@@ -28,8 +28,11 @@
 #include "TitleTransitor.h"
 #include "IrisTransitor.h"
 #include "GameManager.h"
+//#include "YAMLReader.h"
 
 int PlayScene::count = 0;
+
+//YAML_CONVERT_STRUCT(P, name, level, items)
 
 PlayScene::PlayScene()
 {
@@ -75,6 +78,9 @@ PlayScene::PlayScene()
 	gameManager->CreateNum();
 	
 
+	//YamlReader ya;
+	//std::vector<P> pl;
+	//ya.SaveVector<P>("ala", pl);
 	FindGameObject<SoundManager>()->PlaySceneLoad();
 
 	blur->SetDrawOrder(-500);

@@ -1,9 +1,11 @@
 #pragma once
 #include "../Library/SceneBase.h"
+#include <vector>
 
 /// <summary>
 /// ゲームプレイのシーンを制御する
 /// </summary>
+
 class PlayScene : public SceneBase
 {
 public:
@@ -13,3 +15,4 @@ public:
 	void Draw() override;
 	static int count;
 };
+

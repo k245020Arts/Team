@@ -744,6 +744,9 @@
     <ClInclude Include="Source\PlayerDie.h">
       <Filter>PlayScene\Player\playerState</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\練習ライブラリ作成用\project - コピー\YAML\Source\YAMLReader.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
