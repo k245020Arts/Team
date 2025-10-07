@@ -1,0 +1,68 @@
+#include "FollowCamera.h"
+#include "Easing.h"
+#include "transform.h"
+#include "cameraInformation.h"
+#include "Shaker.h"
+#include "ComponentManager.h"
+#include "player.h"
+#include "playerStateManager.h"
+#include "Object3D.h"
+#include "camera.h"
+
+FollowCamera::FollowCamera()
+{
+	enemyShake = false;
+	string = Function::GetClassNameC<FollowCamera>();
+	id = ID::C_FOLLOW;
+}
+
+FollowCamera::~FollowCamera()
+{
+
+}
+
+void FollowCamera::Update()
+{
+	Camera* c = GetBase<Camera>();
+	//‘¼‚Ìˆ—‚©‚ç‹A‚Á‚Ä‚«‚½‚Æ‚«‚É‚·‚®‚ÉƒJƒƒ‰‚ÌˆÊ’u‚ª–ß‚ç‚È‚¢‚æ‚¤‚É•âŠ®‚ðŠ|‚¯‚Ä‚¢‚é
+	if (backCounter >= 0.0f) {
+		float t = 1.0f - backCounter / TIMER_MAX;
+		VECTOR3 easedT = Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
+		c->target = Easing::EaseOut(currentTarget,c->cameraComponent.enemy.transform->position,t);
+		c->currentDistance = easedT;
+		backCounter -= Time::DeltaTimeRate();
+	}
+	else {
+		c->currentDistance = c->defalutDistance;
+		c->target = c->cameraComponent.enemy.transform->position;
+	}
+	//’Ç]ˆ—
+	c->cameraComponent.camera->Follow();
+	//c->TargetEnemySet();
+	/*if (p->GetPlayerStateManager()->GetState<PlayerStateBase>()->GetString() == "PlayerJustAvoid") {
+		*c->cameraComponent.target = c->cameraComponent.enemy.transform->position + c->cameraComponent.player.transform->position * 0.5f;
+	}
+	else {*/
+
+	//ƒJƒƒ‰‚Ì‰ñ“]
+	c->cameraComponent.camera->CameraRotationSet();
+}
+
+void FollowCamera::Draw()
+{
+
+}
+
+void FollowCamera::Start()
+{
+	Camera* c = GetBase<Camera>();
+	p = c->cameraComponent.player.obj->Component()->GetComponent<Player>();
+
+	backCounter = TIMER_MAX;
+	currentTarget = c->target;
+}
+
+void FollowCamera::Finish()
+{
+	
+}
