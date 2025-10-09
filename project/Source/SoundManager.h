@@ -1,7 +1,7 @@
 #pragma once
 #include "../Library/GameObject.h"
 #include <unordered_map>
-#include "ID.h"
+#include "SoundID.h"
 
 class Sound;
 
@@ -20,7 +20,7 @@ public:
 	/// <param name="path">ファイルパス</param>
 	/// <param name="exten">拡張子</param>
 	/// <param name="volume">0～255を指定</param>
-	void SoundLoad(ID::SOUND_ID _type,std::string path,std::string exten,int volume);
+	void SoundLoad(Sound_ID::SOUND_ID _type,std::string path,std::string exten,int volume);
 
 
 	void PlaySceneLoad();
@@ -30,12 +30,12 @@ public:
 	/// SEを再生させる
 	/// </summary>
 	/// <param name="_type"></param>
-	void PlaySe(ID::SOUND_ID _type);
+	void PlaySe(Sound_ID::SOUND_ID _type);
 	//BGMを再生させる
-	void PlayBGM(ID::SOUND_ID _type, bool _loop, bool firstPlay);
+	void PlayBGM(Sound_ID::SOUND_ID _type, bool _loop, bool firstPlay);
 	//BGMを止める
-	void StopBGM(ID::SOUND_ID _type);
-	void StopSE(ID::SOUND_ID _type);
+	void StopBGM(Sound_ID::SOUND_ID _type);
+	void StopSE(Sound_ID::SOUND_ID _type);
 	/// <summary>
 	/// データのハンドルを削除する
 	/// </summary>
@@ -50,7 +50,7 @@ public:
 	void RandamSe(std::string _name, int num);
 
 	//音が再生させているかどうかを調べる
-	bool CheckSe(ID::SOUND_ID _id);
+	bool CheckSe(Sound_ID::SOUND_ID _id);
 
 
 private:

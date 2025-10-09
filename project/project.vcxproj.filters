@@ -350,6 +350,12 @@
     <ClCompile Include="Source\PlayerDie.cpp">
       <Filter>PlayScene\Player\playerState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SoundID.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectID.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -745,6 +751,12 @@
       <Filter>PlayScene\Player\playerState</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\練習ライブラリ作成用\project - コピー\YAML\Source\YAMLReader.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EffectID.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundID.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

@@ -45,12 +45,12 @@ void PlayerJustAvoidAttack5::Update()
 			if (attack) {
 				//UŒ‚‰Â”\‚È‚çUŒ‚
 				p->playerCom.anim->SetPlaySpeed(1.0f);
-				p->playerCom.sound->PlaySe(ID::V_P_JUST_AVOID);
+				p->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
 			}
 			else {
 				//UŒ‚•s‰Â”\‚È‚ç—Ž‰º‚µ‚Ä‚¢‚­
 				p->playerCom.stateManager->ChangeState(ID::P_BLOWAWAY);
-				p->playerCom.sound->PlaySe(ID::SOUND_ID::V_P_LOSE);
+				p->playerCom.sound->PlaySe(Sound_ID::SOUND_ID::V_P_LOSE);
 			}
 			
 		}
@@ -59,8 +59,8 @@ void PlayerJustAvoidAttack5::Update()
 			if (startTimer < p->playerCom.anim->GetCurrentFrame()) {
 				if (oneEffect) {
 					oneEffect = false;
-					p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VECTOR3(0, 0, 0), VECTOR3(1, 1, 1)), p->playerCom.player->GetPlayerObj(), ID::EFFECT_ID::PLAYER_ATTACK, 1.0f);
-					p->playerCom.sound->PlaySe(ID::SOUND_ID::PLAYER_ATTACK_BEFORE);
+					p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VECTOR3(0, 0, 0), VECTOR3(1, 1, 1)), p->playerCom.player->GetPlayerObj(), Effect_ID::EFFECT_ID::PLAYER_ATTACK, 1.0f);
+					p->playerCom.sound->PlaySe(Sound_ID::SOUND_ID::PLAYER_ATTACK_BEFORE);
 				}
 				if (p->playerCom.InputManager->KeyInputDown("attack")) {
 					attack = true;
@@ -110,7 +110,7 @@ void PlayerJustAvoidAttack5::Start()
 	//UŒ‚‚Ì‚½‚ß‚Ì‰‘¬
 	p->playerCom.physics->AddVelocity(VECTOR3(0.0f, 5100.0f, 0.0f), false);
 	p->playerCom.physics->SetGravity(VECTOR3(0.0f, -8000.0f, 0.0f));
-	p->playerCom.sound->PlaySe(ID::V_P_ATTACK4);
+	p->playerCom.sound->PlaySe(Sound_ID::V_P_ATTACK4);
 	//Œõ‚ªŒõŽn‚ß‚éŽžŠÔ‚ÌƒZƒbƒg
 	startTimer = p->playerCom.anim->EventStartTime(ID::P_ANIM_JUST_AVOID_ATTACK4) - 5.0f;
 	oneEffect = true;

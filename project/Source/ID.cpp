@@ -5,8 +5,6 @@
 
 namespace {
 	std::unordered_map<int,std::string> modelId;
-	std::unordered_map<int,std::string> soundId;
-	std::unordered_map<int,std::string> effectId;
 
 	std::string InitID[ID::ID_MAX] = {
 		"enemy",
@@ -65,40 +63,4 @@ std::string ID::GetID(IDType _type)
 		Debug::CreateMessageBox("modelHandleMiss", "miss");
 	}
 	return modelId[type];
-}
-
-std::string ID::GetSoundID(SOUND_ID _type)
-{
-	int type = (int)_type;
-	if (type < 0 && type >= (int)SOUND_MAX) {
-		Debug::CreateMessageBox("soundHandleMiss", "miss");
-	}
-	return soundId[type];
-}
-
-void ID::SetSoundId(std::string _sound,SOUND_ID _type)
-{
-	int type = (int)_type;
-	if (type < 0 && type >= (int)SOUND_MAX) {
-		Debug::CreateMessageBox("soundHandleSetMiss", "miss");
-	}
-	soundId[type] = _sound;
-}
-
-std::string ID::GetEffectID(EFFECT_ID _type)
-{
-	int type = (int)_type;
-	if (type < 0 && type >= (int)EFFECT_MAX) {
-		Debug::CreateMessageBox("EffectHandleMiss", "miss");
-	}
-	return effectId[type];
-}
-
-void ID::SetEffectID(std::string _effect, EFFECT_ID _type)
-{
-	int type = (int)_type;
-	if (type < 0 && type >= (int)SOUND_MAX) {
-		Debug::CreateMessageBox("EffectHandleMiss", "miss");
-	}
-	effectId[type] = _effect;
 }

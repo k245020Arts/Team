@@ -128,11 +128,11 @@ void PlayerJustAvoid::Start()
 	p->playerCom.player->PlayerStickInput();
 	cameraRotation = p->playerCom.camera->GetCameraTransform()->rotation;
 	//音を鳴らす
-	p->playerCom.sound->PlaySe(ID::JUST_AVOID_SOUND);
-	p->playerCom.sound->PlaySe(ID::JUST_AVOID_SUCCESS);
+	p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
+	p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
 	//エフェクトの再生
-	p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f , Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, ID::JUST_AVOID_EFFECT, 1.0f, false);
-	p->playerCom.effect->CreateEffekseer(Transform(MV1GetFramePosition(Load::GetHandle(ID::IDType::P_MODEL), 12), VZero, VOne * 1.0f), nullptr, ID::PLAYER_FLASH, 1.0f);
+	p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f , Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, Effect_ID::JUST_AVOID_EFFECT, 1.0f, false);
+	p->playerCom.effect->CreateEffekseer(Transform(MV1GetFramePosition(Load::GetHandle(ID::IDType::P_MODEL), 12), VZero, VOne * 1.0f), nullptr, Effect_ID::PLAYER_FLASH, 1.0f);
 	//p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VZero, VOne), p->playerCom.player->GetPlayerObj(), ID::PLAYER_AURA, 10.0f);
 	//プレイヤーを青くする
 	p->playerCom.color->setRGB(Color::Rgb(0,0,255,255));
@@ -140,7 +140,7 @@ void PlayerJustAvoid::Start()
 	//カメラの追従速度を遅くする
 	cameraLeap = 0.02f;
 	p->playerCom.camera->CameraLeapSet(cameraLeap);
-	p->playerCom.sound->PlaySe(ID::V_P_JUST_AVOID);
+	p->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
 	//カメラの状態遷移
 	p->playerCom.camera->ChangeStateCamera(ID::P_ANIM_JUST_AVOID);
 	attack = false;

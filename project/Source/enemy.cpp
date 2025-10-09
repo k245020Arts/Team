@@ -164,66 +164,66 @@ void Enemy::PlayerHit()
 		//eCom.state->NowChangeState(ID::E_DAMAGE);
 		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 1500.0f), VECTOR3(100, 100, 100), 0.15f, 0.8f);
 		eCom.control->ControlVibrationStartFrame(10, 10);
-		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, ID::HIT_EFFECT, HIT_EFFECT_TIME);
-		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, -40.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
+		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
+		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, -40.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 		
 		break;
 	case ID::P_ANIM_ATTACK2:
 		//eCom.state->NowChangeState(ID::E_DAMAGE);
 		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 1500.0f), VECTOR3(100, 100, 100), 0.25f, 0.8f);
 		eCom.control->ControlVibrationStartFrame(40, 30);
-		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, ID::HIT_EFFECT, HIT_EFFECT_TIME);
+		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
 		//eCom.effect->CreateEffekseer(Transform(VZero, VOne * VECTOR3(0, 0, 70.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
 		break;
 	case ID::P_ANIM_ATTACK3:
 		//eCom.state->NowChangeState(ID::E_DAMAGE);
 		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 1500.0f), VECTOR3(100, 100, 100), 0.35f, 0.8f);
 		eCom.control->ControlVibrationStartFrame(10, 10);
-		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, ID::HIT_EFFECT, HIT_EFFECT_TIME);
-		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0,100,0), VOne * VECTOR3(0, 0, 80.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
+		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
+		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0,100,0), VOne * VECTOR3(0, 0, 80.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 		break;
 	case ID::P_ANIM_ATTACK4:
 		eCom.state->NowChangeState(ID::E_DAMAGE);
 		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 3500.0f), VECTOR3(200, 200, 200), 0.45f, 0.8f);
 		eCom.control->ControlVibrationStartFrame(50, 50);
-		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, ID::HIT_EFFECT, HIT_EFFECT_TIME);
-		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, -120.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
+		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
+		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, -120.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 		break;
 	case ID::P_ANIM_JUST_AVOID_ATTACK1:
 		eCom.state->NowChangeState(ID::E_DAMAGE);
 		obj->SetObjectTimeRate(1.0f);
 		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 2000.0f), VECTOR3(400, 400, 400), 0.05f, 0.8f);
 		eCom.control->ControlVibrationStartFrame(30, 40);
-		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, ID::HIT_EFFECT, HIT_EFFECT_TIME);
+		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
 		//eCom.effect->CreateEffekseer(Transform(VZero, VOne * VECTOR3(0, 0, 50.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
 		break;
 	case ID::P_ANIM_JUST_AVOID_ATTACK2:
 		eCom.state->NowChangeState(ID::E_DAMAGE);
 		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 4000.0f), VECTOR3(400, 400, 400), 0.8f, 1.2f);
 		eCom.control->ControlVibrationStartFrame(350, 60);
-		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, ID::HIT_EFFECT, HIT_EFFECT_TIME);
-		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 70.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
+		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
+		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 70.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 		break;
 	case ID::P_ANIM_JUST_AVOID_ATTACK3:
 		//eCom.state->NowChangeState(ID::E_DAMAGE);
 		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 4000.0f), VECTOR3(200, 200, 200), 0.2f, 0.8f);
 		eCom.control->ControlVibrationStartFrame(70, 40);
-		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, ID::HIT_EFFECT, HIT_EFFECT_TIME);
-		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, -50.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
+		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
+		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, -50.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 		break;
 	case ID::P_ANIM_JUST_AVOID_ATTACK4:
 		eCom.state->NowChangeState(ID::E_DAMAGE);
 		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 7000.0f), VECTOR3(200, 200, 200), 0.2f, 0.8f);
 		eCom.control->ControlVibrationStartFrame(40, 40);
-		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, ID::HIT_EFFECT, HIT_EFFECT_TIME);
-		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 80.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
+		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
+		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 80.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 		break;
 	case ID::P_ANIM_JUST_AVOID_ATTACK5:
 		eCom.state->NowChangeState(ID::E_BLOWAWAY);
 		bInfo = EnemyBlowAway::EnemyBlowAwayInfo(4000.0f, 3000.0f, VECTOR3(15.0f, 15.0f, 15.0f), VECTOR3(0.3f, 0.3f, 0.3f), 2000.0f, 20.0f);
 		eCom.control->ControlVibrationStartFrame(100, 60);
-		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, ID::SPECIAL_HIT_EFFECT, 5.0f);
-		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 0.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
+		eCom.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::SPECIAL_HIT_EFFECT, 5.0f);
+		eCom.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 0.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 		break;
 	default:
 		Debug::DebugLog("PlayerNoAttackState");

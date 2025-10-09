@@ -38,9 +38,9 @@ void Wall::Update()
 	}
 	if (fabs(distance) < 1600) {
 		
-		if (!effect->IsPlayIng(ID::EFFECT_WALL)) {
+		if (!effect->IsPlayIng(Effect_ID::EFFECT_WALL)) {
 			//エフェクトが再生されていないときに再生
-			effect->CreateEffekseer(Transform(VZero, VZero, VOne * 39.0f), nullptr, ID::EFFECT_WALL, 1.0f);
+			effect->CreateEffekseer(Transform(VZero, VZero, VOne * 39.0f), nullptr, Effect_ID::EFFECT_WALL, 1.0f);
 		}
 		else {
 			//距離が離れれば離れるほど半透明度をあげる。
@@ -48,7 +48,7 @@ void Wall::Update()
 			float disRate;
 			disRate = distance / 1500.0f;
 			rgb = Color::Rgb(255, 255, 255, Easing::Lerp(255, 0, disRate));
-			effect->SetColor(ID::EFFECT_WALL, rgb);
+			effect->SetColor(Effect_ID::EFFECT_WALL, rgb);
 		}
 		
 	}

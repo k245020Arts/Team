@@ -1,6 +1,8 @@
 #pragma once
 #include "../Library/GameObject.h"
 #include "ID.h"
+#include "SoundID.h"
+#include "EffectID.h"
 
 namespace Load {
 
@@ -9,8 +11,8 @@ namespace Load {
 	void Init();
 
 	int LoadModel(std::string path, ID::IDType id);
-	int LoadSound(std::string path, std::string exten, ID::SOUND_ID id);
-	int LoadEffect(std::string path, ID::EFFECT_ID id, float size);
+	int LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id);
+	int LoadEffect(std::string path, Effect_ID::EFFECT_ID id, float size);
 	int LoadImageGraph(std::string path, ID::IDType id);
 	int LoadAnim(std::string path, ID::IDType id);
 
@@ -19,9 +21,9 @@ namespace Load {
 	void AllDelete();
 
 	int GetHandle(ID::IDType id);
-	int GetSoundHandle(ID::SOUND_ID id);
+	int GetSoundHandle(Sound_ID::SOUND_ID id);
 
-	int GetEffectHandle(ID::EFFECT_ID id);
+	int GetEffectHandle(Effect_ID::EFFECT_ID id);
 	//パスの定数
 	//パスを毎回書くのは手間なので定数にして行う
 	const std::string MODEL_PATH = "data/model/";

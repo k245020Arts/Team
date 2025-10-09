@@ -1,8 +1,8 @@
 #pragma once
 #include "../Library/GameObject.h"
 #include <EffekseerForDXLib.h>
-#include "ID.h"
 #include "color.h"
+#include "EffectID.h"
 
 class Transform;
 class BaseObject;
@@ -26,14 +26,14 @@ public:
 	/// <param name="_time">エフェクトの発生させる時間</param>
 	/// <param name="effect3D">エフェクト3Dにするか2Dにするかデフォルトは3D</param>
 	/// <returns></returns>
-	int CreateEffekseer(Transform _transform, BaseObject* _parent,ID::EFFECT_ID _id,float _time,bool effect3D = true);
+	int CreateEffekseer(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id,float _time,bool effect3D = true);
 
-	void StopEffekseer(ID::EFFECT_ID _id);
-	void SetSpeedEffekseer(ID::EFFECT_ID _id,float _speed);
+	void StopEffekseer(Effect_ID::EFFECT_ID _id);
+	void SetSpeedEffekseer(Effect_ID::EFFECT_ID _id,float _speed);
 	void AllStopEffekseer();
-	bool IsPlayIng(ID::EFFECT_ID _id);
+	bool IsPlayIng(Effect_ID::EFFECT_ID _id);
 
-	void SetColor(ID::EFFECT_ID _id, Color::Rgb _rgb);
+	void SetColor(Effect_ID::EFFECT_ID _id, Color::Rgb _rgb);
 	
 private:
 	std::list<BaseObject*> effect;

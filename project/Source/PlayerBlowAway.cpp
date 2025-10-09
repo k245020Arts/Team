@@ -28,7 +28,7 @@ void PlayerBlowAway::Update()
 		if (p->playerCom.anim->GetCurrentID() == ID::GetID(ID::P_FALL)) {
 			p->playerCom.anim->Play(ID::P_GETUP);
 			p->playerCom.shaker->ShakeFinish();
-			p->playerCom.sound->PlaySe(ID::ENEMY_FALL);
+			p->playerCom.sound->PlaySe(Sound_ID::ENEMY_FALL);
 			p->playerCom.camera->CameraShake(VECTOR3(100, 100, 0), Shaker::HORIZONAL_SHAKE, false, 0.5f);
 		}
 	}

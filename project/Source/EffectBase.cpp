@@ -27,7 +27,7 @@ void EffectBase::Draw() {
 
 }
 
-void EffectBase::EffectInit(Transform _transform, BaseObject* _parent, ID::EFFECT_ID _id, float _time, bool effect3D)
+void EffectBase::EffectInit(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D)
 {
 	transform = new Transform(_transform);
 	if (_parent != nullptr) {

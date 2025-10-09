@@ -3,6 +3,8 @@
 #include "playerInformation.h"
 #include "transform.h"
 #include "ID.h"
+#include "EffectID.h"
+#include "SoundID.h"
 
 class Player : public CharaBase
 {

@@ -3,7 +3,7 @@
 #include <EffekseerForDXLib.h>
 #include "Component.h"
 #include "transform.h"
-#include "ID.h"
+#include "EffectID.h"
 #include "color.h"
 
 class BaseObject;
@@ -16,7 +16,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void EffectInit(Transform _transform, BaseObject* _parent, ID::EFFECT_ID _id, float _time, bool effect3D = true);
+	void EffectInit(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D = true);
 
 	void EffectPlay2D();
 	void EffectPlay3D();
@@ -26,7 +26,7 @@ public:
 
 	void ChangeSpeed(float _speed) { speed = _speed; }
 
-	ID::EFFECT_ID GetEffectID() { return id; }
+	Effect_ID::EFFECT_ID GetEffectID() { return id; }
 	void EffectStop();
 	
 	void EffectSpeedSet(float _speed);
@@ -39,7 +39,7 @@ private:
 
 	Transform* transform;
 	BaseObject* parent;
-	ID::EFFECT_ID id;
+	Effect_ID::EFFECT_ID id;
 
 	typedef void (EffectBase::* EffectKind)();
 	EffectKind effectPlay;

@@ -86,7 +86,7 @@ void PlayerAvoid::Start()
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA  - VECTOR3(9000,0,9000));
 	p->playerCom.physics->SetGravity(VECTOR3(0.0f, -6000.0f, 0.0f));
 	p->playerCom.camera->CameraLeapSet(0.13f);
-	p->playerCom.sound->PlaySe(ID::V_P_AVOID);
+	p->playerCom.sound->PlaySe(Sound_ID::V_P_AVOID);
 	maxFrame = p->playerCom.anim->GetMaxFrame();
 	
 	

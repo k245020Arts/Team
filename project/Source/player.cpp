@@ -384,7 +384,7 @@ bool Player::EnemyHit(ID::IDType _attackId)
 			hp -= playerCom.enemyObj->Component()->GetComponent<Enemy>()->GetEnemyStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
 			playerCom.sound->RandamSe("EnemyAttackHit",4);
 			playerCom.sound->RandamSe("P_DamageV",2);
-			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0,50,0),VZero,VOne * 6.0f), obj, ID::PLAYER_HIT, 1.0f);
+			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0,50,0),VZero,VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);
 		}
 	}
 	return true;

@@ -39,15 +39,15 @@ void EnemyAttack1::Update()
 	float time = e->eCom.anim->EventStartTime(ID::E_ATTACK1);
 	//“G‚ÌUŒ‚‚Ì‰¹‚ğ”­¶
 	if (time - 1.0f <= e->eCom.anim->GetCurrentFrame() && time >= e->eCom.anim->GetCurrentFrame()) {
-		if (!e->eCom.sound->CheckSe(ID::ENEMY_SWORD_WIND1) && !e->eCom.sound->CheckSe(ID::ENEMY_SWORD_WIND2)) {
+		if (!e->eCom.sound->CheckSe(Sound_ID::ENEMY_SWORD_WIND1) && !e->eCom.sound->CheckSe(Sound_ID::ENEMY_SWORD_WIND2)) {
 			e->eCom.sound->RandamSe("EnemySword", 2);
 		}
 	}
 	//“G‚ÌŒ•‰ñ‚è‚ğŒõ‚ç‚¹‚Ä‚¢‚é‚±‚Æ‚Ö‚Ìİ’è
 	if (time - 7.0f <= e->eCom.anim->GetCurrentFrame() && time >= e->eCom.anim->GetCurrentFrame()) {
 		if (sound) {
-			e->eCom.effect->CreateEffekseer(Transform(MV1GetFramePosition(Load::GetHandle(ID::IDType::E_MODEL), 12), VZero, VOne * 3.0f), nullptr, ID::ENEMY_FLASH, 1.0f);
-			e->eCom.sound->PlaySe(ID::ENEMY_ATTACK_BEFORE);
+			e->eCom.effect->CreateEffekseer(Transform(MV1GetFramePosition(Load::GetHandle(ID::IDType::E_MODEL), 12), VZero, VOne * 3.0f), nullptr, Effect_ID::ENEMY_FLASH, 1.0f);
+			e->eCom.sound->PlaySe(Sound_ID::ENEMY_ATTACK_BEFORE);
 			e->eCom.sound->RandamSe("E_AttackV", 3);
 			//com.weapon->CreateTrailEnemy(VECTOR3(0, 0, 0), VECTOR3(500, 500, 1000) * MGetRotY(com.enemy->GetEnemyTransform()->rotation.y), 100.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
 			sound = false;
@@ -66,7 +66,7 @@ void EnemyAttack1::Update()
 	float sub = e->eCom.anim->GetCurrentFrame() - e->eCom.anim->GetCurrentBeforeFrame();
 	float speed = sub * effectAverageSpeed;
 	//float rate = 1.0f - com.anim->GetCurrentFrame() / attackStartTime;
-	e->eCom.effect->SetSpeedEffekseer(ID::ENEMY_ATTACK_CICLE, speed);
+	e->eCom.effect->SetSpeedEffekseer(Effect_ID::ENEMY_ATTACK_CICLE, speed);
 }
 
 void EnemyAttack1::Draw()
@@ -90,12 +90,12 @@ void EnemyAttack1::Start()
 	firstColl = true;
 	sound = true;
 	effectAverageSpeed = 60.0f / e->eCom.anim->EventStartTime(animId);
-	e->eCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VZero, VOne), e->eCom.enemy->GetEnemyObj(), ID::ENEMY_ATTACK_CICLE, 1.0f);
+	e->eCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VZero, VOne), e->eCom.enemy->GetEnemyObj(), Effect_ID::ENEMY_ATTACK_CICLE, 1.0f);
 }
 
 void EnemyAttack1::Finish()
 {
 	Enemy* e = GetBase<Enemy>();
 	e->eCom.anim->SetPlaySpeed(1.0f);
-	e->eCom.effect->StopEffekseer(ID::ENEMY_ATTACK_CICLE);
+	e->eCom.effect->StopEffekseer(Effect_ID::ENEMY_ATTACK_CICLE);
 }

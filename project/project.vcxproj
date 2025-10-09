@@ -176,6 +176,7 @@
     <ClInclude Include="Source\cameraStateManager.h" />
     <ClInclude Include="Source\CsvReader.h" />
     <ClInclude Include="Source\EffectBase.h" />
+    <ClInclude Include="Source\EffectID.h" />
     <ClInclude Include="Source\EnemyBlowAway.h" />
     <ClInclude Include="Source\EnemyDie.h" />
     <ClInclude Include="Source\EnemyRun.h" />
@@ -259,6 +260,7 @@
     <ClInclude Include="Source\SceneFactory.h" />
     <ClInclude Include="Source\skyManager.h" />
     <ClInclude Include="Source\Sound.h" />
+    <ClInclude Include="Source\SoundID.h" />
     <ClInclude Include="Source\SoundManager.h" />
     <ClInclude Include="Source\sphereCollider.h" />
     <ClInclude Include="Source\stage.h" />
@@ -318,6 +320,7 @@
     <ClCompile Include="Source\CsvReader.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\EffectBase.cpp" />
+    <ClCompile Include="Source\EffectID.cpp" />
     <ClCompile Include="Source\EffectManager.cpp" />
     <ClCompile Include="Source\enemy.cpp" />
     <ClCompile Include="Source\enemyAttack1.cpp" />
@@ -380,6 +383,7 @@
     <ClCompile Include="Source\Shaker.cpp" />
     <ClCompile Include="Source\skyManager.cpp" />
     <ClCompile Include="Source\Sound.cpp" />
+    <ClCompile Include="Source\SoundID.cpp" />
     <ClCompile Include="Source\SoundManager.cpp" />
     <ClCompile Include="Source\sphereCollider.cpp" />
     <ClCompile Include="Source\stage.cpp" />

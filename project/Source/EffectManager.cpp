@@ -15,17 +15,17 @@ namespace {
 
 EffectManager::EffectManager()
 {
-	Load::LoadEffect("enemyChrage2", ID::ENEMY_FLASH, 50.0f);
-	Load::LoadEffect("hitEffect", ID::HIT_EFFECT, 50.0f);
-	Load::LoadEffect("specialHit", ID::SPECIAL_HIT_EFFECT, 50.0f);
-	Load::LoadEffect("justAvoidEffect", ID::JUST_AVOID_EFFECT, 50.0f);
-	Load::LoadEffect("playerFlash", ID::PLAYER_FLASH, 50.0f);
-	Load::LoadEffect("aura", ID::PLAYER_AURA, 50.0f);
-	Load::LoadEffect("playerHit", ID::PLAYER_HIT, 50.0f);
-	Load::LoadEffect("playerAttackEffect", ID::PLAYER_ATTACK, 50.0f);
-	Load::LoadEffect("hitSlash", ID::PLAYER_SLASH_ATTACK, 50.0f);
-	Load::LoadEffect("enemyAttackCicle", ID::ENEMY_ATTACK_CICLE, 50.0f);
-	Load::LoadEffect("AlphaCutoff", ID::EFFECT_WALL, 50.0f);
+	Load::LoadEffect("enemyChrage2", Effect_ID::ENEMY_FLASH, 50.0f);
+	Load::LoadEffect("hitEffect", Effect_ID::HIT_EFFECT, 50.0f);
+	Load::LoadEffect("specialHit", Effect_ID::SPECIAL_HIT_EFFECT, 50.0f);
+	Load::LoadEffect("justAvoidEffect", Effect_ID::JUST_AVOID_EFFECT, 50.0f);
+	Load::LoadEffect("playerFlash", Effect_ID::PLAYER_FLASH, 50.0f);
+	Load::LoadEffect("aura", Effect_ID::PLAYER_AURA, 50.0f);
+	Load::LoadEffect("playerHit", Effect_ID::PLAYER_HIT, 50.0f);
+	Load::LoadEffect("playerAttackEffect", Effect_ID::PLAYER_ATTACK, 50.0f);
+	Load::LoadEffect("hitSlash", Effect_ID::PLAYER_SLASH_ATTACK, 50.0f);
+	Load::LoadEffect("enemyAttackCicle", Effect_ID::ENEMY_ATTACK_CICLE, 50.0f);
+	Load::LoadEffect("AlphaCutoff", Effect_ID::EFFECT_WALL, 50.0f);
 	//Effekseer_SetGraphicsDeviceDXLib();
 	SetDrawOrder(-10000);
 }
@@ -71,7 +71,7 @@ void EffectManager::Draw()
 	DrawEffekseer2D();
 }
 
-int EffectManager::CreateEffekseer(Transform _transform, BaseObject* _parent, ID::EFFECT_ID _id, float _time, bool effect3D)
+int EffectManager::CreateEffekseer(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D)
 {
 	Object3D* obj = new Object3D();
 	obj->Init(_transform.position, _transform.rotation, _transform.scale, std::to_string(_id));
@@ -82,7 +82,7 @@ int EffectManager::CreateEffekseer(Transform _transform, BaseObject* _parent, ID
 	return 0;
 }
 
-void EffectManager::StopEffekseer(ID::EFFECT_ID _id)
+void EffectManager::StopEffekseer(Effect_ID::EFFECT_ID _id)
 {
 	for (auto e = effect.begin(); e != effect.end();) {
 
@@ -100,7 +100,7 @@ void EffectManager::StopEffekseer(ID::EFFECT_ID _id)
 	}
 }
 
-void EffectManager::SetSpeedEffekseer(ID::EFFECT_ID _id,float _speed)
+void EffectManager::SetSpeedEffekseer(Effect_ID::EFFECT_ID _id,float _speed)
 {
 	for (auto e = effect.begin(); e != effect.end();) {
 
@@ -127,7 +127,7 @@ void EffectManager::AllStopEffekseer()
 	}
 }
 
-bool EffectManager::IsPlayIng(ID::EFFECT_ID _id)
+bool EffectManager::IsPlayIng(Effect_ID::EFFECT_ID _id)
 {
 	for (auto e = effect.begin(); e != effect.end();) {
 
@@ -142,7 +142,7 @@ bool EffectManager::IsPlayIng(ID::EFFECT_ID _id)
 	return false;
 }
 
-void EffectManager::SetColor(ID::EFFECT_ID _id, Color::Rgb _rgb)
+void EffectManager::SetColor(Effect_ID::EFFECT_ID _id, Color::Rgb _rgb)
 {
 	for (auto e = effect.begin(); e != effect.end();) {
 

@@ -5,6 +5,7 @@
 #include "Debug.h"
 #include "../Library/SceneManager.h"
 
+
 namespace {
 
 	enum class Type
@@ -33,8 +34,8 @@ namespace {
 		return ID::GetID(type);
 	}
 
-	std::string ID(ID::SOUND_ID type) {
-		return ID::GetSoundID(type);
+	std::string ID(Sound_ID::SOUND_ID type) {
+		return Sound_ID::GetSoundID(type);
 	}
 }
 
@@ -63,7 +64,7 @@ int Load::LoadModel(std::string path,ID::IDType id)
 	return data.handle;
 }
 
-int Load::LoadSound(std::string path,std::string exten, ID::SOUND_ID id)
+int Load::LoadSound(std::string path,std::string exten, Sound_ID::SOUND_ID id)
 {
 	std::string name = path;
 	LoadData data = fileLoad[name];
@@ -72,7 +73,7 @@ int Load::LoadSound(std::string path,std::string exten, ID::SOUND_ID id)
 		loadName += exten;
 		data.handle = LoadSoundMem(loadName.c_str());
 		data.type = Type::SOUND;
-		ID::SetSoundId(path, id);
+		Sound_ID::SetSoundId(path, id);
 	}
 	if (data.handle == -1) {
 		ShowLoadError("Sound", name);
@@ -84,7 +85,7 @@ int Load::LoadSound(std::string path,std::string exten, ID::SOUND_ID id)
 	return data.handle;
 }
 
-int Load::LoadEffect(std::string path, ID::EFFECT_ID id,float size)
+int Load::LoadEffect(std::string path, Effect_ID::EFFECT_ID id,float size)
 {
 	//std::string name = ID::GetEffectID(id);
 	std::string name = path;
@@ -94,7 +95,7 @@ int Load::LoadEffect(std::string path, ID::EFFECT_ID id,float size)
 		loadName += ".efkefc";
 		data.handle = LoadEffekseerEffect(loadName.c_str(),size);
 		data.type = Type::EFFECT;
-		ID::SetEffectID(path, id);
+		Effect_ID::SetEffectID(path, id);
 	}
 	if (data.handle == -1) {
 		ShowLoadError("Effect", name);
@@ -209,9 +210,9 @@ int Load::GetHandle(ID::IDType id)
 	}
 }
 
-int Load::GetSoundHandle(ID::SOUND_ID id)
+int Load::GetSoundHandle(Sound_ID::SOUND_ID id)
 {
-	auto it = fileLoad.find(ID::GetSoundID(id));
+	auto it = fileLoad.find(Sound_ID::GetSoundID(id));
 	if (fileLoad.end() == it) {
 		std::string str = std::to_string((int)id);
 		Debug::DebugLog("そのサウンドデータはありません" + str);
@@ -222,9 +223,9 @@ int Load::GetSoundHandle(ID::SOUND_ID id)
 	}
 }
 
-int Load::GetEffectHandle(ID::EFFECT_ID id)
+int Load::GetEffectHandle(Effect_ID::EFFECT_ID id)
 {
-	auto it = fileLoad.find(ID::GetEffectID(id));
+	auto it = fileLoad.find(Effect_ID::GetEffectID(id));
 	if (fileLoad.end() == it) {
 		std::string str = std::to_string((int)id);
 		Debug::DebugLog("そのエフェクトデータはありません" + str);

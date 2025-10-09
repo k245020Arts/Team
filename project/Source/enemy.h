@@ -3,6 +3,8 @@
 #include "enemyInformation.h"
 #include "transform.h"
 #include "enemyDamage.h"
+#include "SoundID.h"
+#include "EffectID.h"
 
 class StateManager;
 class EnemyStateManager;
