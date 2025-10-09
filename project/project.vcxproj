@@ -142,7 +142,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\練習ライブラリ作成用\project - コピー\YAML\Source\YAMLReader.h" />
     <ClInclude Include="ImGui\crude_json.h" />
     <ClInclude Include="ImGui\imconfig.h" />
     <ClInclude Include="ImGui\imgui.h" />
@@ -277,6 +276,7 @@
     <ClInclude Include="Source\Wall.h" />
     <ClInclude Include="Source\weaponManager.h" />
     <ClInclude Include="Source\WipeTransitor.h" />
+    <ClInclude Include="Source\YAMLReader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\crude_json.cpp" />

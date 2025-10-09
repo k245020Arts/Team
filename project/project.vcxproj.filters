@@ -750,13 +750,13 @@
     <ClInclude Include="Source\PlayerDie.h">
       <Filter>PlayScene\Player\playerState</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\練習ライブラリ作成用\project - コピー\YAML\Source\YAMLReader.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Source\EffectID.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Source\SoundID.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\YAMLReader.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
