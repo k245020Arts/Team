@@ -6,6 +6,7 @@ class Transform;
 class Camera;
 class StateManager;
 class ControllerInputManager;
+class EnemyManager;
 
 namespace CameraInformation {
 	//カメラのプレイヤーやエネミーのほしい情報をまとめた構造体
@@ -25,7 +26,7 @@ namespace CameraInformation {
 	{
 		CameraComponent() {
 			player = CharaInformation();
-			enemy = CharaInformation();
+			target = CharaInformation();
 			camera = nullptr;
 			shaker = nullptr;
 			cameraTransform = nullptr;
@@ -37,12 +38,13 @@ namespace CameraInformation {
 			//defalutDistance = nullptr;
 		}
 		CharaInformation player;
-		CharaInformation enemy;
+		CharaInformation target;
 		Camera* camera;
 		Shaker* shaker;
 		Transform* cameraTransform;
 		ControllerInputManager* control;
 		StateManager* state;
+		EnemyManager* enemyManager;
 		//VECTOR3* target;
 		//float* reap;
 		//VECTOR3* currentDistance;
