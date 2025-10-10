@@ -72,7 +72,6 @@ PlayScene::PlayScene()
 	cameraManager->CreateCamera();
 	player->CreatePlayer();
 	enemy->PlayerObjPointer();
-	bossManager->CreateBoss();
 	cameraManager->ParentObj("PLAYER");
 	weapon->CreatePlayerWeapon();
 	weapon->CreateEnemyWeapon();

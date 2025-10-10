@@ -365,6 +365,9 @@
     <ClCompile Include="Source\BossIdol.cpp">
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\FreeCamera.cpp">
+      <Filter>PlayScene\camera\cameraState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -779,6 +782,9 @@
     </ClInclude>
     <ClInclude Include="Source\BossIdol.h">
       <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FreeCamera.h">
+      <Filter>PlayScene\camera\cameraState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

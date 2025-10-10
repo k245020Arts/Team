@@ -60,6 +60,7 @@ void FollowCamera::Start()
 
 	backCounter = TIMER_MAX;
 	currentTarget = c->target;
+	c->cameraComponent.cameraTransform->rotation.x = 30.0f * DegToRad;
 }
 
 void FollowCamera::Finish()

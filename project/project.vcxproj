@@ -185,6 +185,7 @@
     <ClInclude Include="Source\EnemyRun.h" />
     <ClInclude Include="Source\FadeTransitor.h" />
     <ClInclude Include="Source\FollowCamera.h" />
+    <ClInclude Include="Source\FreeCamera.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\Guage.h" />
     <ClInclude Include="Source\IrisTransitor.h" />
@@ -341,6 +342,7 @@
     <ClCompile Include="Source\EnemyStateManager.cpp" />
     <ClCompile Include="Source\FadeTransitor.cpp" />
     <ClCompile Include="Source\FollowCamera.cpp" />
+    <ClCompile Include="Source\FreeCamera.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\Guage.cpp" />
     <ClCompile Include="Source\Hierarchy.cpp" />

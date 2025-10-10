@@ -1,5 +1,6 @@
 #pragma once
 #include "../Library/GameObject.h"
+#include <list>
 
 class Object3D;
 
@@ -11,13 +12,15 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	Object3D* GetEnemy();
+	std::list<Object3D*> GetEnemy();
 
 	void CreateEnemy();
 	void PlayerObjPointer();
 
+	void CreateBoss();
+
 private:
 	
-	Object3D* enemy;
+	std::list<Object3D*> enemy;
 
 };

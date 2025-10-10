@@ -52,6 +52,8 @@ public:
 		currentId = ID::ID_MAX;
 		nextId = ID::ID_MAX;
 		stateNoChange = false;
+		debugId = 20;
+		tag = Function::GetClassNameC<StateManager>();
 	}
 	~StateManager() { 
 		/*for (auto& t : stateInfo) {

@@ -11,7 +11,8 @@
 #include "JustAvoidCamera.h"
 #include "JustAvoidAttackCamera.h"
 #include "JustAvoidAttackHitCamera.h"
-
+#include "inputManager.h"
+#include "FreeCamera.h"
 
 Camera::Camera()
 {
@@ -30,6 +31,9 @@ Camera::Camera()
 	debugId = 12;
 	tag = Function::GetClassNameC<Camera>();
 	fov = 60.0f * DegToRad;
+
+	input = FindGameObject<InputManager>();
+	rockOn = false;
 }
 
 Camera::~Camera()
@@ -40,43 +44,34 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	
+	if (input->KeyInputDown("camera")) {
+		rockOn = !rockOn;
+		if (rockOn) {
+			cameraComponent.state->NowChangeState(ID::C_FOLLOW);
+		}
+		else {
+			cameraComponent.state->NowChangeState(ID::C_FREE);
+		}
+	}
 	
 }
 
 void Camera::Draw()
 {
 	//カメラがフェード中も止まってしまうのが嫌だったので一時的にdrawのところに逃がしている
-	if (debugButton == 0) {
+	if (rockOn) {
 		//cameraComponent.state->Update();
 	}
 	else {
-		cameraComponent.cameraTransform->position = cameraComponent.player.transform->position;
-		if (cameraComponent.control->GetStickInput().rightStick.x >= 0.3f) {
-			cameraComponent.cameraTransform->rotation.y += 2.0f * DegToRad;
-		}
-		if (cameraComponent.control->GetStickInput().rightStick.x <= -0.3f) {
-			cameraComponent.cameraTransform->rotation.y -= 2.0f * DegToRad;
-		}
-		if (cameraComponent.control->GetStickInput().rightStick.y >= 0.3f) {
-			if (cameraComponent.cameraTransform->rotation.x >= -80.0f * DegToRad) {
-				cameraComponent.cameraTransform->rotation.x -= 2.0f * DegToRad;
-			}
-
-		}
-		if (cameraComponent.control->GetStickInput().rightStick.y <= -0.3f) {
-			if (cameraComponent.cameraTransform->rotation.x <= 80.0f * DegToRad) {
-				cameraComponent.cameraTransform->rotation.x += 2.0f * DegToRad;
-			}
-		}
+		
 	}
 	SetCameraNearFar(10.0f, 100000.0f);
 	SetupCamera_Perspective(fov);
-	if (debugButton == 0) {
+	if (rockOn) {
 		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position,target);
 	}
-	else if (debugButton == 1) {
-		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position + VECTOR3(0, 0, -1500.0f) * MGetRotX(cameraComponent.cameraTransform->rotation.x) * MGetRotY(cameraComponent.cameraTransform->rotation.y), cameraComponent.player.transform->position);
+	else if (!rockOn) {
+		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position,target);
 	}
 	else {
 		Transform transform = *obj->GetTransform();
@@ -124,7 +119,6 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.cameraTransform =  new Transform(*cameraComponent.player.transform);
 	cameraComponent.cameraTransform->rotation.x = 30.0f * DegToRad;
 	cameraComponent.player.shaker = _obj->Component()->GetComponent<Shaker>();
-	
 
 	using namespace ID;
 
@@ -133,6 +127,7 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.state->CreateState<JustAvoidCamera>(GetID(P_ANIM_JUST_AVOID));
 	cameraComponent.state->CreateState<JustAvoidAttackCamera>(GetID(C_AVOID_ATTACK));
 	cameraComponent.state->CreateState<JustAvoidAttackHitCamera>(GetID(C_HIT));
+	cameraComponent.state->CreateState<FreeCamera>(GetID(C_FREE));
 
 	cameraComponent.state->NodeDrawReady();
 

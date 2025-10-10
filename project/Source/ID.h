@@ -47,6 +47,7 @@ namespace ID {
 		P_DIE,
 		START_NUM,
 		B_MODEL,
+		C_FREE,
 
 		ID_MAX,
 	};

@@ -8,8 +8,6 @@ public:
 	BossManager();
 	~BossManager();
 
-	void CreateBoss();
-
 private:
 	Object3D* boss;
 };

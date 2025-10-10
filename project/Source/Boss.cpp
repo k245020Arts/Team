@@ -18,6 +18,8 @@
 
 Boss::Boss()
 {
+	debugId = 19;
+	tag = Function::GetClassNameC<Boss>();
 }
 
 Boss::~Boss()

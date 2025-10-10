@@ -47,6 +47,7 @@ namespace {
 		"p_die",
 		"start_num",
 		"b_model",
+		"c_free",
 	};
 }
 
