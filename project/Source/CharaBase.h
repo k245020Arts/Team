@@ -35,6 +35,12 @@ public:
 
 	const float GetMaxHp(){return maxHp;}
 
+
+	void LastTargetIn() { lastTarget = true; }
+	void LastTargetOut() { lastTarget = false; }
+
+	bool GetLastTarget() { return lastTarget; }
+
 protected:
 	ColliderBase* attackColl;
 
@@ -43,4 +49,6 @@ protected:
 
 	float hp;
 	float maxHp;
+
+	bool lastTarget;
 };

@@ -49,10 +49,12 @@ public:
 	void AvoidReady();
 	void AvoidRotationChange();
 
-	bool EnemyHit(ID::IDType _attackId);
+	bool EnemyHit(ID::IDType _attackId, BaseObject* _obj);
 	Transform* GetPlayerTransform(){ return playerTransform; }
 	BaseObject* GetPlayerObj() { return obj; }
 	void JustAvoidCan();
+
+	void TargetObjSet(BaseObject* _base);
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans) {

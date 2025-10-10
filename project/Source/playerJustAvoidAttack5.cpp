@@ -68,7 +68,7 @@ void PlayerJustAvoidAttack5::Update()
 			}
 		}
 		//‹——£‚ªˆê’èˆÈã‚É‹ß‚Ã‚¢‚½‚çŽ~‚ß‚é
-		dist = p->playerCom.enemyObj->GetTransform()->position - p->playerCom.player->GetPlayerTransform()->position;
+		dist = p->playerCom.targetObj->GetTransform()->position - p->playerCom.player->GetPlayerTransform()->position;
 		if (dist.Size() <= DISTANCE_MOVE + 800.0f) {
 			p->playerCom.physics->SetFirction(INTEREA + VECTOR3(30000.0f, 15000.0f, 30000.0f));
 		}

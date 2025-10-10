@@ -3,6 +3,7 @@
 #include <list>
 
 class Object3D;
+class Camera;
 
 class EnemyManager : public GameObject
 {
@@ -19,8 +20,10 @@ public:
 
 	void CreateBoss();
 
+	bool PlayerDistance(Camera* camera);
+
 private:
 	
 	std::list<Object3D*> enemy;
-
+	Object3D* player;
 };

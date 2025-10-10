@@ -3,6 +3,7 @@
 
 CharaBase::CharaBase()
 {
+	lastTarget = false;
 }
 
 CharaBase::~CharaBase()

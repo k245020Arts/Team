@@ -13,10 +13,11 @@
 #include "JustAvoidAttackHitCamera.h"
 #include "inputManager.h"
 #include "FreeCamera.h"
+#include "EnemyManager.h"
 
 Camera::Camera()
 {
-	cameraComponent.enemy.transform = nullptr;
+	cameraComponent.target.transform = nullptr;
 	cameraComponent.player.transform = nullptr;
 	cameraComponent.cameraTransform = nullptr;
 	timeTest = 1.0f;
@@ -45,12 +46,16 @@ Camera::~Camera()
 void Camera::Update()
 {
 	if (input->KeyInputDown("camera")) {
-		rockOn = !rockOn;
-		if (rockOn) {
-			cameraComponent.state->NowChangeState(ID::C_FOLLOW);
+		if (!rockOn) {
+			if (cameraComponent.enemyManager->PlayerDistance(this)) {
+				cameraComponent.state->NowChangeState(ID::C_FOLLOW);
+				rockOn = !rockOn;
+			}
+			
 		}
 		else {
 			cameraComponent.state->NowChangeState(ID::C_FREE);
+			rockOn = !rockOn;
 		}
 	}
 	
@@ -82,15 +87,12 @@ void Camera::Draw()
 
 void Camera::Start(BaseObject* _eObj)
 {
-	cameraComponent.enemy.obj = _eObj;
-	cameraComponent.enemy.transform = cameraComponent.enemy.obj->GetTransform();
-	
 	SetCameraNearFar(10.0f, 10000.0f);
 	SetupCamera_Perspective(DX_PI_F / 3.0f);
 	//cameraComponent.target = &target;
 	cameraComponent.control = FindGameObject<ControllerInputManager>();
 	cameraComponent.shaker = obj->Component()->AddComponent<Shaker>();
-	cameraComponent.enemy.shaker = _eObj->Component()->GetComponent<Shaker>();
+	
 	cameraComponent.state = obj->Component()->AddComponent<StateManager>();
 
 }
@@ -119,6 +121,7 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.cameraTransform =  new Transform(*cameraComponent.player.transform);
 	cameraComponent.cameraTransform->rotation.x = 30.0f * DegToRad;
 	cameraComponent.player.shaker = _obj->Component()->GetComponent<Shaker>();
+	cameraComponent.enemyManager = FindGameObject<EnemyManager>();
 
 	using namespace ID;
 
@@ -132,7 +135,7 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.state->NodeDrawReady();
 
 	cameraComponent.state->SetComponent<Camera>(this);
-	cameraComponent.state->StartState(C_FOLLOW);
+	cameraComponent.state->StartState(C_FREE);
 }
 
 void Camera::CameraShake(VECTOR3 _power,Shaker::ShakePattern _pattern,bool _stop,float _second)
@@ -146,9 +149,17 @@ void Camera::CameraShakeStop()
 	cameraComponent.shaker->ShakeFinish();
 }
 
+void Camera::TargetSet(BaseObject* _obj)
+{
+	cameraComponent.target.obj = _obj;
+	cameraComponent.target.transform = cameraComponent.target.obj->GetTransform();
+
+	cameraComponent.target.shaker = _obj->Component()->GetComponent<Shaker>();
+}
+
 void Camera::TargetEnemySet()
 {
-	target = cameraComponent.enemy.transform->position;
+	target = cameraComponent.target.transform->position;
 }
 
 void Camera::CameraLeapSet(float _rape)

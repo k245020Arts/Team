@@ -34,7 +34,7 @@ void CollsionEvent::PlayerDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2
 	Player* player =  _coll1->GetObj()->Component()->GetComponent<Player>();
 	Enemy* enemy = _coll2->GetObj()->Component()->GetComponent<Enemy>();
 	
-	bool damage =  player->EnemyHit(enemy->GetEnemyStateManager()->GetState<EnemyStateBase>()->GetAnimId());
+	bool damage =  player->EnemyHit(enemy->GetEnemyStateManager()->GetState<EnemyStateBase>()->GetAnimId(),enemy->GetEnemyObj());
 	if (!damage) {
 		_coll2->CollsionRespown();
 	}

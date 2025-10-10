@@ -52,10 +52,12 @@ public:
 
 	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);
 
+
 private:
 	EnemyInformation::EnemyComponent eCom;
 	
 	Transform* enemyTransform;
 	StateManager* pState;
 	float damageFlash;
+	
 };

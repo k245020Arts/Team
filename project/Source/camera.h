@@ -31,6 +31,8 @@ public:
 	void CameraShake(VECTOR3 _power, Shaker::ShakePattern _pattern, bool _stop, float _second);
 	void CameraShakeStop();
 
+	void TargetSet(BaseObject* _obj);
+
 	void TargetEnemySet();
 
 	void CameraLeapSet(float _rape);
@@ -38,6 +40,7 @@ public:
 
 	void CameraRotationSet();
 	void Follow();
+	VECTOR3 GetTarget() { return target; }
 
 private:
 

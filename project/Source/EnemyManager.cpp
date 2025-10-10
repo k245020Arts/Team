@@ -14,6 +14,7 @@
 #include "Shaker.h"
 #include "Object2D.h"
 #include "Guage.h"
+#include "Boss.h"
 
 EnemyManager::EnemyManager()
 {
@@ -109,7 +110,7 @@ void EnemyManager::PlayerObjPointer()
 		Guage* g = guage->Component()->AddComponent<Guage>();
 		g->GuageDrawReady<Enemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	}
-	
+	player = obj;
 }
 
 void EnemyManager::CreateBoss()
@@ -143,5 +144,72 @@ void EnemyManager::CreateBoss()
 	m->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "BossModel", ID::B_MODEL));
 	m->RotationMesh(1, DX_PI_F);
 
+	Boss* b = boss->Component()->AddComponent<Boss>();
+
 	enemy.emplace_back(boss);
-};
+}
+
+bool EnemyManager::PlayerDistance(Camera* camera)
+{
+	float distance = 1000000;
+	VECTOR3 dir = camera->GetTarget() - camera->GetCameraTransform()->position;
+	dir = dir.Normalize();
+	auto keepItr = enemy.begin();
+	auto lastItr = enemy.begin();
+
+	for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {
+		CharaBase* e;
+		if ((*itr)->GetTag() == "ENEMY") {
+			e = (*itr)->Component()->GetComponent<Enemy>();
+		}
+		else {
+			e = (*itr)->Component()->GetComponent<Boss>();
+		}
+		
+		if (e == nullptr) {
+			continue;
+		}
+		if (e->GetLastTarget()) {
+			lastItr = itr;
+			continue;
+		}
+		VECTOR3 target = (*itr)->GetTransform()->position - player->GetTransform()->position;
+		float dist = target.Size();
+		
+		if (VDot(dir.Normalize(), target.Normalize()) < cosf(60.0f * DegToRad)) {
+			continue;
+		}
+		if (distance > dist) {
+			distance = dist;
+			keepItr = itr;
+		}
+	}
+
+	if (distance < 100000) {
+		
+		if ((*lastItr)->GetTag() == "ENEMY") {
+			(*lastItr)->Component()->GetComponent<Enemy>()->LastTargetOut();
+		}
+		else {
+			(*lastItr)->Component()->GetComponent<Boss>()->LastTargetOut();
+		}
+		if ((*keepItr)->GetTag() == "ENEMY") {
+			(*keepItr)->Component()->GetComponent<Enemy>()->LastTargetIn();
+		}
+		else {
+			(*keepItr)->Component()->GetComponent<Boss>()->LastTargetIn();
+		}
+		player->Component()->GetComponent<Player>()->TargetObjSet(*keepItr);
+		camera->TargetSet(*keepItr);
+		return true;
+	}
+	if ((*lastItr)->GetTag() == "ENEMY") {
+		(*lastItr)->Component()->GetComponent<Enemy>()->LastTargetOut();
+	}
+	else {
+		(*lastItr)->Component()->GetComponent<Boss>()->LastTargetOut();
+	}
+	player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);
+	return false;
+}
+;

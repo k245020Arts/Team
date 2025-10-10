@@ -37,7 +37,7 @@ void PlayerJustAvoid::Update()
 		return;
 	}
 	Time::ChangeDeltaRate(0.4f);
-	p->playerCom.enemyObj->SetObjectTimeRate(0.6f);
+	p->playerCom.hitObj->SetObjectTimeRate(0.6f);
 	easingCount += Time::DeltaTime() * 0.8f;
 	if (easingCount >= 1.0f) {
 		easingCount = 1.0f;
@@ -59,7 +59,7 @@ void PlayerJustAvoid::Update()
 	{
 		p->playerCom.player->AvoidFinishState();
 		p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
-		p->playerCom.enemyObj->SetObjectTimeRate(1.0f);
+		p->playerCom.targetObj->SetObjectTimeRate(1.0f);
 	}
 	//Ä¶‘¬“x‚ð’x‚­‚µ‚Ä‚¢‚é
 	if (p->playerCom.anim->GetCurrentFrame() >= 14.0f && p->playerCom.anim->GetCurrentFrame() <= 17.0f){
@@ -145,8 +145,8 @@ void PlayerJustAvoid::Start()
 	p->playerCom.camera->ChangeStateCamera(ID::P_ANIM_JUST_AVOID);
 	attack = false;
 	//“G‚ÌUŒ‚‚ð’x‚­‚·‚é
-	p->playerCom.enemyObj->SetObjectTimeRate(0.6f);
-	p->playerCom.enemyObj->SetObjectTimeRate(0.0f);
+	p->playerCom.hitObj->SetObjectTimeRate(0.6f);
+	p->playerCom.hitObj->SetObjectTimeRate(0.0f);
 	Time::ChangeDeltaRate(0.0f);
 	p->playerCom.anim->SetFrame(12.0f);
 	num = 0;
@@ -163,7 +163,7 @@ void PlayerJustAvoid::Finish()
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.player->PlayerStickInput();
 	p->playerCom.camera->CameraLeapSet(0.2f);
-	p->playerCom.enemyObj->SetObjectTimeRate(1.0f);
+	p->playerCom.hitObj->SetObjectTimeRate(1.0f);
 }
 
 void PlayerJustAvoid::JustAvoidShadow()

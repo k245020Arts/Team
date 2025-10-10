@@ -82,7 +82,13 @@ void PlayerAttackStateBase::Start()
 	nextAvoid = false;
 	p->playerCom.player->SetAvoidStart(false);
 	noStateChange = false;
-	targetTrans = *(p->playerCom.enemyObj->GetTransform());
+	if (p->playerCom.targetObj != nullptr) {
+		targetTrans = *(p->playerCom.targetObj->GetTransform());
+	}
+	else {
+		targetTrans = Transform();
+	}
+	
 	//“G‚ÆƒvƒŒƒCƒ„[‚Ì‹——£‚ð‚Æ‚é
 	dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
 	//Šp“xŒvŽZ
@@ -95,7 +101,7 @@ void PlayerAttackStateBase::Start()
 	p->playerCom.sound->RandamSe("P_AttackV", 3);
 	beforeAttack = true;
 	runTimer = 0.0f;
-	if (dist.Size() >= 2500) {
+	if (dist.Size() >= 2500 && p->playerCom.targetObj != nullptr) {
 		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
 		rotation = false;;
 		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));

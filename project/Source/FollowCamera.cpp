@@ -8,6 +8,8 @@
 #include "playerStateManager.h"
 #include "Object3D.h"
 #include "camera.h"
+#include "keyboardInputManager.h"
+#include "EnemyManager.h"
 
 FollowCamera::FollowCamera()
 {
@@ -28,13 +30,13 @@ void FollowCamera::Update()
 	if (backCounter >= 0.0f) {
 		float t = 1.0f - backCounter / TIMER_MAX;
 		VECTOR3 easedT = Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
-		c->target = Easing::EaseOut(currentTarget,c->cameraComponent.enemy.transform->position,t);
+		c->target = Easing::EaseOut(currentTarget,c->cameraComponent.target.transform->position,t);
 		c->currentDistance = easedT;
 		backCounter -= Time::DeltaTimeRate();
 	}
 	else {
 		c->currentDistance = c->defalutDistance;
-		c->target = c->cameraComponent.enemy.transform->position;
+		c->target = c->cameraComponent.target.transform->position;
 	}
 	//’Ç]ˆ—
 	c->cameraComponent.camera->Follow();
@@ -46,6 +48,10 @@ void FollowCamera::Update()
 
 	//ƒJƒƒ‰‚Ì‰ñ“]
 	c->cameraComponent.camera->CameraRotationSet();
+	if (c->cameraComponent.control->GetStickKnockingPut(0.5f).rightStick == S_LEFT || c->cameraComponent.control->GetStickKnockingPut(0.5f).rightStick == S_RIGHT) {
+		c->cameraComponent.enemyManager->PlayerDistance(c->cameraComponent.camera);
+		Start();
+	}
 }
 
 void FollowCamera::Draw()

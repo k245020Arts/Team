@@ -126,7 +126,9 @@ void Player::Start(Object3D* _obj)
 	playerCom.anim = obj->Component()->GetComponent<Animator>();
 	playerCom.anim->Play(ID::P_ANIM_RUN);
 	playerCom.color = obj->Component()->GetComponent<Color>();
-	playerCom.enemyObj = FindGameObjectWithTag<Object3D>("ENEMY");
+	//playerCom.targetObj = FindGameObjectWithTag<Object3D>("ENEMY");
+	playerCom.targetObj = nullptr;
+	playerCom.hitObj = nullptr;
 	playerCom.shaker = c->GetComponent<Shaker>();
 
 	playerCom.effect = FindGameObject<EffectManager>();
@@ -347,11 +349,12 @@ void Player::AvoidRotationChange()
 	}
 }
 
-bool Player::EnemyHit(ID::IDType _attackId)
+bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 {
 	//敵の攻撃が当たった時の処理
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
-	Animator* enemyAnim = playerCom.enemyObj->Component()->GetComponent<Animator>();
+	playerCom.hitObj = _obj;
+	Animator* enemyAnim = playerCom.hitObj->Component()->GetComponent<Animator>();
 	float startTime = enemyAnim->EventStartTime(_attackId);
 	bool damage = false;
 	//ジャスト回避が出来る処理
@@ -381,7 +384,7 @@ bool Player::EnemyHit(ID::IDType _attackId)
 		if (pB->GetID() != ID::P_ANIM_AVOID) {
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
 			playerCom.stateManager->ChangeState(ID::P_DAMAGE);
-			hp -= playerCom.enemyObj->Component()->GetComponent<Enemy>()->GetEnemyStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
+			hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetEnemyStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
 			playerCom.sound->RandamSe("EnemyAttackHit",4);
 			playerCom.sound->RandamSe("P_DamageV",2);
 			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0,50,0),VZero,VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);
@@ -392,6 +395,11 @@ bool Player::EnemyHit(ID::IDType _attackId)
 
 void Player::JustAvoidCan()
 {
+}
+
+void Player::TargetObjSet(BaseObject* _base)
+{
+	playerCom.targetObj = _base;
 }
 
 void Player::PlayerAttackHit()

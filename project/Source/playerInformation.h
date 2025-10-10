@@ -40,7 +40,7 @@ namespace PlayerInformation {
 			player = nullptr;
 			anim = nullptr;
 			color = nullptr;
-			enemyObj = nullptr;
+			targetObj = nullptr;
 			shaker = nullptr;
 			effect = nullptr;
 			sound = nullptr;
@@ -58,7 +58,8 @@ namespace PlayerInformation {
 		Player* player;
 		Animator* anim;
 		Color* color;
-		BaseObject* enemyObj;
+		BaseObject* targetObj;
+		BaseObject* hitObj;
 		Shaker* shaker;
 		EffectManager* effect;
 		SoundManager* sound;
