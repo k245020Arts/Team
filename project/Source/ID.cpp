@@ -46,6 +46,7 @@ namespace {
 		"e_die",
 		"p_die",
 		"start_num",
+		"b_model",
 	};
 }
 

@@ -170,6 +170,10 @@
     <ClInclude Include="Source\Anim2D.h" />
     <ClInclude Include="Source\Animator.h" />
     <ClInclude Include="Source\BlurScreen.h" />
+    <ClInclude Include="Source\Boss.h" />
+    <ClInclude Include="Source\BossIdol.h" />
+    <ClInclude Include="Source\BossInformation.h" />
+    <ClInclude Include="Source\BossManager.h" />
     <ClInclude Include="Source\cameraInformation.h" />
     <ClInclude Include="Source\CameraStateBase.h" />
     <ClInclude Include="Source\cameraStateManager.h" />
@@ -303,6 +307,9 @@
     <ClCompile Include="Source\BaseObject.cpp" />
     <ClCompile Include="Source\BlurScreen.cpp" />
     <ClCompile Include="Source\BootScene.cpp" />
+    <ClCompile Include="Source\Boss.cpp" />
+    <ClCompile Include="Source\BossIdol.cpp" />
+    <ClCompile Include="Source\BossManager.cpp" />
     <ClCompile Include="Source\camera.cpp" />
     <ClCompile Include="Source\cameraManager.cpp" />
     <ClCompile Include="Source\CameraStateBase.cpp" />

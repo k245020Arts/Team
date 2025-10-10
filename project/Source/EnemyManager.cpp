@@ -42,7 +42,7 @@ Object3D* EnemyManager::GetEnemy()
 void EnemyManager::CreateEnemy()
 {
 	enemy = new Object3D();
-	enemy->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(4, 4, 4), "ENEMY");
+	enemy->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(0.1, 0.1, 0.1), "ENEMY");
 	//“–‚½‚è”»’è‚ð¶¬i‚â‚ç‚ê”»’èj
 	SphereCollider* collider = enemy->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;

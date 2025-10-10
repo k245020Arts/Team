@@ -18,6 +18,8 @@ void CollsionInformation::InitSetPair()
     SetPair(PLAYER, WALL);
     SetPair(ENEMY, P_ATTACK);
     SetPair(ENEMY, WALL);
+    SetPair(PLAYER, BOSS_ATTACK);
+    SetPair(BOSS, P_ATTACK);
 }
 
 bool CollsionInformation::IsCollPair(Tag tag1, Tag tag2)

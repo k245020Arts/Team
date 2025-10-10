@@ -21,6 +21,8 @@ namespace CollsionInformation {
 		E_ATTACK,
 		P_ATTACK,
 		WALL,
+		BOSS,
+		BOSS_ATTACK,
 
 		TAG_MAX,
 	};

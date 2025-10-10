@@ -31,7 +31,7 @@ void EnemyIdol::Update()
 	timer += Time::DeltaTime();
 	//ˆê•b‚½‚Á‚½‚çUŒ‚
 	if (timer >= 1.0f) {
-		Debug::DebugLogPrintf(Debug::printfString("timer = %.1f", timer));
+		//Debug::DebugLogPrintf(Debug::printfString("timer = %.1f", timer));
 		VECTOR3 sub = (EnemyInformation::BASE_POS ) - e->eCom.enemy->GetEnemyTransform()->position;
 		float size = sub.Size();
 		VECTOR3 base = EnemyInformation::BASE_POS + VECTOR3(500, 0, 0);

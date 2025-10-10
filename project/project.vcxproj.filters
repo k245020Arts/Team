@@ -356,6 +356,15 @@
     <ClCompile Include="Source\EffectID.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BossManager.cpp">
+      <Filter>PlayScene\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Boss.cpp">
+      <Filter>PlayScene\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossIdol.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -759,6 +768,18 @@
     <ClInclude Include="Source\YAMLReader.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Source\BossManager.h">
+      <Filter>PlayScene\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Boss.h">
+      <Filter>PlayScene\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossInformation.h">
+      <Filter>PlayScene\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossIdol.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -910,6 +931,12 @@
     </Filter>
     <Filter Include="PlayScene\GameManager">
       <UniqueIdentifier>{7f46c37e-1f94-43fe-971a-c299f8addbef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Boss">
+      <UniqueIdentifier>{a76a2d75-d9c0-4c79-84a8-98a9ff9d072f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Boss\BossState">
+      <UniqueIdentifier>{b53f97d4-d65b-4a21-9361-42cf20c1cb00}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

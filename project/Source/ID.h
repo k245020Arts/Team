@@ -46,6 +46,7 @@ namespace ID {
 		E_DIE,
 		P_DIE,
 		START_NUM,
+		B_MODEL,
 
 		ID_MAX,
 	};
