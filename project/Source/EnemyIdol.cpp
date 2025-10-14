@@ -25,22 +25,22 @@ EnemyIdol::~EnemyIdol()
 void EnemyIdol::Update()
 {
 	Enemy* e = GetBase<Enemy>();
-	if (e->eCom.gameManager->GetGameState() == &GameManager::BeforeUpdate) {
+	if (e->enemyBaseComponent.gameManager->GetGameState() == &GameManager::BeforeUpdate) {
 		return;
 	}
 	timer += Time::DeltaTime();
 	//ˆê•b‚½‚Á‚½‚çUŒ‚
 	if (timer >= 1.0f) {
 		//Debug::DebugLogPrintf(Debug::printfString("timer = %.1f", timer));
-		VECTOR3 sub = (EnemyInformation::BASE_POS ) - e->eCom.enemy->GetEnemyTransform()->position;
+		VECTOR3 sub = (EnemyInformation::BASE_POS ) - e->enemyBaseComponent.enemy->GetEnemyTransform()->position;
 		float size = sub.Size();
 		VECTOR3 base = EnemyInformation::BASE_POS + VECTOR3(500, 0, 0);
 		float size2 = base.Size();
 		if (size >= size2) {
-			e->eCom.state->ChangeState(ID::E_RUN);
+			e->enemyBaseComponent.state->ChangeState(ID::E_RUN);
 		}
 		else {
-			e->eCom.state->ChangeState(ID::E_ATTACK1);
+			e->enemyBaseComponent.state->ChangeState(ID::E_ATTACK1);
 		}
 	}
 

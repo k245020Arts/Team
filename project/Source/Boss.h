@@ -1,11 +1,12 @@
 #pragma once
-#include "CharaBase.h"
+#include "EnemyBase.h"
 #include"Object3D.h"
 #include "BossInformation.h"
 
-class Boss : public CharaBase
+class Boss : public EnemyBase
 {
 public:
+	friend class BossIdol;
 	Boss();
 	~Boss();
 	void Update()override;
@@ -16,7 +17,7 @@ public:
 private:
 	Boss* boss;
 
-	BossInformation::BossComponent bossComponent;
+	//BossInformation::BossComponent bossComponent;
 	Transform* bossTransform;
 
 };

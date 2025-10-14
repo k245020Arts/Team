@@ -34,9 +34,9 @@ void EnemyDamage::Update()
 		
 	}
 	//時間が戻ったらステート遷移
-	timer -= e->eCom.enemy->GetEnemyObj()->GetObjectTimeRate();
+	timer -= e->enemyBaseComponent.enemy->GetEnemyObj()->GetObjectTimeRate();
 	if (timer <= 0.00f) {
-		e->eCom.state->ChangeState(ID::E_ANIM_IDOL);
+		e->enemyBaseComponent.state->ChangeState(ID::E_ANIM_IDOL);
 	}
 }
 
@@ -48,15 +48,15 @@ void EnemyDamage::Start()
 {
 	Enemy* e = GetBase<Enemy>();
 	EnemyStateBase::Start();
-	e->eCom.sound->RandamSe("E_DamageV", 2);
+	e->enemyBaseComponent.sound->RandamSe("E_DamageV", 2);
 	first = true;
 }
 
 void EnemyDamage::Finish()
 {
 	Enemy* e = GetBase<Enemy>();
-	e->eCom.anim->Play(ID::E_ANIM_IDOL, 0.5f);
-	e->eCom.shaker->ShakeFinish();
+	e->enemyBaseComponent.anim->Play(ID::E_ANIM_IDOL, 0.5f);
+	e->enemyBaseComponent.shaker->ShakeFinish();
 }
 
 void EnemyDamage::DamageInit(EnemyDamageInfo _info)
@@ -65,6 +65,6 @@ void EnemyDamage::DamageInit(EnemyDamageInfo _info)
 	info = _info;
 	timer = info.damageTime;
 	//e->eCom.physics->SetVelocity(info.speed * MGetRotY(e->eCom.playerObj->GetTransform()->rotation.y));
-	e->eCom.shaker->ShakeStart(info.shakePower, Shaker::HORIZONAL_SHAKE, true, info.shakeTime);
+	e->enemyBaseComponent.shaker->ShakeStart(info.shakePower, Shaker::HORIZONAL_SHAKE, true, info.shakeTime);
 	first = false;
 }

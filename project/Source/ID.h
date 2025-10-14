@@ -48,6 +48,7 @@ namespace ID {
 		START_NUM,
 		B_MODEL,
 		C_FREE,
+		B_IDOL,
 
 		ID_MAX,
 	};

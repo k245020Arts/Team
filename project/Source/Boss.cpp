@@ -15,6 +15,7 @@
 #include "weaponManager.h"
 #include "stateManager.h"
 #include "GameManager.h"
+#include "BossIdol.h"
 
 Boss::Boss()
 {
@@ -36,37 +37,37 @@ void Boss::Draw()
 
 void Boss::Start(Object3D* _obj) 
 {
-	bossComponent.state = obj->Component()->AddComponent<StateManager>();
+	enemyBaseComponent.state = obj->Component()->AddComponent<StateManager>();
 
 
 
 	bossTransform = obj->GetTransform();
 
-	bossComponent.boss = this;
-	bossComponent.anim = obj->Component()->GetComponent<Animator>();
-	bossComponent.physics = obj->Component()->GetComponent<Physics>();
-	bossComponent.control = FindGameObject<ControllerInputManager>();
-	bossComponent.color = obj->Component()->GetComponent<Color>();
-	bossComponent.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));
-	bossComponent.shaker = obj->Component()->GetComponent<Shaker>();
-	bossComponent.effect = FindGameObject<EffectManager>();
-	bossComponent.sound = FindGameObject<SoundManager>();
+	//enemyBaseComponent.boss = this;
+	enemyBaseComponent.anim = obj->Component()->GetComponent<Animator>();
+	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
+	enemyBaseComponent.control = FindGameObject<ControllerInputManager>();
+	enemyBaseComponent.color = obj->Component()->GetComponent<Color>();
+	enemyBaseComponent.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));
+	enemyBaseComponent.shaker = obj->Component()->GetComponent<Shaker>();
+	enemyBaseComponent.effect = FindGameObject<EffectManager>();
+	enemyBaseComponent.sound = FindGameObject<SoundManager>();
 
-	bossComponent.camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
-	//bossComponent.weapon = FindGameObject<WeaponManager>();
+	enemyBaseComponent.camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
+	//enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 
 	attackColl = nullptr;
 	collName = "b_attack";
 
-	bossComponent.gameManager = FindGameObject<GameManager>();
+	enemyBaseComponent.gameManager = FindGameObject<GameManager>();
 
 	using namespace ID;
 
 
-
+	enemyBaseComponent.state->CreateState<BossIdol>(GetID(B_IDOL));
 	/*eCom.state->NodeDrawReady();*/
 
-	bossComponent.state->SetComponent<Boss>(this);
+	enemyBaseComponent.state->SetComponent<Boss>(this);
 
-	bossComponent.state->StartState(E_ANIM_IDOL);
+	enemyBaseComponent.state->StartState(B_IDOL);
 }

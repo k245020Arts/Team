@@ -3,6 +3,7 @@
 #include "enemy.h"
 #include "transform.h"
 #include "sphereCollider.h"
+#include "EnemyBase.h"
 
 EnemyStateBase::EnemyStateBase()
 {
@@ -16,19 +17,19 @@ EnemyStateBase::~EnemyStateBase()
 
 void EnemyStateBase::Start()
 {
-	Enemy* e = GetBase<Enemy>();
-	e->eCom.anim->Play(animId);
+	EnemyBase* e = GetBase<EnemyBase>();
+	e->enemyBaseComponent.anim->Play(animId);
 }
 
 void EnemyStateBase::AttackCollsion()
 {
 	Enemy* e = GetBase<Enemy>();
 	//“G‚ÌUŒ‚”»’è‚Ì¶¬ƒNƒ‰ƒX
-	if (e->eCom.anim->AnimEventCan()) {
+	if (e->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
 			firstColl = false;
-			e->eCom.enemy->CollsionStart<SphereCollider>(CollsionInformation::SPHERE,collTrans);
-			e->eCom.enemy->SetShape(CollsionInformation::SPHERE);
+			e->enemyBaseComponent.enemy->CollsionStart<SphereCollider>(CollsionInformation::SPHERE,collTrans);
+			e->enemyBaseComponent.enemy->SetShape(CollsionInformation::SPHERE);
 		}
 	}
 }

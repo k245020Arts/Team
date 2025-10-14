@@ -18,15 +18,15 @@ EnemyDie::~EnemyDie()
 void EnemyDie::Update()
 {
 	Enemy* e = GetBase<Enemy>();
-	if (e->eCom.anim->IsFinish()) {
-		e->eCom.gameManager->ChangeState("LOSE");
+	if (e->enemyBaseComponent.anim->IsFinish()) {
+		e->enemyBaseComponent.gameManager->ChangeState("LOSE");
 
 	}
 	else {
 		if (slowTime <= 0.0f) {
-			e->eCom.enemy->GetEnemyObj()->SetObjectTimeRate(1.0f);
-			e->eCom.camera->CameraShakeStop();
-			e->eCom.shaker->ShakeFinish();
+			e->enemyBaseComponent.enemy->GetEnemyObj()->SetObjectTimeRate(1.0f);
+			e->enemyBaseComponent.camera->CameraShakeStop();
+			e->enemyBaseComponent.shaker->ShakeFinish();
 		}
 		else {
 			slowTime -= Time::DeltaTime();
@@ -42,10 +42,10 @@ void EnemyDie::Start()
 {
 	Enemy* e = GetBase<Enemy>();
 	EnemyStateBase::Start();
-	e->eCom.enemy->GetEnemyObj()->SetObjectTimeRate(0.05f);
+	e->enemyBaseComponent.enemy->GetEnemyObj()->SetObjectTimeRate(0.05f);
 	slowTime = 1.0f;
-	e->eCom.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
-	e->eCom.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
+	e->enemyBaseComponent.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
+	e->enemyBaseComponent.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 }
 
 void EnemyDie::Finish()

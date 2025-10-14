@@ -1,5 +1,5 @@
 #pragma once
-#include "CharaBase.h"
+#include "EnemyBase.h"
 #include "enemyInformation.h"
 #include "transform.h"
 #include "enemyDamage.h"
@@ -9,7 +9,7 @@
 class StateManager;
 class EnemyStateManager;
 
-class Enemy : public CharaBase
+class Enemy : public EnemyBase
 {
 public:
 	friend class EnemyIdol;
@@ -48,16 +48,15 @@ public:
 	bool IsShake();
 	bool PlayerPointerSet(BaseObject* _obj);
 
-	StateManager* GetEnemyStateManager() { return eCom.state; }
+	StateManager* GetEnemyStateManager() { return enemyBaseComponent.state; }
 
 	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);
 
 
 private:
-	EnemyInformation::EnemyComponent eCom;
 	
 	Transform* enemyTransform;
 	StateManager* pState;
-	float damageFlash;
+	
 	
 };

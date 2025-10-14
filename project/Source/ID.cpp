@@ -48,6 +48,7 @@ namespace {
 		"start_num",
 		"b_model",
 		"c_free",
+		"b_idol",
 	};
 }
 

@@ -40,7 +40,7 @@ void JustAvoidCamera::Update()
         c->cameraComponent.state->ChangeState(ID::C_FOLLOW);
     }
 
-    c->target = c->cameraComponent.target.transform->position;
+    c->target = c->target;
 
     c->cameraComponent.camera->CameraRotationSet();
 

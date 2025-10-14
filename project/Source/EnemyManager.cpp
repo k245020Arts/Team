@@ -44,7 +44,7 @@ void EnemyManager::CreateEnemy()
 {
 	Object3D* e;
 	e = new Object3D();
-	e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(0.1, 0.1, 0.1), "ENEMY");
+	e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(2.0f, 2.0f,2.0f), "ENEMY");
 	//“–‚½‚è”»’è‚ð¶¬i‚â‚ç‚ê”»’èj
 	SphereCollider* collider = e->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -145,6 +145,12 @@ void EnemyManager::CreateBoss()
 	m->RotationMesh(1, DX_PI_F);
 
 	Boss* b = boss->Component()->AddComponent<Boss>();
+
+	Animator* anim = boss->Component()->AddComponent<Animator>();
+	anim->AddFile(ID::B_IDOL, "B_WAIT", true);
+	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL));
+
+	b->Start(boss);
 
 	enemy.emplace_back(boss);
 }

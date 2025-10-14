@@ -368,6 +368,9 @@
     <ClCompile Include="Source\FreeCamera.cpp">
       <Filter>PlayScene\camera\cameraState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EnemyBase.cpp">
+      <Filter>PlayScene\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -785,6 +788,9 @@
     </ClInclude>
     <ClInclude Include="Source\FreeCamera.h">
       <Filter>PlayScene\camera\cameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyBase.h">
+      <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
