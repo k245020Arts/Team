@@ -24,6 +24,7 @@ EnemyManager::EnemyManager()
 
 EnemyManager::~EnemyManager()
 {
+	enemy.clear();
 }
 
 void EnemyManager::Update()
@@ -147,7 +148,7 @@ void EnemyManager::CreateBoss()
 	Boss* b = boss->Component()->AddComponent<Boss>();
 
 	Animator* anim = boss->Component()->AddComponent<Animator>();
-	anim->AddFile(ID::B_IDOL, "B_WAIT", true);
+	anim->AddFile(ID::B_IDOL, "B_ATTACK3", true);
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL));
 
 	b->Start(boss);

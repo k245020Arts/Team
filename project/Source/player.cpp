@@ -426,7 +426,7 @@ void Player::PlayerAttackHit()
 	case ID::P_ANIM_JUST_AVOID_ATTACK2:
 		//playerCom.shaker->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.7f);
 		//playerCom.camera->CameraShake(VECTOR3(100, 200, 200), Shaker::ShakePattern::HORIZONAL_SHAKE, false, 0.7f);
-		playerCom.sound->RandamSe("swordHit00000", 7);
+		
 		break;
 	case ID::P_ANIM_ATTACK3:
 		playerCom.shaker->ShakeStart(VECTOR3(50, 50, 50), Shaker::HORIZONAL_SHAKE, true, 0.12f);

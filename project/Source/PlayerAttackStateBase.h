@@ -14,6 +14,7 @@ public:
 	void Start()override;
 
 	float GetHitDamage() { return hitDamage; }
+	bool IsAttack();
 
 protected:
 	float easingCount;

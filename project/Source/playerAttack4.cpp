@@ -15,6 +15,7 @@ PlayerAttack4::PlayerAttack4()
 	collTrans = Transform(VECTOR3(0, 200, 200), VZero, VECTOR3(250, 0, 0));
 	frontSpeed = 1000.0f;
 	hitDamage = 8.0f;
+	nextAttackID = ID::P_ANIM_ATTACK1;
 }
 
 PlayerAttack4::~PlayerAttack4()
@@ -31,6 +32,9 @@ void PlayerAttack4::Update()
 			//p->playerCom.player->AvoidReady();
 			nextAvoid = true;
 			//noStateChange = true;
+		}
+		if (p->playerCom.InputManager->KeyInputDown("attack")) {
+			nextAttack = true;
 		}
 		timer -= Time::DeltaTimeRate();
 		if (timer <= 0.0f) {

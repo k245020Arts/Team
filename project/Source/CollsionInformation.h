@@ -20,6 +20,7 @@ namespace CollsionInformation {
 		PLAYER,
 		E_ATTACK,
 		P_ATTACK,
+		CAMERA,
 		WALL,
 		BOSS,
 		BOSS_ATTACK,
