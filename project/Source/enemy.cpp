@@ -226,7 +226,7 @@ void Enemy::PlayerHit()
 	case ID::P_ANIM_JUST_AVOID_ATTACK2:
 		enemyBaseComponent.sound->RandamSe("swordHit00000", 7);
 		if (loopNum == -1) {
-			hitCounter = 0.13f;
+			hitCounter = 0.23f;
 			loopNum = 5;
 		}
 		else if (loopNum == 1) {
@@ -265,8 +265,9 @@ void Enemy::PlayerHit()
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
 			angleRan = GetRand(360);
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+			enemyBaseComponent.playerObj->Component()->GetComponent<Shaker>()->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.05f);
 		}
-		
+	
 		break;
 	case ID::P_ANIM_JUST_AVOID_ATTACK3:
 		//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);

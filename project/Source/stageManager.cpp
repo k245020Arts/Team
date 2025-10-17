@@ -74,6 +74,9 @@ void StageManager::CreateWall()
 		case 3:
 			transform = Transform(VECTOR3(0, 100, 10000), VZero, VOne * VECTOR3(100.0f, 50, 4.0f));
 			break;
+		//case 4:
+			//transform = Transform(VECTOR3(0, -100, 0), VZero, VOne * VECTOR3(100.0f, 1, 100.0f));
+			break;
 		default:
 			break;
 		}
