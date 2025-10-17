@@ -12,6 +12,7 @@ public:
 
 	void Start()override;
 	void AttackCollsion();
+	void BossAttackCollsion();
 
 	ID::IDType GetAnimId() { return animId; }
 

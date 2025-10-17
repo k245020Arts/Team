@@ -12,10 +12,21 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	template<typename T>
+	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans) {
+		return nullptr;
+	}
+
+	StateManager* GetStateManager() { return enemyBaseComponent.state; }
+	BaseObject* GetEnemyObj() { return obj; }
+
+	virtual void PlayerHit() { ; }
 
 protected:
 
 	EnemyInformation::EnemyComponent enemyBaseComponent;
 	float damageFlash;
+	float hitCounter;
+	int loopNum;
 
 };

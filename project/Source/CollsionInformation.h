@@ -23,7 +23,7 @@ namespace CollsionInformation {
 		CAMERA,
 		WALL,
 		BOSS,
-		BOSS_ATTACK,
+		B_ATTACK,
 
 		TAG_MAX,
 	};
