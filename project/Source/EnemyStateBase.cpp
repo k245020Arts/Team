@@ -4,6 +4,7 @@
 #include "transform.h"
 #include "sphereCollider.h"
 #include "EnemyBase.h"
+#include "Boss.h"
 
 EnemyStateBase::EnemyStateBase()
 {
@@ -28,8 +29,21 @@ void EnemyStateBase::AttackCollsion()
 	if (e->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
 			firstColl = false;
-			e->enemyBaseComponent.enemy->CollsionStart<SphereCollider>(CollsionInformation::SPHERE,collTrans);
-			e->enemyBaseComponent.enemy->SetShape(CollsionInformation::SPHERE);
+			e->CollsionStart<SphereCollider>(CollsionInformation::SPHERE,collTrans);
+			e->SetShape(CollsionInformation::SPHERE);
+		}
+	}
+}
+
+void EnemyStateBase::BossAttackCollsion()
+{
+	Boss* b = GetBase<Boss>();
+	//“G‚ÌUŒ‚”»’è‚Ì¶¬ƒNƒ‰ƒX
+	if (b->enemyBaseComponent.anim->AnimEventCan()) {
+		if (firstColl) {
+			firstColl = false;
+			b->CollsionStart<SphereCollider>(CollsionInformation::SPHERE, collTrans);
+			b->SetShape(CollsionInformation::SPHERE);
 		}
 	}
 }

@@ -12,6 +12,9 @@ class Boss : public EnemyBase
 public:
 	friend class BossIdol;
 	friend class BossRun;
+	friend class BossNormalAttack1;
+	friend class BossNormalAttack2;
+	friend class BossNormalAttack3;
 	Boss();
 	~Boss();
 	void Update()override;
@@ -21,6 +24,17 @@ public:
 
 	//ƒvƒŒƒCƒ„[‚Ì•û‚ÉŒü‚­ŠÖ”
 	void LookPlayer();
+
+	template<typename T>
+	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans) {
+		if (attackColl == nullptr) {
+			CollsionInfo info = CharaBase::CollsionInstant<T>(_shape, _trans);
+			info.tag = CollsionInformation::Tag::B_ATTACK;
+			collName = "b_attack";
+			attackColl->CollsionAdd(info, _trans, "b_attack");
+		};
+		return static_cast<T*>(attackColl);
+	}
 
 private:
 	Boss* boss;

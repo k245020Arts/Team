@@ -5,6 +5,7 @@
 #include "Debug.h"
 #include "EnemyStateManager.h"
 #include "EnemyStateBase.h"
+#include "Boss.h"
 
 CollsionEvent::CollsionEvent()
 {
@@ -27,6 +28,14 @@ void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2)
 		/*Debug::DebugLog("PlayerAttackHit");*/
 		EnemyDamageEvent(_coll1, _coll2);
 	}
+	if (tag1 == PLAYER && tag2 == B_ATTACK) {
+		/*Debug::DebugLog("EnemyAttackHit");*/
+		PlayerDamageBossEvent(_coll1, _coll2);
+	}
+	if (tag1 == BOSS && tag2 == P_ATTACK) {
+		/*Debug::DebugLog("PlayerAttackHit");*/
+		BossDamageEvent(_coll1, _coll2);
+	}
 }
 
 void CollsionEvent::PlayerDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2)
@@ -34,7 +43,7 @@ void CollsionEvent::PlayerDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2
 	Player* player =  _coll1->GetObj()->Component()->GetComponent<Player>();
 	Enemy* enemy = _coll2->GetObj()->Component()->GetComponent<Enemy>();
 	
-	bool damage =  player->EnemyHit(enemy->GetEnemyStateManager()->GetState<EnemyStateBase>()->GetAnimId(),enemy->GetEnemyObj());
+	bool damage =  player->EnemyHit(enemy->GetStateManager()->GetState<EnemyStateBase>()->GetAnimId(),enemy->GetEnemyObj());
 	if (!damage) {
 		_coll2->CollsionRespown();
 	}
@@ -46,5 +55,25 @@ void CollsionEvent::EnemyDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2)
 	Enemy* enemy = _coll1->GetObj()->Component()->GetComponent<Enemy>();
 
 	enemy->PlayerHit();
+	player->PlayerAttackHit();
+}
+
+void CollsionEvent::PlayerDamageBossEvent(ColliderBase* _coll1, ColliderBase* _coll2)
+{
+	Player* player = _coll1->GetObj()->Component()->GetComponent<Player>();
+	Boss* b = _coll2->GetObj()->Component()->GetComponent<Boss>();
+
+	bool damage = player->EnemyHit(b->GetStateManager()->GetState<EnemyStateBase>()->GetAnimId(), b->GetEnemyObj());
+	if (!damage) {
+		_coll2->CollsionRespown();
+	}
+}
+
+void CollsionEvent::BossDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2)
+{
+	Player* player = _coll2->GetObj()->Component()->GetComponent<Player>();
+	Boss* boss = _coll1->GetObj()->Component()->GetComponent<Boss>();
+
+	boss->PlayerHit();
 	player->PlayerAttackHit();
 }

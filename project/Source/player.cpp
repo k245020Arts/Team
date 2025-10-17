@@ -384,7 +384,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 		if (pB->GetID() != ID::P_ANIM_AVOID) {
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
 			playerCom.stateManager->ChangeState(ID::P_DAMAGE);
-			hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetEnemyStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
+			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
 			playerCom.sound->RandamSe("EnemyAttackHit",4);
 			playerCom.sound->RandamSe("P_DamageV",2);
 			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0,50,0),VZero,VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);

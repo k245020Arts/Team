@@ -25,9 +25,6 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void Start(Object3D* _obj);
-	void ImguiDraw()override;
-
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans) {
 		if (attackColl == nullptr) {
@@ -39,16 +36,17 @@ public:
 		return static_cast<T*>(attackColl);
 	}
 
-	void PlayerHit();
+	void Start(Object3D* _obj);
+	void ImguiDraw()override;
+
+	void PlayerHit()override;
 	void DrawTrail();
 
 	Transform* GetEnemyTransform() { return enemyTransform; }
-	BaseObject* GetEnemyObj() { return obj; }
+	
 
 	bool IsShake();
 	bool PlayerPointerSet(BaseObject* _obj);
-
-	StateManager* GetEnemyStateManager() { return enemyBaseComponent.state; }
 
 	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);
 
@@ -56,7 +54,5 @@ private:
 	
 	Transform* enemyTransform;
 	StateManager* pState;
-	float hitCounter;
-	int loopNum;
-	
+
 };

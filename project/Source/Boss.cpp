@@ -17,7 +17,9 @@
 #include "GameManager.h"
 #include "BossIdol.h"
 #include "BossRun.h"
-#include "player.h"
+#include "BossNormalAttack1.h"
+#include "BossNormalAttack2.h"
+#include "BossNormalAttack3.h"
 
 Boss::Boss()
 {
@@ -31,7 +33,7 @@ Boss::~Boss()
 
 void Boss::Update()
 {
-
+	EnemyBase::Update();
 }
 
 void Boss::Draw()
@@ -67,6 +69,9 @@ void Boss::Start(Object3D* _obj)
 
 	enemyBaseComponent.state->CreateState<BossIdol>(GetID(B_IDOL));
 	enemyBaseComponent.state->CreateState<BossRun>(GetID(B_RUN));
+	enemyBaseComponent.state->CreateState<BossNormalAttack1>(GetID(B_N_ATTACK1));
+	enemyBaseComponent.state->CreateState<BossNormalAttack2>(GetID(B_N_ATTACK2));
+	enemyBaseComponent.state->CreateState<BossNormalAttack3>(GetID(B_N_ATTACK3));
 	/*eCom.state->NodeDrawReady();*/
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
