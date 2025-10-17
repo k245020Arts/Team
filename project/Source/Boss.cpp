@@ -16,6 +16,8 @@
 #include "stateManager.h"
 #include "GameManager.h"
 #include "BossIdol.h"
+#include "BossRun.h"
+#include "player.h"
 
 Boss::Boss()
 {
@@ -29,6 +31,7 @@ Boss::~Boss()
 
 void Boss::Update()
 {
+
 }
 
 void Boss::Draw()
@@ -38,8 +41,7 @@ void Boss::Draw()
 void Boss::Start(Object3D* _obj) 
 {
 	enemyBaseComponent.state = obj->Component()->AddComponent<StateManager>();
-
-
+	enemyBaseComponent.playerObj = FindGameObjectWithTag<Object3D>("PLAYER");
 
 	bossTransform = obj->GetTransform();
 
@@ -63,11 +65,33 @@ void Boss::Start(Object3D* _obj)
 
 	using namespace ID;
 
-
 	enemyBaseComponent.state->CreateState<BossIdol>(GetID(B_IDOL));
+	enemyBaseComponent.state->CreateState<BossRun>(GetID(B_RUN));
 	/*eCom.state->NodeDrawReady();*/
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
 	enemyBaseComponent.state->StartState(B_IDOL);
+}
+
+void Boss::LookPlayer()
+{
+	//プレイヤーのポジションを格納させる
+	VECTOR3 targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
+	//Playerの方をゆっくり向く
+	VECTOR3 distance = targetPos - bossTransform->position;
+
+	float direction = -atan2f(distance.z, distance.x) - 0.5f * DX_PI_F;
+	float sign = direction - bossTransform->rotation.y;
+
+	sign -= floorf(sign / DX_PI_F / 2) * DX_PI_F * 2;
+	const float LOOK_SPEED = 0.2f;
+	if (sign > DX_PI_F)
+		sign -= 2 * DX_PI_F;
+	if (sign > LOOK_SPEED)
+		bossTransform->rotation.y += LOOK_SPEED;
+	else if (sign < -LOOK_SPEED)
+		bossTransform->rotation.y -= LOOK_SPEED;
+	else
+		bossTransform->rotation.y = direction;
 }

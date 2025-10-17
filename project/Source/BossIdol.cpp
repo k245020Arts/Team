@@ -1,6 +1,7 @@
 #include "BossIdol.h"
 #include "Boss.h"
 #include "Animator.h"
+#include "stateManager.h"
 
 BossIdol::BossIdol()
 {
@@ -15,6 +16,14 @@ BossIdol::~BossIdol()
 
 void BossIdol::Update()
 {
+	Boss* b = GetBase<Boss>();
+
+	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
+
+	if (targetVec.Size() < a)
+	{
+		b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+	}
 }
 
 void BossIdol::Draw()

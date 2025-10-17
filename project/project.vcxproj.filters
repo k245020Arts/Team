@@ -371,6 +371,9 @@
     <ClCompile Include="Source\EnemyBase.cpp">
       <Filter>PlayScene\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BossRun.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -791,6 +794,9 @@
     </ClInclude>
     <ClInclude Include="Source\EnemyBase.h">
       <Filter>PlayScene\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossRun.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

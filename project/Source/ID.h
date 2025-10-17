@@ -49,6 +49,7 @@ namespace ID {
 		B_MODEL,
 		C_FREE,
 		B_IDOL,
+		B_RUN,
 
 		ID_MAX,
 	};
