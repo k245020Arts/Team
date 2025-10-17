@@ -374,6 +374,15 @@
     <ClCompile Include="Source\BossRun.cpp">
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BossNormalAttack1.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossNormalAttack2.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossNormalAttack3.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -796,6 +805,15 @@
       <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Source\BossRun.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossNormalAttack1.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossNormalAttack2.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossNormalAttack3.h">
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>
