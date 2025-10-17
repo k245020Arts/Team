@@ -48,7 +48,7 @@ void EnemyDamage::Start()
 {
 	Enemy* e = GetBase<Enemy>();
 	EnemyStateBase::Start();
-	e->enemyBaseComponent.sound->RandamSe("E_DamageV", 2);
+	
 	first = true;
 }
 

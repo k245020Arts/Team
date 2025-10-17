@@ -116,6 +116,8 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 	Transform* trans1 = col1->GetTransform();
 	Transform* trans2 = col2->GetTransform();
 
+
+
 	VECTOR3 pos = trans2->WorldTransform().position + VECTOR3(0,100.0f,0);
 	float raius = col2->GetRadius();
 	Physics* phy = col2->GetObj()->Component()->GetComponent<Physics>();

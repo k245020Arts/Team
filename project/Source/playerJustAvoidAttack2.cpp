@@ -16,7 +16,7 @@ PlayerJustAvoidAttack2::PlayerJustAvoidAttack2()
 	id =  ID::P_ANIM_JUST_AVOID_ATTACK2;
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK2;
 	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(200, 0, 0));
-	nextAttackID = ID::P_ANIM_JUST_AVOID_ATTACK3;
+	nextAttackID = ID::P_ANIM_ATTACK1;
 	frontSpeed = 10000.0f;
 	hitDamage = 5.0f;
 }
@@ -30,10 +30,6 @@ void PlayerJustAvoidAttack2::Update()
 	Player* p = GetBase<Player>();
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
-	if (p->playerCom.controller->GetIsButtonPutNow(XINPUT_BUTTON_B)) {
-		//nextAttack = true;
-		attack = true;
-	}
 	if (!noStateChange) {
 		if (distSize <= ATTACK_MOVE_DIST) {
 			EnemyRotation();
@@ -42,38 +38,34 @@ void PlayerJustAvoidAttack2::Update()
 			p->playerCom.player->AvoidReady();
 			noStateChange = true;
 		}
+		if (p->playerCom.InputManager->KeyInputDown("attack")) {
+			nextAttack = true;
+		}
 		dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
 		if (dist.Size() <= DISTANCE_MOVE && beforeAttack) {
 			p->playerCom.anim->SetPlaySpeed(0.8f);
 			p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(30000.0f, 30000.0f, 30000.0f));
 		}
-		if (p->playerCom.anim->AnimEventCan()) {
-			if (attack) {
-				p->playerCom.anim->SetPlaySpeed(0.8f);
-				beforeAttack = false;
-				rotation = true;
-				frontSpeed = 6000.0f;
-				p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
-			}
-			else {
-				runTimer = 0.1f;
-				noStateChange = true;
-				p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-				p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
-			}
+		if (p->playerCom.anim->AnimEventCan()) {	
+			p->playerCom.anim->SetPlaySpeed(1.6f);
+			beforeAttack = false;
+			rotation = true;
+			frontSpeed = 2000.0f;
+			p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
+			
 		}
 		else {
 			if (beforeAttack)
-				p->playerCom.anim->SetPlaySpeed(0.5f);
+				p->playerCom.anim->SetPlaySpeed(0.3f);
 			else {
 				p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(30000.0f, 30000.0f, 30000.0f));
 				if (nextAttack) {
-					runTimer = 3.0f;
+					runTimer = 1.0f;
 					noStateChange = true;
 					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
 				}
 				else {
-					runTimer = 1.2f;
+					runTimer = 1.0f;
 					noStateChange = true;
 					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
 					p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
@@ -93,7 +85,7 @@ void PlayerJustAvoidAttack2::Start()
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
 	if (distSize <= ATTACK_MOVE_DIST) {
-		p->playerCom.physics->SetVelocity(norm * distSize * 2.5f);
+		p->playerCom.physics->SetVelocity(norm * distSize * 4.5f);
 	}
 	p->playerCom.anim->SetPlaySpeed(0.01f);
 	firstColl = true;

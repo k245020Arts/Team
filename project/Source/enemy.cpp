@@ -41,6 +41,7 @@ Enemy::Enemy()
 	tag = Function::GetClassNameC<Enemy>();
 	hp = MAX_HP;
 	maxHp = hp;
+	loopNum = -1;
 }
 
 Enemy::~Enemy()
@@ -71,6 +72,12 @@ void Enemy::Update()
 	if (hp <= 0.0f && enemyBaseComponent.state->GetState<StateBase>()->GetID() == ID::E_ANIM_IDOL) {
 		enemyBaseComponent.state->NowChangeState(ID::E_DIE);
 		enemyBaseComponent.state->SetNoStateChange(true);
+	}
+	if (loopNum >= 0) {
+		hitCounter -= obj->GetObjectTimeRate();
+		if (hitCounter <= 0.0f) {
+			PlayerHit();
+		}
 	}
 }
 
@@ -148,8 +155,22 @@ void Enemy::ImguiDraw()
 
 void Enemy::PlayerHit()
 {
+	/*if (pState->GetState<PlayerAttackStateBase>() == nullptr) {
+		hitCounter = 0.0f;
+		loopNum = -1;
+		return;
+	}*/
+	/*if (!pState->GetState<PlayerAttackStateBase>()->IsAttack()) {
+		hitCounter = 0.0f;
+		loopNum = -1;
+		return;
+	}*/
 	ID::IDType attackID = pState->GetState<PlayerStateBase>()->GetID();
-	float damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
+	float damage = 0;;
+	if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
+		damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
+	}
+	
 	EnemyDamage::EnemyDamageInfo dInfo;
 	EnemyBlowAway::EnemyBlowAwayInfo bInfo;
 	float random[3] = {};
@@ -158,6 +179,9 @@ void Enemy::PlayerHit()
 		r = (float)GetRand(80) - 40.0f;
 	}
 	//プレイヤーの攻撃の種類によってダメージや吹っ飛び方の種類を変える
+	float angleRan = 0.0f;
+	bool lastAttack = false;
+	bool lastBeforeAttack = false;
 	switch (attackID)
 	{
 	case ID::P_ANIM_ATTACK1:
@@ -173,7 +197,9 @@ void Enemy::PlayerHit()
 		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 1500.0f), VECTOR3(100, 100, 100), 0.25f, 0.8f);
 		enemyBaseComponent.control->ControlVibrationStartFrame(40, 30);
 		enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
-		//enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VOne * VECTOR3(0, 0, 70.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
+		//enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VOne * VECTOR3(0, 0, 70.0f * DegToR{
+		// ad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
+		
 		break;
 	case ID::P_ANIM_ATTACK3:
 		//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
@@ -198,11 +224,50 @@ void Enemy::PlayerHit()
 		//enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VOne * VECTOR3(0, 0, 50.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
 		break;
 	case ID::P_ANIM_JUST_AVOID_ATTACK2:
-		enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
-		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 4000.0f), VECTOR3(400, 400, 400), 0.8f, 1.2f);
-		enemyBaseComponent.control->ControlVibrationStartFrame(350, 60);
-		enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
-		enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 70.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+		enemyBaseComponent.sound->RandamSe("swordHit00000", 7);
+		if (loopNum == -1) {
+			hitCounter = 0.23f;
+			loopNum = 5;
+		}
+		else if (loopNum == 1) {
+			hitCounter = 0.13f;
+			loopNum--;
+			lastBeforeAttack = true;
+		}
+		else if (loopNum == 0) {
+			loopNum = -1;
+			lastAttack = true;
+		}
+		else if (loopNum > 0) {
+			hitCounter = 0.13f;
+			loopNum--;
+		}
+		if (lastAttack) {
+			enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
+			dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 3500.0f), VECTOR3(100, 100, 100), 0.5f, 1.2f);
+			enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE * 14.5f), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
+			//angleRan = GetRand(360);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+		}
+		else if (lastBeforeAttack) {
+			dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(100, 100, 100), 0.5f, 0.5f);
+			enemyBaseComponent.shaker->ShakeStart(VECTOR3(20, 20, 20), Shaker::HORIZONAL_SHAKE, true, 0.3f);
+			enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
+			angleRan = GetRand(360);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+		}
+		else {
+			//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
+			dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(20, 20, 20), 0.2f, 0.02f);
+			enemyBaseComponent.control->ControlVibrationStartFrame(450, 20);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
+			angleRan = GetRand(360);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+			enemyBaseComponent.playerObj->Component()->GetComponent<Shaker>()->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.05f);
+		}
+	
 		break;
 	case ID::P_ANIM_JUST_AVOID_ATTACK3:
 		//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
@@ -233,6 +298,7 @@ void Enemy::PlayerHit()
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD =  enemyBaseComponent.state->GetState<EnemyDamage>();
 	std::shared_ptr <EnemyBlowAway> eB =  enemyBaseComponent.state->GetState<EnemyBlowAway>();
+	enemyBaseComponent.sound->RandamSe("E_DamageV", 2);
 	enemyBaseComponent.color->setRGB(Color::Rgb(255, 0, 0, 255));
 	damageFlash = 0.5f;
 	if (eD != nullptr) {

@@ -79,7 +79,7 @@ void PlayerJustAvoid::Update()
 	}
 	if (easingCount >= 0.5f) {
 		if (attack) {
-			p->playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID_ATTACK3);
+			p->playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID_ATTACK2);
 		}
 	}
 	//Žc‘œ‚ð•t‚¯‚é

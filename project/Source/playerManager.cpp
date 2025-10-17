@@ -81,7 +81,7 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK1, "P_ATTACK05", false, 1.2f,7.0f,15.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1, "P_ATTACK11", false, 8.0f,7.0f,25.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK2, "P_ATTACK06", false, 1.2f, 7.0f, 15.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK2, "P_ATTACK44", false, 0.7f, 7.0f, 15.0f);
+	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK2, "P_ATTACK44", false, 0.7f, 4.0f, 21.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK3, "P_ATTACK03", false, 1.2f, 9.0f, 15.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK3, "P_ATTACK22", false, 0.8f, 9.0f, 20.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK4, "P_ATTACK04", false, 2.0f, 9.0f, 12.0f);

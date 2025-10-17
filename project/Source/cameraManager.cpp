@@ -5,6 +5,8 @@
 #include "EnemyManager.h"
 #include "ComponentLight.h"
 #include "ComponentManager.h"
+#include "ModelCollider.h"
+#include "LoadManager.h"
 
 CameraManager::CameraManager()
 {
@@ -30,7 +32,13 @@ void CameraManager::CreateCamera()
 	Camera* camera = mainCamera->Component()->AddComponent<Camera>();
 	camera->Start(*(FindGameObject<EnemyManager>()->GetEnemy().begin()));
 
-	
+	ModelCollider* c = mainCamera->Component()->AddComponent<ModelCollider>();
+	CollsionInfo info;
+	info.oneColl = false;
+	info.parentTransfrom = mainCamera->GetTransform();
+	info.shape = CollsionInformation::MODEL;
+	info.tag = CollsionInformation::CAMERA;
+	c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(Load::GetHandle(ID::WALL)));
 
 	mainCamera->SetDrawOrder(-1);
 
@@ -40,4 +48,6 @@ void CameraManager::ParentObj(std::string _str)
 {
 	Object3D* obj = FindGameObjectWithTag<Object3D>(_str);
 	mainCamera->Component()->GetComponent<Camera>()->PlayerSet(obj);
+
+	
 }

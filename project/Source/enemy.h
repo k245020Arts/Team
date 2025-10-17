@@ -52,11 +52,11 @@ public:
 
 	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);
 
-
 private:
 	
 	Transform* enemyTransform;
 	StateManager* pState;
-	
+	float hitCounter;
+	int loopNum;
 	
 };

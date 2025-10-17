@@ -113,3 +113,9 @@ void PlayerAttackStateBase::Start()
 	}
 	
 }
+
+bool PlayerAttackStateBase::IsAttack()
+{
+	Player* p = GetBase<Player>();
+	return p->playerCom.anim->AnimEventCan();
+}
