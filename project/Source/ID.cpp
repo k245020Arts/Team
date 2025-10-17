@@ -23,6 +23,7 @@ namespace {
 		"p_attack4",
 		"p_just_avoid_attack4",
 		"p_just_avoid_attack5",
+		"p_attack5",
 		"p_damage",
 		"p_blowAway",
 		"p_fall",
@@ -50,6 +51,15 @@ namespace {
 		"c_free",
 		"b_idol"
 		"b_run"
+		"b_n_attack1",
+		"b_n_attack2",
+		"b_n_attack3",
+		"b_n_attack4",
+		"b_n_attack5",
+		"b_s_attack1",
+		"b_s_attack2",
+		"b_s_attack3",
+		"b_s_attack4",
 	};
 }
 
