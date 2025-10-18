@@ -237,6 +237,7 @@
     <ClInclude Include="Source\playerJustAvoidAttack4.h" />
     <ClInclude Include="Source\playerJustAvoidAttack5.h" />
     <ClInclude Include="Source\PushTransitor.h" />
+    <ClInclude Include="Source\Random.h" />
     <ClInclude Include="Source\Shaker.h" />
     <ClInclude Include="Source\ID.h" />
     <ClInclude Include="Source\inputManager.h" />
@@ -397,6 +398,7 @@
     <ClCompile Include="Source\CharaWeapon.cpp" />
     <ClCompile Include="Source\PlayScene.cpp" />
     <ClCompile Include="Source\PushTransitor.cpp" />
+    <ClCompile Include="Source\Random.cpp" />
     <ClCompile Include="Source\rayCollider.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />
     <ClCompile Include="Source\Shaker.cpp" />
