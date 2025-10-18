@@ -383,9 +383,6 @@
     <ClCompile Include="Source\BossNormalAttack3.cpp">
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Random.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -818,9 +815,6 @@
     </ClInclude>
     <ClInclude Include="Source\BossNormalAttack3.h">
       <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Random.h">
-      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
