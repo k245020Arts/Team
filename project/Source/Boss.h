@@ -5,7 +5,7 @@
 
 class Player;
 
-const float a =5000;
+static const float ChaseRange = 5000.0f;
 
 class Boss : public EnemyBase
 {

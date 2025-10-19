@@ -20,7 +20,7 @@ void BossIdol::Update()
 
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	if (targetVec.Size() < a)
+	if (targetVec.Size() < ChaseRange)
 	{
 		b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
 	}
