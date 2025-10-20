@@ -7,6 +7,7 @@
 #include "ModelCollider.h"
 #include "ComponentManager.h"
 #include "Physics.h"
+#include "rayCollider.h"
 
 CollsionManager::CollsionManager()
 {
@@ -15,7 +16,7 @@ CollsionManager::CollsionManager()
 	//当たり判定でどの形同士ならこの関数にいれるという登録
 	collsionKind[EnumTag(SPHERE ,SPHERE,SHAPE_MAX)] = &CollsionManager::CollsionSphereToSphere;
 	collsionKind[EnumTag(SPHERE ,MODEL,SHAPE_MAX)] = &CollsionManager::CollsionSphereToModel;
-	collsionKind[EnumTag(MODEL ,RAY,SHAPE_MAX)] = &CollsionManager::CollsionSphereToSphere;
+	collsionKind[EnumTag(MODEL ,RAY,SHAPE_MAX)] = &CollsionManager::CollsionModelToRay;
 	collList.clear();
 
 	event = new CollsionEvent();
@@ -48,6 +49,9 @@ void CollsionManager::Update()
 
 			bool hit = false;
 			//当たり判定の形を見て関数ポインタを代入
+			if ((*itr1)->GetShape() > (*itr2)->GetShape()) {
+				Function::swap(*itr1, *itr2);
+			}
 			CollsionKind kind = collsionKind[Function::EnumTag((*itr1)->GetShape(), (*itr2)->GetShape(),CollsionInformation::SHAPE_MAX)];
 			if (kind == nullptr) {
 				continue;
@@ -108,7 +112,55 @@ bool CollsionManager::CollsionSphereToSphere(ColliderBase* col1, ColliderBase* c
 
 bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2)
 {
-	return false;
+	//Transform* trans1 = col1->GetTransform();
+	//Transform* trans2 = col2->GetTransform();
+	//Transform* trans3 = dynamic_cast<RayCollider*>(col2)->Get2Transform();
+
+	//auto ret = MV1CollCheck_Line(dynamic_cast<ModelCollider*>(col1)->GetModel(), -1, trans2->WorldTransform().position, trans3->WorldTransform().position);
+	//VECTOR3 hitPos = ret.HitPosition;
+	//if (ret.HitFlag != 0) {
+	//	if (trans1->position.Size() == 0.0f || trans1->position.Size() > VSize(ret.HitPosition - trans1->position)) {
+	//		VECTOR3 pos  = trans2->WorldTransform().position - hitPos;
+	//		col2->GetObj()->Component()->GetComponent<Physics>()->AddVelocity(pos,false);
+	//	}
+	//	return true;
+	//}
+	////MV1CollResultPolyDimTerminate(ret);
+	//return false;
+
+	Transform* modelTransform = col1->GetTransform(); // 地面など
+	Transform* rayStartTrans = col2->GetTransform();  // レイの始点
+	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col2)->Get2Transform(); // レイの終点
+
+	// レイの開始点と終了点（ワールド座標）
+	VECTOR3 startPos = rayStartTrans->WorldTransform().position;
+	VECTOR3 endPos = rayEndTrans->WorldTransform().position;
+
+	// レイによるモデルの当たり判定
+	auto result = MV1CollCheck_Line(
+		dynamic_cast<ModelCollider*>(col1)->GetModel(),
+		-1,
+		startPos,
+		endPos
+	);
+	if (col2->GetCollTag() == CollsionInformation::P_FLOOR) {
+		int a;
+	}
+	Physics* p = col2->GetObj()->Component()->GetComponent<Physics>();
+	if (result.HitFlag != 0) {
+		VECTOR3 push = startPos - result.HitPosition;
+
+		PushbackResolver resolver;
+		resolver.AddPush(VECTOR3(0,1,0), push.Size(),CollsionInformation::Shape::RAY);
+		resolver.Apply(col2->GetObj()->GetTransform(), p,true,2.0f);
+		p->SetGround(true);
+	}
+	else {
+		p->SetGround(false);
+	}
+
+	return true;
+
 }
 
 bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2)
@@ -118,35 +170,26 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 
 
 
-	VECTOR3 pos = trans2->WorldTransform().position + VECTOR3(0,100.0f,0);
-	float raius = col2->GetRadius();
-	Physics* phy = col2->GetObj()->Component()->GetComponent<Physics>();
+	VECTOR3 pos = trans1->WorldTransform().position + VECTOR3(0,100.0f,0);
+	float raius = col1->GetRadius();
+	Physics* phy = col1->GetObj()->Component()->GetComponent<Physics>();
 	//MV1RefreshCollInfo(dynamic_cast<ModelCollider*>(col1)->GetModel(), -1);
-	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(dynamic_cast<ModelCollider*>(col1)->GetModel(), -1, pos, raius);
+	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(dynamic_cast<ModelCollider*>(col2)->GetModel(), -1, pos, raius);
 	VECTOR3 ret = VZero;
-	
+
+	PushbackResolver resolver;
+
 	for (int i = 0; i < result.HitNum; i++) {
-
 		auto& pol = result.Dim[i];
-		VECTOR3 v = pos - phy->GetLastTransform()->position;
-		//float len = Segment_Triangle_MinLength(phy->GetLastTransform()->position, pos, pol.Position[0], pol.Position[1], pol.Position[2]);
-		// vの長さとradiusから、押し返すベクトルの長さを求める
-		float pushLen = col2->GetRadius() - v.Size();
-		//法線から押し返す方向を取得
-		VECTOR3 pushDir = pol.Normal;
-		float len = VDot(pushDir, v);
-		VECTOR3 newPush = pushDir * len;
 
-		ret += newPush;
-		VECTOR3 pushVecNorm = ret.Normalize();
-		float pushIn = VDot(pushVecNorm, newPush);
-		if (pushIn < ret.Size()) {
-			ret += newPush - pushIn * pushVecNorm;
-		}
-		else {
-			ret = newPush;
-		}
+		VECTOR3 centerToPoly = pos - pol.Position[i];
+		float penetration = VDot(pol.Normal, centerToPoly);
+
+		resolver.AddPush(pol.Normal, penetration,CollsionInformation::SPHERE);
 	}
+
+	// 解決
+	resolver.Apply(col1->GetObj()->GetTransform(), phy,true,10.0f);
 		// 押し返すベクトルを求める
 					// HitPositionからcenterへ向かうベクトルvを作る
 	//	VECTOR3 v = pos - pol.HitPosition;
@@ -173,17 +216,70 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 	//	}
 	//}
 	//trans2->position += ret;
-	if (result.HitNum > 0) {
-		col2->GetObj()->GetTransform()->position -= ret;
-		/*VECTOR3 i = ret;
-		printfDx("X : %.1f Y : %.1f Z : %.1f\n", i.x,i.y,i.z);*/
-		VECTOR3 i = ret.Normalize() * -VDot(ret.Normalize(), phy->GetVelocity());
-		//Debug::DebugLog("x : " + std::to_string(i.x) + "y : " + std::to_string(i.y) + "z : " + std::to_string(i.z));
-		phy->AddVelocity(i,false);
-	}
-	
-	//pos += ret.Normalize() * -VDot(ret.Normalize(), phy->GetVelocity() * 2.0f);
-	//phy->AddVelocity(ret * -1.0f,false);
-	MV1CollResultPolyDimTerminate(result);
+	//if (result.HitNum > 0) {
+	//	col1->GetObj()->GetTransform()->position -= ret;
+	//	/*VECTOR3 i = ret;
+	//	printfDx("X : %.1f Y : %.1f Z : %.1f\n", i.x,i.y,i.z);*/
+	//	VECTOR3 i = ret.Normalize() * -VDot(ret.Normalize(), phy->GetVelocity());
+	//	//Debug::DebugLog("x : " + std::to_string(i.x) + "y : " + std::to_string(i.y) + "z : " + std::to_string(i.z));
+	//	phy->AddVelocity(i,false);
+	//}
+	//
+	////pos += ret.Normalize() * -VDot(ret.Normalize(), phy->GetVelocity() * 2.0f);
+	////phy->AddVelocity(ret * -1.0f,false);
+	//MV1CollResultPolyDimTerminate(result);
 	return false;
+
+	//Transform* trans1 = col1->GetTransform();
+	//Transform* trans2 = col2->GetTransform();
+
+	//// Sphereの中心位置（プレイヤーの座標から少し上にすることで安定）
+	//VECTOR3 spherePos = trans1->WorldTransform().position + VECTOR3(0, 0.1f, 0);
+	//float radius = col1->GetRadius();
+
+	//Physics* physics = col1->GetObj()->Component()->GetComponent<Physics>();
+
+	//// モデルとスフィアの当たり判定
+	//MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(
+	//	dynamic_cast<ModelCollider*>(col2)->GetModel(), -1, spherePos, radius);
+
+	//// 合算用の押し返しベクトル
+	//VECTOR3 totalPush = VZero;
+
+	//for (int i = 0; i < result.HitNum; ++i) {
+	//	auto& pol = result.Dim[i];
+
+	//	// スフィア中心からポリゴンまでのベクトル
+	//	VECTOR3 toPoly = spherePos - pol.Position[0];
+
+	//	// めり込み方向はポリゴン法線
+	//	float penetration = radius - VDot(pol.Normal, toPoly);
+	//	if (penetration > 0.0f) {
+	//		VECTOR3 pushVec = pol.Normal * penetration;
+	//		totalPush += pushVec;
+	//	}
+	//}
+
+	//// 押し返しベクトルが発生しているなら補正
+	//if (result.HitNum > 0 && totalPush.SquareSize() != 0.0f) {
+	//	// 位置補正（地面のめり込みを防止）
+	//	trans1->position += totalPush;
+
+	//	// 速度補正（地面との反発）
+	//	VECTOR3 normal = totalPush.Normalize();
+	//	float dot = VDot(normal, physics->GetVelocity());
+
+	//	if (dot < 0.0f) {
+	//		VECTOR3 reflectVel = normal * -dot;
+	//		physics->AddVelocity(reflectVel, false);
+	//	}
+
+	//	// メモリ解放
+	//	MV1CollResultPolyDimTerminate(result);
+	//	return true;
+	//}
+
+	//// メモリ解放
+	//MV1CollResultPolyDimTerminate(result);
+	//return false;
 }

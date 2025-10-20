@@ -45,6 +45,8 @@ public:
 
 	VECTOR3 GetShakeOffset() const;
 
+	void ImguiDraw()override;
+
 private:
 
 	Transform currentTransform;

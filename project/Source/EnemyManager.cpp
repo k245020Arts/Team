@@ -15,6 +15,7 @@
 #include "Object2D.h"
 #include "Guage.h"
 #include "Boss.h"
+#include "rayCollider.h"
 
 EnemyManager::EnemyManager()
 {
@@ -70,7 +71,10 @@ void EnemyManager::CreateEnemy()
 	info2.tag = CollsionInformation::Tag::ENEMY;
 	info.size = 1.0f;
 	collider2->CollsionAdd(info2, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(250.0f, 1.0f, 1.0f)));
-
+	RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
+	info.shape = CollsionInformation::RAY;
+	info.tag = CollsionInformation::E_FLOOR;
+	collider3->RaySet(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10, 0), VZero, VECTOR3(1.0f, 1, 1)));
 	
 	Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
@@ -145,7 +149,10 @@ void EnemyManager::CreateBoss()
 	info2.tag = CollsionInformation::Tag::BOSS;
 	info.size = 1.0f;
 	collider2->CollsionAdd(info2, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(250.0f, 1.0f, 1.0f)));*/
-
+	RayCollider* collider3 = boss->Component()->AddComponent<RayCollider>();
+	info.shape = CollsionInformation::RAY;
+	info.tag = CollsionInformation::B_FLOOR;
+	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 10.0, 1.0)), Transform(VECTOR3(0, -70, 0), VZero, VECTOR3(1.0f, 1, 1)));
 
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
 

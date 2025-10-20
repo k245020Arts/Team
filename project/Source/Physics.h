@@ -37,6 +37,8 @@ public:
 	//ポジションをたす
 	void AddPosition(VECTOR3 _pos) { currentTransform->position += _pos; }
 
+	void SetGround(bool _g) { ground = _g; }
+
 private:
 
 	VECTOR3 velocity;//移動する値
@@ -52,4 +54,5 @@ private:
 	VECTOR3 firction; //抵抗、摩擦係数
 
 	bool noGravity;
+	bool ground;
 };

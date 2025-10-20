@@ -1,5 +1,6 @@
 #include "Shaker.h"
 #include "Debug.h"
+#include "../ImGui/imgui.h"
 
 Shaker::Shaker()
 {
@@ -22,6 +23,7 @@ void Shaker::Update()
 		time -= Time::DeltaTimeRate();
 		if (time <= 0.0f) {
 			time = 0.0f;
+			ShakeFinish();
 		}
 	}
 	else if(time > -1.0f){
@@ -163,4 +165,11 @@ VECTOR3 Shaker::GetShakePos() const
 VECTOR3 Shaker::GetShakeOffset() const
 {
 	return currentShakePower;
+}
+
+void Shaker::ImguiDraw()
+{
+	ImGui::Separator();
+	ImGui::InputFloat("time", &time);
+	ImGui::Separator();
 }
