@@ -4,6 +4,7 @@
 #include "BossInformation.h"
 
 class Player;
+class CharaWeapon;
 
 static const float ChaseRange = 5000.0f;
 
@@ -37,6 +38,7 @@ public:
 	}
 
 	void PlayerHit()override;
+	void Drail(bool _right);
 
 private:
 	Boss* boss;
@@ -46,5 +48,5 @@ private:
 
 	const int BOSS_RIGHT_HAND_FRAME = 15;
 	const int BOSS_LEFT_HAND_FRAME = 11;
-
+	CharaWeapon* chara;
 };

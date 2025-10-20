@@ -95,3 +95,13 @@ void EnemyStateBase::Trail()
 		e->DrawTrail();
 	}
 }
+
+void EnemyStateBase::BossTrail(bool _right)
+{
+	Boss* e = GetBase<Boss>();
+	float time = e->enemyBaseComponent.anim->EventStartTime(animId);
+	//Œ•‚Ì‹OÕ‚ğ”­¶
+	if (time - 7.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time + 5.0f >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
+		e->Drail(_right);
+	}
+}

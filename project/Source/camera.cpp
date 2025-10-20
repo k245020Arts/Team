@@ -133,6 +133,7 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.state->CreateState<FreeCamera>(GetID(C_FREE));
 
 	cameraComponent.state->NodeDrawReady();
+	cameraComponent.target.shaker = _obj->Component()->GetComponent<Shaker>();
 
 	cameraComponent.state->SetComponent<Camera>(this);
 	cameraComponent.state->StartState(C_FREE);
@@ -153,8 +154,6 @@ void Camera::TargetSet(BaseObject* _obj)
 {
 	cameraComponent.target.obj = _obj;
 	cameraComponent.target.transform = cameraComponent.target.obj->GetTransform();
-
-	cameraComponent.target.shaker = _obj->Component()->GetComponent<Shaker>();
 }
 
 void Camera::TargetEnemySet()

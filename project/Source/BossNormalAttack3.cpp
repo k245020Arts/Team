@@ -24,7 +24,7 @@ void BossNormalAttack3::Update()
 	BossAttackCollsion();
 	AttackSound();
 	AttackFlash(ID::B_MODEL, boss->BOSS_LEFT_HAND_FRAME, "E_AttackV");
-	//Trail();
+	BossTrail(false);
 }
 
 void BossNormalAttack3::Draw()

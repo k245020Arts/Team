@@ -22,6 +22,9 @@
 #include "BossNormalAttack3.h"
 #include "enemyDamage.h"
 #include "PlayerAttackStateBase.h"
+#include "swordEffect.h"
+#include "CharaWeapon.h"
+#include "LoadManager.h"
 
 Boss::Boss()
 {
@@ -83,6 +86,10 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
 	enemyBaseComponent.state->StartState(B_IDOL);
+	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
+	chara = obj->Component()->AddComponent<CharaWeapon>();
+	chara->ObjectPointer(_obj, 10, ID::B_MODEL, -1);
+	chara->SetImage(Load::GetHandle(ID::SWORD_EFFECT_B));
 }
 
 void Boss::LookPlayer()
@@ -257,5 +264,15 @@ void Boss::PlayerHit()
 	}
 	else if (eB != nullptr) {
 		eB->EnemyBlowAwayInfoSet(bInfo);
+	}
+}
+
+void Boss::Drail(bool _right)
+{
+	if (_right) {
+		chara->CreateSwordEffect(VECTOR3(70, 0, -50), VECTOR3(120, 0, 50), 0.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
+	}
+	else {
+		chara->CreateSwordEffect(VECTOR3(0, 0, -50), VECTOR3(50, 0, 100), 0.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
 	}
 }

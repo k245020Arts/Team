@@ -10,6 +10,7 @@
 SwordEffect::SwordEffect()
 {
 	
+	Load::LoadImageGraph(Load::IMAGE_PATH + "zlRYsodZuqpGepk1757160129_1757160135", ID::SWORD_EFFECT_B);
 	Load::LoadImageGraph(Load::IMAGE_PATH + "photo_12", ID::SWORD_EFFECT);
 	num.clear();
 	image = -1;
@@ -111,7 +112,7 @@ void SwordEffect::CreateEffect(VECTOR3 _nearPos, VECTOR3 _farPos, Color::Rgb _rg
 	in.farPos = _farPos * in.weapon->GetWeaponMatrix();
 	in.midPos = (_nearPos + _farPos) / 2.0f;
 	in.rgb = _rgb;
-	image = Load::GetHandle(ID::SWORD_EFFECT);
+	//image = Load::GetHandle(ID::SWORD_EFFECT);
 
 	in.count = 0;
 	
@@ -119,6 +120,11 @@ void SwordEffect::CreateEffect(VECTOR3 _nearPos, VECTOR3 _farPos, Color::Rgb _rg
 	in.timeMax = _time;
 	in.time = _time;
 	num.emplace_back(in);
+}
+
+void SwordEffect::SetImage(int _model)
+{
+	image = _model;
 }
 
 VECTOR3 SwordEffect::GetBezier(float t, VECTOR3 p0, VECTOR3 p1, VECTOR3 p2)

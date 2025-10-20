@@ -60,6 +60,7 @@ namespace ID {
 		B_S_ATTACK2,
 		B_S_ATTACK3,
 		B_S_ATTACK4,
+		SWORD_EFFECT_B,
 
 		ID_MAX,
 	};

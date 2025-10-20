@@ -34,9 +34,11 @@ void WeaponManager::CreatePlayerWeapon()
 	Object3D* player = FindGameObjectWithTag<Object3D>("PLAYER");
 	
 	pWeapon = pObj->Component()->AddComponent<CharaWeapon>();
+	
 	//CharaWeapon* weaponL = pW->Component()->AddComponent<CharaWeapon>();
 
 	pWeapon->ObjectPointer(player,28,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword", ID::IDType::P_WEAPON));
+	pWeapon->SetImage(Load::GetHandle(ID::SWORD_EFFECT));
 	//pWeapon->CreateSwordEffect();
 	//weaponL->ObjectPointer(player,9,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword", ID::IDType::P_WEAPON));
 }
@@ -49,7 +51,9 @@ void WeaponManager::CreateEnemyWeapon()
 	Object3D* enemy = FindGameObjectWithTag<Object3D>("ENEMY");
 
 	eWeapon = eObj->Component()->AddComponent<CharaWeapon>();
+
 	eWeapon->ObjectPointer(enemy, 10, ID::E_MODEL, Load::LoadModel(Load::MODEL_PATH + "2Hand-Sword", ID::IDType::E_WEAPON));
+	eWeapon->SetImage(Load::GetHandle(ID::SWORD_EFFECT));
 	//wea->CreateSwordEffect();
 }
 

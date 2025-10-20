@@ -23,6 +23,7 @@ public:
 	/// <param name="_boneIndex">çú</param>
 	/// <param name="_time">éûä‘</param>
 	void CreateEffect(VECTOR3 _nearPos,VECTOR3 _farPos,Color::Rgb _rgb, int _boneIndex,float _time);
+	void SetImage(int _model);
 
 	VECTOR3 GetBezier(float t, VECTOR3 p0, VECTOR3 p1, VECTOR3 p2);
 

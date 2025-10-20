@@ -39,6 +39,7 @@
 #include "FadeTransitor.h"
 #include "GameManager.h"
 #include "PlayerDie.h"
+#include "EnemyManager.h"
 
 Player::Player()
 {
@@ -354,6 +355,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	//“G‚ÌUŒ‚‚ª“–‚½‚Á‚½‚Ìˆ—
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
 	playerCom.hitObj = _obj;
+	playerCom.camera->TargetSet(_obj);
 	Animator* enemyAnim = playerCom.hitObj->Component()->GetComponent<Animator>();
 	float startTime = enemyAnim->EventStartTime(_attackId);
 	bool damage = false;
@@ -361,6 +363,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f) {
 			playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID);
+			playerCom.hitObj = _obj;
 			Debug::DebugLog("JustAvoid");
 			avoidStart = false;
 			avoidReady = false;

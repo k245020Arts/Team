@@ -41,6 +41,12 @@ std::list<Object3D*> EnemyManager::GetEnemy()
 	return enemy;
 }
 
+std::list<Object3D*>::iterator EnemyManager::GetItr()
+{
+	auto e = enemy.begin();
+	return e;
+}
+
 void EnemyManager::CreateEnemy()
 {
 	Object3D* e;
@@ -112,6 +118,8 @@ void EnemyManager::PlayerObjPointer()
 		g->GuageDrawReady<Enemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	}
 	player = obj;
+	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());
+	FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>()->TargetSet(*enemy.begin());
 }
 
 void EnemyManager::CreateBoss()
@@ -152,8 +160,8 @@ void EnemyManager::CreateBoss()
 
 	Animator* anim = boss->Component()->AddComponent<Animator>();
 	anim->AddFile(ID::B_IDOL, "B_ATTACK3", true,1.0f);
-	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,30.0f,50.0f);
-	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,30.0f,50.0f);
+	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,30.0f,45.0f);
+	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,30.0f,45.0f);
 	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false,1.0f,35.0f,45.0f);
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL));
 

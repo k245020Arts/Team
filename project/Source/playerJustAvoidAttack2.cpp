@@ -84,6 +84,12 @@ void PlayerJustAvoidAttack2::Start()
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
+	if (p->playerCom.targetObj != nullptr) {
+		targetTrans = *(p->playerCom.hitObj->GetTransform());
+	}
+	else {
+		targetTrans = Transform();
+	}
 	if (distSize <= ATTACK_MOVE_DIST) {
 		p->playerCom.physics->SetVelocity(norm * distSize * 4.5f);
 	}
