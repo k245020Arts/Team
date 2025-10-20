@@ -48,7 +48,6 @@ public:
 	bool PlayerPointerSet(BaseObject* _obj);
 
 	
-
 private:
 	
 	Transform* enemyTransform;

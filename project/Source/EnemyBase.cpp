@@ -4,10 +4,12 @@
 #include "stateManager.h"
 #include "weaponManager.h"
 #include "Physics.h"
+#include "PlayerAttackStateBase.h"
 
 EnemyBase::EnemyBase()
 {
 	loopNum = -1;
+	hit = false;
 }
 
 EnemyBase::~EnemyBase()
@@ -40,6 +42,11 @@ void EnemyBase::Update()
 		hitCounter -= obj->GetObjectTimeRate();
 		if (hitCounter <= 0.0f) {
 			PlayerHit();
+		}
+	}
+	if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
+		if (!pState->GetState<PlayerAttackStateBase>()->IsAttack()) {
+			hit = false;
 		}
 	}
 }

@@ -25,6 +25,8 @@ public:
 	void DrawTrail();
 
 	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);
+	bool GetHit() { return hit; }
+
 
 protected:
 
@@ -37,4 +39,5 @@ protected:
 	const float HIT_EFFECT_TIME = 0.2f;
 	const float HIT_EFFECT_SCALE_RATE = 0.1f;
 	const float MAX_HP = 100;
+	bool hit;
 };
