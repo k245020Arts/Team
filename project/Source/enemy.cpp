@@ -18,7 +18,6 @@
 #include "weaponManager.h"
 #include "EnemyIdol.h"
 #include "enemyAttack1.h"
-#include "EnemyBlowAway.h"
 #include "EnemyRun.h"
 #include "PlayerAttackStateBase.h"
 #include "FadeTransitor.h"
@@ -26,9 +25,7 @@
 #include "EnemyDie.h"
 
 namespace {
-	const float HIT_EFFECT_TIME = 0.2f;
-	const float HIT_EFFECT_SCALE_RATE = 0.1f;
-	const float MAX_HP = 100;
+	
 }
 
 Enemy::Enemy()
@@ -41,7 +38,7 @@ Enemy::Enemy()
 	tag = Function::GetClassNameC<Enemy>();
 	hp = MAX_HP;
 	maxHp = hp;
-	loopNum = -1;
+	
 }
 
 Enemy::~Enemy()
@@ -295,11 +292,3 @@ bool Enemy::PlayerPointerSet(BaseObject* _obj)
 	pState = enemyBaseComponent.playerObj->Component()->GetComponent<Player>()->GetPlayerStateManager();
 	return true;
 }
-
-void Enemy::EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info)
-{
-	//“G‚ªƒ_ƒ[ƒW‚ðŽó‚¯‚½Žž‚Ì‚Á”ò‚Î‚µ—Ê‚ÌÝ’è
-	enemyBaseComponent.physics->SetVelocity(_info.speed * MGetRotY(enemyBaseComponent.playerObj->GetTransform()->rotation.y));
-	//enemyBaseComponent.shaker->ShakeStart(_info.shakePower, Shaker::HORIZONAL_SHAKE, true, _info.shakeTime);
-}
-

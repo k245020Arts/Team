@@ -147,6 +147,9 @@ void EnemyManager::CreateBoss()
 
 	Boss* b = boss->Component()->AddComponent<Boss>();
 
+	Physics* physics = boss->Component()->AddComponent<Physics>();
+	physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));
+
 	Animator* anim = boss->Component()->AddComponent<Animator>();
 	anim->AddFile(ID::B_IDOL, "B_ATTACK3", true,1.0f);
 	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,30.0f,50.0f);

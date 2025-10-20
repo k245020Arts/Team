@@ -2,7 +2,6 @@
 #include "EnemyBase.h"
 #include "enemyInformation.h"
 #include "transform.h"
-#include "enemyDamage.h"
 #include "SoundID.h"
 #include "EffectID.h"
 
@@ -48,11 +47,11 @@ public:
 	bool IsShake();
 	bool PlayerPointerSet(BaseObject* _obj);
 
-	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);
+	
 
 private:
 	
 	Transform* enemyTransform;
-	StateManager* pState;
+	
 
 };

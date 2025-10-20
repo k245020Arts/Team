@@ -36,6 +36,8 @@ public:
 		return static_cast<T*>(attackColl);
 	}
 
+	void PlayerHit()override;
+
 private:
 	Boss* boss;
 	
