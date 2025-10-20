@@ -20,6 +20,7 @@
 #include "BossNormalAttack1.h"
 #include "BossNormalAttack2.h"
 #include "BossNormalAttack3.h"
+#include "BossSpecialAttack1.h"
 
 Boss::Boss()
 {
@@ -72,6 +73,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossNormalAttack1>(GetID(B_N_ATTACK1));
 	enemyBaseComponent.state->CreateState<BossNormalAttack2>(GetID(B_N_ATTACK2));
 	enemyBaseComponent.state->CreateState<BossNormalAttack3>(GetID(B_N_ATTACK3));
+	enemyBaseComponent.state->CreateState<BossSpecialAttack1>(GetID(B_S_ATTACK1));
 	/*eCom.state->NodeDrawReady();*/
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);

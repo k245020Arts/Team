@@ -1,7 +1,7 @@
 #pragma once
 #include "enemyStateBase.h"
 
-class BossSpecialAttack1:public EnemyStateBase
+class BossSpecialAttack1 :public EnemyStateBase
 {
 public:
 	BossSpecialAttack1();
@@ -13,4 +13,8 @@ public:
 	void Start()override;
 	void Finish()override;
 private:
+	VECTOR3 velocity;
+	int a;
+	float counter;
+	float copyPos;
 };

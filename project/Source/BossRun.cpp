@@ -4,7 +4,7 @@
 
 BossRun::BossRun()
 {
-	animId = ID::B_IDOL;
+	animId = ID::B_RUN;
 	id = ID::B_RUN;
 	string = Function::GetClassNameC<BossRun>();
 }
@@ -31,7 +31,8 @@ void BossRun::Update()
 		b->enemyBaseComponent.state->ChangeState(ID::B_IDOL);
 	}
 	if (targetVec.Size() <= 1000.0f) {
-		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
+		//b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
+		b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
 	}
 }
 

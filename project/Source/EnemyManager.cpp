@@ -148,10 +148,12 @@ void EnemyManager::CreateBoss()
 	Boss* b = boss->Component()->AddComponent<Boss>();
 
 	Animator* anim = boss->Component()->AddComponent<Animator>();
-	/*anim->AddFile(ID::B_IDOL, "B_ATTACK3", true);
+	anim->AddFile(ID::B_IDOL, "B_ATTACK3", true);
 	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,5.0f,20.0f);
 	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,5.0f,20.0f);
-	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL));*/
+
+	anim->AddFile(ID::B_S_ATTACK1, "B_ATTACK3", false, 1.0f, 5.0f, 20.0f);
+	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL));
 
 	b->Start(boss);
 

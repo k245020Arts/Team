@@ -15,6 +15,8 @@ public:
 	friend class BossNormalAttack1;
 	friend class BossNormalAttack2;
 	friend class BossNormalAttack3;
+	friend class BossSpecialAttack1;
+
 	Boss();
 	~Boss();
 	void Update()override;
