@@ -31,12 +31,15 @@ void BossRun::Update()
 		b->enemyBaseComponent.state->ChangeState(ID::B_IDOL);
 	}
 	if (targetVec.Size() <= 1000.0f) {
-		int a = GetRand(1);
+		int a = GetRand(2);
 		if (a == 0) {
 			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
 		}
-		else {
+		else if (a == 1) {
 			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK2);
+		}
+		else {
+			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK3);
 		}
 		
 	}

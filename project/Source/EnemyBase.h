@@ -1,6 +1,7 @@
 #pragma once
 #include "CharaBase.h"
 #include "enemyInformation.h"
+#include "enemyDamage.h"
 
 class EnemyBase : public CharaBase
 {
@@ -21,6 +22,11 @@ public:
 	BaseObject* GetEnemyObj() { return obj; }
 
 	virtual void PlayerHit() { ; }
+	void DrawTrail();
+
+	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);
+	bool GetHit() { return hit; }
+
 
 protected:
 
@@ -28,5 +34,10 @@ protected:
 	float damageFlash;
 	float hitCounter;
 	int loopNum;
+	StateManager* pState;
 
+	const float HIT_EFFECT_TIME = 0.2f;
+	const float HIT_EFFECT_SCALE_RATE = 0.1f;
+	const float MAX_HP = 100;
+	bool hit;
 };

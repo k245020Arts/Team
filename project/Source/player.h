@@ -61,6 +61,7 @@ public:
 		if (attackColl == nullptr) {
 			CollsionInfo info = CharaBase::CollsionInstant<T>(_shape, _trans);
 			info.tag = CollsionInformation::Tag::P_ATTACK;
+			info.oneColl = false;
 			//collName = "p_attack"
 			attackColl->CollsionAdd(info, _trans, "p_attack");
 		};

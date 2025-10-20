@@ -2,7 +2,6 @@
 #include "EnemyBase.h"
 #include "enemyInformation.h"
 #include "transform.h"
-#include "enemyDamage.h"
 #include "SoundID.h"
 #include "EffectID.h"
 
@@ -40,7 +39,7 @@ public:
 	void ImguiDraw()override;
 
 	void PlayerHit()override;
-	void DrawTrail();
+	
 
 	Transform* GetEnemyTransform() { return enemyTransform; }
 	
@@ -48,11 +47,10 @@ public:
 	bool IsShake();
 	bool PlayerPointerSet(BaseObject* _obj);
 
-	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);
-
+	
 private:
 	
 	Transform* enemyTransform;
-	StateManager* pState;
+	
 
 };

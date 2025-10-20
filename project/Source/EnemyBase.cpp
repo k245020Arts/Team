@@ -2,9 +2,14 @@
 #include "Animator.h"
 #include "color.h"
 #include "stateManager.h"
+#include "weaponManager.h"
+#include "Physics.h"
+#include "PlayerAttackStateBase.h"
 
 EnemyBase::EnemyBase()
 {
+	loopNum = -1;
+	hit = false;
 }
 
 EnemyBase::~EnemyBase()
@@ -39,8 +44,25 @@ void EnemyBase::Update()
 			PlayerHit();
 		}
 	}
+	if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
+		if (!pState->GetState<PlayerAttackStateBase>()->IsAttack()) {
+			hit = false;
+		}
+	}
 }
 
 void EnemyBase::Draw()
 {
+}
+
+void EnemyBase::DrawTrail() {
+
+	//Œ•‚Ì‹OÕ‚ðì¬
+	enemyBaseComponent.weapon->CreateTrailEnemy(VECTOR3(0, 0, 0), VECTOR3(-70, 200, -230), 100.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
+}
+
+void EnemyBase::EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info)
+{
+	//“G‚ªƒ_ƒ[ƒW‚ðŽó‚¯‚½Žž‚Ì‚Á”ò‚Î‚µ—Ê‚ÌÝ’è
+	enemyBaseComponent.physics->SetVelocity(_info.speed * MGetRotY(enemyBaseComponent.playerObj->GetTransform()->rotation.y));
 }

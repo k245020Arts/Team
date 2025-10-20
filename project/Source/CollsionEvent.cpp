@@ -53,7 +53,9 @@ void CollsionEvent::EnemyDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2)
 {
 	Player* player = _coll2->GetObj()->Component()->GetComponent<Player>();
 	Enemy* enemy = _coll1->GetObj()->Component()->GetComponent<Enemy>();
-
+	if (enemy->GetHit()) {
+		return;
+	}
 	enemy->PlayerHit();
 	player->PlayerAttackHit();
 }
@@ -73,7 +75,9 @@ void CollsionEvent::BossDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2)
 {
 	Player* player = _coll2->GetObj()->Component()->GetComponent<Player>();
 	Boss* boss = _coll1->GetObj()->Component()->GetComponent<Boss>();
-
+	if (boss->GetHit()) {
+		return;
+	}
 	boss->PlayerHit();
 	player->PlayerAttackHit();
 }
