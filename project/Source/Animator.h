@@ -92,11 +92,14 @@ public:
 	bool AnimEventCan() { return animEventCan; }
 	void AnimEventReset() { animEventCan = false; }
 	float EventStartTime(ID::IDType id) { return fileInfos[ID::GetID(id)].eventStartTime; }
+	float EventFinishTime(ID::IDType id) { return fileInfos[ID::GetID(id)].eventFinishTime; }
 
 	void SetFrame(float _frame);
 
 	int GetBaseModel();
 	int GetCurrentAttackID();
+
+	
 
 	void ImguiDraw()override;
 

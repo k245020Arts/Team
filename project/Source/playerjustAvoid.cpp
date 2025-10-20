@@ -146,8 +146,8 @@ void PlayerJustAvoid::Start()
 	attack = false;
 	//敵の攻撃を遅くする
 	p->playerCom.hitObj->SetObjectTimeRate(0.6f);
-	p->playerCom.hitObj->SetObjectTimeRate(0.0f);
-	Time::ChangeDeltaRate(0.0f);
+	p->playerCom.hitObj->SetObjectTimeRate(0.01f);
+	Time::ChangeDeltaRate(0.01f);
 	p->playerCom.anim->SetFrame(12.0f);
 	num = 0;
 	//ブラースクリーンを再生する

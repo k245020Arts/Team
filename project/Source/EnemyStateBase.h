@@ -20,4 +20,5 @@ protected:
 	ID::IDType animId;
 	bool firstColl;
 	Transform collTrans;
+	float attackTime;
 };

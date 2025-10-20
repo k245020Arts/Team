@@ -10,6 +10,7 @@ EnemyStateBase::EnemyStateBase()
 {
 	firstColl = false;
 	animId = ID::E_GETUP;
+	attackTime = 0.0f;
 }
 
 EnemyStateBase::~EnemyStateBase()
@@ -20,6 +21,7 @@ void EnemyStateBase::Start()
 {
 	EnemyBase* e = GetBase<EnemyBase>();
 	e->enemyBaseComponent.anim->Play(animId);
+	attackTime = e->enemyBaseComponent.anim->EventFinishTime(animId) - e->enemyBaseComponent.anim->EventStartTime(animId);
 }
 
 void EnemyStateBase::AttackCollsion()
