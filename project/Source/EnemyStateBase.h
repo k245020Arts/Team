@@ -16,9 +16,14 @@ public:
 
 	ID::IDType GetAnimId() { return animId; }
 
+	void AttackSound();
+	void AttackFlash(ID::IDType _modelId, int _modelFrame, std::string _voice);
+	void Trail();
+
 protected:
 	ID::IDType animId;
 	bool firstColl;
 	Transform collTrans;
 	float attackTime;
+	bool sound;
 };

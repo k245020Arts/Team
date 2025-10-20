@@ -40,7 +40,7 @@ public:
 	void ImguiDraw()override;
 
 	void PlayerHit()override;
-	void DrawTrail();
+	
 
 	Transform* GetEnemyTransform() { return enemyTransform; }
 	

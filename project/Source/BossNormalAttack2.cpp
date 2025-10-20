@@ -28,6 +28,9 @@ void BossNormalAttack2::Update()
 		averageSpeed *= boss->obj->GetObjectRate();
 		boss->bossTransform->rotation.y -= averageSpeed * DegToRad;
 	}
+	AttackSound();
+	AttackFlash(ID::B_MODEL, boss->BOSS_LEFT_HAND_FRAME, "E_AttackV");
+	//Trail();
 }
 
 void BossNormalAttack2::Draw()

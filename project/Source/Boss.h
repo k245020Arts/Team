@@ -42,4 +42,7 @@ private:
 	//BossInformation::BossComponent bossComponent;
 	Transform* bossTransform;
 
+	const int BOSS_RIGHT_HAND_FRAME = 15;
+	const int BOSS_LEFT_HAND_FRAME = 11;
+
 };

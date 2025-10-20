@@ -17,9 +17,11 @@ public:
 
 	float GetHitDamage() { return hitDamage; }
 
+	
+
 private:
 	float animStopCounter;
-	bool sound;
+	
 	float effectAverageSpeed;
 	float hitDamage;
 };

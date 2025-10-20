@@ -20,6 +20,7 @@
 #include "BossNormalAttack1.h"
 #include "BossNormalAttack2.h"
 #include "BossNormalAttack3.h"
+#include "weaponManager.h"
 
 Boss::Boss()
 {
@@ -62,6 +63,8 @@ void Boss::Start(Object3D* _obj)
 
 	attackColl = nullptr;
 	collName = "b_attack";
+
+	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 
 	enemyBaseComponent.gameManager = FindGameObject<GameManager>();
 

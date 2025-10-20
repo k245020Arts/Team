@@ -303,8 +303,3 @@ void Enemy::EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info)
 	//enemyBaseComponent.shaker->ShakeStart(_info.shakePower, Shaker::HORIZONAL_SHAKE, true, _info.shakeTime);
 }
 
-void Enemy::DrawTrail() {
-
-	//Œ•‚Ì‹OÕ‚ðì¬
-	enemyBaseComponent.weapon->CreateTrailEnemy(VECTOR3(0, 0, 0), VECTOR3(-70, 200, -230), 100.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
-}

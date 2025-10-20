@@ -21,6 +21,7 @@ public:
 	BaseObject* GetEnemyObj() { return obj; }
 
 	virtual void PlayerHit() { ; }
+	void DrawTrail();
 
 protected:
 
