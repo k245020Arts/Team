@@ -129,14 +129,14 @@ void EnemyManager::CreateBoss()
 	info.size = 1.0f;
 	collider->CollsionAdd(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
 	//“–‚½‚è”»’è‚ð¶¬i‚â‚ç‚ê”»’èj
-	SphereCollider* collider2 = boss->Component()->AddComponent<SphereCollider>();
+	/*SphereCollider* collider2 = boss->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info2;
 	info2.parentTransfrom = boss->GetTransform();
 	info2.shape = CollsionInformation::SPHERE;
 	info2.oneColl = false;
 	info2.tag = CollsionInformation::Tag::BOSS;
 	info.size = 1.0f;
-	collider2->CollsionAdd(info2, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(250.0f, 1.0f, 1.0f)));
+	collider2->CollsionAdd(info2, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(250.0f, 1.0f, 1.0f)));*/
 
 
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
@@ -148,10 +148,10 @@ void EnemyManager::CreateBoss()
 	Boss* b = boss->Component()->AddComponent<Boss>();
 
 	Animator* anim = boss->Component()->AddComponent<Animator>();
-	/*anim->AddFile(ID::B_IDOL, "B_ATTACK3", true);
-	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,5.0f,20.0f);
-	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,5.0f,20.0f);
-	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL));*/
+	anim->AddFile(ID::B_IDOL, "B_ATTACK3", true,1.0f);
+	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,30.0f,50.0f);
+	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,30.0f,50.0f);
+	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL));
 
 	b->Start(boss);
 

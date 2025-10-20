@@ -35,4 +35,5 @@ namespace Time {
 
 	float DeltaTimeRate();
 	float DebugSlowTimeSet(float _rate);
+	float GetTimeRate();
 };

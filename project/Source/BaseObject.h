@@ -21,6 +21,7 @@ public:
 	void SetObjectTimeRate(float _rate) { objectTimeRate = _rate; }
 	//ÀÛ‚Ég‚¤‚Æ‚«‚Í‚±‚Á‚¿‚Åg‚¤
 	float GetObjectTimeRate() { return objectTimeRate * Time::DeltaTimeRate(); }
+	float GetObjectRate() { return objectTimeRate * Time::GetTimeRate(); }
 	int GetId() { return id; }
 
 	Transform* GetTransform() const { return transform; }

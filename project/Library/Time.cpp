@@ -82,3 +82,8 @@ float Time::DebugSlowTimeSet(float _rate)
 	debugTimeRate = _rate;
 	return debugTimeRate;
 }
+
+float Time::GetTimeRate()
+{
+	return rate;
+}
