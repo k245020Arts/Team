@@ -59,7 +59,7 @@ void PlayerJustAvoid::Update()
 	{
 		p->playerCom.player->AvoidFinishState();
 		p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
-		p->playerCom.targetObj->SetObjectTimeRate(1.0f);
+		p->playerCom.hitObj->SetObjectTimeRate(1.0f);
 	}
 	//Ä¶‘¬“x‚ð’x‚­‚µ‚Ä‚¢‚é
 	if (p->playerCom.anim->GetCurrentFrame() >= 14.0f && p->playerCom.anim->GetCurrentFrame() <= 17.0f){

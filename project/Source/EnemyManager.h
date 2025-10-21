@@ -14,6 +14,7 @@ public:
 	void Draw() override;
 
 	std::list<Object3D*> GetEnemy();
+	std::list<Object3D*>::iterator GetItr();
 
 	void CreateEnemy();
 	void PlayerObjPointer();

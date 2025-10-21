@@ -15,6 +15,7 @@
 #include "Object2D.h"
 #include "Guage.h"
 #include "Boss.h"
+#include "rayCollider.h"
 
 EnemyManager::EnemyManager()
 {
@@ -41,6 +42,12 @@ std::list<Object3D*> EnemyManager::GetEnemy()
 	return enemy;
 }
 
+std::list<Object3D*>::iterator EnemyManager::GetItr()
+{
+	auto e = enemy.begin();
+	return e;
+}
+
 void EnemyManager::CreateEnemy()
 {
 	Object3D* e;
@@ -64,7 +71,10 @@ void EnemyManager::CreateEnemy()
 	info2.tag = CollsionInformation::Tag::ENEMY;
 	info.size = 1.0f;
 	collider2->CollsionAdd(info2, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(250.0f, 1.0f, 1.0f)));
-
+	RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
+	info.shape = CollsionInformation::RAY;
+	info.tag = CollsionInformation::E_FLOOR;
+	collider3->RaySet(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10, 0), VZero, VECTOR3(1.0f, 1, 1)));
 	
 	Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
@@ -112,6 +122,8 @@ void EnemyManager::PlayerObjPointer()
 		g->GuageDrawReady<Enemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	}
 	player = obj;
+	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());
+	FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>()->TargetSet(*enemy.begin());
 }
 
 void EnemyManager::CreateBoss()
@@ -137,7 +149,10 @@ void EnemyManager::CreateBoss()
 	info2.tag = CollsionInformation::Tag::BOSS;
 	info.size = 1.0f;
 	collider2->CollsionAdd(info2, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(250.0f, 1.0f, 1.0f)));*/
-
+	RayCollider* collider3 = boss->Component()->AddComponent<RayCollider>();
+	info.shape = CollsionInformation::RAY;
+	info.tag = CollsionInformation::B_FLOOR;
+	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 10.0, 1.0)), Transform(VECTOR3(0, -70, 0), VZero, VECTOR3(1.0f, 1, 1)));
 
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
 
@@ -152,8 +167,8 @@ void EnemyManager::CreateBoss()
 
 	Animator* anim = boss->Component()->AddComponent<Animator>();
 	anim->AddFile(ID::B_IDOL, "B_ATTACK3", true,1.0f);
-	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,30.0f,50.0f);
-	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,30.0f,50.0f);
+	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,30.0f,45.0f);
+	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,30.0f,45.0f);
 	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false,1.0f,35.0f,45.0f);
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL));
 

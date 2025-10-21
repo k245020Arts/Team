@@ -92,7 +92,6 @@ void Enemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<EnemyBlowAway>(GetID(E_BLOWAWAY));
 	enemyBaseComponent.state->CreateState<EnemyRun>(GetID(E_RUN));
 	enemyBaseComponent.state->CreateState<EnemyDie>(GetID(E_DIE));
-
 	
 
 	enemyBaseComponent.state->NodeDrawReady();

@@ -13,6 +13,7 @@ public:
 	void Draw() override;
 	void CreateStage();
 	void CreateWall();
+	void CreateFloor();
 
 private:
 	

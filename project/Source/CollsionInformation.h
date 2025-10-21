@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+#include "../Library/myDxLib.h"
 
 class Transform;
 class ColliderBase;
@@ -24,6 +26,11 @@ namespace CollsionInformation {
 		WALL,
 		BOSS,
 		B_ATTACK,
+		FLOOR,
+		E_FLOOR,
+		P_FLOOR,
+		B_FLOOR,
+		C_FLOOR,
 
 		TAG_MAX,
 	};
@@ -47,4 +54,37 @@ struct CollsionInfo
 	float size;
 	Transform* parentTransfrom;
 	bool oneColl;
+};
+
+class Transform;
+class Physics;
+
+struct PushInfo {
+	VECTOR3 normal;      // 法線ベクトル
+	float penetration; // めり込み量
+	CollsionInformation::Shape shape;
+
+	PushInfo(const VECTOR3& n, float p, CollsionInformation::Shape _shape)
+		: normal(n), penetration(p) ,shape(_shape) {
+	}
+};
+
+class PushbackResolver {
+private:
+	std::vector<PushInfo> pushes;
+
+public:
+	PushbackResolver();
+	~PushbackResolver();
+	void Clear();
+
+	// 押し返しデータを追加
+	void AddPush(const VECTOR3& normal, float penetration, CollsionInformation::Shape _shape);
+
+	// 押し返しベクトルを計算して返す
+	VECTOR3 ResolvePushback(float maxLength = 5.0f);
+
+	// 位置と速度に押し返しを適用
+	void Apply(Transform* transform, Physics* physics, bool affectVelocity = true, float maxLength = 5.0f);
+	bool IsGrounded(float minYNormal = 0.6f) const;
 };

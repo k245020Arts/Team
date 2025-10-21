@@ -22,6 +22,9 @@
 #include "BossNormalAttack3.h"
 #include "enemyDamage.h"
 #include "PlayerAttackStateBase.h"
+#include "swordEffect.h"
+#include "CharaWeapon.h"
+#include "LoadManager.h"
 
 Boss::Boss()
 {
@@ -83,6 +86,10 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
 	enemyBaseComponent.state->StartState(B_IDOL);
+	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
+	chara = obj->Component()->AddComponent<CharaWeapon>();
+	chara->ObjectPointer(_obj, 10, ID::B_MODEL, -1);
+	chara->SetImage(Load::GetHandle(ID::SWORD_EFFECT_B));
 }
 
 void Boss::LookPlayer()
@@ -157,7 +164,7 @@ void Boss::PlayerHit()
 		hit = true;
 		break;
 	case ID::P_ANIM_ATTACK4:
-		enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
+		//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
 		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 3500.0f), VECTOR3(200, 200, 200), 0.45f, 0.8f);
 		enemyBaseComponent.control->ControlVibrationStartFrame(50, 50);
 		enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
@@ -252,10 +259,20 @@ void Boss::PlayerHit()
 	enemyBaseComponent.sound->RandamSe("E_DamageV", 2);
 	enemyBaseComponent.color->setRGB(Color::Rgb(255, 0, 0, 255));
 	damageFlash = 0.5f;
-	if (eD != nullptr) {
+	/*if (eD != nullptr) {
 		eD->DamageInit(dInfo);
 	}
 	else if (eB != nullptr) {
 		eB->EnemyBlowAwayInfoSet(bInfo);
+	}*/
+}
+
+void Boss::Drail(bool _right)
+{
+	if (_right) {
+		chara->CreateSwordEffect(VECTOR3(70, 0, -50), VECTOR3(120, 0, 50), 0.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
+	}
+	else {
+		chara->CreateSwordEffect(VECTOR3(0, 0, -50), VECTOR3(50, 0, 100), 0.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
 	}
 }

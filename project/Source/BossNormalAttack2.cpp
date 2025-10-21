@@ -30,7 +30,7 @@ void BossNormalAttack2::Update()
 	}
 	AttackSound();
 	AttackFlash(ID::B_MODEL, boss->BOSS_LEFT_HAND_FRAME, "E_AttackV");
-	//Trail();
+	BossTrail(false);
 }
 
 void BossNormalAttack2::Draw()

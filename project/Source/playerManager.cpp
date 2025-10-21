@@ -18,6 +18,7 @@
 #include "MotionBlur.h"
 #include "Object2D.h"
 #include "Guage.h"
+#include "rayCollider.h"
 
 PlayerManager::PlayerManager()
 {
@@ -55,6 +56,11 @@ void PlayerManager::CreatePlayer()
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	ColliderBase* collider2 = playerPointer->Component()->AddComponent<SphereCollider>();
 	collider2->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(200.0f, 0, 0)));
+
+	RayCollider* collider3 = playerPointer->Component()->AddComponent<RayCollider>();
+	info.shape = CollsionInformation::RAY;
+	info.tag = CollsionInformation::P_FLOOR;
+	collider3->RaySet(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10, 0), VZero, VECTOR3(1.0f, 1, 1)));
 
 	Shaker* shaker = playerPointer->Component()->AddComponent<Shaker>();
 	

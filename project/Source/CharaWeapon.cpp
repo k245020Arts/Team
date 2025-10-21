@@ -85,3 +85,9 @@ void CharaWeapon::CreateSwordEffect(VECTOR3 _nPos, VECTOR3 _fPos, float _r, floa
 	SwordEffect* sE = obj->Component()->GetComponent<SwordEffect>();
 	sE->CreateEffect(_nPos, _fPos,Color::Rgb(_r,_g,_b,_a), static_cast<int>(index), _time);
 }
+
+void CharaWeapon::SetImage(int _model)
+{
+	SwordEffect* sE = obj->Component()->GetComponent<SwordEffect>();
+	sE->SetImage(_model);
+}

@@ -23,6 +23,7 @@ public:
 	int CharaModel() { return modelHandle; }
 
 	MATRIX GetWeaponMatrix() { return matrix; }
+	void SetImage(int _model);
 
 private:
 	BaseObject* chara;

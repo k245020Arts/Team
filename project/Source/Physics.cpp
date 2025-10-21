@@ -30,7 +30,7 @@ void Physics::Update()
 {
 	*lastTransform = *currentTransform;
 
-	if (!noGravity) {
+	if (!noGravity || !ground) {
 		velocity += gravity * obj->GetObjectTimeRate(); //重力分velocityに足している
 	}
 	
@@ -48,10 +48,10 @@ void Physics::Update()
 	//ポジションを足す。
 	currentTransform->position += velocity * obj->GetObjectTimeRate();
 	//今は地面に当たり判定を作っていないので仮置き
-	if (currentTransform->position.y <= 0.0f) {
+	/*if (currentTransform->position.y <= 0.0f) {
 		currentTransform->position.y = 0;
 		velocity.y = gravity.y;
-	}
+	}*/
 }
 
 void Physics::Start(VECTOR3 _gravityAmout, VECTOR3 _fir)
