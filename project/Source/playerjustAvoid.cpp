@@ -140,6 +140,7 @@ void PlayerJustAvoid::Start()
 	//ƒJƒƒ‰‚Ì’Ç]‘¬“x‚ð’x‚­‚·‚é
 	cameraLeap = 0.02f;
 	p->playerCom.camera->CameraLeapSet(cameraLeap);
+	p->playerCom.camera->TargetSet(p->playerCom.hitObj);
 	p->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
 	//ƒJƒƒ‰‚Ìó‘Ô‘JˆÚ
 	p->playerCom.camera->ChangeStateCamera(ID::P_ANIM_JUST_AVOID);

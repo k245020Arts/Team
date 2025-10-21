@@ -123,6 +123,7 @@ void EnemyManager::PlayerObjPointer()
 	}
 	player = obj;
 	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());
+	player->Component()->GetComponent<Player>()->HitObjectSet(*enemy.begin());
 	FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>()->TargetSet(*enemy.begin());
 }
 

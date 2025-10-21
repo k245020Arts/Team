@@ -35,6 +35,7 @@ Camera::Camera()
 
 	input = FindGameObject<InputManager>();
 	rockOn = false;
+	beforePos = 0.0f;
 }
 
 Camera::~Camera()
@@ -194,4 +195,9 @@ void Camera::Follow()
 	cameraComponent.cameraTransform->position = Easing::Lerp(cameraComponent.cameraTransform->position, desiredCamPos, reap);
 	//‚»‚Ì‚ ‚Æ‚ÉƒJƒƒ‰shake‚ð‚©‚¯‚é
 	cameraComponent.cameraTransform->position += cameraComponent.shaker->GetShakePower();
+	if (fabs(beforePos - cameraComponent.cameraTransform->position.y) <= 1.5f) {
+		cameraComponent.cameraTransform->position.y = beforePos;
+	}
+
+	beforePos = cameraComponent.cameraTransform->position.y;
 }

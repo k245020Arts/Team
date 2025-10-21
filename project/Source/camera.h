@@ -57,4 +57,5 @@ private:
 	ControllerInputManager* control;
 	InputManager* input;
 	bool rockOn;
+	float beforePos;
 };

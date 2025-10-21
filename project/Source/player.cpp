@@ -78,9 +78,12 @@ void Player::Update()
 		JustAvoidCan();
 	}
 	//UŒ‚‚Ì‚ ‚½‚è‚Í‚ñ‚Ä‚¢‚ªI‚í‚Á‚½‚çíœ
-	if (!playerCom.anim->AnimEventCan()) {
-		DeleteCollision();
+	if (playerCom.stateManager->GetState<PlayerAttackStateBase>() != nullptr) {
+		if (!playerCom.stateManager->GetState<PlayerAttackStateBase>()->IsAttack()) {
+			DeleteCollision();
+		}
 	}
+	
 	if (justAvoid) {
 		if (playerCom.stateManager->GetState<StateBase>()->GetString() != "PlayerJustAvoid") {
 			justAvoid = false;
@@ -354,9 +357,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 {
 	//“G‚ÌUŒ‚‚ª“–‚½‚Á‚½‚Ìˆ—
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
-	playerCom.hitObj = _obj;
-	playerCom.camera->TargetSet(_obj);
-	Animator* enemyAnim = playerCom.hitObj->Component()->GetComponent<Animator>();
+	Animator* enemyAnim = _obj->Component()->GetComponent<Animator>();
 	float startTime = enemyAnim->EventStartTime(_attackId);
 	bool damage = false;
 	//ƒWƒƒƒXƒg‰ñ”ğ‚ªo—ˆ‚éˆ—
@@ -364,6 +365,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f) {
 			playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID);
 			playerCom.hitObj = _obj;
+			playerCom.camera->TargetSet(_obj);
 			Debug::DebugLog("JustAvoid");
 			avoidStart = false;
 			avoidReady = false;
@@ -403,6 +405,11 @@ void Player::JustAvoidCan()
 void Player::TargetObjSet(BaseObject* _base)
 {
 	playerCom.targetObj = _base;
+}
+
+void Player::HitObjectSet(BaseObject* _base)
+{
+	playerCom.hitObj = _base;
 }
 
 void Player::PlayerAttackHit()

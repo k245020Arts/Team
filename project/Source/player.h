@@ -55,6 +55,7 @@ public:
 	void JustAvoidCan();
 
 	void TargetObjSet(BaseObject* _base);
+	void HitObjectSet(BaseObject* _base);
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans) {

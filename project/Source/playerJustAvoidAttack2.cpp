@@ -83,15 +83,44 @@ void PlayerJustAvoidAttack2::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
-	PlayerAttackStateBase::Start();
-	if (p->playerCom.targetObj != nullptr) {
+
+	nextAttack = false;
+	nextAvoid = false;
+	p->playerCom.player->SetAvoidStart(false);
+
+	noStateChange = false;
+	if (p->playerCom.hitObj != nullptr) {
 		targetTrans = *(p->playerCom.hitObj->GetTransform());
 	}
 	else {
 		targetTrans = Transform();
 	}
+
+	dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
+
+	//Šp“xŒvŽZ
+	angle = atan2f(dist.x, dist.z);
+	easingCount = 0.0f;
+	beforeAngle = p->playerCom.player->GetPlayerTransform()->rotation.y;
+	firstColl = true;
+	distSize = dist.Size();
+	norm = dist.Normalize();
+	beforeAttack = true;
+	runTimer = 0.0f;
+	if (dist.Size() >= 2500 && p->playerCom.hitObj != nullptr) {
+		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
+		rotation = false;;
+		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));
+	}
+	else {
+		//‹ß‚¢‚Æ“G‚Ì•ûŒü‚ÉŒü‚©‚Á‚ÄUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
+		rotation = true;
+		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
+	}
+
+
 	if (distSize <= ATTACK_MOVE_DIST) {
-		p->playerCom.physics->SetVelocity(norm * distSize * 4.5f);
+		p->playerCom.physics->SetVelocity(norm * distSize * 3.5f);
 	}
 	p->playerCom.anim->SetPlaySpeed(0.01f);
 	firstColl = true;

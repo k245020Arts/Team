@@ -20,11 +20,12 @@ void CollsionInformation::InitSetPair()
     SetPair(PLAYER, ENEMY);
     SetPair(PLAYER, E_ATTACK);
     SetPair(PLAYER, WALL);
-    SetPair(CAMERA, WALL);
+    //SetPair(CAMERA, WALL);
     SetPair(ENEMY, P_ATTACK);
     SetPair(ENEMY, WALL);
     SetPair(PLAYER, B_ATTACK);
     SetPair(BOSS, P_ATTACK);
+    SetPair(BOSS, WALL);
     SetPair(FLOOR, P_FLOOR);
     SetPair(FLOOR, E_FLOOR);
     SetPair(FLOOR, C_FLOOR);
@@ -148,7 +149,7 @@ void PushbackResolver::Apply(Transform* transform, Physics* physics, bool affect
 
 bool PushbackResolver::IsGrounded(float minYNormal) const {
     for (const auto& push : pushes) {
-        // 法線のY成分が一定以上なら「地面」とみなす（例：30°以内 → Y > 0.86）
+        // 法線のY成分が一定以上なら「地面」とみなす
         if (push.normal.y >= minYNormal) {
             return true;
         }

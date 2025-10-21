@@ -82,9 +82,9 @@ void StageManager::CreateWall()
 		}
 		Object3D* obj = new Object3D();
 		obj->Init(transform, "WALL" + std::to_string(i));
-		MeshRenderer* mesh = obj->Component()->AddComponent<MeshRenderer>();
+		/*MeshRenderer* mesh = obj->Component()->AddComponent<MeshRenderer>();
 		mesh->ModelHandle(Load::GetHandle(ID::WALL));
-		mesh->DrawLocalPosition();
+		mesh->DrawLocalPosition();*/
 		Wall* wall = obj->Component()->AddComponent<Wall>();
 		wall->ModelSet(Load::GetHandle(ID::WALL));
 		ModelCollider* c = obj->Component()->AddComponent<ModelCollider>();
@@ -110,7 +110,7 @@ void StageManager::CreateWall()
 void StageManager::CreateFloor()
 {
 	Transform transform;
-	transform = Transform(VECTOR3(0, -100, 0), VZero, VOne * VECTOR3(500.0f, 1, 500.0f));
+	transform = Transform(VECTOR3(0, -1000, 0), VZero, VOne * VECTOR3(500.0f, 10.0f, 500.0f));
 
 	Object3D* obj = new Object3D();
 	obj->Init(transform, "FLOOR");

@@ -26,7 +26,13 @@ void FreeCamera::Update()
 	}
 	else {
 		c->currentDistance = c->defalutDistance;
-		c->target = c->cameraComponent.player.transform->position + VECTOR3(0,400,0);
+		VECTOR3 targetp = c->cameraComponent.player.transform->position;
+		
+		if (fabs(beforeTarget - c->cameraComponent.player.transform->position.y) <= 1.0f) {
+			targetp.y = beforeTarget;
+		}
+		c->target = targetp+ VECTOR3(0,400,0);
+		beforeTarget = targetp.y;
 	}
 	c->Follow();
 
@@ -59,6 +65,7 @@ void FreeCamera::Start()
 
 	backCounter = TIMER_MAX;
 	currentTarget = c->target;
+	beforeTarget = c->cameraComponent.player.transform->position.y;
 }
 
 void FreeCamera::Finish()

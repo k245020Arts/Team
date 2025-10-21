@@ -18,4 +18,5 @@ private:
 
 	const float TIMER_MAX = 0.5f;
 	VECTOR3 currentTarget;
+	float beforeTarget;
 };

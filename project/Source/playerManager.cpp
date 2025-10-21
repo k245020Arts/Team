@@ -69,7 +69,7 @@ void PlayerManager::CreatePlayer()
 	Physics* physics = playerPointer->Component()->AddComponent<Physics>();
 	Player* player = playerPointer->Component()->AddComponent<Player>();
 	
-	physics->Start(VECTOR3(0.0f, -6000.0f, 0.0f), PlayerInformation::BASE_INTERIA);
+	physics->Start(VECTOR3(0.0f, -1000.0f, 0.0f), PlayerInformation::BASE_INTERIA);
 	/*Camera* camera = playerPointer->Component()->AddComponent<Camera>();
 	camera->Start(FindGameObject<EnemyManager>()->GetEnemy());*/
 	me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "RPG-Character", ID::P_MODEL));
@@ -77,8 +77,8 @@ void PlayerManager::CreatePlayer()
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL));
-	anim->AddFile(ID::IDType::P_ANIM_IDOL, "P_IDOL3", true, 1.0f);
-	anim->AddFile(ID::IDType::P_ANIM_RUN, "P_RUN1", true, 1.0f);
+	anim->AddFile(ID::IDType::P_ANIM_IDOL, "B_WAIT", true, 1.0f);
+	anim->AddFile(ID::IDType::P_ANIM_RUN, "P_ATTACK_47_", true, 1.0f);
 	anim->AddFile(ID::IDType::P_ANIM_AVOID, "P_AVOID", false, 1.0f,0.0f,5.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID, "P_JUST_AVOID", false, 1.5f,10.0f,25.0f);
 	anim->AddFile(ID::IDType::P_DAMAGE, "P_DAMAGE", false, 2.0f,0.0f,10.0f);
