@@ -60,6 +60,7 @@ namespace {
 		"b_s_attack2",
 		"b_s_attack3",
 		"b_s_attack4",
+		"b_attackSorting"//
 		"sword_effect_b"
 	};
 }

@@ -20,11 +20,13 @@
 #include "BossNormalAttack1.h"
 #include "BossNormalAttack2.h"
 #include "BossNormalAttack3.h"
+#include  "BossSpecialAttack1.h"
 #include "enemyDamage.h"
 #include "PlayerAttackStateBase.h"
 #include "swordEffect.h"
 #include "CharaWeapon.h"
 #include "LoadManager.h"
+#include "AttackSorting.h"
 
 Boss::Boss()
 {
@@ -78,9 +80,11 @@ void Boss::Start(Object3D* _obj)
 
 	enemyBaseComponent.state->CreateState<BossIdol>(GetID(B_IDOL));
 	enemyBaseComponent.state->CreateState<BossRun>(GetID(B_RUN));
+	enemyBaseComponent.state->CreateState<AttackSorting>(GetID(B_AttackSorting));
 	enemyBaseComponent.state->CreateState<BossNormalAttack1>(GetID(B_N_ATTACK1));
 	enemyBaseComponent.state->CreateState<BossNormalAttack2>(GetID(B_N_ATTACK2));
 	enemyBaseComponent.state->CreateState<BossNormalAttack3>(GetID(B_N_ATTACK3));
+	enemyBaseComponent.state->CreateState<BossSpecialAttack1>(GetID(B_S_ATTACK1));
 	/*eCom.state->NodeDrawReady();*/
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);

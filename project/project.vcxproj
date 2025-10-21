@@ -169,6 +169,7 @@
     <ClInclude Include="Source\AABBCollider.h" />
     <ClInclude Include="Source\Anim2D.h" />
     <ClInclude Include="Source\Animator.h" />
+    <ClInclude Include="Source\AttackSorting.h" />
     <ClInclude Include="Source\BlurScreen.h" />
     <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\BossIdol.h" />
@@ -312,6 +313,7 @@
     <ClCompile Include="Source\AABBCollider.cpp" />
     <ClCompile Include="Source\Anim2D.cpp" />
     <ClCompile Include="Source\Animator.cpp" />
+    <ClCompile Include="Source\AttackSorting.cpp" />
     <ClCompile Include="Source\BaseObject.cpp" />
     <ClCompile Include="Source\BlurScreen.cpp" />
     <ClCompile Include="Source\BootScene.cpp" />
