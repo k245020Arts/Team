@@ -8,7 +8,7 @@ BossSpecialAttack1::BossSpecialAttack1()
 	//animId = ID::B_S_ATTACK1;
 	id = ID::B_S_ATTACK1;
 	string = Function::GetClassNameC<BossSpecialAttack1>();
-	a = 2;
+	a = 0;
 	counter = 0;
 }
 
@@ -19,7 +19,6 @@ BossSpecialAttack1::~BossSpecialAttack1()
 void BossSpecialAttack1::Update()
 {
 	Boss* b = GetBase<Boss>();
-	b->LookPlayer();
 	
 	if (a == 0)
 	{
@@ -41,11 +40,17 @@ void BossSpecialAttack1::Update()
 			b->obj->GetTransform()->position.y = 450;
 			b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
 		}
+		else
+		{
+			b->LookPlayer();
+			rotation = b->obj->GetTransform()->rotation;
+
+			float c = 5.0f;
+			velocity.x = c * cosf(-rotation.y - 0.5f * DX_PI_F);
+			velocity.z = c * sinf(-rotation.y - 0.5f * DX_PI_F);
+		}
 	}
 	
-	if (CheckHitKey(KEY_INPUT_Z))
-		a = 0;
-
 	b->obj->GetTransform()->position += velocity;
 }
 

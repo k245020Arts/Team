@@ -40,9 +40,9 @@ void BossRun::Update()
 		}
 		else {
 			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK3);
-		}
-		
+		}		
 	}
+	
 }
 
 void BossRun::Draw()
