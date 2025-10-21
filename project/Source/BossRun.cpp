@@ -1,6 +1,7 @@
 #include "BossRun.h"
 #include "Boss.h"
 #include "stateManager.h"
+#include "AttackSorting.h"
 
 BossRun::BossRun()
 {
@@ -30,8 +31,9 @@ void BossRun::Update()
 	{
 		b->enemyBaseComponent.state->ChangeState(ID::B_IDOL);
 	}
-	if (targetVec.Size() <= 1000.0f) {
-		int a = GetRand(2);
+	if (targetVec.Size() <= 1000.0f)
+	{
+		/*int a = GetRand(2);
 		if (a == 0) {
 			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
 		}
@@ -40,8 +42,10 @@ void BossRun::Update()
 		}
 		else {
 			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK3);
-		}		
+		}		*/
+		b->enemyBaseComponent.state->ChangeState(ID::B_AttackSorting); 
 	}
+	
 	
 }
 

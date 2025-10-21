@@ -11,6 +11,7 @@ static const float ChaseRange = 5000.0f;
 class Boss : public EnemyBase
 {
 public:
+	friend class AttackSorting;
 	friend class BossIdol;
 	friend class BossRun;
 	friend class BossNormalAttack1;

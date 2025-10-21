@@ -3,6 +3,8 @@
 
 static const float BOSS_SPEED = 5.0f;
 
+class AttackSorting;
+
 class BossRun : public EnemyStateBase
 {
 public:
@@ -16,6 +18,7 @@ public:
 	void Finish()override;
 
 private:
+	AttackSorting* sorting;//UŒ‚‚ÌU‚è•ª‚¯
 	VECTOR3 velocity;
 	VECTOR3 rotation;
 };
