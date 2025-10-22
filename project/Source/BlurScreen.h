@@ -44,7 +44,7 @@ private:
 	float fadeTime;
 
 	float defalutFadeTime;
-	int screenDraw;
+	float screenDraw;
 
 	int currentScreen;
 };

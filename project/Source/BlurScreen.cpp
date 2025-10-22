@@ -65,7 +65,8 @@ void BlurScreen::Draw()
 	GetDrawBlendMode(&blendMode, &param);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(alpha));
 
-	if (screenDraw++ > 2) {
+	screenDraw += Time::DeltaTimeRate();
+	if (screenDraw > 0.2f) {
 		DrawExtendGraphF(0.0f, 0.0f, Screen::WIDTH, Screen::HEIGHT, blurScreen[1 - currentScreen], false);
 	}
 	
@@ -134,7 +135,7 @@ void BlurScreen::Reset()
 	fadeTime = 0.0f;
 
 	currentScreen = 0;
-	screenDraw = 0;
+	screenDraw = 0.0f;
 
 }
 
