@@ -82,5 +82,5 @@ void MeshRenderer::ImguiDraw()
 
 void MeshRenderer::RotationMesh(int _meshNum, float _angle)
 {
-	MV1SetFrameUserLocalMatrix(hModel, _meshNum, MGetRotY(_angle));
+	int a = MV1SetFrameUserLocalMatrix(hModel, _meshNum, MGetRotY(_angle));
 }

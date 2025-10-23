@@ -38,7 +38,7 @@ int PlayScene::count = 0;
 PlayScene::PlayScene()
 {
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
-	Load::LoadModel(Load::MODEL_PATH + "Player", ID::P_MODEL);
+	//Load::LoadModel(Load::MODEL_PATH + "Player", ID::P_MODEL);
 	Hierachy* hierachy = new Hierachy();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	new EffectManager();
