@@ -58,4 +58,6 @@ private:
 	InputManager* input;
 	bool rockOn;
 	float beforePos;
+	float nearFog;
+	float farFog;
 };
