@@ -36,6 +36,8 @@ Camera::Camera()
 	input = FindGameObject<InputManager>();
 	rockOn = false;
 	beforePos = 0.0f;
+	nearFog = 10000.0f;
+	farFog = 1800000.0f;
 }
 
 Camera::~Camera()
@@ -71,18 +73,22 @@ void Camera::Draw()
 	else {
 		
 	}
-	SetCameraNearFar(10.0f, 100000.0f);
+	SetCameraNearFar(10.0f, 100000000.0f);
+	SetFogEnable(true);
+	SetFogStartEnd(nearFog,farFog);
+	SetFogColor(137, 189, 222);
 	SetupCamera_Perspective(fov);
-	if (rockOn) {
+	if (debugButton == 2) {
+		Transform transform = *obj->GetTransform();
+		SetCameraPositionAndTarget_UpVecY(transform.position, VECTOR3(0, 0, 0));
+	}
+	else if (rockOn) {
 		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position,target);
 	}
 	else if (!rockOn) {
 		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position,target);
 	}
-	else {
-		Transform transform = *obj->GetTransform();
-		SetCameraPositionAndTarget_UpVecY(transform.position, VECTOR3(0, 0, 0));
-	}
+	
 	//DrawSphere3D(target, 50, 1, 0x999999, 0x999999, true);
 }
 
@@ -112,6 +118,9 @@ void Camera::ImguiDraw()
 	ImGui::RadioButton("targetPlayer", &targetChangeButton, 0);
 	ImGui::RadioButton("targetEnemy", &targetChangeButton, 1);
 	ImGui::DragFloat("fov", &fov, 0.1f, 0.0f, 360.0f * DegToRad);
+	ImGui::InputFloat("nearFog", &nearFog);
+	ImGui::InputFloat("farFog", &farFog);
+
 }
 
 void Camera::PlayerSet(BaseObject* _obj)

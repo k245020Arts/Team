@@ -43,7 +43,8 @@ void PlayerManager::Draw()
 void PlayerManager::CreatePlayer()
 {
 	playerPointer = new Object3D();
-	playerPointer->Init(VECTOR3(300, 100, 1500), VZero, VECTOR3(2, 2, 2), "PLAYER");
+	//playerPointer->Init(VECTOR3(300, 100, 1500), VZero, VECTOR3(3.0f, 3.0f,3.0f), "PLAYER");
+	playerPointer->Init(VECTOR3(300, 100, 1500), VZero, VECTOR3(3.0f ,3.0f,3.0f), "PLAYER");
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	ColliderBase* collider = playerPointer->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -72,8 +73,9 @@ void PlayerManager::CreatePlayer()
 	physics->Start(VECTOR3(0.0f, -1000.0f, 0.0f), PlayerInformation::BASE_INTERIA);
 	/*Camera* camera = playerPointer->Component()->AddComponent<Camera>();
 	camera->Start(FindGameObject<EnemyManager>()->GetEnemy());*/
-	me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "RPG-Character", ID::P_MODEL));
-	me2->RotationMesh(1, 180.0f * DegToRad);
+	//me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "exo_red", ID::P_MODEL));
+	me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Paladin J Nordstrom", ID::P_MODEL));
+	me2->RotationMesh(68, 180.0f * DegToRad);
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL));
