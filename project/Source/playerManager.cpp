@@ -38,6 +38,7 @@ void PlayerManager::Update()
 
 void PlayerManager::Draw()
 {
+
 }
 
 void PlayerManager::CreatePlayer()
@@ -75,7 +76,7 @@ void PlayerManager::CreatePlayer()
 	camera->Start(FindGameObject<EnemyManager>()->GetEnemy());*/
 	//me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "exo_red", ID::P_MODEL));
 	me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Paladin J Nordstrom", ID::P_MODEL));
-	me2->RotationMesh(68, 180.0f * DegToRad);
+	me2->RotationMesh(67, 180.0f * DegToRad);
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL));
@@ -108,7 +109,7 @@ void PlayerManager::CreatePlayer()
 	Object2D* guage = new Object2D();
 	guage->Init(VECTOR2F(970, 1000), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 0.5f), "playerHpGuage");
 
-	playerPointer->AddChild(guage); 
+	playerPointer->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
 	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);

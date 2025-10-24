@@ -153,13 +153,13 @@ void EnemyManager::CreateBoss()
 	RayCollider* collider3 = boss->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::B_FLOOR;
-	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 10.0, 1.0)), Transform(VECTOR3(0, -70, 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 10.0, 1.0)), Transform(VECTOR3(0, -0, 0), VZero, VECTOR3(1.0f, 1, 1)));
 
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
 
 	MeshRenderer* m = boss->Component()->AddComponent<MeshRenderer>();
 	m->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "BossModel", ID::B_MODEL));
-	m->RotationMesh(1, DX_PI_F);
+	m->RotationMesh(0, 180.0f * DegToRad);
 
 	Boss* b = boss->Component()->AddComponent<Boss>();
 
