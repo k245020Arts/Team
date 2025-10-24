@@ -390,7 +390,7 @@
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClCompile>
     <ClCompile Include="Source\AttackSorting.cpp">
-      <Filter>PlayScene\Boss</Filter>
+      <Filter>PlayScene\Boss\BossState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -832,7 +832,7 @@
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClInclude>
     <ClInclude Include="Source\AttackSorting.h">
-      <Filter>PlayScene\Boss</Filter>
+      <Filter>PlayScene\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

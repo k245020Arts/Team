@@ -116,6 +116,7 @@ void Boss::LookPlayer()
 		bossTransform->rotation.y -= LOOK_SPEED;
 	else
 		bossTransform->rotation.y = direction;
+
 }
 
 void Boss::PlayerHit()
