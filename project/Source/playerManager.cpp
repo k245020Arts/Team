@@ -78,7 +78,7 @@ void PlayerManager::CreatePlayer()
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL));
 	anim->AddFile(ID::IDType::P_ANIM_IDOL, "B_WAIT", true, 1.0f);
-	anim->AddFile(ID::IDType::P_ANIM_RUN, "P_ATTACK_47_", true, 1.0f);
+	anim->AddFile(ID::IDType::P_ANIM_RUN, "P_ATTACK46", true, 1.0f);
 	anim->AddFile(ID::IDType::P_ANIM_AVOID, "P_AVOID", false, 1.0f,0.0f,5.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID, "P_JUST_AVOID", false, 1.5f,10.0f,25.0f);
 	anim->AddFile(ID::IDType::P_DAMAGE, "P_DAMAGE", false, 2.0f,0.0f,10.0f);

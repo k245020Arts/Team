@@ -40,6 +40,7 @@ void StageManager::CreateStage()
 	mesh->ModelHandle(Load::GetHandle(ID::S_MODEL));
 	Stage* stageComp = stage->Component()->AddComponent<Stage>();
 	CreateWall();
+
 	/*int num = 0;
 	for (int x = 0; x < 10; x++) {
 		for (int z = 0; z < 10; z++) {
