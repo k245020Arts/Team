@@ -49,6 +49,6 @@ namespace EnemyInformation {
 	};
 
 	//Å‰‚Ìƒ|ƒWƒVƒ‡ƒ“
-	const VECTOR3 BASE_POS = VECTOR3(500, 0, 0);
+	const VECTOR3 BASE_POS = VECTOR3(500, 1000, 0);
 
 };

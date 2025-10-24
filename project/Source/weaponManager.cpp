@@ -53,7 +53,7 @@ void WeaponManager::CreateEnemyWeapon()
 
 	eWeapon = eObj->Component()->AddComponent<CharaWeapon>();
 
-	eWeapon->ObjectPointer(enemy, 10, ID::E_MODEL, Load::LoadModel(Load::MODEL_PATH + "2Hand-Sword", ID::IDType::E_WEAPON));
+	eWeapon->ObjectPointer(enemy, 10, ID::E_MODEL, -1);
 	eWeapon->SetImage(Load::GetHandle(ID::SWORD_EFFECT));
 	//wea->CreateSwordEffect();
 }

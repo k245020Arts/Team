@@ -52,7 +52,7 @@ void EnemyManager::CreateEnemy()
 {
 	Object3D* e;
 	e = new Object3D();
-	e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(2.0f, 2.0f,2.0f), "ENEMY");
+	e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(2.5f, 2.5f,2.5f), "ENEMY");
 	//“–‚½‚è”»’è‚ð¶¬i‚â‚ç‚ê”»’èj
 	SphereCollider* collider = e->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -74,12 +74,12 @@ void EnemyManager::CreateEnemy()
 	RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::E_FLOOR;
-	collider3->RaySet(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10, 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -100, 0), VZero, VECTOR3(1.0f, 1, 1)));
 	
 	Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
 	MeshRenderer* me = e->Component()->AddComponent<MeshRenderer>();
-	me->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "RPG-Character", ID::IDType::E_MODEL));
+	me->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Ch45_nonPBR", ID::IDType::E_MODEL));
 	me->RotationMesh(1, DX_PI_F);
 
 	Animator* anim = e->Component()->AddComponent<Animator>();
