@@ -104,9 +104,10 @@ void Boss::LookPlayer()
 	VECTOR3 distance = targetPos - bossTransform->position;
 
 	float direction = -atan2f(distance.z, distance.x) - 0.5f * DX_PI_F;
-	float sign = direction - bossTransform->rotation.y;
+	/*float sign = direction - bossTransform->rotation.y;*/
+	float sign = (direction - bossTransform->rotation.y)* 180*DegToRad;
 
-	sign -= floorf(sign / DX_PI_F / 2) * DX_PI_F * 2;
+	sign -= floorf(sign / DX_PI_F / 2) * DX_PI_F * 2.0f;//2
 	const float LOOK_SPEED = 0.2f;
 	if (sign > DX_PI_F)
 		sign -= 2 * DX_PI_F;
