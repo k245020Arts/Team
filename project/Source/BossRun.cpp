@@ -45,7 +45,9 @@ void BossRun::Update()
 		}		*/
 		b->enemyBaseComponent.state->ChangeState(ID::B_AttackSorting); 
 	}
-	
+	if (CheckHitKey(KEY_INPUT_M)) {
+		b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
+	}
 	
 }
 

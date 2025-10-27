@@ -68,5 +68,5 @@ namespace PlayerInformation {
 		GameManager* gameManager;
 	};
 
-	static const VECTOR3 BASE_INTERIA = VECTOR3(2500.0f, 2500.0f, 2500.0f);
+	static const VECTOR3 BASE_INTERIA = VECTOR3(7500.0f, 2500.0f, 7500.0f);
 }

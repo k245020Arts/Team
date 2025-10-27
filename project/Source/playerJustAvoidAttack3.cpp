@@ -17,7 +17,7 @@ PlayerJustAvoidAttack3::PlayerJustAvoidAttack3()
 	id = ID::P_ANIM_JUST_AVOID_ATTACK3;
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK3;
 	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(200, 0, 0));
-	nextAttackID = ID::P_ANIM_JUST_AVOID_ATTACK2;
+	nextAttackID = ID::P_ANIM_ATTACK1;
 	frontSpeed = 12000.0f;
 	hitDamage = 5.0f;
 }
@@ -28,7 +28,7 @@ PlayerJustAvoidAttack3::~PlayerJustAvoidAttack3()
 
 void PlayerJustAvoidAttack3::Update()
 {
-	Player* p = GetBase<Player>();
+	/*Player* p = GetBase<Player>();
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
 	if (!noStateChange) {
@@ -82,6 +82,39 @@ void PlayerJustAvoidAttack3::Update()
 				p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(40000.0f, 40000.0f, 40000.0f));
 			}
 		}
+	}*/
+
+	Player* p = GetBase<Player>();
+	AttackCollsion();
+	PlayerAttackStateBase::Update();
+	if (!noStateChange) {
+		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
+			//p->playerCom.player->AvoidReady();
+			nextAvoid = true;
+			//noStateChange = true;
+		}
+		if (p->playerCom.InputManager->KeyInputDown("attack")) {
+			nextAttack = true;
+		}
+		timer -= Time::DeltaTimeRate();
+		if (timer <= 0.0f) {
+			p->playerCom.anim->SetPlaySpeed(1.0f);
+		}
+		if (p->playerCom.anim->AnimEventCan()) {
+			p->playerCom.anim->SetPlaySpeed(2.5f);
+			beforeAttack = false;
+			p->playerCom.physics->SetVelocity(VZero);
+		}
+		else {
+			if (beforeAttack) {
+				//p->playerCom.anim->SetPlaySpeed(1.5f);
+			}
+			else {
+				runTimer = 0.4f;
+				noStateChange = true;
+				p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
+			}
+		}
 	}
 }
 
@@ -95,10 +128,10 @@ void PlayerJustAvoidAttack3::Start()
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
 	if (distSize <= ATTACK_MOVE_DIST) {
-		p->playerCom.physics->SetVelocity(norm * distSize * 5.0f);
+		p->playerCom.physics->SetVelocity(norm * distSize * 2.0f);
 	}
 	p->playerCom.anim->SetPlaySpeed(0.1f);
-	count = ATTACK_NUMMAX;
+	//count = ATTACK_NUMMAX;
 }
 
 void PlayerJustAvoidAttack3::Finish()

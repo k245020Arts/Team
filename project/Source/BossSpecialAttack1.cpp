@@ -2,6 +2,7 @@
 #include "Boss.h"
 #include "stateManager.h"
 #include "Animator.h"
+#include "Physics.h"
 
 BossSpecialAttack1::BossSpecialAttack1()
 {
@@ -19,6 +20,8 @@ BossSpecialAttack1::~BossSpecialAttack1()
 void BossSpecialAttack1::Update()
 {
 	Boss* b = GetBase<Boss>();
+
+	b->enemyBaseComponent.physics->AddGravity(VECTOR3(0, -100, 0));
 	
 	if (a == 0)
 	{
@@ -51,7 +54,7 @@ void BossSpecialAttack1::Update()
 		}
 	}
 	
-	b->obj->GetTransform()->position += velocity;
+	//b->obj->GetTransform()->position += velocity;
 }
 
 void BossSpecialAttack1::Draw()
@@ -61,8 +64,12 @@ void BossSpecialAttack1::Draw()
 void BossSpecialAttack1::Start()
 {
 	EnemyStateBase::Start();
+	Boss* b = GetBase<Boss>();
+	b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0,1500,0),false);
 }
 
 void BossSpecialAttack1::Finish()
 {
+	Boss* b = GetBase<Boss>();
+	b->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));
 }
