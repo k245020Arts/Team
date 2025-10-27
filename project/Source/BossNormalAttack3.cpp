@@ -19,7 +19,10 @@ void BossNormalAttack3::Update()
 {
 	Boss* boss = GetBase<Boss>();
 	if (boss->enemyBaseComponent.anim->IsFinish()) {
-		boss->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+		if (boss->maxAttack != 0)
+			boss->enemyBaseComponent.state->ChangeState(ID::B_AttackSorting);
+		else
+			boss->enemyBaseComponent.state->ChangeState(ID::B_RUN);
 	}
 	BossAttackCollsion();
 	AttackSound();

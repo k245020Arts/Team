@@ -52,4 +52,6 @@ private:
 	const int BOSS_RIGHT_HAND_FRAME = 15;
 	const int BOSS_LEFT_HAND_FRAME = 11;
 	CharaWeapon* chara;
+
+	int maxAttack;
 };

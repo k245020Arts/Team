@@ -5,8 +5,8 @@
 
 BossRun::BossRun()
 {
-	animId = ID::B_IDOL;
 	id = ID::B_RUN;
+	animId = ID::B_RUN;
 	string = Function::GetClassNameC<BossRun>();
 }
 
@@ -28,25 +28,10 @@ void BossRun::Update()
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 
 	if (targetVec.Size() >= ChaseRange)
-	{
 		b->enemyBaseComponent.state->ChangeState(ID::B_IDOL);
-	}
+
 	if (targetVec.Size() <= 1000.0f)
-	{
-		/*int a = GetRand(2);
-		if (a == 0) {
-			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
-		}
-		else if (a == 1) {
-			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK2);
-		}
-		else {
-			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK3);
-		}		*/
-		b->enemyBaseComponent.state->ChangeState(ID::B_AttackSorting); 
-	}
-	
-	
+		b->enemyBaseComponent.state->ChangeState(ID::B_AttackSorting);
 }
 
 void BossRun::Draw()
