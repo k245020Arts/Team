@@ -31,6 +31,7 @@ PlayerAttackStateBase::~PlayerAttackStateBase()
 void PlayerAttackStateBase::Update()
 {
 	Player* p = GetBase<Player>();
+	//p->playerTransform->position = p->playerCom.anim->BoneNowPosition();
 	if (p->playerCom.anim->AnimEventCan()) {
 		p->playerCom.player->DrawTrail();
 		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/

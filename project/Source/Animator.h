@@ -19,6 +19,7 @@ public:
 	~Animator();
 
 	void BaseModelSet(int _model, int _root);
+	void BaseModelSet(int _model, std::string _rootName);
 
 	/// <summary>
 	/// アニメーションの再生をする

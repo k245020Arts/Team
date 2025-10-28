@@ -12,8 +12,8 @@ PlayerAttack4::PlayerAttack4()
 	string = Function::GetClassNameC<PlayerAttack4>();
 	id = ID::P_ANIM_ATTACK4;
 	animId = ID::P_ANIM_ATTACK4;
-	collTrans = Transform(VECTOR3(0, 200, 200), VZero, VECTOR3(250, 0, 0));
-	frontSpeed = 1000.0f;
+	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(280, 0, 0));
+	frontSpeed = 2000.0f;
 	hitDamage = 8.0f;
 	nextAttackID = ID::P_ANIM_JUST_AVOID_ATTACK3;
 }
@@ -43,7 +43,8 @@ void PlayerAttack4::Update()
 		if (p->playerCom.anim->AnimEventCan()) {
 			p->playerCom.anim->SetPlaySpeed(2.5f);
 			beforeAttack = false;
-			p->playerCom.physics->SetVelocity(VZero);
+			//p->playerCom.physics->SetVelocity(VZero);
+			p->playerCom.physics->AddVelocity(VECTOR3(0, 50000, 0), true);
 		}
 		else {
 			if (beforeAttack) {
@@ -68,11 +69,12 @@ void PlayerAttack4::Start()
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
 	timer = 0.01f;
-	p->playerCom.anim->SetPlaySpeed(0.1f);
-	p->playerCom.physics->AddVelocity(VECTOR3(0, 100000, 0), true);
+	//p->playerCom.anim->SetPlaySpeed(0.1f);
+	p->playerCom.physics->SetGravity(VZero);
 	//UŒ‚‚Ì‘O‚É‚½‚ß‚ð‚¢‚ê‚é‚½‚ß‚Ìshake
 	//p->playerCom.shaker->ShakeStart(VECTOR3(20.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 0.4f);
 	//p->playerCom.controller->ControlVibrationStartFrame(100, 20);
+	p->playerCom.physics->SetGravity(PlayerInformation::BASE_GRAVITY);
 }
 
 void PlayerAttack4::Finish()

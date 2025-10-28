@@ -16,9 +16,10 @@ PlayerJustAvoidAttack3::PlayerJustAvoidAttack3()
 	string = Function::GetClassNameC<PlayerJustAvoidAttack3>();
 	id = ID::P_ANIM_JUST_AVOID_ATTACK3;
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK3;
-	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(200, 0, 0));
+	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(280, 0, 0));
 	nextAttackID = ID::P_ANIM_ATTACK1;
-	frontSpeed = 4000.0f;
+	//frontSpeed = 500.0f;
+	frontSpeed = 0.0f;
 	hitDamage = 5.0f;
 }
 
@@ -97,15 +98,38 @@ void PlayerJustAvoidAttack3::Update()
 			nextAttack = true;
 		}
 		timer -= Time::DeltaTimeRate();
-		if (timer <= 0.0f) {
+		if (p->playerCom.physics->GetGravity().y <= -30000.0f) {
 			p->playerCom.anim->SetPlaySpeed(1.0f);
 		}
+		else {
+			p->playerCom.physics->AddGravity(VECTOR3(0, -1500, 0));
+		}
+		//if (p->playerCom.anim->GetCurrentFrame() >= p->playerCom.anim->EventStartTime(animId) - 3.0f) {
+			
+		//}
 		if (p->playerCom.anim->AnimEventCan()) {
 			p->playerCom.anim->SetPlaySpeed(2.5f);
 			beforeAttack = false;
 			p->playerCom.physics->SetVelocity(VZero);
+			//p->playerCom.anim->SetPlaySpeed(1.0f);
 		}
 		else {
+			if (!beforeAttack) {
+				p->playerCom.anim->SetFrame(p->playerCom.anim->EventStartTime(animId));
+				firstColl = true;
+			}
+			/*if (p->playerCom.physics->GetGround()) {
+				if (beforeAttack) {
+					p->playerCom.anim->SetPlaySpeed(1.5f);
+				}
+				else {
+					runTimer = 0.4f;
+					noStateChange = true;
+					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
+				}
+			}*/
+		}
+		if (p->playerCom.physics->GetGround()) {
 			if (beforeAttack) {
 				//p->playerCom.anim->SetPlaySpeed(1.5f);
 			}
@@ -127,10 +151,13 @@ void PlayerJustAvoidAttack3::Start()
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
-	if (distSize <= ATTACK_MOVE_DIST) {
+	/*if (distSize <= ATTACK_MOVE_DIST) {
 		p->playerCom.physics->SetVelocity(norm * distSize * 2.0f);
-	}
+	}*/
 	p->playerCom.anim->SetPlaySpeed(0.1f);
+	p->playerCom.physics->AddGravity(VECTOR3(0, 0, 0));
+	p->playerCom.physics->SetGravity(VZero);
+	//timer = 2.0f;
 	//count = ATTACK_NUMMAX;
 }
 
@@ -140,15 +167,17 @@ void PlayerJustAvoidAttack3::Finish()
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.anim->AnimEventReset();
+	p->playerCom.physics->SetGravity(PlayerInformation::BASE_GRAVITY);
+
 }
 
 void PlayerJustAvoidAttack3::Again()
 {
 	Player* p = GetBase<Player>();
 	PlayerAttackStateBase::Start();
-	if (distSize <= ATTACK_MOVE_DIST) {
+	/*if (distSize <= ATTACK_MOVE_DIST) {
 		p->playerCom.physics->SetVelocity(norm * distSize * 5.0f);
-	}
+	}*/
 	firstColl = true;
 	count--;
 	

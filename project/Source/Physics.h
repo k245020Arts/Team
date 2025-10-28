@@ -38,6 +38,7 @@ public:
 	void AddPosition(VECTOR3 _pos) { currentTransform->position += _pos; }
 
 	void SetGround(bool _g) { ground = _g; }
+	bool GetGround() { return ground; }
 
 private:
 

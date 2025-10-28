@@ -1,4 +1,4 @@
-#include "Animator.h"
+﻿#include "Animator.h"
 #include <string>
 #include <assert.h>
 #include "../Library/time.h"
@@ -43,9 +43,16 @@ void Animator::BaseModelSet(int _model, int _root)
     rootNum = _root;
 }
 
+void Animator::BaseModelSet(int _model, std::string _rootName)
+{
+    baseModel = _model;
+    rootNum = MV1SearchFrame(_model, _rootName.c_str());
+}
+
 void Animator::Update()
 {
 
+    //MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
     //MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
 
     if (current.attachID >= 0)
@@ -81,15 +88,22 @@ void Animator::Update()
             MV1SetAttachAnimTime(baseModel, current.attachID, current.frame);
         }
 
-        MATRIX currentM = MV1GetFrameLocalMatrix(baseModel, rootNum);
+        // --- rootボーンのローカル位置（アニメーションが与える移動）を取得 ---
+        VECTOR3 prevPos = currentPosition;
+        currentPosition = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, rootNum);
 
-        const VECTOR3 framePos = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, rootNum);
+        // --- フレーム間の移動差分を計算 ---
+        subPosition = currentPosition - prevPos;
 
-        currentM *= MGetTranslate(framePos * -1.0f);
-           
-        currentM *= MGetTranslate(VECTOR3(0.0f, framePos.y, 0.0f));
+        // --- 現在のrootフレームのローカル行列を取得 ---
+        MATRIX rootLocal = MV1GetFrameLocalMatrix(baseModel, rootNum);
 
-        //MV1SetFrameUserLocalMatrix(baseModel, rootNum, currentM);
+        // --- アニメーションで動いた分（currentPosition）をキャンセル ---
+        rootLocal = MMult(rootLocal, MGetTranslate(VGet(-currentPosition.x, 0.0f, -currentPosition.z)));
+
+        // --- 補正を適用 ---
+        MV1SetFrameUserLocalMatrix(baseModel, rootNum, rootLocal);
+
     }
 
     if (before.attachID>=0)
@@ -121,6 +135,7 @@ void Animator::Update()
         MV1SetAttachAnimBlendRate(baseModel, current.attachID, rate);
         MV1SetAttachAnimBlendRate(baseModel, before.attachID, 1.0f - rate);
     }
+
 }
 
 void Animator::AddFile(ID::IDType id, std::string filename, bool loop, float speed, float _eventStart, float _eventFinish)
@@ -140,11 +155,11 @@ void Animator::AddFile(ID::IDType id, std::string filename, bool loop, float spe
     if (fileInfos.count(str) > 0)
     {
         MessageBox(nullptr,
-            (std::string("ID=") + (str)+"�͎g���Ă��܂�").c_str(),
+            (std::string("ID=") + (str)+"は使われています").c_str(),
             "Animator", MB_OK);
         assert(false);
     }
-    fileInfos.emplace(str, inf); // �o�^
+    fileInfos.emplace(str, inf); // 登録
 }
 
 void Animator::Play(ID::IDType id, float margeTime)
