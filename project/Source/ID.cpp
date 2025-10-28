@@ -51,6 +51,8 @@ namespace {
 		"c_free",
 		"b_idol"
 		"b_run"
+		"b_coolTime",//
+		"b_attackSorting"//
 		"b_n_attack1",
 		"b_n_attack2",
 		"b_n_attack3",
@@ -60,7 +62,6 @@ namespace {
 		"b_s_attack2",
 		"b_s_attack3",
 		"b_s_attack4",
-		"b_attackSorting"//
 		"sword_effect_b"
 	};
 }

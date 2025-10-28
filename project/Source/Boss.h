@@ -12,6 +12,7 @@ class Boss : public EnemyBase
 {
 public:
 	friend class AttackSorting;
+	friend class BossCoolTime;
 	friend class BossIdol;
 	friend class BossRun;
 	friend class BossNormalAttack1;

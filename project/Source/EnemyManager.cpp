@@ -131,7 +131,8 @@ void EnemyManager::CreateBoss()
 {
 	Object3D* boss;
 	boss = new Object3D();
-	boss->Init(Transform(VECTOR3(0, 450, 0), VZero, VECTOR3(5, 5, 5)), "Boss");
+	float a = 7.0f;
+	boss->Init(Transform(VECTOR3(0, 450, 0), VZero, VECTOR3(a, a - 1, a)), "Boss");
 
 	SphereCollider* collider = boss->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -167,7 +168,8 @@ void EnemyManager::CreateBoss()
 	physics->Start(VECTOR3(0.0f, -1500.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));
 
 	Animator* anim = boss->Component()->AddComponent<Animator>();
-	anim->AddFile(ID::B_IDOL, "B_ATTACK3", true,1.0f);
+	anim->AddFile(ID::B_IDOL, "B_IDLE", true,1.0f);
+	anim->AddFile(ID::B_COOLTIME, "B_IDLE2", true, 1.0f, 30.0f, 45.0f);
 	anim->AddFile(ID::B_RUN, "B_WALK", true, 1.0f, 30.0f, 45.0f);
 	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,30.0f,45.0f);
 	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,30.0f,45.0f);
