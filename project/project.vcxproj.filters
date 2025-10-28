@@ -392,6 +392,9 @@
     <ClCompile Include="Source\AttackSorting.cpp">
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BossCoolTime.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -832,6 +835,9 @@
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClInclude>
     <ClInclude Include="Source\AttackSorting.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossCoolTime.h">
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>

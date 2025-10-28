@@ -18,7 +18,6 @@ public:
 	void Finish()override;
 
 private:
-	AttackSorting* sorting;//UŒ‚‚ÌU‚è•ª‚¯
 	VECTOR3 velocity;
 	VECTOR3 rotation;
 };

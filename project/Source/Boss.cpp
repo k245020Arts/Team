@@ -27,6 +27,7 @@
 #include "CharaWeapon.h"
 #include "LoadManager.h"
 #include "AttackSorting.h"
+#include "BossCoolTime.h"
 
 Boss::Boss()
 {
@@ -80,7 +81,8 @@ void Boss::Start(Object3D* _obj)
 
 	enemyBaseComponent.state->CreateState<BossIdol>(GetID(B_IDOL));
 	enemyBaseComponent.state->CreateState<BossRun>(GetID(B_RUN));
-	enemyBaseComponent.state->CreateState<AttackSorting>(GetID(B_AttackSorting));
+	enemyBaseComponent.state->CreateState<BossCoolTime>(GetID(B_COOLTIME));
+	enemyBaseComponent.state->CreateState<AttackSorting>(GetID(B_ATTACKSORTING));
 	enemyBaseComponent.state->CreateState<BossNormalAttack1>(GetID(B_N_ATTACK1));
 	enemyBaseComponent.state->CreateState<BossNormalAttack2>(GetID(B_N_ATTACK2));
 	enemyBaseComponent.state->CreateState<BossNormalAttack3>(GetID(B_N_ATTACK3));

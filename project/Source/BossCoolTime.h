@@ -1,18 +1,18 @@
 #pragma once
 #include "enemyStateBase.h"
 
-class AttackSorting :public EnemyStateBase
+class BossCoolTime:public EnemyStateBase
 {
 public:
-	AttackSorting();
-	~AttackSorting();
+	BossCoolTime();
+	~BossCoolTime();
+
 	void Update()override;
 
 	void Start()override;
 	void Finish()override;
 
 private:
-	const int MAXATK = 3;
-	const float COOLTIME = 30.0f;
+	const float COOLTIME = 60.0f;
 	float coolTime;
 };

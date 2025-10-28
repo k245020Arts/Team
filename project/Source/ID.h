@@ -51,6 +51,8 @@ namespace ID {
 		C_FREE,
 		B_IDOL,
 		B_RUN,
+		B_COOLTIME,
+		B_ATTACKSORTING,
 		B_N_ATTACK1,
 		B_N_ATTACK2,
 		B_N_ATTACK3,
@@ -60,7 +62,6 @@ namespace ID {
 		B_S_ATTACK2,
 		B_S_ATTACK3,
 		B_S_ATTACK4,
-		B_AttackSorting,
 		SWORD_EFFECT_B,
 
 		ID_MAX,

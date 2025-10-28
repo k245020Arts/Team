@@ -31,7 +31,7 @@ void BossRun::Update()
 		b->enemyBaseComponent.state->ChangeState(ID::B_IDOL);
 
 	if (targetVec.Size() <= 1000.0f)
-		b->enemyBaseComponent.state->ChangeState(ID::B_AttackSorting);
+		b->enemyBaseComponent.state->ChangeState(ID::B_COOLTIME);
 }
 
 void BossRun::Draw()

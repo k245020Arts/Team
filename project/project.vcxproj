@@ -172,6 +172,7 @@
     <ClInclude Include="Source\AttackSorting.h" />
     <ClInclude Include="Source\BlurScreen.h" />
     <ClInclude Include="Source\Boss.h" />
+    <ClInclude Include="Source\BossCoolTime.h" />
     <ClInclude Include="Source\BossIdol.h" />
     <ClInclude Include="Source\BossInformation.h" />
     <ClInclude Include="Source\BossManager.h" />
@@ -318,6 +319,7 @@
     <ClCompile Include="Source\BlurScreen.cpp" />
     <ClCompile Include="Source\BootScene.cpp" />
     <ClCompile Include="Source\Boss.cpp" />
+    <ClCompile Include="Source\BossCoolTime.cpp" />
     <ClCompile Include="Source\BossIdol.cpp" />
     <ClCompile Include="Source\BossManager.cpp" />
     <ClCompile Include="Source\BossNormalAttack1.cpp" />

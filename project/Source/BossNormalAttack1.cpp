@@ -20,7 +20,7 @@ void BossNormalAttack1::Update()
 	Boss* boss = GetBase<Boss>();
 	if (boss->enemyBaseComponent.anim->IsFinish()) {
 		if (boss->maxAttack != 0)
-			boss->enemyBaseComponent.state->ChangeState(ID::B_AttackSorting);
+			boss->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
 		else
 			boss->enemyBaseComponent.state->ChangeState(ID::B_RUN);
 	}
