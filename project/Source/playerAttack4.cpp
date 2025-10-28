@@ -69,6 +69,7 @@ void PlayerAttack4::Start()
 	PlayerAttackStateBase::Start();
 	timer = 0.01f;
 	p->playerCom.anim->SetPlaySpeed(0.1f);
+	p->playerCom.physics->AddVelocity(VECTOR3(0, 100000, 0), true);
 	//UŒ‚‚Ì‘O‚É‚½‚ß‚ð‚¢‚ê‚é‚½‚ß‚Ìshake
 	//p->playerCom.shaker->ShakeStart(VECTOR3(20.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 0.4f);
 	//p->playerCom.controller->ControlVibrationStartFrame(100, 20);

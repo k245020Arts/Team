@@ -18,7 +18,7 @@ PlayerJustAvoidAttack3::PlayerJustAvoidAttack3()
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK3;
 	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(200, 0, 0));
 	nextAttackID = ID::P_ANIM_ATTACK1;
-	frontSpeed = 12000.0f;
+	frontSpeed = 4000.0f;
 	hitDamage = 5.0f;
 }
 

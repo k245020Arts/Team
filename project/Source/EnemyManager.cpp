@@ -90,7 +90,7 @@ void EnemyManager::CreateEnemy()
 	anim->AddFile(ID::E_GETUP, "E_GETUP", false, 2.0f);
 	anim->AddFile(ID::E_RUN, "E_RUN", true, 1.0f);
 	anim->AddFile(ID::IDType::E_DIE, "E_DIE", false, 0.5f, 9.0f, 12.0f);
-	anim->BaseModelSet(Load::GetHandle(ID::E_MODEL));
+	anim->BaseModelSet(Load::GetHandle(ID::E_MODEL),1);
 	anim->Play(ID::E_ANIM_IDOL);
 
 	Physics* physics = e->Component()->AddComponent<Physics>();
@@ -172,7 +172,7 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,30.0f,45.0f);
 	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,30.0f,45.0f);
 	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false,1.0f,35.0f,45.0f);
-	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL));
+	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL),0);
 
 	b->Start(boss);
 

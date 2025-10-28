@@ -37,13 +37,17 @@ Animator::~Animator()
     fileInfos.clear();
 }
 
-void Animator::BaseModelSet(int _model)
+void Animator::BaseModelSet(int _model, int _root)
 {
     baseModel = _model;
+    rootNum = _root;
 }
 
 void Animator::Update()
 {
+
+    //MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
+
     if (current.attachID >= 0)
     { // current
         const FileInfo& f = fileInfos[current.fileID];
@@ -77,14 +81,15 @@ void Animator::Update()
             MV1SetAttachAnimTime(baseModel, current.attachID, current.frame);
         }
 
-        MATRIX currentM = MV1GetFrameLocalMatrix(baseModel, 0);
+        MATRIX currentM = MV1GetFrameLocalMatrix(baseModel, rootNum);
 
-        const VECTOR3 framePos = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, 0);
+        const VECTOR3 framePos = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, rootNum);
 
         currentM *= MGetTranslate(framePos * -1.0f);
            
         currentM *= MGetTranslate(VECTOR3(0.0f, framePos.y, 0.0f));
 
+        //MV1SetFrameUserLocalMatrix(baseModel, rootNum, currentM);
     }
 
     if (before.attachID>=0)

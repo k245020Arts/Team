@@ -18,7 +18,7 @@ public:
 	Animator();
 	~Animator();
 
-	void BaseModelSet(int _model);
+	void BaseModelSet(int _model, int _root);
 
 	/// <summary>
 	/// アニメーションの再生をする
@@ -32,7 +32,7 @@ public:
 	/// <param name="filename">アニメーションファイル</param>
 	/// <param name="loop">ループする場合はtrue</param>
 	/// <param name="speed">再生倍率（基本は1.0）</param>
-	void AddFile(ID::IDType id, std::string filename, bool loop, float speed = 1.0f,float _eventStart = -1.0f,float _eventFinish = -1.0f);
+	void AddFile(ID::IDType id, std::string filename, bool loop,float speed = 1.0f,float _eventStart = -1.0f,float _eventFinish = -1.0f);
 
 	/// <summary>
 	/// アニメーションを再生する
@@ -105,13 +105,15 @@ public:
 
 private:
 	int baseModel;
+	int rootNum;
 	struct FileInfo {
 		int hModel;
 		bool loop;
 		float maxFrame;
 		float playSpeed;
 		float eventStartTime;
-		float eventFinishTime;;
+		float eventFinishTime;
+		
 		FileInfo() : hModel(-1), loop(false), maxFrame(1.0f), playSpeed(1.0f), eventFinishTime(-1.0f), eventStartTime(-1.0f){}
 	};
 	std::map<std::string, FileInfo> fileInfos;
