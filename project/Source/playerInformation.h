@@ -18,6 +18,7 @@ class SoundManager;
 class WeaponManager;
 class MotionBlur;
 class GameManager;
+class EnemyManager;
 
 namespace PlayerInformation {
 
@@ -47,6 +48,7 @@ namespace PlayerInformation {
 			weapon = nullptr;
 			blur = nullptr;
 			gameManager = nullptr;
+			enemyManager = nullptr;
 		}
 		StateManager* stateManager;
 		MeshRenderer* renderer;
@@ -66,6 +68,7 @@ namespace PlayerInformation {
 		WeaponManager* weapon;
 		MotionBlur* blur;
 		GameManager* gameManager;
+		EnemyManager* enemyManager;
 	};
 
 	static const VECTOR3 BASE_INTERIA = VECTOR3(7500.0f, 2500.0f, 7500.0f);

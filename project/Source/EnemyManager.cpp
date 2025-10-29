@@ -26,6 +26,7 @@ EnemyManager::EnemyManager()
 EnemyManager::~EnemyManager()
 {
 	enemy.clear();
+	chara.clear();
 }
 
 void EnemyManager::Update()
@@ -99,6 +100,7 @@ void EnemyManager::CreateEnemy()
 
 	Enemy* en = e->Component()->AddComponent<Enemy>();
 	//e->Start(enemy);
+	chara.emplace_back(en);
 	
 	enemy.emplace_back(e);
 }
@@ -177,7 +179,7 @@ void EnemyManager::CreateBoss()
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL),0);
 
 	b->Start(boss);
-
+	chara.emplace_back(b);
 	enemy.emplace_back(boss);
 }
 
@@ -186,10 +188,55 @@ bool EnemyManager::PlayerDistance(Camera* camera)
 	float distance = 1000000;
 	VECTOR3 dir = camera->GetTarget() - camera->GetCameraTransform()->position;
 	dir = dir.Normalize();
-	auto keepItr = enemy.begin();
-	auto lastItr = enemy.begin();
+	auto keepItr = chara.begin();
+	auto lastItr = chara.begin();
 
-	for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		if ((*itr)->GetLastTarget()) {
+			lastItr = itr;
+			continue;
+		}
+		VECTOR3 target = (*itr)->GetBaseObject()->GetTransform()->position - player->GetTransform()->position;
+		float dist = target.Size();
+
+		if (VDot(dir.Normalize(), target.Normalize()) < cosf(90.0f * DegToRad)) {
+			continue;
+		}
+		if (distance > dist) {
+			distance = dist;
+			keepItr = itr;
+		}
+	}
+
+	if (distance < 100000) {
+		(*lastItr)->LastTargetOut();
+		(*keepItr)->LastTargetIn();
+		
+		player->Component()->GetComponent<Player>()->TargetObjSet((*keepItr)->GetBaseObject());
+		camera->TargetSet((*keepItr)->GetBaseObject());
+		return true;
+	}
+	(*lastItr)->LastTargetOut();
+	
+	player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);
+	return false;
+}
+
+void EnemyManager::JustAvoidTargetChange(Object3D* _obj)
+{
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		if ((*itr)->GetBaseObject() == _obj) {
+			(*itr)->LastTargetIn();
+			continue;
+		}
+		if ((*itr)->GetLastTarget()) {
+			(*itr)->LastTargetOut();
+			continue;
+		}
+	}
+}
+
+	/*for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {
 		CharaBase* e;
 		if ((*itr)->GetTag() == "ENEMY") {
 			e = (*itr)->Component()->GetComponent<Enemy>();
@@ -241,7 +288,5 @@ bool EnemyManager::PlayerDistance(Camera* camera)
 	else {
 		(*lastItr)->Component()->GetComponent<Boss>()->LastTargetOut();
 	}
-	player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);
-	return false;
-}
+	player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);*/
 ;

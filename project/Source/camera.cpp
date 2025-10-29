@@ -52,7 +52,7 @@ void Camera::Update()
 		if (!rockOn) {
 			if (cameraComponent.enemyManager->PlayerDistance(this)) {
 				cameraComponent.state->NowChangeState(ID::C_FOLLOW);
-				rockOn = !rockOn;
+				//rockOn = !rockOn;
 			}
 			
 		}
@@ -164,6 +164,7 @@ void Camera::TargetSet(BaseObject* _obj)
 {
 	cameraComponent.target.obj = _obj;
 	cameraComponent.target.transform = cameraComponent.target.obj->GetTransform();
+	rockOn = true;
 }
 
 void Camera::TargetEnemySet()

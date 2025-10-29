@@ -33,6 +33,7 @@ public:
 	int GetId() { return debugId; }
 	std::string GetCollTag() { return colltag; }
 	void SetCollTag(std::string _tag) { colltag = _tag; }
+	BaseObject* GetBaseObject() { return obj; }
 
 	//void SetSlowMode(bool _slow) { slowMode = _slow;}
 

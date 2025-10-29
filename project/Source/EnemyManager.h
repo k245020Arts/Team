@@ -4,6 +4,7 @@
 
 class Object3D;
 class Camera;
+class CharaBase;
 
 class EnemyManager : public GameObject
 {
@@ -22,9 +23,11 @@ public:
 	void CreateBoss();
 
 	bool PlayerDistance(Camera* camera);
+	void JustAvoidTargetChange(Object3D* _obj);
 
 private:
 	
 	std::list<Object3D*> enemy;
 	Object3D* player;
+	std::list<CharaBase*> chara;
 };

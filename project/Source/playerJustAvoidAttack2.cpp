@@ -139,4 +139,5 @@ void PlayerJustAvoidAttack2::Finish()
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.anim->AnimEventReset();
+	p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
 }

@@ -40,6 +40,7 @@
 #include "GameManager.h"
 #include "PlayerDie.h"
 #include "EnemyManager.h"
+#include "ComponentManager.h"
 
 Player::Player()
 {
@@ -143,6 +144,7 @@ void Player::Start(Object3D* _obj)
 	playerCom.blur = obj->Component()->GetComponent<MotionBlur>();
 
 	playerCom.gameManager = FindGameObject<GameManager>();
+	playerCom.enemyManager = FindGameObject<EnemyManager>();
 	
 	avoidStart = false;
 	justAvoidCanCounter = 0.0f;
@@ -366,6 +368,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f) {
 			playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID);
 			playerCom.hitObj = _obj;
+			playerCom.enemyManager->JustAvoidTargetChange(dynamic_cast<Object3D*>(_obj));
 			playerCom.camera->TargetSet(_obj);
 			Debug::DebugLog("JustAvoid");
 			avoidStart = false;
