@@ -53,8 +53,11 @@ void Animator::Update()
 {
 
     //MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
-    //MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
+    //ローカルマトリックスの座標を打ち消す
+    MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
+    MATRIX matrix = MGetIdent();
 
+    VECTOR3 beforePos = currentPosition;
     if (current.attachID >= 0)
     { // current
         const FileInfo& f = fileInfos[current.fileID];
@@ -79,36 +82,32 @@ void Animator::Update()
             animEventCan = false;
         }
         if (current.boneIndex != -1) {
-            currentPosition = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, current.boneIndex);
+            currentPosition = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, rootNum);
             MV1SetAttachAnimTime(baseModel, current.attachID, current.frame);
-            nowPosition = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, current.boneIndex);
+            nowPosition = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, rootNum);
             subPosition = nowPosition - currentPosition;
         }
         else {
-            MV1SetAttachAnimTime(baseModel, current.attachID, current.frame);
+           MV1SetAttachAnimTime(baseModel, current.attachID, current.frame);
         }
 
-        // --- rootボーンのローカル位置（アニメーションが与える移動）を取得 ---
-        VECTOR3 prevPos = currentPosition;
-        currentPosition = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, rootNum);
+       
+        // 現在の行列を取得
+        matrix = MV1GetFrameLocalMatrix(baseModel, rootNum);
+        // 無補正時の座標を取得
+        const VECTOR3 framePos = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, rootNum);
 
-        // --- フレーム間の移動差分を計算 ---
-        subPosition = currentPosition - prevPos;
+        // 座標移動を打ち消す
+        matrix *= MGetTranslate(framePos * -1.0f);
 
-        // --- 現在のrootフレームのローカル行列を取得 ---
-        MATRIX rootLocal = MV1GetFrameLocalMatrix(baseModel, rootNum);
-
-        // --- アニメーションで動いた分（currentPosition）をキャンセル ---
-        rootLocal = MMult(rootLocal, MGetTranslate(VGet(-currentPosition.x, 0.0f, -currentPosition.z)));
-
-        // --- 補正を適用 ---
-        MV1SetFrameUserLocalMatrix(baseModel, rootNum, rootLocal);
+            // Yだけ維持、XZを原点
+        matrix *= MGetTranslate(VECTOR3(0.0f, framePos.y, 0.0f));
 
     }
 
     if (before.attachID>=0)
     { // before
-        blendTime += Time::DeltaTime();
+        blendTime += obj->GetObjectTimeRate();
         if (blendTime >= blendTimeMax)
         {
             MV1SetAttachAnimBlendRate(baseModel, current.attachID, 1.0f);
@@ -119,7 +118,7 @@ void Animator::Update()
             return;
         }
         const FileInfo& f = fileInfos[before.fileID];
-        before.frame += Time::DeltaTime() * playSpeed * f.playSpeed * 30.0f;
+        before.frame += obj->GetObjectTimeRate() * playSpeed * f.playSpeed * 30.0f;
         if (before.frame >= f.maxFrame)
         {
             if (f.loop) {
@@ -135,7 +134,107 @@ void Animator::Update()
         MV1SetAttachAnimBlendRate(baseModel, current.attachID, rate);
         MV1SetAttachAnimBlendRate(baseModel, before.attachID, 1.0f - rate);
     }
+    MV1SetFrameUserLocalMatrix(baseModel, rootNum, matrix);
 
+    // ①前姿勢を補正
+    // ②後姿勢を補正
+    // ③前姿勢と後姿勢を割合でブレンド
+
+    // 一旦リセット
+    //const FileInfo& f = fileInfos[current.fileID];
+    //MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
+
+    //MATRIX currentM = MGetIdent();	// 現在のアニメーションの行列
+    //MATRIX beforeM = MGetIdent();		// 前回のアニメーションの行列
+
+    //// ◇前回のアニメーションが再生中なら
+    //if (current.attachID >= 0) {
+    //    // ▽補間処理
+    //    {
+    //        blendTime += obj->GetObjectTimeRate() * playSpeed;
+
+    //        if (blendTime >= blendTimeMax) {
+    //            MV1DetachAnim(baseModel, before.attachID);
+    //            MV1SetAttachAnimBlendRate(baseModel, current.attachID, 1.0f);
+    //            before.attachID = -1;
+    //        }
+    //        else {
+    //            float rate = blendTime / blendTimeMax;
+    //            MV1SetAttachAnimBlendRate(baseModel, before.attachID, 1.0f - rate);
+    //            MV1SetAttachAnimBlendRate(baseModel, current.attachID, rate);
+    //        }
+    //    }
+
+    //    // 前回の行列を設定
+    //    beforeM = MV1GetFrameLocalMatrix(baseModel, rootNum);
+
+    //    // 無補正時の座標を取得
+    //    const VECTOR3 framePos = MV1GetAttachAnimFrameLocalPosition(baseModel, before.attachID, rootNum);
+
+    //    // 座標移動を打ち消す
+    //    beforeM *= MGetTranslate(framePos * -1.0f);
+
+    //    // Yだけ維持、XZを原点
+    //    beforeM *= MGetTranslate(VECTOR3(0.0f, framePos.y, 0.0f));
+    //}
+
+    //// ◇アニメーションが再生中なら
+    //if (current.attachID >= 0) {
+
+    //    current.beforeFrame = current.frame;
+    //    current.frame += obj->GetObjectTimeRate() * playSpeed * f.playSpeed * 30.0f;
+
+    //    // アニメーションが総再生フレームまで再生したら
+    //    if (current.frame >= f.maxFrame) {
+
+    //        if (!f.loop)
+    //            current.frame = f.maxFrame;
+    //        else {
+    //            current.frame -= f.maxFrame;
+
+    //        }
+    //    }
+
+    //    // アニメーションを適応させる
+    //    MV1SetAttachAnimTime(baseModel, current.attachID, current.frame);
+
+    //    // 現在の行列を取得
+    //    currentM = MV1GetFrameLocalMatrix(baseModel, rootNum);
+
+    //    if (fileInfos[current.fileID].eventFinishTime >= current.frame && fileInfos[current.fileID].eventStartTime <= current.frame) {
+    //        animEventCan = true;
+    //    }
+    //    else {
+    //        animEventCan = false;
+    //    }
+
+    //    // ◇ローカル座標の固定化が有効なら
+    //   /* if (anims[playingLabel].isFixedRoot)
+    //    {*/
+    //        // 無補正時の座標を取得
+    //        const VECTOR3 framePos = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, rootNum);
+
+    //        // 座標移動を打ち消す
+    //        currentM *= MGetTranslate(framePos * -1.0f);
+
+    //        // Yだけ維持、XZを原点
+    //        currentM *= MGetTranslate(VECTOR3(0.0f, framePos.y, 0.0f));
+    //   // }
+
+    //    // ◇前回のアニメーションが再生中なら、ブレンドする
+    //    if (before.attachID >= 0)
+    //    {
+    //        // root姿勢を滑らかに遷移
+    //        float progress = blendTime / blendTimeMax;
+
+    //        // 現姿勢と前姿勢を合成
+    //        // 最低値 + (最大値 - 最低値) * progress
+    //        currentM = MAdd(beforeM, MAdd(currentM, beforeM * MGetScale(VOne * -1.0f)) * MGetScale(VOne* progress));
+    //    }
+
+    //    // セット
+    //    MV1SetFrameUserLocalMatrix(baseModel, rootNum, currentM);
+    //}
 }
 
 void Animator::AddFile(ID::IDType id, std::string filename, bool loop, float speed, float _eventStart, float _eventFinish)

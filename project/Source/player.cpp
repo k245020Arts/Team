@@ -70,6 +70,7 @@ void Player::Update()
 {
 	//playerCom.stateManager->Update();
 	//‰ñ”ðó‘Ô‚ªŽn‚Ü‚é‚Æ‚«‚É‰ñ“]‚É•â³‚ðŠ|‚¯‚é‚½‚ß‚Ìˆ—
+	playerTransform->position = playerCom.anim->BoneMovePositionAdd(playerTransform->position);
 	if (avoidReady) {
 		AvoidRotationChange();
 	}

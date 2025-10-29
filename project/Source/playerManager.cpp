@@ -75,11 +75,11 @@ void PlayerManager::CreatePlayer()
 	/*Camera* camera = playerPointer->Component()->AddComponent<Camera>();
 	camera->Start(FindGameObject<EnemyManager>()->GetEnemy());*/
 	//me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "exo_red", ID::P_MODEL));
-	me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Player2", ID::P_MODEL));
+	me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Player4", ID::P_MODEL));
 	me2->RotationMesh(0, 180.0f * DegToRad);
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
-	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),"Armature");
+	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),"mixamorig:Hips");
 	anim->AddFile(ID::IDType::P_ANIM_IDOL, "P_IDOL_M3", true, 1.0f);
 	anim->AddFile(ID::IDType::P_ANIM_RUN, "P_RUN_M_1", true, 1.3f);
 	anim->AddFile(ID::IDType::P_ANIM_AVOID, "P_AVOID_M_1", false, 1.0f,0.0f,5.0f);

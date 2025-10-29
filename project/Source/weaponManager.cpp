@@ -29,7 +29,7 @@ void WeaponManager::Draw()
 void WeaponManager::CreatePlayerWeapon()
 { 
 	pObj =  new Object3D();
-	pObj->Init((VECTOR3)MV1GetFramePosition(Load::GetHandle(ID::P_MODEL), 28), VZero, VECTOR3(30, 30, 30), "PLAYER_WEAPON");
+	pObj->Init((VECTOR3)MV1GetFramePosition(Load::GetHandle(ID::P_MODEL), 73), VZero, VECTOR3(30, 30, 30), "PLAYER_WEAPON");
 
 	Object3D* player = FindGameObjectWithTag<Object3D>("PLAYER");
 	
@@ -38,7 +38,7 @@ void WeaponManager::CreatePlayerWeapon()
 	//CharaWeapon* weaponL = pW->Component()->AddComponent<CharaWeapon>();
 
 	//pWeapon->ObjectPointer(player,57,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword", ID::IDType::P_WEAPON));
-	pWeapon->ObjectPointer(player,45,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword", ID::IDType::P_WEAPON));
+	pWeapon->ObjectPointer(player,73,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword", ID::IDType::P_WEAPON));
 	pWeapon->SetImage(Load::GetHandle(ID::SWORD_EFFECT));
 	//pWeapon->CreateSwordEffect();
 	//weaponL->ObjectPointer(player,9,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword", ID::IDType::P_WEAPON));
