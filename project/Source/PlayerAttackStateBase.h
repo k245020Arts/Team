@@ -12,6 +12,7 @@ public:
 
 	virtual void EnemyRotation();
 	void Start()override;
+	void Finish() override;
 
 	float GetHitDamage() { return hitDamage; }
 	bool IsAttack();

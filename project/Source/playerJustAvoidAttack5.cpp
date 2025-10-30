@@ -127,4 +127,5 @@ void PlayerJustAvoidAttack5::Finish()
 	p->playerCom.anim->AnimEventReset();
 	p->playerCom.camera->ChangeStateCamera(ID::C_FOLLOW);
 	p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
+	PlayerAttackStateBase::Finish();
 }

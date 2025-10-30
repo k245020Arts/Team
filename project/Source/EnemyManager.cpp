@@ -164,7 +164,7 @@ void EnemyManager::CreateBoss()
 	ModelCollider* collider4 = boss->Component()->AddComponent<ModelCollider>();
 	info.shape = CollsionInformation::MODEL;
 	info.tag = CollsionInformation::BOSS;
-	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(0.45f, 1.0f, 0.45f)),Load::GetHandle(ID::WALL));
+	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(0.45f, 1.0f, 0.45f)), Load::LoadModel(Load::MODEL_PATH + "BossPush",ID::BOSS_PUSH));
 
 
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();

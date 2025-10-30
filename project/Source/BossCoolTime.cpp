@@ -13,6 +13,7 @@ BossCoolTime::BossCoolTime()
 
 BossCoolTime::~BossCoolTime()
 {
+	
 }
 
 void BossCoolTime::Update()

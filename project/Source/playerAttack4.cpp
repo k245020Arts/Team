@@ -82,4 +82,5 @@ void PlayerAttack4::Finish()
 	Player* p = GetBase<Player>();
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.anim->AnimEventReset();
+	PlayerAttackStateBase::Finish();
 }

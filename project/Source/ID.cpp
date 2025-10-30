@@ -62,7 +62,8 @@ namespace {
 		"b_s_attack2",
 		"b_s_attack3",
 		"b_s_attack4",
-		"sword_effect_b"
+		"sword_effect_b",
+		"bossPush",
 	};
 }
 

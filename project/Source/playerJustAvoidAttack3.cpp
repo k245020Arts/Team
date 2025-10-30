@@ -168,7 +168,7 @@ void PlayerJustAvoidAttack3::Finish()
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.anim->AnimEventReset();
 	p->playerCom.physics->SetGravity(PlayerInformation::BASE_GRAVITY);
-
+	PlayerAttackStateBase::Finish();
 }
 
 void PlayerJustAvoidAttack3::Again()

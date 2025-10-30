@@ -104,7 +104,7 @@ void PlayerJustAvoidAttack1::Finish()
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.player->DeleteCollision();
 	p->playerCom.anim->AnimEventReset();
-
+	PlayerAttackStateBase::Finish();
 }
 
 void PlayerJustAvoidAttack1::Again()

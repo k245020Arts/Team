@@ -87,6 +87,7 @@ void PlayerAttack1::Start()
 void PlayerAttack1::Finish()
 {
 	Player* p = GetBase<Player>();
+	PlayerAttackStateBase::Finish();
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.anim->AnimEventReset();
 }
