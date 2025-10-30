@@ -1,6 +1,8 @@
 #pragma once
 #include "enemyStateBase.h"
 
+class BossStatus;
+
 class BossCoolTime:public EnemyStateBase
 {
 public:
@@ -13,6 +15,6 @@ public:
 	void Finish()override;
 
 private:
-	const float COOLTIME = 60.0f;
+	BossStatus* bs;
 	float coolTime;
 };

@@ -19,17 +19,17 @@ void BossRun::Update()
 	Boss* b = GetBase<Boss>();
 	b->LookPlayer();
 	rotation = b->obj->GetTransform()->rotation;
-
+	//移動の計算
 	velocity.x = BOSS_SPEED * cosf(-rotation.y - 0.5f * DX_PI_F);
 	velocity.z = BOSS_SPEED * sinf(-rotation.y - 0.5f * DX_PI_F);
-
+	//計算したものをボスのポジションに足す
 	b->obj->GetTransform()->position += velocity;
 
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
-
+	//プレイヤーと離れたらアイドルになる
 	if (targetVec.Size() >= ChaseRange)
 		b->enemyBaseComponent.state->ChangeState(ID::B_IDOL);
-
+	//プレイヤーに近づいたら攻撃に移行
 	if (targetVec.Size() <= 1000.0f)
 		b->enemyBaseComponent.state->ChangeState(ID::B_COOLTIME);
 }

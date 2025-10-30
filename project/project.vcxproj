@@ -179,6 +179,7 @@
     <ClInclude Include="Source\BossNormalAttack1.h" />
     <ClInclude Include="Source\BossNormalAttack2.h" />
     <ClInclude Include="Source\BossNormalAttack3.h" />
+    <ClInclude Include="Source\BossStatus.h" />
     <ClInclude Include="Source\BossRun.h" />
     <ClInclude Include="Source\BossSpecialAttack1.h" />
     <ClInclude Include="Source\cameraInformation.h" />

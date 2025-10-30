@@ -1,6 +1,7 @@
 #include "AttackSorting.h"
 #include "Boss.h"
 #include "stateManager.h"
+#include "BossStatus.h"
 
 AttackSorting::AttackSorting()
 {
@@ -28,11 +29,12 @@ void AttackSorting::Update()
 
 void AttackSorting::Start()
 {
-	Boss* b;
-	b = GetBase<Boss>();
+	Boss* b = GetBase<Boss>();
+	BossStatus* bs = new BossStatus;
+
 	//‰½‰ñ˜A‘±UŒ‚‚·‚é‚©Œˆ‚ß‚é
 	if (b->maxAttack == 0)
-		b->maxAttack = GetRand(MAXATK);
+		b->maxAttack = GetRand(bs->GetStatus().maxAttack);
 	else
 		b->maxAttack--;
 }

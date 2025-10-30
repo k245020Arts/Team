@@ -840,6 +840,9 @@
     <ClInclude Include="Source\BossCoolTime.h">
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClInclude>
+    <ClInclude Include="Source\BossStatus.h">
+      <Filter>PlayScene\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
