@@ -110,7 +110,7 @@ void PlayerJustAvoidAttack3::Update()
 		if (p->playerCom.anim->AnimEventCan()) {
 			p->playerCom.anim->SetPlaySpeed(2.5f);
 			beforeAttack = false;
-			p->playerCom.physics->SetVelocity(VZero);
+			//p->playerCom.physics->SetVelocity(VZero);
 			//p->playerCom.anim->SetPlaySpeed(1.0f);
 		}
 		else {
