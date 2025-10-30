@@ -16,6 +16,7 @@
 #include "Guage.h"
 #include "Boss.h"
 #include "rayCollider.h"
+#include "ModelCollider.h"
 
 EnemyManager::EnemyManager()
 {
@@ -107,10 +108,10 @@ void EnemyManager::CreateEnemy()
 
 void EnemyManager::PlayerObjPointer()
 {
-	Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
+	
 	for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {
 		Enemy* e = (*itr)->Component()->GetComponent<Enemy>();
-		e->PlayerPointerSet(obj);
+		//e->PlayerPointerSet(obj);
 		e->Start((*itr));
 		(*itr)->SetDrawOrder(-1);
 
@@ -123,7 +124,7 @@ void EnemyManager::PlayerObjPointer()
 		Guage* g = guage->Component()->AddComponent<Guage>();
 		g->GuageDrawReady<Enemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	}
-	player = obj;
+	
 	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());
 	player->Component()->GetComponent<Player>()->HitObjectSet(*enemy.begin());
 	FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>()->TargetSet(*enemy.begin());
@@ -131,6 +132,8 @@ void EnemyManager::PlayerObjPointer()
 
 void EnemyManager::CreateBoss()
 {
+	Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
+	player = obj;
 	Object3D* boss;
 	boss = new Object3D();
 	float a = 7.0f;
@@ -158,6 +161,12 @@ void EnemyManager::CreateBoss()
 	info.tag = CollsionInformation::B_FLOOR;
 	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 10.0, 1.0)), Transform(VECTOR3(0, -0, 0), VZero, VECTOR3(1.0f, 1, 1)));
 
+	ModelCollider* collider4 = boss->Component()->AddComponent<ModelCollider>();
+	info.shape = CollsionInformation::MODEL;
+	info.tag = CollsionInformation::BOSS;
+	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(0.45f, 1.0f, 0.45f)),Load::GetHandle(ID::WALL));
+
+
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
 
 	MeshRenderer* m = boss->Component()->AddComponent<MeshRenderer>();
@@ -179,8 +188,21 @@ void EnemyManager::CreateBoss()
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL),0);
 
 	b->Start(boss);
+
+	Object2D* guage = new Object2D();
+
+	guage->Init(VECTOR2F(970, 0), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 0.5f), "bossHpGuage");
+
+	boss->AddChild(guage);
+
+	Guage* g = guage->Component()->AddComponent<Guage>();
+	g->GuageDrawReady<Boss>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	chara.emplace_back(b);
 	enemy.emplace_back(boss);
+
+	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());
+	player->Component()->GetComponent<Player>()->HitObjectSet(*enemy.begin());
+	FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>()->TargetSet(*enemy.begin());
 }
 
 bool EnemyManager::PlayerDistance(Camera* camera)

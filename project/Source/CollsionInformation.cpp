@@ -18,6 +18,7 @@ namespace {
 void CollsionInformation::InitSetPair()
 {
     SetPair(PLAYER, ENEMY);
+    SetPair(PLAYER, BOSS);
     SetPair(PLAYER, E_ATTACK);
     SetPair(PLAYER, WALL);
     //SetPair(CAMERA, WALL);

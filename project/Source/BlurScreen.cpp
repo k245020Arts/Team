@@ -67,7 +67,7 @@ void BlurScreen::Draw()
 
 	screenDraw += Time::DeltaTimeRate();
 	if (screenDraw > 0.2f) {
-		DrawExtendGraphF(0.0f, 0.0f, Screen::WIDTH, Screen::HEIGHT, blurScreen[1 - currentScreen], false);
+		//DrawExtendGraphF(0.0f, 0.0f, Screen::WIDTH, Screen::HEIGHT, blurScreen[1 - currentScreen], false);
 	}
 	
 

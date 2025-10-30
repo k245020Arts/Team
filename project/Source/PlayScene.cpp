@@ -68,14 +68,14 @@ PlayScene::PlayScene()
 	BossManager* bossManager = new BossManager();
 	
 	stageManager->CreateStage();
-	enemy->CreateEnemy();
+	//enemy->CreateEnemy();
 	cameraManager->CreateCamera();
 	player->CreatePlayer();
-	enemy->PlayerObjPointer();
+	//enemy->PlayerObjPointer();
 	cameraManager->ParentObj("PLAYER");
 	enemy->CreateBoss();
 	weapon->CreatePlayerWeapon();
-	weapon->CreateEnemyWeapon();
+	//weapon->CreateEnemyWeapon();
 	collManager->SetDrawOrder(-90000);
 	hierachy->SetDrawOrder(-100000);
 	sky->CreateSky();

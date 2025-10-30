@@ -9,7 +9,7 @@ public:
 	~ModelCollider();
 
 	void Update()override;
-	//void Draw()override;
+	void Draw()override;
 
 	void ModelColliderSet(CollsionInfo _info, Transform _transform , int _modelHandle);
 

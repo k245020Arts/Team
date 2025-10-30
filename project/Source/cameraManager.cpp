@@ -31,7 +31,7 @@ void CameraManager::CreateCamera()
 	mainCamera->Init(VECTOR3(0,0,-1500), VZero, VECTOR3(1, 1, 1), "CAMERA_OBJ");
 
 	Camera* camera = mainCamera->Component()->AddComponent<Camera>();
-	camera->Start(*(FindGameObject<EnemyManager>()->GetEnemy().begin()));
+	camera->Start(nullptr);
 
 	SphereCollider* c = mainCamera->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
