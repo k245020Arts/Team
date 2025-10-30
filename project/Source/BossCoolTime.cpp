@@ -18,7 +18,8 @@ BossCoolTime::~BossCoolTime()
 void BossCoolTime::Update()
 {
 	Boss* b = GetBase<Boss>();
-	
+	b->LookPlayer();
+
 	//UŒ‚‚Ü‚Å‚ÌŽžŠÔiŒã‚ÅC³j
 	coolTime++;
 	if (coolTime >= bs->GetStatus().coolTime)

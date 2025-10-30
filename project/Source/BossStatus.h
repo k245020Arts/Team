@@ -12,6 +12,7 @@ private:
 		int maxAttack = 3;				//最大連続攻撃の数
 		float maxHp = 1000;				//最大HP
 		float coolTime = 60.0f;			//一段目の攻撃までの時間
+		float runSpeed = 5.0f;			//ボスの移動速度
 	};
 	Status status;
 
