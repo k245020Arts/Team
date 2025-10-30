@@ -34,6 +34,7 @@ public:
 	void AnimStart(float _speed,int _num);
 
 	VECTOR2I GetImageSize() { return imageSize; }
+	void SetDrawImageSize(VECTOR2I _pos);
 
 	void SetNum(int _num) { num = _num; }
 	
@@ -43,6 +44,7 @@ private:
 	int hImage;
 	GraphMode mode;
 	VECTOR2I imageSize;
+	VECTOR2I drawImageSize;
 	Transform* transform2D;
 
 	Anim2D* anim2D;

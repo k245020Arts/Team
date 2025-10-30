@@ -32,7 +32,7 @@ void Guage::Update()
 		float amount = displayHp / maxhp;
 
 		//float amout = *hp / maxhp;
-		guage->SetStartPos(VECTOR2I(static_cast<int>((1.0f - amount) * guage->GetImageSize().x), 0));
+		guage->SetDrawImageSize(VECTOR2I(static_cast<int>((amount) * guage->GetImageSize().x), guage->GetImageSize().y));
 	}
 }
 
