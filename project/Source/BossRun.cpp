@@ -2,12 +2,15 @@
 #include "Boss.h"
 #include "stateManager.h"
 #include "AttackSorting.h"
+#include "BossStatus.h"
 
 BossRun::BossRun()
 {
 	id = ID::B_RUN;
 	animId = ID::B_RUN;
 	string = Function::GetClassNameC<BossRun>();
+	bs = new BossStatus;
+	speed = bs->GetStatus().runSpeed;
 }
 
 BossRun::~BossRun()
@@ -18,10 +21,13 @@ void BossRun::Update()
 {
 	Boss* b = GetBase<Boss>();
 	b->LookPlayer();
+	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
+
 	rotation = b->obj->GetTransform()->rotation;
 	//移動の計算
-	velocity.x = BOSS_SPEED * cosf(-rotation.y - 0.5f * DX_PI_F);
-	velocity.z = BOSS_SPEED * sinf(-rotation.y - 0.5f * DX_PI_F);
+	velocity.x = speed * cosf(ROTY);
+	velocity.z = speed * sinf(ROTY);
+
 	//計算したものをボスのポジションに足す
 	b->obj->GetTransform()->position += velocity;
 
