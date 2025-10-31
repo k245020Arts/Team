@@ -19,7 +19,6 @@ void BossNormalAttack3::Update()
 {
 	Boss* boss = GetBase<Boss>();
 	//‚Ç‚±‚Ü‚ÅƒvƒŒƒCƒ„[‚Ì•û‚ðŒ©‚é‚©
-	
 
 	if (boss->enemyBaseComponent.anim->IsFinish()) {
 		if (boss->maxAttack != 0)
