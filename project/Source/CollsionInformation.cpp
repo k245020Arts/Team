@@ -71,6 +71,10 @@ VECTOR3 PushbackResolver::ResolvePushback(float maxLength){
 		totalPush += newPush;
 		VECTOR3 pushVecNorm = totalPush.Normalize();
 		float pushIn = VDot(pushVecNorm, newPush);
+        if (p.shape == CollsionInformation::SPHERE) {
+            pushVecNorm = VECTOR3(1,0,1) * pushVecNorm;
+            newPush = VECTOR3(newPush.x, 0.0f, newPush.z);
+        }
 		if (pushIn < totalPush.Size()) {
 			totalPush += newPush - pushIn * pushVecNorm;
 		}
@@ -134,6 +138,7 @@ void PushbackResolver::Apply(Transform* transform, Physics* physics, bool affect
            
         }
         else {
+            
             VECTOR3 velocity = physics->GetVelocity();
             VECTOR3 normal = push.Normalize();
             float dot = VDot(normal, velocity);

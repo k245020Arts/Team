@@ -36,6 +36,13 @@ public:
 	void AddFile(ID::IDType id, std::string filename, bool loop,float speed = 1.0f,float _eventStart = -1.0f,float _eventFinish = -1.0f);
 
 	/// <summary>
+	/// 最大タイムをデフォルトタイムから変えたいときに設定する。
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="_maxTime"></param>
+	void SetMaxFrame(ID::IDType id,float _maxTime);
+
+	/// <summary>
 	/// アニメーションを再生する
 	/// </summary>
 	/// <param name="id">再生するアニメーションの番号</param>
@@ -99,8 +106,6 @@ public:
 
 	int GetBaseModel();
 	int GetCurrentAttackID();
-
-	
 
 	void ImguiDraw()override;
 
