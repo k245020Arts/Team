@@ -30,7 +30,7 @@ void AttackSorting::Update()
 void AttackSorting::Start()
 {
 	Boss* b = GetBase<Boss>();
-	BossStatus* bs = new BossStatus;
+	BossStatus* bs = b->bs;
 
 	//‰½‰ñ˜A‘±UŒ‚‚·‚é‚©Œˆ‚ß‚é
 	if (b->maxAttack == 0)

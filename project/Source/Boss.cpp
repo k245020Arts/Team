@@ -28,15 +28,20 @@
 #include "LoadManager.h"
 #include "AttackSorting.h"
 #include "BossCoolTime.h"
+#include "BossStatus.h"
 
 Boss::Boss()
 {
 	debugId = 19;
 	tag = Function::GetClassNameC<Boss>();
+	bs = new BossStatus;
+
+	hp = bs->GetStatus().maxHp;
 }
 
 Boss::~Boss()
 {
+	delete bs;
 }
 
 void Boss::Update()
