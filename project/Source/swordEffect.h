@@ -56,6 +56,10 @@ private:
 		Color::Rgb rgb;
 
 		int count;
+
+		float feedInTime;
+		float feedOutTime;
+		float maxAlpha;
 	};
 
 	

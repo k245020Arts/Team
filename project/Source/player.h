@@ -77,6 +77,7 @@ public:
 	void DeleteCollision();
 
 	void DrawTrail();
+	void DrawTrail(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, float index, float _time);
 
 private:
 	PlayerInformation::CharaComponent playerCom;

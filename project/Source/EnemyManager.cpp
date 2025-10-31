@@ -192,7 +192,7 @@ void EnemyManager::CreateBoss()
 
 	Object2D* guage = new Object2D();
 
-	guage->Init(VECTOR2F(970, 0), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 0.5f), "bossHpGuage");
+	guage->Init(VECTOR2F(970, 100), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 0.5f), "bossHpGuage");
 
 	boss->AddChild(guage);
 

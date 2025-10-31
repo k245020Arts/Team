@@ -22,6 +22,7 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	time = 0.0f;
 	beforeAngle = 0.0f;
 	beforeAttack = false;
+	defalutTrail = true;
 }
 
 PlayerAttackStateBase::~PlayerAttackStateBase()
@@ -32,7 +33,7 @@ void PlayerAttackStateBase::Update()
 {
 	Player* p = GetBase<Player>();
 	
-	if (p->playerCom.anim->AnimEventCan()) {
+	if (p->playerCom.anim->AnimEventCan() && defalutTrail) {
 		p->playerCom.player->DrawTrail();
 		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
 	}

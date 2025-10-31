@@ -21,6 +21,7 @@ PlayerJustAvoidAttack3::PlayerJustAvoidAttack3()
 	//frontSpeed = 500.0f;
 	frontSpeed = 0.0f;
 	hitDamage = 5.0f;
+	defalutTrail = true;
 }
 
 PlayerJustAvoidAttack3::~PlayerJustAvoidAttack3()
@@ -88,6 +89,8 @@ void PlayerJustAvoidAttack3::Update()
 	Player* p = GetBase<Player>();
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
+
+	
 	if (!noStateChange) {
 		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
 			//p->playerCom.player->AvoidReady();
