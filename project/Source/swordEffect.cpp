@@ -154,6 +154,7 @@ void SwordEffect::MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos
 	spcColor.r = (BYTE)num[i].rgb.r;
 	spcColor.g = (BYTE)num[i].rgb.g;
 	spcColor.b = (BYTE)num[i].rgb.b;
+	spcColor.a = (BYTE)num[i].rgb.a;
 
 	VERTEX3D v;
 	v.norm = VGet(0, 1, 0);

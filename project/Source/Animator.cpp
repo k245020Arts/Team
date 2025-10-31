@@ -261,6 +261,11 @@ void Animator::AddFile(ID::IDType id, std::string filename, bool loop, float spe
     fileInfos.emplace(str, inf); // 登録
 }
 
+void Animator::SetMaxFrame(ID::IDType id, float _maxTime)
+{
+    fileInfos[ID::GetID(id)].maxFrame = _maxTime;
+}
+
 void Animator::Play(ID::IDType id, float margeTime)
 {
     std::string str = ID::GetID(id);

@@ -164,7 +164,7 @@ void EnemyManager::CreateBoss()
 	ModelCollider* collider4 = boss->Component()->AddComponent<ModelCollider>();
 	info.shape = CollsionInformation::MODEL;
 	info.tag = CollsionInformation::BOSS;
-	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(0.45f, 1.0f, 0.45f)), Load::LoadModel(Load::MODEL_PATH + "BossPush",ID::BOSS_PUSH));
+	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), Load::LoadModel(Load::MODEL_PATH + "wall",ID::BOSS_PUSH));
 
 
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
@@ -185,6 +185,7 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,30.0f,45.0f);
 	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,30.0f,45.0f);
 	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false,1.0f,35.0f,45.0f);
+	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL),0);
 
 	b->Start(boss);

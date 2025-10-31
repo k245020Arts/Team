@@ -503,5 +503,5 @@ void Player::DeleteCollision()
 void Player::DrawTrail()
 {
 	//Œ•‚Ì‹OÕ‚Ìˆ—
-	playerCom.weapon->CreateTrailPlayer(VECTOR3(0, 0, 0), VECTOR3(0, 0, -200), 255.0f, 0.0f, 0.0f, 255.0f, 28, 0.45f);
+	playerCom.weapon->CreateTrailPlayer(VECTOR3(0, 0, 0), VECTOR3(0, 0, -120), 255.0f, 0.0f, 0.0f, 100.0f, 28, 0.45f);
 }
