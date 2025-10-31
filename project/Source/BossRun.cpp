@@ -9,8 +9,7 @@ BossRun::BossRun()
 	id = ID::B_RUN;
 	animId = ID::B_RUN;
 	string = Function::GetClassNameC<BossRun>();
-	bs = new BossStatus;
-	speed = bs->GetStatus().runSpeed;
+	bs = nullptr;
 }
 
 BossRun::~BossRun()
@@ -21,6 +20,13 @@ void BossRun::Update()
 {
 	Boss* b = GetBase<Boss>();
 	b->LookPlayer();
+
+	if (bs == nullptr)
+	{
+		bs = b->bs;
+		speed = bs->GetStatus().runSpeed;
+	}	
+
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
 
 	rotation = b->obj->GetTransform()->rotation;

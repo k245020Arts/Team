@@ -18,6 +18,9 @@ BossNormalAttack3::~BossNormalAttack3()
 void BossNormalAttack3::Update()
 {
 	Boss* boss = GetBase<Boss>();
+	//‚Ç‚±‚Ü‚ÅƒvƒŒƒCƒ„[‚Ì•û‚ðŒ©‚é‚©
+	
+
 	if (boss->enemyBaseComponent.anim->IsFinish()) {
 		if (boss->maxAttack != 0)
 			boss->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
@@ -40,6 +43,7 @@ void BossNormalAttack3::Start()
 
 	EnemyStateBase::Start();
 	firstColl = true;
+	counter = 0;
 }
 
 void BossNormalAttack3::Finish()

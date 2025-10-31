@@ -8,7 +8,6 @@ BossCoolTime::BossCoolTime()
 {
 	animId = ID::B_COOLTIME;
 	id = ID::B_COOLTIME;
-	bs = new BossStatus;
 }
 
 BossCoolTime::~BossCoolTime()
@@ -20,6 +19,7 @@ void BossCoolTime::Update()
 {
 	Boss* b = GetBase<Boss>();
 	b->LookPlayer();
+	bs = b->bs;
 
 	//çUåÇÇ‹Ç≈ÇÃéûä‘Åiå„Ç≈èCê≥Åj
 	coolTime++;
