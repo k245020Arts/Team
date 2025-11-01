@@ -237,11 +237,24 @@ bool EnemyManager::PlayerDistance(Camera* camera)
 		
 		player->Component()->GetComponent<Player>()->TargetObjSet((*keepItr)->GetBaseObject());
 		camera->TargetSet((*keepItr)->GetBaseObject());
+		cameraTargetObj = (*keepItr)->GetBaseObject();
 		return true;
 	}
 	(*lastItr)->LastTargetOut();
-	
+	cameraTargetObj = nullptr;
 	player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);
+	return false;
+}
+
+bool EnemyManager::TargetCancel(Camera* camera)
+{
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		if ((*itr)->GetBaseObject() == cameraTargetObj) {
+			(*itr)->LastTargetOut();
+			player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -250,6 +263,8 @@ void EnemyManager::JustAvoidTargetChange(Object3D* _obj)
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
 		if ((*itr)->GetBaseObject() == _obj) {
 			(*itr)->LastTargetIn();
+			cameraTargetObj = _obj;
+			player->Component()->GetComponent<Player>()->TargetObjSet((*itr)->GetBaseObject());
 			continue;
 		}
 		if ((*itr)->GetLastTarget()) {

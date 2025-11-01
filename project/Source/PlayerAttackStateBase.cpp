@@ -89,6 +89,7 @@ void PlayerAttackStateBase::Start()
 	}
 	else {
 		targetTrans = Transform();
+		targetTrans.position = VECTOR3(0, 0, 1) * p->playerTransform->rotation;
 	}
 	
 	//“G‚ÆƒvƒŒƒCƒ„[‚Ì‹——£‚ð‚Æ‚é
@@ -103,7 +104,7 @@ void PlayerAttackStateBase::Start()
 	p->playerCom.sound->RandamSe("P_AttackV", 3);
 	beforeAttack = true;
 	runTimer = 0.0f;
-	if (dist.Size() >= 2500 && p->playerCom.targetObj != nullptr) {
+	if (dist.Size() >= 3000 || p->playerCom.targetObj != nullptr) {
 		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
 		rotation = false;;
 		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));

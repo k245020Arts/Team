@@ -3,6 +3,7 @@
 #include <list>
 
 class Object3D;
+class BaseObject;
 class Camera;
 class CharaBase;
 
@@ -23,6 +24,7 @@ public:
 	void CreateBoss();
 
 	bool PlayerDistance(Camera* camera);
+	bool TargetCancel(Camera* camera);
 	void JustAvoidTargetChange(Object3D* _obj);
 
 private:
@@ -30,4 +32,5 @@ private:
 	std::list<Object3D*> enemy;
 	Object3D* player;
 	std::list<CharaBase*> chara;
+	BaseObject* cameraTargetObj;
 };

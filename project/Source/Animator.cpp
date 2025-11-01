@@ -56,6 +56,7 @@ void Animator::Update()
     //ローカルマトリックスの座標を打ち消す
     MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
     MATRIX matrix = MGetIdent();
+    MATRIX beforeMatrix = MGetIdent();
 
     VECTOR3 beforePos = currentPosition;
     if (current.attachID >= 0)
@@ -133,7 +134,31 @@ void Animator::Update()
         float rate = blendTime / blendTimeMax;
         MV1SetAttachAnimBlendRate(baseModel, current.attachID, rate);
         MV1SetAttachAnimBlendRate(baseModel, before.attachID, 1.0f - rate);
+
+       // 前回の行列を設定
+       beforeMatrix = MV1GetFrameLocalMatrix(baseModel, rootNum);
+
+       // 無補正時の座標を取得
+       const VECTOR3 framePos = MV1GetAttachAnimFrameLocalPosition(baseModel, before.attachID, rootNum);
+
+       // 座標移動を打ち消す
+       beforeMatrix *= MGetTranslate(framePos * -1.0f);
+
+       // Yだけ維持、XZを原点
+       beforeMatrix *= MGetTranslate(VECTOR3(0.0f, framePos.y, 0.0f));
     }
+
+    // ◇前回のアニメーションが再生中なら、ブレンドする
+   if (before.attachID >= 0)
+   {
+          // root姿勢を滑らかに遷移
+          float progress = blendTime / blendTimeMax;
+
+       // 現姿勢と前姿勢を合成
+       // 最低値 + (最大値 - 最低値) * progress
+       matrix = MAdd(beforeMatrix, MAdd(matrix, beforeMatrix * MGetScale(VOne * -1.0f)) * MGetScale(VOne* progress));
+   }
+
     MV1SetFrameUserLocalMatrix(baseModel, rootNum, matrix);
 
     // ①前姿勢を補正

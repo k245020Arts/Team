@@ -147,18 +147,22 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2)
 		int a;
 	}
 	Physics* p = col2->GetObj()->Component()->GetComponent<Physics>();
+	static PushbackResolver resolver; // オブジェクトに1つ保持する
+
+	resolver.Clear(); // 前フレームの情報をクリア
+
 	if (result.HitFlag != 0) {
 		VECTOR3 push = startPos - result.HitPosition;
 
-		PushbackResolver resolver;
-		resolver.AddPush(VECTOR3(0,1,0), push.Size(),CollsionInformation::Shape::RAY);
-		resolver.Apply(col2->GetObj()->GetTransform(), p,true,2.0f);
-		p->SetGround(true);
-	}
-	else {
-		p->SetGround(false);
+		// Y方向のみ押し返し
+		resolver.AddPush(VECTOR3(0, 1, 0), push.Size(), CollsionInformation::Shape::RAY);
 	}
 
+	// 最大押し返し長さ 2.0 を DeltaTime に対応
+	resolver.Apply(col2->GetObj()->GetTransform(), p, true, 2.0f * Time::DeltaTimeRate());
+
+	// ground 判定は pushes に依存
+	p->SetGround(resolver.IsGrounded(0.7f));
 	return true;
 
 }

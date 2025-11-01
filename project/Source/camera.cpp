@@ -57,6 +57,7 @@ void Camera::Update()
 			
 		}
 		else {
+			
 			cameraComponent.state->NowChangeState(ID::C_FREE);
 			rockOn = !rockOn;
 		}

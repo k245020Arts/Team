@@ -112,45 +112,22 @@ VECTOR3 PushbackResolver::ResolvePushback(float maxLength){
 
 void PushbackResolver::Apply(Transform* transform, Physics* physics, bool affectVelocity, float maxLength) {
     VECTOR3 push = ResolvePushback(maxLength);
-    if (push == VECTOR3(0, 0, 0)) {
-        //lastPushMagnitude = 0.0f;
-        return;
-    }
+    if (push.Size() < 0.001f) return; // 微小なら無視
 
-    // 位置補正（押し返し）
+    // 位置補正
     transform->position += push;
 
-    // 押し返しに応じた速度補正（接地してる場合のみ）
-    //physics->SetGravity(IsGrounded());
     if (affectVelocity && physics) {
-        if (IsGrounded()) {
-            // 重力方向に限ってキャンセル
-            VECTOR3 gravityOnly = VECTOR3(0, 1, 0);
-            VECTOR3 velocity = physics->GetVelocity();
-            VECTOR3 normal = push.Normalize();
-            float gDot = VDot(gravityOnly, normal);
-            float dot = VDot(gravityOnly, velocity);
-            if (gDot > 0.5f) {
-                
-                VECTOR3 cancel = normal * -dot;
-                physics->AddVelocity(cancel, false);  // ← Y方向だけにする
-            }
-           
-        }
-        else {
-            
-            VECTOR3 velocity = physics->GetVelocity();
-            VECTOR3 normal = push.Normalize();
-            float dot = VDot(normal, velocity);
+        VECTOR3 vel = physics->GetVelocity();
+        VECTOR3 pushNorm = push.Normalize();
 
-            if (dot < -1.0f) {
-                // めり込んでる方向の速度を殺す
-                physics->AddVelocity(normal * -dot, false);
-            }
+        // めり込み方向の速度だけ打ち消す
+        float dot = VDot(vel, pushNorm);
+        if (dot < 0.0f) {
+            vel -= pushNorm * dot;
+            physics->SetVelocity(vel);
         }
     }
-
-   // lastPushMagnitude = push.Size();
 }
 
 bool PushbackResolver::IsGrounded(float minYNormal) const {
