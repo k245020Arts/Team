@@ -24,7 +24,7 @@ void PlayerBlowAway::Update()
 {
 	Player* p = GetBase<Player>();
 	//—Ž‰º‚µ‚½‚çƒJƒƒ‰‚ðc—h‚ê
-	if (p->playerCom.player->GetPlayerTransform()->position.y <= 0.0f) {
+	if (p->playerCom.physics->GetGround()) {
 		if (p->playerCom.anim->GetCurrentID() == ID::GetID(ID::P_FALL)) {
 			p->playerCom.anim->Play(ID::P_GETUP);
 			p->playerCom.shaker->ShakeFinish();
@@ -39,8 +39,8 @@ void PlayerBlowAway::Update()
 			p->playerCom.anim->SetPlaySpeed(1.0f);
 		}
 		else if (p->playerCom.anim->GetCurrentID() == ID::GetID(ID::P_GETUP)) {
-			p->playerCom.stateManager->ChangeState(ID::P_ANIM_RUN);
-			
+			//p->playerCom.stateManager->ChangeState(ID::P_ANIM_RUN);
+			p->AvoidFinishState();
 			
 		}
 	}
@@ -60,8 +60,8 @@ void PlayerBlowAway::Start()
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
 	eRotation = p->playerCom.hitObj->GetTransform()->rotation;
-	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 3000) * MGetRotY(eRotation.y));
-	p->playerCom.physics->AddVelocity(VECTOR3(0, 500, 0), false);
+	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 5000) * MGetRotY(eRotation.y));
+	p->playerCom.physics->AddVelocity(VECTOR3(0, 1000, 0), false);
 	p->playerCom.physics->SetGravity(VECTOR3(0, -3000.0f, 0));
 	p->playerCom.player->GetPlayerTransform()->position.y += 10.0f;
 	p->playerCom.anim->SetPlaySpeed(2.5f);
@@ -71,6 +71,6 @@ void PlayerBlowAway::Start()
 void PlayerBlowAway::Finish()
 {
 	Player* p = GetBase<Player>();
-	p->playerCom.physics->SetGravity(VECTOR3(0, -6000.0f, 0));
+	p->playerCom.physics->SetGravity(PlayerInformation::BASE_GRAVITY);
 	p->playerCom.shaker->ShakeFinish();
 }

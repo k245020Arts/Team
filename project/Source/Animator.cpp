@@ -152,11 +152,11 @@ void Animator::Update()
    if (before.attachID >= 0)
    {
           // root姿勢を滑らかに遷移
-          float progress = blendTime / blendTimeMax;
+       float rate = blendTime / blendTimeMax;
 
        // 現姿勢と前姿勢を合成
        // 最低値 + (最大値 - 最低値) * progress
-       matrix = MAdd(beforeMatrix, MAdd(matrix, beforeMatrix * MGetScale(VOne * -1.0f)) * MGetScale(VOne* progress));
+       matrix = MAdd(beforeMatrix, MAdd(matrix, beforeMatrix * MGetScale(VOne * -1.0f)) * MGetScale(VOne* rate));
    }
 
     MV1SetFrameUserLocalMatrix(baseModel, rootNum, matrix);
