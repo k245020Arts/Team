@@ -49,6 +49,7 @@ namespace PlayerInformation {
 			blur = nullptr;
 			gameManager = nullptr;
 			enemyManager = nullptr;
+			hitObj = nullptr;
 		}
 		StateManager* stateManager;
 		MeshRenderer* renderer;

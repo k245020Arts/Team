@@ -175,14 +175,14 @@ void SwordEffect::MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos
 			num[i].feedInTime = 0.0f;
 		}
 		float rate = 1 - (num[i].feedInTime / 0.2f);
-		spcColor.a =  Easing::Lerp(0.0f, num[i].maxAlpha, rate);
+		spcColor.a = (BYTE)Easing::Lerp(0.0f, num[i].maxAlpha, rate);
 	}
 	else if (num[i].time <= 0.0f) {
 		float rate = (num[i].feedOutTime / 0.5f);
-		spcColor.a = Easing::Lerp(0.0f, num[i].maxAlpha, rate);
+		spcColor.a = (BYTE)Easing::Lerp(0.0f, num[i].maxAlpha, rate);
 	}
 	else {
-		spcColor.a = num[i].maxAlpha;
+		spcColor.a = (BYTE)num[i].maxAlpha;
 	}
 
 	VERTEX3D v;

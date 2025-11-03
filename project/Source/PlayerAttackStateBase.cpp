@@ -23,6 +23,7 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	beforeAngle = 0.0f;
 	beforeAttack = false;
 	defalutTrail = true;
+	nextAvoid = false;
 }
 
 PlayerAttackStateBase::~PlayerAttackStateBase()

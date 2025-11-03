@@ -23,6 +23,8 @@ PlayerJustAvoid::PlayerJustAvoid()
 	id = ID::P_ANIM_JUST_AVOID;
 	attack = false;
 	blurScreen = FindGameObject<BlurScreen>();
+	cameraAngle = 0.0f;
+	cameraLeap = 0.0f;
 }
 
 PlayerJustAvoid::~PlayerJustAvoid()

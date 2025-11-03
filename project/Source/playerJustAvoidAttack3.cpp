@@ -16,12 +16,14 @@ PlayerJustAvoidAttack3::PlayerJustAvoidAttack3()
 	string = Function::GetClassNameC<PlayerJustAvoidAttack3>();
 	id = ID::P_ANIM_JUST_AVOID_ATTACK3;
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK3;
-	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(280, 0, 0));
+	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	nextAttackID = ID::P_ANIM_ATTACK1;
 	//frontSpeed = 500.0f;
 	frontSpeed = 0.0f;
 	hitDamage = 5.0f;
 	defalutTrail = true;
+	timer = 0.0f;
+	count = 0;
 }
 
 PlayerJustAvoidAttack3::~PlayerJustAvoidAttack3()
@@ -101,8 +103,8 @@ void PlayerJustAvoidAttack3::Update()
 			nextAttack = true;
 		}
 		timer -= Time::DeltaTimeRate();
-		if (p->playerCom.physics->GetGravity().y <= -30000.0f) {
-			p->playerCom.anim->SetPlaySpeed(1.0f);
+		if (p->playerCom.physics->GetGravity().y <= -20000.0f) {
+			p->playerCom.anim->SetPlaySpeed(2.0f);
 		}
 		else {
 			p->playerCom.physics->AddGravity(VECTOR3(0, -1500, 0));

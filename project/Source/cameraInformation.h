@@ -32,6 +32,7 @@ namespace CameraInformation {
 			cameraTransform = nullptr;
 			control = nullptr;
 			state = nullptr;
+			enemyManager = nullptr;
 			//target = nullptr;
 			//reap = nullptr;
 			//currentDistance = nullptr;

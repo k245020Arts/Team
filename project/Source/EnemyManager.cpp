@@ -22,6 +22,7 @@ EnemyManager::EnemyManager()
 {
 	//CreateEnemy();
 	enemy.clear();
+	player = nullptr;
 }
 
 EnemyManager::~EnemyManager()
@@ -146,7 +147,7 @@ void EnemyManager::CreateBoss()
 	info.oneColl = false;
 	info.tag = CollsionInformation::Tag::BOSS;
 	info.size = 1.0f;
-	collider->CollsionAdd(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
+	collider->CollsionAdd(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
 	//当たり判定を生成（やられ判定）
 	/*SphereCollider* collider2 = boss->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info2;
@@ -214,9 +215,10 @@ bool EnemyManager::PlayerDistance(Camera* camera)
 	auto keepItr = chara.begin();
 	auto lastItr = chara.begin();
 
+	//一番近い敵を検出
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
 		if ((*itr)->GetLastTarget()) {
-			lastItr = itr;
+			lastItr = itr; //最後にロックオンされていた敵のイテレーター
 			continue;
 		}
 		VECTOR3 target = (*itr)->GetBaseObject()->GetTransform()->position - player->GetTransform()->position;
@@ -226,11 +228,12 @@ bool EnemyManager::PlayerDistance(Camera* camera)
 			continue;
 		}
 		if (distance > dist) {
-			distance = dist;
-			keepItr = itr;
+			distance = dist;  //距離を入れる
+			keepItr = itr; //このイテレーターがロックオンされるイテレーター
 		}
 	}
 
+	//一定距離離れているとターゲットに入れない
 	if (distance < 100000) {
 		(*lastItr)->LastTargetOut();
 		(*keepItr)->LastTargetIn();
@@ -327,4 +330,3 @@ void EnemyManager::JustAvoidTargetChange(Object3D* _obj)
 		(*lastItr)->Component()->GetComponent<Boss>()->LastTargetOut();
 	}
 	player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);*/
-;

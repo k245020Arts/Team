@@ -20,6 +20,7 @@ Physics::Physics()
 	noGravity = false;
 	debugId = 9;
 	tag = Function::GetClassNameC<Physics>();
+	ground = false;
 }
 
 Physics::~Physics()

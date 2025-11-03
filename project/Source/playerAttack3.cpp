@@ -11,7 +11,7 @@ PlayerAttack3::PlayerAttack3()
 	string = Function::GetClassNameC<PlayerAttack3>();
 	id = ID::P_ANIM_ATTACK3;
 	animId = ID::P_ANIM_ATTACK3;
-	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(280, 0, 0));
+	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	nextAttackID = ID::P_ANIM_ATTACK4; 
 	frontSpeed = 1000.0f;
 	hitDamage = 2.0f;

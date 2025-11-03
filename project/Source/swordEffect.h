@@ -42,6 +42,9 @@ private:
 			rgb = Color::Rgb();
 			count = 0;
 			timeMax = 0.0f;
+			feedInTime = 0.0f;
+			feedOutTime = 0.0f;
+			maxAlpha = 0.0f;
 		}
 		float time;
 		float timeMax;

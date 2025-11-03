@@ -17,6 +17,7 @@ public:
 	void Draw()override;
 
 	//当たり判定の生成をしている(攻撃の)
+	//プレイヤーと敵の攻撃の当たり判定の生成を一括で管理したかったのでこういう作りにしています。
 	template<typename T>
 	CollsionInfo CollsionInstant(CollsionInformation::Shape _shape, Transform _trans) {
 		attackColl = obj->Component()->AddComponent<T>();

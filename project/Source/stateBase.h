@@ -14,7 +14,7 @@ public:
 		id = ID::ID_MAX;
 		string = "";
 		obj = nullptr;
-		
+		com = nullptr;
 	}
 	~StateBase(){}
 

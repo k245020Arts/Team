@@ -7,6 +7,9 @@ Shaker::Shaker()
 	pattern = NONE;
 	debugId = 10;
 	tag = Function::GetClassNameC<Shaker>();
+	transform = nullptr;
+	time = 0.0f;
+	stop = false;
 }
 
 Shaker::~Shaker()

@@ -15,11 +15,14 @@ PlayerJustAvoidAttack2::PlayerJustAvoidAttack2()
 	string = Function::GetClassNameC<PlayerJustAvoidAttack2>();
 	id =  ID::P_ANIM_JUST_AVOID_ATTACK2;
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK2;
-	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(200, 0, 0));
+	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(300, 0, 0));
 	nextAttackID = ID::P_ANIM_ATTACK1;
 	frontSpeed = 10000.0f;
 	hitDamage = 5.0f;
 	defalutTrail = false;
+	attack = false;
+	count = 0;
+	timer = 0.0f;
 }
 
 PlayerJustAvoidAttack2::~PlayerJustAvoidAttack2()

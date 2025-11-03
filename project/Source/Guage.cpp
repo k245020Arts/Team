@@ -12,6 +12,7 @@ Guage::Guage()
 	debugId = 19;
 	tag = Function::GetClassNameC<Guage>();
 	displayHp = 0.0f;
+	changeColorCounter = 0.0f;
 }
 
 Guage::~Guage()

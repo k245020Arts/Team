@@ -15,6 +15,8 @@ StageManager::StageManager()
 	//CreateStage();
 	Load::LoadModel(Load::MODEL_PATH +  "new_Stage", ID::S_MODEL);
 	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL);
+	stage = nullptr;
+	modelHandle = -1;
 }
 
 StageManager::~StageManager()

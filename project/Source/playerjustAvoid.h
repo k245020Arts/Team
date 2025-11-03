@@ -22,10 +22,6 @@ private:
 	static const int SHADOW_NUM_MAX = 10;
 	int shadowNum;
 	bool avoidShadowStart;
-	int hModel[SHADOW_NUM_MAX];
-	Transform shadowTransform[SHADOW_NUM_MAX];
-	float shadowAddTime;
-	Animator* anim[SHADOW_NUM_MAX];
 	float easingCount;
 	float cameraAngle;
 	VECTOR3 cameraRotation;

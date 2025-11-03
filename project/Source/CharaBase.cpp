@@ -4,6 +4,8 @@
 CharaBase::CharaBase()
 {
 	lastTarget = false;
+	collShape = CollsionInformation::Shape::SPHERE;
+	maxHp = 0;
 }
 
 CharaBase::~CharaBase()

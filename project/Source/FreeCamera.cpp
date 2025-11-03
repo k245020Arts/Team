@@ -7,6 +7,8 @@ FreeCamera::FreeCamera()
 {
 	string = Function::GetClassNameC<FreeCamera>();
 	id = ID::C_FREE;
+	backCounter = 0.0f;
+	beforeTarget = 0.0f;
 }
 
 FreeCamera::~FreeCamera()
@@ -17,6 +19,7 @@ void FreeCamera::Update()
 {
 	Camera* c = GetBase<Camera>();
 
+	//滑らかに他のstateから移行した時に移動するようにしている。
 	if (backCounter >= 0.0f) {
 		float t = 1.0f - backCounter / TIMER_MAX;
 		VECTOR3 easedT = Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
@@ -34,23 +37,25 @@ void FreeCamera::Update()
 		c->target = targetp+ VECTOR3(0,400,0);
 		beforeTarget = targetp.y;
 	}
+	//プレイヤーの追従処理
 	c->Follow();
 
+	//スティック移動
 	if (c->cameraComponent.control->GetStickInput().rightStick.x >= 0.3f) {
-		c->cameraComponent.cameraTransform->rotation.y += 2.0f * DegToRad;
+		c->cameraComponent.cameraTransform->rotation.y += 180.0f * Time::DeltaTimeRate() * DegToRad;
 	}
 	if (c->cameraComponent.control->GetStickInput().rightStick.x <= -0.3f) {
-		c->cameraComponent.cameraTransform->rotation.y -= 2.0f * DegToRad;
+		c->cameraComponent.cameraTransform->rotation.y -= 180.0f * Time::DeltaTimeRate() * DegToRad;
 	}
 	if (c->cameraComponent.control->GetStickInput().rightStick.y >= 0.3f) {
-		if (c->cameraComponent.cameraTransform->rotation.x >= -80.0f * DegToRad) {
-			c->cameraComponent.cameraTransform->rotation.x -= 2.0f * DegToRad;
+		if (c->cameraComponent.cameraTransform->rotation.x >= 0.0f * DegToRad) {
+			c->cameraComponent.cameraTransform->rotation.x -= 180.0f * Time::DeltaTimeRate() * DegToRad;
 		}
 
 	}
 	if (c->cameraComponent.control->GetStickInput().rightStick.y <= -0.3f) {
-		if (c->cameraComponent.cameraTransform->rotation.x <= 80.0f * DegToRad) {
-			c->cameraComponent.cameraTransform->rotation.x += 2.0f * DegToRad;
+		if (c->cameraComponent.cameraTransform->rotation.x <= 60.0f * DegToRad) {
+			c->cameraComponent.cameraTransform->rotation.x += 180.0f * Time::DeltaTimeRate() * DegToRad;
 		}
 	}
 }

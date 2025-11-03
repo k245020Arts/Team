@@ -10,6 +10,10 @@
 
 PlayerStateBase::PlayerStateBase()
 {
+	firstColl = false;
+	nextAttack = false;
+	noStateChange = false;
+	animId = ID::P_ANIM_IDOL;
 }
 
 PlayerStateBase::~PlayerStateBase()

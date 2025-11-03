@@ -10,6 +10,8 @@ EnemyBase::EnemyBase()
 {
 	loopNum = -1;
 	hit = false;
+	hitCounter = 0.0f;
+	pState = nullptr;
 }
 
 EnemyBase::~EnemyBase()
