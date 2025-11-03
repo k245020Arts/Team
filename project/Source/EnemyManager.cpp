@@ -136,8 +136,8 @@ void EnemyManager::CreateBoss()
 	player = obj;
 	Object3D* boss;
 	boss = new Object3D();
-	float a = 7.0f;
-	boss->Init(Transform(VECTOR3(0, 450, 9000), VZero, VECTOR3(a, a - 1, a)), "Boss");
+	float a = 8.0f;
+	boss->Init(Transform(VECTOR3(0, 450, 8000), VZero, VECTOR3(a, a - 1, a)), "Boss");
 
 	SphereCollider* collider = boss->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -182,9 +182,9 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_IDOL, "B_IDLE", true,1.0f);
 	anim->AddFile(ID::B_COOLTIME, "B_IDLE2", true, 1.0f, 30.0f, 45.0f);
 	anim->AddFile(ID::B_RUN, "B_WALK", true, 1.0f, 30.0f, 45.0f);
-	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.0f,30.0f,45.0f);
-	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.0f,30.0f,45.0f);
-	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false,1.0f,35.0f,45.0f);
+	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.2f,30.0f,45.0f);
+	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.2f,30.0f,45.0f);
+	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false,1.2f,35.0f,45.0f);
 	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL),0);
 

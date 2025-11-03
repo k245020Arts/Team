@@ -3,6 +3,7 @@
 #include "Boss.h"
 #include "stateManager.h"
 #include "Easing.h"
+#include "BossStatus.h"
 
 BossNormalAttack1::BossNormalAttack1()
 {
@@ -18,7 +19,9 @@ BossNormalAttack1::~BossNormalAttack1()
 void BossNormalAttack1::Update()
 {
 	Boss* boss = GetBase<Boss>();
-	if (boss->enemyBaseComponent.anim->IsFinish()) {
+	//if (boss->enemyBaseComponent.anim->IsFinish()) {
+	if (boss->enemyBaseComponent.anim->GetMaxFrame() - a <= boss->enemyBaseComponent.anim->GetCurrentFrame())
+	{
 		if (boss->maxAttack != 0)
 			boss->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
 		else
@@ -46,9 +49,19 @@ void BossNormalAttack1::Start()
 {
 	EnemyStateBase::Start();
 	firstColl = true;
-	
+	Boss* boss = GetBase<Boss>();
+	if (boss->maxAttack == 0)
+	{
+		boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+		a = 0;
+	}
+	else
+		a = boss->bs->GetStatus().maxA;
 }
 
 void BossNormalAttack1::Finish()
 {
+	Boss* boss = GetBase<Boss>();
+	if (boss->maxAttack == 0)
+		boss->enemyBaseComponent.anim->SetPlaySpeed(1.2f);
 }

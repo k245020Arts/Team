@@ -108,17 +108,18 @@ void Boss::LookPlayer()
 {
 	//プレイヤーのポジションを格納させる
 	VECTOR3 targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
-	//Playerの方をゆっくり向く
 	VECTOR3 distance = targetPos - bossTransform->position;
-
+	//向くべき角度
 	float direction = -atan2f(distance.z, distance.x) - 0.5f * DX_PI_F;
-	/*float sign = direction - bossTransform->rotation.y;*/
-	float sign = (direction - bossTransform->rotation.y)* 180*DegToRad;
-
-	sign -= floorf(sign / DX_PI_F / 2) * DX_PI_F * 2.0f;//2
-	const float LOOK_SPEED = 0.2f;
+	//その角度とどれだけ差があるか
+	float sign = direction - bossTransform->rotation.y;
+	//切り捨てして180の境界線を無くす
+	sign -= floorf(sign / DX_PI_F / 2) * DX_PI_F * 2.0f;
 	if (sign > DX_PI_F)
 		sign -= 2 * DX_PI_F;
+	//向くスピード(ラジアン)
+	const float LOOK_SPEED = 0.03f;
+	//Playerの方をゆっくり向く
 	if (sign > LOOK_SPEED)
 		bossTransform->rotation.y += LOOK_SPEED;
 	else if (sign < -LOOK_SPEED)

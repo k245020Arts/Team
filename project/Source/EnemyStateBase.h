@@ -27,4 +27,6 @@ protected:
 	Transform collTrans;
 	float attackTime;
 	bool sound;
+
+	float a;
 };
