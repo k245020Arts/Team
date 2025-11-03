@@ -76,6 +76,10 @@ public:
 	void AvoidFinishState();
 	void DeleteCollision();
 
+	/// <summary>
+	/// 軌跡表示の関数で引数なしはdefalutのものが呼び出される。
+	/// 特別仕様にカスタマイズしたいなら下の関数を使用する
+	/// </summary>
 	void DrawTrail();
 	void DrawTrail(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, float index, float _time);
 

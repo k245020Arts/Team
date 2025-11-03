@@ -38,20 +38,21 @@ bool CollsionInformation::IsCollPair(Tag tag1, Tag tag2)
     return  pairTag[Function::EnumTag(tag1, tag2, CollsionInformation::TAG_MAX)];
 }
 
-PushbackResolver::PushbackResolver()
-{
-}
-
-PushbackResolver::~PushbackResolver()
+Pushback::Pushback()
 {
     Clear();
 }
 
-void PushbackResolver::Clear() {
+Pushback::~Pushback()
+{
+    Clear();
+}
+
+void Pushback::Clear() {
     pushes.clear();
 }
 
-void PushbackResolver::AddPush(const VECTOR3& normal, float penetration, CollsionInformation::Shape _shape)
+void Pushback::AddPush(const VECTOR3& normal, float penetration, CollsionInformation::Shape _shape)
 {
     if (penetration > 0.0f) {
         PushInfo i(normal, penetration, _shape);
@@ -60,9 +61,11 @@ void PushbackResolver::AddPush(const VECTOR3& normal, float penetration, Collsio
     }
 }
 
-VECTOR3 PushbackResolver::ResolvePushback(float maxLength){
-    if (pushes.empty()) return VECTOR3(0, 0, 0);
-
+VECTOR3 Pushback::ResultPushback(float maxLength) {
+    if (pushes.empty()) {
+        return VECTOR3(0, 0, 0);
+    }
+ 
     VECTOR3 totalPush = VECTOR3(0, 0, 0);
 
     for (const auto& p : pushes) {
@@ -70,7 +73,9 @@ VECTOR3 PushbackResolver::ResolvePushback(float maxLength){
 
 		totalPush += newPush;
 		VECTOR3 pushVecNorm = totalPush.Normalize();
+        //押し返す量を取得
 		float pushIn = VDot(pushVecNorm, newPush);
+        //丸の形状ならyの押し返しを消す
         if (p.shape == CollsionInformation::SPHERE) {
             pushVecNorm = VECTOR3(1,0,1) * pushVecNorm;
             newPush = VECTOR3(newPush.x, 0.0f, newPush.z);
@@ -83,35 +88,17 @@ VECTOR3 PushbackResolver::ResolvePushback(float maxLength){
 		}
     }
 
-    // 正規化 & 最大長クランプ（安全性）
+    //最大の値を越したらそれ以上は押し返さないようにする
     if (totalPush.Size() > maxLength) {
         totalPush = totalPush.Normalize() * maxLength;
     }
 
-    float magnitude = totalPush.Size();
-    float smoothMag = 0.5f * 0.5f + magnitude * (1.0f - 0.5f);
-    VECTOR3 result = totalPush.Normalize() * smoothMag;
-
     return totalPush;
 
-    //if (pushes.empty()) return VECTOR3(0, 0, 0);
-
-    //VECTOR3 totalPush = VECTOR3(0, 0, 0);
-
-    //for (const auto& p : pushes) {
-    //    totalPush += p.normal * p.penetration;
-    //}
-
-    //// 正規化 & 最大長クランプ（安全性）
-    //if (totalPush.Size() > maxLength) {
-    //    totalPush = totalPush.Normalize() * maxLength;
-    //}
-
-    //return totalPush;
 }
 
-void PushbackResolver::Apply(Transform* transform, Physics* physics, bool affectVelocity, float maxLength) {
-    VECTOR3 push = ResolvePushback(maxLength);
+void Pushback::Apply(Transform* transform, Physics* physics, bool affectVelocity, float maxLength) {
+    VECTOR3 push = ResultPushback(maxLength);
     if (push.Size() < 0.001f) return; // 微小なら無視
 
     // 位置補正
@@ -130,7 +117,7 @@ void PushbackResolver::Apply(Transform* transform, Physics* physics, bool affect
     }
 }
 
-bool PushbackResolver::IsGrounded(float minYNormal) const {
+bool Pushback::IsGrounded(float minYNormal) const {
     for (const auto& push : pushes) {
         // 法線のY成分が一定以上なら「地面」とみなす
         if (push.normal.y >= minYNormal) {

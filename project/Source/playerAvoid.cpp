@@ -60,6 +60,7 @@ void PlayerAvoid::Update()
 			time = 0.5f;
 			/*p->playerCom.physics->SetFirction(VECTOR3(250.0f, 250.0f, 250.0f));*/
 		}
+		//スピードの調整
 		float animEasing = Easing::Sin90Cube(1.0f, 0.8f,time);
 		float easeIng = Easing::Sin90Cube(7000.0f, 200.0f, time);
 		float ySpeed = Easing::SinCube(800.0f, 0.0f, time);

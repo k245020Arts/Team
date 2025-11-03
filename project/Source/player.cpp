@@ -75,7 +75,7 @@ void Player::Update()
 	if (avoidReady) {
 		AvoidRotationChange();
 	}
-	//ジャスト回避が出来るようになる「
+	//ジャスト回避が出来るようになる
 	if (enemyHit) {
 		JustAvoidCan();
 	}
@@ -85,12 +85,12 @@ void Player::Update()
 			DeleteCollision();
 		}
 	}
-	
 	if (justAvoid) {
 		if (playerCom.stateManager->GetState<StateBase>()->GetString() != "PlayerJustAvoid") {
 			justAvoid = false;
 		}
 	}
+	//死亡条件
 	if (hp <= 0.0f && (playerCom.stateManager->GetState<StateBase>()->GetID() == ID::P_ANIM_IDOL)) {
 		playerCom.stateManager->NowChangeState(ID::P_DIE);
 		playerCom.stateManager->SetNoStateChange(true);
@@ -109,6 +109,8 @@ void Player::Draw()
 
 void Player::Start(Object3D* _obj)
 {
+	//初期化の値を設定
+	//必要なコンポーネントを付けている。
 	obj = _obj;
 	playerCom.stateManager = obj->Component()->AddComponent<StateManager>();
 	
@@ -340,6 +342,7 @@ void Player::AvoidReady()
 
 void Player::AvoidRotationChange()
 {
+	//回避するときにどれくらいの速度で回転させるかを示す処理
 	RotationChange(walkAngle,20.0f);
 	if (avoidReadyCounter >= 0.0f) {
 		avoidReadyCounter -= Time::DeltaTimeRate();
@@ -484,6 +487,7 @@ StateManager* Player::GetPlayerStateManager()
 void Player::AvoidFinishState()
 {
 	PlayerStickInput();
+	//スティックをある程度傾けていたら移動の処理、傾けていなかったら止まる処理
 	if (fabs(walkAngle.x) >= 0.3f || fabs(walkAngle.z) >= 0.3f) {
 		playerCom.stateManager->ChangeState(ID::P_ANIM_RUN);
 	}

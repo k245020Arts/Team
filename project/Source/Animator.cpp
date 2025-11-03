@@ -51,9 +51,7 @@ void Animator::BaseModelSet(int _model, std::string _rootName)
 
 void Animator::Update()
 {
-
-    //MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
-    //ローカルマトリックスの座標を打ち消す
+    //一回リセットしないと位置が戻らないので戻す。
     MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
     MATRIX matrix = MGetIdent();
     MATRIX beforeMatrix = MGetIdent();
@@ -151,115 +149,13 @@ void Animator::Update()
     // ◇前回のアニメーションが再生中なら、ブレンドする
    if (before.attachID >= 0)
    {
-          // root姿勢を滑らかに遷移
        float rate = blendTime / blendTimeMax;
 
-       // 現姿勢と前姿勢を合成
-       // 最低値 + (最大値 - 最低値) * progress
+       //ブレンド前とブレンド後を合成
        matrix = MAdd(beforeMatrix, MAdd(matrix, beforeMatrix * MGetScale(VOne * -1.0f)) * MGetScale(VOne* rate));
    }
-
+   //アニメーションの位置を変えないようにする
     MV1SetFrameUserLocalMatrix(baseModel, rootNum, matrix);
-
-    // ①前姿勢を補正
-    // ②後姿勢を補正
-    // ③前姿勢と後姿勢を割合でブレンド
-
-    // 一旦リセット
-    //const FileInfo& f = fileInfos[current.fileID];
-    //MV1ResetFrameUserLocalMatrix(baseModel, rootNum);
-
-    //MATRIX currentM = MGetIdent();	// 現在のアニメーションの行列
-    //MATRIX beforeM = MGetIdent();		// 前回のアニメーションの行列
-
-    //// ◇前回のアニメーションが再生中なら
-    //if (current.attachID >= 0) {
-    //    // ▽補間処理
-    //    {
-    //        blendTime += obj->GetObjectTimeRate() * playSpeed;
-
-    //        if (blendTime >= blendTimeMax) {
-    //            MV1DetachAnim(baseModel, before.attachID);
-    //            MV1SetAttachAnimBlendRate(baseModel, current.attachID, 1.0f);
-    //            before.attachID = -1;
-    //        }
-    //        else {
-    //            float rate = blendTime / blendTimeMax;
-    //            MV1SetAttachAnimBlendRate(baseModel, before.attachID, 1.0f - rate);
-    //            MV1SetAttachAnimBlendRate(baseModel, current.attachID, rate);
-    //        }
-    //    }
-
-    //    // 前回の行列を設定
-    //    beforeM = MV1GetFrameLocalMatrix(baseModel, rootNum);
-
-    //    // 無補正時の座標を取得
-    //    const VECTOR3 framePos = MV1GetAttachAnimFrameLocalPosition(baseModel, before.attachID, rootNum);
-
-    //    // 座標移動を打ち消す
-    //    beforeM *= MGetTranslate(framePos * -1.0f);
-
-    //    // Yだけ維持、XZを原点
-    //    beforeM *= MGetTranslate(VECTOR3(0.0f, framePos.y, 0.0f));
-    //}
-
-    //// ◇アニメーションが再生中なら
-    //if (current.attachID >= 0) {
-
-    //    current.beforeFrame = current.frame;
-    //    current.frame += obj->GetObjectTimeRate() * playSpeed * f.playSpeed * 30.0f;
-
-    //    // アニメーションが総再生フレームまで再生したら
-    //    if (current.frame >= f.maxFrame) {
-
-    //        if (!f.loop)
-    //            current.frame = f.maxFrame;
-    //        else {
-    //            current.frame -= f.maxFrame;
-
-    //        }
-    //    }
-
-    //    // アニメーションを適応させる
-    //    MV1SetAttachAnimTime(baseModel, current.attachID, current.frame);
-
-    //    // 現在の行列を取得
-    //    currentM = MV1GetFrameLocalMatrix(baseModel, rootNum);
-
-    //    if (fileInfos[current.fileID].eventFinishTime >= current.frame && fileInfos[current.fileID].eventStartTime <= current.frame) {
-    //        animEventCan = true;
-    //    }
-    //    else {
-    //        animEventCan = false;
-    //    }
-
-    //    // ◇ローカル座標の固定化が有効なら
-    //   /* if (anims[playingLabel].isFixedRoot)
-    //    {*/
-    //        // 無補正時の座標を取得
-    //        const VECTOR3 framePos = MV1GetAttachAnimFrameLocalPosition(baseModel, current.attachID, rootNum);
-
-    //        // 座標移動を打ち消す
-    //        currentM *= MGetTranslate(framePos * -1.0f);
-
-    //        // Yだけ維持、XZを原点
-    //        currentM *= MGetTranslate(VECTOR3(0.0f, framePos.y, 0.0f));
-    //   // }
-
-    //    // ◇前回のアニメーションが再生中なら、ブレンドする
-    //    if (before.attachID >= 0)
-    //    {
-    //        // root姿勢を滑らかに遷移
-    //        float progress = blendTime / blendTimeMax;
-
-    //        // 現姿勢と前姿勢を合成
-    //        // 最低値 + (最大値 - 最低値) * progress
-    //        currentM = MAdd(beforeM, MAdd(currentM, beforeM * MGetScale(VOne * -1.0f)) * MGetScale(VOne* progress));
-    //    }
-
-    //    // セット
-    //    MV1SetFrameUserLocalMatrix(baseModel, rootNum, currentM);
-    //}
 }
 
 void Animator::AddFile(ID::IDType id, std::string filename, bool loop, float speed, float _eventStart, float _eventFinish)

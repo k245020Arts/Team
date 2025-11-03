@@ -19,14 +19,14 @@ public:
 	/// </summary>
 	/// <param name="_filename"></param>
 	/// <param name="all"></param>
-	void SaveAll(std::string _filename,const std::vector<std::vector<std::string>>& all) const;
+	void SaveAll(std::string _filename,const std::vector<std::vector<std::string>>& all);
 	/// <summary>
 	/// 一ラインを書き換える
 	/// </summary>
 	/// <param name="_filename"></param>
 	/// <param name="targetLine"></param>
 	/// <param name="newLine"></param>
-	void SaveLine(std::string _filename, int targetLine, const std::vector<std::string>& newLine) const;
+	void SaveLine(std::string _filename, int targetLine, const std::vector<std::string>& newLine);
 	/// <summary>
 	/// セル一箇所だけ書き換える
 	/// </summary>
@@ -34,7 +34,7 @@ public:
 	/// <param name="line"></param>
 	/// <param name="column"></param>
 	/// <param name="newValue"></param>
-	void SaveCell(std::string _filename, int line, int column, const std::string& newValue)const;
+	void SaveCell(std::string _filename, int line, int column, const std::string& newValue);
 	
 	/// <summary>
 	/// 全てのセルを1種類の文字で埋める

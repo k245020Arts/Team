@@ -9,6 +9,13 @@ public:
 	void Update()override;
 	void Draw()  override;
 
+	/// <summary>
+	/// ‰Šú‰»ˆ—2D‚È‚ç‚±‚Á‚¿‚ğg‚¤‚Ì‚ğ„§
+	/// </summary>
+	/// <param name="_pos"></param>
+	/// <param name="_rotate"></param>
+	/// <param name="_scale"></param>
+	/// <param name="name"></param>
 	void Init(const VECTOR2F _pos, const VECTOR2F _rotate, const VECTOR2F _scale, std::string name);
 	void Init(Transform _transform, std::string name);
 

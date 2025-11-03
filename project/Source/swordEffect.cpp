@@ -76,6 +76,7 @@ void SwordEffect::Draw()
 		MakeDiv(vertexes, rPos, tPos, v0, v1,i);
 	}
 
+	//インデックスの設定
 	for (int i = 0; i < (vertexes.size() - 2) / 2; i++) {
 		indexes.push_back(i * 2);
 		indexes.push_back(i * 2 + 1);
@@ -167,6 +168,7 @@ void SwordEffect::MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos
 	spcColor.b = (BYTE)num[i].rgb.b;
 	//spcColor.a = (BYTE)num[i].rgb.a;
 	
+	//フェードインとフェードアウト
 	if (num[i].feedInTime > 0.0f) {
 		num[i].feedInTime -= Time::DeltaTimeRate();
 		if (num[i].feedInTime <= 0.0f) {
@@ -184,7 +186,7 @@ void SwordEffect::MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos
 	}
 
 	VERTEX3D v;
-	v.norm = VGet(0, 1, 0);
+	v.norm = VECTOR3(0, 1, 0);
 	v.dif = spcColor;
 	v.spc = spcColor;
 

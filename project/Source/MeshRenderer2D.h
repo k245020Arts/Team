@@ -35,9 +35,13 @@ public:
 
 	VECTOR2I GetImageSize() { return imageSize; }
 	void SetDrawImageSize(VECTOR2I _pos);
-
+	/// <summary>
+	/// •¶š‚Ì•`‰æ‚ğ‚µ‚½‚¢‚Æ‚«‚É•¶š‚ğƒZƒbƒg‚µ‚½•ª‚Ì•¶š‚ª”š‚Å•`‰æ‚³‚ê‚é‚æ‚¤‚É‚·‚é
+	/// </summary>
+	/// <param name="_num"></param>
 	void SetNum(int _num) { num = _num; }
 	
+	//•`‰æ‚Ìİ’è€–Ú
 	void SetDraw(bool _draw) { draw = _draw; }
 
 private:

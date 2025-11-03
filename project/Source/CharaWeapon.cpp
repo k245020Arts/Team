@@ -61,6 +61,7 @@ void CharaWeapon::ObjectPointer(BaseObject* _obj, int _frame, ID::IDType _baseMo
 
 void CharaWeapon::SetParent(bool _parent)
 {
+	//e‚ðŠO‚·‚©‚Ç‚¤‚©
 	parent = _parent;
 	if (!parent) {
 		MeshRenderer* me = obj->Component()->AddComponent<MeshRenderer>();

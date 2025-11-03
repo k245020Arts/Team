@@ -137,19 +137,13 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2)
 	VECTOR3 endPos = rayEndTrans->WorldTransform().position;
 
 	// レイによるモデルの当たり判定
-	auto result = MV1CollCheck_Line(
-		dynamic_cast<ModelCollider*>(col1)->GetModel(),
-		-1,
-		startPos,
-		endPos
+	auto result = MV1CollCheck_Line(dynamic_cast<ModelCollider*>(col1)->GetModel(),-1,startPos,endPos
 	);
 	if (col2->GetCollTag() == CollsionInformation::P_FLOOR) {
 		int a;
 	}
 	Physics* p = col2->GetObj()->Component()->GetComponent<Physics>();
-	static PushbackResolver resolver; // オブジェクトに1つ保持する
-
-	resolver.Clear(); // 前フレームの情報をクリア
+	Pushback resolver;
 
 	if (result.HitFlag != 0) {
 		VECTOR3 push = startPos - result.HitPosition;
@@ -157,11 +151,9 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2)
 		// Y方向のみ押し返し
 		resolver.AddPush(VECTOR3(0, 1, 0), push.Size(), CollsionInformation::Shape::RAY);
 	}
-
-	// 最大押し返し長さ 2.0 を DeltaTime に対応
 	resolver.Apply(col2->GetObj()->GetTransform(), p, true, 2.0f * Time::DeltaTimeRate());
 
-	// ground 判定は pushes に依存
+	//地面の判定は当たり判定から行う
 	p->SetGround(resolver.IsGrounded(0.7f));
 	return true;
 
@@ -181,7 +173,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(dynamic_cast<ModelCollider*>(col2)->GetModel(), -1, pos, raius);
 	VECTOR3 ret = VZero;
 
-	PushbackResolver resolver;
+	Pushback resolver;
 
 	for (int i = 0; i < result.HitNum; i++) {
 		auto& pol = result.Dim[i];
@@ -194,96 +186,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 
 	// 解決
 	resolver.Apply(col1->GetObj()->GetTransform(), phy,true,10.0f);
-		// 押し返すベクトルを求める
-					// HitPositionからcenterへ向かうベクトルvを作る
-	//	VECTOR3 v = pos - pol.HitPosition;
-	//	// vの長さとradiusから、押し返すベクトルの長さを求める
-	//	float pushLen = raius - v.Size();
-	//	// 押し返すベクトルを求める(vの向き×長さ）
 
-	//	VECTOR3 newPush = v.Normalize() * pushLen;
-	//	VECTOR3 v1 = ret;
-	//	VECTOR3 v2 = newPush;
-	//	VECTOR3 v1n = v1.Normalize();
-	//	float vLen = VDot(v1n, v2);
-	//	v = v1n * vLen;
-	//	VECTOR3 vt = v2 - v;
-	//	if (v1.Size() > v.Size()) {
-	//		ret = v1 + vt;
-	//	}
-	//	else {
-	//		VECTOR3 v2n = v2.Normalize();
-	//		vLen = VDot(v1, v2n);
-	//		v = v2n * vLen;
-	//		vt = v1 - v;
-	//		ret = v2 + vt;
-	//	}
-	//}
-	//trans2->position += ret;
-	//if (result.HitNum > 0) {
-	//	col1->GetObj()->GetTransform()->position -= ret;
-	//	/*VECTOR3 i = ret;
-	//	printfDx("X : %.1f Y : %.1f Z : %.1f\n", i.x,i.y,i.z);*/
-	//	VECTOR3 i = ret.Normalize() * -VDot(ret.Normalize(), phy->GetVelocity());
-	//	//Debug::DebugLog("x : " + std::to_string(i.x) + "y : " + std::to_string(i.y) + "z : " + std::to_string(i.z));
-	//	phy->AddVelocity(i,false);
-	//}
-	//
-	////pos += ret.Normalize() * -VDot(ret.Normalize(), phy->GetVelocity() * 2.0f);
-	////phy->AddVelocity(ret * -1.0f,false);
-	//MV1CollResultPolyDimTerminate(result);
 	return false;
 
-	//Transform* trans1 = col1->GetTransform();
-	//Transform* trans2 = col2->GetTransform();
-
-	//// Sphereの中心位置（プレイヤーの座標から少し上にすることで安定）
-	//VECTOR3 spherePos = trans1->WorldTransform().position + VECTOR3(0, 0.1f, 0);
-	//float radius = col1->GetRadius();
-
-	//Physics* physics = col1->GetObj()->Component()->GetComponent<Physics>();
-
-	//// モデルとスフィアの当たり判定
-	//MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(
-	//	dynamic_cast<ModelCollider*>(col2)->GetModel(), -1, spherePos, radius);
-
-	//// 合算用の押し返しベクトル
-	//VECTOR3 totalPush = VZero;
-
-	//for (int i = 0; i < result.HitNum; ++i) {
-	//	auto& pol = result.Dim[i];
-
-	//	// スフィア中心からポリゴンまでのベクトル
-	//	VECTOR3 toPoly = spherePos - pol.Position[0];
-
-	//	// めり込み方向はポリゴン法線
-	//	float penetration = radius - VDot(pol.Normal, toPoly);
-	//	if (penetration > 0.0f) {
-	//		VECTOR3 pushVec = pol.Normal * penetration;
-	//		totalPush += pushVec;
-	//	}
-	//}
-
-	//// 押し返しベクトルが発生しているなら補正
-	//if (result.HitNum > 0 && totalPush.SquareSize() != 0.0f) {
-	//	// 位置補正（地面のめり込みを防止）
-	//	trans1->position += totalPush;
-
-	//	// 速度補正（地面との反発）
-	//	VECTOR3 normal = totalPush.Normalize();
-	//	float dot = VDot(normal, physics->GetVelocity());
-
-	//	if (dot < 0.0f) {
-	//		VECTOR3 reflectVel = normal * -dot;
-	//		physics->AddVelocity(reflectVel, false);
-	//	}
-
-	//	// メモリ解放
-	//	MV1CollResultPolyDimTerminate(result);
-	//	return true;
-	//}
-
-	//// メモリ解放
-	//MV1CollResultPolyDimTerminate(result);
-	//return false;
 }

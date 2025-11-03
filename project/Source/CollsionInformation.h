@@ -69,20 +69,20 @@ struct PushInfo {
 	}
 };
 
-class PushbackResolver {
+class Pushback {
 private:
 	std::vector<PushInfo> pushes;
 
 public:
-	PushbackResolver();
-	~PushbackResolver();
+	Pushback();
+	~Pushback();
 	void Clear();
 
 	// 押し返しデータを追加
 	void AddPush(const VECTOR3& normal, float penetration, CollsionInformation::Shape _shape);
 
 	// 押し返しベクトルを計算して返す
-	VECTOR3 ResolvePushback(float maxLength = 5.0f);
+	VECTOR3 ResultPushback(float maxLength = 5.0f);
 
 	// 位置と速度に押し返しを適用
 	void Apply(Transform* transform, Physics* physics, bool affectVelocity = true, float maxLength = 5.0f);

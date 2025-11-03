@@ -36,7 +36,7 @@ private:
 	float alpha;
 	bool fadeOut;
 
-	int blurScreen[SCREEN_NUM];
+	int blurScreen[SCREEN_NUM]; //•`‰æ‚³‚¹‚éƒXƒNƒŠ[ƒ“‚ğ•Û‘¶‚·‚é
 
 	float defalutAlpha;
 

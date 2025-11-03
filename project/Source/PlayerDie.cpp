@@ -23,6 +23,7 @@ void PlayerDie::Update()
 		
 	}
 	else {
+		//€‚ñ‚¾uŠÔ‚ÍƒXƒ[Ä¶‚ğ‚³‚¹‚é
 		if (slowTime <= 0.0f) {
 			Time::ChangeDeltaRate(1.0f);
 			p->playerCom.camera->CameraShakeStop();

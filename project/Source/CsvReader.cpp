@@ -21,8 +21,6 @@ bool CsvReader::Load(std::string _filename)
 	record.clear();
 	while (std::getline(file, str))
 	{
-		//OutputDebugString(str.c_str());
-		//OutputDebugString("\n");
 		//str‚ð,‚²‚Æ‚É‚Î‚ç‚·
 		std::vector<std::string> line;
 		size_t idx;
@@ -38,7 +36,7 @@ bool CsvReader::Load(std::string _filename)
 	return true;
 }
 
-void CsvReader::SaveAll(std::string _filename,const std::vector<std::vector<std::string>>& all) const
+void CsvReader::SaveAll(std::string _filename,const std::vector<std::vector<std::string>>& all) 
 {
 	std::ofstream file(_filename, std::ios::out);
 	for (const auto& row : all) {
@@ -50,7 +48,7 @@ void CsvReader::SaveAll(std::string _filename,const std::vector<std::vector<std:
 	}
 }
 
-void CsvReader::SaveLine(std::string _filename, int targetLine, const std::vector<std::string>& newLine) const
+void CsvReader::SaveLine(std::string _filename, int targetLine, const std::vector<std::string>& newLine) 
 {
 	
 	std::vector<std::vector<std::string>> temp = record;
@@ -62,7 +60,7 @@ void CsvReader::SaveLine(std::string _filename, int targetLine, const std::vecto
 	SaveAll(_filename, temp);
 }
 
-void CsvReader::SaveCell(std::string _filename, int line, int column, const std::string& newValue)const
+void CsvReader::SaveCell(std::string _filename, int line, int column, const std::string& newValue)
 {
 	if (line < 0 || line >= record.size()) return;
 	if (column < 0 || column >= record[line].size()) return;

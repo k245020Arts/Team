@@ -27,6 +27,7 @@ namespace {
 	//std::array <std::string, (int)Type::EFFECT + 1> path;
 
 	void ShowLoadError(const std::string& type, const std::string& name) {
+		//エラーしたらメッセージボックスでエラー分を出す
 		Debug::CreateMessageBox("読み込み失敗: " + name, type);
 	}
 
@@ -49,6 +50,7 @@ int Load::LoadModel(std::string path,ID::IDType id)
 	std::string name = ID::GetID(id);
 	LoadData data = fileLoad[name];
 	if (data.handle == -1) {
+		//拡張子はこっちで指定する分楽にできるようにする
 		path += ".mv1";
 		data.handle = MV1LoadModel(path.c_str());
 		data.type = Type::MODEL;
@@ -70,6 +72,7 @@ int Load::LoadSound(std::string path,std::string exten, Sound_ID::SOUND_ID id)
 	LoadData data = fileLoad[name];
 	std::string loadName = Load::SOUND_PATH + path;
 	if (data.handle == -1) {
+		//soundだけは拡張子が様々なので引数で指定
 		loadName += exten;
 		data.handle = LoadSoundMem(loadName.c_str());
 		data.type = Type::SOUND;
@@ -92,6 +95,7 @@ int Load::LoadEffect(std::string path, Effect_ID::EFFECT_ID id,float size)
 	LoadData data = fileLoad[name];
 	std::string loadName = Load::EFFECT_PATH + path;
 	if (data.handle == -1) {
+		//拡張子はこっちで指定する分楽にできるようにする
 		loadName += ".efkefc";
 		data.handle = LoadEffekseerEffect(loadName.c_str(),size);
 		data.type = Type::EFFECT;
@@ -112,6 +116,7 @@ int Load::LoadImageGraph(std::string path, ID::IDType id)
 	std::string name = ID::GetID(id);
 	LoadData data = fileLoad[name];
 	if (data.handle == -1) {
+		//拡張子はこっちで指定する分楽にできるようにする
 		path += ".png";
 		data.handle = LoadGraph(path.c_str());
 		data.type = Type::IMAGE;
@@ -131,6 +136,7 @@ int Load::LoadAnim(std::string path, ID::IDType id)
 	std::string name = ID::GetID(id);
 	LoadData data = fileLoad[name];
 	if (data.handle == -1) {
+		//拡張子はこっちで指定する分楽にできるようにする
 		path += ".mv1";
 		data.handle = MV1LoadModel(path.c_str());
 		data.type = Type::ANIM;
@@ -147,6 +153,7 @@ int Load::LoadAnim(std::string path, ID::IDType id)
 
 void Load::DeleteData(ID::IDType id)
 {
+	//指定したIDのリソースを削除する
 	std::string name = ID::GetID(id);
 	auto itr = fileLoad.find(name);
 	if (itr == fileLoad.end()) {
@@ -175,6 +182,7 @@ void Load::DeleteData(ID::IDType id)
 
 void Load::AllDelete()
 {
+	//すべてのリソースデータを削除する
 	for (auto f:fileLoad) {
 		switch (f.second.type)
 		{

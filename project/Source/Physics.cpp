@@ -33,31 +33,6 @@ void Physics::Update()
 {
 	*lastTransform = *currentTransform;
 
-	/*if (!noGravity || !ground) {
-		velocity += gravity * obj->GetObjectTimeRate(); //重力分velocityに足している
-	}
-	
-
-	float resis = velocity.Size();
-	VECTOR3 velo = velocity;
-
-	float num;
-
-	//抵抗を掛けてベロシティを減らしている
-	velo.y -= 5.0f * obj->GetObjectTimeRate();
-	num = max(resis - firction.Size() * obj->GetObjectTimeRate(), 0.0f);
-	velocity = velocity.Normalize() * num;
-	velocity.y = velo.y;
-	//ポジションを足す。
-	currentTransform->position += velocity * obj->GetObjectTimeRate();
-	//今は地面に当たり判定を作っていないので仮置き
-	/*if (currentTransform->position.y <= 0.0f) {
-		currentTransform->position.y = 0;
-		velocity.y = gravity.y;
-	}*/
-	
-	*lastTransform = *currentTransform;
-
 	float dt = obj->GetObjectTimeRate();
 
 	// 地面にいない場合のみ重力を加算
