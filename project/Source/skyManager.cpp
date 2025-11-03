@@ -29,6 +29,7 @@ void SkyManager::CreateSky()
 	sky =  new Object3D();
 
 	sky->Init(VECTOR3(0, -4000, 0), VECTOR3(0, 0, 0), VECTOR3(2000.0f,2000.0f,2000.0f), "sky");
+	sky->SetDrawOrder(10);
 
 	MeshRenderer* mesh = sky->Component()->AddComponent<MeshRenderer>();
 	mesh->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "sky/sky_2", ID::SKY));

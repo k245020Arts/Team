@@ -43,4 +43,5 @@ protected:
 	bool rotation;
 
 	float hitDamage;
+	bool defalutTrail;
 };

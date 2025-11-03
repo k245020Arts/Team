@@ -4,6 +4,9 @@
 
 namespace {
 	const VECTOR3 MIN_FRICTION = VECTOR3(5.0f, 5.0f, 5.0f);
+	
+	constexpr int PHYSICS_SUBSTEPS = 6;  // 1フレームを何分割するか
+	
 }
 
 Physics::Physics()
@@ -30,7 +33,7 @@ void Physics::Update()
 {
 	*lastTransform = *currentTransform;
 
-	if (!noGravity || !ground) {
+	/*if (!noGravity || !ground) {
 		velocity += gravity * obj->GetObjectTimeRate(); //重力分velocityに足している
 	}
 	
@@ -52,6 +55,31 @@ void Physics::Update()
 		currentTransform->position.y = 0;
 		velocity.y = gravity.y;
 	}*/
+	
+	*lastTransform = *currentTransform;
+
+	float dt = obj->GetObjectTimeRate();
+
+	// 地面にいない場合のみ重力を加算
+	if (!ground) {
+		velocity += gravity * dt;
+	}
+	
+	// 摩擦減衰
+	float resistance = velocity.Size();
+	VECTOR3 velo = velocity;
+	//velo.y -= 5.0f * dt;
+
+	float newSpeed = max(resistance - firction.Size() * dt, 0.0f);
+	velocity = velocity.Normalize() * newSpeed;
+	velocity.y = velo.y;
+
+	// 微小速度をカット（誤差防止）
+	if (fabs(velocity.y) < 0.0001f)
+		velocity.y = 0.0f;
+
+	// 位置更新
+	currentTransform->position += velocity * dt;
 }
 
 void Physics::Start(VECTOR3 _gravityAmout, VECTOR3 _fir)
@@ -67,7 +95,7 @@ void Physics::AddVelocity(VECTOR3 _addVelocity, bool _deltaTime)
 {
 	VECTOR3 add = _addVelocity;
 	if (_deltaTime) {
-		add *= Time::DeltaTime();
+		add *= obj->GetObjectTimeRate();
 	}
 	velocity += add;
 }

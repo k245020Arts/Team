@@ -19,6 +19,7 @@ PlayerJustAvoidAttack2::PlayerJustAvoidAttack2()
 	nextAttackID = ID::P_ANIM_ATTACK1;
 	frontSpeed = 10000.0f;
 	hitDamage = 5.0f;
+	defalutTrail = false;
 }
 
 PlayerJustAvoidAttack2::~PlayerJustAvoidAttack2()
@@ -30,6 +31,9 @@ void PlayerJustAvoidAttack2::Update()
 	Player* p = GetBase<Player>();
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
+	if (p->playerCom.anim->AnimEventCan()) {
+		p->playerCom.player->DrawTrail(VECTOR3(0, 0, -100), VECTOR3(0, 0, -350), 255.0f, 0.0f, 0.0f, 150.0f, 28, 0.8f);
+	}
 	if (!noStateChange) {
 		if (distSize <= ATTACK_MOVE_DIST) {
 			EnemyRotation();

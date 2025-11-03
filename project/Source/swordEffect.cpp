@@ -5,6 +5,7 @@
 #include "transform.h"
 #include "../ImGui/imgui.h"
 #include <array>
+#include "Easing.h"
 
 
 SwordEffect::SwordEffect()
@@ -27,9 +28,16 @@ SwordEffect::~SwordEffect()
 void SwordEffect::Update()
 {
 	for (auto e = num.begin(); e != num.end();) {
+		if (e->feedInTime > 0.0f) {
+			e++;
+			continue;
+		}
 		e->time -= Time::DeltaTimeRate();
 		if (e->time <= 0.0f) {
-			e = num.erase(e);
+			e->feedOutTime -= Time::DeltaTimeRate();
+			if (e->feedOutTime <= 0.0f) {
+				e = num.erase(e);
+			}
 		}
 		else {
 			e++;
@@ -119,6 +127,9 @@ void SwordEffect::CreateEffect(VECTOR3 _nearPos, VECTOR3 _farPos, Color::Rgb _rg
 	//time = _time;
 	in.timeMax = _time;
 	in.time = _time;
+	in.maxAlpha = _rgb.a;
+	in.feedInTime = 0.2f;
+	in.feedOutTime = 0.5f;
 	num.emplace_back(in);
 }
 
@@ -154,7 +165,23 @@ void SwordEffect::MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos
 	spcColor.r = (BYTE)num[i].rgb.r;
 	spcColor.g = (BYTE)num[i].rgb.g;
 	spcColor.b = (BYTE)num[i].rgb.b;
-	spcColor.a = (BYTE)num[i].rgb.a;
+	//spcColor.a = (BYTE)num[i].rgb.a;
+	
+	if (num[i].feedInTime > 0.0f) {
+		num[i].feedInTime -= Time::DeltaTimeRate();
+		if (num[i].feedInTime <= 0.0f) {
+			num[i].feedInTime = 0.0f;
+		}
+		float rate = 1 - (num[i].feedInTime / 0.2f);
+		spcColor.a =  Easing::Lerp(0.0f, num[i].maxAlpha, rate);
+	}
+	else if (num[i].time <= 0.0f) {
+		float rate = (num[i].feedOutTime / 0.5f);
+		spcColor.a = Easing::Lerp(0.0f, num[i].maxAlpha, rate);
+	}
+	else {
+		spcColor.a = num[i].maxAlpha;
+	}
 
 	VERTEX3D v;
 	v.norm = VGet(0, 1, 0);

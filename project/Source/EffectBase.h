@@ -52,4 +52,6 @@ private:
 	int hPlayHandle;
 	float time;
 	float speed;
+	float feedInTime;
+	const float FEEDIN_TIME = 0.1f;
 };

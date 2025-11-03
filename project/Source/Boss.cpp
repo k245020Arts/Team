@@ -37,6 +37,7 @@ Boss::Boss()
 	bs = new BossStatus;
 
 	hp = bs->GetStatus().maxHp;
+	maxHp = hp;
 }
 
 Boss::~Boss()

@@ -22,6 +22,7 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	time = 0.0f;
 	beforeAngle = 0.0f;
 	beforeAttack = false;
+	defalutTrail = true;
 }
 
 PlayerAttackStateBase::~PlayerAttackStateBase()
@@ -32,7 +33,7 @@ void PlayerAttackStateBase::Update()
 {
 	Player* p = GetBase<Player>();
 	
-	if (p->playerCom.anim->AnimEventCan()) {
+	if (p->playerCom.anim->AnimEventCan() && defalutTrail) {
 		p->playerCom.player->DrawTrail();
 		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
 	}
@@ -88,6 +89,7 @@ void PlayerAttackStateBase::Start()
 	}
 	else {
 		targetTrans = Transform();
+		targetTrans.position = VECTOR3(0, 0, 1) * p->playerTransform->rotation;
 	}
 	
 	//“G‚ÆƒvƒŒƒCƒ„[‚Ì‹——£‚ð‚Æ‚é
@@ -102,7 +104,7 @@ void PlayerAttackStateBase::Start()
 	p->playerCom.sound->RandamSe("P_AttackV", 3);
 	beforeAttack = true;
 	runTimer = 0.0f;
-	if (dist.Size() >= 2500 && p->playerCom.targetObj != nullptr) {
+	if (dist.Size() >= 3000 || p->playerCom.targetObj != nullptr) {
 		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
 		rotation = false;;
 		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));

@@ -1,10 +1,13 @@
 #include "EffectBase.h"
 #include "Object3D.h"
 #include "LoadManager.h"
+#include "Easing.h"
 
 EffectBase::EffectBase()
 {
 	speed = 1.0f;
+	debugId = 22;
+	tag = Function::GetClassNameC<EffectBase>();
 }
 
 EffectBase::~EffectBase()
@@ -16,11 +19,24 @@ EffectBase::~EffectBase()
 void EffectBase::Update() 
 {
 	(this->*effectPlay)();
-	time -= Time::DeltaTimeRate();
-	if (time <= 0.0f) {
-		(this->*effectStop)();
-		active = false;
+	if (feedInTime <= 0.0f) {
+		time -= Time::DeltaTimeRate();
+		if (time <= 0.0f) {
+			(this->*effectStop)();
+			active = false;
+		}
 	}
+	else {
+		feedInTime -= Time::DeltaTimeRate();
+		if (feedInTime <= 0.0f) {
+			feedInTime = 0.0f;
+		}
+		float rate = 1 - (feedInTime / FEEDIN_TIME);
+		float amout = Easing::EaseIn(0.0f, 255.0f, rate);
+		Color::Rgb rgb = Color::Rgb(255.0f, 255.0f, 255.0f, amout);
+		(this->*effectColor)(rgb);
+	}
+	
 }
 
 void EffectBase::Draw() {
@@ -49,7 +65,7 @@ void EffectBase::EffectInit(Transform _transform, BaseObject* _parent, Effect_ID
 		effectColor = &EffectBase::SetColor2D;
 		hPlayHandle = PlayEffekseer2DEffect(Load::GetEffectHandle(id));
 	}
-	
+	feedInTime = FEEDIN_TIME;;
 }
 
 void EffectBase::EffectPlay2D()
