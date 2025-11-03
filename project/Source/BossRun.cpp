@@ -25,11 +25,11 @@ void BossRun::Update()
 	{
 		bs = b->bs;
 		speed = bs->GetStatus().runSpeed;
-	}	
-
-	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
+	}
 
 	rotation = b->obj->GetTransform()->rotation;
+	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
+
 	//ˆÚ“®‚ÌŒvŽZ
 	velocity.x = speed * cosf(ROTY);
 	velocity.z = speed * sinf(ROTY);

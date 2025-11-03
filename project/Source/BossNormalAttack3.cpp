@@ -3,6 +3,7 @@
 #include "Boss.h"
 #include "stateManager.h"
 #include "Easing.h"
+#include "BossStatus.h"
 
 BossNormalAttack3::BossNormalAttack3()
 {
@@ -17,18 +18,23 @@ BossNormalAttack3::~BossNormalAttack3()
 
 void BossNormalAttack3::Update()
 {
-	Boss* boss = GetBase<Boss>();
+	Boss* b = GetBase<Boss>();
 	//‚Ç‚±‚Ü‚ÅƒvƒŒƒCƒ„[‚Ì•û‚ğŒ©‚é‚©
+	counter++;
+	if (counter < 50)
+		b->LookPlayer();
 
-	if (boss->enemyBaseComponent.anim->IsFinish()) {
-		if (boss->maxAttack != 0)
-			boss->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
+	//if (b->enemyBaseComponent.anim->IsFinish()) {
+	if (b->enemyBaseComponent.anim->GetMaxFrame() - a <= b->enemyBaseComponent.anim->GetCurrentFrame())
+	{
+		if (b->maxAttack != 0)
+			b->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
 		else
-			boss->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+			b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
 	}
 	BossAttackCollsion();
 	AttackSound();
-	AttackFlash(ID::B_MODEL, boss->BOSS_LEFT_HAND_FRAME, "E_AttackV");
+	AttackFlash(ID::B_MODEL, b->BOSS_LEFT_HAND_FRAME, "E_AttackV");
 	BossTrail(false);
 }
 
@@ -45,7 +51,12 @@ void BossNormalAttack3::Start()
 	counter = 0;
 
 	if (boss->maxAttack == 0)
+	{
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+		a = 0;
+	}
+	else
+		a = boss->bs->GetStatus().maxA - 20;
 }
 
 void BossNormalAttack3::Finish()

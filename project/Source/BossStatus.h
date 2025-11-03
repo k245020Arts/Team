@@ -13,6 +13,7 @@ private:
 		float maxHp = 1000;				//Å‘åHP
 		float coolTime = 60.0f;			//ˆê’i–Ú‚ÌUŒ‚‚Ü‚Å‚ÌŠÔ
 		float runSpeed = 5.0f;			//ƒ{ƒX‚ÌˆÚ“®‘¬“x
+		float maxA = 50.0f;				//Ÿ‚ÌUŒ‚‚ÌŠÔŠu‚ğ’Z‚­‚·‚é
 	};
 	Status status;
 
