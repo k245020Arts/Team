@@ -72,6 +72,6 @@ namespace PlayerInformation {
 		EnemyManager* enemyManager;
 	};
 
-	static const VECTOR3 BASE_INTERIA = VECTOR3(7500.0f, 2500.0f, 7500.0f);
-	static const VECTOR3 BASE_GRAVITY = VECTOR3(0.0f, -1000.0f, 0.0f);
+	static const VECTOR3 BASE_INTERIA = VECTOR3(7500.0f, -7500.0f, 7500.0f);
+	static const VECTOR3 BASE_GRAVITY = VECTOR3(0.0f, -5000.0f, 0.0f);
 }
