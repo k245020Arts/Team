@@ -49,10 +49,10 @@ namespace {
 		"start_num",
 		"b_model",
 		"c_free",
-		"b_idol"
-		"b_run"
-		"b_coolTime",//
-		"b_attackSorting"//
+		"b_idol",
+		"b_run",
+		"b_coolTime",
+		"b_attackSorting",
 		"b_n_attack1",
 		"b_n_attack2",
 		"b_n_attack3",

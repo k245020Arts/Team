@@ -47,9 +47,10 @@ void BossNormalAttack1::Draw()
 
 void BossNormalAttack1::Start()
 {
+	Boss* boss = GetBase<Boss>();
 	EnemyStateBase::Start();
 	firstColl = true;
-	Boss* boss = GetBase<Boss>();
+	boss->enemyBaseComponent.anim->AnimEventReset();
 	if (boss->maxAttack == 0)
 	{
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
@@ -62,6 +63,8 @@ void BossNormalAttack1::Start()
 void BossNormalAttack1::Finish()
 {
 	Boss* boss = GetBase<Boss>();
+	boss->DeleteCollision();
+	boss->enemyBaseComponent.anim->AnimEventReset();
 	if (boss->maxAttack == 0)
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.2f);
 }

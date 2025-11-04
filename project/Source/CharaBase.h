@@ -42,6 +42,8 @@ public:
 
 	bool GetLastTarget() { return lastTarget; }
 
+	virtual void DeleteCollision();
+
 protected:
 	ColliderBase* attackColl;
 

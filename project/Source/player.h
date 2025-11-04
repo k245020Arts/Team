@@ -74,7 +74,6 @@ public:
 	StateManager* GetPlayerStateManager();
 
 	void AvoidFinishState();
-	void DeleteCollision();
 
 	/// <summary>
 	/// ‹OÕ•\¦‚ÌŠÖ”‚Åˆø”‚È‚µ‚Ídefalut‚Ì‚à‚Ì‚ªŒÄ‚Ño‚³‚ê‚éB
@@ -82,6 +81,8 @@ public:
 	/// </summary>
 	void DrawTrail();
 	void DrawTrail(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, float index, float _time);
+
+	void DeleteCollision() override;
 
 private:
 	PlayerInformation::CharaComponent playerCom;

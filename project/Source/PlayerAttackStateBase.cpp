@@ -121,7 +121,7 @@ void PlayerAttackStateBase::Start()
 void PlayerAttackStateBase::Finish()
 {
 	Player* p = GetBase<Player>();
-	p->DeleteCollision();
+    p->DeleteCollision();
 }
 
 bool PlayerAttackStateBase::IsAttack()

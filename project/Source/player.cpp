@@ -496,14 +496,6 @@ void Player::AvoidFinishState()
 	}
 }
 
-void Player::DeleteCollision()
-{
-	if (attackColl != nullptr) {
-		DeleteColliderComponent();
-		attackColl = nullptr;
-	}
-}
-
 void Player::DrawTrail()
 {
 	DrawTrail(VECTOR3(0, 0, -70), VECTOR3(0, 0, -150), 255.0f, 0.0f, 0.0f, 100.0f, 28, 0.25f);
@@ -514,4 +506,9 @@ void Player::DrawTrail(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _
 {
 	//Œ•‚Ì‹OÕ‚Ìˆ—
 	playerCom.weapon->CreateTrailPlayer(_nPos,_fPos,_r,_g,_b,_a,index,_time);
+}
+
+void Player::DeleteCollision()
+{
+	CharaBase::DeleteCollision();
 }

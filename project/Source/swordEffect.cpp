@@ -129,7 +129,7 @@ void SwordEffect::CreateEffect(VECTOR3 _nearPos, VECTOR3 _farPos, Color::Rgb _rg
 	in.timeMax = _time;
 	in.time = _time;
 	in.maxAlpha = _rgb.a;
-	in.feedInTime = 0.2f;
+	in.feedInTime = 0.1f;
 	in.feedOutTime = 0.5f;
 	num.emplace_back(in);
 }
@@ -174,7 +174,7 @@ void SwordEffect::MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos
 		if (num[i].feedInTime <= 0.0f) {
 			num[i].feedInTime = 0.0f;
 		}
-		float rate = 1 - (num[i].feedInTime / 0.2f);
+		float rate = 1 - (num[i].feedInTime / 0.1f);
 		spcColor.a = (BYTE)Easing::Lerp(0.0f, num[i].maxAlpha, rate);
 	}
 	else if (num[i].time <= 0.0f) {

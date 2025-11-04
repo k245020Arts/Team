@@ -49,6 +49,7 @@ void BossNormalAttack3::Start()
 	EnemyStateBase::Start();
 	firstColl = true;
 	counter = 0;
+	boss->enemyBaseComponent.anim->AnimEventReset();
 
 	if (boss->maxAttack == 0)
 	{
@@ -62,6 +63,8 @@ void BossNormalAttack3::Start()
 void BossNormalAttack3::Finish()
 {
 	Boss* boss = GetBase<Boss>();
+	boss->DeleteCollision();
+	boss->enemyBaseComponent.anim->AnimEventReset();
 	if (boss->maxAttack == 0)
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.2f);
 }

@@ -62,7 +62,7 @@ void PlayerStateBase::DefalutWalk()
 {
 	Player* p = GetBase<Player>();
 	//ˆÚ“®ˆ—
-	p->playerCom.player->Move(200.0f, 3200.0f);
+	p->playerCom.player->Move(20000.0f * Time::DeltaTimeRate(), 3200.0f);
 	if (p->playerCom.InputManager->KeyInputDown("avoid")) {
 		p->playerCom.player->AvoidReady();
 	}
