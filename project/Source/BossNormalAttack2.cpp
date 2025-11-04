@@ -48,7 +48,8 @@ void BossNormalAttack2::Start()
 	Boss* boss = GetBase<Boss>();
 	EnemyStateBase::Start();
 	firstColl = true;
-	boss->enemyBaseComponent.anim->AnimEventReset();
+	Boss* boss = GetBase<Boss>();
+	hitDamage = boss->bs->GetStatus().normalAttack1;
 	if (boss->maxAttack == 0)
 	{
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);

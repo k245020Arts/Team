@@ -49,6 +49,7 @@ void BossNormalAttack3::Start()
 	EnemyStateBase::Start();
 	firstColl = true;
 	counter = 0;
+	hitDamage = boss->bs->GetStatus().normalAttack3;
 	boss->enemyBaseComponent.anim->AnimEventReset();
 
 	if (boss->maxAttack == 0)

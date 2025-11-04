@@ -1,7 +1,7 @@
 #pragma once
-#include "EnemyStateBase.h"
+#include "BossAttackBase.h"
 
-class BossNormalAttack3 : public EnemyStateBase
+class BossNormalAttack3 : public BossAttackBase
 {
 public:
 	BossNormalAttack3();
