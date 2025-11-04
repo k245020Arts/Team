@@ -48,7 +48,6 @@ void BossNormalAttack2::Start()
 	Boss* boss = GetBase<Boss>();
 	EnemyStateBase::Start();
 	firstColl = true;
-	Boss* boss = GetBase<Boss>();
 	hitDamage = boss->bs->GetStatus().normalAttack1;
 	if (boss->maxAttack == 0)
 	{

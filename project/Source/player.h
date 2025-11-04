@@ -98,5 +98,5 @@ private:
 	float noAvoidCounter;
 	float avoidReadyCounter;
 
-	const float MAX_HP = 100;
+	const float MAX_HP = 1000;
 };

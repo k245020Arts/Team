@@ -41,6 +41,7 @@
 #include "PlayerDie.h"
 #include "EnemyManager.h"
 #include "ComponentManager.h"
+#include "BossAttackBase.h"
 
 Player::Player()
 {
@@ -364,6 +365,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	//敵の攻撃が当たった時の処理
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
 	Animator* enemyAnim = _obj->Component()->GetComponent<Animator>();
+	std::shared_ptr<BossAttackBase> attack = _obj->Component()->GetComponent<StateManager>()->GetState<BossAttackBase>();
 	float startTime = enemyAnim->EventStartTime(_attackId);
 	bool damage = false;
 	//ジャスト回避が出来る処理
@@ -396,6 +398,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 		if (pB->GetID() != ID::P_ANIM_AVOID) {
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
 			playerCom.stateManager->ChangeState(ID::P_DAMAGE);
+			hp -= attack->GetHitDamage();
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
 			playerCom.sound->RandamSe("EnemyAttackHit",4);
 			playerCom.sound->RandamSe("P_DamageV",2);
