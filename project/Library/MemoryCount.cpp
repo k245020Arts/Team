@@ -1,93 +1,4 @@
-﻿//#include "MemoryCount.h"
-//#include <atomic>
-//#include <cstdlib>
-//#include <new>
-//
-////ウィンドウズを使っているときはこれが実行される。
-//#ifdef _WIN32 
-//#include <windows.h>
-//#endif
-//#pragma warning(disable:28251)  // 注釈不整合の警告番号　//どうしてもwaringが直らなかったのでこれで苦肉の策
-//
-//namespace {
-//    std::atomic<size_t> totalMemorySize{ 0 };
-//}
-//
-//// ====== operator new ======
-//
-//void* __CRTDECL operator new(std::size_t _size) noexcept(false) {
-//    totalMemorySize += _size;//メモリのサイズを加算
-//    //実際のメモリ割り当てを行う(演算子のオーバーライドなので普通のnewでもしていることはしっかりとしないとインスタンスが確保されない)
-//    void* _ptr = std::malloc(_size);
-//    if (!_ptr) throw std::bad_alloc();
-//    return _ptr;
-//}
-//
-//void* __CRTDECL operator new(std::size_t _size, const std::nothrow_t&) noexcept {
-//    totalMemorySize += _size;//メモリのサイズを加算
-//    //実際のメモリ割り当てを行う(演算子のオーバーライドなので普通のnewでもしていることはしっかりとしないとインスタンスが確保されない)
-//    return std::malloc(_size);
-//}
-//
-//void* __CRTDECL operator new[](std::size_t _size) noexcept(false) {
-//    totalMemorySize += _size;//メモリのサイズを加算
-//    //実際のメモリ割り当てを行う(演算子のオーバーライドなので普通のnewでもしていることはしっかりとしないとインスタンスが確保されない)
-//    void* _ptr = std::malloc(_size);
-//    if (!_ptr) throw std::bad_alloc();
-//    return _ptr;
-//}
-//
-//void* __CRTDECL operator new[](std::size_t _size, const std::nothrow_t&) noexcept {
-//    totalMemorySize += _size;//メモリのサイズを加算
-//    //実際のメモリ割り当てを行う(演算子のオーバーライドなので普通のnewでもしていることはしっかりとしないとインスタンスが確保されない)
-//    return std::malloc(_size);
-//}
-//
-//// ====== operator delete ======
-//
-//void operator delete(void* _ptr, std::size_t _size) noexcept {
-//    // 解放するメモリサイズを減算
-//    totalMemorySize -= _size;
-//    // 実際のメモリ解放は free で行う(newの時と同じでこっちもしっかりと処理をしないといけない)
-//    std::free(_ptr);
-//}
-//
-//void operator delete(void* _ptr, const std::nothrow_t&) noexcept {
-//    std::free(_ptr);
-//}
-//
-//void operator delete[](void* _ptr, std::size_t _size) noexcept {
-//    // 解放するメモリサイズを減算
-//    totalMemorySize -= _size;
-//    // 実際のメモリ解放は free で行う(newの時と同じでこっちもしっかりと処理をしないといけない)
-//    std::free(_ptr);
-//}
-//
-//void operator delete[](void* _ptr, const std::nothrow_t&) noexcept {
-//    std::free(_ptr);
-//}
-//
-//// ====== メモリ使用状況取得 ======
-//
-//size_t GetTrackedMemoryUsage() {
-//    return totalMemorySize.load();
-//}
-//
-//size_t GetTotalPhysicalMemory() {
-//#ifdef _WIN32
-//    MEMORYSTATUSEX _memInfo;
-//    _memInfo.dwLength = sizeof(MEMORYSTATUSEX);
-//    if (GlobalMemoryStatusEx(&_memInfo)) {
-//        return static_cast<size_t>(_memInfo.ullTotalPhys);
-//    }
-//
-//#endif
-//    return 0;
-//}
-//
-//#pragma warning(pop)
-
-#include "MemoryCount.h"
+﻿#include "MemoryCount.h"
 #include <atomic>
 #include <cstdlib>
 #include <new>
@@ -98,7 +9,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
-// 注釈不整合の警告番号　//どうしてもwaringが直らなかったのでこれで苦肉の策
+//どうしてもwaringが直らなかったのでこれで苦肉の策
 #pragma warning(disable:28251)
 #include <DxLib.h>
 

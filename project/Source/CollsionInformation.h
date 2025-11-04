@@ -70,9 +70,6 @@ struct PushInfo {
 };
 
 class Pushback {
-private:
-	std::vector<PushInfo> pushes;
-
 public:
 	Pushback();
 	~Pushback();
@@ -87,4 +84,6 @@ public:
 	// 位置と速度に押し返しを適用
 	void Apply(Transform* transform, Physics* physics, bool affectVelocity = true, float maxLength = 5.0f);
 	bool IsGrounded(float minYNormal = 0.6f) const;
+private:
+	std::vector<PushInfo> pushes;
 };

@@ -3,7 +3,7 @@
 #include <new>
 #include <windows.h>
 #pragma warning(push)
-#pragma warning(disable:28251)  // 注釈不整合の警告番号 //どうしてもwaringが直らなかったのでこれで苦肉の策
+#pragma warning(disable:28251) //どうしてもwaringが直らなかったのでこれで苦肉の策
 
 /// <summary>
 /// new演算子のオーバーロード

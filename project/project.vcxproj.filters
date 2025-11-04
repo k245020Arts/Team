@@ -356,9 +356,6 @@
     <ClCompile Include="Source\EffectID.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BossManager.cpp">
-      <Filter>PlayScene\Boss</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Boss.cpp">
       <Filter>PlayScene\Boss</Filter>
     </ClCompile>
@@ -803,9 +800,6 @@
     </ClInclude>
     <ClInclude Include="Source\YAMLReader.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\BossManager.h">
-      <Filter>PlayScene\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Source\Boss.h">
       <Filter>PlayScene\Boss</Filter>

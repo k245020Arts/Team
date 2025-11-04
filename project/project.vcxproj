@@ -177,7 +177,6 @@
     <ClInclude Include="Source\BossDie.h" />
     <ClInclude Include="Source\BossIdol.h" />
     <ClInclude Include="Source\BossInformation.h" />
-    <ClInclude Include="Source\BossManager.h" />
     <ClInclude Include="Source\BossNormalAttack1.h" />
     <ClInclude Include="Source\BossNormalAttack2.h" />
     <ClInclude Include="Source\BossNormalAttack3.h" />
@@ -326,7 +325,6 @@
     <ClCompile Include="Source\BossCoolTime.cpp" />
     <ClCompile Include="Source\BossDie.cpp" />
     <ClCompile Include="Source\BossIdol.cpp" />
-    <ClCompile Include="Source\BossManager.cpp" />
     <ClCompile Include="Source\BossNormalAttack1.cpp" />
     <ClCompile Include="Source\BossNormalAttack2.cpp" />
     <ClCompile Include="Source\BossNormalAttack3.cpp" />

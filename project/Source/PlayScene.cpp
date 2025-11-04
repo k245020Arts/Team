@@ -28,7 +28,6 @@
 #include "TitleTransitor.h"
 #include "IrisTransitor.h"
 #include "GameManager.h"
-#include "BossManager.h"
 //#include "YAMLReader.h"
 
 int PlayScene::count = 0;
@@ -64,8 +63,6 @@ PlayScene::PlayScene()
 	SkyManager* sky = new SkyManager();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	GameManager* gameManager = new GameManager();
-
-	BossManager* bossManager = new BossManager();
 	
 	stageManager->CreateStage();
 	//enemy->CreateEnemy();
