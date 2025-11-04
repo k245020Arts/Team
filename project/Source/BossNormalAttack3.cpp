@@ -49,7 +49,7 @@ void BossNormalAttack3::Start()
 	EnemyStateBase::Start();
 	firstColl = true;
 	counter = 0;
-
+	hitDamage = boss->bs->GetStatus().normalAttack3;
 	if (boss->maxAttack == 0)
 	{
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);

@@ -374,15 +374,6 @@
     <ClCompile Include="Source\BossRun.cpp">
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BossNormalAttack1.cpp">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\BossNormalAttack2.cpp">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\BossNormalAttack3.cpp">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Random.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -394,6 +385,18 @@
     </ClCompile>
     <ClCompile Include="Source\BossCoolTime.cpp">
       <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossAttackBase.cpp">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossNormalAttack1.cpp">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossNormalAttack2.cpp">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossNormalAttack3.cpp">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -819,15 +822,6 @@
     <ClInclude Include="Source\BossRun.h">
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BossNormalAttack1.h">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\BossNormalAttack2.h">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\BossNormalAttack3.h">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Random.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -842,6 +836,18 @@
     </ClInclude>
     <ClInclude Include="Source\BossStatus.h">
       <Filter>PlayScene\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossAttackBase.h">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossNormalAttack1.h">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossNormalAttack2.h">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossNormalAttack3.h">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1000,6 +1006,9 @@
     </Filter>
     <Filter Include="PlayScene\Boss\BossState">
       <UniqueIdentifier>{b53f97d4-d65b-4a21-9361-42cf20c1cb00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Boss\BossState\Attack">
+      <UniqueIdentifier>{e4d7576d-2312-43bf-a6ee-ae1af44846fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

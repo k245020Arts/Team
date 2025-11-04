@@ -50,6 +50,7 @@ void BossNormalAttack1::Start()
 	EnemyStateBase::Start();
 	firstColl = true;
 	Boss* boss = GetBase<Boss>();
+	hitDamage = boss->bs->GetStatus().normalAttack1;
 	if (boss->maxAttack == 0)
 	{
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
