@@ -4,6 +4,7 @@
 #include <DxLib.h>
 #include "MemoryCount.h"
 #include "../Source/Debug.h"
+#include "../Source/LoadManager.h"
 
 namespace
 {
@@ -57,6 +58,7 @@ void SceneManager::Draw()
 
 void SceneManager::Release()
 {
+	Load::AllDelete();
 	if (m_currentScene != nullptr)
 	{
 		delete m_currentScene;

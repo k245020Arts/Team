@@ -14,7 +14,7 @@ PlayerAttack3::PlayerAttack3()
 	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	nextAttackID = ID::P_ANIM_ATTACK4; 
 	frontSpeed = 1000.0f;
-	hitDamage = 2.0f;
+	hitDamage = 15.0f;
 }
 
 PlayerAttack3::~PlayerAttack3()

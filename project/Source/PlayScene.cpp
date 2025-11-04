@@ -101,7 +101,7 @@ PlayScene::~PlayScene()
 void PlayScene::Update()
 {
 	if (CheckHitKey(KEY_INPUT_T)) {
-		FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 0.05f);
+		FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
 	}
 	if (CheckHitKey(KEY_INPUT_ESCAPE)) {
 		SceneManager::Exit();

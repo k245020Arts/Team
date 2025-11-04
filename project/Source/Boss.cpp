@@ -29,6 +29,7 @@
 #include "AttackSorting.h"
 #include "BossCoolTime.h"
 #include "BossStatus.h"
+#include "BossDie.h"
 
 Boss::Boss()
 {
@@ -48,6 +49,10 @@ Boss::~Boss()
 void Boss::Update()
 {
 	EnemyBase::Update();
+	if (hp <= 0.0f) {
+		enemyBaseComponent.state->NowChangeState(ID::BOSS_DIE);
+		enemyBaseComponent.state->SetNoStateChange(true);
+	}
 }
 
 void Boss::Draw()
@@ -93,6 +98,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossNormalAttack2>(GetID(B_N_ATTACK2));
 	enemyBaseComponent.state->CreateState<BossNormalAttack3>(GetID(B_N_ATTACK3));
 	enemyBaseComponent.state->CreateState<BossSpecialAttack1>(GetID(B_S_ATTACK1));
+	enemyBaseComponent.state->CreateState<BossDie>(GetID(BOSS_DIE));
 	/*eCom.state->NodeDrawReady();*/
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
@@ -180,7 +186,7 @@ void Boss::PlayerHit()
 		break;
 	case ID::P_ANIM_ATTACK4:
 		//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
-		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 2000.0f, 00.0f), VECTOR3(200, 200, 200), 0.85f, 1.0f);
+		dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 400.0f, 00.0f), VECTOR3(200, 200, 200), 0.85f, 1.0f);
 		enemyBaseComponent.control->ControlVibrationStartFrame(50, 50);
 		enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, HIT_EFFECT_TIME);
 		enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, -120.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
@@ -285,9 +291,9 @@ void Boss::PlayerHit()
 void Boss::Drail(bool _right)
 {
 	if (_right) {
-		chara->CreateSwordEffect(VECTOR3(70, 0, -50), VECTOR3(120, 0, 50), 0.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
+		chara->CreateSwordEffect(VECTOR3(70, 0, -50), VECTOR3(120, 0, 50), 200.0f, 10.0f, 00.0f, 155.0f, 28, 0.5f);
 	}
 	else {
-		chara->CreateSwordEffect(VECTOR3(0, 0, -50), VECTOR3(50, 0, 100), 0.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
+		chara->CreateSwordEffect(VECTOR3(0, 0, -50), VECTOR3(50, 0, 100), 200.0f, 10.0f, 00.0f, 155.0f, 28, 0.5f);
 	}
 }

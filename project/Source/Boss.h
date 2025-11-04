@@ -20,6 +20,7 @@ public:
 	friend class BossNormalAttack2;
 	friend class BossNormalAttack3;
 	friend class BossSpecialAttack1;
+	friend class BossDie;
 
 	Boss();
 	~Boss();

@@ -21,7 +21,7 @@ PlayerAttack1::PlayerAttack1()
 	nextAttackID = ID::P_ANIM_ATTACK2;
 	frontSpeed = 2500.0f;
 	time = 0.0f;
-	hitDamage = 5.0f;
+	hitDamage = 15.0f;
 }
 
 PlayerAttack1::~PlayerAttack1()

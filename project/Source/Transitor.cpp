@@ -41,7 +41,7 @@ void Transitor::StartTransitor(std::string _sceneName, float _time)
 	timeMax = _time;
 	transitorType = PLAY;
 
-	SetUseSetDrawScreenSettingReset(FALSE);
+	SetUseSetDrawScreenSettingReset(FALSE); //カメラのリセット
 
 	SceneManager::ChangeScene(_sceneName);
 }

@@ -40,6 +40,7 @@ void BaseObject::Update()
 	}
 	//コンポーネントで回している
 	componentManager->Update();
+	//子供のオブジェクトをまわす
 	for (BaseObject* child : children) {
 		child->Update();
 	}

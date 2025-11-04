@@ -64,6 +64,7 @@ namespace {
 		"b_s_attack4",
 		"sword_effect_b",
 		"bossPush",
+		"boss_die",
 	};
 }
 

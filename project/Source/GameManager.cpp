@@ -103,7 +103,7 @@ MEB GameManager::PlayDraw()
 
 MEB GameManager::WinUpdate()
 {
-	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 2.0f);
+	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 0.5f);
 	return MEB();
 }
 

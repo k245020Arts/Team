@@ -398,6 +398,9 @@
     <ClCompile Include="Source\BossNormalAttack3.cpp">
       <Filter>PlayScene\Boss\BossState\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BossDie.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -848,6 +851,9 @@
     </ClInclude>
     <ClInclude Include="Source\BossNormalAttack3.h">
       <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BossDie.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

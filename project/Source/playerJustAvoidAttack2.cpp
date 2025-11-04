@@ -18,7 +18,7 @@ PlayerJustAvoidAttack2::PlayerJustAvoidAttack2()
 	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(300, 0, 0));
 	nextAttackID = ID::P_ANIM_ATTACK1;
 	frontSpeed = 10000.0f;
-	hitDamage = 5.0f;
+	hitDamage = 30.0f;
 	defalutTrail = false;
 	attack = false;
 	count = 0;
@@ -35,7 +35,7 @@ void PlayerJustAvoidAttack2::Update()
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
 	if (p->playerCom.anim->AnimEventCan()) {
-		p->playerCom.player->DrawTrail(VECTOR3(0, 0, -100), VECTOR3(0, 0, -350), 255.0f, 0.0f, 0.0f, 150.0f, 28, 0.8f);
+		p->playerCom.player->DrawTrail(VECTOR3(0, 0, -100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
 	}
 	if (!noStateChange) {
 		if (distSize <= ATTACK_MOVE_DIST) {
@@ -94,6 +94,7 @@ void PlayerJustAvoidAttack2::Start()
 	nextAttack = false;
 	nextAvoid = false;
 	p->playerCom.player->SetAvoidStart(false);
+	p->playerCom.anim->AnimEventReset();
 
 	noStateChange = false;
 	if (p->playerCom.hitObj != nullptr) {

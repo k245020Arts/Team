@@ -20,7 +20,7 @@ PlayerJustAvoidAttack3::PlayerJustAvoidAttack3()
 	nextAttackID = ID::P_ANIM_ATTACK1;
 	//frontSpeed = 500.0f;
 	frontSpeed = 0.0f;
-	hitDamage = 5.0f;
+	hitDamage = 55.0f;
 	defalutTrail = true;
 	timer = 0.0f;
 	count = 0;

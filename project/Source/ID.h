@@ -64,6 +64,7 @@ namespace ID {
 		B_S_ATTACK4,
 		SWORD_EFFECT_B,
 		BOSS_PUSH,
+		BOSS_DIE,
 
 		ID_MAX,
 	};
