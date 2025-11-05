@@ -10,4 +10,6 @@ public:
 	float GetHitDamage() { return hitDamage; }
 protected:
 	float hitDamage;
+	float motionSpeed;
+	float motionMaxSpeed;
 };

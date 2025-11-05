@@ -56,9 +56,13 @@ void BossNormalAttack3::Start()
 	{
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 		a = 0;
+		motionMaxSpeed = 1.0f;
 	}
 	else
+	{
 		a = boss->bs->GetStatus().maxA - 20;
+		motionMaxSpeed = 1.2f;
+	}
 }
 
 void BossNormalAttack3::Finish()
