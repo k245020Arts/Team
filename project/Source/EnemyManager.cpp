@@ -194,11 +194,12 @@ void EnemyManager::CreateBoss()
 
 	Object2D* guage = new Object2D();
 
-	guage->Init(VECTOR2F(970, 100), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 0.5f), "bossHpGuage");
+	guage->Init(VECTOR2F(1680, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.5f, 0.5f), "bossHpGuage");
 
 	boss->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
+	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(1650.0f, 120.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
 	g->GuageDrawReady<Boss>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	chara.emplace_back(b);
 	enemy.emplace_back(boss);

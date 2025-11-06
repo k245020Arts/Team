@@ -66,6 +66,7 @@ namespace ID {
 		BOSS_PUSH,
 		BOSS_DIE,
 		HP_EDGE,
+		BOSS_HP_EDGE,
 
 		ID_MAX,
 	};

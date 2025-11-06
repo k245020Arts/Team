@@ -66,6 +66,7 @@ namespace {
 		"bossPush",
 		"boss_die",
 		"hp_edge",
+		"boss_hp_edge",
 	};
 }
 
