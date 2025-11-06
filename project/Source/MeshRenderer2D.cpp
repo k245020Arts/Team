@@ -94,6 +94,11 @@ void MeshRenderer2D::SetTransform(const VECTOR3 _pos, const VECTOR3 _rotate, con
 	transform2D = new Transform(_pos, _rotate, _scale);
 }
 
+void MeshRenderer2D::SetTransform(const Transform& transform)
+{
+	transform2D = new Transform(transform);
+}
+
 void MeshRenderer2D::ImguiDraw()
 {
 	if (ImGui::TreeNode("textureTransform") ){
@@ -125,6 +130,16 @@ void MeshRenderer2D::AnimStart(float _speed, int _num)
 void MeshRenderer2D::SetDrawImageSize(VECTOR2I _pos)
 {
 	drawImageSize = _pos;
+}
+
+void MeshRenderer2D::SetPosition(VECTOR3 _position)
+{
+	if (transform2D == nullptr) {
+		obj->GetTransform()->position = _position;
+	}
+	else {
+		transform2D->position = _position;
+	}
 }
 
 void MeshRenderer2D::DrawNum()

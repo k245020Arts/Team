@@ -65,6 +65,7 @@ namespace ID {
 		SWORD_EFFECT_B,
 		BOSS_PUSH,
 		BOSS_DIE,
+		HP_EDGE,
 
 		ID_MAX,
 	};

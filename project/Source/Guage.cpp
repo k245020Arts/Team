@@ -13,6 +13,7 @@ Guage::Guage()
 	tag = Function::GetClassNameC<Guage>();
 	displayHp = 0.0f;
 	changeColorCounter = 0.0f;
+	reverce = false;
 }
 
 Guage::~Guage()
@@ -33,6 +34,7 @@ void Guage::Update()
 		float amount = displayHp / maxhp;
 
 		//float amout = *hp / maxhp;
+
 		guage->SetDrawImageSize(VECTOR2I(static_cast<int>((amount) * guage->GetImageSize().x), guage->GetImageSize().y));
 	}
 }
@@ -41,8 +43,9 @@ void Guage::Draw()
 {
 }
 
-void Guage::EdgeDrawReady(int _image, MeshRenderer2D::GraphMode _mode)
+void Guage::EdgeDrawReady(int _image, MeshRenderer2D::GraphMode _mode, Transform _transfrom)
 {
 	edge = obj->Component()->AddComponent<MeshRenderer2D>();
 	edge->TextureHandle(_image, _mode);
+	edge->SetTransform(_transfrom);
 }
