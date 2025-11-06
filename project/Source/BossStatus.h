@@ -7,7 +7,7 @@ private:
 	{
 		float normalAttack1 = 50.0f;	//攻撃１のダメージ数値
 		float normalAttack2 = 50.0f;	//攻撃２のダメージ数値
-		float normalAttack3 = 70.0f;	//攻撃３のダメージ数値
+		float normalAttack3 = 180.0f;	//攻撃３のダメージ数値
 
 		int maxAttack		= 3;		//最大連続攻撃の数
 		float maxHp			= 1000;		//最大HP
