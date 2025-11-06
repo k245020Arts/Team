@@ -65,6 +65,8 @@ namespace {
 		"sword_effect_b",
 		"bossPush",
 		"boss_die",
+		"hp_edge",
+		"boss_hp_edge",
 	};
 }
 

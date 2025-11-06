@@ -504,9 +504,6 @@
     <ClInclude Include="Source\LoadManager.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Hierarchy.h">
-      <Filter>Component\Hierarchy</Filter>
-    </ClInclude>
     <ClInclude Include="Source\stageManager.h">
       <Filter>PlayScene\Stage</Filter>
     </ClInclude>
@@ -848,6 +845,9 @@
     </ClInclude>
     <ClInclude Include="Source\BossDie.h">
       <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Hierarchy.h">
+      <Filter>Component\Hierarchy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

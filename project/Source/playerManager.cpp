@@ -114,11 +114,12 @@ void PlayerManager::CreatePlayer()
 	player->Start(playerPointer);
 
 	Object2D* guage = new Object2D();
-	guage->Init(VECTOR2F(970, 1000), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 0.5f), "playerHpGuage");
+	guage->Init(VECTOR2F(335, 100), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.44f, 0.35f), "playerHp");
 
 	playerPointer->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
+	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpEdge", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(300.0f,100.0f,0.0f),VZero,VECTOR3(1.3f,1.0f,0.0f)));
 	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
-
+	
 }

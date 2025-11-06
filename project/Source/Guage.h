@@ -18,13 +18,15 @@ public:
 		maxhp = obj->GetParent()->Component()->GetComponent<T>()->GetMaxHp();
 	}
 
-	void EdgeDrawReady(int _image, MeshRenderer2D::GraphMode _mode);
+	void EdgeDrawReady(int _image, MeshRenderer2D::GraphMode _mode,Transform _transfrom);
 	template <typename T>
 	void GuageDrawReady(int _image, MeshRenderer2D::GraphMode _mode) {
 		guage = obj->Component()->AddComponent<MeshRenderer2D>();
 		guage->TextureHandle(_image, _mode);
 		GetHp<T>();
 	}
+
+
 
 private:
 	float* hp;
@@ -33,4 +35,5 @@ private:
 	MeshRenderer2D* edge;
 	float displayHp;
 	float changeColorCounter;
+
 };

@@ -63,6 +63,8 @@ void Hierachy::Update()
 	/*if (!fade->IsEnd()) {
 		return;
 	}*/
+#ifdef _DEBUG
+
 	if (inputManager->KeyInputDown("debugChange")) {
 		debug = !debug; //デバックウィンドウの出し入れ
 	}
@@ -88,6 +90,7 @@ void Hierachy::Update()
 		//二つ目のウィンドウを表示
 		InspectorDraw();
 	}
+#endif // _DEBUG
 }
 	
 

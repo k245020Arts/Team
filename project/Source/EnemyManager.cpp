@@ -183,9 +183,9 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_IDOL, "B_IDLE", true,1.0f);
 	anim->AddFile(ID::B_COOLTIME, "B_IDLE2", true, 1.0f);
 	anim->AddFile(ID::B_RUN, "B_WALK", true, 1.0f, 30.0f, 45.0f);
-	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.2f,30.0f,60.0f);
-	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.2f,30.0f,60.0f);
-	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false,1.2f,30.0f,60.0f);
+	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.2f,25.0f,60.0f);
+	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.2f,25.0f,60.0f);
+	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false,1.2f,40.0f,55.0f);
 	anim->AddFile(ID::BOSS_DIE, "B_DIE", false,1.2f);
 	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL),0);
@@ -194,11 +194,12 @@ void EnemyManager::CreateBoss()
 
 	Object2D* guage = new Object2D();
 
-	guage->Init(VECTOR2F(970, 100), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 0.5f), "bossHpGuage");
+	guage->Init(VECTOR2F(1680, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.5f, 0.5f), "bossHpGuage");
 
 	boss->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
+	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(1650.0f, 120.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
 	g->GuageDrawReady<Boss>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	chara.emplace_back(b);
 	enemy.emplace_back(boss);

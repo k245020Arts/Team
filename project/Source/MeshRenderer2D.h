@@ -4,6 +4,7 @@
 //2Dの画像を描画するときに使うクラス。
 
 class Anim2D;
+class Transform;
 
 class MeshRenderer2D : public Component
 {
@@ -27,6 +28,7 @@ public:
 	//初期化処理
 	void TextureHandle(int _image,GraphMode _mode);
 	void SetTransform(const VECTOR3 _pos, const VECTOR3 _rotate, const VECTOR3 _scale);
+	void SetTransform(const Transform& transform);
 	void ImguiDraw()override;
 
 	void SetStartPos(VECTOR2I _pos);
@@ -43,6 +45,8 @@ public:
 	
 	//描画の設定項目
 	void SetDraw(bool _draw) { draw = _draw; }
+
+	void SetPosition(VECTOR3 _position);
 
 private:
 	int hImage;
