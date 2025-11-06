@@ -2,6 +2,7 @@
 #include "../Library/SceneBase.h"
 
 class InputManager;
+class SoundManager;
 
 /// <summary>
 /// タイトルシーン
@@ -20,4 +21,5 @@ private:
 	InputManager* input;
 	int keyImage;
 	int titleImage;
+	SoundManager* sound;
 };

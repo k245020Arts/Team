@@ -7,7 +7,7 @@ Sound::Sound()
 
 Sound::~Sound()
 {
-
+	StopSound();
 }
 
 void Sound::SoundData(int _soundHandle, int _volume)

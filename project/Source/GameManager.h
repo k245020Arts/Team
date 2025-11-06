@@ -5,6 +5,7 @@
 
 typedef MethodExec<class GameManager> MEB;
 typedef MethodExec<class GameManager> MEBDraw;
+class SoundManager;
 
 class GameManager : public GameObject
 {
@@ -50,4 +51,5 @@ private:
 	int winImage;
 	int loseImage;
 	float resultCounter;
+	SoundManager* sound;
 };

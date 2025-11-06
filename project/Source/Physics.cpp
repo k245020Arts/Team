@@ -1,6 +1,7 @@
 #include "Physics.h"
 #include "transform.h"
 #include "../ImGui/imgui.h"
+#include "TransitorManager.h"
 
 namespace {
 	const VECTOR3 MIN_FRICTION = VECTOR3(5.0f, 5.0f, 5.0f);
@@ -21,6 +22,7 @@ Physics::Physics()
 	debugId = 9;
 	tag = Function::GetClassNameC<Physics>();
 	ground = false;
+	transitor = nullptr;
 }
 
 Physics::~Physics()
@@ -32,6 +34,9 @@ Physics::~Physics()
 
 void Physics::Update()
 {
+	if (!transitor->IsTransitor()) {
+		return;
+	}
 	*lastTransform = *currentTransform;
 
 	float dt = obj->GetObjectTimeRate();
@@ -65,6 +70,7 @@ void Physics::Start(VECTOR3 _gravityAmout, VECTOR3 _fir)
 
 	gravity = _gravityAmout;
 	firction = _fir;
+	transitor = FindGameObject<TransitorManager>();
 }
 
 void Physics::AddVelocity(VECTOR3 _addVelocity, bool _deltaTime)

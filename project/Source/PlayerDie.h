@@ -16,4 +16,5 @@ public:
 
 private:
 	float slowTime;
+	bool one;
 };

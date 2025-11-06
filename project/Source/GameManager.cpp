@@ -4,6 +4,7 @@
 #include "MeshRenderer2D.h"
 #include "ComponentManager.h"
 #include "LoadManager.h"
+#include "SoundManager.h"
 
 namespace {
 	const int GAME_STATE_MAX = 4;
@@ -25,6 +26,7 @@ GameManager::GameManager()
 	winImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
 	loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
 	resultCounter = 3.0f;
+	sound = FindGameObject<SoundManager>();
 }
 
 GameManager::~GameManager()
@@ -106,11 +108,10 @@ MEB GameManager::PlayDraw()
 
 MEB GameManager::WinUpdate()
 {
-	resultCounter -= Time::DeltaTime();
-	if (resultCounter >= 0.0f) {
+	if (sound->CheckSe(Sound_ID::WIN)) {
 		return &GameManager::WinUpdate;
 	}
-	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 0.5f);
+	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
 	return MEB();
 }
 
@@ -123,11 +124,10 @@ MEBDraw GameManager::WinDraw()
 
 MEB GameManager::LoseUpdate()
 {
-	resultCounter -= Time::DeltaTime();
-	if (resultCounter >= 0.0f) {
+	if (sound->CheckSe(Sound_ID::LOSE)) {
 		return &GameManager::LoseUpdate;
 	}
-	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 0.1f);
+	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
 	return MEB();
 }
 

@@ -8,6 +8,7 @@
 #include "Debug.h"
 #include "inputManager.h"
 #include "LoadManager.h"
+#include "SoundManager.h"
 
 TitleScene::TitleScene()
 {
@@ -17,16 +18,22 @@ TitleScene::TitleScene()
 	hImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Title", ID::TITLE_BACK);
 	titleImage = Load::LoadImageGraph(Load::IMAGE_PATH + "TitleImage", ID::TITLE);
 	keyImage = Load::LoadImageGraph(Load::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
+	sound = FindGameObject<SoundManager>();
+	sound->TitleSceneLoad();
+	sound->PlayBGM(Sound_ID::TITLE_BGM, true, true);
 }
 
 TitleScene::~TitleScene()
 {
 	//DeleteGraph(hImage);
+	Load::AllDelete();
+	FindGameObject<SoundManager>()->AllDeleteSound();
 }
 
 void TitleScene::Update()
 {
 	if (input->KeyInputDown("SceneChange")) {
+		sound->PlaySe(Sound_ID::PUSH);
 		FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
 		//Debug::DebugLog(std::to_string(GetMemory()));
 	}

@@ -5,6 +5,8 @@
 //物理演算関係関数
 //基本的にオブジェクトの移動はこのクラスを通して行っている。
 
+class TransitorManager;
+
 class Physics : public Component
 {
 public:
@@ -56,4 +58,7 @@ private:
 
 	bool noGravity;
 	bool ground;
+
+	TransitorManager* transitor; //フェード中に移動をするとなぜかすり抜けてしまうことが多々あるのでそれの防止用
+
 };

@@ -86,12 +86,15 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::JUST_AVOID_SUCCESS, "success", ".wav", 255);
 
 	SoundLoad(Sound_ID::PLAY_BGM, "PlaySceneBGM", ".wav", 150);
+	SoundLoad(Sound_ID::WIN, "winSe", ".wav", 200);
+	SoundLoad(Sound_ID::LOSE, "loseSe", ".mp3", 200);
 	
 }
 
 void SoundManager::TitleSceneLoad()
 {
-
+	SoundLoad(Sound_ID::TITLE_BGM, "titleBGM", ".wav", 150);
+	SoundLoad(Sound_ID::PUSH, "titlePush (1)", ".wav", 250);
 }
 
 void SoundManager::CommonSceneLoad()

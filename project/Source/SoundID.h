@@ -50,6 +50,9 @@ namespace Sound_ID {
 		JUST_AVOID_SUCCESS,
 		TITLE_BGM,
 		PLAY_BGM,
+		PUSH,
+		WIN,
+		LOSE,
 
 		SOUND_MAX
 	};

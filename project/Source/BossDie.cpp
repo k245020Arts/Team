@@ -4,12 +4,14 @@
 #include "Boss.h"
 #include "Animator.h"
 #include "GameManager.h"
+#include "SoundManager.h"
 
 BossDie::BossDie()
 {
 	animId = ID::BOSS_DIE;
 	id = ID::BOSS_DIE;
 	string = Function::GetClassNameC<BossDie>();
+	one = true;
 }
 
 BossDie::~BossDie()
@@ -21,6 +23,12 @@ void BossDie::Update()
 	Boss* b = GetBase<Boss>();
 	if (b->enemyBaseComponent.anim->IsFinish()) {
 		b->enemyBaseComponent.gameManager->ChangeState("WIN");
+		if (one) {
+			b->enemyBaseComponent.sound->StopBGM(Sound_ID::PLAY_BGM);
+			b->enemyBaseComponent.sound->PlaySe(Sound_ID::WIN);
+			one = false;
+		}
+	
 	}
 	else {
 		//Ž€‚ñ‚¾uŠÔ‚ÍƒXƒ[Ä¶‚ð‚³‚¹‚é
@@ -47,6 +55,7 @@ void BossDie::Start()
 	slowTime = 0.5f;
 	b->enemyBaseComponent.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	b->enemyBaseComponent.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
+	one = true;
 }
 
 void BossDie::Finish()
