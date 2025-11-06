@@ -35,9 +35,9 @@ BaseObject::~BaseObject()
 void BaseObject::Update()
 {
 	//フェード中なら動かさない
-	if (!transitor->IsTransitor()) {
+	/*if (!transitor->IsTransitor()) {
 		return;
-	}
+	}*/
 	//コンポーネントで回している
 	componentManager->Update();
 	//子供のオブジェクトをまわす

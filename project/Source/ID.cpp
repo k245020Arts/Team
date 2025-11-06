@@ -67,6 +67,11 @@ namespace {
 		"boss_die",
 		"hp_edge",
 		"boss_hp_edge",
+		"title_back",
+		"title",
+		"push_button",
+		"win",
+		"lose",
 	};
 }
 

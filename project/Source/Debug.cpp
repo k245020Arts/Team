@@ -47,6 +47,7 @@ void Debug::InitDebug(InputManager* _input)
 
 void Debug::UpdateDebug()
 {
+#ifdef _DEBUG
 	ImGui::Begin("debug");
 	if (ImGui::TreeNode("debugLogger")) {
 		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(500, 200));
@@ -61,13 +62,17 @@ void Debug::UpdateDebug()
 		logger.pop_front();
 	}
 	ImGui::End();
+#endif
 }
 
 void Debug::DebugUpdate()
 {
+#ifdef _DEBUG
 	if (inputManager->KeyInputDown("debugChange")) {
 		debug = !debug;
 	}
+
+
 	if (!debug) {
 		return;
 	}
@@ -117,6 +122,7 @@ void Debug::DebugUpdate()
 	}
 
 	UpdateLogger();
+#endif // _DEBUG
 }
 
 void Debug::DebugLog(std::string _log)

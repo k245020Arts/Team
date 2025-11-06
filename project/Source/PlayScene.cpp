@@ -28,6 +28,7 @@
 #include "TitleTransitor.h"
 #include "IrisTransitor.h"
 #include "GameManager.h"
+#include "inputManager.h"
 //#include "YAMLReader.h"
 
 int PlayScene::count = 0;
@@ -83,6 +84,8 @@ PlayScene::PlayScene()
 	//std::vector<P> pl;
 	//ya.SaveVector<P>("ala", pl);
 	FindGameObject<SoundManager>()->PlaySceneLoad();
+	FindGameObject<SoundManager>()->PlayBGM(Sound_ID::PLAY_BGM,true,true);
+	input = FindGameObject<InputManager>();
 
 	blur->SetDrawOrder(-500);
 
@@ -97,6 +100,10 @@ PlayScene::~PlayScene()
 
 void PlayScene::Update()
 {
+	//if (input->KeyInputDown("SceneChange"))
+	//{
+		//FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
+	//}
 	if (CheckHitKey(KEY_INPUT_T)) {
 		FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
 	}

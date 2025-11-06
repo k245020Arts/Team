@@ -15,6 +15,7 @@ void Sound::SoundData(int _soundHandle, int _volume)
 	soundHandle = _soundHandle;
 	volume = _volume;
 	lastPlayintBgm = _soundHandle;
+	ChangeVolumeSoundMem(volume,soundHandle);
 }
 
 void Sound::PlaySe()

@@ -1,6 +1,8 @@
 #pragma once
 #include "../Library/SceneBase.h"
 
+class InputManager;
+
 /// <summary>
 /// タイトルシーン
 /// 
@@ -15,4 +17,7 @@ public:
 	void Draw() override;
 private:
 	int hImage;
+	InputManager* input;
+	int keyImage;
+	int titleImage;
 };

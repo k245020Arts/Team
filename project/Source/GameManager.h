@@ -46,4 +46,8 @@ private:
 
 	float startCount;
 	Object2D* obj;
+
+	int winImage;
+	int loseImage;
+	float resultCounter;
 };

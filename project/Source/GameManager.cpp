@@ -22,6 +22,9 @@ GameManager::GameManager()
 	stateDraw = MEBDraw(&GameManager::BeforeDraw);
 	startCount = 4.0f;
 	SetDrawOrder(-500);
+	winImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
+	loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
+	resultCounter = 3.0f;
 }
 
 GameManager::~GameManager()
@@ -103,22 +106,34 @@ MEB GameManager::PlayDraw()
 
 MEB GameManager::WinUpdate()
 {
+	resultCounter -= Time::DeltaTime();
+	if (resultCounter >= 0.0f) {
+		return &GameManager::WinUpdate;
+	}
 	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 0.5f);
 	return MEB();
 }
 
 MEBDraw GameManager::WinDraw()
 {
+	
+	DrawGraph(750, 100, winImage, true);
 	return MEBDraw();
 }
 
 MEB GameManager::LoseUpdate()
 {
+	resultCounter -= Time::DeltaTime();
+	if (resultCounter >= 0.0f) {
+		return &GameManager::LoseUpdate;
+	}
 	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 0.1f);
 	return MEB();
 }
 
 MEBDraw GameManager::LoseDraw()
 {
-	return MEBDraw();
+	
+	DrawGraph(750, 100, loseImage, true);
+	return &GameManager::LoseDraw;
 }

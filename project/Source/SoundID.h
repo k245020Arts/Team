@@ -48,6 +48,8 @@ namespace Sound_ID {
 		V_E_ATTACK2,
 		V_E_ATTACK3,
 		JUST_AVOID_SUCCESS,
+		TITLE_BGM,
+		PLAY_BGM,
 
 		SOUND_MAX
 	};

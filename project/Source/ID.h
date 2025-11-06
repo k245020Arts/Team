@@ -67,6 +67,11 @@ namespace ID {
 		BOSS_DIE,
 		HP_EDGE,
 		BOSS_HP_EDGE,
+		TITLE_BACK,
+		TITLE,
+		PUSH_BUTTON,
+		WIN,
+		LOSE,
 
 		ID_MAX,
 	};

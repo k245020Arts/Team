@@ -53,6 +53,10 @@ void Boss::Update()
 		enemyBaseComponent.state->NowChangeState(ID::BOSS_DIE);
 		enemyBaseComponent.state->SetNoStateChange(true);
 	}
+	if (obj->GetTransform()->position.y <= -10000.0f) {
+		enemyBaseComponent.state->NowChangeState(ID::BOSS_DIE);
+		enemyBaseComponent.state->SetNoStateChange(true);
+	}
 }
 
 void Boss::Draw()

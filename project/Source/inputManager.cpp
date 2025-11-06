@@ -23,6 +23,7 @@ InputManager::InputManager(bool _useController, bool _useKeyboard, bool _useMous
 
 	CreateInputData(KeyConfigData("attack", KEY_INPUT_Q, XINPUT_BUTTON_B, MouseInputManager::LEFT_CLICK));
 	CreateInputData(KeyConfigData("avoid", KEY_INPUT_A, XINPUT_BUTTON_A, MouseInputManager::MOUSE_NONE));
+	CreateInputData(KeyConfigData("SceneChange", KEY_INPUT_P, XINPUT_BUTTON_A, MouseInputManager::MOUSE_NONE));
 	CreateInputData(KeyConfigData("debugChange", KEY_INPUT_Z, NOT_INPUT, MouseInputManager::RIGHT_CLICK));
 	CreateInputData(KeyConfigData("camera", KEY_INPUT_P, XINPUT_BUTTON_RIGHT_THUMB, MouseInputManager::RIGHT_CLICK));
 

@@ -2,6 +2,8 @@
 #include "../Library/SceneBase.h"
 #include <vector>
 
+class InputManager;
+
 /// <summary>
 /// ゲームプレイのシーンを制御する
 /// </summary>
@@ -14,5 +16,7 @@ public:
 	void Update() override;
 	void Draw() override;
 	static int count;
+private:
+	InputManager* input;
 };
 

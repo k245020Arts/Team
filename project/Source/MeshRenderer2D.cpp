@@ -111,7 +111,9 @@ void MeshRenderer2D::ImguiDraw()
 			ImGui::DragFloat3("2DScale", &transform2D->scale.x, 1.0f, 10.0f);
 			ImGui::Separator();
 		}
-		
+		if (ImGui::Button("NoDraw")) {
+			draw = !draw;
+		}
 		ImGui::Text("image = %d", hImage);
 		ImGui::TreePop();
 	}

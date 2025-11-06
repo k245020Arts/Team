@@ -19,7 +19,7 @@ void PlayerDie::Update()
 {
 	Player* p = GetBase<Player>();
 	if (p->playerCom.anim->IsFinish()) {
-		p->playerCom.gameManager->ChangeState("WIN");
+		p->playerCom.gameManager->ChangeState("LOSE");
 		
 	}
 	else {

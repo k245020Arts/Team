@@ -96,6 +96,10 @@ void Player::Update()
 		playerCom.stateManager->NowChangeState(ID::P_DIE);
 		playerCom.stateManager->SetNoStateChange(true);
 	}
+	if (obj->GetTransform()->position.y <= -10000.0f) {
+		playerCom.stateManager->NowChangeState(ID::BOSS_DIE);
+		playerCom.stateManager->SetNoStateChange(true);
+	}
 	//playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
 }
 
