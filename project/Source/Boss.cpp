@@ -124,7 +124,7 @@ void Boss::LookPlayer()
 	if (sign > DX_PI_F)
 		sign -= 2 * DX_PI_F;
 	//向くスピード(ラジアン)
-	const float LOOK_SPEED = 0.03f;
+	const float LOOK_SPEED = 0.07f;
 	//Playerの方をゆっくり向く
 	if (sign > LOOK_SPEED)
 		bossTransform->rotation.y += LOOK_SPEED;

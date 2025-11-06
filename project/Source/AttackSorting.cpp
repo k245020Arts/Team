@@ -17,14 +17,14 @@ void AttackSorting::Update()
 {
 	Boss* b;
 	b = GetBase<Boss>();
-	int attackNumber = GetRand(2);
-
-	if (attackNumber == 0)
+	int attackNumber = GetRand(1);
+	//attackNumber = 2;
+	if (b->maxAttack == 0)
+		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK3);
+	else if (attackNumber == 0)
 		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
 	else if (attackNumber == 1)
 		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK2);
-	else
-		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK3);
 }
 
 void AttackSorting::Start()

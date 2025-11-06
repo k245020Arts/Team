@@ -19,11 +19,18 @@ BossNormalAttack3::~BossNormalAttack3()
 void BossNormalAttack3::Update()
 {
 	Boss* b = GetBase<Boss>();
+	const float MSPEED = 60.0f;//モーションの速度調整
 	//どこまでプレイヤーの方を見るか
 	counter++;
-	if (counter < 50)
+	if (counter < 30 && motionSpeed >= 0)
+		motionSpeed -= motionMaxSpeed / MSPEED;
+	else if (motionSpeed <= motionMaxSpeed)
+		motionSpeed += motionMaxSpeed / MSPEED;
+
+	if (counter<=50)
 		b->LookPlayer();
 
+	b->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 	//if (b->enemyBaseComponent.anim->IsFinish()) {
 	if (b->enemyBaseComponent.anim->GetMaxFrame() - a <= b->enemyBaseComponent.anim->GetCurrentFrame())
 	{
@@ -63,6 +70,7 @@ void BossNormalAttack3::Start()
 		a = boss->bs->GetStatus().maxA - 20;
 		motionMaxSpeed = 1.2f;
 	}
+	motionSpeed = motionMaxSpeed;
 }
 
 void BossNormalAttack3::Finish()
