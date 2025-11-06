@@ -37,6 +37,7 @@ int PlayScene::count = 0;
 
 PlayScene::PlayScene()
 {
+	
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	//Load::LoadModel(Load::MODEL_PATH + "Player", ID::P_MODEL);
 	Hierachy* hierachy = new Hierachy();
@@ -64,6 +65,8 @@ PlayScene::PlayScene()
 	SkyManager* sky = new SkyManager();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	GameManager* gameManager = new GameManager();
+
+
 	
 	stageManager->CreateStage();
 	//enemy->CreateEnemy();
@@ -83,6 +86,7 @@ PlayScene::PlayScene()
 	//YamlReader ya;
 	//std::vector<P> pl;
 	//ya.SaveVector<P>("ala", pl);
+	FindGameObject<SoundManager>()->AllDeleteSound();
 	FindGameObject<SoundManager>()->PlaySceneLoad();
 	FindGameObject<SoundManager>()->PlayBGM(Sound_ID::PLAY_BGM,true,true);
 	input = FindGameObject<InputManager>();

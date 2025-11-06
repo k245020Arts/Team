@@ -22,4 +22,8 @@ private:
 	int keyImage;
 	int titleImage;
 	SoundManager* sound;
+	float firstCounter;
+	float exrate;
+	float pushCounter;
+	float moveButton;
 };
