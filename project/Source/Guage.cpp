@@ -13,7 +13,7 @@ Guage::Guage()
 	tag = Function::GetClassNameC<Guage>();
 	displayHp = 0.0f;
 	changeColorCounter = 0.0f;
-	reverce = false;
+	//reverce = false;
 }
 
 Guage::~Guage()
