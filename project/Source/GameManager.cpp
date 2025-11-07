@@ -21,7 +21,7 @@ GameManager::GameManager()
 {
 	state = MEB(&GameManager::BeforeUpdate);;
 	stateDraw = MEBDraw(&GameManager::BeforeDraw);
-	startCount = 4.0f;
+	startCount = 0.0f;
 	SetDrawOrder(-500);
 	winImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
 	loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);

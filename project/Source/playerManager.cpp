@@ -45,7 +45,7 @@ void PlayerManager::CreatePlayer()
 {
 	playerPointer = new Object3D();
 	//playerPointer->Init(VECTOR3(300, 100, 1500), VZero, VECTOR3(3.0f, 3.0f,3.0f), "PLAYER");
-	playerPointer->Init(VECTOR3(300,600, 1500), VZero, VECTOR3(3.0f ,3.0f,3.0f), "PLAYER");
+	playerPointer->Init(VECTOR3(300,300, -2000), VZero, VECTOR3(3.0f ,3.0f,3.0f), "PLAYER");
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	ColliderBase* collider = playerPointer->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -114,12 +114,12 @@ void PlayerManager::CreatePlayer()
 	player->Start(playerPointer);
 
 	Object2D* guage = new Object2D();
-	guage->Init(VECTOR2F(335, 100), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.44f, 0.35f), "playerHp");
+	guage->Init(VECTOR2F(950.0f, 950.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.44f, 0.35f), "playerHp");
 
 	playerPointer->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
-	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpEdge", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(300.0f,100.0f,0.0f),VZero,VECTOR3(1.3f,1.0f,0.0f)));
+	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpEdge", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(915.0f,950.0f,0.0f),VZero,VECTOR3(1.3f,1.0f,0.0f)));
 	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	
 }

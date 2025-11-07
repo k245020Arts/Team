@@ -138,7 +138,7 @@ void EnemyManager::CreateBoss()
 	Object3D* boss;
 	boss = new Object3D();
 	float a = 8.0f;
-	boss->Init(Transform(VECTOR3(0, 450, 8000), VZero, VECTOR3(a, a - 1, a)), "Boss");
+	boss->Init(Transform(VECTOR3(0, 450, 2000), VZero, VECTOR3(a, a - 1, a)), "Boss");
 
 	SphereCollider* collider = boss->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -194,12 +194,12 @@ void EnemyManager::CreateBoss()
 
 	Object2D* guage = new Object2D();
 
-	guage->Init(VECTOR2F(1680, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.5f, 0.5f), "bossHpGuage");
+	guage->Init(VECTOR2F(950, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.5f, 0.5f), "bossHpGuage");
 
 	boss->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
-	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(1650.0f, 120.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
+	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
 	g->GuageDrawReady<Boss>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	chara.emplace_back(b);
 	enemy.emplace_back(boss);

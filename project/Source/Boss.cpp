@@ -44,6 +44,7 @@ Boss::Boss()
 Boss::~Boss()
 {
 	delete bs;
+	bs = nullptr;
 }
 
 void Boss::Update()
