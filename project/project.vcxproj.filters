@@ -245,7 +245,7 @@
     <ClCompile Include="Source\PlayerAttackStateBase.cpp">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\camerestate.cpp">
+    <ClCompile Include="Source\CameraStateManager.cpp">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="Source\CameraStateBase.cpp">
@@ -549,7 +549,7 @@
     <ClInclude Include="Source\CollsionInformation.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Source\name.h">
+    <ClInclude Include="Source\Function.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModelCollider.h">
@@ -672,7 +672,7 @@
     <ClInclude Include="Source\CameraInformation.h">
       <Filter>PlayScene\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Source\camerestate.h">
+    <ClInclude Include="Source\CameraStateManager.h">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
     <ClInclude Include="Source\CameraStateBase.h">
