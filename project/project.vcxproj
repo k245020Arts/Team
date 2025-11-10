@@ -183,7 +183,7 @@
     <ClInclude Include="Source\BossStatus.h" />
     <ClInclude Include="Source\BossRun.h" />
     <ClInclude Include="Source\BossSpecialAttack1.h" />
-    <ClInclude Include="Source\cameraInformation.h" />
+    <ClInclude Include="Source\CameraInformation.h" />
     <ClInclude Include="Source\CameraStateBase.h" />
     <ClInclude Include="Source\cameraStateManager.h" />
     <ClInclude Include="Source\CsvReader.h" />

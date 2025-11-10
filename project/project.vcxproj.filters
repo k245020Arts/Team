@@ -669,7 +669,7 @@
     <ClInclude Include="Source\PlayerAttackStateBase.h">
       <Filter>PlayScene\Player\playerState\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Source\cameraInformation.h">
+    <ClInclude Include="Source\CameraInformation.h">
       <Filter>PlayScene\camera</Filter>
     </ClInclude>
     <ClInclude Include="Source\cameraStateManager.h">
