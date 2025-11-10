@@ -19,26 +19,24 @@ BossNormalAttack3::~BossNormalAttack3()
 void BossNormalAttack3::Update()
 {
 	Boss* b = GetBase<Boss>();
-	const float MSPEED = 60.0f;//モーションの速度調整
-	//どこまでプレイヤーの方を見るか
+	const float MSPEED = 75.0f;//モーションの速度調整
+
 	counter++;
-	if (counter < 30 && motionSpeed >= 0)
+	//モーションの速度減速
+	if (counter < 70 && motionSpeed >= 0)
 		motionSpeed -= motionMaxSpeed / MSPEED;
+	//モーションの速度加速
 	else if (motionSpeed <= motionMaxSpeed)
 		motionSpeed += motionMaxSpeed / MSPEED;
-
-	if (counter<=50)
+	//どこまでプレイヤーの方を見るか(今後回避行動取るまでに変更)
+	if (counter <= 50)
 		b->LookPlayer();
 
 	b->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
-	//if (b->enemyBaseComponent.anim->IsFinish()) {
-	if (b->enemyBaseComponent.anim->GetMaxFrame() - a <= b->enemyBaseComponent.anim->GetCurrentFrame())
-	{
-		if (b->maxAttack != 0)
-			b->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
-		else
-			b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
-	}
+
+	if (b->enemyBaseComponent.anim->IsFinish())
+		b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+
 	BossAttackCollsion();
 	AttackSound();
 	AttackFlash(ID::B_MODEL, b->BOSS_LEFT_HAND_FRAME, "E_AttackV");
@@ -52,24 +50,15 @@ void BossNormalAttack3::Draw()
 void BossNormalAttack3::Start()
 {
 	Boss* boss = GetBase<Boss>();
-
 	EnemyStateBase::Start();
+
 	firstColl = true;
 	counter = 0;
 	hitDamage = boss->bs->GetStatus().normalAttack3;
 	boss->enemyBaseComponent.anim->AnimEventReset();
 
-	if (boss->maxAttack == 0)
-	{
-		boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-		a = 0;
-		motionMaxSpeed = 1.0f;
-	}
-	else
-	{
-		a = boss->bs->GetStatus().maxA - 20;
-		motionMaxSpeed = 1.2f;
-	}
+	motionMaxSpeed = 1.0f;
+	boss->enemyBaseComponent.anim->SetPlaySpeed(motionMaxSpeed);
 	motionSpeed = motionMaxSpeed;
 }
 

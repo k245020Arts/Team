@@ -2,7 +2,7 @@
 
 BossAttackBase::BossAttackBase()
 {
-	EnemyStateBase();
+	
 }
 
 BossAttackBase::~BossAttackBase()

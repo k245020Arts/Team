@@ -15,15 +15,13 @@ AttackSorting::~AttackSorting()
 
 void AttackSorting::Update()
 {
-	Boss* b;
-	b = GetBase<Boss>();
-	int attackNumber = GetRand(1);
-	//attackNumber = 2;
+	Boss* b = GetBase<Boss>();
+	
 	if (b->maxAttack == 0)
 		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK3);
-	else if (attackNumber == 0)
+	else if (b->maxAttack == 1)
 		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
-	else if (attackNumber == 1)
+	else if (b->maxAttack == 2)
 		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK2);
 }
 
