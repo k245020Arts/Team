@@ -69,16 +69,16 @@
       <Filter>PlayScene\Player</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerWait.cpp">
-      <Filter>PlayScene\Player\playerState</Filter>
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerWalk.cpp">
-      <Filter>PlayScene\Player\playerState</Filter>
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Component\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\Camera.cpp">
-      <Filter>PlayScene\camera</Filter>
+      <Filter>PlayScene\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Source\LoadManager.cpp">
       <Filter>Common</Filter>
@@ -114,13 +114,13 @@
       <Filter>Common\InputManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\ControllerInputManager.cpp">
-      <Filter>Common\InputManager\controler</Filter>
+      <Filter>Common\InputManager\Controler</Filter>
     </ClCompile>
     <ClCompile Include="Source\KeyboardInputManager.cpp">
-      <Filter>Common\InputManager\keyBord</Filter>
+      <Filter>Common\InputManager\KeyBord</Filter>
     </ClCompile>
     <ClCompile Include="Source\MouseInputManager.cpp">
-      <Filter>Common\InputManager\mouse</Filter>
+      <Filter>Common\InputManager\Mouse</Filter>
     </ClCompile>
     <ClCompile Include="Source\CollsionManager.cpp">
       <Filter>Component\Collider</Filter>
@@ -138,25 +138,25 @@
       <Filter>Component\Collider\AABB</Filter>
     </ClCompile>
     <ClCompile Include="Source\CameraManager.cpp">
-      <Filter>PlayScene\camera\cameraManager</Filter>
+      <Filter>PlayScene\Camera\CameraManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerStateBase.cpp">
-      <Filter>PlayScene\Player\playerState</Filter>
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Source\Light.cpp">
       <Filter>PlayScene</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerStateManager.cpp">
-      <Filter>PlayScene\Player\playerState\Manager</Filter>
+      <Filter>PlayScene\Player\PlayerState\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerAvoid.cpp">
-      <Filter>PlayScene\Player\playerState</Filter>
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Source\WeaponManager.cpp">
-      <Filter>PlayScene\weapon</Filter>
+      <Filter>PlayScene\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Source\CharaWeapon.cpp">
-      <Filter>PlayScene\weapon</Filter>
+      <Filter>PlayScene\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>PlayScene\Enemy</Filter>
@@ -189,16 +189,16 @@
       <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerDamage.cpp">
-      <Filter>PlayScene\Player\playerState</Filter>
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerjustAvoid.cpp">
-      <Filter>PlayScene\Player\playerState</Filter>
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Source\EnemyDamage.cpp">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerBlowAway.cpp">
-      <Filter>PlayScene\Player\playerState</Filter>
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Source\Shaker.cpp">
       <Filter>Component\shakeer</Filter>
@@ -219,61 +219,61 @@
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerAttack1.cpp">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerAttack2.cpp">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerJustAvoidAttack1.cpp">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerJustAvoidAttack2.cpp">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerJustAvoidAttack3.cpp">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerJustAvoidAttack4.cpp">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerAttack3.cpp">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerAttack4.cpp">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerAttackStateBase.cpp">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\cameraStateManager.cpp">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="Source\CameraStateBase.cpp">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="Source\FollowCamera.cpp">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="Source\JustAvoidCamera.cpp">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerJustAvoidAttack5.cpp">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\EnemyRun.cpp">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClCompile>
     <ClCompile Include="Source\JustAvoidAttackCamera.cpp">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="Source\JustAvoidAttackHitCamera.cpp">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="Source\SkyManager.cpp">
       <Filter>PlayScene\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Source\SwordEffect.cpp">
-      <Filter>PlayScene\weapon</Filter>
+      <Filter>PlayScene\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Source\MotionBlur.cpp">
       <Filter>Component\MotionBlur</Filter>
@@ -348,7 +348,7 @@
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerDie.cpp">
-      <Filter>PlayScene\Player\playerState</Filter>
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Source\SoundID.cpp">
       <Filter>Common</Filter>
@@ -363,7 +363,7 @@
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClCompile>
     <ClCompile Include="Source\FreeCamera.cpp">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="Source\EnemyBase.cpp">
       <Filter>PlayScene\Enemy</Filter>
@@ -468,7 +468,7 @@
     <ClInclude Include="Source\ComponentManager.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Source\transform.h">
+    <ClInclude Include="Source\Transform.h">
       <Filter>Component\Transform</Filter>
     </ClInclude>
     <ClInclude Include="Source\MeshRenderer.h">
@@ -477,65 +477,65 @@
     <ClInclude Include="Source\MeshRenderer2D.h">
       <Filter>Component\MeshRenderer2D</Filter>
     </ClInclude>
-    <ClInclude Include="Source\player.h">
+    <ClInclude Include="Source\Player.h">
       <Filter>PlayScene\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\stateBase.h">
+    <ClInclude Include="Source\StateBase.h">
       <Filter>PlayScene\State</Filter>
     </ClInclude>
-    <ClInclude Include="Source\stateManager.h">
+    <ClInclude Include="Source\StateManager.h">
       <Filter>PlayScene\State</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerInformation.h">
+    <ClInclude Include="Source\PlayerInformation.h">
       <Filter>PlayScene\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerWait.h">
-      <Filter>PlayScene\Player\playerState</Filter>
+    <ClInclude Include="Source\PlayerWait.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerWalk.h">
-      <Filter>PlayScene\Player\playerState</Filter>
+    <ClInclude Include="Source\PlayerWalk.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="Source\Physics.h">
       <Filter>Component\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\camera.h">
-      <Filter>PlayScene\camera</Filter>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>PlayScene\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Source\LoadManager.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Source\stageManager.h">
+    <ClInclude Include="Source\StageManager.h">
       <Filter>PlayScene\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Source\stage.h">
+    <ClInclude Include="Source\Stage.h">
       <Filter>PlayScene\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Source\colliderBase.h">
+    <ClInclude Include="Source\ColliderBase.h">
       <Filter>Component\Collider\ColliderBase</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerManager.h">
+    <ClInclude Include="Source\PlayerManager.h">
       <Filter>PlayScene\Player</Filter>
     </ClInclude>
     <ClInclude Include="Source\EnemyManager.h">
       <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Source\color.h">
+    <ClInclude Include="Source\Color.h">
       <Filter>Component\Color</Filter>
     </ClInclude>
     <ClInclude Include="Source\Animator.h">
       <Filter>Component\Anim</Filter>
     </ClInclude>
-    <ClInclude Include="Source\inputManager.h">
+    <ClInclude Include="Source\InputManager.h">
       <Filter>Common\InputManager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\controllerInputManager.h">
-      <Filter>Common\InputManager\controler</Filter>
+    <ClInclude Include="Source\ControllerInputManager.h">
+      <Filter>Common\InputManager\Controler</Filter>
     </ClInclude>
-    <ClInclude Include="Source\keyboardInputManager.h">
-      <Filter>Common\InputManager\keyBord</Filter>
+    <ClInclude Include="Source\KeyboardInputManager.h">
+      <Filter>Common\InputManager\KeyBord</Filter>
     </ClInclude>
-    <ClInclude Include="Source\mouseInputManager.h">
-      <Filter>Common\InputManager\mouse</Filter>
+    <ClInclude Include="Source\MouseInputManager.h">
+      <Filter>Common\InputManager\Mouse</Filter>
     </ClInclude>
     <ClInclude Include="Source\Shaker.h">
       <Filter>Component\shakeer</Filter>
@@ -555,7 +555,7 @@
     <ClInclude Include="Source\ModelCollider.h">
       <Filter>Component\Collider\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Source\rayCollider.h">
+    <ClInclude Include="Source\RayCollider.h">
       <Filter>Component\Collider\Ray</Filter>
     </ClInclude>
     <ClInclude Include="Source\Debug.h">
@@ -564,31 +564,31 @@
     <ClInclude Include="Source\AABBCollider.h">
       <Filter>Component\Collider\AABB</Filter>
     </ClInclude>
-    <ClInclude Include="Source\cameraManager.h">
-      <Filter>PlayScene\camera\cameraManager</Filter>
+    <ClInclude Include="Source\CameraManager.h">
+      <Filter>PlayScene\Camera\CameraManager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerStateBase.h">
-      <Filter>PlayScene\Player\playerState</Filter>
+    <ClInclude Include="Source\PlayerStateBase.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\light.h">
+    <ClInclude Include="Source\Light.h">
       <Filter>PlayScene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerStateManager.h">
-      <Filter>PlayScene\Player\playerState\Manager</Filter>
+    <ClInclude Include="Source\PlayerStateManager.h">
+      <Filter>PlayScene\Player\PlayerState\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerAvoid.h">
-      <Filter>PlayScene\Player\playerState</Filter>
+    <ClInclude Include="Source\PlayerAvoid.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\weaponManager.h">
-      <Filter>PlayScene\weapon</Filter>
+    <ClInclude Include="Source\WeaponManager.h">
+      <Filter>PlayScene\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Source\CharaWeapon.h">
-      <Filter>PlayScene\weapon</Filter>
+      <Filter>PlayScene\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Source\enemy.h">
+    <ClInclude Include="Source\Enemy.h">
       <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Source\enemyInformation.h">
+    <ClInclude Include="Source\EnemyInformation.h">
       <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Source\CharaBase.h">
@@ -609,23 +609,23 @@
     <ClInclude Include="Source\EnemyIdol.h">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\enemyAttack1.h">
+    <ClInclude Include="Source\EnemyAttack1.h">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\CollsionEvent.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerDamage.h">
-      <Filter>PlayScene\Player\playerState</Filter>
+    <ClInclude Include="Source\PlayerDamage.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerjustAvoid.h">
-      <Filter>PlayScene\Player\playerState</Filter>
+    <ClInclude Include="Source\PlayerjustAvoid.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\enemyDamage.h">
+    <ClInclude Include="Source\EnemyDamage.h">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerBlowAway.h">
-      <Filter>PlayScene\Player\playerState</Filter>
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="Source\EffectManager.h">
       <Filter>Common\Effect</Filter>
@@ -642,68 +642,68 @@
     <ClInclude Include="Source\EnemyBlowAway.h">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerAttack1.h">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+    <ClInclude Include="Source\PlayerAttack1.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerAttack2.h">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+    <ClInclude Include="Source\PlayerAttack2.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerJustAvoidAttack1.h">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+    <ClInclude Include="Source\PlayerJustAvoidAttack1.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerJustAvoidAttack2.h">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+    <ClInclude Include="Source\PlayerJustAvoidAttack2.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerAttack3.h">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+    <ClInclude Include="Source\PlayerAttack3.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerJustAvoidAttack3.h">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+    <ClInclude Include="Source\PlayerJustAvoidAttack3.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerAttack4.h">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+    <ClInclude Include="Source\PlayerAttack4.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerJustAvoidAttack4.h">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+    <ClInclude Include="Source\PlayerJustAvoidAttack4.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerAttackStateBase.h">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Source\cameraInformation.h">
-      <Filter>PlayScene\camera</Filter>
+    <ClInclude Include="Source\CameraInformation.h">
+      <Filter>PlayScene\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Source\cameraStateManager.h">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
     <ClInclude Include="Source\CameraStateBase.h">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
     <ClInclude Include="Source\FollowCamera.h">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
     <ClInclude Include="Source\JustAvoidCamera.h">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\sphereCollider.h">
+    <ClInclude Include="Source\SphereCollider.h">
       <Filter>Component\Collider\Sphere</Filter>
     </ClInclude>
-    <ClInclude Include="Source\playerJustAvoidAttack5.h">
-      <Filter>PlayScene\Player\playerState\Attack</Filter>
+    <ClInclude Include="Source\PlayerJustAvoidAttack5.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="Source\EnemyRun.h">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\JustAvoidAttackCamera.h">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
     <ClInclude Include="Source\JustAvoidAttackHitCamera.h">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\skyManager.h">
+    <ClInclude Include="Source\SkyManager.h">
       <Filter>PlayScene\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Source\swordEffect.h">
-      <Filter>PlayScene\weapon</Filter>
+    <ClInclude Include="Source\SwordEffect.h">
+      <Filter>PlayScene\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Source\MotionBlur.h">
       <Filter>Component\MotionBlur</Filter>
@@ -787,7 +787,7 @@
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerDie.h">
-      <Filter>PlayScene\Player\playerState</Filter>
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="Source\EffectID.h">
       <Filter>Common</Filter>
@@ -808,7 +808,7 @@
       <Filter>PlayScene\Boss\BossState</Filter>
     </ClInclude>
     <ClInclude Include="Source\FreeCamera.h">
-      <Filter>PlayScene\camera\cameraState</Filter>
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
     <ClInclude Include="Source\EnemyBase.h">
       <Filter>PlayScene\Enemy</Filter>
@@ -911,15 +911,6 @@
     <Filter Include="Common\InputManager">
       <UniqueIdentifier>{ec883660-3f70-429b-a895-d99e6951a77d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\InputManager\controler">
-      <UniqueIdentifier>{59a215e4-309a-49ea-81db-50540a15c9e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\InputManager\keyBord">
-      <UniqueIdentifier>{480737b5-d8a3-4079-9929-46e247026029}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\InputManager\mouse">
-      <UniqueIdentifier>{1b45303a-5faa-4882-ab7a-3e3fb41ed846}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Component\shakeer">
       <UniqueIdentifier>{0807bdb5-0373-4196-816a-0b4d3e5ff7d7}</UniqueIdentifier>
     </Filter>
@@ -938,20 +929,11 @@
     <Filter Include="Component\Collider\AABB">
       <UniqueIdentifier>{4747d783-1546-4691-b9dd-57424d1d41c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayScene\weapon">
-      <UniqueIdentifier>{5cd4761d-ff01-4b3f-aa54-752b004b0da1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PlayScene\Chara">
       <UniqueIdentifier>{8b3b55a0-3176-4d3f-b57d-705e7c4178f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Component\Anim">
       <UniqueIdentifier>{0a65219b-dafa-40f2-9121-23e5ec042917}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayScene\Player\playerState">
-      <UniqueIdentifier>{9fe7111d-3253-4249-91ed-8cf0c8e71686}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayScene\Player\playerState\Manager">
-      <UniqueIdentifier>{5a24c875-06c2-4769-9f12-90953913dce6}</UniqueIdentifier>
     </Filter>
     <Filter Include="PlayScene\Enemy\EnemyState">
       <UniqueIdentifier>{abde14e5-aa93-431a-9c37-24ae1e582b64}</UniqueIdentifier>
@@ -964,18 +946,6 @@
     </Filter>
     <Filter Include="Common\Sound">
       <UniqueIdentifier>{e22cf7b1-3ee3-4727-a775-af17cb0ec9c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayScene\Player\playerState\Attack">
-      <UniqueIdentifier>{a3fadcba-f65d-4ef7-a6f3-cb69317d3d13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayScene\camera">
-      <UniqueIdentifier>{16fa929f-7bf0-4fc0-93db-6cbcf5a5b723}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayScene\camera\cameraManager">
-      <UniqueIdentifier>{3f53b35f-708a-486b-841b-fcd4d42fcc5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayScene\camera\cameraState">
-      <UniqueIdentifier>{36cd74a5-9930-4b7e-a4d2-0e680d9b34ef}</UniqueIdentifier>
     </Filter>
     <Filter Include="Component\MotionBlur">
       <UniqueIdentifier>{eb08ff8c-3dae-414b-bfb6-0c58226e2cca}</UniqueIdentifier>
@@ -1009,6 +979,36 @@
     </Filter>
     <Filter Include="PlayScene\Boss\BossState\Attack">
       <UniqueIdentifier>{e4d7576d-2312-43bf-a6ee-ae1af44846fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Camera">
+      <UniqueIdentifier>{16fa929f-7bf0-4fc0-93db-6cbcf5a5b723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Player\PlayerState">
+      <UniqueIdentifier>{9fe7111d-3253-4249-91ed-8cf0c8e71686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Player\PlayerState\Manager">
+      <UniqueIdentifier>{5a24c875-06c2-4769-9f12-90953913dce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Player\PlayerState\Attack">
+      <UniqueIdentifier>{a3fadcba-f65d-4ef7-a6f3-cb69317d3d13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Weapon">
+      <UniqueIdentifier>{5cd4761d-ff01-4b3f-aa54-752b004b0da1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Camera\CameraState">
+      <UniqueIdentifier>{36cd74a5-9930-4b7e-a4d2-0e680d9b34ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Camera\CameraManager">
+      <UniqueIdentifier>{3f53b35f-708a-486b-841b-fcd4d42fcc5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\InputManager\Controler">
+      <UniqueIdentifier>{59a215e4-309a-49ea-81db-50540a15c9e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\InputManager\KeyBord">
+      <UniqueIdentifier>{480737b5-d8a3-4079-9929-46e247026029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\InputManager\Mouse">
+      <UniqueIdentifier>{1b45303a-5faa-4882-ab7a-3e3fb41ed846}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
