@@ -185,7 +185,7 @@
     <ClInclude Include="Source\BossSpecialAttack1.h" />
     <ClInclude Include="Source\CameraInformation.h" />
     <ClInclude Include="Source\CameraStateBase.h" />
-    <ClInclude Include="Source\cameraStateManager.h" />
+    <ClInclude Include="Source\camerestate.h" />
     <ClInclude Include="Source\CsvReader.h" />
     <ClInclude Include="Source\EffectBase.h" />
     <ClInclude Include="Source\EffectID.h" />
@@ -233,7 +233,7 @@
     <ClInclude Include="Source\EnemyManager.h" />
     <ClInclude Include="Source\EnemyStateBase.h" />
     <ClInclude Include="Source\EnemyStateManager.h" />
-    <ClInclude Include="Source\function.h" />
+    <ClInclude Include="Source\name.h" />
     <ClInclude Include="Source\Hierarchy.h" />
     <ClInclude Include="Source\PlayerDie.h" />
     <ClInclude Include="Source\PlayerJustAvoidAttack1.h" />
@@ -333,7 +333,7 @@
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\CameraManager.cpp" />
     <ClCompile Include="Source\CameraStateBase.cpp" />
-    <ClCompile Include="Source\cameraStateManager.cpp" />
+    <ClCompile Include="Source\camerestate.cpp" />
     <ClCompile Include="Source\CharaBase.cpp" />
     <ClCompile Include="Source\ColliderBase.cpp" />
     <ClCompile Include="Source\CollsionEvent.cpp" />

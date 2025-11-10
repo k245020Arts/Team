@@ -201,7 +201,7 @@
       <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Source\Shaker.cpp">
-      <Filter>Component\shakeer</Filter>
+      <Filter>Component\Shaker</Filter>
     </ClCompile>
     <ClCompile Include="Source\EffectManager.cpp">
       <Filter>Common\Effect</Filter>
@@ -245,7 +245,7 @@
     <ClCompile Include="Source\PlayerAttackStateBase.cpp">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\cameraStateManager.cpp">
+    <ClCompile Include="Source\camerestate.cpp">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="Source\CameraStateBase.cpp">
@@ -538,7 +538,7 @@
       <Filter>Common\InputManager\Mouse</Filter>
     </ClInclude>
     <ClInclude Include="Source\Shaker.h">
-      <Filter>Component\shakeer</Filter>
+      <Filter>Component\Shaker</Filter>
     </ClInclude>
     <ClInclude Include="Source\Easing.h">
       <Filter>Common</Filter>
@@ -549,7 +549,7 @@
     <ClInclude Include="Source\CollsionInformation.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Source\function.h">
+    <ClInclude Include="Source\name.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModelCollider.h">
@@ -672,7 +672,7 @@
     <ClInclude Include="Source\CameraInformation.h">
       <Filter>PlayScene\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Source\cameraStateManager.h">
+    <ClInclude Include="Source\camerestate.h">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
     <ClInclude Include="Source\CameraStateBase.h">
@@ -911,9 +911,6 @@
     <Filter Include="Common\InputManager">
       <UniqueIdentifier>{ec883660-3f70-429b-a895-d99e6951a77d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\shakeer">
-      <UniqueIdentifier>{0807bdb5-0373-4196-816a-0b4d3e5ff7d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Component\Collider\Model">
       <UniqueIdentifier>{155fa35e-e89a-4597-8ee0-e8f22bcefa92}</UniqueIdentifier>
     </Filter>
@@ -1009,6 +1006,9 @@
     </Filter>
     <Filter Include="Common\InputManager\Mouse">
       <UniqueIdentifier>{1b45303a-5faa-4882-ab7a-3e3fb41ed846}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Shaker">
+      <UniqueIdentifier>{0807bdb5-0373-4196-816a-0b4d3e5ff7d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
