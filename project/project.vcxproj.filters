@@ -56,7 +56,7 @@
     <ClCompile Include="Source\ComponentManager.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="Source\transform.cpp">
+    <ClCompile Include="Source\Transform.cpp">
       <Filter>Component\Transform</Filter>
     </ClCompile>
     <ClCompile Include="Source\MeshRenderer.cpp">
@@ -65,19 +65,19 @@
     <ClCompile Include="Source\MeshRenderer2D.cpp">
       <Filter>Component\MeshRenderer2D</Filter>
     </ClCompile>
-    <ClCompile Include="Source\player.cpp">
+    <ClCompile Include="Source\Player.cpp">
       <Filter>PlayScene\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerWait.cpp">
+    <ClCompile Include="Source\PlayerWait.cpp">
       <Filter>PlayScene\Player\playerState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerWalk.cpp">
+    <ClCompile Include="Source\PlayerWalk.cpp">
       <Filter>PlayScene\Player\playerState</Filter>
     </ClCompile>
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Component\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\camera.cpp">
+    <ClCompile Include="Source\Camera.cpp">
       <Filter>PlayScene\camera</Filter>
     </ClCompile>
     <ClCompile Include="Source\LoadManager.cpp">
@@ -86,40 +86,40 @@
     <ClCompile Include="Source\Hierarchy.cpp">
       <Filter>Component\Hierarchy</Filter>
     </ClCompile>
-    <ClCompile Include="Source\stageManager.cpp">
+    <ClCompile Include="Source\StageManager.cpp">
       <Filter>PlayScene\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Source\stage.cpp">
+    <ClCompile Include="Source\Stage.cpp">
       <Filter>PlayScene\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Source\colliderBase.cpp">
+    <ClCompile Include="Source\ColliderBase.cpp">
       <Filter>Component\Collider\ColliderBase</Filter>
     </ClCompile>
-    <ClCompile Include="Source\sphereCollider.cpp">
+    <ClCompile Include="Source\SphereCollider.cpp">
       <Filter>Component\Collider\Sphere</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerManager.cpp">
+    <ClCompile Include="Source\PlayerManager.cpp">
       <Filter>PlayScene\Player</Filter>
     </ClCompile>
     <ClCompile Include="Source\EnemyManager.cpp">
       <Filter>PlayScene\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Source\color.cpp">
+    <ClCompile Include="Source\Color.cpp">
       <Filter>Component\Color</Filter>
     </ClCompile>
     <ClCompile Include="Source\Animator.cpp">
       <Filter>Component\Anim</Filter>
     </ClCompile>
-    <ClCompile Include="Source\inputManager.cpp">
+    <ClCompile Include="Source\InputManager.cpp">
       <Filter>Common\InputManager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\controllerInputManager.cpp">
+    <ClCompile Include="Source\ControllerInputManager.cpp">
       <Filter>Common\InputManager\controler</Filter>
     </ClCompile>
-    <ClCompile Include="Source\keyboardInputManager.cpp">
+    <ClCompile Include="Source\KeyboardInputManager.cpp">
       <Filter>Common\InputManager\keyBord</Filter>
     </ClCompile>
-    <ClCompile Include="Source\mouseInputManager.cpp">
+    <ClCompile Include="Source\MouseInputManager.cpp">
       <Filter>Common\InputManager\mouse</Filter>
     </ClCompile>
     <ClCompile Include="Source\CollsionManager.cpp">
@@ -128,7 +128,7 @@
     <ClCompile Include="Source\ModelCollider.cpp">
       <Filter>Component\Collider\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Source\rayCollider.cpp">
+    <ClCompile Include="Source\RayCollider.cpp">
       <Filter>Component\Collider\Ray</Filter>
     </ClCompile>
     <ClCompile Include="Source\Debug.cpp">
@@ -137,28 +137,28 @@
     <ClCompile Include="Source\AABBCollider.cpp">
       <Filter>Component\Collider\AABB</Filter>
     </ClCompile>
-    <ClCompile Include="Source\cameraManager.cpp">
+    <ClCompile Include="Source\CameraManager.cpp">
       <Filter>PlayScene\camera\cameraManager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerStateBase.cpp">
+    <ClCompile Include="Source\PlayerStateBase.cpp">
       <Filter>PlayScene\Player\playerState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\light.cpp">
+    <ClCompile Include="Source\Light.cpp">
       <Filter>PlayScene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerStateManager.cpp">
+    <ClCompile Include="Source\PlayerStateManager.cpp">
       <Filter>PlayScene\Player\playerState\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerAvoid.cpp">
+    <ClCompile Include="Source\PlayerAvoid.cpp">
       <Filter>PlayScene\Player\playerState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\weaponManager.cpp">
+    <ClCompile Include="Source\WeaponManager.cpp">
       <Filter>PlayScene\weapon</Filter>
     </ClCompile>
     <ClCompile Include="Source\CharaWeapon.cpp">
       <Filter>PlayScene\weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Source\enemy.cpp">
+    <ClCompile Include="Source\Enemy.cpp">
       <Filter>PlayScene\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Source\CharaBase.cpp">
@@ -179,7 +179,7 @@
     <ClCompile Include="Source\EnemyIdol.cpp">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\enemyAttack1.cpp">
+    <ClCompile Include="Source\EnemyAttack1.cpp">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClCompile>
     <ClCompile Include="Source\CollsionEvent.cpp">
@@ -188,13 +188,13 @@
     <ClCompile Include="Source\CollsionInformation.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerDamage.cpp">
+    <ClCompile Include="Source\PlayerDamage.cpp">
       <Filter>PlayScene\Player\playerState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerjustAvoid.cpp">
+    <ClCompile Include="Source\PlayerjustAvoid.cpp">
       <Filter>PlayScene\Player\playerState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\enemyDamage.cpp">
+    <ClCompile Include="Source\EnemyDamage.cpp">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerBlowAway.cpp">
@@ -218,28 +218,28 @@
     <ClCompile Include="Source\EnemyBlowAway.cpp">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerAttack1.cpp">
+    <ClCompile Include="Source\PlayerAttack1.cpp">
       <Filter>PlayScene\Player\playerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerAttack2.cpp">
+    <ClCompile Include="Source\PlayerAttack2.cpp">
       <Filter>PlayScene\Player\playerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerJustAvoidAttack1.cpp">
+    <ClCompile Include="Source\PlayerJustAvoidAttack1.cpp">
       <Filter>PlayScene\Player\playerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerJustAvoidAttack2.cpp">
+    <ClCompile Include="Source\PlayerJustAvoidAttack2.cpp">
       <Filter>PlayScene\Player\playerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerJustAvoidAttack3.cpp">
+    <ClCompile Include="Source\PlayerJustAvoidAttack3.cpp">
       <Filter>PlayScene\Player\playerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerJustAvoidAttack4.cpp">
+    <ClCompile Include="Source\PlayerJustAvoidAttack4.cpp">
       <Filter>PlayScene\Player\playerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerAttack3.cpp">
+    <ClCompile Include="Source\PlayerAttack3.cpp">
       <Filter>PlayScene\Player\playerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerAttack4.cpp">
+    <ClCompile Include="Source\PlayerAttack4.cpp">
       <Filter>PlayScene\Player\playerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerAttackStateBase.cpp">
@@ -257,7 +257,7 @@
     <ClCompile Include="Source\JustAvoidCamera.cpp">
       <Filter>PlayScene\camera\cameraState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\playerJustAvoidAttack5.cpp">
+    <ClCompile Include="Source\PlayerJustAvoidAttack5.cpp">
       <Filter>PlayScene\Player\playerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\EnemyRun.cpp">
@@ -269,10 +269,10 @@
     <ClCompile Include="Source\JustAvoidAttackHitCamera.cpp">
       <Filter>PlayScene\camera\cameraState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\skyManager.cpp">
+    <ClCompile Include="Source\SkyManager.cpp">
       <Filter>PlayScene\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Source\swordEffect.cpp">
+    <ClCompile Include="Source\SwordEffect.cpp">
       <Filter>PlayScene\weapon</Filter>
     </ClCompile>
     <ClCompile Include="Source\MotionBlur.cpp">
