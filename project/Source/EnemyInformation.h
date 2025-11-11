@@ -63,36 +63,29 @@ namespace EnemyInformation {
 		LoopCombo       // 多段ヒット・特殊コンボ
 	};
 
-	struct EnemyReaction
-	{
-		ID::IDType id;
+	struct EnemyReaction {
+		ID::IDType attackID;
 
-		// 敵へのダメージ情報
 		EnemyDamage::EnemyDamageInfo dInfo;
 		EnemyBlowAway::EnemyBlowAwayInfo bInfo;
-		AttackType type;
-		bool useBlowAway;
 
-		// 状態遷移ID
-		ID::IDType enemyNextState;
+		enum class Type { Normal, BlowAway, LoopCombo } attackType;
+		ID::IDType changeStateID;
 
-		// 振動
 		int vibrationPower;
 		int vibrationType;
 
-		// エフェクト情報
 		Effect_ID::EFFECT_ID hitEffectID;
 		float hitEffectTime;
-		float hitEffectScale;
-		bool createSlashEffect;
-		float shashAngle;
-		Effect_ID::EFFECT_ID slashEffectID;
+		float hitEffectScaleRate;
 
 		bool hit;
+		float slashAngleRad;
+		Effect_ID::EFFECT_ID slashEffectID;
+		bool useSlashEffect;
 
-		// 多段ヒット専用
-		int loopCount = 0;          // ループ回数
-		float loopInterval = 0.0f;  // ループ間隔
+		int loopMax;          // -1でループなし
+		float loopInterval;   // ループ間隔
 	};
 	
 };
