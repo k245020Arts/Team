@@ -1,6 +1,5 @@
 #pragma once
 #include "stateBase.h"
-#include "enemyInformation.h"
 #include "ID.h"
 #include "transform.h"
 

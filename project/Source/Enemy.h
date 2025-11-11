@@ -3,7 +3,7 @@
 #include "enemyInformation.h"
 #include "transform.h"
 #include "SoundID.h"
-#include "EffectID.h"
+
 
 class StateManager;
 class EnemyStateManager;
@@ -46,7 +46,7 @@ public:
 
 	bool IsShake();
 	bool PlayerPointerSet(BaseObject* _obj);
-
+	
 	
 private:
 	

@@ -40,8 +40,23 @@
 #include "GameManager.h"
 #include "PlayerDie.h"
 #include "EnemyManager.h"
-#include "ComponentManager.h"
 #include "BossAttackBase.h"
+
+namespace {
+
+	std::unordered_map<ID::IDType, PlayerInformation::PlayerReaction> attackEffects = {
+	{ ID::P_ANIM_ATTACK1, { VECTOR3(50,50,50), 0.07f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ ID::P_ANIM_JUST_AVOID_ATTACK1, { VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ ID::P_ANIM_ATTACK2, { VECTOR3(50,50,50), 0.1f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ ID::P_ANIM_ATTACK3, { VECTOR3(50,50,50), 0.12f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ ID::P_ANIM_JUST_AVOID_ATTACK3, { VECTOR3(150,100,100), 0.05f, VECTOR3(30,50,50), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ ID::P_ANIM_ATTACK4, { VECTOR3(100,100,100), 0.2f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ ID::P_ANIM_JUST_AVOID_ATTACK4, { VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ ID::P_ANIM_JUST_AVOID_ATTACK5, { VECTOR3(100,100,100), 0.3f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	};
+
+
+}
 
 Player::Player()
 {
@@ -429,56 +444,17 @@ void Player::HitObjectSet(BaseObject* _base)
 void Player::PlayerAttackHit()
 {
 	//プレイヤーの攻撃を当てた時のカメラのシェイクヒットストップの処理
-	ID::IDType id = playerCom.stateManager->GetState<StateBase>()->GetID();
-	switch (id)
-	{
-	case ID::P_ANIM_ATTACK1:
-		playerCom.shaker->ShakeStart(VECTOR3(50, 50, 50), Shaker::HORIZONAL_SHAKE, true, 0.07f);
-		playerCom.camera->CameraShake(VECTOR3(40, 40, 40), Shaker::ShakePattern::HORIZONAL_SHAKE, false, 0.1f);
-		playerCom.sound->RandamSe("swordHit00000", 7);
-		break;
-	case ID::P_ANIM_JUST_AVOID_ATTACK1:
-		playerCom.shaker->ShakeStart(VECTOR3(100, 100, 100), Shaker::HORIZONAL_SHAKE, true, 0.15f);
-		playerCom.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::ShakePattern::HORIZONAL_SHAKE, false, 0.3f);
-		playerCom.sound->RandamSe("swordHit00000", 7);
-		break;
-	case ID::P_ANIM_ATTACK2:
-		playerCom.shaker->ShakeStart(VECTOR3(50, 50, 50), Shaker::HORIZONAL_SHAKE, true, 0.1f);
-		playerCom.camera->CameraShake(VECTOR3(40, 40, 40), Shaker::ShakePattern::HORIZONAL_SHAKE, false, 0.1f);
-		playerCom.sound->RandamSe("swordHit00000", 7);
-		break;
-	case ID::P_ANIM_JUST_AVOID_ATTACK2:
-		//playerCom.shaker->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.7f);
-		//playerCom.camera->CameraShake(VECTOR3(100, 200, 200), Shaker::ShakePattern::HORIZONAL_SHAKE, false, 0.7f);
-		
-		break;
-	case ID::P_ANIM_ATTACK3:
-		playerCom.shaker->ShakeStart(VECTOR3(50, 50, 50), Shaker::HORIZONAL_SHAKE, true, 0.12f);
-		playerCom.camera->CameraShake(VECTOR3(40, 40, 40), Shaker::ShakePattern::HORIZONAL_SHAKE, false, 0.1f);
-		playerCom.sound->RandamSe("swordHit00000", 7);
-		break;
-	case ID::P_ANIM_JUST_AVOID_ATTACK3:
-		playerCom.shaker->ShakeStart(VECTOR3(150, 100, 100), Shaker::HORIZONAL_SHAKE, true, 0.05f);
-		playerCom.camera->CameraShake(VECTOR3(30, 50, 50), Shaker::ShakePattern::HORIZONAL_SHAKE, false, 0.3f);
-		playerCom.sound->RandamSe("swordHit00000", 7);
-		break;
-	case ID::P_ANIM_ATTACK4:
-		playerCom.shaker->ShakeStart(VECTOR3(100, 100, 100), Shaker::HORIZONAL_SHAKE, true, 0.2f);
-		playerCom.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::ShakePattern::HORIZONAL_SHAKE, false, 0.3f);
-		playerCom.sound->RandamSe("swordHit00000", 7);
-		break;
-	case ID::P_ANIM_JUST_AVOID_ATTACK4:
-		playerCom.shaker->ShakeStart(VECTOR3(100, 100, 100), Shaker::HORIZONAL_SHAKE, true, 0.15f);
-		playerCom.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::ShakePattern::HORIZONAL_SHAKE, false, 0.3f);
-		playerCom.sound->RandamSe("swordHit00000", 7);
-		break;
-	case ID::P_ANIM_JUST_AVOID_ATTACK5:
-		playerCom.shaker->ShakeStart(VECTOR3(100, 100, 100), Shaker::HORIZONAL_SHAKE, true, 0.3f);
-		playerCom.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::ShakePattern::HORIZONAL_SHAKE, false, 0.3f);
-		playerCom.sound->RandamSe("swordHit00000", 7);
-		break;
-	}
 	
+
+	ID::IDType id = playerCom.stateManager->GetState<StateBase>()->GetID();
+
+	auto it = attackEffects.find(id);
+	if (it != attackEffects.end()) {
+		const auto& e = it->second;
+		playerCom.shaker->ShakeStart(e.shakePower, e.shakePattern, e.shakerLoop, e.shakeTime);
+		playerCom.camera->CameraShake(e.cameraShakePower, e.shakePattern, false, e.cameraShakeTime);
+		playerCom.sound->RandamSe(e.soundName, e.soundKind);
+	}
 }
 
 bool Player::IsShake() 

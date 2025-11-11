@@ -1,4 +1,7 @@
 #pragma once
+#include "EffectID.h"
+#include "EnemyBlowAway.h"
+#include "EnemyDamage.h"
 
 class StateManager;
 class Enemy;
@@ -50,5 +53,46 @@ namespace EnemyInformation {
 
 	//最初のポジション
 	const VECTOR3 BASE_POS = VECTOR3(500, 1000, 0);
+	const float HIT_EFFECT_TIME = 0.2f;
+	const float HIT_EFFECT_SCALE_RATE = 0.1f;
 
+	enum AttackType {
+		Normal,         // 通常攻撃
+		JustAvoid,      // ジャスト回避攻撃
+		BlowAway,       // 吹っ飛ばし
+		LoopCombo       // 多段ヒット・特殊コンボ
+	};
+
+	struct EnemyReaction
+	{
+		ID::IDType id;
+
+		// 敵へのダメージ情報
+		EnemyDamage::EnemyDamageInfo dInfo;
+		EnemyBlowAway::EnemyBlowAwayInfo bInfo;
+		AttackType type;
+		bool useBlowAway;
+
+		// 状態遷移ID
+		ID::IDType enemyNextState;
+
+		// 振動
+		int vibrationPower;
+		int vibrationType;
+
+		// エフェクト情報
+		Effect_ID::EFFECT_ID hitEffectID;
+		float hitEffectTime;
+		float hitEffectScale;
+		bool createSlashEffect;
+		float shashAngle;
+		Effect_ID::EFFECT_ID slashEffectID;
+
+		bool hit;
+
+		// 多段ヒット専用
+		int loopCount = 0;          // ループ回数
+		float loopInterval = 0.0f;  // ループ間隔
+	};
+	
 };

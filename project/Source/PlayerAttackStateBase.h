@@ -5,6 +5,7 @@
 class PlayerAttackStateBase : public PlayerStateBase
 {
 public:
+
 	PlayerAttackStateBase();
 	~PlayerAttackStateBase();
 
@@ -44,4 +45,5 @@ protected:
 
 	float hitDamage;
 	bool defalutTrail;
+
 };
