@@ -47,33 +47,33 @@ namespace {
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, -120.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-			// ジャスト回避攻撃
-			{ ID::P_ANIM_JUST_AVOID_ATTACK1, { ID::P_ANIM_JUST_AVOID_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-20000,2000), VECTOR3(400,400,400),0.05f,0.8f),
-				EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 30, 40,
-				Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-				true, 0.0f, Effect_ID::PLAYER_SLASH_ATTACK, false, -1, 0.0f } },
+		// ジャスト回避攻撃
+		{ ID::P_ANIM_JUST_AVOID_ATTACK1, { ID::P_ANIM_JUST_AVOID_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-20000,2000), VECTOR3(400,400,400),0.05f,0.8f),
+			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 30, 40,
+			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
+			true, 0.0f, Effect_ID::PLAYER_SLASH_ATTACK, false, -1, 0.0f } },
 
-			{ ID::P_ANIM_JUST_AVOID_ATTACK2, { ID::P_ANIM_JUST_AVOID_ATTACK2, EnemyDamage::EnemyDamageInfo(), EnemyBlowAway::EnemyBlowAwayInfo(),
-				EnemyInformation::EnemyReaction::Type::LoopCombo, ID::E_DAMAGE, 0, 0,
-				Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-				true, 90.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, 5, 0.13f } },
+		{ ID::P_ANIM_JUST_AVOID_ATTACK2, { ID::P_ANIM_JUST_AVOID_ATTACK2, EnemyDamage::EnemyDamageInfo(), EnemyBlowAway::EnemyBlowAwayInfo(),
+			EnemyInformation::EnemyReaction::Type::LoopCombo, ID::E_DAMAGE, 0, 0,
+			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
+			true, 90.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, 5, 0.13f } },
 
-			{ ID::P_ANIM_JUST_AVOID_ATTACK3, { ID::P_ANIM_JUST_AVOID_ATTACK3, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200),0.2f,0.8f),
-				EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 70, 40,
-				Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-				true, -50.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
+		{ ID::P_ANIM_JUST_AVOID_ATTACK3, { ID::P_ANIM_JUST_AVOID_ATTACK3, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200),0.2f,0.8f),
+			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 70, 40,
+			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
+			true, -50.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-			{ ID::P_ANIM_JUST_AVOID_ATTACK4, { ID::P_ANIM_JUST_AVOID_ATTACK4, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,7000), VECTOR3(200,200,200),0.2f,0.8f),
-				EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 40, 40,
-				Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-				true, 80.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
+		{ ID::P_ANIM_JUST_AVOID_ATTACK4, { ID::P_ANIM_JUST_AVOID_ATTACK4, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,7000), VECTOR3(200,200,200),0.2f,0.8f),
+			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 40, 40,
+			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
+			true, 80.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
 				// 吹っ飛ばし攻撃
-				{ ID::P_ANIM_JUST_AVOID_ATTACK5, { ID::P_ANIM_JUST_AVOID_ATTACK5, EnemyDamage::EnemyDamageInfo(),
-					EnemyBlowAway::EnemyBlowAwayInfo(4000,3000,VECTOR3(15,15,15),VECTOR3(0.3f,0.3f,0.3f),2000,20),
-					EnemyInformation::EnemyReaction::Type::BlowAway, ID::E_BLOWAWAY, 100, 60,
-					Effect_ID::SPECIAL_HIT_EFFECT, 5.0f, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-					true, 0.0f, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
+		{ ID::P_ANIM_JUST_AVOID_ATTACK5, { ID::P_ANIM_JUST_AVOID_ATTACK5, EnemyDamage::EnemyDamageInfo(),
+			EnemyBlowAway::EnemyBlowAwayInfo(4000,3000,VECTOR3(15,15,15),VECTOR3(0.3f,0.3f,0.3f),2000,20),
+			EnemyInformation::EnemyReaction::Type::BlowAway, ID::E_BLOWAWAY, 100, 60,
+			Effect_ID::SPECIAL_HIT_EFFECT, 5.0f, EnemyInformation::HIT_EFFECT_SCALE_RATE,
+			true, 0.0f, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 	};
 }
 

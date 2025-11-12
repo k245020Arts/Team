@@ -32,16 +32,29 @@ public:
 	//当たり判定の削除
 	void DeleteColliderComponent();
 
+	/// <summary>
+	/// hpの取得、Guageと結びつかせたいのでポインタ渡しにして毎フレームゲットしなくてもいいようにしている
+	/// </summary>
+	/// <returns></returns>
 	float* GetHp() { return &hp; }
 
+	/// <summary>
+	/// 最大hpの取得
+	/// </summary>
+	/// <returns></returns>
 	const float GetMaxHp(){return maxHp;}
 
-
+	/// <summary>
+	/// 最終ターゲットかどうかを取得する関数
+	/// </summary>
 	void LastTargetIn() { lastTarget = true; }
 	void LastTargetOut() { lastTarget = false; }
 
 	bool GetLastTarget() { return lastTarget; }
 
+	/// <summary>
+	/// 当たり判定の削除をする、Charaによって違うがある程度は対応できるようにしておく
+	/// </summary>
 	virtual void DeleteCollision();
 
 protected:

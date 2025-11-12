@@ -35,26 +35,65 @@ public:
 	void Update()override;
 	void Draw()override;
 	void Start(Object3D* _obj);
-
+	/// <summary>
+	/// 移動の関数
+	/// </summary>
+	/// <param name="_speed"></param>
+	/// <param name="_speedMax"></param>
 	void Move(float _speed,float _speedMax);
+	/// <summary>
+	/// プレイヤーの回転を滑らかに行うために行っている関数
+	/// 上は自由指定ver、下はデフォルト値ver
+	/// </summary>
+	/// <param name="_angle"></param>
+	/// <param name="_speed"></param>
 	void RotationChange(VECTOR3 _angle,float _speed);
 	void RotationChange();
+	/// <summary>
+	/// 回避の向き指定とか移動とかの処理を行っている関数
+	/// </summary>
+	/// <param name="_speed"></param>
+	/// <param name="_speedMax"></param>
+	/// <param name="cameraAngle"></param>
+	/// <param name="_upSpeed"></param>
 	void Avoid(float _speed, float _speedMax,float cameraAngle,float _upSpeed);
 	void ImguiDraw()override;
+	/// <summary>
+	/// プレイヤーの移動のスティックの値を得られる関数
+	/// </summary>
 	void PlayerStickInput();
 
 	VECTOR3 GetWalkAngle() { return walkAngle; }
 	bool GetAvoidStart() { return avoidStart; }
 	void SetAvoidStart(bool _set) { avoidStart = _set; }
+	/// <summary>
+	/// 回避が始まるときのちょっとした隙をつくるかんすう
+	/// </summary>
 	void AvoidReady();
+	/// <summary>
+	/// 回避した時の回転のチェンジをしている関数
+	/// </summary>
 	void AvoidRotationChange();
-
+	
+	/// <summary>
+	/// 敵の攻撃を食らった時の処理
+	/// </summary>
+	/// <param name="_attackId"></param>
+	/// <param name="_obj"></param>
+	/// <returns></returns>
 	bool EnemyHit(ID::IDType _attackId, BaseObject* _obj);
 	Transform* GetPlayerTransform(){ return playerTransform; }
 	BaseObject* GetPlayerObj() { return obj; }
 	void JustAvoidCan();
-
+	/// <summary>
+	/// カメラのターゲットをセットする関数
+	/// </summary>
+	/// <param name="_base"></param>
 	void TargetObjSet(BaseObject* _base);
+	/// <summary>
+	/// 攻撃を食らったりしたときとか、ジャスト回避した敵の種類をエル関数
+	/// </summary>
+	/// <param name="_base"></param>
 	void HitObjectSet(BaseObject* _base);
 
 	template<typename T>

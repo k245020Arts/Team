@@ -12,12 +12,21 @@ public:
 
 	void Update()override;
 	void Draw()override;
+	/// <summary>
+	/// HPゲージのHpを取得
+	/// </summary>
+	/// <typeparam name="T">誰のHPを取得したいか</typeparam>
 	template <typename T>
 	void GetHp() {
 		hp = obj->GetParent()->Component()->GetComponent<T>()->GetHp();
 		maxhp = obj->GetParent()->Component()->GetComponent<T>()->GetMaxHp();
 	}
-
+	/// <summary>
+	/// HPバーの枠を描画
+	/// </summary>
+	/// <param name="_image"></param>
+	/// <param name="_mode"></param>
+	/// <param name="_transfrom"></param>
 	void EdgeDrawReady(int _image, MeshRenderer2D::GraphMode _mode,Transform _transfrom);
 	template <typename T>
 	void GuageDrawReady(int _image, MeshRenderer2D::GraphMode _mode) {

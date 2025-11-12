@@ -16,8 +16,15 @@ public:
 	~CollsionManager();
 	void Update()override;
 	void Draw()override;
+	/// <summary>
+	/// 当たり判定リストに追加
+	/// </summary>
+	/// <param name="obj"></param>
 	void AddPush(ColliderBase* obj);
-
+	/// <summary>
+	/// 当たり判定リストを削除
+	/// </summary>
+	/// <param name="obj"></param>
 	void RemoveCollList(ColliderBase* obj);
 
 private:

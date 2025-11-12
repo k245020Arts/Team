@@ -17,14 +17,28 @@ public:
 	~Hierachy();
 	void Update() override;
 	void Draw() override;
-	
+	/// <summary>
+	/// デバック画面リストに追加
+	/// </summary>
+	/// <param name="_name"></param>
+	/// <param name="_obj"></param>
 	void Start(std::string _name, BaseObject* _obj);
 
+	/// <summary>
+	/// 実際に描画をしているところunityでいうヒエラルキーの描画
+	/// </summary>
+	/// <param name="_obj"></param>
 	void DrawHierarchy(BaseObject* _obj);
+	/// <summary>
+	/// 実際にパラメータとかを出しているところ、unityでいうところのインスペクターの描画
+	/// </summary>
 	void InspectorDraw();
 
 	void TransformDraw(BaseObject* _obj);
 	void RemoveHierachy(BaseObject* _obj);
+	/// <summary>
+	/// すべてのデータを削除
+	/// </summary>
 	void AllDeleteList();
 
 	

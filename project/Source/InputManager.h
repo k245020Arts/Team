@@ -78,9 +78,9 @@ public:
 	/// <param name="_data"></param>
 	void CreateInputData(KeyConfigData _data);
 	//キーコンフィグ用のボタンの種類
-	bool KeyInputDown(std::string _name);
-	bool KeyInput(std::string _name);
-	bool KeyInputUp(std::string _name);
+	bool KeyInputDown(std::string _name);//最初の一回のみ
+	bool KeyInput(std::string _name);//入力し続けている間
+	bool KeyInputUp(std::string _name);//話した瞬間
 
 	bool IsData(std::string _name);
 

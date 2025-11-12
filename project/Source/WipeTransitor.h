@@ -16,7 +16,12 @@ public:
 
 	void Update()override;
 	void Draw()override;
-
+	/// <summary>
+	/// 画面がずれていく画面遷移の開始
+	/// </summary>
+	/// <param name="_sceneName">移行したいシーンの名前</param>
+	/// <param name="_time">場面遷移の時間</param>
+	/// <param name="_dir">どの方向にずれていくか上下左右の4方向</param>
 	void WipeStart(std::string _sceneName, float _time, Direction _dir);
 	void SetGradation();
 

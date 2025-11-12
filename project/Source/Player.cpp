@@ -444,8 +444,6 @@ void Player::HitObjectSet(BaseObject* _base)
 void Player::PlayerAttackHit()
 {
 	//プレイヤーの攻撃を当てた時のカメラのシェイクヒットストップの処理
-	
-
 	ID::IDType id = playerCom.stateManager->GetState<StateBase>()->GetID();
 
 	auto it = attackEffects.find(id);

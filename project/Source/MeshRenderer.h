@@ -20,7 +20,13 @@ public:
 	//プレイヤーのモデルとかが反対になってしまっているのを強制的に直す関数
 	void RotationMesh(int _meshNum,float _angle);
 
+	/// <summary>
+	/// ローカルの座標を参照して描画をさせたいときに使う
+	/// </summary>
 	void DrawLocalPosition() { worldTransform = false; }
+	/// <summary>
+	/// ワールドの座標から描画させる
+	/// </summary>
 	void DrawWorldPosition() { worldTransform = true; }
 	
 

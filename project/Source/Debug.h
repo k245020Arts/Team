@@ -26,15 +26,30 @@ namespace Debug {
 
 	void DebugUpdate();
 
+	/// <summary>
+	/// Log出力する値を挿入する関数
+	/// </summary>
+	/// <param name="_log"></param>
 	void DebugLog(std::string _log);
+	/// <summary>
+	/// Log出力する値を挿入する関数
+	/// Printfみたいな形で出力したいときに使う
+	/// 上の関数はエスケープシーケンス対応ver
+	/// 下の関数は非対応ver
+	/// </summary>
+	/// <param name="_log"></param>
+	/// <param name=""></param>
 	void DebugLogPrintfArgs(const TCHAR* _log,...);
 	void DebugLogPrintf(const TCHAR* _log);
 
 	void UpdateLogger();
 
+	//ログ出力をリセットする
 	void ClearLogger();
+	//ヒットストップを削除
 	bool ShakeStop();
 
+	//当たり判定の描画をするかどうかを管理しているクラス
 	bool SphereColliderDraw();
 	bool AABBColliderDraw();
 	bool ModelColliderDraw();

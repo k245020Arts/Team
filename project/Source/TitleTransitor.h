@@ -13,7 +13,12 @@ public:
 	void Draw()override;
 
 	void SetTile();
-
+	/// <summary>
+	/// タイルフェードの開始
+	/// </summary>
+	/// <param name="_sceneName">移行したいシーン名</param>
+	/// <param name="_time">場面遷移の時間</param>
+	/// <param name="_useGravity">タイルがはがれた後下に落ちるかどうか</param>
 	void StartTile(std::string _sceneName, float _time,bool _useGravity);
 
 	struct TitleInfo

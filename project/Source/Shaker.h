@@ -32,11 +32,23 @@ public:
 	void ShakeStart(VECTOR3 _power,ShakePattern _pattern,float rok,float _second);
 	void ShakeStart(VECTOR3 _power,ShakePattern _pattern,float rok,float _second,Transform* _baseTransform);
 	
-
+	/// <summary>
+	/// shakeの強さをセットっする
+	/// </summary>
+	/// <param name="_power"></param>
 	void SetShakePower(VECTOR3 _power);
+	/// <summary>
+	/// shakeの強さを足していく
+	/// </summary>
+	/// <param name="_power"></param>
 	void AddShakePower(VECTOR3 _power);
 	
 	void ShakeFinish();
+	/// <summary>
+	/// Shake中かどうか
+	/// timeが0より大きいまたはマイナス1より小さかったら今shake中と判定する
+	/// </summary>
+	/// <returns></returns>
 	bool IsShakeing() { return (time > 0 || time < -1.0f); }
 
 	VECTOR3 GetShakePos() const ;

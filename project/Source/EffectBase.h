@@ -16,11 +16,25 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	/// <summary>
+	/// エフェクトの準備をするクラス
+	/// EffectManagerで自動で呼ばれるので手動で呼ぶ必要はない
+	/// </summary>
+	/// <param name="_transform"></param>
+	/// <param name="_parent"></param>
+	/// <param name="_id"></param>
+	/// <param name="_time"></param>
+	/// <param name="effect3D"></param>
 	void EffectInit(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D = true);
 
+	/// <summary>
+	/// エフェクトを再生させる2Dと3Dで関数を分けている
+	/// </summary>
 	void EffectPlay2D();
 	void EffectPlay3D();
-
+	/// <summary>
+	/// エフェクトをストップさせる2Dと3Dで関数を分けている
+	/// </summary>
 	void EffectStop2D();
 	void EffectStop3D();
 
@@ -29,8 +43,14 @@ public:
 	Effect_ID::EFFECT_ID GetEffectID() { return id; }
 	void EffectStop();
 	
+	/// <summary>
+	/// エフェクトのスピードを調整
+	/// </summary>
+	/// <param name="_speed"></param>
 	void EffectSpeedSet(float _speed);
-
+	/// <summary>
+	/// エフェクトの色を変える2Dと3Dで関数を分けている
+	/// </summary>
 	void SetColor2D(Color::Rgb _rgb);
 	void SetColor3D(Color::Rgb _rgb);
 	void SetColor(Color::Rgb _rgb);

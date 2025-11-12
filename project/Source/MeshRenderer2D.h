@@ -34,7 +34,10 @@ public:
 	void SetStartPos(VECTOR2I _pos);
 
 	void AnimStart(float _speed,int _num);
-
+	/// <summary>
+	/// ‰æ‘œ‚Ì‘å‚«‚³‚ðŽæ“¾
+	/// </summary>
+	/// <returns></returns>
 	VECTOR2I GetImageSize() { return imageSize; }
 	void SetDrawImageSize(VECTOR2I _pos);
 	/// <summary>
