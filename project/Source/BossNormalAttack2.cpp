@@ -19,8 +19,7 @@ BossNormalAttack2::~BossNormalAttack2()
 void BossNormalAttack2::Update()
 {
 	Boss* boss = GetBase<Boss>();
-	//if (boss->enemyBaseComponent.anim->IsFinish()) {
-	if (boss->enemyBaseComponent.anim->GetMaxFrame() - a <= boss->enemyBaseComponent.anim->GetCurrentFrame())
+	if (boss->enemyBaseComponent.anim->GetMaxFrame() - fallFrame <= boss->enemyBaseComponent.anim->GetCurrentFrame())
 	{
 		if (boss->maxAttack != 0)
 			boss->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
@@ -29,7 +28,6 @@ void BossNormalAttack2::Update()
 	}
 	BossAttackCollsion();
 	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
-		//printfDx("attackTime = %s : TimeRate = %s \n", std::to_string(attackTime).c_str(), std::to_string(boss->obj->GetObjectRate()).c_str());
 		averageSpeed = 90.0f / attackTime;
 		averageSpeed *= boss->obj->GetObjectRate();
 		boss->bossTransform->rotation.y -= averageSpeed * DegToRad;
@@ -49,13 +47,7 @@ void BossNormalAttack2::Start()
 	EnemyStateBase::Start();
 	firstColl = true;
 	hitDamage = boss->bs->GetStatus().normalAttack1;
-	if (boss->maxAttack == 0)
-	{
-		boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-		a = 0;
-	}
-	else
-		a = boss->bs->GetStatus().maxA;
+	fallFrame = boss->bs->GetStatus().fallFrame;
 }
 
 void BossNormalAttack2::Finish()
@@ -63,6 +55,4 @@ void BossNormalAttack2::Finish()
 	Boss* boss = GetBase<Boss>();
 	boss->DeleteCollision();
 	boss->enemyBaseComponent.anim->AnimEventReset();
-	if (boss->maxAttack == 0)
-		boss->enemyBaseComponent.anim->SetPlaySpeed(1.2f);
 }

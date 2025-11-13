@@ -27,5 +27,5 @@ protected:
 	float attackTime;
 	bool sound;
 
-	float a;
+	float fallFrame;
 };

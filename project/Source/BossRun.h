@@ -1,8 +1,6 @@
 #pragma once
 #include "enemyStateBase.h"
 
-static const float BOSS_SPEED = 5.0f;
-
 class AttackSorting;
 class BossStatus;
 

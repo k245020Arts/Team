@@ -7,8 +7,6 @@ class Player;
 class CharaWeapon;
 class BossStatus;
 
-static const float ChaseRange = 5000.0f;
-
 class Boss : public EnemyBase
 {
 public:
@@ -49,7 +47,7 @@ public:
 private:
 	Boss* boss;
 	BossStatus* bs;
-	
+
 	//BossInformation::BossComponent bossComponent;
 	Transform* bossTransform;
 

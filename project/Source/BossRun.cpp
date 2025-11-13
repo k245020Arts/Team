@@ -39,10 +39,10 @@ void BossRun::Update()
 
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 	//プレイヤーと離れたらアイドルになる
-	if (targetVec.Size() >= ChaseRange)
+	if (targetVec.Size() >= bs->GetStatus().chaseRange)
 		b->enemyBaseComponent.state->ChangeState(ID::B_IDOL);
 	//プレイヤーに近づいたら攻撃に移行
-	if (targetVec.Size() <= 1200.0f)
+	if (targetVec.Size() <= bs->GetStatus().range)
 		b->enemyBaseComponent.state->ChangeState(ID::B_COOLTIME);
 }
 

@@ -19,11 +19,11 @@ BossNormalAttack3::~BossNormalAttack3()
 void BossNormalAttack3::Update()
 {
 	Boss* b = GetBase<Boss>();
-	const float MSPEED = 75.0f;//モーションの速度調整
+	const float MSPEED = 60.0f;//モーションの速度調整
 
 	counter++;
 	//モーションの速度減速
-	if (counter < 70 && motionSpeed >= 0)
+	if (counter < MSPEED && motionSpeed >= 0)
 		motionSpeed -= motionMaxSpeed / MSPEED;
 	//モーションの速度加速
 	else if (motionSpeed <= motionMaxSpeed)
@@ -49,16 +49,17 @@ void BossNormalAttack3::Draw()
 
 void BossNormalAttack3::Start()
 {
-	Boss* boss = GetBase<Boss>();
+	Boss* b = GetBase<Boss>();
 	EnemyStateBase::Start();
 
 	firstColl = true;
 	counter = 0;
-	hitDamage = boss->bs->GetStatus().normalAttack3;
-	boss->enemyBaseComponent.anim->AnimEventReset();
+	hitDamage = b->bs->GetStatus().normalAttack3;
+	b->enemyBaseComponent.anim->AnimEventReset();
 
-	motionMaxSpeed = 1.0f;
-	boss->enemyBaseComponent.anim->SetPlaySpeed(motionMaxSpeed);
+	motionMaxSpeed = b->bs->GetStatus().motionSpeed;
+
+	b->enemyBaseComponent.anim->SetPlaySpeed(motionMaxSpeed);
 	motionSpeed = motionMaxSpeed;
 }
 

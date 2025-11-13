@@ -2,6 +2,7 @@
 #include "Boss.h"
 #include "Animator.h"
 #include "stateManager.h"
+#include "BossStatus.h"
 
 BossIdol::BossIdol()
 {
@@ -20,7 +21,7 @@ void BossIdol::Update()
 
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	if (targetVec.Size() < ChaseRange)
+	if (targetVec.Size() < b->bs->GetStatus().chaseRange)
 		b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
 }
 
