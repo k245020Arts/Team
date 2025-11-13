@@ -27,6 +27,8 @@ public:
 
 	void Start(Object3D* _obj);
 
+	void ImguiDraw()override;
+
 	//ƒvƒŒƒCƒ„[‚Ì•û‚ÉŒü‚­ŠÖ”
 	void LookPlayer();
 

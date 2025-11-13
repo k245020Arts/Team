@@ -54,5 +54,15 @@ size_t GetMemory();
 /// <returns></returns>
 size_t GetTotalMemory();
 
+template<typename C>
+void SafeDelete(C*& ptr) {
+	if (ptr != nullptr) {
+		delete ptr;
+		ptr = nullptr;
+	}
+}
+
+#define SafeDelete(type,ptr)
+
 #pragma warning(pop)
 

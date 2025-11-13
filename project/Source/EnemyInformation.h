@@ -16,6 +16,7 @@ class EffectManager;
 class SoundManager;
 class WeaponManager;
 class GameManager;
+class ColliderBase;
 
 namespace EnemyInformation {
 
@@ -49,6 +50,7 @@ namespace EnemyInformation {
 		SoundManager* sound;
 		WeaponManager* weapon;
 		GameManager* gameManager;
+		std::list<ColliderBase*> collider;
 	};
 
 	//Å‰‚Ìƒ|ƒWƒVƒ‡ƒ“

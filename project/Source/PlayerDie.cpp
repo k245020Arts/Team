@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "player.h"
 #include "SoundManager.h"
+#include "SphereCollider.h"
 
 PlayerDie::PlayerDie()
 {
@@ -56,6 +57,7 @@ void PlayerDie::Start()
 	p->playerCom.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	p->playerCom.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	one = true;
+	p->obj->Component()->RemoveAllComponent<SphereCollider>();
 }
 
 void PlayerDie::Finish()

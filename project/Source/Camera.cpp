@@ -42,7 +42,8 @@ Camera::Camera()
 
 Camera::~Camera()
 {
-	delete cameraComponent.cameraTransform;
+	SafeDelete<Transform>(cameraComponent.cameraTransform);
+
 	//delete cameraComponent.state;
 }
 

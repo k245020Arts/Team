@@ -38,6 +38,22 @@ public:
 		}
 		return nullptr;
 	}
+
+	//コンポーネントを削除する。
+	template <typename T>
+	T* RemoveAllComponent() {
+		for (auto c = component.begin(); c != component.end();) {
+			if (typeid(*(*c)) == typeid(T)) {
+				delete* c;
+				c = component.erase(c);
+			}
+			else {
+				c++;
+			}
+		}
+		return nullptr;
+	}
+
 	//tagで検索して一致したコンポーネントを削除
 	template <typename T>
 	T* RemoveComponentWithTag(std::string tag) {

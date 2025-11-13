@@ -947,9 +947,6 @@
     <Filter Include="Component\MotionBlur">
       <UniqueIdentifier>{eb08ff8c-3dae-414b-bfb6-0c58226e2cca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\BlurScreen">
-      <UniqueIdentifier>{de5d3712-9403-47cd-94d6-5dc4668429e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\Transitor">
       <UniqueIdentifier>{2d1fc8bf-9526-43a5-af14-5a4e1a838b19}</UniqueIdentifier>
     </Filter>
@@ -1009,6 +1006,9 @@
     </Filter>
     <Filter Include="Component\Shaker">
       <UniqueIdentifier>{0807bdb5-0373-4196-816a-0b4d3e5ff7d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\BlurScreen">
+      <UniqueIdentifier>{de5d3712-9403-47cd-94d6-5dc4668429e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

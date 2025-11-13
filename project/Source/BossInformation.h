@@ -14,6 +14,7 @@ class EffectManager;
 class SoundManager;
 class WeaponManager;
 class GameManager;
+class ColliderBase;
 
 namespace BossInformation {
 

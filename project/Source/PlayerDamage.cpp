@@ -38,7 +38,7 @@ void PlayerDamage::Start()
 	eRotation = p->playerCom.hitObj->GetTransform()->rotation;
 	//p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 3000) * MGetRotY(eRotation.y));
 	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 3000) * MGetRotY(-eRotation.y));
-	p->playerCom.shaker->ShakeStart(VECTOR3(10, 10, 10), Shaker::HORIZONAL_SHAKE, false, -1.0f);
+	p->playerCom.shaker->ShakeStart(VECTOR3(10, 10, 10), Shaker::HORIZONAL_SHAKE, false, 0.5f);
 }
 
 void PlayerDamage::Finish()

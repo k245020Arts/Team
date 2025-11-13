@@ -319,6 +319,10 @@ void Player::ImguiDraw()
 		if (ImGui::Button("justAvoid")) {
 			playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID);
 		}
+		if (ImGui::Button("playerDie")) {
+			playerCom.stateManager->NowChangeState(ID::P_DIE);
+			playerCom.stateManager->SetNoStateChange(true);
+		}
 		ImGui::TreePop();
 	}
 

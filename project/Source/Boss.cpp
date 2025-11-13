@@ -125,6 +125,8 @@ void Boss::Start(Object3D* _obj)
 
 	bossTransform = obj->GetTransform();
 
+	enemyBaseComponent.collider = FindGameObjects<ColliderBase>();
+
 	//enemyBaseComponent.boss = this;
 	enemyBaseComponent.anim = obj->Component()->GetComponent<Animator>();
 	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
@@ -166,6 +168,14 @@ void Boss::Start(Object3D* _obj)
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::B_MODEL, -1);
 	chara->SetImage(Load::GetHandle(ID::SWORD_EFFECT_B));
+}
+
+void Boss::ImguiDraw()
+{
+	if (ImGui::Button("bossDie")) {
+		enemyBaseComponent.state->NowChangeState(ID::BOSS_DIE);
+		enemyBaseComponent.state->SetNoStateChange(true);
+	}
 }
 
 void Boss::LookPlayer()

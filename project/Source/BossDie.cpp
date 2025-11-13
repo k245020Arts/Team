@@ -5,6 +5,11 @@
 #include "Animator.h"
 #include "GameManager.h"
 #include "SoundManager.h"
+#include "ColliderBase.h"
+#include "ComponentManager.h"
+#include "Physics.h"
+#include "ModelCollider.h"
+#include "SphereCollider.h"
 
 BossDie::BossDie()
 {
@@ -56,6 +61,9 @@ void BossDie::Start()
 	b->enemyBaseComponent.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	b->enemyBaseComponent.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	one = true;
+	obj->Component()->RemoveAllComponent<SphereCollider>();
+	obj->Component()->RemoveAllComponent<ModelCollider>();
+	b->enemyBaseComponent.physics->SetGravity(VZero);
 }
 
 void BossDie::Finish()
