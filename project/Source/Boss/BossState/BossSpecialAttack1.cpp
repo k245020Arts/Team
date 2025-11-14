@@ -37,7 +37,7 @@ void BossSpecialAttack1::Update()
 		velocity.y -= counter;
 		if (b->obj->GetTransform()->position.y <= 450)
 		{
-			a == 2;
+			a = 2;
 			velocity = 0;
 			counter = 0;
 			b->obj->GetTransform()->position.y = 450;

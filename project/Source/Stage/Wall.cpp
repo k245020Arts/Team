@@ -47,7 +47,7 @@ void Wall::Update()
 			Color::Rgb rgb;
 			float disRate;
 			disRate = distance / 1500.0f;
-			rgb = Color::Rgb(255, 255, 255, Easing::Lerp(255, 0, disRate));
+			rgb = Color::Rgb(255.0f, 255.0f, 255.0f, Easing::Lerp(255.0f, 0.0f, disRate));
 			effect->SetColor(Effect_ID::EFFECT_WALL, rgb);
 		}
 		

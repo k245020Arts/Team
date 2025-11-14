@@ -84,7 +84,7 @@ void GameManager::CreateNum()
 MEB GameManager::BeforeUpdate()
 {
 	startCount -= Time::DeltaTime();
-	obj->Component()->GetComponent<MeshRenderer2D>()->SetNum(startCount);
+	obj->Component()->GetComponent<MeshRenderer2D>()->SetNum((int)startCount);
 	return (startCount > 0.0f) ? &GameManager::BeforeUpdate : &GameManager::PlayUpdate;
 }
 

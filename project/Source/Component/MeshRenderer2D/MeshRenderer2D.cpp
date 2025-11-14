@@ -157,7 +157,7 @@ void MeshRenderer2D::DrawNum()
 	int dig = 0;
 	do
 	{
-		DrawRectRotaGraph(transform.position.x - (imageSize.x / 10 * dig), transform.position.y, tmp % 10 * imageSize.x / 10, 0, imageSize.x / 10, imageSize.y, transform.scale.x, transform.rotation.y, hImage, true, false);
+		DrawRectRotaGraph((int)transform.position.x - (int)(imageSize.x / 10 * dig), transform.position.y, tmp % 10 * imageSize.x / 10, 0, imageSize.x / 10, imageSize.y, transform.scale.x, transform.rotation.y, hImage, true, false);
 		tmp = tmp / 10;
 		dig++;
 	} while (tmp > 0);

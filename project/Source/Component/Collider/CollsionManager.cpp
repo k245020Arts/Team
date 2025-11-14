@@ -140,7 +140,7 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2)
 	auto result = MV1CollCheck_Line(dynamic_cast<ModelCollider*>(col1)->GetModel(),-1,startPos,endPos
 	);
 	if (col2->GetCollTag() == CollsionInformation::P_FLOOR) {
-		int a;
+		//int a;
 	}
 	Physics* p = col2->GetObj()->Component()->GetComponent<Physics>();
 	Pushback resolver;

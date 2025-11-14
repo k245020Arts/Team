@@ -484,7 +484,7 @@ void Player::AvoidFinishState()
 
 void Player::DrawTrail()
 {
-	DrawTrail(VECTOR3(0, 0, -70), VECTOR3(0, 0, -150), 0.0f, 0.0f, 255.0f, 100.0f, 28, 0.25f);
+	DrawTrail(VECTOR3(-23, -4, -200), VECTOR3(23, 4, 16), 0.0f, 0.0f, 255.0f, 100.0f, 28, 0.25f);
 	
 }
 
