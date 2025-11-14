@@ -4,7 +4,7 @@
 #include <cassert>
 #include <iostream>
 #include <string.h>
-#include"../strconv-master/strconv.h"
+#include"../../../strconv-master/strconv.h"
 
 //アサートを自作してみた
 //従来のやつと違うところがAssertの&&をなくす

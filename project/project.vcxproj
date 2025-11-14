@@ -206,6 +206,7 @@
     <ClInclude Include="Source\Common\InputManager\MouseInputManager.h" />
     <ClInclude Include="Source\Common\LoadManager.h" />
     <ClInclude Include="Source\Common\MethodExec.h" />
+    <ClInclude Include="Source\Common\MyAssert\MyAssert.h" />
     <ClInclude Include="Source\Common\Random.h" />
     <ClInclude Include="Source\Common\Sound\Sound.h" />
     <ClInclude Include="Source\Common\Sound\SoundManager.h" />
@@ -348,6 +349,7 @@
     <ClCompile Include="Source\Common\InputManager\KeyboardInputManager.cpp" />
     <ClCompile Include="Source\Common\InputManager\MouseInputManager.cpp" />
     <ClCompile Include="Source\Common\LoadManager.cpp" />
+    <ClCompile Include="Source\Common\MyAssert\MyAssert.cpp" />
     <ClCompile Include="Source\Common\Random.cpp" />
     <ClCompile Include="Source\Common\Sound\Sound.cpp" />
     <ClCompile Include="Source\Common\Sound\SoundManager.cpp" />

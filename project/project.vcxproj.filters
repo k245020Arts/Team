@@ -398,6 +398,9 @@
     <ClCompile Include="Source\Weapon\WeaponManager.cpp">
       <Filter>PlayScene\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Common\MyAssert\MyAssert.cpp">
+      <Filter>Common\MyAssert</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -849,6 +852,9 @@
     <ClInclude Include="Source\Weapon\WeaponManager.h">
       <Filter>PlayScene\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Common\MyAssert\MyAssert.h">
+      <Filter>Common\MyAssert</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1012,6 +1018,9 @@
     </Filter>
     <Filter Include="PlayScene\Light">
       <UniqueIdentifier>{afcaf72a-0209-4f62-af62-980d6ada46a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\MyAssert">
+      <UniqueIdentifier>{b52fc2c3-0dab-4e98-b53f-e8c2c5bbfb5b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
