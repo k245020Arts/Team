@@ -18,11 +18,13 @@ void AttackSorting::Update()
 	Boss* b = GetBase<Boss>();
 
 	if (b->maxAttack == 0)
-		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK3);
+		b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
 	else if (b->maxAttack == 1)
 		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
 	else if (b->maxAttack == 2)
 		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK2);
+	else if(b->maxAttack == 3)
+		b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
 	else
 	{
 		RandomAttack();

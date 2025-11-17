@@ -18,4 +18,8 @@ private:
 	int a;
 	float counter;
 	float copyPos;
+	float count;
+	float subSpeed;
+	float attackStart;
+	bool firstCount;
 };

@@ -56,11 +56,11 @@ public:
 		tag = Function::GetClassNameC<StateManager>();
 	}
 	~StateManager() { 
-		/*for (auto& t : stateInfo) {
-			delete t.second;
-			t.second = nullptr;
+		for (auto& t : stateInfo) {
+			//t.second.reset();
+			//t.second = nullptr;
 		}
-		state = nullptr;*/
+		state = nullptr;
 		stateInfo.clear(); 
 		ed::DestroyEditor(nodeWindow);
 		Debug::DebugLogPrintf(Debug::printfString("%s : size = %d", nodeName.c_str(), state.use_count()));
