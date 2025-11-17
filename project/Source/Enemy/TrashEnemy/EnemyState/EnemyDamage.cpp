@@ -1,12 +1,12 @@
 #include "enemyDamage.h"
-#include "../../Component/Color/color.h"
+#include "../../../Component/Color/color.h"
 #include "EnemyStateManager.h"
 #include "../Enemy.h"
-#include "../../Component/Physics/Physics.h"
-#include "../../Component/Animator/Animator.h"
-#include "../../Component/Shaker/Shaker.h"
-#include "../../Camera/Camera.h"
-#include "../../Common/Sound/SoundManager.h"
+#include "../../../Component/Physics/Physics.h"
+#include "../../../Component/Animator/Animator.h"
+#include "../../../Component/Shaker/Shaker.h"
+#include "../../../Camera/Camera.h"
+#include "../../../Common/Sound/SoundManager.h"
 
 EnemyDamage::EnemyDamage()
 {

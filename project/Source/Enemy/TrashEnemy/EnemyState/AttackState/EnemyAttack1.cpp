@@ -1,12 +1,12 @@
 #include "enemyAttack1.h"
-#include "../../Component/Animator/Animator.h"
-#include "EnemyStateManager.h"
-#include "../Enemy.h"
-#include "../../Common/Effect/EffectManager.h"
-#include "../../Common/LoadManager.h"
-#include "../../Common/Sound/SoundManager.h"
-#include "../../Weapon/WeaponManager.h"
-#include "../../Camera/Camera.h"
+#include "../../../../Component/Animator/Animator.h"
+#include "../EnemyStateManager.h"
+#include "../../Enemy.h"
+#include "../../../../Common/Effect/EffectManager.h"
+#include "../../../../Common/LoadManager.h"
+#include "../../../../Common/Sound/SoundManager.h"
+#include "../../../../Weapon/WeaponManager.h"
+#include "../../../../Camera/Camera.h"
 
 EnemyAttack1::EnemyAttack1()
 {

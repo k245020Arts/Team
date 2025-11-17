@@ -1,14 +1,14 @@
 #include "EnemyBlowAway.h"
-#include "../../Component/Physics/Physics.h"
-#include "../../Component/Animator/Animator.h"
+#include "../../../Component/Physics/Physics.h"
+#include "../../../Component/Animator/Animator.h"
 #include "../Enemy.h"
-#include "../../Component/Shaker/Shaker.h"
+#include "../../../Component/Shaker/Shaker.h"
 #include "EnemyStateManager.h"
-#include "../../Component/Transform/transform.h"
-#include "../../Camera/Camera.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
-#include "../../Component/Color/color.h"
-#include "../../Common/Sound/SoundManager.h"
+#include "../../../Component/Transform/transform.h"
+#include "../../../Camera/Camera.h"
+#include "../../../Common/InputManager/ControllerInputManager.h"
+#include "../../../Component/Color/color.h"
+#include "../../../Common/Sound/SoundManager.h"
 
 EnemyBlowAway::EnemyBlowAway()
 {
