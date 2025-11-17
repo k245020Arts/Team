@@ -1,9 +1,9 @@
 #include "EnemyIdol.h"
 #include "EnemyStateManager.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../../Common/InputManager/ControllerInputManager.h"
 #include "../enemy.h"
-#include "../../Common/Debug/Debug.h"
-#include "../../GameManager/GameManager.h"
+#include "../../../Common/Debug/Debug.h"
+#include "../../../GameManager/GameManager.h"
 
 EnemyIdol::EnemyIdol()
 {

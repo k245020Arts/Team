@@ -1,8 +1,8 @@
 #include "EnemyRun.h"
-#include "../../Common/Function.h"
+#include "../../../Common/Function.h"
 #include "EnemyStateManager.h"
-#include "../../Component/Physics/Physics.h"
-#include "../../Component/Animator/Animator.h"
+#include "../../../Component/Physics/Physics.h"
+#include "../../../Component/Animator/Animator.h"
 #include "../Enemy.h"
 
 EnemyRun::EnemyRun()

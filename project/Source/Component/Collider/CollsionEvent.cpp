@@ -1,11 +1,11 @@
 #include "CollsionEvent.h"
 #include "../ComponentManager.h"
 #include "../../Player/Player.h"
-#include "../../Enemy/Enemy.h"
+#include "../../Enemy/TrashEnemy/Enemy.h"
 #include "../../Common/Debug/Debug.h"
-#include "../../Enemy/EnemyState/EnemyStateManager.h"
-#include "../../Enemy/EnemyState/EnemyStateBase.h"
-#include "../../Boss/Boss.h"
+#include "../../Enemy/TrashEnemy/EnemyState/EnemyStateManager.h"
+#include "../../Enemy/TrashEnemy/EnemyState/EnemyStateBase.h"
+#include "../../Enemy/Boss/Boss.h"
 
 CollsionEvent::CollsionEvent()
 {

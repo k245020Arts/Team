@@ -1,5 +1,5 @@
 #pragma once
-#include "Attack/BossAttackBase.h"
+#include "BossAttackBase.h"
 
 class BossSpecialAttack1 :public BossAttackBase
 {

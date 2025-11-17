@@ -1,7 +1,7 @@
 #pragma once
-#include "../../State/StateBase.h"
-#include "../../Common/ID/ID.h"
-#include "../../Component/Transform/Transform.h"
+#include "../../../State/StateBase.h"
+#include "../../../Common/ID/ID.h"
+#include "../../../Component/Transform/Transform.h"
 
 class EnemyStateBase : public StateBase
 {

@@ -1,7 +1,7 @@
 #include "EnemyDie.h"
-#include "../../Component/Animator/Animator.h"
-#include "../../GameManager/GameManager.h"
-#include "../../Camera/Camera.h"
+#include "../../../Component/Animator/Animator.h"
+#include "../../../GameManager/GameManager.h"
+#include "../../../Camera/Camera.h"
 #include "../enemy.h"
 
 EnemyDie::EnemyDie()
