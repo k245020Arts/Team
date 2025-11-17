@@ -212,39 +212,6 @@
     <ClCompile Include="Source\Component\ComponentManager.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Boss\Boss.cpp">
-      <Filter>PlayScene\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Boss\BossState\AttackSorting.cpp">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Boss\BossState\BossCoolTime.cpp">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Boss\BossState\BossDie.cpp">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Boss\BossState\BossIdol.cpp">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Boss\BossState\BossRun.cpp">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Boss\BossState\BossSpecialAttack1.cpp">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Boss\BossState\Attack\BossAttackBase.cpp">
-      <Filter>PlayScene\Boss\BossState\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Boss\BossState\Attack\BossNormalAttack1.cpp">
-      <Filter>PlayScene\Boss\BossState\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Boss\BossState\Attack\BossNormalAttack2.cpp">
-      <Filter>PlayScene\Boss\BossState\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Boss\BossState\Attack\BossNormalAttack3.cpp">
-      <Filter>PlayScene\Boss\BossState\Attack</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Camera\Camera.cpp">
       <Filter>PlayScene\Camera</Filter>
     </ClCompile>
@@ -275,38 +242,8 @@
     <ClCompile Include="Source\CharaBase\CharaBase.cpp">
       <Filter>PlayScene\Chara</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\Enemy.cpp">
-      <Filter>PlayScene\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\EnemyBase.cpp">
-      <Filter>PlayScene\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Enemy\EnemyManager.cpp">
       <Filter>PlayScene\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\EnemyState\EnemyAttack1.cpp">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\EnemyState\EnemyBlowAway.cpp">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\EnemyState\EnemyDamage.cpp">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\EnemyState\EnemyDie.cpp">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\EnemyState\EnemyIdol.cpp">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\EnemyState\EnemyRun.cpp">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\EnemyState\EnemyStateBase.cpp">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\EnemyState\EnemyStateManager.cpp">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameManager\GameManager.cpp">
       <Filter>PlayScene\GameManager</Filter>
@@ -400,6 +337,69 @@
     </ClCompile>
     <ClCompile Include="Source\Common\MyAssert\MyAssert.cpp">
       <Filter>Common\MyAssert</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.cpp">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack1.cpp">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack2.cpp">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack3.cpp">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack1.cpp">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossCoolTime.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossDie.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossIdol.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossRun.cpp">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\Boss.cpp">
+      <Filter>PlayScene\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\EnemyBase.cpp">
+      <Filter>PlayScene\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\Enemy.cpp">
+      <Filter>PlayScene\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyBlowAway.cpp">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDamage.cpp">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDie.cpp">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyIdol.cpp">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyRun.cpp">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateBase.cpp">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateManager.cpp">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\AttackState\EnemyAttack1.cpp">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -645,45 +645,6 @@
     <ClInclude Include="Source\Component\ComponentManager.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Boss\Boss.h">
-      <Filter>PlayScene\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossInformation.h">
-      <Filter>PlayScene\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\BossStatus.h">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\AttackSorting.h">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\BossCoolTime.h">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\BossDie.h">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\BossIdol.h">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\BossRun.h">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\BossSpecialAttack1.h">
-      <Filter>PlayScene\Boss\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\Attack\BossNormalAttack3.h">
-      <Filter>PlayScene\Boss\BossState\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\Attack\BossAttackBase.h">
-      <Filter>PlayScene\Boss\BossState\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\Attack\BossNormalAttack1.h">
-      <Filter>PlayScene\Boss\BossState\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Boss\BossState\Attack\BossNormalAttack2.h">
-      <Filter>PlayScene\Boss\BossState\Attack</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Camera\Camera.h">
       <Filter>PlayScene\Camera</Filter>
     </ClInclude>
@@ -717,41 +678,11 @@
     <ClInclude Include="Source\CharaBase\CharaBase.h">
       <Filter>PlayScene\Chara</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\Enemy.h">
-      <Filter>PlayScene\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\EnemyBase.h">
-      <Filter>PlayScene\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Enemy\EnemyInformation.h">
       <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy\EnemyManager.h">
       <Filter>PlayScene\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\EnemyState\EnemyStateManager.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\EnemyState\EnemyAttack1.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\EnemyState\EnemyBlowAway.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\EnemyState\EnemyDamage.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\EnemyState\EnemyDie.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\EnemyState\EnemyIdol.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\EnemyState\EnemyRun.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\EnemyState\EnemyStateBase.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameManager\GameManager.h">
       <Filter>PlayScene\GameManager</Filter>
@@ -854,6 +785,75 @@
     </ClInclude>
     <ClInclude Include="Source\Common\MyAssert\MyAssert.h">
       <Filter>Common\MyAssert</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.h">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack1.h">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack2.h">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack3.h">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack1.h">
+      <Filter>PlayScene\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\AttackSorting.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossCoolTime.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossDie.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossIdol.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossRun.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossStatus.h">
+      <Filter>PlayScene\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\Boss.h">
+      <Filter>PlayScene\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossInformation.h">
+      <Filter>PlayScene\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\EnemyBase.h">
+      <Filter>PlayScene\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\Enemy.h">
+      <Filter>PlayScene\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateManager.h">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyBlowAway.h">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDamage.h">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDie.h">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyIdol.h">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyRun.h">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateBase.h">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\AttackState\EnemyAttack1.h">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
