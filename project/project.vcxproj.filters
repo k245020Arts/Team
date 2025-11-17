@@ -378,16 +378,16 @@
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stage\SkyManager.cpp">
-      <Filter>PlayScene\Stage</Filter>
+      <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stage\Stage.cpp">
-      <Filter>PlayScene\Stage</Filter>
+      <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stage\StageManager.cpp">
-      <Filter>PlayScene\Stage</Filter>
+      <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stage\Wall.cpp">
-      <Filter>PlayScene\Stage</Filter>
+      <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Source\Weapon\CharaWeapon.cpp">
       <Filter>PlayScene\Weapon</Filter>
@@ -826,16 +826,16 @@
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="Source\Stage\Wall.h">
-      <Filter>PlayScene\Stage</Filter>
+      <Filter>PlayScene\Player\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\Stage\SkyManager.h">
-      <Filter>PlayScene\Stage</Filter>
+      <Filter>PlayScene\Player\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\Stage\Stage.h">
-      <Filter>PlayScene\Stage</Filter>
+      <Filter>PlayScene\Player\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\Stage\StageManager.h">
-      <Filter>PlayScene\Stage</Filter>
+      <Filter>PlayScene\Player\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\State\StateBase.h">
       <Filter>PlayScene\State</Filter>
@@ -898,9 +898,6 @@
     </Filter>
     <Filter Include="Component\Hierarchy">
       <UniqueIdentifier>{cd202fe2-fa9a-48eb-b34c-35be669b522a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayScene\Stage">
-      <UniqueIdentifier>{680a7862-0e94-4976-be61-35c6bd087db7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Component\Collider">
       <UniqueIdentifier>{0c484757-ca1b-470d-b50f-3bfd4a4bbd01}</UniqueIdentifier>
@@ -1021,6 +1018,9 @@
     </Filter>
     <Filter Include="Common\MyAssert">
       <UniqueIdentifier>{b52fc2c3-0dab-4e98-b53f-e8c2c5bbfb5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Player\Stage">
+      <UniqueIdentifier>{680a7862-0e94-4976-be61-35c6bd087db7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

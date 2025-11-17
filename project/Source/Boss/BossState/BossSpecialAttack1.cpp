@@ -54,7 +54,7 @@ void BossSpecialAttack1::Update()
 		}
 	}
 	
-	//b->obj->GetTransform()->position += velocity;
+	b->obj->GetTransform()->position += velocity;
 }
 
 void BossSpecialAttack1::Draw()
