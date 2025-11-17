@@ -1,6 +1,6 @@
 #include "AttackSorting.h"
 #include "../Boss.h"
-#include "../../State/StateManager.h"
+#include "../../../State/StateManager.h"
 #include "BossStatus.h"
 
 AttackSorting::AttackSorting()

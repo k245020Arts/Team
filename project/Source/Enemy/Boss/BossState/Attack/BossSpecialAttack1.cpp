@@ -1,8 +1,8 @@
 #include "BossSpecialAttack1.h"
-#include "../Boss.h"
-#include "../../State/StateManager.h"
-#include "../../Component/Animator/Animator.h"
-#include "../../Component/Physics/Physics.h"
+#include "../../Boss.h"
+#include "../../../../State/StateManager.h"
+#include "../../../../Component/Animator/Animator.h"
+#include "../../../../Component/Physics/Physics.h"
 
 BossSpecialAttack1::BossSpecialAttack1()
 {

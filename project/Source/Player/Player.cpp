@@ -34,14 +34,14 @@
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack4.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack5.h"
 #include "../Common/LoadManager.h"
-#include "../Enemy/Enemy.h"
-#include "../Enemy/EnemyState/EnemyStateManager.h"
-#include "../Enemy/EnemyState/enemyAttack1.h"
+#include "../Enemy/TrashEnemy/Enemy.h"
+#include "../Enemy/TrashEnemy/EnemyState/EnemyStateManager.h"
+#include "../Enemy/TrashEnemy/EnemyState/AttackState/EnemyAttack1.h"
 #include "../Common/Transitor/FadeTransitor.h"
 #include "../GameManager/GameManager.h"
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Enemy/EnemyManager.h"
-#include "../Boss/BossState/Attack/BossAttackBase.h"
+#include "../Enemy/Boss/BossState/Attack/BossAttackBase.h"
 
 namespace {
 

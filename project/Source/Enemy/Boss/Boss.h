@@ -1,6 +1,6 @@
 #pragma once
-#include "../Enemy/EnemyBase.h"
-#include "../Component/Object/Object3D.h"
+#include "../EnemyBase.h"
+#include "../../Component/Object/Object3D.h"
 #include "BossInformation.h"
 
 class Player;
