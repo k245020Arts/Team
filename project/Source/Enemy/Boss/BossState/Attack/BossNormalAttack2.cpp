@@ -1,8 +1,8 @@
 #include "BossNormalAttack2.h"
-#include "../../../Component/Animator/Animator.h"
+#include "../../../../Component/Animator/Animator.h"
 #include "../../Boss.h"
-#include "../../../State/StateManager.h"
-#include "../../../Common/Easing.h"
+#include "../../../../State/StateManager.h"
+#include "../../../../Common/Easing.h"
 #include "../BossStatus.h"
 
 BossNormalAttack2::BossNormalAttack2()

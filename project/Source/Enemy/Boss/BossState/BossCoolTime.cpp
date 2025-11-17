@@ -1,7 +1,7 @@
 #include "BossCoolTime.h"
 #include "../Boss.h"
-#include "../../State/StateManager.h"
-#include "../../Component/Animator/Animator.h"
+#include "../../../State/StateManager.h"
+#include "../../../Component/Animator/Animator.h"
 #include "BossStatus.h"
 
 BossCoolTime::BossCoolTime()

@@ -1,7 +1,7 @@
 #include "BossIdol.h"
 #include "../Boss.h"
-#include "../../Component/Animator/Animator.h"
-#include "../../State/StateManager.h"
+#include "../../../Component/Animator/Animator.h"
+#include "../../../State/StateManager.h"
 #include "BossStatus.h"
 
 BossIdol::BossIdol()
