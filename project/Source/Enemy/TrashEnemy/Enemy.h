@@ -1,8 +1,9 @@
 #pragma once
-#include "EnemyBase.h"
+#include "../EnemyBase.h"
 #include "../enemyInformation.h"
 #include "../../Component/Transform/transform.h"
 #include "../../Common/ID/SoundID.h"
+
 
 class StateManager;
 class EnemyStateManager;

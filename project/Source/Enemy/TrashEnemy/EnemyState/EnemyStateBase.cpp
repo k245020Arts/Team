@@ -3,7 +3,7 @@
 #include "../Enemy.h"
 #include "../../../Component/Transform/transform.h"
 #include "../../../Component/Collider/sphereCollider.h"
-#include "../EnemyBase.h"
+#include "../../EnemyBase.h"
 #include "../../Boss/Boss.h"
 #include "../../../Common/LoadManager.h"
 #include "EnemyStateManager.h"

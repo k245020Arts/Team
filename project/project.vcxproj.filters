@@ -371,9 +371,6 @@
     <ClCompile Include="Source\Enemy\Boss\Boss.cpp">
       <Filter>PlayScene\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\EnemyBase.cpp">
-      <Filter>PlayScene\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Enemy\TrashEnemy\Enemy.cpp">
       <Filter>PlayScene\Enemy</Filter>
     </ClCompile>
@@ -400,6 +397,9 @@
     </ClCompile>
     <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\AttackState\EnemyAttack1.cpp">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\EnemyBase.cpp">
+      <Filter>PlayScene\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -825,9 +825,6 @@
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h">
       <Filter>PlayScene\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\EnemyBase.h">
-      <Filter>PlayScene\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Enemy\TrashEnemy\Enemy.h">
       <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
@@ -854,6 +851,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\AttackState\EnemyAttack1.h">
       <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\EnemyBase.h">
+      <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

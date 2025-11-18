@@ -1,5 +1,5 @@
 #pragma once
-#include "Attack/BossAttackBase.h"
+#include "BossAttackBase.h"
 
 class BossSpecialAttack1 :public BossAttackBase
 {
@@ -18,4 +18,8 @@ private:
 	int a;
 	float counter;
 	float copyPos;
+	float count;
+	float subSpeed;
+	float attackStart;
+	bool firstCount;
 };

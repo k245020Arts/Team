@@ -111,6 +111,9 @@ void Boss::Update()
 		enemyBaseComponent.state->NowChangeState(ID::BOSS_DIE);
 		enemyBaseComponent.state->SetNoStateChange(true);
 	}
+	if (CheckHitKey(KEY_INPUT_0)) {
+		enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
+	}
 }
 
 void Boss::Draw()
