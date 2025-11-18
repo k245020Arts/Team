@@ -407,6 +407,9 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemy.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -866,6 +869,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.h">
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemy.h">
+      <Filter>PlayScene\Enemy\TrashEnemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
