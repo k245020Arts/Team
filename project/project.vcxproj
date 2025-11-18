@@ -213,6 +213,7 @@
     <ClInclude Include="Source\Component\Collider\CollsionEvent.h" />
     <ClInclude Include="Source\Component\Collider\CollsionInformation.h" />
     <ClInclude Include="Source\Component\Collider\CollsionManager.h" />
+    <ClInclude Include="Source\Component\Collider\DountCollider.h" />
     <ClInclude Include="Source\Component\Collider\ModelCollider.h" />
     <ClInclude Include="Source\Component\Collider\RayCollider.h" />
     <ClInclude Include="Source\Component\Collider\SphereCollider.h" />
@@ -359,6 +360,7 @@
     <ClCompile Include="Source\Component\Collider\CollsionEvent.cpp" />
     <ClCompile Include="Source\Component\Collider\CollsionInformation.cpp" />
     <ClCompile Include="Source\Component\Collider\CollsionManager.cpp" />
+    <ClCompile Include="Source\Component\Collider\DountCollider.cpp" />
     <ClCompile Include="Source\Component\Collider\ModelCollider.cpp" />
     <ClCompile Include="Source\Component\Collider\RayCollider.cpp" />
     <ClCompile Include="Source\Component\Collider\SphereCollider.cpp" />

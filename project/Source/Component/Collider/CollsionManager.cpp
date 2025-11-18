@@ -8,6 +8,7 @@
 #include "../ComponentManager.h"
 #include "../Physics/Physics.h"
 #include "rayCollider.h"
+#include "DountCollider.h"
 
 CollsionManager::CollsionManager()
 {
@@ -16,6 +17,7 @@ CollsionManager::CollsionManager()
 	//“–‚½‚è”»’è‚Å‚Ç‚ÌŒ`“¯Žm‚È‚ç‚±‚ÌŠÖ”‚É‚¢‚ê‚é‚Æ‚¢‚¤“o˜^
 	collsionKind[EnumTag(SPHERE ,SPHERE,SHAPE_MAX)] = &CollsionManager::CollsionSphereToSphere;
 	collsionKind[EnumTag(SPHERE ,MODEL,SHAPE_MAX)] = &CollsionManager::CollsionSphereToModel;
+	collsionKind[EnumTag(SPHERE, DONUT,SHAPE_MAX)] = &CollsionManager::CollsionSphereToDount;
 	collsionKind[EnumTag(MODEL ,RAY,SHAPE_MAX)] = &CollsionManager::CollsionModelToRay;
 	collList.clear();
 
@@ -189,4 +191,21 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 
 	return false;
 
+}
+
+bool CollsionManager::CollsionSphereToDount(ColliderBase* col1, ColliderBase* col2)
+{
+	Transform* trans1 = col1->GetTransform();
+	Transform* trans2 = col2->GetTransform();
+	float outRadius = dynamic_cast<DountCollider*>(col2)->GetOutRadius();
+
+	float dist = VSize(VSub(trans1->WorldTransform().position, trans2->WorldTransform().position));
+
+	if (dist <= trans1->scale.x + outRadius) {
+		if (dist >= trans1->scale.x + trans2->scale.x) {
+			return true;
+		}
+	}
+
+	return false;
 }

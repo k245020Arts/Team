@@ -16,6 +16,7 @@ namespace Effect_ID {
 		PLAYER_SLASH_ATTACK,
 		ENEMY_ATTACK_CICLE,
 		EFFECT_WALL,
+		BOSS_WAVE,
 		EFFECT_MAX
 	};
 

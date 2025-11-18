@@ -18,6 +18,7 @@ private:
 
 	//プレイヤーがダメージを食らった時
 	void PlayerDamageBossEvent(ColliderBase* _coll1,ColliderBase* _coll2);
+	void PlayerDamageBossEffectEvent(ColliderBase* _coll1,ColliderBase* _coll2);
 	//ボスがダメージを食らった時
 	void BossDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2);
 	//void DamageEvent(ColliderBase* _coll1, ColliderBase* _coll2);

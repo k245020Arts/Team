@@ -26,7 +26,7 @@ public:
 	/// <param name="_time">エフェクトの発生させる時間</param>
 	/// <param name="effect3D">エフェクト3Dにするか2Dにするかデフォルトは3D</param>
 	/// <returns></returns>
-	int CreateEffekseer(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id,float _time,bool effect3D = true);
+	BaseObject* CreateEffekseer(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id,float _time,bool effect3D = true);
 	/// <summary>
 	/// エフェクトの再生を止める
 	/// </summary>

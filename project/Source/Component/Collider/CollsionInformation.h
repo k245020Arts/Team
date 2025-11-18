@@ -13,6 +13,7 @@ namespace CollsionInformation {
 		MODEL,
 		RAY,
 		AABB,
+		DONUT,
 		SHAPE_MAX,
 	};
 	//“–‚½‚è”»’è‚ÌŽí—Þ
@@ -31,6 +32,7 @@ namespace CollsionInformation {
 		P_FLOOR,
 		B_FLOOR,
 		C_FLOOR,
+		B_E_ATTACK,
 
 		TAG_MAX,
 	};

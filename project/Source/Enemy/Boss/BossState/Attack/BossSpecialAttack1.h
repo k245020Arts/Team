@@ -22,4 +22,5 @@ private:
 	float subSpeed;
 	float attackStart;
 	bool firstCount;
+	bool effect;
 };

@@ -29,6 +29,7 @@ BaseObject::~BaseObject()
 	}
 	delete componentManager;
 	FindGameObject<Hierachy>()->RemoveHierachy(this);
+	RemoveParent();
 	DeleteAllChildren();
 }
 
@@ -44,6 +45,7 @@ void BaseObject::Update()
 	for (BaseObject* child : children) {
 		child->Update();
 	}
+
 }
 
 void BaseObject::Draw()

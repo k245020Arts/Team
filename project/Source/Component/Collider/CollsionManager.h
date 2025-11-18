@@ -37,5 +37,6 @@ private:
 	bool CollsionSphereToSphere(ColliderBase* col1, ColliderBase* col2);
 	bool CollsionModelToRay(ColliderBase* col1, ColliderBase* col2);
 	bool CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2);
+	bool CollsionSphereToDount(ColliderBase* col1, ColliderBase* col2);
 	CollsionEvent* event;
 };

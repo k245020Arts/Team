@@ -45,9 +45,15 @@ void EffectBase::Draw() {
 
 void EffectBase::EffectInit(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D)
 {
-	transform = new Transform(_transform);
+	//transform = new Transform(_transform);
+	BaseObject* base = GetBaseObject();
+	base->GetTransform()->position = _transform.position;
+	base->GetTransform()->rotation = _transform.rotation;
+	base->GetTransform()->scale = _transform.scale;
 	if (_parent != nullptr) {
-		transform->SetParent(_parent->GetTransform());
+		parent = _parent;
+		parent->AddChild(GetBaseObject(), true);
+		//transform->SetParent(_parent->GetTransform());
 	}
 
 	id = _id;
@@ -70,7 +76,11 @@ void EffectBase::EffectInit(Transform _transform, BaseObject* _parent, Effect_ID
 
 void EffectBase::EffectPlay2D()
 {
-	Transform worldTrans = transform->WorldTransform();
+	Transform worldTrans = GetBaseObject()->GetTransform()->WorldTransform();
+	if (parent != nullptr) {
+		worldTrans = parent->GetTransform()->WorldTransform();
+	}
+	
 
 	SetPosPlayingEffekseer2DEffect(hPlayHandle, worldTrans.position.x, worldTrans.position.y, worldTrans.position.z);
 	SetRotationPlayingEffekseer2DEffect(hPlayHandle, worldTrans.rotation.x, worldTrans.rotation.y, worldTrans.rotation.z);
@@ -81,7 +91,7 @@ void EffectBase::EffectPlay2D()
 
 void EffectBase::EffectPlay3D()
 {
-	Transform worldTrans = transform->WorldTransform();
+	Transform worldTrans = GetBaseObject()->GetTransform()->WorldTransform();
 
 	SetPosPlayingEffekseer3DEffect(hPlayHandle, worldTrans.position.x, worldTrans.position.y, worldTrans.position.z);
 	SetRotationPlayingEffekseer3DEffect(hPlayHandle, worldTrans.rotation.x, worldTrans.rotation.y, worldTrans.rotation.z);

@@ -407,6 +407,9 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Component\Collider\DountCollider.cpp">
+      <Filter>Component\Collider\Dount</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -867,6 +870,9 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.h">
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\Collider\DountCollider.h">
+      <Filter>Component\Collider\Dount</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1036,6 +1042,9 @@
     </Filter>
     <Filter Include="PlayScene\Enemy\TrashEnemy\EnemyState">
       <UniqueIdentifier>{abde14e5-aa93-431a-9c37-24ae1e582b64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Collider\Dount">
+      <UniqueIdentifier>{4d872a09-12de-490c-8ce6-3ebe2c828be6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -3,6 +3,8 @@
 #include "../../../../State/StateManager.h"
 #include "../../../../Component/Animator/Animator.h"
 #include "../../../../Component/Physics/Physics.h"
+#include "../../../../Common/Effect/EffectManager.h"
+#include "../../../../Component/Collider/DountCollider.h"
 
 BossSpecialAttack1::BossSpecialAttack1()
 {
@@ -44,11 +46,27 @@ void BossSpecialAttack1::Update()
 	subSpeed += 8.0f;
 	
 	if (b->enemyBaseComponent.physics->GetGround()) {
+		if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 40) {
+			if (effect) {
+				effect = false;
+				BaseObject* obj = b->enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
+				CollsionInfo info;
+				info.parentTransfrom = b->GetBaseObject()->GetTransform();
+				info.shape = CollsionInformation::DONUT;
+				info.oneColl = false;
+				info.tag = CollsionInformation::Tag::B_E_ATTACK;
+				obj->Component()->AddComponent<DountCollider>()->DountSet(info, Transform(VZero, VZero, VECTOR3(0, 0, 0)), 50, 50.0f);
+			}
+		}
+		
 		if (b->enemyBaseComponent.anim->IsFinish()) {
 			if (b->maxAttack != 0)
 				b->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
 			else
 				b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+
+			
+			
 		}
 	}
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= b->enemyBaseComponent.anim->EventFinishTime(animId)) {
@@ -114,6 +132,7 @@ void BossSpecialAttack1::Start()
 	firstColl = true;
 	attackStart = 15.0f;
 	firstCount = true;
+	effect = true;
 }
 
 void BossSpecialAttack1::Finish()

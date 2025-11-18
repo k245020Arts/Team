@@ -26,6 +26,7 @@ EffectManager::EffectManager()
 	Load::LoadEffect("hitSlash", Effect_ID::PLAYER_SLASH_ATTACK, 50.0f);
 	Load::LoadEffect("enemyAttackCicle", Effect_ID::ENEMY_ATTACK_CICLE, 50.0f);
 	Load::LoadEffect("AlphaCutoff", Effect_ID::EFFECT_WALL, 50.0f);
+	Load::LoadEffect("bossWave", Effect_ID::BOSS_WAVE, 50.0f);
 	//Effekseer_SetGraphicsDeviceDXLib();
 	SetDrawOrder(-10000);
 }
@@ -71,7 +72,7 @@ void EffectManager::Draw()
 	DrawEffekseer2D();
 }
 
-int EffectManager::CreateEffekseer(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D)
+BaseObject* EffectManager::CreateEffekseer(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D)
 {
 	Object3D* obj = new Object3D();
 	obj->Init(_transform.position, _transform.rotation, _transform.scale, std::to_string(_id));
@@ -79,7 +80,7 @@ int EffectManager::CreateEffekseer(Transform _transform, BaseObject* _parent, Ef
 	base->EffectInit(_transform,_parent,_id,_time,effect3D);
 	effect.emplace_back(obj);
 	
-	return 0;
+	return obj;
 }
 
 void EffectManager::StopEffekseer(Effect_ID::EFFECT_ID _id)

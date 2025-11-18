@@ -394,7 +394,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	bool damage = false;
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
-		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f || startTime >= 0.0f) {
+		if ((enemyAnim->GetCurrentFrame() <= startTime + 2.0f || startTime >= 0.0f)) {
 			playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID);
 			playerCom.hitObj = _obj;
 			playerCom.enemyManager->JustAvoidTargetChange(dynamic_cast<Object3D*>(_obj));
@@ -408,7 +408,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	}
 	else {
 		//ジャスト回避が出来るようになったらスルー
-		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f) {
+		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f && attack != nullptr) {
 			return false;
 		}
 		else {
@@ -422,7 +422,13 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 		if (pB->GetID() != ID::P_ANIM_AVOID) {
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
 			playerCom.stateManager->ChangeState(ID::P_DAMAGE);
-			hp -= attack->GetHitDamage();
+			if (attack == nullptr) {
+				hp -= 50.0f;
+			}
+			else {
+				hp -= attack->GetHitDamage();
+			}
+			
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
 			playerCom.sound->RandamSe("EnemyAttackHit",4);
 			playerCom.sound->RandamSe("P_DamageV",2);
