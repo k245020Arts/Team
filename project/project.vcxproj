@@ -239,6 +239,7 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack2.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack3.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack1.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossCoolTime.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossDie.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossIdol.h" />
@@ -383,6 +384,7 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack2.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack3.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack1.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossCoolTime.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossDie.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossIdol.cpp" />
