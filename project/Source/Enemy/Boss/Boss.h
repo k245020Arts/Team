@@ -18,6 +18,7 @@ public:
 	friend class BossNormalAttack2;
 	friend class BossNormalAttack3;
 	friend class BossSpecialAttack1;
+	friend class BossSpecialAttack2;
 	friend class BossDie;
 
 	Boss();
@@ -31,6 +32,7 @@ public:
 
 	//ƒvƒŒƒCƒ„[‚Ì•û‚ÉŒü‚­ŠÖ”
 	void LookPlayer();
+	void LookPlayer(float speed);
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans) {

@@ -14,5 +14,8 @@ public:
 	void Finish()override;
 
 private:
-
+	float attackCount;
+	VECTOR3 rotation;
+	float distance;
+	bool look;
 };

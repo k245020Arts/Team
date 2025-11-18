@@ -20,7 +20,8 @@
 #include "../Boss/BossState/Attack/BossNormalAttack1.h"
 #include "../Boss/BossState/Attack/BossNormalAttack2.h"
 #include "../Boss/BossState/Attack/BossNormalAttack3.h"
-#include  "../Boss/BossState/BossSpecialAttack1.h"
+#include  "../Boss/BossState/Attack/BossSpecialAttack1.h"
+#include  "../Boss/BossState/Attack/BossSpecialAttack2.h"
 #include "../TrashEnemy/EnemyState/EnemyDamage.h"
 #include "../../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
 #include "../../Weapon/SwordEffect.h"
@@ -114,6 +115,9 @@ void Boss::Update()
 	if (CheckHitKey(KEY_INPUT_0)) {
 		enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
 	}
+	if (CheckHitKey(KEY_INPUT_2)) {
+		enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK2);
+	}
 }
 
 void Boss::Draw()
@@ -161,6 +165,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossNormalAttack2>(GetID(B_N_ATTACK2));
 	enemyBaseComponent.state->CreateState<BossNormalAttack3>(GetID(B_N_ATTACK3));
 	enemyBaseComponent.state->CreateState<BossSpecialAttack1>(GetID(B_S_ATTACK1));
+	enemyBaseComponent.state->CreateState<BossSpecialAttack2>(GetID(B_S_ATTACK2));
 	enemyBaseComponent.state->CreateState<BossDie>(GetID(BOSS_DIE));
 	/*eCom.state->NodeDrawReady();*/
 
@@ -183,6 +188,11 @@ void Boss::ImguiDraw()
 
 void Boss::LookPlayer()
 {
+	LookPlayer(0.07f);
+}
+
+void Boss::LookPlayer(float speed)
+{
 	//プレイヤーのポジションを格納させる
 	VECTOR3 targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
 	VECTOR3 distance = targetPos - bossTransform->position;
@@ -195,7 +205,7 @@ void Boss::LookPlayer()
 	if (sign > DX_PI_F)
 		sign -= 2 * DX_PI_F;
 	//向くスピード(ラジアン)
-	const float LOOK_SPEED = 0.07f;
+	const float LOOK_SPEED = speed;
 	//Playerの方をゆっくり向く
 	if (sign > LOOK_SPEED)
 		bossTransform->rotation.y += LOOK_SPEED;

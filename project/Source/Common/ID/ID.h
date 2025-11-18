@@ -72,6 +72,7 @@ namespace ID {
 		PUSH_BUTTON,
 		WIN,
 		LOSE,
+		B_S_ATTACK2_STOP,
 
 		ID_MAX,
 	};

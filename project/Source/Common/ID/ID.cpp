@@ -72,6 +72,7 @@ namespace {
 		"push_button",
 		"win",
 		"lose",
+		"b_s_attack2Stop",
 	};
 }
 

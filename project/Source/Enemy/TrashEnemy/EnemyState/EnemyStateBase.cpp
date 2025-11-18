@@ -29,6 +29,7 @@ void EnemyStateBase::Start()
 	e->enemyBaseComponent.anim->Play(animId);
 	attackTime = e->enemyBaseComponent.anim->EventFinishTime(animId) - e->enemyBaseComponent.anim->EventStartTime(animId);
 	sound = true;
+	e->enemyBaseComponent.anim->AnimEventReset();
 }
 
 void EnemyStateBase::AttackCollsion()

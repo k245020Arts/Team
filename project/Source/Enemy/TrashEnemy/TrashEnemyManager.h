@@ -1,5 +1,5 @@
 #pragma once
-#include ".././../Library/GameObject.h"
+#include "../../../Library/GameObject.h"
 
 class TrashEnemyManager : public GameObject
 {
