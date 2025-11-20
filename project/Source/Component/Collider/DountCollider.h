@@ -10,9 +10,10 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void DountSet(CollsionInfo _info, Transform _transform,float _outRadius,float _speed);
+	void DountSet(CollsionInfo _info, Transform _transform,float _outRadius);
 
 	float GetOutRadius() { return outRadius; }
+	void AddOutRadius(float radius) { outRadius += radius; }
 
 private:
 

@@ -504,3 +504,38 @@ void Player::DeleteCollision()
 {
 	CharaBase::DeleteCollision();
 }
+
+bool Player::EnemyAttackObjectHitIsPlayer()
+{
+	//敵の攻撃が当たった時の処理
+	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
+	bool damage = false;
+	//ジャスト回避が出来る処理
+	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
+		
+		playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID);
+		Debug::DebugLog("JustAvoid");
+		avoidStart = false;
+		avoidReady = false;
+		justAvoidCanCounter = 0.0f;
+		justAvoid = true;
+		
+	}
+	else {	
+		//出来なかったらダメージを食らう
+		damage = true;
+	}
+	//ダメージが入ったらパラメーターのセット
+	if (damage) {
+		if (pB->GetID() != ID::P_ANIM_AVOID) {
+			playerCom.controller->ControlVibrationStartFrame(80, 30);
+			playerCom.stateManager->ChangeState(ID::P_DAMAGE);
+			hp -= 50.0f;
+			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
+			playerCom.sound->RandamSe("EnemyAttackHit", 4);
+			playerCom.sound->RandamSe("P_DamageV", 2);
+			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 50, 0), VZero, VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);
+		}
+	}
+	return true;
+}
