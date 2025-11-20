@@ -416,6 +416,9 @@
     <ClCompile Include="Source\Component\Collider\DountCollider.cpp">
       <Filter>Component\Collider\DountCollider</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Component\EnemyAttackObject\ShockWave\ShockWave.cpp">
+      <Filter>Component\EnemyAttackObject\ShockWave</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -885,6 +888,9 @@
     <ClInclude Include="Source\Component\Collider\DountCollider.h">
       <Filter>Component\Collider\DountCollider</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\EnemyAttackObject\ShockWave\ShockWave.h">
+      <Filter>Component\EnemyAttackObject\ShockWave</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1060,6 +1066,9 @@
     </Filter>
     <Filter Include="Component\Collider\DountCollider">
       <UniqueIdentifier>{1c9d24e1-cca0-4901-803e-bd923a676e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\EnemyAttackObject\ShockWave">
+      <UniqueIdentifier>{e806857c-2465-42e0-916a-33e75e21b66a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
