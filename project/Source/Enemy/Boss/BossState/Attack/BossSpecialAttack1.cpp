@@ -5,6 +5,7 @@
 #include "../../../../Component/Physics/Physics.h"
 #include "../../../../Common/Effect/EffectManager.h"
 #include "../../../../Component/Collider/DountCollider.h"
+#include "../../../../Component/EnemyAttackObject/ShockWave/ShockWave.h"
 
 BossSpecialAttack1::BossSpecialAttack1()
 {
@@ -49,13 +50,9 @@ void BossSpecialAttack1::Update()
 		if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 40) {
 			if (effect) {
 				effect = false;
-				BaseObject* obj = b->enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
-				CollsionInfo info;
-				info.parentTransfrom = b->GetBaseObject()->GetTransform();
-				info.shape = CollsionInformation::DONUT;
-				info.oneColl = false;
-				info.tag = CollsionInformation::Tag::B_E_ATTACK;
-				obj->Component()->AddComponent<DountCollider>()->DountSet(info, Transform(VZero, VZero, VECTOR3(0, 0, 0)), 50, 50.0f);
+				BaseObject* obj1 = b->enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
+				ShockWave* w = obj1->Component()->AddComponent<ShockWave>();
+				w->CreateWave(CollsionInformation::B_E_ATTACK, Transform(VZero, VZero, VOne), 50.0f, 50.0f);
 			}
 		}
 		

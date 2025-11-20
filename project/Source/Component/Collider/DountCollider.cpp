@@ -2,7 +2,8 @@
 
 DountCollider::DountCollider()
 {
-
+	debugId = 23;
+	tag = Function::GetClassNameC<DountCollider>();
 }
 
 DountCollider::~DountCollider()
@@ -11,8 +12,8 @@ DountCollider::~DountCollider()
 
 void DountCollider::Update()
 {
-	collTransform->scale.x += speed;
-	outRadius += speed;
+	/*collTransform->scale.x += speed;
+	outRadius += speed;*/
 }
 
 void DountCollider::Draw()
@@ -21,10 +22,9 @@ void DountCollider::Draw()
 	DrawSphere3D(collTransform->WorldTransform().position, outRadius, 10, 0xffff00, 0xffff00, false);*/
 }
 
-void DountCollider::DountSet(CollsionInfo _info, Transform _transform, float _outRadius, float _speed)
+void DountCollider::DountSet(CollsionInfo _info, Transform _transform, float _outRadius)
 {
 	ColliderBase::CollsionAdd(_info, _transform);
 
 	outRadius = _outRadius;
-	speed = _speed;
 }

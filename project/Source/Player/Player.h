@@ -123,6 +123,8 @@ public:
 
 	void DeleteCollision() override;
 
+	bool EnemyAttackObjectHitIsPlayer();
+
 private:
 	PlayerInformation::CharaComponent playerCom;
 	float size;
