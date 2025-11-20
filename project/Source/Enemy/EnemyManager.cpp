@@ -137,8 +137,8 @@ void EnemyManager::CreateBoss()
 	player = obj;
 	Object3D* boss;
 	boss = new Object3D();
-	float a = 8.0f;
-	boss->Init(Transform(VECTOR3(0, 450, 2000), VZero, VECTOR3(a, a - 1, a)), "Boss");
+	float bSize = 8.0f;
+	boss->Init(Transform(VECTOR3(0, 450, 2000), VZero, VECTOR3(bSize, bSize - 1, bSize)), "Boss");
 
 	SphereCollider* collider = boss->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;

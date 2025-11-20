@@ -22,6 +22,8 @@ public:
 	//“G‚ÌƒŠƒXƒg‚Ìæ“¾
 	std::list<TrashEnemy*>& EnemyList(){ return enemies; }
 
+	void ImguiDraw();
+
 private:
 	std::list<TrashEnemy*> enemies;
 

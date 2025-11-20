@@ -885,6 +885,9 @@
     <ClInclude Include="Source\Component\Collider\DountCollider.h">
       <Filter>Component\Collider\DountCollider</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1060,6 +1063,9 @@
     </Filter>
     <Filter Include="Component\Collider\DountCollider">
       <UniqueIdentifier>{1c9d24e1-cca0-4901-803e-bd923a676e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Enemy\TrashEnemy\TrashEnemyState">
+      <UniqueIdentifier>{e41d11e8-6e6b-42f8-9653-60a8ffcb03eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
