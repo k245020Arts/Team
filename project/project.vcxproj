@@ -220,6 +220,7 @@
     <ClInclude Include="Source\Component\Color\Color.h" />
     <ClInclude Include="Source\Component\Component.h" />
     <ClInclude Include="Source\Component\ComponentManager.h" />
+    <ClInclude Include="Source\Component\EnemyAttackObject\EnemyAttackObject.h" />
     <ClInclude Include="Source\Component\Guage\Guage.h" />
     <ClInclude Include="Source\Component\Hierarchy\Hierarchy.h" />
     <ClInclude Include="Source\Component\Light\ComponentLight.h" />
@@ -368,6 +369,7 @@
     <ClCompile Include="Source\Component\Color\Color.cpp" />
     <ClCompile Include="Source\Component\Component.cpp" />
     <ClCompile Include="Source\Component\ComponentManager.cpp" />
+    <ClCompile Include="Source\Component\EnemyAttackObject\EnemyAttackObject.cpp" />
     <ClCompile Include="Source\Component\Guage\Guage.cpp" />
     <ClCompile Include="Source\Component\Hierarchy\Hierarchy.cpp" />
     <ClCompile Include="Source\Component\Light\ComponentLight.cpp" />

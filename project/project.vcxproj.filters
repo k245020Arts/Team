@@ -410,6 +410,12 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemy.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Component\EnemyAttackObject\EnemyAttackObject.cpp">
+      <Filter>Component\EnemyAttackObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\Collider\DountCollider.cpp">
+      <Filter>Component\Collider\DountCollider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -873,6 +879,12 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemy.h">
       <Filter>PlayScene\Enemy\TrashEnemy</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\EnemyAttackObject\EnemyAttackObject.h">
+      <Filter>Component\EnemyAttackObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\Collider\DountCollider.h">
+      <Filter>Component\Collider\DountCollider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1042,6 +1054,12 @@
     </Filter>
     <Filter Include="PlayScene\Enemy\TrashEnemy\EnemyState">
       <UniqueIdentifier>{abde14e5-aa93-431a-9c37-24ae1e582b64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\EnemyAttackObject">
+      <UniqueIdentifier>{f0a5e89a-db37-4a72-b5d2-7911cffed116}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Collider\DountCollider">
+      <UniqueIdentifier>{1c9d24e1-cca0-4901-803e-bd923a676e9e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
