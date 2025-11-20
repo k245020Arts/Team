@@ -1,10 +1,10 @@
 #include "BootScene.h"
-#include "inputManager.h"
-#include "LoadManager.h"
-#include "CollsionManager.h"
-#include "SoundManager.h"
-#include "Debug.h"
-#include "TransitorManager.h"
+#include "../Source/Common/InputManager/InputManager.h"
+#include "../Source/Common/LoadManager.h"
+#include "../Source/Component/Collider/CollsionManager.h"
+#include "../Source/Common/Sound/SoundManager.h"
+#include "../Source/Common/Debug/Debug.h"
+#include "../Source/Common/Transitor/TransitorManager.h"
 
 BootScene::BootScene()
 {

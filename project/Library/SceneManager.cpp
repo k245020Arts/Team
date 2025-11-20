@@ -3,8 +3,8 @@
 #include "../Source/SceneFactory.h"
 #include <DxLib.h>
 #include "MemoryCount.h"
-#include "../Source/Debug.h"
-#include "../Source/LoadManager.h"
+#include "../Source/Common/Debug/Debug.h"
+#include "../Source/Common/LoadManager.h"
 
 namespace
 {
