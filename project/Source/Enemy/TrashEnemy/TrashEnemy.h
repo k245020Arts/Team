@@ -18,6 +18,7 @@ public:
 	void Draw()override;
 
 	void CreateTrashEnemy(VECTOR3 _pos);
-private:
 
+	VECTOR3 GetPos() { return obj->GetTransform()->position; }
+private:
 };
