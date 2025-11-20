@@ -891,6 +891,9 @@
     <ClInclude Include="Source\Component\EnemyAttackObject\ShockWave\ShockWave.h">
       <Filter>Component\EnemyAttackObject\ShockWave</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1069,6 +1072,9 @@
     </Filter>
     <Filter Include="Component\EnemyAttackObject\ShockWave">
       <UniqueIdentifier>{e806857c-2465-42e0-916a-33e75e21b66a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Enemy\TrashEnemy\TrashEnemyState">
+      <UniqueIdentifier>{bd70a036-28c6-4b2f-844d-711fd7640036}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
