@@ -2,7 +2,7 @@
 #include "TrashEnemy.h"
 #include "../../Common/LoadManager.h"
 #include "../../Component/MeshRenderer/MeshRenderer.h"
-#include "../../ImGui/imgui.h"
+#include "../../../ImGui/imgui.h"
 
 TrashEnemyManager::TrashEnemyManager()
 {
