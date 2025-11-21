@@ -10,6 +10,7 @@ class TrashEnemy : public EnemyBase
 {
 public:
 	friend class T_EnemyIdol;
+	friend class T_EnemyRun;
 
 	TrashEnemy();
 	~TrashEnemy();
