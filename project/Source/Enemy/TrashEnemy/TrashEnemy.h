@@ -9,6 +9,8 @@ class EnemyStateManager;
 class TrashEnemy : public EnemyBase
 {
 public:
+	friend class T_EnemyIdol;
+
 	TrashEnemy();
 	~TrashEnemy();
 

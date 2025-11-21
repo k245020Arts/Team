@@ -422,6 +422,9 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -895,6 +898,9 @@
       <Filter>Component\EnemyAttackObject\ShockWave</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,0 +1,42 @@
+#include "T_EnemyIdol.h"
+#include "../TrashEnemy.h"
+#include "../../../Component/Animator/Animator.h"
+#include "../../../State/StateManager.h"
+
+T_EnemyIdol::T_EnemyIdol()
+{
+	//animId = ID::TE_IDOL;
+	id = ID::TE_IDOL;
+	string = Function::GetClassNameC<T_EnemyIdol>();
+}
+
+T_EnemyIdol::~T_EnemyIdol()
+{
+}
+
+void T_EnemyIdol::Update()
+{
+	TrashEnemy* e = GetBase<TrashEnemy>();
+
+	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
+		//EnemyTransform->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
+
+	if (targetVec.Size() < 1000)
+		e->enemyBaseComponent.state->ChangeState(ID::TE_RUN);
+	else
+		e->obj->GetTransform()->rotation.x++;
+
+}
+
+void T_EnemyIdol::Draw()
+{
+}
+
+void T_EnemyIdol::Start()
+{
+	//EnemyStateBase::Start();
+}
+
+void T_EnemyIdol::Finish()
+{
+}

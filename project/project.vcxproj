@@ -263,6 +263,7 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemy.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyManager.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.h" />
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.h" />
     <ClInclude Include="Source\GameManager\GameManager.h" />
     <ClInclude Include="Source\Light\Light.h" />
     <ClInclude Include="Source\BootScene.h" />
@@ -411,6 +412,7 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemy.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyManager.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.cpp" />
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.cpp" />
     <ClCompile Include="Source\GameManager\GameManager.cpp" />
     <ClCompile Include="Source\Light\Light.cpp" />
     <ClCompile Include="Source\Player\Player.cpp" />
