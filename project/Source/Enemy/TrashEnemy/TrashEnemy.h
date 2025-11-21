@@ -1,9 +1,7 @@
 #pragma once
 #include "../EnemyBase.h"
-#include "../enemyInformation.h"
-#include "../../Component/Transform/transform.h"
-#include "../../Common/ID/SoundID.h"
-
+#include "../../Component/Object/Object3D.h"
+#include "../EnemyInformation.h"
 
 class StateManager;
 class EnemyStateManager;
@@ -17,8 +15,10 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void CreateTrashEnemy(VECTOR3 _pos);
+	void Start();
 
+	void CreateTrashEnemy(VECTOR3 _pos);
 	VECTOR3 GetPos() { return obj->GetTransform()->position; }
+
 private:
 };
