@@ -73,6 +73,7 @@ namespace {
 		"win",
 		"lose",
 		"b_s_attack2Stop",
+		"b_s_attack2Before",
 	};
 }
 

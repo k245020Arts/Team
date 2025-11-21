@@ -73,6 +73,7 @@ namespace ID {
 		WIN,
 		LOSE,
 		B_S_ATTACK2_STOP,
+		B_S_ATTACK2_BEFORE,
 
 		ID_MAX,
 	};

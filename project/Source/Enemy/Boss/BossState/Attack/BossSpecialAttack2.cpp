@@ -7,7 +7,7 @@
 BossSpecialAttack2::BossSpecialAttack2()
 {
 	id = ID::B_S_ATTACK2;
-	animId = ID::B_S_ATTACK2;
+	animId = ID::B_S_ATTACK2_BEFORE;
 	collTrans = Transform(VECTOR3(0, 0, -50), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
 }
 
@@ -18,15 +18,25 @@ BossSpecialAttack2::~BossSpecialAttack2()
 void BossSpecialAttack2::Update()
 {
 	Boss* b = GetBase<Boss>();
-	attackCount -= Time::DeltaTimeRate();
-	if (attackCount <= 0.0f) {
-		b->enemyBaseComponent.anim->Play(ID::B_S_ATTACK2_STOP);
-		if (b->enemyBaseComponent.anim->IsFinish()) {
+	if (b->enemyBaseComponent.anim->IsFinish()) {
+		if (b->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(ID::B_S_ATTACK2_STOP)) {
 			if (b->maxAttack != 0)
 				b->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
 			else
 				b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
 		}
+		else {
+			b->enemyBaseComponent.anim->Play(ID::B_S_ATTACK2);
+			AttackStart();
+		}
+	}
+	if (b->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(ID::B_S_ATTACK2_BEFORE)) {
+		b->LookPlayer(0.09f);
+		return;
+	}
+	attackCount -= Time::DeltaTimeRate();
+	if (attackCount <= 0.0f) {
+		b->enemyBaseComponent.anim->Play(ID::B_S_ATTACK2_STOP);
 		VECTOR3 p = b->enemyBaseComponent.physics->GetVelocity().Normalize();
 		b->enemyBaseComponent.physics->AddVelocity(p * -5000.0f, true);
 		return;
@@ -57,6 +67,18 @@ void BossSpecialAttack2::Draw()
 void BossSpecialAttack2::Start()
 {
 	EnemyStateBase::Start();
+	
+}
+
+void BossSpecialAttack2::Finish()
+{
+	EnemyStateBase::Start();
+	Boss* b = GetBase<Boss>();
+	b->enemyBaseComponent.physics->SetVelocity(VECTOR3(0, 0, -1000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix());
+}
+
+void BossSpecialAttack2::AttackStart()
+{
 	Boss* b = GetBase<Boss>();
 	attackCount = 2.0f;
 	//b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 3000, 0), false);
@@ -67,11 +89,4 @@ void BossSpecialAttack2::Start()
 	firstColl = true;
 	look = true;
 	distance = pos.Size();
-}
-
-void BossSpecialAttack2::Finish()
-{
-	EnemyStateBase::Start();
-	Boss* b = GetBase<Boss>();
-	b->enemyBaseComponent.physics->SetVelocity(VECTOR3(0, 0, -1000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix());
 }

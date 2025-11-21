@@ -18,4 +18,5 @@ private:
 	VECTOR3 rotation;
 	float distance;
 	bool look;
+	void AttackStart();
 };

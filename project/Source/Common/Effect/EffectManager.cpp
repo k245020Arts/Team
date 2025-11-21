@@ -26,7 +26,7 @@ EffectManager::EffectManager()
 	Load::LoadEffect("hitSlash", Effect_ID::PLAYER_SLASH_ATTACK, 50.0f);
 	Load::LoadEffect("enemyAttackCicle", Effect_ID::ENEMY_ATTACK_CICLE, 50.0f);
 	Load::LoadEffect("AlphaCutoff", Effect_ID::EFFECT_WALL, 50.0f);
-	Load::LoadEffect("bossWave", Effect_ID::BOSS_WAVE, 50.0f);
+	Load::LoadEffect("bossWave1", Effect_ID::BOSS_WAVE, 50.0f);
 	//Effekseer_SetGraphicsDeviceDXLib();
 	SetDrawOrder(-10000);
 }
