@@ -419,6 +419,9 @@
     <ClCompile Include="Source\Component\EnemyAttackObject\ShockWave\ShockWave.cpp">
       <Filter>Component\EnemyAttackObject\ShockWave</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />

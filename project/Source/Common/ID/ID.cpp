@@ -74,6 +74,9 @@ namespace {
 		"lose",
 		"b_s_attack2Stop",
 		"b_s_attack2Before",
+		"te_idol"
+		"te_run"
+		"te_attack"
 	};
 }
 

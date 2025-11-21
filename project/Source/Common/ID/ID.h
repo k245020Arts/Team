@@ -73,7 +73,10 @@ namespace ID {
 		WIN,
 		LOSE,
 		B_S_ATTACK2_STOP,
-		B_S_ATTACK2_BEFORE,
+		B_S_ATTACK2_BEFORE,	
+		TE_IDOL,
+		TE_RUN,
+		TE_ATTACK,
 
 		ID_MAX,
 	};

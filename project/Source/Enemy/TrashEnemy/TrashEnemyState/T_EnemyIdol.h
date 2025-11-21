@@ -1,1 +1,16 @@
 #pragma once
+#include "../EnemyState/EnemyStateBase.h"
+
+class T_EnemyIdol :public EnemyStateBase
+{
+public:
+	T_EnemyIdol();
+	~T_EnemyIdol();
+
+	void Update()override;
+	void Draw()override;
+
+	void Start()override;
+	void Finish()override;
+private:
+};

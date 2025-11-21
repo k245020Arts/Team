@@ -31,6 +31,7 @@
 #include "../Boss/BossState/BossCoolTime.h"
 #include "../Boss/BossState/BossStatus.h"
 #include "../Boss/BossState/BossDie.h"
+#include "../TrashEnemy/TrashEnemyManager.h"//
 
 namespace {
 	const std::unordered_map<ID::IDType, EnemyInformation::EnemyReaction> bossTable = {
@@ -93,6 +94,8 @@ Boss::Boss()
 
 	hp = bs->GetStatus().maxHp;
 	maxHp = hp;
+	TrashEnemyManager* a = new TrashEnemyManager;//
+	a->CreateEnemy(VECTOR3(0, 0, 0), 1);//
 }
 
 Boss::~Boss()
