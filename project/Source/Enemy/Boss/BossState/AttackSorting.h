@@ -18,4 +18,6 @@ private:
 	void RandomAttack();
 
 	float coolTime;
+
+	bool jump;
 };

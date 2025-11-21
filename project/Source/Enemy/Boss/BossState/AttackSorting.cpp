@@ -16,21 +16,34 @@ AttackSorting::~AttackSorting()
 void AttackSorting::Update()
 {
 	Boss* b = GetBase<Boss>();
-
-	if (b->maxAttack == 0)
-		b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
-	else if (b->maxAttack == 1)
-		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
-	else if (b->maxAttack == 2)
-		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK2);
-	else if(b->maxAttack == 3)
-		b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
-	else
-	{
-		RandomAttack();
-		if (!Hp())
-			b->maxAttack = 0;
+	if (jump) {
+		if (b->maxAttack != 0) {
+			b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1_SMALL);
+			b->maxAttack--;
+		}
+		else {
+			b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
+		}
+			
 	}
+	else {
+		if (b->maxAttack == 0)
+			b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
+		else if (b->maxAttack == 1)
+			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
+		else if (b->maxAttack == 2)
+			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK2);
+		else if (b->maxAttack == 3)
+			b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
+		else
+		{
+			RandomAttack();
+			if (!Hp())
+				b->maxAttack = 0;
+		}
+	}
+
+	
 
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 	if (targetVec.Size() >= b->bs->GetStatus().range)
@@ -44,7 +57,7 @@ void AttackSorting::Start()
 {
 	Boss* b = GetBase<Boss>();
 	int maxAttack = b->bs->GetStatus().maxAttack;
-
+	int randam = GetRand(1);
 	if (Hp())
 	{
 		//‰½‰ñ˜A‘±UŒ‚‚·‚é‚©Œˆ‚ß‚é
@@ -54,7 +67,18 @@ void AttackSorting::Start()
 			b->maxAttack--;
 	}
 	else
-		b->maxAttack = maxAttack;
+		b->maxAttack = 0;
+
+	if (b->maxAttack == 0) {
+		if (randam) {
+			jump = true;
+			b->maxAttack = GetRand(maxAttack - 1);
+		}
+		else {
+			jump = false;
+		}
+	}
+	
 }
 
 void AttackSorting::Finish()

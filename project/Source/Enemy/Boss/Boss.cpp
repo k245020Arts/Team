@@ -21,6 +21,7 @@
 #include "../Boss/BossState/Attack/BossNormalAttack2.h"
 #include "../Boss/BossState/Attack/BossNormalAttack3.h"
 #include  "../Boss/BossState/Attack/BossSpecialAttack1.h"
+#include  "../Boss/BossState/Attack/BossSpecialSmallAttack1.h"
 #include  "../Boss/BossState/Attack/BossSpecialAttack2.h"
 #include "../TrashEnemy/EnemyState/EnemyDamage.h"
 #include "../../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
@@ -95,7 +96,7 @@ Boss::Boss()
 	hp = bs->GetStatus().maxHp;
 	maxHp = hp;
 	TrashEnemyManager* a = new TrashEnemyManager;//
-	a->CreateEnemy(VECTOR3(0, 0, 0), 1);//
+	//a->CreateEnemy(VECTOR3(0, 0, 0), 1);//
 }
 
 Boss::~Boss()
@@ -117,6 +118,9 @@ void Boss::Update()
 	}
 	if (CheckHitKey(KEY_INPUT_0)) {
 		enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
+	}
+	if (CheckHitKey(KEY_INPUT_1)) {
+		enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1_SMALL);
 	}
 	if (CheckHitKey(KEY_INPUT_2)) {
 		enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK2);
@@ -168,6 +172,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossNormalAttack2>(GetID(B_N_ATTACK2));
 	enemyBaseComponent.state->CreateState<BossNormalAttack3>(GetID(B_N_ATTACK3));
 	enemyBaseComponent.state->CreateState<BossSpecialAttack1>(GetID(B_S_ATTACK1));
+	enemyBaseComponent.state->CreateState <BossSpecialSmallAttack1 > (GetID(B_S_ATTACK1_SMALL));
 	enemyBaseComponent.state->CreateState<BossSpecialAttack2>(GetID(B_S_ATTACK2));
 	enemyBaseComponent.state->CreateState<BossDie>(GetID(BOSS_DIE));
 	/*eCom.state->NodeDrawReady();*/

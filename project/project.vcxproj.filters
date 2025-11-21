@@ -425,6 +425,9 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialSmallAttack1.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -902,6 +905,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialSmallAttack1.h">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

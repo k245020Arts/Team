@@ -74,9 +74,11 @@ namespace ID {
 		LOSE,
 		B_S_ATTACK2_STOP,
 		B_S_ATTACK2_BEFORE,	
+		B_S_ATTACK1_SMALL,
 		TE_IDOL,
 		TE_RUN,
 		TE_ATTACK,
+
 
 		ID_MAX,
 	};
