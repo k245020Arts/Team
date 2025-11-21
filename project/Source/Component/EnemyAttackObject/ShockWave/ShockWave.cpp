@@ -21,7 +21,6 @@ void ShockWave::Update()
 {
 	collider->GetTransform()->scale.x += waveSpeed;
 	collider->AddOutRadius(waveSpeed);
-	obj;
 }
 
 void ShockWave::Draw()
