@@ -18,7 +18,7 @@ namespace {
     static const  size_t HEADER_SIZE = sizeof(size_t); // 先頭に保存するサイズの量
 }
 
-void* operator new(std::size_t size) {
+[[nodiscard]] void* operator new(std::size_t size) {
     size_t s = HEADER_SIZE;
     size_t totalSize = size + HEADER_SIZE;
     //実際のメモリ割り当てを行う(演算子のオーバーライドなので普通のnewでもしていることはしっかりとしないとインスタンスが確保されない)
@@ -33,7 +33,7 @@ void* operator new(std::size_t size) {
     return static_cast<char*>(raw) + HEADER_SIZE;
 }
 
-void* operator new[](std::size_t size) {
+[[nodiscard]] void* operator new[](std::size_t size) {
     size_t totalSize = size + HEADER_SIZE;
     //実際のメモリ割り当てを行う(演算子のオーバーライドなので普通のnewでもしていることはしっかりとしないとインスタンスが確保されない)
     void* raw = std::malloc(totalSize);
@@ -47,7 +47,7 @@ void* operator new[](std::size_t size) {
     return static_cast<char*>(raw) + HEADER_SIZE;
 }
 
-void* operator new(std::size_t size, const std::nothrow_t&) noexcept {
+[[nodiscard]] void* operator new(std::size_t size, const std::nothrow_t&) noexcept {
     size_t totalSize = size + HEADER_SIZE;
     //実際のメモリ割り当てを行う(演算子のオーバーライドなので普通のnewでもしていることはしっかりとしないとインスタンスが確保されない)
     void* raw = std::malloc(totalSize);
@@ -61,7 +61,7 @@ void* operator new(std::size_t size, const std::nothrow_t&) noexcept {
     return static_cast<char*>(raw) + HEADER_SIZE;
 }
 
-void* operator new[](std::size_t size, const std::nothrow_t&) noexcept {
+[[nodiscard]] void* operator new[](std::size_t size, const std::nothrow_t&) noexcept {
     size_t totalSize = size + HEADER_SIZE;
     //実際のメモリ割り当てを行う(演算子のオーバーライドなので普通のnewでもしていることはしっかりとしないとインスタンスが確保されない)
     void* raw = std::malloc(totalSize);

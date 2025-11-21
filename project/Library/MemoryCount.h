@@ -4,6 +4,7 @@
 #include <windows.h>
 #pragma warning(push)
 #pragma warning(disable:28251) //どうしてもwaringが直らなかったのでこれで苦肉の策
+#pragma warning(error : 4834) //new演算子に入れるときに引数の値を使わなかった場合エラーを吐くようにする
 
 /// <summary>
 /// new演算子のオーバーロード
@@ -11,28 +12,28 @@
 /// </summary>
 /// <param name="_size">メモリのサイズ</param>
 /// <returns></returns>
-void* __CRTDECL operator new(std::size_t _size) noexcept(false);
+[[nodiscard]] void* __CRTDECL operator new(std::size_t _size) noexcept(false);
 /// <summary>
 /// newの演算子のオーバーロードで例外を吐かないver
 /// </summary>
 /// <param name="_size"></param>
 /// <param name=""></param>
 /// <returns></returns>
-void* __CRTDECL operator new(std::size_t _size, const std::nothrow_t&) noexcept;
+[[nodiscard]] void* __CRTDECL operator new(std::size_t _size, const std::nothrow_t&) noexcept;
 /// <summary>
 /// new演算子のオーバーロード配列対応ver
 /// 
 /// </summary>
 /// <param name="_size">メモリのサイズ</param>
 /// <returns></returns>
-void* __CRTDECL operator new[](std::size_t _size) noexcept(false);
+[[nodiscard]] void* __CRTDECL operator new[](std::size_t _size) noexcept(false);
 /// <summary>
 /// newの演算子のオーバーロードで例外を吐かないver配列対応ver
 /// </summary>
 /// <param name="_size"></param>
 /// <param name=""></param>
 /// <returns></returns>
-void* __CRTDECL operator new[](std::size_t _size, const std::nothrow_t&) noexcept;
+[[nodiscard]] void* __CRTDECL operator new[](std::size_t _size, const std::nothrow_t&) noexcept;
 
 //----------------------以下delete ; ver--------------------------------
 
@@ -64,5 +65,5 @@ void SafeDelete(C*& ptr) {
 
 #define SafeDelete(type,ptr)
 
-#pragma warning(pop)
+//#pragma warning(pop)
 

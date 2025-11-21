@@ -5,6 +5,7 @@
 #include "../Weapon/WeaponManager.h"
 #include "../Component/Physics/Physics.h"
 #include "../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
+#include "../../Library/MemoryCount.h"
 
 EnemyBase::EnemyBase()
 {
