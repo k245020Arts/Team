@@ -262,6 +262,7 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateManager.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemy.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyManager.h" />
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.h" />
     <ClInclude Include="Source\GameManager\GameManager.h" />
     <ClInclude Include="Source\Light\Light.h" />
     <ClInclude Include="Source\BootScene.h" />

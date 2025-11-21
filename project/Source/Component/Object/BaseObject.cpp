@@ -119,8 +119,9 @@ void BaseObject::DeleteChild(BaseObject* child) {
 void BaseObject::DeleteAllChildren() {
 	for (auto itr = children.begin(); itr != children.end();) {
 		BaseObject* obj = *itr;
-		delete obj;
 		itr = children.erase(itr);
+		delete obj;
+		
 	}
 }
 

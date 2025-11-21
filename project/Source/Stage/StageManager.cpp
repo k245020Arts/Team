@@ -14,7 +14,7 @@ StageManager::StageManager()
 {
 	//modelHandle = MV1LoadModel("data/model/stage10.mv1");
 	//CreateStage();
-	Load::LoadModel(Load::MODEL_PATH +  "new_Stage", ID::S_MODEL);
+	Load::LoadModel(Load::MODEL_PATH +  "new_Stage6", ID::S_MODEL);
 	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL);
 	stage = nullptr;
 	modelHandle = -1;
