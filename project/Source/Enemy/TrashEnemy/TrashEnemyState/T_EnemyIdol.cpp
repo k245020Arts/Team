@@ -23,9 +23,7 @@ void T_EnemyIdol::Update()
 
 	if (targetVec.Size() < 1000)
 		e->enemyBaseComponent.state->ChangeState(ID::TE_RUN);
-	else
-		e->obj->GetTransform()->rotation.x++;
-
+	
 }
 
 void T_EnemyIdol::Draw()

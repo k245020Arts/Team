@@ -22,6 +22,8 @@
 #include "../../Common/LoadManager.h"
 
 #include "TrashEnemyState/T_EnemyIdol.h"
+#include "TrashEnemyState/T_EnemyRun.h"
+#include "EnemyState/AttackState/EnemyAttack1.h"
 
 
 TrashEnemy::TrashEnemy()
@@ -63,6 +65,8 @@ void TrashEnemy::Start()
 	using namespace ID;
 
 	enemyBaseComponent.state->CreateState<T_EnemyIdol>(GetID(TE_IDOL));
+	enemyBaseComponent.state->CreateState<T_EnemyRun>(GetID(TE_RUN));
+	enemyBaseComponent.state->CreateState<EnemyAttack1>(GetID(E_ATTACK1));
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 	enemyBaseComponent.state->StartState(TE_IDOL);
