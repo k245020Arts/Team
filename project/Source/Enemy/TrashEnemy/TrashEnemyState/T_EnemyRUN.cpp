@@ -25,8 +25,8 @@ void T_EnemyRun::Update()
 	e->obj->GetTransform()->position += velocity;
 
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
-	/*if (targetVec.Size() <= 300)
-		e->enemyBaseComponent.state->ChangeState(ID::E_ATTACK1);*/
+	if (targetVec.Size() <= 300)
+		e->enemyBaseComponent.state->ChangeState(ID::E_ATTACK1);
 }
 
 void T_EnemyRun::Start()
