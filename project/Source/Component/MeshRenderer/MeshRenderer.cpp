@@ -35,9 +35,6 @@ void MeshRenderer::Draw()
 	if (hModel < 0) {
 		return;
 	}
-	if (obj->GetTag() == "BossShadow") {
-		draw += 0.0f;
-	}
 	//描画専用のトランスフォームを作る
 	Transform tra = *obj->GetTransform();
 	if (shaker != nullptr) {
