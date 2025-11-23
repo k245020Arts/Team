@@ -428,6 +428,9 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialSmallAttack1.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="Source\State\StateManager.cpp">
+      <Filter>PlayScene\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />

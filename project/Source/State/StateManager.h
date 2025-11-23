@@ -44,36 +44,11 @@ struct Node
 class StateManager : public Component
 {
 public:
-	StateManager(){ 
-		state = nullptr;
-		nodeBaseNum = -1;
-		nodeName = "";
-		nodeWindow = ed::CreateEditor();
-		currentId = ID::ID_MAX;
-		nextId = ID::ID_MAX;
-		stateNoChange = false;
-		debugId = 20;
-		tag = Function::GetClassNameC<StateManager>();
-	}
-	~StateManager() { 
-		for (auto& t : stateInfo) {
-			//t.second.reset();
-			//t.second = nullptr;
-		}
-		state = nullptr;
-		stateInfo.clear(); 
-		ed::DestroyEditor(nodeWindow);
-		Debug::DebugLogPrintf(Debug::printfString("%s : size = %d", nodeName.c_str(), state.use_count()));
-	}
+	StateManager();
+	~StateManager();
 
-	virtual void Update() { 
-		if (currentId != nextId) {
-			currentId = nextId;
-			Change(currentId);
-		}
-		state->Update();
-	}
-	virtual void Draw() { state->Draw(); }
+	virtual void Update();
+	virtual void Draw();
 
 	ID::IDType GetBeforeID() { return beforeId; }
 
@@ -94,30 +69,17 @@ public:
 	}
 
 	//最初の一回だけ呼び出す用関数
-	void StartState(ID::IDType _id) {
-		std::string id = ID::GetID(_id);
-		state = stateInfo[id];
-		state->Start();
-	}
+	void StartState(ID::IDType _id);
 	/// <summary>
 	/// 次の１フレーム後にステートを変える
 	/// </summary>
 	/// <returns></returns>
-	void ChangeState(ID::IDType _id) {
-		if (currentId == _id) {
-			return;
-		}
-		nextId = _id;
-	}
+	void ChangeState(ID::IDType _id);
 	/// <summary>
 	/// 通った瞬間にstateを変えることが出来るクラス
 	/// </summary>
 	/// <param name="_id"></param>
-	void NowChangeState(ID::IDType _id) {
-		nextId = _id;
-		currentId = _id;
-		Change(currentId);
-	}
+	void NowChangeState(ID::IDType _id);
 	/// <summary>
 	/// この変数をtrueにするとstateがチェンジされない
 	/// </summary>
@@ -133,158 +95,15 @@ public:
 	}
 
 
-	void NodeDrawReady() {
-		for (auto s : stateInfo) {
-			idName.emplace_back(s.second->GetID());
-		}
-	}
+	void NodeDrawReady();
 
-	void LoadState() {
-		CsvReader csvReader;
+	void LoadState();
 
-		csvReader.Load(fileName);
+	void SaveState();
 
-		for (int r = 0; r < csvReader.GetLines(); r++) {
-			if (r == csvReader.GetLines() - 1) {
-				newLinkIdNum = std::stoi(csvReader.GetString(r, 0));
-			}
-			else {
-				Link links;
-				for (int c = 0; c < csvReader.GetColums(r); c++) {
-					std::string string;
-					switch (c)
-					{
-					case 0:
-						links.input = std::stoi(csvReader.GetString(r, c));
-						break;
-					case 1:
-						links.output = std::stoi(csvReader.GetString(r, c));
-						break;
-					case 2:
-						links.id = std::stoi(csvReader.GetString(r, c));
-						break;
-					default:
-						break;
-					}
-				}
-				link.emplace_back(links);
-			}
+	void StateNodeDraw();
 
-		}
-	}
-
-	void SaveState() {
-		CsvReader csvReader;
-
-		std::vector<std::vector<std::string>> data;
-
-		for (const Link& l : link) {
-			std::vector<std::string> row;
-			row.emplace_back(std::to_string(l.input.Get()));
-			row.emplace_back(std::to_string(l.output.Get()));
-			row.emplace_back(std::to_string(l.id.Get()));
-			data.emplace_back(row);
-		}
-		std::vector<std::string> num;
-		num.emplace_back(std::to_string(newLinkIdNum));
-		data.emplace_back(num);
-
-		csvReader.SaveAll(fileName, data);
-	}
-
-	void StateNodeDraw() {
-		SetCurrentEditor(nodeWindow);
-		std::string nName = nodeName + "StateNode";
-		ed::Begin(nName.c_str());
-		for (int i = 0; i < idName.size(); i++) {
-
-			if (state->GetID() == idName[i]) {
-				ed::PushStyleColor(ed::StyleColor_NodeBorder, ImColor(255, 0, 0));
-			}
-			int baseId = i * nodeBaseNum;
-			int nodeId = baseId;
-			int pinInputId = baseId + 1;
-			int pinOutputId = baseId + 2;
-			ed::BeginNode(nodeId);
-
-			std::string string = ID::GetID(idName[i]);
-			std::string start = string + "Start";
-			std::string end = string + "End";
-			ImGui::Text(string.c_str());
-			ed::BeginPin(pinInputId, ed::PinKind::Input);
-			ImGui::Text("In");
-			ed::EndPin();
-			ed::BeginPin(pinOutputId, ed::PinKind::Output);
-			ImGui::Text("Out");
-			ed::EndPin();
-			ed::EndNode();
-			if (state->GetID() == idName[i]) {
-				ed::PopStyleColor();
-			}
-		}
-
-		//生成処理
-		if (ed::BeginCreate()) {
-			ed::PinId startPinId, finishPinId;
-			Debug::DebugLog("delete");
-			if (ed::QueryNewLink(&startPinId, &finishPinId)) {
-				if (ed::AcceptNewItem()) {
-					Debug::DebugLog("newLink");
-					ed::LinkId newLinkId = ed::LinkId(newLinkIdNum++);
-					link.emplace_back(Link(finishPinId, startPinId, newLinkId));
-					ed::Link(newLinkId, startPinId, finishPinId);
-				}
-			}
-		}
-		ed::EndCreate();
-
-		ed::LinkId popLink = ed::GetHoveredLink();
-		std::string popName = nodeName + "LinkPopMenu";
-		if (popLink && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
-			keepLink = popLink; // 右クリックしたリンクを保存
-			Debug::DebugLog(std::to_string(keepLink.Get()));
-			ed::Suspend();
-			ImGui::OpenPopup(popName.c_str());
-			ed::Resume();
-
-		}
-
-		ed::Suspend();
-		if (ImGui::BeginPopup(popName.c_str())){
-			if (ImGui::MenuItem("Delete Link")){
-				ed::LinkId deleteId = keepLink.Get();
-				Debug::DebugLog("Deleting link ID: " + std::to_string(deleteId.Get()));
-				//削除処理
-				for (auto e = link.begin(); e != link.end();) {
-					if ((e)->id == deleteId) {
-						e = link.erase(e);
-						break;
-					}
-					e++;
-				}
-				keepLink = ed::LinkId();
-				ImGui::CloseCurrentPopup();
-			}
-
-			ImGui::EndPopup();
-		}
-		ed::Resume();
-
-
-
-		// 削除処理の後にリンクを描画する
-		for (Link& l : link) {
-			ed::Link(l.id, l.output, l.input);
-		}
-
-		ed::NodeId doubleClick = ed::GetDoubleClickedNode();
-		if (doubleClick) {
-			int nodeId = static_cast<int>(doubleClick.Get());
-			int index = nodeId / nodeBaseNum;
-			ChangeState(idName[index]);
-		}
-		ed::End();
-	}
+	void ImguiDraw();
 
 protected:
 
@@ -311,12 +130,5 @@ protected:
 	bool stateNoChange;
 private:
 
-	void Change(ID::IDType _id) {
-		if (stateNoChange) {
-			return;
-		}
-		state->Finish();
-		beforeId = _id;
-		StartState(_id);
-	}
+	void Change(ID::IDType _id);
 };

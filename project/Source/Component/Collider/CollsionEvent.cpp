@@ -1,7 +1,7 @@
 #include "CollsionEvent.h"
 #include "../ComponentManager.h"
 #include "../../Player/Player.h"
-#include "../../Enemy/TrashEnemy/Enemy.h"
+#include "../../Enemy/TrashEnemy/TrashEnemy.h"
 #include "../../Common/Debug/Debug.h"
 #include "../../Enemy/TrashEnemy/EnemyState/EnemyStateManager.h"
 #include "../../Enemy/TrashEnemy/EnemyState/EnemyStateBase.h"
@@ -46,7 +46,7 @@ void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2)
 void CollsionEvent::PlayerDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2)
 {
 	Player* player =  _coll1->GetObj()->Component()->GetComponent<Player>();
-	Enemy* enemy = _coll2->GetObj()->Component()->GetComponent<Enemy>();
+	TrashEnemy* enemy = _coll2->GetObj()->Component()->GetComponent<TrashEnemy>();
 	
 	bool damage =  player->EnemyHit(enemy->GetStateManager()->GetState<EnemyStateBase>()->GetAnimId(),enemy->GetEnemyObj());
 	if (!damage) {
@@ -57,7 +57,7 @@ void CollsionEvent::PlayerDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2
 void CollsionEvent::EnemyDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2)
 {
 	Player* player = _coll2->GetObj()->Component()->GetComponent<Player>();
-	Enemy* enemy = _coll1->GetObj()->Component()->GetComponent<Enemy>();
+	TrashEnemy* enemy = _coll1->GetObj()->Component()->GetComponent<TrashEnemy>();
 	if (enemy->GetHit()) {
 		return;
 	}
