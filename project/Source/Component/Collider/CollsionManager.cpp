@@ -9,6 +9,7 @@
 #include "../Physics/Physics.h"
 #include "rayCollider.h"
 #include "DountCollider.h"
+#include "../Shadow/Shadow.h"
 
 CollsionManager::CollsionManager()
 {
@@ -152,11 +153,19 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2)
 
 		// Y•ûŒü‚Ì‚Ý‰Ÿ‚µ•Ô‚µ
 		resolver.AddPush(VECTOR3(0, 1, 0), push.Size(), CollsionInformation::Shape::RAY);
+
+		if (col2->GetCollTag() == CollsionInformation::SHADOW) {
+			col2->GetBaseObject()->Component()->GetComponent<Shadow>()->ChangeScale(push,result.HitPosition);
+		}
 	}
 	resolver.Apply(col2->GetObj()->GetTransform(), p, true, 2.0f * Time::DeltaTimeRate());
 
+	if (p != nullptr) {
+		p->SetGround(resolver.IsGrounded(0.7f));
+	}
+	
 	//’n–Ê‚Ì”»’è‚Í“–‚½‚è”»’è‚©‚çs‚¤
-	p->SetGround(resolver.IsGrounded(0.7f));
+	
 	return true;
 
 }
@@ -188,6 +197,9 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 
 	// ‰ðŒˆ
 	resolver.Apply(col1->GetObj()->GetTransform(), phy,true,10.0f);
+
+
+	
 
 	return false;
 

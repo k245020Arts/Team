@@ -124,9 +124,14 @@ void PlayerManager::CreatePlayer()
 	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 
 	Object3D* shadow = new Object3D();
-	shadow->Init(Transform(VECTOR3(0.0f, 0.0f, 0.0f), VZero, VECTOR3(1.0f, 0.1f, 1.0f)), "PlayerShadow");
+	shadow->Init(Transform(VECTOR3(0.0f, -100.0f, 0.0f), VZero, VECTOR3(1.0f, 0.1f, 1.0f)), "PlayerShadow");
 	Shadow* s = shadow->Component()->AddComponent<Shadow>();
 	s->Start();
+	
+	RayCollider* collider4 = shadow->Component()->AddComponent<RayCollider>();
+	info.shape = CollsionInformation::RAY;
+	info.tag = CollsionInformation::SHADOW;
+	collider4->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10000, 0), VZero, VECTOR3(1.0f, 1, 1)));
 	
 	playerPointer->AddChild(shadow);
 }

@@ -17,6 +17,7 @@
 #include "Boss/Boss.h"
 #include "../Component/Collider/rayCollider.h"
 #include "../Component/Collider/ModelCollider.h"
+#include "../Component/Shadow/Shadow.h"
 
 EnemyManager::EnemyManager()
 {
@@ -161,6 +162,17 @@ void EnemyManager::CreateBoss()
 	g->GuageDrawReady<Boss>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	chara.emplace_back(b);
 	enemy.emplace_back(boss);
+
+	Object3D* shadow = new Object3D();
+	shadow->Init(Transform(VECTOR3(0.0f, -20.0f, 0.0f), VZero, VECTOR3(1.0f, 0.1f, 1.0f)), "BossShadow");
+	Shadow* s = shadow->Component()->AddComponent<Shadow>();
+	s->Start();
+
+	RayCollider* collider5 = shadow->Component()->AddComponent<RayCollider>();
+	info.shape = CollsionInformation::RAY;
+	info.tag = CollsionInformation::SHADOW;
+	collider5->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10000, 0), VZero, VECTOR3(1.0f, 1, 1)));
+	boss->AddChild(shadow);
 
 	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());
 	player->Component()->GetComponent<Player>()->HitObjectSet(*enemy.begin());
