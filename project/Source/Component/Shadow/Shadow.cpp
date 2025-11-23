@@ -20,7 +20,9 @@ Shadow::~Shadow()
 
 void Shadow::Update()
 {
-	GetBaseObject()->GetTransform()->position.y = groundPos.y;
+	obj->GetTransform()->position = obj->GetParent()->GetTransform()->position;
+	obj->GetTransform()->position.y = groundPos.y;
+
 }
 
 void Shadow::Draw()
@@ -29,12 +31,14 @@ void Shadow::Draw()
 
 void Shadow::Start()
 {
-	model = Load::LoadModel(Load::MODEL_PATH + "shadow", ID::SHADOW);
+	obj = GetBaseObject();
+	model = Load::LoadModel(Load::MODEL_PATH + "shadow1", ID::SHADOW);
 	MeshRenderer* mesh = GetBaseObject()->Component()->AddComponent<MeshRenderer>();
 	mesh->ModelHandle(model);
-	//mesh->DrawLocalPosition();
-	GetBaseObject()->Component()->GetComponent<Color>()->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));
-	baseScale = GetBaseObject()->GetTransform()->scale;
+	mesh->DrawLocalPosition();
+	//obj->Component()->GetComponent<Color>()->setRGB(Color::Rgb(255.0f, 50.0f, 50.0f, 155.0f));
+	baseScale = obj->GetTransform()->scale;
+	
 }
 
 void Shadow::ChangeScale(VECTOR3 _dist, VECTOR3 _groundPos)
@@ -44,9 +48,9 @@ void Shadow::ChangeScale(VECTOR3 _dist, VECTOR3 _groundPos)
 	if (d > MAX_DIST) {
 		d = MAX_DIST;
 	}
-	float s = Easing::Lerp(base, 0.2f, d / MAX_DIST);
-	GetBaseObject()->GetTransform()->scale.x = s;
-	GetBaseObject()->GetTransform()->scale.z = s;
+	float s = Easing::EaseOut(base, 0.2f, d / MAX_DIST);
+	obj->GetTransform()->scale.x = s;
+	obj->GetTransform()->scale.z = s;
 	groundPos = _groundPos;
 	dist = _dist;
 }

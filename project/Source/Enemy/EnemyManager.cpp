@@ -164,14 +164,14 @@ void EnemyManager::CreateBoss()
 	enemy.emplace_back(boss);
 
 	Object3D* shadow = new Object3D();
-	shadow->Init(Transform(VECTOR3(0.0f, -20.0f, 0.0f), VZero, VECTOR3(1.0f, 0.1f, 1.0f)), "BossShadow");
+	shadow->Init(Transform(VECTOR3(0.0f, -20.0f, 0.0f), VZero, VECTOR3(boss->GetTransform()->scale.x - 2.0f, 0.1f, boss->GetTransform()->scale.z - 2.0f)), "BossShadow");
 	Shadow* s = shadow->Component()->AddComponent<Shadow>();
 	s->Start();
 
 	RayCollider* collider5 = shadow->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::SHADOW;
-	collider5->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10000, 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider5->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist() , 0), VZero, VECTOR3(1.0f, 1, 1)));
 	boss->AddChild(shadow);
 
 	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());

@@ -17,10 +17,13 @@ public:
 
 	void ChangeScale(VECTOR3 _dist, VECTOR3 _groundPos);
 
+	const int GetMaxDist() { return MAX_DIST; }
+
 private:
 	int model;
 	VECTOR3 baseScale;
-	const float MAX_DIST = 10000.0f;
+	const float MAX_DIST = 5000.0f;
 	VECTOR3 groundPos;
 	VECTOR3 dist;
+	BaseObject* obj;
 };
