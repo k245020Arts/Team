@@ -78,7 +78,7 @@ namespace ID {
 		TE_IDOL,
 		TE_RUN,
 		TE_ATTACK,
-
+		SHADOW,
 
 		ID_MAX,
 	};

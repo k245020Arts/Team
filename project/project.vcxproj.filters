@@ -431,6 +431,9 @@
     <ClCompile Include="Source\State\StateManager.cpp">
       <Filter>PlayScene\State</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Component\Shadow\Shadow.cpp">
+      <Filter>Component\Shadow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -912,6 +915,9 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialSmallAttack1.h">
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\Shadow\Shadow.h">
+      <Filter>Component\Shadow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1093,6 +1099,9 @@
     </Filter>
     <Filter Include="PlayScene\Enemy\TrashEnemy\TrashEnemyState">
       <UniqueIdentifier>{bd70a036-28c6-4b2f-844d-711fd7640036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Shadow">
+      <UniqueIdentifier>{a45eba3d-2725-4ced-8fa3-3f263a4040c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

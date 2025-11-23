@@ -78,6 +78,7 @@ namespace {
 		"te_idol"
 		"te_run"
 		"te_attack"
+		"shadow",
 	};
 }
 

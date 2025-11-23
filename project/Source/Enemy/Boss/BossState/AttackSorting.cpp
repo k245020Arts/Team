@@ -45,12 +45,12 @@ void AttackSorting::Update()
 
 	
 
-	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
+	/*VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 	if (targetVec.Size() >= b->bs->GetStatus().range)
 	{
 		b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
 		b->maxAttack = 0;
-	}
+	}*/
 }
 
 void AttackSorting::Start()

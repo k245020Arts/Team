@@ -19,6 +19,7 @@
 #include "../Component/Object/Object2D.h"
 #include "../Component/Guage/Guage.h"
 #include "../Component/Collider/RayCollider.h"
+#include "../Component/Shadow/Shadow.h"
 
 PlayerManager::PlayerManager()
 {
@@ -121,5 +122,11 @@ void PlayerManager::CreatePlayer()
 	Guage* g = guage->Component()->AddComponent<Guage>();
 	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpEdge", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(915.0f,950.0f,0.0f),VZero,VECTOR3(1.3f,1.0f,0.0f)));
 	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+
+	Object3D* shadow = new Object3D();
+	shadow->Init(Transform(VECTOR3(0.0f, 0.0f, 0.0f), VZero, VECTOR3(1.0f, 0.1f, 1.0f)), "PlayerShadow");
+	Shadow* s = shadow->Component()->AddComponent<Shadow>();
+	s->Start();
 	
+	playerPointer->AddChild(shadow);
 }

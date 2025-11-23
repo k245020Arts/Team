@@ -232,6 +232,7 @@
     <ClInclude Include="Source\Component\Object\Object2D.h" />
     <ClInclude Include="Source\Component\Object\Object3D.h" />
     <ClInclude Include="Source\Component\Physics\Physics.h" />
+    <ClInclude Include="Source\Component\Shadow\Shadow.h" />
     <ClInclude Include="Source\Component\Shaker\Shaker.h" />
     <ClInclude Include="Source\Component\Transform\Transform.h" />
     <ClInclude Include="Source\Enemy\Boss\Boss.h" />
@@ -385,6 +386,7 @@
     <ClCompile Include="Source\Component\Object\Object2D.cpp" />
     <ClCompile Include="Source\Component\Object\Object3D.cpp" />
     <ClCompile Include="Source\Component\Physics\Physics.cpp" />
+    <ClCompile Include="Source\Component\Shadow\Shadow.cpp" />
     <ClCompile Include="Source\Component\Shaker\Shaker.cpp" />
     <ClCompile Include="Source\Component\Transform\Transform.cpp" />
     <ClCompile Include="Source\Enemy\Boss\Boss.cpp" />
