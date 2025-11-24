@@ -8,7 +8,7 @@
 
 JustAvoidAttackHitCamera::JustAvoidAttackHitCamera()
 {
-	id = ID::C_HIT;
+	//id = ID::C_HIT;
 	firstRotation = 0.0f;
 	timer = 0.0f;
 }

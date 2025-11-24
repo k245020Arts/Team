@@ -11,7 +11,7 @@ PlayerDamage::PlayerDamage()
 
 	string = string = Function::GetClassNameC<PlayerDamage>();;
 	animId = ID::P_DAMAGE;
-	id = ID::P_DAMAGE;
+	//id = ID::P_DAMAGE;
 }
 
 PlayerDamage::~PlayerDamage()
@@ -22,7 +22,7 @@ void PlayerDamage::Update()
 {
 	Player* p = GetBase<Player>();
 	if (p->playerCom.anim->IsFinish()) {
-		p->playerCom.stateManager->ChangeState(ID::P_ANIM_RUN);
+		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 	}
 }
 

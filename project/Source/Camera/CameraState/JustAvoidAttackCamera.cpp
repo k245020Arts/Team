@@ -10,7 +10,7 @@ JustAvoidAttackCamera::JustAvoidAttackCamera()
 {
 	string = Function::GetClassNameC<JustAvoidAttackCamera>();
 
-	id = ID::C_AVOID_ATTACK;
+	//id = ID::C_AVOID_ATTACK;
 	firstRotation = 0.0f;
 	distanceTimer = 0.0f;
 	timer = 0.0f;

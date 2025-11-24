@@ -13,7 +13,7 @@ PlayerBlowAway::PlayerBlowAway()
 {
 	string = string = Function::GetClassNameC<PlayerBlowAway>();;
 	animId = ID::P_DAMAGE;
-	id= ID::P_BLOWAWAY;
+	//id= ID::P_BLOWAWAY;
 }
 
 PlayerBlowAway::~PlayerBlowAway()

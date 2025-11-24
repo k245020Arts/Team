@@ -14,11 +14,11 @@
 PlayerAttack1::PlayerAttack1()
 {
 	string = Function::GetClassNameC<PlayerAttack1>();
-	id = ID::P_ANIM_ATTACK1;
+	//id = ID::P_ANIM_ATTACK1;
 	nextAttack = false;
 	animId = ID::P_ANIM_ATTACK1;
 	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
-	nextAttackID = ID::P_ANIM_ATTACK2;
+	nextAttackID = StateID::PLAYER_ATTACK2_S;
 	frontSpeed = 2500.0f;
 	time = 0.0f;
 	hitDamage = 15.0f;

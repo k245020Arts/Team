@@ -2,7 +2,7 @@
 #include "../Component/Component.h"
 #include "../Component/Shaker/Shaker.h"
 #include "cameraInformation.h"
-#include "../Common/ID/ID.h"
+#include "../Common/ID/StateID.h"
 
 class ControllerInputManager;
 class InputManager;
@@ -36,7 +36,7 @@ public:
 	void TargetEnemySet();
 
 	void CameraLeapSet(float _rape);
-	void ChangeStateCamera(ID::IDType _id);
+	void ChangeStateCamera(StateID::State_ID _id);
 
 	void CameraRotationSet();
 	void Follow();

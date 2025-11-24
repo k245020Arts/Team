@@ -16,7 +16,7 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	nextAttack = 0.0f;
 	distSize = 0.0f;
 	frontSpeed = 0.0f;
-	nextAttackID = ID::P_ANIM_ATTACK1;
+	nextAttackID = StateID::PLAYER_ATTACK1_S;
 	rotation = 0.0f;
 	runTimer = 0.0f;
 	time = 0.0f;
@@ -56,7 +56,7 @@ void PlayerAttackStateBase::Update()
 					p->playerCom.player->AvoidFinishState();
 				}
 				else {
-					p->playerCom.stateManager->ChangeState(ID::P_ANIM_RUN);
+					p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 				}
 			}
 			

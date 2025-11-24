@@ -45,15 +45,15 @@
 
 namespace {
 
-	std::unordered_map<ID::IDType, PlayerInformation::PlayerReaction> attackEffects = {
-	{ ID::P_ANIM_ATTACK1, { VECTOR3(50,50,50), 0.07f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ ID::P_ANIM_JUST_AVOID_ATTACK1, { VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ ID::P_ANIM_ATTACK2, { VECTOR3(50,50,50), 0.1f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ ID::P_ANIM_ATTACK3, { VECTOR3(50,50,50), 0.12f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ ID::P_ANIM_JUST_AVOID_ATTACK3, { VECTOR3(150,100,100), 0.05f, VECTOR3(30,50,50), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ ID::P_ANIM_ATTACK4, { VECTOR3(100,100,100), 0.2f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ ID::P_ANIM_JUST_AVOID_ATTACK4, { VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ ID::P_ANIM_JUST_AVOID_ATTACK5, { VECTOR3(100,100,100), 0.3f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	std::unordered_map<StateID::State_ID, PlayerInformation::PlayerReaction> attackEffects = {
+	{ StateID::PLAYER_ATTACK1_S, { VECTOR3(50,50,50), 0.07f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, { VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{  StateID::PLAYER_ATTACK2_S, { VECTOR3(50,50,50), 0.1f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{  StateID::PLAYER_ATTACK3_S, { VECTOR3(50,50,50), 0.12f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ StateID::PLAYER_JUST_AVOID_ATTACK3_S, { VECTOR3(150,100,100), 0.05f, VECTOR3(30,50,50), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{  StateID::PLAYER_ATTACK4_S, { VECTOR3(100,100,100), 0.2f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ StateID::PLAYER_JUST_AVOID_ATTACK4_S, { VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ StateID::PLAYER_JUST_AVOID_ATTACK5_S, { VECTOR3(100,100,100), 0.3f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
 	};
 
 
@@ -108,12 +108,13 @@ void Player::Update()
 		}
 	}
 	//死亡条件
-	if (hp <= 0.0f && (playerCom.stateManager->GetState<StateBase>()->GetID() == ID::P_ANIM_IDOL)) {
-		playerCom.stateManager->NowChangeState(ID::P_DIE);
+	if (hp <= 0.0f && (playerCom.stateManager->GetState<StateBase>()->GetID() == StateID::PLAYER_WAIT_S)) {
+		playerCom.stateManager->NowChangeState(StateID::PLAYER_DIE_S);
 		playerCom.stateManager->SetNoStateChange(true);
 	}
+
 	if (obj->GetTransform()->position.y <= -10000.0f) {
-		playerCom.stateManager->NowChangeState(ID::BOSS_DIE);
+		playerCom.stateManager->NowChangeState(StateID::BOSS_DIE_S);
 		playerCom.stateManager->SetNoStateChange(true);
 	}
 	//playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
@@ -178,27 +179,27 @@ void Player::Start(Object3D* _obj)
 	//physics->SetInterect(VECTOR3(5.0f, -1.0f, 0.0f),0.1);
 	using namespace ID;
 	//ステートのセット
-	playerCom.stateManager->CreateState<PlayerWait>(GetID(P_ANIM_IDOL));
-	playerCom.stateManager->CreateState<PlayerWalk>(GetID(P_ANIM_RUN));
-	playerCom.stateManager->CreateState<PlayerAvoid>(GetID(P_ANIM_AVOID));
-	playerCom.stateManager->CreateState<PlayerJustAvoid>(GetID(P_ANIM_JUST_AVOID));
-	playerCom.stateManager->CreateState<PlayerAttack1>(GetID(P_ANIM_ATTACK1));
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack1>(GetID(P_ANIM_JUST_AVOID_ATTACK1));
-	playerCom.stateManager->CreateState<PlayerAttack2>(GetID(P_ANIM_ATTACK2));
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack2>(GetID(P_ANIM_JUST_AVOID_ATTACK2));
-	playerCom.stateManager->CreateState<PlayerAttack3>(GetID(P_ANIM_ATTACK3));
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack3>(GetID(P_ANIM_JUST_AVOID_ATTACK3));
-	playerCom.stateManager->CreateState<PlayerAttack4>(GetID(P_ANIM_ATTACK4));
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack4>(GetID(P_ANIM_JUST_AVOID_ATTACK4));
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack5>(GetID(P_ANIM_JUST_AVOID_ATTACK5));
-	playerCom.stateManager->CreateState<PlayerDamage>(GetID(P_DAMAGE));
-	playerCom.stateManager->CreateState<PlayerBlowAway>(GetID(P_BLOWAWAY));
-	playerCom.stateManager->CreateState<PlayerDie>(GetID(P_DIE));
+	playerCom.stateManager->CreateState<PlayerWait>("PlayerWait", StateID::PLAYER_WAIT_S);
+	playerCom.stateManager->CreateState<PlayerWalk>("PlayerWalk", StateID::PLAYER_WALK_S);
+	playerCom.stateManager->CreateState<PlayerAvoid>("PlayerAvoid", StateID::PLAYER_AVOID_S);
+	playerCom.stateManager->CreateState<PlayerJustAvoid>("PlayerJustAvoid", StateID::PLAYER_JUST_AVOID_S);
+	playerCom.stateManager->CreateState<PlayerAttack1>("PlayerAttack1", StateID::PLAYER_ATTACK1_S);
+	playerCom.stateManager->CreateState<PlayerJustAvoidAttack1>("PlayerJustAvoidAttack1", StateID::PLAYER_JUST_AVOID_ATTACK1_S);
+	playerCom.stateManager->CreateState<PlayerAttack2>("PlayerAttack2", StateID::PLAYER_ATTACK2_S);
+	playerCom.stateManager->CreateState<PlayerJustAvoidAttack2>("PlayerJustAvoidAttack2", StateID::PLAYER_JUST_AVOID_ATTACK2_S);
+	playerCom.stateManager->CreateState<PlayerAttack3>("PlayerAttack3", StateID::PLAYER_ATTACK3_S);
+	playerCom.stateManager->CreateState<PlayerJustAvoidAttack3>("PlayerJustAvoidAttack3", StateID::PLAYER_JUST_AVOID_ATTACK3_S);
+	playerCom.stateManager->CreateState<PlayerAttack4>("PlayerAttack4", StateID::PLAYER_ATTACK4_S);
+	playerCom.stateManager->CreateState<PlayerJustAvoidAttack4>("PlayerJustAvoidAttack4", StateID::PLAYER_JUST_AVOID_ATTACK4_S);
+	playerCom.stateManager->CreateState<PlayerJustAvoidAttack5>("PlayerJustAvoidAttack5", StateID::PLAYER_JUST_AVOID_ATTACK5_S);
+	playerCom.stateManager->CreateState<PlayerDamage>("PlayerDamage", StateID::PLAYER_DAMAGE_S);
+	playerCom.stateManager->CreateState<PlayerBlowAway>("PlayerBlowAway", StateID::PLAYER_BLOW_AWAY_S);
+	playerCom.stateManager->CreateState<PlayerDie>("PlayerDie", StateID::PLAYER_DIE_S);
 
 	playerCom.stateManager->NodeDrawReady();
 	playerCom.stateManager->SetComponent<Player>(this);
 
-	playerCom.stateManager->StartState(P_ANIM_IDOL);
+	playerCom.stateManager->StartState(StateID::PLAYER_WAIT_S);
 }
 
 void Player::Move(float _speed, float _speedMax)
@@ -251,12 +252,12 @@ void Player::Move(float _speed, float _speedMax)
 			moveVelo.y = playerCom.physics->GetVelocity().y;
 			playerCom.physics->SetVelocity(moveVelo);
 		}
-		playerCom.stateManager->ChangeState(ID::P_ANIM_RUN);
+		playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 		//アニメーションのスピードを傾き方で測定
 		playerCom.anim->SetPlaySpeed(walkAngle.Size());
 	}
 	else {
-		playerCom.stateManager->ChangeState(ID::P_ANIM_IDOL);
+		playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 	}
 }
 
@@ -303,7 +304,7 @@ void Player::ImguiDraw()
 	ImGui::Text(playerCom.stateManager->GetState<StateBase>()->GetString().c_str());
 	//playerCom.stateManager->StateNodeDraw();
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth;
-	bool open = ImGui::TreeNodeEx("PlayerState", flags);
+	/*bool open = ImGui::TreeNodeEx("PlayerState", flags);
 	if(open){
 		if (ImGui::Button("p_Damage")) {
 			playerCom.stateManager->ChangeState(ID::P_DAMAGE);
@@ -325,7 +326,7 @@ void Player::ImguiDraw()
 			playerCom.stateManager->SetNoStateChange(true);
 		}
 		ImGui::TreePop();
-	}
+	}*/
 
 	//static int screen = MakeScreen(256, 256, TRUE);
 	//static int modelHandle = Load::GetHandle(ID::P_MODEL);
@@ -376,7 +377,7 @@ void Player::AvoidRotationChange()
 		justAvoidCanCounter -= Time::DeltaTimeRate();
 	}
 	if (avoidStart && justAvoidCanCounter <= 0.0f && avoidReadyCounter <= 0.0f) {
-		playerCom.stateManager->ChangeState(ID::P_ANIM_AVOID);
+		playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
 		avoidStart = false;
 		avoidReady = false;
 		justAvoid = false;
@@ -395,7 +396,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f || startTime >= 0.0f) {
-			playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID);
+			playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
 			playerCom.hitObj = _obj;
 			playerCom.enemyManager->JustAvoidTargetChange(dynamic_cast<Object3D*>(_obj));
 			playerCom.camera->TargetSet(_obj);
@@ -421,7 +422,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	if (damage) {
 		if (pB->GetID() != ID::P_ANIM_AVOID) {
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
-			playerCom.stateManager->ChangeState(ID::P_DAMAGE);
+			playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 			if (attack == nullptr) {
 				hp -= 50.0f;
 			}
@@ -455,7 +456,7 @@ void Player::HitObjectSet(BaseObject* _base)
 void Player::PlayerAttackHit()
 {
 	//プレイヤーの攻撃を当てた時のカメラのシェイクヒットストップの処理
-	ID::IDType id = playerCom.stateManager->GetState<StateBase>()->GetID();
+	StateID::State_ID id = playerCom.stateManager->GetState<StateBase>()->GetID();
 
 	auto it = attackEffects.find(id);
 	if (it != attackEffects.end()) {
@@ -481,10 +482,10 @@ void Player::AvoidFinishState()
 	PlayerStickInput();
 	//スティックをある程度傾けていたら移動の処理、傾けていなかったら止まる処理
 	if (fabs(walkAngle.x) >= 0.3f || fabs(walkAngle.z) >= 0.3f) {
-		playerCom.stateManager->ChangeState(ID::P_ANIM_RUN);
+		playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 	}
 	else {
-		playerCom.stateManager->ChangeState(ID::P_ANIM_IDOL);
+		playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 	}
 }
 
@@ -513,7 +514,7 @@ bool Player::EnemyAttackObjectHitIsPlayer()
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 		
-		playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID);
+		playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
 		Debug::DebugLog("JustAvoid");
 		avoidStart = false;
 		avoidReady = false;
@@ -527,9 +528,9 @@ bool Player::EnemyAttackObjectHitIsPlayer()
 	}
 	//ダメージが入ったらパラメーターのセット
 	if (damage) {
-		if (pB->GetID() != ID::P_ANIM_AVOID) {
+		if (pB->GetID() != StateID::PLAYER_AVOID_S) {
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
-			playerCom.stateManager->ChangeState(ID::P_DAMAGE);
+			playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 			hp -= 50.0f;
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
 			playerCom.sound->RandamSe("EnemyAttackHit", 4);

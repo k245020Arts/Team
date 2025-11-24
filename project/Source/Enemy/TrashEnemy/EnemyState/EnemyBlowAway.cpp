@@ -14,7 +14,7 @@ EnemyBlowAway::EnemyBlowAway()
 {
 	string = Function::GetClassNameC<EnemyBlowAway>();
 	animId = ID::E_DAMAGE; 
-	id = ID::E_BLOWAWAY;
+	//id = ID::E_BLOWAWAY;
 	GravityAdd = 0.0f;
 	
 }
@@ -53,7 +53,7 @@ void EnemyBlowAway::Update()
 	//—§‚¿ã‚ª‚Á‚½‚ç–_—§‚¿ó‘Ô‚É‘JˆÚ
 	else if (e->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(ID::E_GETUP)) {
 		if (e->enemyBaseComponent.anim->IsFinish()) {
-			e->enemyBaseComponent.state->ChangeState(ID::E_ANIM_IDOL);
+			//e->enemyBaseComponent.state->ChangeState(ID::E_ANIM_IDOL);
 		}
 	}
 	//—Ž‰º‘¬“x‚ð‰Á‘¬‚³‚¹‚Ä‚¢‚é

@@ -16,7 +16,7 @@ EnemyDamage::EnemyDamage()
 		string = string.substr(prefix.length());
 	}
 	animId = ID::E_DAMAGE;
-	id = ID::E_DAMAGE;
+	//id = ID::E_DAMAGE;
 	timer = 0.0f;
 	info = EnemyDamageInfo();
 	first = true;
@@ -36,7 +36,7 @@ void EnemyDamage::Update()
 	//時間が戻ったらステート遷移
 	timer -= e->enemyBaseComponent.enemy->GetEnemyObj()->GetObjectTimeRate();
 	if (timer <= 0.00f) {
-		e->enemyBaseComponent.state->ChangeState(ID::E_ANIM_IDOL);
+		//e->enemyBaseComponent.state->ChangeState(ID::E_ANIM_IDOL);
 	}
 }
 

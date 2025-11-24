@@ -7,7 +7,7 @@
 
 BossNormalAttack3::BossNormalAttack3()
 {
-	id = ID::B_N_ATTACK3;
+	//id = ID::B_N_ATTACK3;
 	animId = ID::B_N_ATTACK3;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 }
@@ -35,7 +35,7 @@ void BossNormalAttack3::Update()
 	b->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
 	if (b->enemyBaseComponent.anim->IsFinish())
-		b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 
 	BossAttackCollsion();
 	AttackSound();

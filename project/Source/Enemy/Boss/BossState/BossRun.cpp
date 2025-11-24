@@ -6,7 +6,7 @@
 
 BossRun::BossRun()
 {
-	id = ID::B_RUN;
+	//id = ID::B_RUN;
 	animId = ID::B_RUN;
 	string = Function::GetClassNameC<BossRun>();
 	bs = nullptr;
@@ -40,10 +40,10 @@ void BossRun::Update()
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 	//プレイヤーと離れたらアイドルになる
 	if (targetVec.Size() >= bs->GetStatus().chaseRange)
-		b->enemyBaseComponent.state->ChangeState(ID::B_IDOL);
+		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_IDOL_S);
 	//プレイヤーに近づいたら攻撃に移行
 	if (targetVec.Size() <= bs->GetStatus().range)
-		b->enemyBaseComponent.state->ChangeState(ID::B_COOLTIME);
+		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_COOL_TIME_S);
 }
 
 void BossRun::Draw()

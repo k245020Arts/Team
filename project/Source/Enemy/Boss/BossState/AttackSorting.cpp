@@ -18,23 +18,23 @@ void AttackSorting::Update()
 	Boss* b = GetBase<Boss>();
 	if (jump) {
 		if (b->maxAttack != 0) {
-			b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1_SMALL);
+			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
 			b->maxAttack--;
 		}
 		else {
-			b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
+			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK1_S);
 		}
 			
 	}
 	else {
 		if (b->maxAttack == 0)
-			b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
+			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK1_S);
 		else if (b->maxAttack == 1)
-			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
+			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK1_S);
 		else if (b->maxAttack == 2)
-			b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK2);
+			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK2_S);
 		else if (b->maxAttack == 3)
-			b->enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
+			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK3_S);
 		else
 		{
 			RandomAttack();
@@ -103,7 +103,7 @@ void AttackSorting::RandomAttack()
 	Boss* b = GetBase<Boss>();
 	int random = GetRand(1);
 	if (random == 0)
-		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK1);
+		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK1_S);
 	else if (random == 1)
-		b->enemyBaseComponent.state->ChangeState(ID::B_N_ATTACK2);
+		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK2_S);
 }

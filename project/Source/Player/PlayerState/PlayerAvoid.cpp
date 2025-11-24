@@ -16,7 +16,7 @@ PlayerAvoid::PlayerAvoid()
 {
 	time = 0.0f;
 	string = string = Function::GetClassNameC<PlayerAvoid>();;
-	id = ID::P_ANIM_AVOID;
+	//id = ID::P_ANIM_AVOID;
 
 	animId = ID::P_ANIM_AVOID;
 	/*avoidShadowStart = false;*/

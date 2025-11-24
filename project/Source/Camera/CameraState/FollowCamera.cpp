@@ -15,7 +15,7 @@ FollowCamera::FollowCamera()
 {
 	enemyShake = false;
 	string = Function::GetClassNameC<FollowCamera>();
-	id = ID::C_FOLLOW;
+	//id = ID::C_FOLLOW;
 	backCounter = 0.0f;
 }
 

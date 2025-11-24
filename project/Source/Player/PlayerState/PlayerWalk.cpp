@@ -11,7 +11,7 @@ PlayerWalk::PlayerWalk()
 
 	string = string = Function::GetClassNameC<PlayerWalk>();;
 	animId = ID::P_ANIM_RUN;;
-	id = ID::P_ANIM_RUN;
+	//id = ID::P_ANIM_RUN;
 }
 
 PlayerWalk::~PlayerWalk()
@@ -23,7 +23,7 @@ void PlayerWalk::Update()
 {
 	Player* p = GetBase<Player>();
 	if (CheckHitKey(KEY_INPUT_1)) {
-		p->playerCom.stateManager->ChangeState(ID::P_ANIM_IDOL);
+		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 	}
 	DefalutWalk();
 }

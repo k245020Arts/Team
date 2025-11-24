@@ -11,7 +11,7 @@ JustAvoidCamera::JustAvoidCamera()
     Start();
     string = Function::GetClassNameC<JustAvoidCamera>();
     zoomDistance = VZero;
-    id = ID::P_ANIM_JUST_AVOID;
+   // id = ID::P_ANIM_JUST_AVOID;
 }
 
 JustAvoidCamera::~JustAvoidCamera()
@@ -37,7 +37,7 @@ void JustAvoidCamera::Update()
     changeTimer -= Time::DeltaTimeRate();
 
     if (changeTimer <= 0.0f) {
-        c->cameraComponent.state->ChangeState(ID::C_FOLLOW);
+        c->cameraComponent.state->ChangeState(StateID::FOLLOW_CAMERA_S);
     }
 
     c->target = c->target;

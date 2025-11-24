@@ -9,7 +9,7 @@
 PlayerDie::PlayerDie()
 {
 	animId = ID::P_DIE;
-	id = ID::P_DIE;
+	//id = ID::P_DIE;
 	string = Function::GetClassNameC<PlayerDie>();
 	one = false;
 }

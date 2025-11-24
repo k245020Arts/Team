@@ -35,51 +35,51 @@
 #include "../TrashEnemy/TrashEnemyManager.h"//
 
 namespace {
-	const std::unordered_map<ID::IDType, EnemyInformation::EnemyReaction> bossTable = {
+	const std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> bossTable = {
 		// 通常攻撃
-		{ ID::P_ANIM_ATTACK1, { ID::P_ANIM_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.15f,0.8f),
+		{  StateID::PLAYER_ATTACK1_S, { ID::P_ANIM_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.15f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 10, 10,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 40.0f, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-		{ ID::P_ANIM_ATTACK2, { ID::P_ANIM_ATTACK2, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.25f,0.8f),
+		{  StateID::PLAYER_ATTACK2_S, { ID::P_ANIM_ATTACK2, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.25f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 40, 30,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 70.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-		{ ID::P_ANIM_ATTACK3, { ID::P_ANIM_ATTACK3, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.35f,0.8f),
+		{  StateID::PLAYER_ATTACK3_S, { ID::P_ANIM_ATTACK3, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.35f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 10, 10,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 80.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-		{ ID::P_ANIM_ATTACK4, { ID::P_ANIM_ATTACK4, EnemyDamage::EnemyDamageInfo(VECTOR3(0,400,0), VECTOR3(200,200,200),0.85f,1.0f),
+		{  StateID::PLAYER_ATTACK4_S, { ID::P_ANIM_ATTACK4, EnemyDamage::EnemyDamageInfo(VECTOR3(0,400,0), VECTOR3(200,200,200),0.85f,1.0f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 50, 50,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 0.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
 		// ジャスト回避攻撃
-		{ ID::P_ANIM_JUST_AVOID_ATTACK1, { ID::P_ANIM_JUST_AVOID_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-20000,2000), VECTOR3(400,400,400),0.05f,0.8f),
+		{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, { ID::P_ANIM_JUST_AVOID_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-20000,2000), VECTOR3(400,400,400),0.05f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 30, 40,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 0.0f, Effect_ID::PLAYER_SLASH_ATTACK, false, -1, 0.0f } },
 
-		{ ID::P_ANIM_JUST_AVOID_ATTACK2, { ID::P_ANIM_JUST_AVOID_ATTACK2, EnemyDamage::EnemyDamageInfo(), EnemyBlowAway::EnemyBlowAwayInfo(),
+		{ StateID::PLAYER_JUST_AVOID_ATTACK2_S, { ID::P_ANIM_JUST_AVOID_ATTACK2, EnemyDamage::EnemyDamageInfo(), EnemyBlowAway::EnemyBlowAwayInfo(),
 			EnemyInformation::EnemyReaction::Type::LoopCombo, ID::E_DAMAGE, 0, 0,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 90.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, 5, 0.13f } },
 
-		{ ID::P_ANIM_JUST_AVOID_ATTACK3, { ID::P_ANIM_JUST_AVOID_ATTACK3, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200),0.2f,0.8f),
+		{StateID::PLAYER_JUST_AVOID_ATTACK3_S, { ID::P_ANIM_JUST_AVOID_ATTACK3, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200),0.2f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 70, 40,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 180.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-		{ ID::P_ANIM_JUST_AVOID_ATTACK4, { ID::P_ANIM_JUST_AVOID_ATTACK4, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,7000), VECTOR3(200,200,200),0.2f,0.8f),
+		{ StateID::PLAYER_JUST_AVOID_ATTACK4_S, { ID::P_ANIM_JUST_AVOID_ATTACK4, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,7000), VECTOR3(200,200,200),0.2f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 40, 40,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 80.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
 		// 吹っ飛ばし攻撃
-		{ ID::P_ANIM_JUST_AVOID_ATTACK5, { ID::P_ANIM_JUST_AVOID_ATTACK5, EnemyDamage::EnemyDamageInfo(),
+		{ StateID::PLAYER_JUST_AVOID_ATTACK5_S, { ID::P_ANIM_JUST_AVOID_ATTACK5, EnemyDamage::EnemyDamageInfo(),
 			EnemyBlowAway::EnemyBlowAwayInfo(4000,3000,VECTOR3(15,15,15),VECTOR3(0.3f,0.3f,0.3f),2000,20),
 			EnemyInformation::EnemyReaction::Type::BlowAway, ID::E_BLOWAWAY, 100, 60,
 			Effect_ID::SPECIAL_HIT_EFFECT, 5.0f, EnemyInformation::HIT_EFFECT_SCALE_RATE,
@@ -109,21 +109,25 @@ void Boss::Update()
 {
 	EnemyBase::Update();
 	if (hp <= 0.0f) {
-		enemyBaseComponent.state->NowChangeState(ID::BOSS_DIE);
+		enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
 		enemyBaseComponent.state->SetNoStateChange(true);
 	}
+
 	if (obj->GetTransform()->position.y <= -10000.0f) {
-		enemyBaseComponent.state->NowChangeState(ID::BOSS_DIE);
+		enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
 		enemyBaseComponent.state->SetNoStateChange(true);
 	}
+
 	if (CheckHitKey(KEY_INPUT_0)) {
-		enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1);
+		enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK1_S);
 	}
+
 	if (CheckHitKey(KEY_INPUT_1)) {
-		enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK1_SMALL);
+		enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
 	}
+
 	if (CheckHitKey(KEY_INPUT_2)) {
-		enemyBaseComponent.state->ChangeState(ID::B_S_ATTACK2);
+		enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK2_S);
 	}
 }
 
@@ -164,22 +168,22 @@ void Boss::Start(Object3D* _obj)
 
 	using namespace ID;
 
-	enemyBaseComponent.state->CreateState<BossIdol>(GetID(B_IDOL));
-	enemyBaseComponent.state->CreateState<BossRun>(GetID(B_RUN));
-	enemyBaseComponent.state->CreateState<BossCoolTime>(GetID(B_COOLTIME));
-	enemyBaseComponent.state->CreateState<AttackSorting>(GetID(B_ATTACKSORTING));
-	enemyBaseComponent.state->CreateState<BossNormalAttack1>(GetID(B_N_ATTACK1));
-	enemyBaseComponent.state->CreateState<BossNormalAttack2>(GetID(B_N_ATTACK2));
-	enemyBaseComponent.state->CreateState<BossNormalAttack3>(GetID(B_N_ATTACK3));
-	enemyBaseComponent.state->CreateState<BossSpecialAttack1>(GetID(B_S_ATTACK1));
-	enemyBaseComponent.state->CreateState <BossSpecialSmallAttack1 > (GetID(B_S_ATTACK1_SMALL));
-	enemyBaseComponent.state->CreateState<BossSpecialAttack2>(GetID(B_S_ATTACK2));
-	enemyBaseComponent.state->CreateState<BossDie>(GetID(BOSS_DIE));
-	/*eCom.state->NodeDrawReady();*/
+	enemyBaseComponent.state->CreateState<BossIdol>("BossIdol", StateID::BOSS_IDOL_S);
+	enemyBaseComponent.state->CreateState<BossRun>("BossRun", StateID::BOSS_RUN_S);
+	enemyBaseComponent.state->CreateState<BossCoolTime>("BossCoolTime", StateID::BOSS_COOL_TIME_S);
+	enemyBaseComponent.state->CreateState<AttackSorting>("AttackSorting", StateID::ATTACK_SORTING_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack1>("BossNormalAttack1", StateID::BOSS_NORMAL_ATTACK1_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack2>("BossNormalAttack2", StateID::BOSS_NORMAL_ATTACK2_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack3>("BossNormalAttack3", StateID::BOSS_NORMAL_ATTACK3_S);
+	enemyBaseComponent.state->CreateState<BossSpecialAttack1>("BossSpecialAttack1", StateID::BOSS_SPECIAL_ATTACK1_S);
+	enemyBaseComponent.state->CreateState<BossSpecialSmallAttack1>("BossSpecialSmallAttack1", StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
+	enemyBaseComponent.state->CreateState<BossSpecialAttack2>("BossSpecialAttack2", StateID::BOSS_SPECIAL_ATTACK2_S);
+	enemyBaseComponent.state->CreateState<BossDie>("BossDie", StateID::BOSS_DIE_S);
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
-	enemyBaseComponent.state->StartState(B_IDOL);
+	// 初期ステート
+	enemyBaseComponent.state->StartState(StateID::BOSS_IDOL_S);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::B_MODEL, -1);
@@ -189,7 +193,7 @@ void Boss::Start(Object3D* _obj)
 void Boss::ImguiDraw()
 {
 	if (ImGui::Button("bossDie")) {
-		enemyBaseComponent.state->NowChangeState(ID::BOSS_DIE);
+		enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
 		enemyBaseComponent.state->SetNoStateChange(true);
 	}
 }
@@ -331,7 +335,7 @@ void Boss::PlayerHit()
 		eB->EnemyBlowAwayInfoSet(bInfo);
 	}*/
 
-	ID::IDType attackID = pState->GetState<PlayerStateBase>()->GetID();
+	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
 	float damage = 0;;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
 		damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();

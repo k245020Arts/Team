@@ -32,7 +32,7 @@ void PlayerStateBase::Draw()
 void PlayerStateBase::AvoidStart()
 {
 	Player* p = GetBase<Player>();
-	p->playerCom.stateManager->ChangeState(ID::P_ANIM_AVOID);
+	p->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
 	noStateChange = false;
 }
 
@@ -67,6 +67,6 @@ void PlayerStateBase::DefalutWalk()
 		p->playerCom.player->AvoidReady();
 	}
 	if (p->playerCom.InputManager->KeyInputDown("attack")) {
-		p->playerCom.stateManager->ChangeState(ID::P_ANIM_ATTACK1);
+		p->playerCom.stateManager->ChangeState(StateID::PLAYER_ATTACK1_S);
 	}
 }

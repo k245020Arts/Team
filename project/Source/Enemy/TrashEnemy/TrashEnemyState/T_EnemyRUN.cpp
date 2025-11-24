@@ -6,7 +6,7 @@
 T_EnemyRun::T_EnemyRun()
 {
 	//animId = ID::TE_IDOL;
-	id = ID::TE_RUN;
+	//id = ID::TE_RUN;
 	string = Function::GetClassNameC<T_EnemyRun>();
 }
 
@@ -30,7 +30,7 @@ void T_EnemyRun::Update()
 
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
 	if (targetVec.Size() <= 500)
-		e->enemyBaseComponent.state->ChangeState(ID::TE_ATTACK);
+		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
 }
 
 void T_EnemyRun::Start()

@@ -37,10 +37,10 @@ void EnemyBase::Update()
 	if (CheckHitKey(KEY_INPUT_G)) {
 		obj->GetTransform()->position = EnemyInformation::BASE_POS;
 	}
-	if (hp <= 0.0f && enemyBaseComponent.state->GetState<StateBase>()->GetID() == ID::E_ANIM_IDOL) {
-		enemyBaseComponent.state->NowChangeState(ID::E_DIE);
-		enemyBaseComponent.state->SetNoStateChange(true);
-	}
+	//if (hp <= 0.0f && enemyBaseComponent.state->GetState<StateBase>()->GetID() == StateID::E_ANIM_IDOL) {
+	//	//enemyBaseComponent.state->NowChangeState(ID::E_DIE);
+	//	enemyBaseComponent.state->SetNoStateChange(true);
+	//}
 	if (loopNum >= 0) {
 		hitCounter -= obj->GetObjectTimeRate();
 		if (hitCounter <= 0.0f) {
