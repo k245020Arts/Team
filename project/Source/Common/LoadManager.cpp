@@ -47,13 +47,15 @@ void Load::Init()
 
 int Load::LoadModel(std::string path,ID::IDType id)
 {
-	std::string name = ID::GetID(id);
+	std::string name = path;
 	LoadData data = fileLoad[name];
 	if (data.handle == -1) {
 		//拡張子はこっちで指定する分楽にできるようにする
+		ID::SetID(path, id);
 		path += ".mv1";
 		data.handle = MV1LoadModel(path.c_str());
 		data.type = Type::MODEL;
+		
 	}
 	if (data.handle == -1) {
 		ShowLoadError("Model", name);
@@ -113,10 +115,11 @@ int Load::LoadEffect(std::string path, Effect_ID::EFFECT_ID id,float size)
 
 int Load::LoadImageGraph(std::string path, ID::IDType id)
 {
-	std::string name = ID::GetID(id);
+	std::string name = path;
 	LoadData data = fileLoad[name];
 	if (data.handle == -1) {
 		//拡張子はこっちで指定する分楽にできるようにする
+		ID::SetID(path, id);
 		path += ".png";
 		data.handle = LoadGraph(path.c_str());
 		data.type = Type::IMAGE;
@@ -133,13 +136,15 @@ int Load::LoadImageGraph(std::string path, ID::IDType id)
 
 int Load::LoadAnim(std::string path, ID::IDType id)
 {
-	std::string name = ID::GetID(id);
+	std::string name = path;
 	LoadData data = fileLoad[name];
 	if (data.handle == -1) {
 		//拡張子はこっちで指定する分楽にできるようにする
+		ID::SetID(path, id);
 		path += ".mv1";
 		data.handle = MV1LoadModel(path.c_str());
 		data.type = Type::ANIM;
+		
 	}
 	if (data.handle == -1) {
 		ShowLoadError("Anim", name);

@@ -84,9 +84,9 @@ namespace {
 
 void ID::Init() {
 
-	for (int i = 0; i < ID_MAX; i++) {
+	/*for (int i = 0; i < ID_MAX; i++) {
 		modelId[i] = InitID[i];
-	}
+	}*/
 }
 
 std::string ID::GetID(IDType _type)
@@ -96,4 +96,13 @@ std::string ID::GetID(IDType _type)
 		Debug::CreateMessageBox("modelHandleMiss", "miss");
 	}
 	return modelId[type];
+}
+
+void ID::SetID(std::string _model, IDType _type)
+{
+	int type = (int)_type;
+	if (type < 0 && type >= (int)ID_MAX) {
+		Debug::CreateMessageBox("soundHandleSetMiss", "miss");
+	}
+	modelId[type] = _model;
 }

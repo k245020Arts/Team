@@ -161,8 +161,8 @@ void Animator::Update()
 void Animator::AddFile(ID::IDType id, std::string filename, bool loop, float speed, float _eventStart, float _eventFinish)
 {
     FileInfo inf;
-    std::string str = ID::GetID(id);
     inf.hModel = Load::LoadAnim(Load::ANIM_PATH + filename, id);
+    std::string str = ID::GetID(id);
     assert(inf.hModel > 0);
     inf.loop = loop;
     inf.playSpeed = speed;

@@ -136,6 +136,12 @@ void Camera::PlayerSet(BaseObject* _obj)
 
 	using namespace ID;
 
+	SetID("c_follow", C_FOLLOW);
+	SetID("c_anim_just_avoid", P_ANIM_JUST_AVOID);
+	SetID("c_avoid_attack", C_AVOID_ATTACK);
+	SetID("c_free", C_FREE);
+	SetID("c_hit", C_HIT);
+
 	//state‚ð“o˜^
 	cameraComponent.state->CreateState<FollowCamera>(GetID(C_FOLLOW));
 	cameraComponent.state->CreateState<JustAvoidCamera>(GetID(P_ANIM_JUST_AVOID));
