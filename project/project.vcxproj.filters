@@ -437,6 +437,9 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Common\ID\StateID.cpp">
+      <Filter>Common\ID</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -923,6 +926,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Common\ID\StateID.h">
+      <Filter>Common\ID</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

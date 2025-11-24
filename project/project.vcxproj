@@ -187,6 +187,7 @@
     <ClInclude Include="Source\Common\ID\EffectID.h" />
     <ClInclude Include="Source\Common\ID\ID.h" />
     <ClInclude Include="Source\Common\ID\SoundID.h" />
+    <ClInclude Include="Source\Common\ID\StateID.h" />
     <ClInclude Include="Source\Common\InputManager\ControllerInputManager.h" />
     <ClInclude Include="Source\Common\InputManager\InputManager.h" />
     <ClInclude Include="Source\Common\InputManager\KeyboardInputManager.h" />
@@ -344,6 +345,7 @@
     <ClCompile Include="Source\Common\ID\EffectID.cpp" />
     <ClCompile Include="Source\Common\ID\ID.cpp" />
     <ClCompile Include="Source\Common\ID\SoundID.cpp" />
+    <ClCompile Include="Source\Common\ID\StateID.cpp" />
     <ClCompile Include="Source\Common\InputManager\ControllerInputManager.cpp" />
     <ClCompile Include="Source\Common\InputManager\InputManager.cpp" />
     <ClCompile Include="Source\Common\InputManager\KeyboardInputManager.cpp" />

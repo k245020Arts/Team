@@ -87,5 +87,6 @@ namespace ID {
 	void Init();
 
 	std::string GetID(IDType _type);
+	void SetID(std::string _model, IDType _type);
 
 }
