@@ -5,6 +5,9 @@
 
 T_EnemyRun::T_EnemyRun()
 {
+	//animId = ID::TE_IDOL;
+	id = ID::TE_RUN;
+	string = Function::GetClassNameC<T_EnemyRun>();
 }
 
 T_EnemyRun::~T_EnemyRun()
@@ -15,22 +18,24 @@ void T_EnemyRun::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	rotation = e->obj->GetTransform()->rotation;
+	e->LookPlayer();
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
 
 	//移動の計算
-	velocity.x = 5 * cosf(ROTY);
-	velocity.z = 5 * sinf(ROTY);
+	velocity.x = 10 * cosf(ROTY);
+	velocity.z = 10 * sinf(ROTY);
 
 	//計算したものをボスのポジションに足す
 	e->obj->GetTransform()->position += velocity;
 
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
-	if (targetVec.Size() <= 300)
-		e->enemyBaseComponent.state->ChangeState(ID::E_ATTACK1);
+	if (targetVec.Size() <= 500)
+		e->enemyBaseComponent.state->ChangeState(ID::TE_ATTACK);
 }
 
 void T_EnemyRun::Start()
 {
+	EnemyStateBase::Start();
 }
 
 void T_EnemyRun::Finish()

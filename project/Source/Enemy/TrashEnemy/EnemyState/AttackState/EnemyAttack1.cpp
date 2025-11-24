@@ -7,13 +7,14 @@
 #include "../../../../Common/Sound/SoundManager.h"
 #include "../../../../Weapon/WeaponManager.h"
 #include "../../../../Camera/Camera.h"
+#include "../../TrashEnemy.h"
 
 EnemyAttack1::EnemyAttack1()
 {
-	animId = ID::E_ATTACK1;
+	animId = ID::B_N_ATTACK3; /*ID::E_ATTACK1*/;
 	collTrans = Transform(VECTOR3(-100, 50, 100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	string = Function::GetClassNameC<EnemyAttack1>();
-	id = ID::E_ATTACK1;
+	id = ID::TE_ATTACK;
 	sound = false;
 	animStopCounter = 0.0f;
 	effectAverageSpeed = 0.0f;
@@ -27,8 +28,9 @@ EnemyAttack1::~EnemyAttack1()
 void EnemyAttack1::Update()
 {
 	Enemy* e = GetBase<Enemy>();
-	if (e->enemyBaseComponent.anim->IsFinish()) {
-		e->enemyBaseComponent.state->ChangeState(ID::E_ANIM_IDOL);
+	if (e->enemyBaseComponent.anim->IsFinish())
+	{
+		e->enemyBaseComponent.state->ChangeState(ID::TE_IDOL);
 	}
 	/*if (com.anim->GetCurrentFrame() >= 12.0f && com.anim->GetCurrentFrame() <= 20.0f) {
 		com.anim->SetPlaySpeed(0.2f);
@@ -69,17 +71,22 @@ void EnemyAttack1::Draw()
 
 void EnemyAttack1::Start()
 {
-	Enemy* e = GetBase<Enemy>();
+	/*TrashEnemy* e = GetBase<TrashEnemy>();
 	EnemyStateBase::Start();
 	firstColl = true;
 	sound = true;
 	effectAverageSpeed = 60.0f / e->enemyBaseComponent.anim->EventStartTime(animId);
-	e->enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VZero, VOne), e->enemyBaseComponent.enemy->GetEnemyObj(), Effect_ID::ENEMY_ATTACK_CICLE, 1.0f);
+	e->enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VZero, VOne), e->enemyBaseComponent.trashEnemy->GetEnemyObj(), Effect_ID::ENEMY_ATTACK_CICLE, 1.0f);*/
+
+	/*TrashEnemy* e = GetBase<TrashEnemy>();
+	EnemyStateBase::Start();
+	firstColl = true;
+	e->enemyBaseComponent.anim->AnimEventReset();*/
 }
 
 void EnemyAttack1::Finish()
 {
-	Enemy* e = GetBase<Enemy>();
+	/*TrashEnemy* e = GetBase<TrashEnemy>();
 	e->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	e->enemyBaseComponent.effect->StopEffekseer(Effect_ID::ENEMY_ATTACK_CICLE);
+	e->enemyBaseComponent.effect->StopEffekseer(Effect_ID::ENEMY_ATTACK_CICLE);*/
 }

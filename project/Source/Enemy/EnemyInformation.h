@@ -5,6 +5,7 @@
 
 class StateManager;
 class Enemy;
+class TrashEnemy;
 class Animator;
 class Physics;
 class ControllerInputManager;
@@ -39,6 +40,7 @@ namespace EnemyInformation {
 		}
 		StateManager* state;
 		Enemy* enemy;
+		TrashEnemy* trashEnemy;
 		Physics* physics;
 		Animator* anim;
 		ControllerInputManager* control;

@@ -23,8 +23,7 @@
 
 #include "TrashEnemyState/T_EnemyIdol.h"
 #include "TrashEnemyState/T_EnemyRun.h"
-#include "EnemyState/AttackState/EnemyAttack1.h"
-
+#include "TrashEnemyState/T_EnemyAttack.h"
 
 TrashEnemy::TrashEnemy()
 {
@@ -38,13 +37,15 @@ TrashEnemy::~TrashEnemy()
 
 void TrashEnemy::Update()
 {
+	EnemyBase::Update();
+
 }
 
 void TrashEnemy::Draw()
 {
 }
 
-void TrashEnemy::Start()
+void TrashEnemy::Start(Object3D* _obj)
 {
 	enemyBaseComponent.state = obj->Component()->AddComponent<StateManager>();
 	enemyBaseComponent.playerObj = FindGameObjectWithTag<Object3D>("PLAYER");
@@ -66,15 +67,42 @@ void TrashEnemy::Start()
 
 	enemyBaseComponent.state->CreateState<T_EnemyIdol>(GetID(TE_IDOL));
 	enemyBaseComponent.state->CreateState<T_EnemyRun>(GetID(TE_RUN));
-	enemyBaseComponent.state->CreateState<EnemyAttack1>(GetID(E_ATTACK1));
+	enemyBaseComponent.state->CreateState<T_EnemyAttack>(GetID(TE_ATTACK));
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 	enemyBaseComponent.state->StartState(TE_IDOL);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
+
+	chara = obj->Component()->AddComponent<CharaWeapon>();
+	chara->ObjectPointer(_obj, 10, ID::E_MODEL, -1);
+	chara->SetImage(Load::GetHandle(ID::SWORD_EFFECT_B));
 }
 
 void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos)
 {
 	obj->GetTransform()->position = _pos;
-	Start();
+}
+
+void TrashEnemy::LookPlayer()
+{
+	//プレイヤーのポジションを格納させる
+	VECTOR3 targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
+	VECTOR3 distance = targetPos - obj->GetTransform()->position;
+	//向くべき角度
+	float direction = -atan2f(distance.z, distance.x) - 0.5f * DX_PI_F;
+	//その角度とどれだけ差があるか
+	float sign = direction - obj->GetTransform()->rotation.y;
+	//切り捨てして180の境界線を無くす
+	sign -= floorf(sign / DX_PI_F / 2) * DX_PI_F * 2.0f;
+	if (sign > DX_PI_F)
+		sign -= 2 * DX_PI_F;
+	//向くスピード(ラジアン)
+	const float LOOK_SPEED = 0.1;
+	//Playerの方をゆっくり向く
+	if (sign > LOOK_SPEED)
+		obj->GetTransform()->rotation.y += LOOK_SPEED;
+	else if (sign < -LOOK_SPEED)
+		obj->GetTransform()->rotation.y -= LOOK_SPEED;
+	else
+		obj->GetTransform()->rotation.y = direction;
 }

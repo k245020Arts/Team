@@ -434,6 +434,9 @@
     <ClCompile Include="Source\Component\Shadow\Shadow.cpp">
       <Filter>Component\Shadow</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -917,6 +920,9 @@
     </ClInclude>
     <ClInclude Include="Source\Component\Shadow\Shadow.h">
       <Filter>Component\Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

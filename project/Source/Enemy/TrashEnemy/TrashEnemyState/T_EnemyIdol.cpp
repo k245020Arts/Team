@@ -21,7 +21,7 @@ void T_EnemyIdol::Update()
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
 		//EnemyTransform->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	if (targetVec.Size() < 1000)
+	if (targetVec.Size() < 5000)
 		e->enemyBaseComponent.state->ChangeState(ID::TE_RUN);
 	
 }
@@ -32,7 +32,7 @@ void T_EnemyIdol::Draw()
 
 void T_EnemyIdol::Start()
 {
-	//EnemyStateBase::Start();
+	EnemyStateBase::Start();
 }
 
 void T_EnemyIdol::Finish()

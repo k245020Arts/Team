@@ -44,14 +44,6 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 {
     for (int i = 0; i < enemySpawnCounter; i++)
     {
-        
-        /*Object3D* enemy = new Object3D();
-        const float SIZE = 3.0f;
-        enemy->Init(Transform(VZero, VZero, VECTOR3(SIZE, SIZE, SIZE)), "TrashEnemy");
-
-        MeshRenderer* m = enemy->Component()->AddComponent<MeshRenderer>();
-        m->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Ch45_nonPBR", ID::E_MODEL));
-        m->RotationMesh(0, 180.0f * DegToRad);*/
 		// 個別のenemyを作る
 		Object3D* e;
 		e = new Object3D();
@@ -86,13 +78,13 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		me->RotationMesh(1, DX_PI_F);
 
 		Animator* anim = e->Component()->AddComponent<Animator>();
-		anim->AddFile(ID::E_ATTACK1, "E_ATTACK1", false, 0.7f, 11.0f, 18.0f);
-		anim->AddFile(ID::E_ANIM_IDOL, "E_IDOL", true, 1.0f);
+		anim->AddFile(ID::TE_ATTACK, "B_N_ATTACK3", false, 0.7f, 11.0f, 18.0f);
+		/*anim->AddFile(ID::E_ANIM_IDOL, "E_IDOL", true, 1.0f);
 		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
 		anim->AddFile(ID::E_FALL, "E_FALL", true, 1.0f);
 		anim->AddFile(ID::E_GETUP, "E_GETUP", false, 2.0f);
 		anim->AddFile(ID::E_RUN, "E_RUN", true, 1.0f);
-		anim->AddFile(ID::IDType::E_DIE, "E_DIE", false, 0.5f, 9.0f, 12.0f);
+		anim->AddFile(ID::IDType::E_DIE, "E_DIE", false, 0.5f, 9.0f, 12.0f);*/
 		anim->BaseModelSet(Load::GetHandle(ID::E_MODEL), 1);
 		//anim->Play(ID::E_ANIM_IDOL);
 
@@ -101,7 +93,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 
         // 個別のTrashEnemyを追加
         TrashEnemy* t = e->Component()->AddComponent<TrashEnemy>();
-
+		t->Start(e);
         // enemiesに登録（個別インスタンス）
         enemies.emplace_back(t);
 
