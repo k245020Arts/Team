@@ -108,8 +108,6 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 
 void TrashEnemyManager::ImguiDraw()
 {
-   // gl::clear(Color(0, 0, 0));
-
     ImGui::Begin("TrashEnemyManager");
 
     ImGui::Text("enemies: %d", enemies.size());
