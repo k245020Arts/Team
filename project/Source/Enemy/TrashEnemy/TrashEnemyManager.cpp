@@ -78,14 +78,15 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		me->RotationMesh(1, DX_PI_F);
 
 		Animator* anim = e->Component()->AddComponent<Animator>();
-		anim->AddFile(ID::TE_ATTACK, "B_N_ATTACK3", false, 0.7f, 11.0f, 18.0f);
+		anim->BaseModelSet(Load::GetHandle(ID::E_MODEL), 1);
+		anim->AddFile(ID::TE_ATTACK, "B_ATTACK3", false, 0.7f, 11.0f, 18.0f);
 		/*anim->AddFile(ID::E_ANIM_IDOL, "E_IDOL", true, 1.0f);
 		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
 		anim->AddFile(ID::E_FALL, "E_FALL", true, 1.0f);
 		anim->AddFile(ID::E_GETUP, "E_GETUP", false, 2.0f);
 		anim->AddFile(ID::E_RUN, "E_RUN", true, 1.0f);
 		anim->AddFile(ID::IDType::E_DIE, "E_DIE", false, 0.5f, 9.0f, 12.0f);*/
-		anim->BaseModelSet(Load::GetHandle(ID::E_MODEL), 1);
+		
 		//anim->Play(ID::E_ANIM_IDOL);
 
 		Physics* physics = e->Component()->AddComponent<Physics>();

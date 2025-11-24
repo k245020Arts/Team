@@ -75,9 +75,9 @@ namespace {
 		"b_s_attack2Stop",
 		"b_s_attack2Before",
 		"b_s_attack1small",
-		"te_idol"
-		"te_run"
-		"te_attack"
+		"te_idol",
+		"te_run",
+		"te_attack",
 		"shadow",
 	};
 }

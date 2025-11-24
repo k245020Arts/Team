@@ -11,6 +11,7 @@
 #include "../../../Common/Sound/SoundManager.h"
 #include "../../../Weapon/WeaponManager.h"
 #include "../../../Camera/Camera.h"
+#include "../TrashEnemy.h"
 
 EnemyStateBase::EnemyStateBase()
 {
@@ -89,11 +90,11 @@ void EnemyStateBase::AttackFlash(ID::IDType _modelId, int _modelFrame, std::stri
 
 void EnemyStateBase::Trail()
 {
-	EnemyBase* e = GetBase<EnemyBase>();
+	TrashEnemy* e = GetBase<TrashEnemy>();
 	float time = e->enemyBaseComponent.anim->EventStartTime(animId);
 	//Œ•‚Ì‹OÕ‚ğ”­¶
 	if (time - 7.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time + 5.0f >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
-		e->DrawTrail();
+		e->Trail();
 	}
 }
 

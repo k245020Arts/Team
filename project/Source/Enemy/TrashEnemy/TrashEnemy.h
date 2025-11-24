@@ -25,6 +25,8 @@ public:
 	void CreateTrashEnemy(VECTOR3 _pos);
 	VECTOR3 GetPos() { return obj->GetTransform()->position; }
 
+	void Trail();
+
 private:
 	CharaWeapon* chara;
 	void LookPlayer();

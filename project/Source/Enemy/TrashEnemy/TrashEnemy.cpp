@@ -70,7 +70,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<T_EnemyAttack>(GetID(TE_ATTACK));
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
-	enemyBaseComponent.state->StartState(TE_IDOL);
+	enemyBaseComponent.state->StartState(TE_ATTACK);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 
 	chara = obj->Component()->AddComponent<CharaWeapon>();
@@ -105,4 +105,9 @@ void TrashEnemy::LookPlayer()
 		obj->GetTransform()->rotation.y -= LOOK_SPEED;
 	else
 		obj->GetTransform()->rotation.y = direction;
+}
+
+void TrashEnemy::Trail()
+{
+	chara->CreateSwordEffect(VECTOR3(70, 0, -50), VECTOR3(120, 0, 50), 200.0f, 10.0f, 00.0f, 155.0f, 28, 0.5f);
 }

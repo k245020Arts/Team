@@ -25,7 +25,7 @@ void T_EnemyAttack::Update()
 	//BossAttackCollsion();
 	AttackSound();
 	AttackFlash(ID::E_MODEL, 11, "E_AttackV");
-	BossTrail(false);
+	Trail();
 }
 
 void T_EnemyAttack::Draw()
