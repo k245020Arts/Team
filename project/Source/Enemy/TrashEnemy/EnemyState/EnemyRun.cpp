@@ -7,7 +7,7 @@
 
 EnemyRun::EnemyRun()
 {
-	id = ID::E_RUN;
+	//id = ID::E_RUN;
 	animId = ID::E_RUN;
 	string = Function::GetClassNameC<EnemyRun>();
 }
@@ -30,7 +30,7 @@ void EnemyRun::Update()
 	if (size <= size2) {
 		//‹­§“I‚ÉŽ~‚Ü‚ç‚¹‚½‚¢‚Ì‚Å’ïR‚ð‹­‚ß‚Ä‚¢‚é
 		e->enemyBaseComponent.physics->SetFirction(VECTOR3(500000.0f, 500000.0f, 500000.0f));
-		e->enemyBaseComponent.state->ChangeState(ID::E_ANIM_IDOL);
+		//e->enemyBaseComponent.state->ChangeState(StateID::E_ANIM_IDOL);
 	}
 	if (e->enemyBaseComponent.physics->GetVelocity().Size() <= 3000.0f) {
 		e->enemyBaseComponent.physics->AddVelocity(dir * 150.0f, false);

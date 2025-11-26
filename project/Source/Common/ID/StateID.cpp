@@ -1,10 +1,27 @@
 #include "StateID.h"
+#include "ID.h"
+#include <unordered_map>
+#include <assert.h>
+#include "../Debug/Debug.h"
+
+namespace {
+	std::unordered_map<int, std::string> stateId;
+}
 
 std::string StateID::GetID(State_ID _type)
 {
-    return std::string();
+	int type = (int)_type;
+	if (type < 0 && type >= (int)STATE_MAX) {
+		Debug::CreateMessageBox("EffectHandleMiss", "miss");
+	}
+	return stateId[type];
 }
 
 void StateID::SetID(std::string _state, State_ID _type)
 {
+	int type = (int)_type;
+	if (type < 0 && type >= (int)STATE_MAX) {
+		Debug::CreateMessageBox("soundHandleSetMiss", "miss");
+	}
+	stateId[type] = _state;
 }

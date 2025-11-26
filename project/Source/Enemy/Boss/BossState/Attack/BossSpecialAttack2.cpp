@@ -6,7 +6,7 @@
 
 BossSpecialAttack2::BossSpecialAttack2()
 {
-	id = ID::B_S_ATTACK2;
+	//id = ID::B_S_ATTACK2;
 	animId = ID::B_S_ATTACK2_BEFORE;
 	collTrans = Transform(VECTOR3(0, 0, -50), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
 }
@@ -21,9 +21,9 @@ void BossSpecialAttack2::Update()
 	if (b->enemyBaseComponent.anim->IsFinish()) {
 		if (b->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(ID::B_S_ATTACK2_STOP)) {
 			if (b->maxAttack != 0)
-				b->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
+				b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 			else
-				b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+				b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 		}
 		else {
 			b->enemyBaseComponent.anim->Play(ID::B_S_ATTACK2);

@@ -5,7 +5,7 @@
 
 T_EnemyAttack::T_EnemyAttack()
 {
-	id = ID::TE_ATTACK;
+	//id = ID::TE_ATTACK;
 	animId = ID::B_N_ATTACK3;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 }
@@ -20,7 +20,7 @@ void T_EnemyAttack::Update()
 	const float MSPEED = 60.0f;//ƒ‚[ƒVƒ‡ƒ“‚Ì‘¬“x’²®
 
 	if (e->enemyBaseComponent.anim->IsFinish())
-		e->enemyBaseComponent.state->ChangeState(ID::TE_RUN);
+		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 
 	//BossAttackCollsion();
 	AttackSound();

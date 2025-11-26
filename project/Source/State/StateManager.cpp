@@ -6,8 +6,8 @@ StateManager::StateManager()
 	nodeBaseNum = -1;
 	nodeName = "";
 	nodeWindow = ed::CreateEditor();
-	currentId = ID::ID_MAX;
-	nextId = ID::ID_MAX;
+	currentId = StateID::STATE_MAX;
+	nextId = StateID::STATE_MAX;
 	stateNoChange = false;
 	debugId = 20;
 	tag = Function::GetClassNameC<StateManager>();
@@ -39,14 +39,14 @@ void StateManager::Draw()
 	state->Draw();
 }
 
-void StateManager::StartState(ID::IDType _id)
+void StateManager::StartState(StateID::State_ID _id)
 {
-	std::string id = ID::GetID(_id);
+	std::string id = StateID::GetID(_id);
 	state = stateInfo[id];
 	state->Start();
 }
 
-void StateManager::ChangeState(ID::IDType _id)
+void StateManager::ChangeState(StateID::State_ID _id)
 {
 	if (currentId == _id) {
 		return;
@@ -54,7 +54,7 @@ void StateManager::ChangeState(ID::IDType _id)
 	nextId = _id;
 }
 
-void StateManager::NowChangeState(ID::IDType _id)
+void StateManager::NowChangeState(StateID::State_ID _id)
 {
 	nextId = _id;
 	currentId = _id;
@@ -139,7 +139,7 @@ void StateManager::StateNodeDraw()
 		int pinOutputId = baseId + 2;
 		ed::BeginNode(nodeId);
 
-		std::string string = ID::GetID(idName[i]);
+		std::string string = StateID::GetID(idName[i]);
 		std::string start = string + "Start";
 		std::string end = string + "End";
 		ImGui::Text(string.c_str());
@@ -232,7 +232,7 @@ void StateManager::ImguiDraw()
 
 }
 
-void StateManager::Change(ID::IDType _id)
+void StateManager::Change(StateID::State_ID _id)
 {
 	if (stateNoChange) {
 		return;

@@ -2,8 +2,8 @@
 #include "../../Library/GameObject.h"
 #include "../Player/PlayerInformation.h"
 #include <typeinfo>
-#include "../Common/ID/ID.h"
 #include "../Component/Component.h"
+#include "../Common/ID/StateID.h"
 
 class BaseObject;
 
@@ -11,15 +11,16 @@ class StateBase
 {
 public:
 	StateBase() {
-		id = ID::ID_MAX;
+		id = StateID::STATE_MAX;
 		string = "";
 		obj = nullptr;
 		com = nullptr;
 	}
 	~StateBase(){}
 
-	void Init(BaseObject* _base) {
+	void Init(BaseObject* _base,StateID::State_ID _id) {
 		obj = _base;
+		id = _id;
 	}
 
 	virtual void Update(){}
@@ -27,7 +28,7 @@ public:
 	virtual void Start() { ; }
 
 	std::string GetString() { return string; }
-	ID::IDType GetID() { return id; }
+	StateID::State_ID GetID() { return id; }
 
 	virtual void AvoidStart() { ; }
 	virtual void Finish() { ; }
@@ -44,7 +45,7 @@ public:
 
 protected:
 	std::string string;
-	ID::IDType id;
+	StateID::State_ID id;
 	BaseObject* obj;
 	Component* com;
 };

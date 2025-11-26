@@ -6,7 +6,7 @@
 FreeCamera::FreeCamera()
 {
 	string = Function::GetClassNameC<FreeCamera>();
-	id = ID::C_FREE;
+	//id = ID::C_FREE;
 	backCounter = 0.0f;
 	beforeTarget = 0.0f;
 }

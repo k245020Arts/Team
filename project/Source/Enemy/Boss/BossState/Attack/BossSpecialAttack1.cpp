@@ -10,7 +10,7 @@
 BossSpecialAttack1::BossSpecialAttack1()
 {
 	//animId = ID::B_S_ATTACK1;
-	id = ID::B_S_ATTACK1;
+	//id = ID::B_S_ATTACK1;
 	string = Function::GetClassNameC<BossSpecialAttack1>();
 	a = 0;
 	counter = 0;
@@ -58,9 +58,9 @@ void BossSpecialAttack1::Update()
 		
 		if (b->enemyBaseComponent.anim->IsFinish()) {
 			if (b->maxAttack != 0)
-				b->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
+				b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 			else
-				b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+				b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 
 			
 			

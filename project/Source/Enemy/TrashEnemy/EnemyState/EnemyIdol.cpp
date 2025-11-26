@@ -13,7 +13,7 @@ EnemyIdol::EnemyIdol()
 	if (string.find(prefix) == 0) {
 		string = string.substr(prefix.length());
 	}
-	id = ID::E_ANIM_IDOL;
+	//id = ID::E_ANIM_IDOL;
 	timer = 0.0f;
 }
 
@@ -37,10 +37,10 @@ void EnemyIdol::Update()
 		VECTOR3 base = EnemyInformation::BASE_POS + VECTOR3(500, 0, 0);
 		float size2 = base.Size();
 		if (size >= size2) {
-			e->enemyBaseComponent.state->ChangeState(ID::E_RUN);
+			//e->enemyBaseComponent.state->ChangeState(ID::E_RUN);
 		}
 		else {
-			e->enemyBaseComponent.state->ChangeState(ID::E_ATTACK1);
+			//e->enemyBaseComponent.state->ChangeState(ID::E_ATTACK1);
 		}
 	}
 

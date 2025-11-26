@@ -37,7 +37,7 @@ protected:
 
 	float runTimer;
 
-	ID::IDType nextAttackID;
+	StateID::State_ID nextAttackID;
 	float frontSpeed;
 
 	const float ATTACK_FINISH_ANIM_SPEED = 0.1f;

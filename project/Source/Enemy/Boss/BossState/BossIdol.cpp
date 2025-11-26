@@ -7,7 +7,7 @@
 BossIdol::BossIdol()
 {
 	animId = ID::B_IDOL;
-	id = ID::B_IDOL;
+	//id = ID::B_IDOL;
 	string = Function::GetClassNameC<BossIdol>();
 }
 
@@ -22,7 +22,7 @@ void BossIdol::Update()
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 
 	if (targetVec.Size() < b->bs->GetStatus().chaseRange)
-		b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 }
 
 void BossIdol::Draw()

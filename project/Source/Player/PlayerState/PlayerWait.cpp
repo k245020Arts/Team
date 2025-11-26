@@ -10,7 +10,7 @@ PlayerWait::PlayerWait()
 
 	string = string = Function::GetClassNameC<PlayerWait>();;
 	animId = ID::P_ANIM_IDOL;
-	id = ID::P_ANIM_IDOL;
+	//id = ID::P_ANIM_IDOL;
 }
 
 PlayerWait::~PlayerWait()
@@ -25,7 +25,7 @@ void PlayerWait::Update()
 		return;
 	}
 	if (CheckHitKey(KEY_INPUT_0)) {
-		p->playerCom.stateManager->ChangeState(ID::P_ANIM_RUN);
+		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 	}
 
 	DefalutWalk();

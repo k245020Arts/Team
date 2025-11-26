@@ -17,12 +17,13 @@
 PlayerJustAvoidAttack1::PlayerJustAvoidAttack1()
 {
 	string = Function::GetClassNameC<PlayerJustAvoidAttack1>();
-	id = ID::P_ANIM_JUST_AVOID_ATTACK1;
+	//id = ID::P_ANIM_JUST_AVOID_ATTACK1;
 	nextAttack = false;
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK1;
 	collTrans = Transform(VECTOR3(0, 70, 200), VZero, VECTOR3(300, 0, 0));
 	timer = 0.0f;
-	nextAttackID = ID::P_ANIM_JUST_AVOID_ATTACK4;
+	//nextAttackID = ID::P_ANIM_JUST_AVOID_ATTACK4;
+	nextAttackID = StateID::PLAYER_JUST_AVOID_ATTACK4_S;
 	frontSpeed = 2000.0f;
 	hitDamage = 1;
 	animSpeed = 0.0f;

@@ -7,7 +7,7 @@
 
 BossNormalAttack2::BossNormalAttack2()
 {
-	id = ID::B_N_ATTACK2;
+	//id = ID::B_N_ATTACK2;
 	animId = ID::B_N_ATTACK2;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 }
@@ -22,9 +22,9 @@ void BossNormalAttack2::Update()
 	if (boss->enemyBaseComponent.anim->GetMaxFrame() - fallFrame <= boss->enemyBaseComponent.anim->GetCurrentFrame())
 	{
 		if (boss->maxAttack != 0)
-			boss->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
+			boss->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 		else
-			boss->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+			boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 	}
 	BossAttackCollsion();
 	if (boss->enemyBaseComponent.anim->AnimEventCan()) {

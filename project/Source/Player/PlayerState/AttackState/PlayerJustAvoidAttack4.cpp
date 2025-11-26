@@ -15,10 +15,10 @@
 PlayerJustAvoidAttack4::PlayerJustAvoidAttack4()
 {
 	string = Function::GetClassNameC<PlayerJustAvoidAttack4>();
-	id = ID::P_ANIM_JUST_AVOID_ATTACK4;
+	//id = ID::P_ANIM_JUST_AVOID_ATTACK4;
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK2;
 	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(200, 0, 0));
-	nextAttackID = ID::P_ANIM_JUST_AVOID_ATTACK5;
+	nextAttackID = StateID::PLAYER_JUST_AVOID_ATTACK5_S;
 	frontSpeed = 1000.0f;
 	hitDamage = 5.0f;
 }
@@ -66,7 +66,7 @@ void PlayerJustAvoidAttack4::Update()
 					noStateChange = true;
 					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
 					p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
-					p->playerCom.camera->ChangeStateCamera(ID::C_FOLLOW);
+					p->playerCom.camera->ChangeStateCamera(StateID::FOLLOW_CAMERA_S);
 				}
 			}
 		}
@@ -87,7 +87,7 @@ void PlayerJustAvoidAttack4::Start()
 	}
 	p->playerCom.anim->SetPlaySpeed(0.1f);
 	firstColl = true;
-	p->playerCom.camera->ChangeStateCamera(ID::C_AVOID_ATTACK);
+	p->playerCom.camera->ChangeStateCamera(StateID::JUST_AVOID_ATTACK_CAMERA_S);
 	nextAttack = true;
 }
 

@@ -15,7 +15,7 @@
 PlayerJustAvoidAttack5::PlayerJustAvoidAttack5()
 {
 	string = Function::GetClassNameC<PlayerJustAvoidAttack5>();
-	id = ID::P_ANIM_JUST_AVOID_ATTACK5;
+	//id = ID::P_ANIM_JUST_AVOID_ATTACK5;
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK4;
 	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(200, 0, 0));
 	attack = false;
@@ -49,7 +49,7 @@ void PlayerJustAvoidAttack5::Update()
 			}
 			else {
 				//UŒ‚•s‰Â”\‚È‚ç—Ž‰º‚µ‚Ä‚¢‚­
-				p->playerCom.stateManager->ChangeState(ID::P_BLOWAWAY);
+				p->playerCom.stateManager->ChangeState(StateID::PLAYER_BLOW_AWAY_S);
 				p->playerCom.sound->PlaySe(Sound_ID::SOUND_ID::V_P_LOSE);
 			}
 			
@@ -76,7 +76,7 @@ void PlayerJustAvoidAttack5::Update()
 		if (p->playerCom.anim->AnimEventCan()) {
 			p->playerCom.anim->SetPlaySpeed(1.0f);
 			beforeAttack = false;
-			p->playerCom.camera->ChangeStateCamera(ID::C_HIT);
+			p->playerCom.camera->ChangeStateCamera(StateID::JUST_AVOID_ATTACK_HIT_CAMERA_S);
 		}
 		else {
 			if (beforeAttack) {
@@ -125,7 +125,7 @@ void PlayerJustAvoidAttack5::Finish()
 	p->playerCom.physics->SetFirction(INTEREA);
 	p->playerCom.physics->SetGravity(VECTOR3(0.0f, -6000.0f, 0.0f));
 	p->playerCom.anim->AnimEventReset();
-	p->playerCom.camera->ChangeStateCamera(ID::C_FOLLOW);
+	p->playerCom.camera->ChangeStateCamera(StateID::FOLLOW_CAMERA_S);
 	p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
 	PlayerAttackStateBase::Finish();
 }

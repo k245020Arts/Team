@@ -65,12 +65,14 @@ void TrashEnemy::Start(Object3D* _obj)
 
 	using namespace ID;
 
-	enemyBaseComponent.state->CreateState<T_EnemyIdol>(GetID(TE_IDOL));
-	enemyBaseComponent.state->CreateState<T_EnemyRun>(GetID(TE_RUN));
-	enemyBaseComponent.state->CreateState<T_EnemyAttack>(GetID(TE_ATTACK));
+	enemyBaseComponent.state->CreateState<T_EnemyIdol>("_T_EnemyIdol", StateID::T_ENEMY_IDOL_S);
+	enemyBaseComponent.state->CreateState<T_EnemyRun>("_T_EnemyRun", StateID::T_ENEMY_RUN_S);
+	enemyBaseComponent.state->CreateState<T_EnemyAttack>("_T_EnemyAttack", StateID::T_ENEMY_ATTACK_S);
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
-	enemyBaseComponent.state->StartState(TE_ATTACK);
+
+	// スタートステートも StateID 化
+	enemyBaseComponent.state->StartState(StateID::T_ENEMY_ATTACK_S);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 
 	chara = obj->Component()->AddComponent<CharaWeapon>();

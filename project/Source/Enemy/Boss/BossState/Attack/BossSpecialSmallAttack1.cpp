@@ -9,7 +9,7 @@
 
 BossSpecialSmallAttack1::BossSpecialSmallAttack1()
 {
-	id = ID::B_S_ATTACK1_SMALL;
+	//id = ID::B_S_ATTACK1_SMALL;
 	string = Function::GetClassNameC<BossSpecialSmallAttack1>();
 	animId = ID::B_S_ATTACK1_SMALL;
 
@@ -54,9 +54,9 @@ void BossSpecialSmallAttack1::Update()
 
 		if (b->enemyBaseComponent.anim->IsFinish()) {
 			if (b->maxAttack != 0)
-				b->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
+				b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 			else
-				b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
+				b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 		}
 	}
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= b->enemyBaseComponent.anim->EventFinishTime(animId)) {

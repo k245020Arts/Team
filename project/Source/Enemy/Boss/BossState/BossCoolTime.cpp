@@ -7,7 +7,7 @@
 BossCoolTime::BossCoolTime()
 {
 	animId = ID::B_COOLTIME;
-	id = ID::B_COOLTIME;
+	//id = ID::B_COOLTIME;
 }
 
 BossCoolTime::~BossCoolTime()
@@ -24,7 +24,7 @@ void BossCoolTime::Update()
 	//UŒ‚‚Ü‚Å‚ÌŽžŠÔiŒã‚ÅC³j
 	coolTime++;
 	if (coolTime >= bs->GetStatus().coolTime)
-		b->enemyBaseComponent.state->ChangeState(ID::B_ATTACKSORTING);
+		b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 }
 
 void BossCoolTime::Start()

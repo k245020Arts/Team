@@ -14,7 +14,7 @@ EnemyAttack1::EnemyAttack1()
 	animId = ID::B_N_ATTACK3; /*ID::E_ATTACK1*/;
 	collTrans = Transform(VECTOR3(-100, 50, 100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	string = Function::GetClassNameC<EnemyAttack1>();
-	id = ID::TE_ATTACK;
+	//id = ID::TE_ATTACK;
 	sound = false;
 	animStopCounter = 0.0f;
 	effectAverageSpeed = 0.0f;
@@ -30,7 +30,7 @@ void EnemyAttack1::Update()
 	Enemy* e = GetBase<Enemy>();
 	if (e->enemyBaseComponent.anim->IsFinish())
 	{
-		e->enemyBaseComponent.state->ChangeState(ID::TE_IDOL);
+		//e->enemyBaseComponent.state->ChangeState(ID::TE_IDOL);
 	}
 	/*if (com.anim->GetCurrentFrame() >= 12.0f && com.anim->GetCurrentFrame() <= 20.0f) {
 		com.anim->SetPlaySpeed(0.2f);

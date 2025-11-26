@@ -52,14 +52,14 @@ void Camera::Update()
 	if (input->KeyInputDown("camera")) {
 		if (!rockOn) {
 			if (cameraComponent.enemyManager->PlayerDistance(this)) {
-				cameraComponent.state->NowChangeState(ID::C_FOLLOW);
+				cameraComponent.state->NowChangeState(StateID::FOLLOW_CAMERA_S);
 				//rockOn = !rockOn;
 			}
 			
 		}
 		else {
 			
-			cameraComponent.state->NowChangeState(ID::C_FREE);
+			cameraComponent.state->NowChangeState(StateID::FREE_CAMERA_S);
 			rockOn = !rockOn;
 		}
 	}
@@ -136,24 +136,18 @@ void Camera::PlayerSet(BaseObject* _obj)
 
 	using namespace ID;
 
-	SetID("c_follow", C_FOLLOW);
-	SetID("c_anim_just_avoid", P_ANIM_JUST_AVOID);
-	SetID("c_avoid_attack", C_AVOID_ATTACK);
-	SetID("c_free", C_FREE);
-	SetID("c_hit", C_HIT);
-
 	//state‚ð“o˜^
-	cameraComponent.state->CreateState<FollowCamera>(GetID(C_FOLLOW));
-	cameraComponent.state->CreateState<JustAvoidCamera>(GetID(P_ANIM_JUST_AVOID));
-	cameraComponent.state->CreateState<JustAvoidAttackCamera>(GetID(C_AVOID_ATTACK));
-	cameraComponent.state->CreateState<JustAvoidAttackHitCamera>(GetID(C_HIT));
-	cameraComponent.state->CreateState<FreeCamera>(GetID(C_FREE));
+	cameraComponent.state->CreateState<FollowCamera>("_FollowCamera", StateID::FOLLOW_CAMERA_S);
+	cameraComponent.state->CreateState<JustAvoidCamera>("_JustAvoidCamera", StateID::JUST_AVOID_CAMERA_S);
+	cameraComponent.state->CreateState<JustAvoidAttackCamera>("_JustAvoidAttackCamera", StateID::JUST_AVOID_ATTACK_CAMERA_S);
+	cameraComponent.state->CreateState<JustAvoidAttackHitCamera>("_JustAvoidAttackHitCamera", StateID::JUST_AVOID_ATTACK_HIT_CAMERA_S);
+	cameraComponent.state->CreateState<FreeCamera>("_FreeCamera", StateID::FREE_CAMERA_S);
 
 	cameraComponent.state->NodeDrawReady();
 	cameraComponent.target.shaker = _obj->Component()->GetComponent<Shaker>();
 
 	cameraComponent.state->SetComponent<Camera>(this);
-	cameraComponent.state->StartState(C_FREE);
+	cameraComponent.state->StartState(StateID::FREE_CAMERA_S);
 	//CameraRotationSet();
 }
 
@@ -186,7 +180,7 @@ void Camera::CameraLeapSet(float _rape)
 	reap = _rape;
 }
 
-void Camera::ChangeStateCamera(ID::IDType _id)
+void Camera::ChangeStateCamera(StateID::State_ID _id)
 {
 	cameraComponent.state->ChangeState(_id);
 }

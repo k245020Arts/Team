@@ -20,7 +20,7 @@ PlayerJustAvoid::PlayerJustAvoid()
 
 	string = string = Function::GetClassNameC<PlayerJustAvoid>();;
 	animId = ID::P_ANIM_JUST_AVOID;
-	id = ID::P_ANIM_JUST_AVOID;
+	//id = ID::P_ANIM_JUST_AVOID;
 	attack = false;
 	blurScreen = FindGameObject<BlurScreen>();
 	cameraAngle = 0.0f;
@@ -81,7 +81,7 @@ void PlayerJustAvoid::Update()
 	}
 	if (easingCount >= 0.5f) {
 		if (attack) {
-			p->playerCom.stateManager->ChangeState(ID::P_ANIM_JUST_AVOID_ATTACK2);
+			p->playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_ATTACK2_S);
 		}
 	}
 	//Žc‘œ‚ð•t‚¯‚é
@@ -145,7 +145,7 @@ void PlayerJustAvoid::Start()
 	p->playerCom.camera->TargetSet(p->playerCom.hitObj);
 	p->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
 	//ƒJƒƒ‰‚Ìó‘Ô‘JˆÚ
-	p->playerCom.camera->ChangeStateCamera(ID::P_ANIM_JUST_AVOID);
+	p->playerCom.camera->ChangeStateCamera(StateID::JUST_AVOID_CAMERA_S);
 	attack = false;
 	//“G‚ÌUŒ‚‚ð’x‚­‚·‚é
 	p->playerCom.hitObj->SetObjectTimeRate(0.6f);

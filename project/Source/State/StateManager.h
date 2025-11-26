@@ -3,7 +3,7 @@
 #include "../Player/PlayerState/PlayerStateBase.h"
 #include <typeinfo>
 #include <string>
-#include "../Common/ID/ID.h"
+#include "../Common/ID/StateID.h"
 #include "../../ImGui/imgui.h"
 #include "../../ImGui/imgui_node_editor.h"
 #include "../Common/Debug/Debug.h"
@@ -50,13 +50,14 @@ public:
 	virtual void Update();
 	virtual void Draw();
 
-	ID::IDType GetBeforeID() { return beforeId; }
+	StateID::State_ID GetBeforeID() { return beforeId; }
 
 	//ステートを追加
 	template <typename T>
-	std::shared_ptr<T> CreateState(std::string _state) {
+	std::shared_ptr<T> CreateState(std::string _state,StateID::State_ID _id) {
 		std::shared_ptr<T> sta = std::make_shared<T>();
-		sta->Init(obj);
+		StateID::SetID(_state, _id);
+		sta->Init(obj,_id);
 		stateInfo.emplace(_state,sta);
 		return sta;
 	}
@@ -69,17 +70,17 @@ public:
 	}
 
 	//最初の一回だけ呼び出す用関数
-	void StartState(ID::IDType _id);
+	void StartState(StateID::State_ID _id);
 	/// <summary>
 	/// 次の１フレーム後にステートを変える
 	/// </summary>
 	/// <returns></returns>
-	void ChangeState(ID::IDType _id);
+	void ChangeState(StateID::State_ID _id);
 	/// <summary>
 	/// 通った瞬間にstateを変えることが出来るクラス
 	/// </summary>
 	/// <param name="_id"></param>
-	void NowChangeState(ID::IDType _id);
+	void NowChangeState(StateID::State_ID _id);
 	/// <summary>
 	/// この変数をtrueにするとstateがチェンジされない
 	/// </summary>
@@ -110,13 +111,13 @@ protected:
 	std::unordered_map<std::string, std::shared_ptr<StateBase>> stateInfo;
 	std::shared_ptr<StateBase> state;
 
-	ID::IDType currentId;
-	ID::IDType beforeId;
-	ID::IDType nextId;
+	StateID::State_ID currentId;
+	StateID::State_ID beforeId;
+	StateID::State_ID nextId;
 
 	ax::NodeEditor::EditorContext* nodeWindow;
 
-	std::vector<ID::IDType> idName;
+	std::vector<StateID::State_ID> idName;
 	std::vector<Link> link;
 	std::vector<Node> node;
 
@@ -130,5 +131,5 @@ protected:
 	bool stateNoChange;
 private:
 
-	void Change(ID::IDType _id);
+	void Change(StateID::State_ID _id);
 };

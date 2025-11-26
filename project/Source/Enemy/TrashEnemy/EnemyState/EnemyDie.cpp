@@ -7,7 +7,7 @@
 EnemyDie::EnemyDie()
 {
 	animId = ID::E_DIE;
-	id = ID::E_DIE;
+	//id = ID::E_DIE;
 	string = Function::GetClassNameC<EnemyDie>();
 }
 

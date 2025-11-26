@@ -14,7 +14,7 @@
 BossDie::BossDie()
 {
 	animId = ID::BOSS_DIE;
-	id = ID::BOSS_DIE;
+	//id = ID::BOSS_DIE;
 	string = Function::GetClassNameC<BossDie>();
 	one = true;
 }
