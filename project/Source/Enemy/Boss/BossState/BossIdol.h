@@ -14,5 +14,5 @@ public:
 	void Finish()override;
 
 private:
-
+	float timer;
 };

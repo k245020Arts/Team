@@ -1,6 +1,5 @@
 #pragma once
 #include "../PlayerStateBase.h"
-#include "../../../Common/ID/ID.h"
 
 class PlayerAttackStateBase : public PlayerStateBase
 {

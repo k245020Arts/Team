@@ -97,6 +97,7 @@ Boss::Boss()
 	maxHp = hp;
 	TrashEnemyManager* a = new TrashEnemyManager;//
 	a->CreateEnemy(VECTOR3(0, 0, 0), 1);//
+	maxAttack = -1;
 }
 
 Boss::~Boss()

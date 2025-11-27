@@ -4,6 +4,15 @@
 class AttackSorting :public EnemyStateBase
 {
 public:
+	
+	enum HP_RATE
+	{
+		MAX,
+		EIGHT,
+		FIVE,
+		THREE,
+	};
+
 	AttackSorting();
 	~AttackSorting();
 	void Update()override;
@@ -14,10 +23,16 @@ public:
 private:
 	const float COOLTIME = 30.0f;
 
-	bool Hp();
+	HP_RATE Hp();
 	void RandomAttack();
+
+	void NormalAttackSelect();
 
 	float coolTime;
 
+	HP_RATE hp;
+
 	bool jump;
+	int kind;
+	int attackNum;
 };

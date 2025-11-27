@@ -53,7 +53,7 @@ void BossSpecialSmallAttack1::Update()
 		}
 
 		if (b->enemyBaseComponent.anim->IsFinish()) {
-			if (b->maxAttack != 0)
+			if (b->maxAttack != -1)
 				b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 			else
 				b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
@@ -92,10 +92,12 @@ void BossSpecialSmallAttack1::Start()
 	firstCount = true;
 	effect = true;
 	b->enemyBaseComponent.anim->SetMaxFrame(animId, 60.0f);
+	b->enemyBaseComponent.anim->SetFrame(0.0f);
 }
 
 void BossSpecialSmallAttack1::Finish()
 {
 	Boss* b = GetBase<Boss>();
 	b->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));
+	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 }

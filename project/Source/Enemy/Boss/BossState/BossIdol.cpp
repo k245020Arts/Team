@@ -23,6 +23,10 @@ void BossIdol::Update()
 
 	if (targetVec.Size() < b->bs->GetStatus().chaseRange)
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+	timer -= Time::DeltaTimeRate();
+	if (timer <= 0.0f) {
+		b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
+	}
 }
 
 void BossIdol::Draw()
@@ -32,6 +36,7 @@ void BossIdol::Draw()
 void BossIdol::Start()
 {
 	EnemyStateBase::Start();
+	timer = 1.0f;
 	//Boss* b = GetBase<Boss>();
 	//b->enemyBaseComponent.anim->Play(animId);
 }

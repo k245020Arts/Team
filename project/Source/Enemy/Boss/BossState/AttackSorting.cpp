@@ -2,10 +2,53 @@
 #include "../Boss.h"
 #include "../../../State/StateManager.h"
 #include "BossStatus.h"
+#include "../../../Common/Random.h"
+
+namespace {
+	const int ATTACK_KIND_MAX = 6;
+	const int COMBO_ATTACK_KIND_MAX = 3;
+	enum COMBO_ATTACK
+	{
+		NORMAL_COMBO,
+		JUMP_COMBO,
+		RUN_COMBO,
+	};
+	std::vector<COMBO_ATTACK> comboKind{
+		{NORMAL_COMBO},
+		{JUMP_COMBO},
+		{RUN_COMBO},
+	};
+	std::vector<StateID::State_ID> attackKind{
+		{StateID::BOSS_NORMAL_ATTACK1_S},
+		{StateID::BOSS_NORMAL_ATTACK2_S},
+		{StateID::BOSS_NORMAL_ATTACK3_S},
+		{StateID::BOSS_SPECIAL_ATTACK1_S},
+		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S},
+		{StateID::BOSS_SPECIAL_ATTACK2_S},
+	};
+	const std::vector<std::vector<double>> normalAttackParam{
+		{ 1.0,1.0,0.5,0.0,0.0,0.0 },
+		{ 1.0,1.0,1.0,0.0,0.0,0.0 },
+		{ 0.1,0.1,0.5,0.7,1.0,0.1 },
+		{ 0.05,0.05,1.0,0.5,0.9,0.1 },
+	};
+	const std::vector<std::vector<double>> comboAttackParam{
+		{ 1.0,0.0,0.0},
+		{ 0.8,0.2,0.0},
+		{ 0.5,0.5,0.5},
+		{ 0.2,0.7,0.5},
+	};
+	const std::vector<std::vector<StateID::State_ID>> comboOrder{
+		{StateID::BOSS_NORMAL_ATTACK1_S, StateID::BOSS_NORMAL_ATTACK2_S, StateID::BOSS_NORMAL_ATTACK3_S},
+		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_ATTACK1_S },
+		{StateID::BOSS_SPECIAL_ATTACK2_S, StateID::BOSS_SPECIAL_ATTACK2_S }
+	};
+}
 
 AttackSorting::AttackSorting()
 {
 	coolTime = 0;
+	string = Function::GetClassNameC<AttackSorting>();
 }
 
 AttackSorting::~AttackSorting()
@@ -16,6 +59,14 @@ AttackSorting::~AttackSorting()
 void AttackSorting::Update()
 {
 	Boss* b = GetBase<Boss>();
+	if (b->maxAttack != -1) {
+		b->enemyBaseComponent.state->ChangeState(comboOrder[kind][attackNum - b->maxAttack]);
+	}
+	else {
+		b->enemyBaseComponent.state->ChangeState(attackKind[kind]);
+	}
+	
+	/*Boss* b = GetBase<Boss>();
 	if (jump) {
 		if (b->maxAttack != 0) {
 			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
@@ -41,7 +92,7 @@ void AttackSorting::Update()
 			if (!Hp())
 				b->maxAttack = 0;
 		}
-	}
+	}*/
 
 	
 
@@ -55,29 +106,60 @@ void AttackSorting::Update()
 
 void AttackSorting::Start()
 {
+	
 	Boss* b = GetBase<Boss>();
+	if (b->maxAttack != -1) {
+		b->maxAttack--;
+		return;
+	}
 	int maxAttack = b->bs->GetStatus().maxAttack;
 	int randam = GetRand(1);
-	if (Hp())
+	hp = Hp();
+	float comboAttackRate = 0.0f;
+	switch (hp)
 	{
-		//âΩâÒòAë±çUåÇÇ∑ÇÈÇ©åàÇﬂÇÈ
-		if (b->maxAttack == 0)
-			b->maxAttack = GetRand(maxAttack - 1);
-		else
-			b->maxAttack--;
+	case AttackSorting::MAX:
+		comboAttackRate = 0.0f;
+		break;
+	case AttackSorting::EIGHT:
+		comboAttackRate = 0.2f;
+		break;
+	case AttackSorting::FIVE:
+		comboAttackRate = 0.7f;
+		break;
+	case AttackSorting::THREE:
+		comboAttackRate = 0.9f;
+		break;
 	}
-	else
-		b->maxAttack = 0;
+	bool combo = Random::GetBernoulli(comboAttackRate);
+	if (combo) {
+		kind = Random::GetWeightedIndex(comboAttackParam[hp]);
+		b->maxAttack = comboOrder[kind].size() - 1;
+		attackNum = b->maxAttack;
+	}
+	else {
+		NormalAttackSelect();
+	}
+	//if ()
+	//{
+	//	//âΩâÒòAë±çUåÇÇ∑ÇÈÇ©åàÇﬂÇÈ
+	//	if (b->maxAttack == 0)
+	//		b->maxAttack = GetRand(maxAttack - 1);
+	//	else
+	//		b->maxAttack--;
+	//}
+	//else
+	//	b->maxAttack = 0;
 
-	if (b->maxAttack == 0) {
-		if (randam) {
-			jump = true;
-			b->maxAttack = GetRand(maxAttack - 1);
-		}
-		else {
-			jump = false;
-		}
-	}
+	//if (b->maxAttack == 0) {
+	//	if (randam) {
+	//		jump = true;
+	//		b->maxAttack = GetRand(maxAttack + 10);
+	//	}
+	//	else {
+	//		jump = false;
+	//	}
+	//}
 	
 }
 
@@ -86,16 +168,24 @@ void AttackSorting::Finish()
 
 }
 
-bool AttackSorting::Hp()
+AttackSorting::HP_RATE AttackSorting::Hp()
 {
 	Boss* b = GetBase<Boss>();
 	float hp = b->hp;
 
-	//hpÇ™ÇWäÑà»â∫Ç»ÇÁòAë±çUåÇÇÇ∑ÇÈ
-	if (hp <= b->bs->GetStatus().maxHp * 0.8)
-		return true;
-	else
-		return false;
+	if (hp >= b->bs->GetStatus().maxHp * 0.8f) {
+		return MAX;
+	}
+	else if (hp >= b->bs->GetStatus().maxHp * 0.5f) {
+		return EIGHT;
+	}
+	else if (hp >= b->bs->GetStatus().maxHp * 0.3f){
+		return FIVE;
+	}
+	else {
+		return THREE;
+	}
+	return THREE;
 }
 
 void AttackSorting::RandomAttack()
@@ -106,4 +196,36 @@ void AttackSorting::RandomAttack()
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK1_S);
 	else if (random == 1)
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK2_S);
+}
+
+void AttackSorting::NormalAttackSelect()
+{
+	Boss* b = GetBase<Boss>();
+	std::vector<double> rand;
+	rand.resize(6);
+	/*switch (hp)
+	{
+	case AttackSorting::MAX:
+		rand = 
+		break;
+		break;
+	case AttackSorting::EIGHT:
+		rand = 
+		break;
+	case AttackSorting::FIVE:
+		
+		break;
+	case AttackSorting::THREE:
+		
+		break;
+	default:
+		break;
+	}*/
+	VECTOR3 dist = b->obj->GetTransform()->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
+	float size = dist.Size();
+	if (size > 5000.0f) {
+		rand[5] += 3.0f;
+	}
+	kind = Random::GetWeightedIndex(normalAttackParam[hp]);
+	b->maxAttack = -1;
 }
