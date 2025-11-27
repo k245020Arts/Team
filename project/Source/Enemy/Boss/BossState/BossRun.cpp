@@ -3,6 +3,7 @@
 #include "../../../State/StateManager.h"
 #include "AttackSorting.h"
 #include "BossStatus.h"
+#include "../../../Component/Physics/Physics.h"
 
 BossRun::BossRun()
 {
@@ -27,15 +28,32 @@ void BossRun::Update()
 		speed = bs->GetStatus().runSpeed;
 	}
 
-	rotation = b->obj->GetTransform()->rotation;
-	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
+	//rotation = b->obj->GetTransform()->rotation;
+	//const float ROTY = -rotation.y - 0.5f * DX_PI_F;
 
-	//移動の計算
-	velocity.x = speed * cosf(ROTY);
-	velocity.z = speed * sinf(ROTY);
+	////移動の計算
+	//velocity.x = speed * cosf(ROTY);
+	//velocity.z = speed * sinf(ROTY);
 
-	//計算したものをボスのポジションに足す
-	b->obj->GetTransform()->position += velocity;
+	////計算したものをボスのポジションに足す
+	//b->obj->GetTransform()->position += velocity;
+
+	VECTOR3 dir = VZero;
+	dir.y *= 0.0f;
+	//b->bossTransform->GetRotationMatrix();
+	dir = b->bossTransform->Forward() * -1000.0f;
+	b->enemyBaseComponent.physics->AddVelocity(dir, false);
+	VECTOR3 moveVelo;
+	moveVelo = b->enemyBaseComponent.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
+
+	float max = 1500.0f;
+	//float size = moveVelo.SquareSize();
+	//最大速度までいったらスピードマックスに補正
+	if (moveVelo.SquareSize() >= max * max) {
+		moveVelo = moveVelo.Normalize() * max;
+		moveVelo.y = b->enemyBaseComponent.physics->GetVelocity().y;
+		b->enemyBaseComponent.physics->SetVelocity(moveVelo);
+	}
 
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 	//プレイヤーと離れたらアイドルになる

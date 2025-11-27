@@ -110,6 +110,7 @@ void AttackSorting::Start()
 	Boss* b = GetBase<Boss>();
 	if (b->maxAttack != -1) {
 		b->maxAttack--;
+		b->comboFirstAttack = false;
 		return;
 	}
 	int maxAttack = b->bs->GetStatus().maxAttack;
@@ -133,9 +134,16 @@ void AttackSorting::Start()
 	}
 	bool combo = Random::GetBernoulli(comboAttackRate);
 	if (combo) {
-		kind = Random::GetWeightedIndex(comboAttackParam[hp]);
+		std::vector<double> rand = comboAttackParam[hp];
+		VECTOR3 dist = b->obj->GetTransform()->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
+		float size = dist.Size();
+		if (size >= 5000.0f) {
+			rand[2] += 2.0f;
+		}
+		kind = Random::GetWeightedIndex(rand);
 		b->maxAttack = comboOrder[kind].size() - 1;
 		attackNum = b->maxAttack;
+		b->comboFirstAttack = true;
 	}
 	else {
 		NormalAttackSelect();
@@ -201,8 +209,7 @@ void AttackSorting::RandomAttack()
 void AttackSorting::NormalAttackSelect()
 {
 	Boss* b = GetBase<Boss>();
-	std::vector<double> rand;
-	rand.resize(6);
+	std::vector<double> rand = normalAttackParam[hp];
 	/*switch (hp)
 	{
 	case AttackSorting::MAX:
@@ -226,6 +233,6 @@ void AttackSorting::NormalAttackSelect()
 	if (size > 5000.0f) {
 		rand[5] += 3.0f;
 	}
-	kind = Random::GetWeightedIndex(normalAttackParam[hp]);
+	kind = Random::GetWeightedIndex(rand);
 	b->maxAttack = -1;
 }

@@ -47,7 +47,7 @@ void MeshRenderer::Draw()
 	else {
 		MV1SetMatrix(hModel, tra.GetMatrix());
 	}
-	
+	obj->GetTransform()->GetMatrix();
 	MV1SetDifColorScale(hModel, color->GetColorF());
 	MV1DrawModel(hModel);
 }

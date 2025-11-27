@@ -157,3 +157,17 @@ void EffectManager::SetColor(Effect_ID::EFFECT_ID _id, Color::Rgb _rgb)
 		}
 	}
 }
+
+void EffectManager::ParentTransformRemove(BaseObject* _obj)
+{
+	for (auto e = effect.begin(); e != effect.end();) {
+		if (_obj == *e) {
+			EffectBase* base = (*e)->Component()->GetComponent<EffectBase>();
+			base->ParentTransformRemove();
+			return;
+		}
+		else {
+			e++;
+		}
+	}
+}

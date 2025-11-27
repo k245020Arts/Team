@@ -98,6 +98,7 @@ Boss::Boss()
 	TrashEnemyManager* a = new TrashEnemyManager;//
 	a->CreateEnemy(VECTOR3(0, 0, 0), 1);//
 	maxAttack = -1;
+	comboFirstAttack = false;
 }
 
 Boss::~Boss()
@@ -120,7 +121,7 @@ void Boss::Update()
 	}
 
 	if (CheckHitKey(KEY_INPUT_0)) {
-		enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK1_S);
+		hp -= 5.0f;
 	}
 
 	if (CheckHitKey(KEY_INPUT_1)) {
@@ -130,6 +131,7 @@ void Boss::Update()
 	if (CheckHitKey(KEY_INPUT_2)) {
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK2_S);
 	}
+
 }
 
 void Boss::Draw()

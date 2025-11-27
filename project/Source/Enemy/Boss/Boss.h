@@ -62,4 +62,5 @@ private:
 	CharaWeapon* chara;
 
 	int maxAttack;
+	bool comboFirstAttack;
 };

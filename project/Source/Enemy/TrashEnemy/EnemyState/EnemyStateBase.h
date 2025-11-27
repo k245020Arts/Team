@@ -17,6 +17,7 @@ public:
 
 	void AttackSound();
 	void AttackFlash(ID::IDType _modelId, int _modelFrame, std::string _voice);
+	void AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std::string _voice);
 	void Trail();
 	void BossTrail(bool _right);
 

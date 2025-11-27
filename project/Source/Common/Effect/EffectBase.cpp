@@ -135,3 +135,8 @@ void EffectBase::SetColor(Color::Rgb _rgb)
 {
 	(this->*effectColor)(_rgb);
 }
+
+void EffectBase::ParentTransformRemove()
+{
+	parent->GetTransform()->RemoveChild(obj->GetTransform());
+}

@@ -52,6 +52,11 @@ public:
 	/// <param name="_id"></param>
 	/// <param name="_rgb"></param>
 	void SetColor(Effect_ID::EFFECT_ID _id, Color::Rgb _rgb);
+	/// <summary>
+	///　親のトランスフォームを外すための関数
+	/// </summary>
+	/// <param name="_obj"></param>
+	void ParentTransformRemove(BaseObject* _obj);
 	
 private:
 	std::list<BaseObject*> effect;

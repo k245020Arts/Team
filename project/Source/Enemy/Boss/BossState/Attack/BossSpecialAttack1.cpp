@@ -41,6 +41,7 @@ void BossSpecialAttack1::Update()
 
 			VECTOR3 sub = pos - b->GetBaseObject()->GetTransform()->position;
 			b->enemyBaseComponent.physics->AddVelocity(sub, false);
+			AttackBeforeFrash(ID::B_MODEL, b->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
 		}
 	}
 
@@ -51,8 +52,9 @@ void BossSpecialAttack1::Update()
 		if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 40) {
 			if (effect) {
 				effect = false;
-				BaseObject* obj1 = b->enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
+				BaseObject* obj1 = b->enemyBaseComponent.effect->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
 				ShockWave* w = obj1->Component()->AddComponent<ShockWave>();
+				b->enemyBaseComponent.effect->ParentTransformRemove(obj1);
 				w->CreateWave(CollsionInformation::B_E_ATTACK, Transform(VZero, VZero, VOne), 50.0f, 50.0f);
 			}
 		}
@@ -83,6 +85,7 @@ void BossSpecialAttack1::Update()
 	
 	
 	BossAttackCollsion();
+	
 }
 
 void BossSpecialAttack1::Draw()
