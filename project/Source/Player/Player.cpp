@@ -117,6 +117,13 @@ void Player::Update()
 		playerCom.stateManager->NowChangeState(StateID::BOSS_DIE_S);
 		playerCom.stateManager->SetNoStateChange(true);
 	}
+	if (redCounter > 0.0f) {
+		redCounter -= Time::DeltaTimeRate();
+		if (redCounter <= 0.0f) {
+			redCounter = 0.0f;
+			playerCom.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));
+		}
+	}
 	//playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
 }
 
@@ -200,6 +207,7 @@ void Player::Start(Object3D* _obj)
 	playerCom.stateManager->SetComponent<Player>(this);
 
 	playerCom.stateManager->StartState(StateID::PLAYER_WAIT_S);
+	redCounter = 0.0f;
 }
 
 void Player::Move(float _speed, float _speedMax)
@@ -444,6 +452,8 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 				my_error_assert("ƒ_ƒ[ƒW‚Ìó‘Ô‚ª“ü‚Á‚Ä‚¢‚Ü‚¹‚ñ");
 				break;
 			}
+			playerCom.color->setRGB(Color::Rgb(255.0f, 0.0f, 0.0f, 255.0f));
+			redCounter = 0.5f;
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
 			playerCom.sound->RandamSe("EnemyAttackHit",4);
 			playerCom.sound->RandamSe("P_DamageV",2);

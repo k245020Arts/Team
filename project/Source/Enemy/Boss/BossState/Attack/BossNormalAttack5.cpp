@@ -31,9 +31,11 @@ void BossNormalAttack5::Update()
 	}
 	BossAttackCollsion();
 	boss->LookPlayer();
-	VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
-	VECTOR3 normal = dis.Normalize();
-	boss->enemyBaseComponent.physics->AddVelocity(normal * 3500.0f, true);
+	if (!boss->enemyBaseComponent.anim->AnimEventCan()) {
+		VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
+		normal = dis.Normalize();
+		boss->enemyBaseComponent.physics->AddVelocity(normal * 6500.0f, true);
+	}
 	AttackSound();
 	AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
 	BossTrail(true);
@@ -50,10 +52,17 @@ void BossNormalAttack5::Start()
 	firstColl = true;
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
-	VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
-	VECTOR3 normal = dis.Normalize();
-	boss->enemyBaseComponent.physics->AddVelocity(normal * 3500.0f, false);
+	keepPlayerPosition = boss->enemyBaseComponent.playerObj->GetTransform()->position;
+	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
+	VECTOR3 dis = keepPlayerPosition - boss->bossTransform->position;
+	normal = dis.Normalize();
+	boss->enemyBaseComponent.physics->AddVelocity(normal * 2500.0f, false);
 	fallFrame = 0;
+
+	/*if (boss->comboFirstAttack)
+		boss->enemyBaseComponent.anim->SetFrame(0.0f);
+	else
+		boss->enemyBaseComponent.anim->SetFrame(10.0f);*/
 }
 
 void BossNormalAttack5::Finish()

@@ -39,7 +39,7 @@ Animator::~Animator()
 
 void Animator::BaseModelSet(int _model, int _root)
 {
-    baseModel = _model;
+    baseModel =  _model;
     rootNum = _root;
 }
 
