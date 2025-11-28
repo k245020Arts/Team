@@ -154,6 +154,7 @@ void Animator::Update()
        //ブレンド前とブレンド後を合成
        matrix = MAdd(beforeMatrix, MAdd(matrix, beforeMatrix * MGetScale(VOne * -1.0f)) * MGetScale(VOne* rate));
    }
+   obj;
    //アニメーションの位置を変えないようにする
     MV1SetFrameUserLocalMatrix(baseModel, rootNum, matrix);
 }
@@ -293,6 +294,7 @@ VECTOR3 Animator::BoneNowPosition()
 void Animator::SetFrame(float _frame)
 {
     current.frame = _frame;
+    current.beforeFrame = current.frame;
 }
 
 int Animator::GetBaseModel()

@@ -393,6 +393,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	std::shared_ptr<BossAttackBase> attack = _obj->Component()->GetComponent<StateManager>()->GetState<BossAttackBase>();
 	float startTime = enemyAnim->EventStartTime(_attackId);
 	bool damage = false;
+	BossAttackBase::DamagePattern param = attack->GetDamageParam();
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f || startTime >= 0.0f) {
@@ -422,14 +423,27 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	if (damage) {
 		if (pB->GetID() != ID::P_ANIM_AVOID) {
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
-			playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
+			//playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 			if (attack == nullptr) {
 				hp -= 50.0f;
 			}
 			else {
-				hp -= attack->GetHitDamage();
+				hp -= param.hitDamage;
 			}
-			
+			switch (param.damagePattern)
+			{
+			case BossAttackBase::NO_BACK:
+				break;
+			case BossAttackBase::BACK:
+				playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
+				break;
+			case BossAttackBase::BLOW_AWAY:
+				playerCom.stateManager->ChangeState(StateID::PLAYER_BLOW_AWAY_S);
+				break;
+			default:
+				my_error_assert("ダメージの状態が入っていません");
+				break;
+			}
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
 			playerCom.sound->RandamSe("EnemyAttackHit",4);
 			playerCom.sound->RandamSe("P_DamageV",2);

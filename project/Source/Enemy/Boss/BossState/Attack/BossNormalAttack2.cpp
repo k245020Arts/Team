@@ -11,6 +11,7 @@ BossNormalAttack2::BossNormalAttack2()
 	string = Function::GetClassNameC<BossNormalAttack2>();
 	animId = ID::B_N_ATTACK2;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
+	damage.damagePattern = BossAttackBase::NO_BACK;
 }
 
 BossNormalAttack2::~BossNormalAttack2()
@@ -47,8 +48,9 @@ void BossNormalAttack2::Start()
 	Boss* boss = GetBase<Boss>();
 	EnemyStateBase::Start();
 	firstColl = true;
-	hitDamage = boss->bs->GetStatus().normalAttack1;
+	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
 	fallFrame = boss->bs->GetStatus().fallFrame;
+	boss->enemyBaseComponent.anim->SetFrame(5.0f);
 }
 
 void BossNormalAttack2::Finish()

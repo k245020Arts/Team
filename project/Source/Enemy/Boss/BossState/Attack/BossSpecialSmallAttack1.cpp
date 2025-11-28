@@ -14,6 +14,8 @@ BossSpecialSmallAttack1::BossSpecialSmallAttack1()
 	animId = ID::B_S_ATTACK1_SMALL;
 
 	collTrans = Transform(VECTOR3(0, -50, 0), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
+	damage.damagePattern = BossAttackBase::BACK;
+	damage.hitDamage = 50.0f;
 }
 
 BossSpecialSmallAttack1::~BossSpecialSmallAttack1()
@@ -97,7 +99,8 @@ void BossSpecialSmallAttack1::Start()
 	if (b->comboFirstAttack)
 		b->enemyBaseComponent.anim->SetFrame(0.0f);
 	else
-		b->enemyBaseComponent.anim->SetFrame(30.0f);
+		b->enemyBaseComponent.anim->SetFrame(20.0f);
+	
 }
 
 void BossSpecialSmallAttack1::Finish()

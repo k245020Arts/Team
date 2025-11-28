@@ -9,12 +9,14 @@ namespace {
 	const int COMBO_ATTACK_KIND_MAX = 3;
 	enum COMBO_ATTACK
 	{
-		NORMAL_COMBO,
+		NORMAL_COMBO1,
+		NORMAL_COMBO2,
 		JUMP_COMBO,
 		RUN_COMBO,
 	};
 	std::vector<COMBO_ATTACK> comboKind{
-		{NORMAL_COMBO},
+		{NORMAL_COMBO1},
+		{NORMAL_COMBO2},
 		{JUMP_COMBO},
 		{RUN_COMBO},
 	};
@@ -33,13 +35,14 @@ namespace {
 		{ 0.05,0.05,1.0,0.5,0.9,0.1 },
 	};
 	const std::vector<std::vector<double>> comboAttackParam{
-		{ 1.0,0.0,0.0},
-		{ 0.8,0.2,0.0},
-		{ 0.5,0.5,0.5},
-		{ 0.2,0.7,0.5},
+		{ 1.0,0.5,0.0,0.0},
+		{ 0.8,0.7,0.2,0.0},
+		{ 0.5,1.0,0.5,0.5},
+		{ 0.2,0.5,0.7,0.5},
 	};
 	const std::vector<std::vector<StateID::State_ID>> comboOrder{
 		{StateID::BOSS_NORMAL_ATTACK1_S, StateID::BOSS_NORMAL_ATTACK2_S, StateID::BOSS_NORMAL_ATTACK3_S},
+		{StateID::BOSS_NORMAL_ATTACK4_S, StateID::BOSS_NORMAL_ATTACK5_S, StateID::BOSS_NORMAL_ATTACK6_S},
 		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_ATTACK1_S },
 		{StateID::BOSS_SPECIAL_ATTACK2_S, StateID::BOSS_SPECIAL_ATTACK2_S }
 	};
@@ -111,7 +114,8 @@ void AttackSorting::Update()
 
 void AttackSorting::Start()
 {
-	
+	animId = ID::B_IDOL;
+	EnemyStateBase::Start();
 	Boss* b = GetBase<Boss>();
 	if (b->maxAttack != -1) {
 		b->maxAttack--;

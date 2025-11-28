@@ -11,6 +11,7 @@ BossNormalAttack1::BossNormalAttack1()
 	string = Function::GetClassNameC<BossNormalAttack1>();
 	animId = ID::B_N_ATTACK1;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
+	damage.damagePattern = BossAttackBase::NO_BACK;
 }
 
 BossNormalAttack1::~BossNormalAttack1()
@@ -48,8 +49,8 @@ void BossNormalAttack1::Start()
 	EnemyStateBase::Start();
 	firstColl = true;
 	boss->enemyBaseComponent.anim->AnimEventReset();
-	hitDamage = boss->bs->GetStatus().normalAttack1;
-
+	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
+	boss->enemyBaseComponent.anim->SetFrame(5.0f);
 	fallFrame = boss->bs->GetStatus().fallFrame;
 }
 
