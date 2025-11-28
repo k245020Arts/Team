@@ -20,6 +20,9 @@
 #include "../Boss/BossState/Attack/BossNormalAttack1.h"
 #include "../Boss/BossState/Attack/BossNormalAttack2.h"
 #include "../Boss/BossState/Attack/BossNormalAttack3.h"
+#include "../Boss/BossState/Attack/BossNormalAttack4.h"
+#include "../Boss/BossState/Attack/BossNormalAttack5.h"
+#include "../Boss/BossState/Attack/BossNormalAttack6.h"
 #include  "../Boss/BossState/Attack/BossSpecialAttack1.h"
 #include  "../Boss/BossState/Attack/BossSpecialSmallAttack1.h"
 #include  "../Boss/BossState/Attack/BossSpecialAttack2.h"
@@ -32,6 +35,7 @@
 #include "../Boss/BossState/BossCoolTime.h"
 #include "../Boss/BossState/BossStatus.h"
 #include "../Boss/BossState/BossDie.h"
+#include "../Boss/BossState/BossRoar.h"
 #include "../TrashEnemy/TrashEnemyManager.h"//
 
 namespace {
@@ -95,10 +99,10 @@ Boss::Boss()
 
 	hp = bs->GetStatus().maxHp;
 	maxHp = hp;
-	TrashEnemyManager* a = new TrashEnemyManager;//
-	a->CreateEnemy(VECTOR3(0, 0, 0), 1);//
+	trashEnemy = new TrashEnemyManager();
 	maxAttack = -1;
 	comboFirstAttack = false;
+	roaf = false;
 }
 
 Boss::~Boss()
@@ -130,6 +134,14 @@ void Boss::Update()
 
 	if (CheckHitKey(KEY_INPUT_2)) {
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK2_S);
+	}
+
+	if (Hp() == FIVE) {
+		if (!roaf) {
+			enemyBaseComponent.state->ChangeState(StateID::B_ROAR_S);
+			roaf = true;
+		}
+		
 	}
 
 }
@@ -178,10 +190,14 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossNormalAttack1>("BossNormalAttack1", StateID::BOSS_NORMAL_ATTACK1_S);
 	enemyBaseComponent.state->CreateState<BossNormalAttack2>("BossNormalAttack2", StateID::BOSS_NORMAL_ATTACK2_S);
 	enemyBaseComponent.state->CreateState<BossNormalAttack3>("BossNormalAttack3", StateID::BOSS_NORMAL_ATTACK3_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack4>("BossNormalAttack4", StateID::BOSS_NORMAL_ATTACK4_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack5>("BossNormalAttack5", StateID::BOSS_NORMAL_ATTACK5_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack6>("BossNormalAttack6", StateID::BOSS_NORMAL_ATTACK6_S);
 	enemyBaseComponent.state->CreateState<BossSpecialAttack1>("BossSpecialAttack1", StateID::BOSS_SPECIAL_ATTACK1_S);
 	enemyBaseComponent.state->CreateState<BossSpecialSmallAttack1>("BossSpecialSmallAttack1", StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
 	enemyBaseComponent.state->CreateState<BossSpecialAttack2>("BossSpecialAttack2", StateID::BOSS_SPECIAL_ATTACK2_S);
 	enemyBaseComponent.state->CreateState<BossDie>("BossDie", StateID::BOSS_DIE_S);
+	enemyBaseComponent.state->CreateState<BossRoar>("BossRoar", StateID::B_ROAR_S);
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
@@ -460,4 +476,23 @@ Boss::HP_RATE Boss::Hp()
 		hpRate = Boss::THREE;
 	}
 	return hpRate;
+}
+
+void Boss::MoveBoss(float _speed, float _max)
+{
+	VECTOR3 dir = VZero;
+	dir.y *= 0.0f;
+	//b->bossTransform->GetRotationMatrix();
+	dir = bossTransform->Forward() * -_speed;
+	enemyBaseComponent.physics->AddVelocity(dir, false);
+	VECTOR3 moveVelo;
+	moveVelo = enemyBaseComponent.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
+
+	float max = _max;
+	//最大速度までいったらスピードマックスに補正
+	if (moveVelo.SquareSize() >= max * max) {
+		moveVelo = moveVelo.Normalize() * max;
+		moveVelo.y = enemyBaseComponent.physics->GetVelocity().y;
+		enemyBaseComponent.physics->SetVelocity(moveVelo);
+	}
 }

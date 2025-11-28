@@ -37,22 +37,17 @@ void BossRun::Update()
 
 	////計算したものをボスのポジションに足す
 	//b->obj->GetTransform()->position += velocity;
-
-	VECTOR3 dir = VZero;
-	dir.y *= 0.0f;
-	//b->bossTransform->GetRotationMatrix();
-	dir = b->bossTransform->Forward() * -1000.0f;
-	b->enemyBaseComponent.physics->AddVelocity(dir, false);
-	VECTOR3 moveVelo;
-	moveVelo = b->enemyBaseComponent.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
-
-	float max = 1500.0f;
-	//最大速度までいったらスピードマックスに補正
-	if (moveVelo.SquareSize() >= max * max) {
-		moveVelo = moveVelo.Normalize() * max;
-		moveVelo.y = b->enemyBaseComponent.physics->GetVelocity().y;
-		b->enemyBaseComponent.physics->SetVelocity(moveVelo);
+	float speed = 0.0f;
+	float max = 0.0f;
+	if (b->hpRate == Boss::FIVE || b->hpRate == Boss::THREE) {
+		speed = 2000.0f;
+		max = 2500.0f;
 	}
+	else {
+		speed = 1000.0f;
+		max = 1500.0f;
+	}
+	b->MoveBoss(speed, max);
 
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 	//プレイヤーと離れたらアイドルになる
@@ -69,6 +64,13 @@ void BossRun::Draw()
 
 void BossRun::Start()
 {
+	Boss* b = GetBase<Boss>();
+	if (b->hpRate == Boss::FIVE || b->hpRate == Boss::THREE) {
+		animId = ID::B_DUSH;
+	}
+	else {
+		animId = ID::B_RUN;
+	}
 	EnemyStateBase::Start();
 }
 

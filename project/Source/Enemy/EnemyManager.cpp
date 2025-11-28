@@ -140,12 +140,17 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.2f,25.0f,60.0f);
 	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.2f,25.0f,60.0f);
 	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false,1.2f,40.0f,55.0f);
+	anim->AddFile(ID::B_N_ATTACK4, "B_ATTACK4", false,1.0f,40.0f,55.0f);
+	anim->AddFile(ID::B_N_ATTACK5, "B_ATTACK5", false,1.0f,40.0f,55.0f);
+	anim->AddFile(ID::B_N_ATTACK6, "B_ATTACK6", false,1.0f,40.0f,55.0f);
 	anim->AddFile(ID::B_S_ATTACK1, "B_SATTACK1", false,1.0f,50.0f,60.0f);
 	anim->AddFile(ID::B_S_ATTACK2, "B_SATTACK2", true,1.0f,0.0f,100.0f);
 	anim->AddFile(ID::B_S_ATTACK2_STOP, "B_SATTACK2_STOP", false,1.0f);
 	anim->AddFile(ID::B_S_ATTACK2_BEFORE, "B_SATTACK2_BEFORE", false,1.0f,0.0f,100.0f);
 	anim->AddFile(ID::B_S_ATTACK1_SMALL, "B_SATTACK1_SAMLL", false,1.3f,40.0f,55.0f);
 	anim->AddFile(ID::BOSS_DIE, "B_DIE", false,1.2f);
+	anim->AddFile(ID::B_ROAR, "B_ROAR", false,1.2f,30.0f,40.0f);
+	anim->AddFile(ID::B_DUSH, "B_RUN", true,1.2f,30.0f,40.0f);
 	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL),1);
 

@@ -58,6 +58,7 @@ namespace ID {
 		B_N_ATTACK3,
 		B_N_ATTACK4,
 		B_N_ATTACK5,
+		B_N_ATTACK6,
 		B_S_ATTACK1,
 		B_S_ATTACK2,
 		B_S_ATTACK3,
@@ -80,7 +81,7 @@ namespace ID {
 		TE_ATTACK,
 		SHADOW,
 		B_DUSH,
-		B_ROAF,
+		B_ROAR,
 
 		ID_MAX,
 	};
