@@ -90,11 +90,12 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
 		MeshRenderer* me = e->Component()->AddComponent<MeshRenderer>();
-		me->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Ch45_nonPBR", ID::IDType::E_MODEL));
+		int handle = MV1DuplicateModel( Load::LoadModel(Load::MODEL_PATH + "Ch45_nonPBR", ID::IDType::E_MODEL));
+		me->ModelHandle(handle);
 		me->RotationMesh(1, DX_PI_F);
 
 		Animator* anim = e->Component()->AddComponent<Animator>();
-		anim->BaseModelSet(Load::GetHandle(ID::E_MODEL), 1);
+		anim->BaseModelSet(handle, 1);
 		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
 		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
 		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 0.7f, 20.0f, 30.0f);

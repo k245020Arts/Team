@@ -41,16 +41,17 @@ Animator::~Animator()
 
 void Animator::BaseModelSet(int _model, int _root)
 {
+
     baseModel =  _model;
     rootNum = _root;
 
-    MV1DuplicateModel(baseModel);
 }
 
 void Animator::BaseModelSet(int _model, std::string _rootName)
 {
     baseModel = _model;
     rootNum = MV1SearchFrame(_model, _rootName.c_str());
+
 }
 
 void Animator::Update()
