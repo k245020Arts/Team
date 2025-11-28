@@ -5,8 +5,7 @@
 
 T_EnemyRun::T_EnemyRun()
 {
-	//animId = ID::TE_IDOL;
-	//id = ID::TE_RUN;
+	animId = ID::E_RUN;
 	string = Function::GetClassNameC<T_EnemyRun>();
 }
 
@@ -25,7 +24,7 @@ void T_EnemyRun::Update()
 	velocity.x = 10 * cosf(ROTY);
 	velocity.z = 10 * sinf(ROTY);
 
-	//計算したものをボスのポジションに足す
+	//計算したものをポジションに足す
 	e->obj->GetTransform()->position += velocity;
 
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;

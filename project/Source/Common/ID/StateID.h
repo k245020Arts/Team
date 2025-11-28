@@ -47,6 +47,7 @@ namespace StateID{
         T_ENEMY_IDOL_S,
         T_ENEMY_RUN_S,
         T_ENEMY_ATTACK_S,
+        T_ENEMY_DEAD,
 
         STATE_MAX,
     };

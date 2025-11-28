@@ -24,10 +24,14 @@
 #include "TrashEnemyState/T_EnemyIdol.h"
 #include "TrashEnemyState/T_EnemyRun.h"
 #include "TrashEnemyState/T_EnemyAttack.h"
+#include "TrashEnemyState/T_EnemyDead.h"
 
 TrashEnemy::TrashEnemy()
 {
 	tag = Function::GetClassNameC<TrashEnemy>();
+
+	hp = 100;
+	maxHp = hp;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -38,7 +42,8 @@ TrashEnemy::~TrashEnemy()
 void TrashEnemy::Update()
 {
 	EnemyBase::Update();
-
+	if (hp <= 0)
+		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 }
 
 void TrashEnemy::Draw()
@@ -68,6 +73,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<T_EnemyIdol>("_T_EnemyIdol", StateID::T_ENEMY_IDOL_S);
 	enemyBaseComponent.state->CreateState<T_EnemyRun>("_T_EnemyRun", StateID::T_ENEMY_RUN_S);
 	enemyBaseComponent.state->CreateState<T_EnemyAttack>("_T_EnemyAttack", StateID::T_ENEMY_ATTACK_S);
+	enemyBaseComponent.state->CreateState<T_EnemyDead>("_T_EnemyDead", StateID::T_ENEMY_DEAD);
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 

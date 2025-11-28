@@ -110,8 +110,6 @@ void Enemy::Draw()
 void Enemy::Start(Object3D* _obj) 
 {
 	enemyBaseComponent.state = obj->Component()->AddComponent<StateManager>();
-	
-	
 
 	enemyTransform = obj->GetTransform();
 

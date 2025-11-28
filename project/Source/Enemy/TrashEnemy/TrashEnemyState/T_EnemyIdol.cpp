@@ -23,7 +23,6 @@ void T_EnemyIdol::Update()
 
 	if (targetVec.Size() < 5000)
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
-	
 }
 
 void T_EnemyIdol::Draw()
