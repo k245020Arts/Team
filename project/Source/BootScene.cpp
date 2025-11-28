@@ -5,6 +5,7 @@
 #include "../Source/Common/Sound/SoundManager.h"
 #include "../Source/Common/Debug/Debug.h"
 #include "../Source/Common/Transitor/TransitorManager.h"
+#include "Common/Random.h"
 
 BootScene::BootScene()
 {
@@ -12,6 +13,7 @@ BootScene::BootScene()
 	Load::Init();
 	ID::Init();
 	Debug::InitDebug(input);
+	Random::Init();
 	SoundManager*sound =  new SoundManager();
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();

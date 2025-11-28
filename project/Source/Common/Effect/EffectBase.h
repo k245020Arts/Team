@@ -55,6 +55,8 @@ public:
 	void SetColor3D(Color::Rgb _rgb);
 	void SetColor(Color::Rgb _rgb);
 
+	void ParentTransformRemove();
+
 private:
 
 	Transform* transform;

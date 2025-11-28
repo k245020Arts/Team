@@ -1,9 +1,11 @@
 #pragma once
 #include "../../TrashEnemy/EnemyState/EnemyStateBase.h"
+#include "../Boss.h"
 
 class AttackSorting :public EnemyStateBase
 {
 public:
+
 	AttackSorting();
 	~AttackSorting();
 	void Update()override;
@@ -14,10 +16,15 @@ public:
 private:
 	const float COOLTIME = 30.0f;
 
-	bool Hp();
 	void RandomAttack();
+
+	void NormalAttackSelect();
 
 	float coolTime;
 
+	Boss::HP_RATE hp;
+
 	bool jump;
+	int kind;
+	int attackNum;
 };

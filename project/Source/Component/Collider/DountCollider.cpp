@@ -18,8 +18,8 @@ void DountCollider::Update()
 
 void DountCollider::Draw()
 {
-	/*DrawSphere3D(collTransform->WorldTransform().position, collTransform->scale.x, 10, 0xff0000, 0xff0000, false);
-	DrawSphere3D(collTransform->WorldTransform().position, outRadius, 10, 0xffff00, 0xffff00, false);*/
+	DrawSphere3D(collTransform->WorldTransform().position, collTransform->scale.x, 10, 0xff0000, 0xff0000, false);
+	DrawSphere3D(collTransform->WorldTransform().position, outRadius, 10, 0xffff00, 0xffff00, false);
 }
 
 void DountCollider::DountSet(CollsionInfo _info, Transform _transform, float _outRadius)

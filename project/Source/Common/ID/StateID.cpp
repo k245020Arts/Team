@@ -12,7 +12,7 @@ std::string StateID::GetID(State_ID _type)
 {
 	int type = (int)_type;
 	if (type < 0 && type >= (int)STATE_MAX) {
-		Debug::CreateMessageBox("EffectHandleMiss", "miss");
+		Debug::CreateMessageBox("StateHandleMiss", "miss");
 	}
 	return stateId[type];
 }
@@ -21,7 +21,7 @@ void StateID::SetID(std::string _state, State_ID _type)
 {
 	int type = (int)_type;
 	if (type < 0 && type >= (int)STATE_MAX) {
-		Debug::CreateMessageBox("soundHandleSetMiss", "miss");
+		Debug::CreateMessageBox("StateSetMiss", "miss");
 	}
 	stateId[type] = _state;
 }

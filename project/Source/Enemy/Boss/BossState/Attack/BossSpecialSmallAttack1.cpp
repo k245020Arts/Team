@@ -46,14 +46,15 @@ void BossSpecialSmallAttack1::Update()
 		if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 40) {
 			if (effect) {
 				effect = false;
-				BaseObject* obj1 = b->enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
+				BaseObject* obj1 = b->enemyBaseComponent.effect->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
 				ShockWave* w = obj1->Component()->AddComponent<ShockWave>();
+				b->enemyBaseComponent.effect->ParentTransformRemove(obj1);
 				w->CreateWave(CollsionInformation::B_E_ATTACK, Transform(VZero, VZero, VOne), 50.0f, 50.0f);
 			}
 		}
 
 		if (b->enemyBaseComponent.anim->IsFinish()) {
-			if (b->maxAttack != 0)
+			if (b->maxAttack != -1)
 				b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 			else
 				b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
@@ -92,10 +93,16 @@ void BossSpecialSmallAttack1::Start()
 	firstCount = true;
 	effect = true;
 	b->enemyBaseComponent.anim->SetMaxFrame(animId, 60.0f);
+
+	if (b->comboFirstAttack)
+		b->enemyBaseComponent.anim->SetFrame(0.0f);
+	else
+		b->enemyBaseComponent.anim->SetFrame(30.0f);
 }
 
 void BossSpecialSmallAttack1::Finish()
 {
 	Boss* b = GetBase<Boss>();
 	b->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));
+	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 }

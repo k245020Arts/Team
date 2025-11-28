@@ -440,6 +440,18 @@
     <ClCompile Include="Source\Common\ID\StateID.cpp">
       <Filter>Common\ID</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossRoar.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack4.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack5.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack6.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -929,6 +941,18 @@
     </ClInclude>
     <ClInclude Include="Source\Common\ID\StateID.h">
       <Filter>Common\ID</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossRoar.h">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack4.h">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack5.h">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack6.h">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

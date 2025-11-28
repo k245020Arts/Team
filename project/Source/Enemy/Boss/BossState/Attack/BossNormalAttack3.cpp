@@ -8,6 +8,7 @@
 BossNormalAttack3::BossNormalAttack3()
 {
 	//id = ID::B_N_ATTACK3;
+	string = Function::GetClassNameC<BossNormalAttack3>();
 	animId = ID::B_N_ATTACK3;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 }
@@ -70,4 +71,5 @@ void BossNormalAttack3::Finish()
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	if (boss->maxAttack == 0)
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.2f);
+	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 }

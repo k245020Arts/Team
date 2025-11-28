@@ -1,11 +1,11 @@
 #pragma once
 #include "../../TrashEnemy/EnemyState/EnemyStateBase.h"
 
-class BossIdol : public EnemyStateBase
+class BossRoar : public EnemyStateBase
 {
 public:
-	BossIdol();
-	~BossIdol();
+	BossRoar();
+	~BossRoar();
 
 	void Update()override;
 	void Draw()override;
@@ -14,5 +14,5 @@ public:
 	void Finish()override;
 
 private:
-	float timer;
+	bool first;
 };

@@ -1,23 +1,24 @@
-#include "BossNormalAttack1.h"
+#include "BossNormalAttack6.h"
 #include "../../../../Component/Animator/Animator.h"
 #include "../../Boss.h"
 #include "../../../../State/StateManager.h"
 #include "../../../../Common/Easing.h"
 #include "../BossStatus.h"
+#include "../../../../Component/Physics/Physics.h"
 
-BossNormalAttack1::BossNormalAttack1()
+BossNormalAttack6::BossNormalAttack6()
 {
 	//id = ID::B_N_ATTACK1;
-	string = Function::GetClassNameC<BossNormalAttack1>();
-	animId = ID::B_N_ATTACK1;
+	string = Function::GetClassNameC<BossNormalAttack6>();
+	animId = ID::B_N_ATTACK6;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 }
 
-BossNormalAttack1::~BossNormalAttack1()
+BossNormalAttack6::~BossNormalAttack6()
 {
 }
 
-void BossNormalAttack1::Update()
+void BossNormalAttack6::Update()
 {
 	Boss* boss = GetBase<Boss>();
 	if (boss->enemyBaseComponent.anim->GetMaxFrame() - fallFrame <= boss->enemyBaseComponent.anim->GetCurrentFrame())
@@ -38,11 +39,11 @@ void BossNormalAttack1::Update()
 	BossTrail(true);
 }
 
-void BossNormalAttack1::Draw()
+void BossNormalAttack6::Draw()
 {
 }
 
-void BossNormalAttack1::Start()
+void BossNormalAttack6::Start()
 {
 	Boss* boss = GetBase<Boss>();
 	EnemyStateBase::Start();
@@ -53,7 +54,7 @@ void BossNormalAttack1::Start()
 	fallFrame = boss->bs->GetStatus().fallFrame;
 }
 
-void BossNormalAttack1::Finish()
+void BossNormalAttack6::Finish()
 {
 	Boss* boss = GetBase<Boss>();
 	boss->DeleteCollision();

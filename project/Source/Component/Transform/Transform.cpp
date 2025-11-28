@@ -76,6 +76,7 @@ void Transform::RemoveChild(Transform* _child)
 {
 	for (auto itr = child.begin(); itr != child.end(); itr++) {
 		if (*itr == _child) {
+			_child->RemoveParent(this);
 			child.remove(_child);
 			return;
 		}

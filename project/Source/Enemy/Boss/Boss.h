@@ -6,6 +6,7 @@
 class Player;
 class CharaWeapon;
 class BossStatus;
+class TrashEnemyManager;
 
 class Boss : public EnemyBase
 {
@@ -17,11 +18,22 @@ public:
 	friend class BossNormalAttack1;
 	friend class BossNormalAttack2;
 	friend class BossNormalAttack3;
+	friend class BossNormalAttack4;
+	friend class BossNormalAttack5;
+	friend class BossNormalAttack6;
 	friend class BossSpecialAttack1;
 	friend class BossSpecialSmallAttack1;
 	friend class BossSpecialAttack2;
 	friend class BossDie;
+	friend class BossRoar;
 	
+	enum HP_RATE
+	{
+		MAX,
+		EIGHT,
+		FIVE,
+		THREE,
+	};
 
 	Boss();
 	~Boss();
@@ -50,6 +62,10 @@ public:
 	void PlayerHit()override;
 	void Drail(bool _right);
 
+	HP_RATE Hp();
+
+	void MoveBoss(float _speed,float _max);
+
 private:
 	Boss* boss;
 	BossStatus* bs;
@@ -62,4 +78,10 @@ private:
 	CharaWeapon* chara;
 
 	int maxAttack;
+	bool comboFirstAttack;
+
+	HP_RATE hpRate;
+	bool roaf;
+
+	TrashEnemyManager* trashEnemy;
 };

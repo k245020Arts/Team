@@ -31,7 +31,7 @@ void ShockWave::CreateWave(CollsionInformation::Tag _tag, Transform _transform, 
 {
 	
 	CollsionInfo info;
-	info.parentTransfrom = GetBaseObject()->GetParent()->GetTransform();
+	info.parentTransfrom = GetBaseObject()->GetTransform();
 	info.shape = CollsionInformation::DONUT;
 	info.oneColl = true;
 	info.tag = _tag;
