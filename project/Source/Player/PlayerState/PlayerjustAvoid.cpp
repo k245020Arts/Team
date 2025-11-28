@@ -61,7 +61,7 @@ void PlayerJustAvoid::Update()
 	{
 		p->playerCom.player->AvoidFinishState();
 		p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
-		p->playerCom.hitObj->SetObjectTimeRate(1.0f);
+		p->playerCom.hitObj->SetObjectTimeRate();
 	}
 	//Ä¶‘¬“x‚ð’x‚­‚µ‚Ä‚¢‚é
 	if (p->playerCom.anim->GetCurrentFrame() >= 14.0f && p->playerCom.anim->GetCurrentFrame() <= 17.0f){
@@ -166,7 +166,7 @@ void PlayerJustAvoid::Finish()
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.player->PlayerStickInput();
 	p->playerCom.camera->CameraLeapSet(0.2f);
-	p->playerCom.hitObj->SetObjectTimeRate(1.0f);
+	p->playerCom.hitObj->SetObjectTimeRate();
 }
 
 void PlayerJustAvoid::JustAvoidShadow()

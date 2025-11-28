@@ -29,11 +29,11 @@ void BossNormalAttack6::Update()
 			boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 	}
 	BossAttackCollsion();
-	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
+	/*if (boss->enemyBaseComponent.anim->AnimEventCan()) {
 		averageSpeed = 90.0f / attackTime;
 		averageSpeed *= boss->obj->GetObjectRate();
 		boss->bossTransform->rotation.y += averageSpeed * DegToRad;
-	}
+	}*/
 	AttackSound();
 	AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
 	BossTrail(true);
@@ -50,8 +50,10 @@ void BossNormalAttack6::Start()
 	firstColl = true;
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	hitDamage = boss->bs->GetStatus().normalAttack1;
-
-	fallFrame = boss->bs->GetStatus().fallFrame;
+	VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
+	VECTOR3 normal = dis.Normalize();
+	boss->enemyBaseComponent.physics->AddVelocity(normal * 6000.0f, false);
+	fallFrame = 0;
 }
 
 void BossNormalAttack6::Finish()

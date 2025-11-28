@@ -140,6 +140,8 @@ void Boss::Update()
 		if (!roaf) {
 			enemyBaseComponent.state->ChangeState(StateID::B_ROAR_S);
 			roaf = true;
+			obj->SetBaseTimeSpeed(1.2f);
+			obj->SetObjectTimeRate();
 		}
 		
 	}

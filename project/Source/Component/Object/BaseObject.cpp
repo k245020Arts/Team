@@ -13,6 +13,7 @@ int BaseObject::idPlus = 0;
 BaseObject::BaseObject()
 {
 	objectTimeRate = 1.0f;
+	baseTimeSpeed = 1.0f;
 	componentManager = nullptr;
 	transform = nullptr;
 	transitor = nullptr;

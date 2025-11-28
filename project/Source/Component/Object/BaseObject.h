@@ -19,6 +19,7 @@ public:
 	//オブジェクトに持たせたりする再生速度の重み
 	//プレイヤーとかエネミーとかで再生速度を分けたいときに使う
 	void SetObjectTimeRate(float _rate) { objectTimeRate = _rate; }
+	void SetObjectTimeRate() { SetObjectTimeRate(baseTimeSpeed); }
 	//実際に使うときはこっちで使う
 	float GetObjectTimeRate() { return objectTimeRate * Time::DeltaTimeRate(); }
 	float GetObjectRate() { return objectTimeRate * Time::GetTimeRate(); }
@@ -60,6 +61,9 @@ public:
 	/// <returns></returns>
 	BaseObject* GetParent() { return parent; }
 
+	void SetBaseTimeSpeed(float _speed) { baseTimeSpeed = _speed; }
+	float GetBaseTimeSpeed(float _speed) { return baseTimeSpeed; }
+
 protected:
 	ComponentManager* componentManager;
 	float objectTimeRate;
@@ -72,4 +76,5 @@ protected:
 	BaseObject* parent;
 	std::list<BaseObject*> children;
 	bool transformParent;
+	float baseTimeSpeed;
 };
