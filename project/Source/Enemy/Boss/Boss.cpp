@@ -39,7 +39,7 @@
 #include "../TrashEnemy/TrashEnemyManager.h"//
 
 namespace {
-	const std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> bossTable = {
+	const std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable = {
 		// 通常攻撃
 		{  StateID::PLAYER_ATTACK1_S, { ID::P_ANIM_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.15f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 10, 10,
@@ -376,8 +376,8 @@ void Boss::PlayerHit()
 	bool lastAttack = false;
 	bool lastBeforeAttack = false;
 
-	auto bossParam = bossTable.find(attackID);
-	if (bossParam != bossTable.end()) {
+	auto bossParam = enemyTable.find(attackID);
+	if (bossParam != enemyTable.end()) {
 		const auto& e = bossParam->second;
 		switch (e.attackType)
 		{

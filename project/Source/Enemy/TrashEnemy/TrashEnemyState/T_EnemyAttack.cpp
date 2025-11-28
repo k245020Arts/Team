@@ -5,10 +5,11 @@
 
 T_EnemyAttack::T_EnemyAttack()
 {
-	animId = ID::B_N_ATTACK3;
+	animId = ID::TE_ATTACK;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 
 	damage.hitDamage = 20.0f;
+	damage.damagePattern = BossAttackBase::NO_BACK;
 }
 
 T_EnemyAttack::~T_EnemyAttack()
@@ -19,6 +20,7 @@ void T_EnemyAttack::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	const float MSPEED = 60.0f;//ƒ‚[ƒVƒ‡ƒ“‚Ì‘¬“x’²®
+	e->LookPlayer();
 
 	if (e->enemyBaseComponent.anim->IsFinish())
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);

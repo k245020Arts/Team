@@ -24,7 +24,7 @@
 
 TrashEnemyManager::TrashEnemyManager()
 {
-
+	
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -35,6 +35,20 @@ void TrashEnemyManager::Update()
 {
 	if (CheckHitKey(KEY_INPUT_0))
 		CreateEnemy(VZero, 3);
+
+	if (enemies.empty() == false)
+	{
+		for (auto itr = enemies.begin(); itr != enemies.end(); )
+		{
+			if (!(*itr)->GetActive())
+			{
+				(*itr)->GetEnemyObj()->DestroyMe();
+				itr = enemies.erase(itr);  // 次の要素のイテレータが返る
+			}
+			else
+				++itr;
+		}
+	}
 }
 
 void TrashEnemyManager::Draw()
@@ -76,20 +90,17 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
 		MeshRenderer* me = e->Component()->AddComponent<MeshRenderer>();
-		me->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Ch46_nonPBR", ID::IDType::E_MODEL));
+		me->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Ch45_nonPBR", ID::IDType::E_MODEL));
 		me->RotationMesh(1, DX_PI_F);
 
 		Animator* anim = e->Component()->AddComponent<Animator>();
 		anim->BaseModelSet(Load::GetHandle(ID::E_MODEL), 1);
-		anim->AddFile(ID::TE_ATTACK, "B_ATTACK3", false, 0.7f, 11.0f, 18.0f);
-		/*anim->AddFile(ID::E_ANIM_IDOL, "E_IDOL", true, 1.0f);
+		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
+		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
+		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 0.7f, 20.0f, 30.0f);
 		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
-		anim->AddFile(ID::E_FALL, "E_FALL", true, 1.0f);
-		anim->AddFile(ID::E_GETUP, "E_GETUP", false, 2.0f);*/
-		anim->AddFile(ID::TE_RUN, "E_RUN0", true, 1.0f, 30.0f, 45.0f);
-		//anim->AddFile(ID::IDType::E_DIE, "E_DIE", false, 0.5f, 9.0f, 12.0f);
 		
-		anim->Play(ID::E_ANIM_IDOL);
+		anim->Play(ID::TE_IDOL);
 
 		Physics* physics = e->Component()->AddComponent<Physics>();
 		physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));
@@ -111,8 +122,8 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 void TrashEnemyManager::ImguiDraw()
 {
     ImGui::Begin("TrashEnemyManager");
-
-    ImGui::Text("enemies: %d", enemies.size());
+	for (auto& itr : enemies)
+    ImGui::Text("enemies: %d", itr->GetHp());
 
     ImGui::End();
 }

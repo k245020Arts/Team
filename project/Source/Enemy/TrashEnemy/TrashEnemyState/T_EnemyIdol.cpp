@@ -5,8 +5,7 @@
 
 T_EnemyIdol::T_EnemyIdol()
 {
-	//animId = ID::TE_IDOL;
-	//id = ID::TE_IDOL;
+	animId = ID::TE_IDOL;
 	string = Function::GetClassNameC<T_EnemyIdol>();
 }
 
@@ -21,7 +20,7 @@ void T_EnemyIdol::Update()
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
 		//EnemyTransform->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	if (targetVec.Size() < 5000)
+	if (targetVec.Size() < 2000)
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 }
 

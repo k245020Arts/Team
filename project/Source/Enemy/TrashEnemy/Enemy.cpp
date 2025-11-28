@@ -25,7 +25,7 @@
 #include "EnemyState/EnemyDie.h"
 
 namespace {
-	const std::unordered_map<ID::IDType, EnemyInformation::EnemyReaction> bossTable = {
+	const std::unordered_map<ID::IDType, EnemyInformation::EnemyReaction> enemyTable = {
 		// í èÌçUåÇ
 		{ ID::P_ANIM_ATTACK1, { ID::P_ANIM_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.15f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 10, 10,

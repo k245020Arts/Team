@@ -35,12 +35,16 @@ Animator::~Animator()
         }
     }
     fileInfos.clear();
+    
+    MV1DeleteModel(baseModel);
 }
 
 void Animator::BaseModelSet(int _model, int _root)
 {
     baseModel = _model;
     rootNum = _root;
+
+    MV1DuplicateModel(baseModel);
 }
 
 void Animator::BaseModelSet(int _model, std::string _rootName)

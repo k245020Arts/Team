@@ -26,5 +26,4 @@ public:
 
 private:
 	std::list<TrashEnemy*> enemies;
-
 };

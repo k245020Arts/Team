@@ -5,7 +5,7 @@
 
 T_EnemyRun::T_EnemyRun()
 {
-	animId = ID::E_RUN;
+	animId = ID::TE_RUN;
 	string = Function::GetClassNameC<T_EnemyRun>();
 }
 
