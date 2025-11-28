@@ -22,6 +22,13 @@ public:
 	friend class BossSpecialAttack2;
 	friend class BossDie;
 	
+	enum HP_RATE
+	{
+		MAX,
+		EIGHT,
+		FIVE,
+		THREE,
+	};
 
 	Boss();
 	~Boss();
@@ -50,6 +57,8 @@ public:
 	void PlayerHit()override;
 	void Drail(bool _right);
 
+	HP_RATE Hp();
+
 private:
 	Boss* boss;
 	BossStatus* bs;
@@ -63,4 +72,6 @@ private:
 
 	int maxAttack;
 	bool comboFirstAttack;
+
+	HP_RATE hpRate;
 };

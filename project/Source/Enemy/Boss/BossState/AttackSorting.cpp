@@ -49,6 +49,11 @@ AttackSorting::AttackSorting()
 {
 	coolTime = 0;
 	string = Function::GetClassNameC<AttackSorting>();
+	hp = Boss::MAX;
+	attackNum = 0;
+	jump = false;
+	kind = 0;
+
 }
 
 AttackSorting::~AttackSorting()
@@ -115,20 +120,20 @@ void AttackSorting::Start()
 	}
 	int maxAttack = b->bs->GetStatus().maxAttack;
 	int randam = GetRand(1);
-	hp = Hp();
+	hp = b->Hp();
 	float comboAttackRate = 0.0f;
 	switch (hp)
 	{
-	case AttackSorting::MAX:
+	case Boss::MAX:
 		comboAttackRate = 0.0f;
 		break;
-	case AttackSorting::EIGHT:
+	case Boss::EIGHT:
 		comboAttackRate = 0.2f;
 		break;
-	case AttackSorting::FIVE:
+	case Boss::FIVE:
 		comboAttackRate = 0.7f;
 		break;
-	case AttackSorting::THREE:
+	case Boss::THREE:
 		comboAttackRate = 0.9f;
 		break;
 	}
@@ -174,26 +179,6 @@ void AttackSorting::Start()
 void AttackSorting::Finish()
 {
 
-}
-
-AttackSorting::HP_RATE AttackSorting::Hp()
-{
-	Boss* b = GetBase<Boss>();
-	float hp = b->hp;
-
-	if (hp >= b->bs->GetStatus().maxHp * 0.8f) {
-		return MAX;
-	}
-	else if (hp >= b->bs->GetStatus().maxHp * 0.5f) {
-		return EIGHT;
-	}
-	else if (hp >= b->bs->GetStatus().maxHp * 0.3f){
-		return FIVE;
-	}
-	else {
-		return THREE;
-	}
-	return THREE;
 }
 
 void AttackSorting::RandomAttack()

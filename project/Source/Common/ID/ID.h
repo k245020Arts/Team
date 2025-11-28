@@ -79,6 +79,8 @@ namespace ID {
 		TE_RUN,
 		TE_ATTACK,
 		SHADOW,
+		B_DUSH,
+		B_ROAF,
 
 		ID_MAX,
 	};

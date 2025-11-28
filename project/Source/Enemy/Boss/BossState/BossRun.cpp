@@ -47,7 +47,6 @@ void BossRun::Update()
 	moveVelo = b->enemyBaseComponent.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
 
 	float max = 1500.0f;
-	//float size = moveVelo.SquareSize();
 	//最大速度までいったらスピードマックスに補正
 	if (moveVelo.SquareSize() >= max * max) {
 		moveVelo = moveVelo.Normalize() * max;

@@ -440,6 +440,9 @@
     <ClCompile Include="Source\Common\ID\StateID.cpp">
       <Filter>Common\ID</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossRoaf.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -929,6 +932,9 @@
     </ClInclude>
     <ClInclude Include="Source\Common\ID\StateID.h">
       <Filter>Common\ID</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossRoaf.h">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
