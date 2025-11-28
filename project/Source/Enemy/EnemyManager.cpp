@@ -134,6 +134,8 @@ void EnemyManager::CreateBoss()
 	physics->Start(VECTOR3(0.0f, -1500.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));
 
 	Animator* anim = boss->Component()->AddComponent<Animator>();
+	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL), 1);
+
 	anim->AddFile(ID::B_IDOL, "B_IDLE", true,1.0f);
 	anim->AddFile(ID::B_COOLTIME, "B_IDLE2", true, 1.0f);
 	anim->AddFile(ID::B_RUN, "B_WALK", true, 1.2f, 30.0f, 45.0f);
@@ -152,7 +154,7 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_ROAR, "B_ROAR", false,1.2f,30.0f,40.0f);
 	anim->AddFile(ID::B_DUSH, "B_RUN", true,1.2f,30.0f,40.0f);
 	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
-	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL),1);
+
 
 	b->Start(boss);
 

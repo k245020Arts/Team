@@ -32,9 +32,12 @@ void BossNormalAttack6::Update()
 	BossAttackCollsion();
 	boss->LookPlayer();
 	if (!boss->enemyBaseComponent.anim->AnimEventCan()) {
-		VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
-		normal = dis.Normalize();
-		boss->enemyBaseComponent.physics->AddVelocity(normal * 6500.0f, true);
+		if (firstColl) {
+			VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
+			normal = dis.Normalize();
+			boss->enemyBaseComponent.physics->AddVelocity(normal * 6500.0f, true);
+		}
+	
 	}
 	AttackSound();
 	AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
