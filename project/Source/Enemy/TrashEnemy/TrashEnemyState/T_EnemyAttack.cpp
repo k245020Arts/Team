@@ -24,7 +24,7 @@ void T_EnemyAttack::Update()
 	if (e->enemyBaseComponent.anim->IsFinish())
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 
-	BossAttackCollsion();
+	AttackCollsion();
 	AttackSound();
 	AttackFlash(ID::E_MODEL, 11, "E_AttackV");
 	Trail();
