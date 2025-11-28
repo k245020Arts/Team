@@ -27,6 +27,8 @@ EffectManager::EffectManager()
 	Load::LoadEffect("enemyAttackCicle", Effect_ID::ENEMY_ATTACK_CICLE, 50.0f);
 	Load::LoadEffect("AlphaCutoff", Effect_ID::EFFECT_WALL, 50.0f);
 	Load::LoadEffect("bossWave1", Effect_ID::BOSS_WAVE, 50.0f);
+	Load::LoadEffect("bossGround", Effect_ID::BOSS_GROUND, 30.0f);
+	Load::LoadEffect("bossRoor", Effect_ID::BOSS_ROAR, 10.0f);
 	//Effekseer_SetGraphicsDeviceDXLib();
 	SetDrawOrder(-10000);
 }
