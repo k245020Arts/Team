@@ -22,7 +22,7 @@ public:
 	StateManager* GetStateManager() { return enemyBaseComponent.state; }
 	BaseObject* GetEnemyObj() { return obj; }
 
-	virtual void PlayerHit() { ; }
+	virtual void PlayerHit() { hit = true; }
 	void DrawTrail();
 
 	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);

@@ -34,11 +34,11 @@ void PlayerDamage::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
-	p->playerCom.color->setRGB(Color::Rgb(255.0f, 0.0f, 0.0f,255.0f));
+	
 	eRotation = p->playerCom.hitObj->GetTransform()->rotation;
 	//p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 3000) * MGetRotY(eRotation.y));
-	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 3000) * MGetRotY(-eRotation.y));
-	p->playerCom.shaker->ShakeStart(VECTOR3(10, 10, 10), Shaker::HORIZONAL_SHAKE, false, 0.5f);
+	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 5000) * MGetRotY(-eRotation.y));
+	p->playerCom.shaker->ShakeStart(VECTOR3(10, 10, 10), Shaker::HORIZONAL_SHAKE, false, 0.2f);
 }
 
 void PlayerDamage::Finish()

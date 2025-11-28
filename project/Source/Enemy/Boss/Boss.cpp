@@ -124,7 +124,7 @@ void Boss::Update()
 		enemyBaseComponent.state->SetNoStateChange(true);
 	}
 
-	if (CheckHitKey(KEY_INPUT_0)) {
+	if (CheckHitKey(KEY_INPUT_NUMPAD0)) {
 		hp -= 20.0f;
 	}
 

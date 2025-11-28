@@ -17,6 +17,9 @@ namespace Effect_ID {
 		ENEMY_ATTACK_CICLE,
 		EFFECT_WALL,
 		BOSS_WAVE,
+		BOSS_GROUND,
+		BOSS_ROAR,
+
 		EFFECT_MAX
 	};
 

@@ -35,6 +35,7 @@ public:
 		GetHp<T>();
 	}
 
+	void WorldToScreenMode(bool _mode,VECTOR3 _plusPos);
 
 
 private:
@@ -44,5 +45,6 @@ private:
 	MeshRenderer2D* edge;
 	float displayHp;
 	float changeColorCounter;
-
+	bool screenMode;
+	VECTOR3 plus;
 };

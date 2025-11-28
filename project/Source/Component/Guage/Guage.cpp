@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <algorithm>
+#include "../../Camera/CameraManager.h"
 
 Guage::Guage()
 {
@@ -13,6 +14,7 @@ Guage::Guage()
 	tag = Function::GetClassNameC<Guage>();
 	displayHp = 0.0f;
 	changeColorCounter = 0.0f;
+	screenMode = false;
 }
 
 Guage::~Guage()
@@ -22,6 +24,21 @@ Guage::~Guage()
 
 void Guage::Update()
 {
+	if (screenMode) {
+		VECTOR3 worldPos(
+			obj->GetParent()->GetTransform()->position.x,
+			obj->GetParent()->GetTransform()->position.y,
+			obj->GetParent()->GetTransform()->position.z
+		);
+
+		VECTOR headPos = VAdd(worldPos,plus);
+
+		// ‡B 3D -> 2D•ÏŠ·
+		VECTOR3 screenPos = VECTOR3(0,0,0);
+		screenPos = ConvWorldPosToScreenPos(headPos);
+		obj->GetTransform()->position = screenPos;
+		edge->SetPosition(obj->GetTransform()->position);
+	}
 	if (guage != nullptr) {
 
 		float speed = 3.0f;
@@ -47,4 +64,10 @@ void Guage::EdgeDrawReady(int _image, MeshRenderer2D::GraphMode _mode, Transform
 	edge = obj->Component()->AddComponent<MeshRenderer2D>();
 	edge->TextureHandle(_image, _mode);
 	edge->SetTransform(_transfrom);
+}
+
+void Guage::WorldToScreenMode(bool _mode, VECTOR3 _plusPos)
+{
+	screenMode = _mode;
+	plus = _plusPos;
 }

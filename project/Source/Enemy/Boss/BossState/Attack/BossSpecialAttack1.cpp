@@ -6,6 +6,7 @@
 #include "../../../../Common/Effect/EffectManager.h"
 #include "../../../../Component/Collider/DountCollider.h"
 #include "../../../../Component/EnemyAttackObject/ShockWave/ShockWave.h"
+#include "../../../../Common/Sound/SoundManager.h"
 
 BossSpecialAttack1::BossSpecialAttack1()
 {
@@ -55,9 +56,12 @@ void BossSpecialAttack1::Update()
 			if (effect) {
 				effect = false;
 				BaseObject* obj1 = b->enemyBaseComponent.effect->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
+				BaseObject* obj2 = b->enemyBaseComponent.effect->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_GROUND, 1.0f);
 				ShockWave* w = obj1->Component()->AddComponent<ShockWave>();
 				b->enemyBaseComponent.effect->ParentTransformRemove(obj1);
+				b->enemyBaseComponent.effect->ParentTransformRemove(obj2);
 				w->CreateWave(CollsionInformation::B_E_ATTACK, Transform(VZero, VZero, VOne), 50.0f, 50.0f);
+				b->enemyBaseComponent.sound->PlaySe(Sound_ID::GROUND);
 			}
 		}
 		

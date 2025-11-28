@@ -27,12 +27,15 @@ namespace {
 		{StateID::BOSS_SPECIAL_ATTACK1_S},
 		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S},
 		{StateID::BOSS_SPECIAL_ATTACK2_S},
+		{StateID::BOSS_NORMAL_ATTACK4_S},
+		{StateID::BOSS_NORMAL_ATTACK5_S},
+		{StateID::BOSS_NORMAL_ATTACK6_S},
 	};
 	const std::vector<std::vector<double>> normalAttackParam{
-		{ 1.0,1.0,0.5,0.0,0.0,0.0 },
-		{ 1.0,1.0,1.0,0.0,0.0,0.0 },
-		{ 0.1,0.1,0.5,0.7,1.0,0.1 },
-		{ 0.05,0.05,1.0,0.5,0.9,0.1 },
+		{ 1.0,1.0,0.5,0.0,0.0,0.0,1.0,1.0,0.5 },
+		{ 1.0,1.0,1.0,0.0,0.0,0.0,1.0,1.0,1.0  },
+		{ 0.1,0.1,0.5,0.7,1.0,0.1,0.5,0.5,0.5  },
+		{ 0.05,0.05,1.0,0.5,0.9,0.1,0.5,0.5,0.5  },
 	};
 	const std::vector<std::vector<double>> comboAttackParam{
 		{ 1.0,0.5,0.0,0.0},
@@ -219,6 +222,16 @@ void AttackSorting::NormalAttackSelect()
 	}*/
 	VECTOR3 dist = b->obj->GetTransform()->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 	float size = dist.Size();
+	if (size > 1400.0f) {
+		rand[6] += 0.5f;
+		rand[7] += 0.5f;
+		rand[8] += 0.5f;
+	}
+	else {
+		rand[0] += 0.5f;
+		rand[1] += 0.5f;
+		rand[2] += 0.5f;
+	}
 	if (size > 5000.0f) {
 		rand[5] += 3.0f;
 	}
