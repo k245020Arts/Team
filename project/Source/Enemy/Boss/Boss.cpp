@@ -107,8 +107,8 @@ Boss::Boss()
 
 Boss::~Boss()
 {
-	delete trashEnemy;
-	trashEnemy = nullptr;
+	//delete trashEnemy;
+	//trashEnemy = nullptr;
 	delete bs;
 	bs = nullptr;
 }
