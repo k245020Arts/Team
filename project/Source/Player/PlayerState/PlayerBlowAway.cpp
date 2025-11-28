@@ -60,8 +60,8 @@ void PlayerBlowAway::Start()
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
 	eRotation = p->playerCom.hitObj->GetTransform()->rotation;
-	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 5000) * MGetRotY(eRotation.y));
-	p->playerCom.physics->AddVelocity(VECTOR3(0, 1000, 0), false);
+	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 10000) * MGetRotY(eRotation.y));
+	p->playerCom.physics->AddVelocity(VECTOR3(0, 2000, 0), false);
 	p->playerCom.physics->SetGravity(VECTOR3(0, -3000.0f, 0));
 	p->playerCom.player->GetPlayerTransform()->position.y += 10.0f;
 	p->playerCom.anim->SetPlaySpeed(2.5f);

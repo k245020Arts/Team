@@ -10,6 +10,8 @@ BossSpecialAttack2::BossSpecialAttack2()
 	string = Function::GetClassNameC<BossSpecialAttack2>();
 	animId = ID::B_S_ATTACK2_BEFORE;
 	collTrans = Transform(VECTOR3(0, 0, -50), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
+	damage.damagePattern = BossAttackBase::BLOW_AWAY;
+	damage.hitDamage = 50.0f;
 }
 
 BossSpecialAttack2::~BossSpecialAttack2()

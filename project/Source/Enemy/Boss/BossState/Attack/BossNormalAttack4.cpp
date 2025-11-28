@@ -12,6 +12,7 @@ BossNormalAttack4::BossNormalAttack4()
 	string = Function::GetClassNameC<BossNormalAttack4>();
 	animId = ID::B_N_ATTACK4;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
+	damage.damagePattern = BossAttackBase::NO_BACK;
 }
 
 BossNormalAttack4::~BossNormalAttack4()
@@ -28,12 +29,11 @@ void BossNormalAttack4::Update()
 		else
 			boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 	}
+	boss->LookPlayer();
+	VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
+	VECTOR3 normal = dis.Normalize();
+	boss->enemyBaseComponent.physics->AddVelocity(normal * 3500.0f, true);
 	BossAttackCollsion();
-	/*if (boss->enemyBaseComponent.anim->AnimEventCan()) {
-		averageSpeed = 90.0f / attackTime;
-		averageSpeed *= boss->obj->GetObjectRate();
-		boss->bossTransform->rotation.y += averageSpeed * DegToRad;
-	}*/
 	AttackSound();
 	AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
 	BossTrail(true);
@@ -49,7 +49,7 @@ void BossNormalAttack4::Start()
 	EnemyStateBase::Start();
 	firstColl = true;
 	boss->enemyBaseComponent.anim->AnimEventReset();
-	hitDamage = boss->bs->GetStatus().normalAttack1;
+	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
 	VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
 	VECTOR3 normal = dis.Normalize();
 	boss->enemyBaseComponent.physics->AddVelocity(normal * 3500.0f, false);

@@ -125,7 +125,7 @@ void Boss::Update()
 	}
 
 	if (CheckHitKey(KEY_INPUT_0)) {
-		hp -= 5.0f;
+		hp -= 20.0f;
 	}
 
 	if (CheckHitKey(KEY_INPUT_1)) {
@@ -497,4 +497,26 @@ void Boss::MoveBoss(float _speed, float _max)
 		moveVelo.y = enemyBaseComponent.physics->GetVelocity().y;
 		enemyBaseComponent.physics->SetVelocity(moveVelo);
 	}
+}
+
+float Boss::GetAttackCoolTime()
+{
+	switch (hpRate)
+	{
+	case Boss::MAX:
+		coolTime = 1.0f;
+		break;
+	case Boss::EIGHT:
+		coolTime = 0.5f;
+		break;
+	case Boss::FIVE:
+		coolTime = 0.2f;
+		break;
+	case Boss::THREE:
+		coolTime = 0.0f;
+		break;
+	default:
+		break;
+	}
+	return coolTime;
 }

@@ -11,6 +11,7 @@ BossNormalAttack3::BossNormalAttack3()
 	string = Function::GetClassNameC<BossNormalAttack3>();
 	animId = ID::B_N_ATTACK3;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
+	damage.damagePattern = BossAttackBase::BACK;
 }
 
 BossNormalAttack3::~BossNormalAttack3()
@@ -24,16 +25,16 @@ void BossNormalAttack3::Update()
 
 	counter++;
 	//モーションの速度減速
-	if (counter < MSPEED && motionSpeed >= 0)
-		motionSpeed -= motionMaxSpeed / MSPEED;
+	if (counter < MSPEED && damage.motionSpeed >= 0)
+		damage.motionSpeed -= damage.motionMaxSpeed / MSPEED;
 	//モーションの速度加速
-	else if (motionSpeed <= motionMaxSpeed)
-		motionSpeed += motionMaxSpeed / MSPEED;
+	else if (damage.motionSpeed <= damage.motionMaxSpeed)
+		damage.motionSpeed += damage.motionMaxSpeed / MSPEED;
 	//どこまでプレイヤーの方を見るか(今後回避行動取るまでに変更)
 	if (counter <= 50)
 		b->LookPlayer();
 
-	b->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
+	b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionSpeed);
 
 	if (b->enemyBaseComponent.anim->IsFinish())
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
@@ -55,13 +56,13 @@ void BossNormalAttack3::Start()
 
 	firstColl = true;
 	counter = 0;
-	hitDamage = b->bs->GetStatus().normalAttack3;
+	damage.hitDamage = b->bs->GetStatus().normalAttack3;
 	b->enemyBaseComponent.anim->AnimEventReset();
 
-	motionMaxSpeed = b->bs->GetStatus().motionSpeed;
+	damage.motionMaxSpeed = b->bs->GetStatus().motionSpeed;
 
-	b->enemyBaseComponent.anim->SetPlaySpeed(motionMaxSpeed);
-	motionSpeed = motionMaxSpeed;
+	b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionMaxSpeed);
+	damage.motionSpeed = damage.motionMaxSpeed;
 }
 
 void BossNormalAttack3::Finish()

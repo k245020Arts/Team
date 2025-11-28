@@ -23,14 +23,16 @@ void BossCoolTime::Update()
 	bs = b->bs;
 
 	//UŒ‚‚Ü‚Å‚ÌŽžŠÔiŒã‚ÅC³j
-	coolTime++;
-	if (coolTime >= bs->GetStatus().coolTime)
+	coolTime += Time::DeltaTimeRate();
+	if (coolTime >= b->coolTime)
 		b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 }
 
 void BossCoolTime::Start()
 {
+	Boss* b = GetBase<Boss>();
 	coolTime = 0;
+	b->GetAttackCoolTime();
 	EnemyStateBase::Start();
 }
 

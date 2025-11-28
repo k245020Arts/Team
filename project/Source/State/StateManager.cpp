@@ -220,6 +220,7 @@ void StateManager::StateNodeDraw()
 
 void StateManager::ImguiDraw()
 {
+	ImGui::Text("%s", state->GetString().c_str());
 	if (ImGui::TreeNode("state")) {
 		for (auto& t : stateInfo) {
 			std::string name = t.second->GetString();

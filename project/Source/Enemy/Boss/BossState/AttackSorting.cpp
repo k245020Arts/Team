@@ -114,7 +114,8 @@ void AttackSorting::Update()
 
 void AttackSorting::Start()
 {
-	
+	animId = ID::B_IDOL;
+	EnemyStateBase::Start();
 	Boss* b = GetBase<Boss>();
 	if (b->maxAttack != -1) {
 		b->maxAttack--;

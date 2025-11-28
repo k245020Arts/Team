@@ -10,8 +10,8 @@ private:
 		float normalAttack3 = 80.0f;	//攻撃３のダメージ数値
 
 		int maxAttack = 4;		//最大連続攻撃の数
-		float maxHp = 1000;		//最大HP
-		float coolTime = 60.0f;	//一段目の攻撃までの時間
+		float maxHp = 3000;		//最大HP
+		float coolTime = 30.0f;	//一段目の攻撃までの時間
 		float runSpeed = 8.0f;		//ボスの移動速度
 		float fallFrame = 50.0f;	//次の攻撃の間隔を短くする
 		float motionSpeed = 1.4f;		//攻撃モーションの最大速度

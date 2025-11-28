@@ -65,6 +65,7 @@ public:
 	HP_RATE Hp();
 
 	void MoveBoss(float _speed,float _max);
+	float GetAttackCoolTime();
 
 private:
 	Boss* boss;
@@ -84,4 +85,5 @@ private:
 	bool roaf;
 
 	TrashEnemyManager* trashEnemy;
+	float coolTime;
 };

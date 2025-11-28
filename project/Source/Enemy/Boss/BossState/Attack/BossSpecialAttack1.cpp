@@ -18,6 +18,8 @@ BossSpecialAttack1::BossSpecialAttack1()
 	animId = ID::B_S_ATTACK1;
 
 	collTrans = Transform(VECTOR3(0, -50, 0), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
+	damage.damagePattern = BossAttackBase::BLOW_AWAY;
+	damage.hitDamage = 50.0f;
 }
 
 BossSpecialAttack1::~BossSpecialAttack1()
