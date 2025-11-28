@@ -5,7 +5,6 @@
 
 T_EnemyAttack::T_EnemyAttack()
 {
-	//id = ID::TE_ATTACK;
 	animId = ID::B_N_ATTACK3;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 
