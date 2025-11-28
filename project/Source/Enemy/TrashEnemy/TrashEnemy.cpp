@@ -78,7 +78,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
 	// スタートステートも StateID 化
-	enemyBaseComponent.state->StartState(StateID::T_ENEMY_ATTACK_S);
+	enemyBaseComponent.state->StartState(StateID::T_ENEMY_RUN_S);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 
 	chara = obj->Component()->AddComponent<CharaWeapon>();

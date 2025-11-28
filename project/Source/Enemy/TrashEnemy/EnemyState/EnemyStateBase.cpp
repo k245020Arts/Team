@@ -35,7 +35,7 @@ void EnemyStateBase::Start()
 
 void EnemyStateBase::AttackCollsion()
 {
-	Enemy* e = GetBase<Enemy>();
+	TrashEnemy* e = GetBase<TrashEnemy>();
 	//“G‚ÌUŒ‚”»’è‚Ì¶¬ƒNƒ‰ƒX
 	if (e->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
