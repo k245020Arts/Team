@@ -88,6 +88,9 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::PLAY_BGM, "PlaySceneBGM", ".wav", 150);
 	SoundLoad(Sound_ID::WIN, "winSe", ".wav", 200);
 	SoundLoad(Sound_ID::LOSE, "loseSe", ".mp3", 200);
+
+	SoundLoad(Sound_ID::GROUND, "Ground", ".wav", 255);
+	SoundLoad(Sound_ID::V_B_ROAR, "B_ROAR", ".wav", 255);
 	
 }
 

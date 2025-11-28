@@ -53,6 +53,8 @@ namespace Sound_ID {
 		PUSH,
 		WIN,
 		LOSE,
+		GROUND,
+		V_B_ROAR,
 
 		SOUND_MAX
 	};

@@ -4,6 +4,7 @@
 #include "AttackSorting.h"
 #include "BossStatus.h"
 #include "../../../Component/Animator/Animator.h"
+#include "../../../Common/Sound/SoundManager.h"
 #include "../../TrashEnemy/TrashEnemyManager.h"//
 
 BossRoar::BossRoar()
@@ -38,7 +39,10 @@ void BossRoar::Draw()
 
 void BossRoar::Start()
 {
+	Boss* b = GetBase<Boss>();
+	b->enemyBaseComponent.sound->PlaySe(Sound_ID::V_B_ROAR);
 	EnemyStateBase::Start();
+
 }
 
 void BossRoar::Finish()

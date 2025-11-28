@@ -25,51 +25,51 @@
 #include "EnemyState/EnemyDie.h"
 
 namespace {
-	const std::unordered_map<ID::IDType, EnemyInformation::EnemyReaction> bossTable = {
+	const std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> bossTable = {
 		// 通常攻撃
-		{ ID::P_ANIM_ATTACK1, { ID::P_ANIM_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.15f,0.8f),
+		{  StateID::PLAYER_ATTACK1_S, { ID::P_ANIM_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.15f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 10, 10,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-			true, 0.0f, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
+			true, 40.0f, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-		{ ID::P_ANIM_ATTACK2, { ID::P_ANIM_ATTACK2, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.25f,0.8f),
+		{  StateID::PLAYER_ATTACK2_S, { ID::P_ANIM_ATTACK2, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.25f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 40, 30,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-			true, 40.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
+			true, 70.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-		{ ID::P_ANIM_ATTACK3, { ID::P_ANIM_ATTACK3, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.35f,0.8f),
+		{  StateID::PLAYER_ATTACK3_S, { ID::P_ANIM_ATTACK3, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.35f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 10, 10,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 80.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-		{ ID::P_ANIM_ATTACK4, { ID::P_ANIM_ATTACK4, EnemyDamage::EnemyDamageInfo(VECTOR3(0,400,0), VECTOR3(200,200,200),0.85f,1.0f),
+		{  StateID::PLAYER_ATTACK4_S, { ID::P_ANIM_ATTACK4, EnemyDamage::EnemyDamageInfo(VECTOR3(0,400,0), VECTOR3(200,200,200),0.85f,1.0f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 50, 50,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-			true, -120.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
+			true, 0.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-		// ジャスト回避攻撃
-		{ ID::P_ANIM_JUST_AVOID_ATTACK1, { ID::P_ANIM_JUST_AVOID_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-20000,2000), VECTOR3(400,400,400),0.05f,0.8f),
+			// ジャスト回避攻撃
+		{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, { ID::P_ANIM_JUST_AVOID_ATTACK1, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-20000,2000), VECTOR3(400,400,400),0.05f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 30, 40,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 0.0f, Effect_ID::PLAYER_SLASH_ATTACK, false, -1, 0.0f } },
 
-		{ ID::P_ANIM_JUST_AVOID_ATTACK2, { ID::P_ANIM_JUST_AVOID_ATTACK2, EnemyDamage::EnemyDamageInfo(), EnemyBlowAway::EnemyBlowAwayInfo(),
+		{ StateID::PLAYER_JUST_AVOID_ATTACK2_S, { ID::P_ANIM_JUST_AVOID_ATTACK2, EnemyDamage::EnemyDamageInfo(), EnemyBlowAway::EnemyBlowAwayInfo(),
 			EnemyInformation::EnemyReaction::Type::LoopCombo, ID::E_DAMAGE, 0, 0,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 90.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, 5, 0.13f } },
+	
+		{StateID::PLAYER_JUST_AVOID_ATTACK3_S, { ID::P_ANIM_JUST_AVOID_ATTACK3, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200),0.2f,0.8f),
+		EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 70, 40,
+		Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
+		true, 180.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-		{ ID::P_ANIM_JUST_AVOID_ATTACK3, { ID::P_ANIM_JUST_AVOID_ATTACK3, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200),0.2f,0.8f),
-			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 70, 40,
-			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-			true, -50.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
-
-		{ ID::P_ANIM_JUST_AVOID_ATTACK4, { ID::P_ANIM_JUST_AVOID_ATTACK4, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,7000), VECTOR3(200,200,200),0.2f,0.8f),
+		{ StateID::PLAYER_JUST_AVOID_ATTACK4_S, { ID::P_ANIM_JUST_AVOID_ATTACK4, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,7000), VECTOR3(200,200,200),0.2f,0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal, ID::E_DAMAGE, 40, 40,
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 80.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-				// 吹っ飛ばし攻撃
-		{ ID::P_ANIM_JUST_AVOID_ATTACK5, { ID::P_ANIM_JUST_AVOID_ATTACK5, EnemyDamage::EnemyDamageInfo(),
+		// 吹っ飛ばし攻撃
+		{ StateID::PLAYER_JUST_AVOID_ATTACK5_S, { ID::P_ANIM_JUST_AVOID_ATTACK5, EnemyDamage::EnemyDamageInfo(),
 			EnemyBlowAway::EnemyBlowAwayInfo(4000,3000,VECTOR3(15,15,15),VECTOR3(0.3f,0.3f,0.3f),2000,20),
 			EnemyInformation::EnemyReaction::Type::BlowAway, ID::E_BLOWAWAY, 100, 60,
 			Effect_ID::SPECIAL_HIT_EFFECT, 5.0f, EnemyInformation::HIT_EFFECT_SCALE_RATE,
@@ -343,7 +343,7 @@ void Enemy::PlayerHit()
 		loopNum = -1;
 		return;
 	}
-	//ID::IDType attackID = pState->GetState<PlayerStateBase>()->GetID();
+	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
 	float damage = 0;;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
 		damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
@@ -356,78 +356,78 @@ void Enemy::PlayerHit()
 	EnemyBlowAway::EnemyBlowAwayInfo bInfo;
 	float random[3] = {};
 	//エフェクトの位置をランダムに派生
-	//for (float& r : random) {
-	//	r = (float)GetRand(80) - 40.0f;
-	//}
-	////プレイヤーの攻撃の種類によってダメージや吹っ飛び方の種類を変える
-	//float angleRan = 0.0f;
-	//bool lastAttack = false;
-	//bool lastBeforeAttack = false;
-	//auto enemyParam = bossTable.find(attackID);
-	//if (enemyParam != bossTable.end()) {
-	//	const auto& e = enemyParam->second;
-	//	switch (e.attackType)
-	//	{
-	//	case EnemyInformation::EnemyReaction::Type::Normal:
-	//		enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
-	//		enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
-	//		enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
-	//		enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
-	//		break;
-	//	case EnemyInformation::EnemyReaction::Type::BlowAway:
-	//		enemyBaseComponent.state->NowChangeState(ID::E_BLOWAWAY);
-	//		break;
-	//	case EnemyInformation::EnemyReaction::Type::LoopCombo:
-	//		enemyBaseComponent.sound->RandamSe("swordHit00000", 7);
-	//		if (loopNum == -1) {
-	//			hitCounter = 0.23f;
-	//			loopNum = 5;
-	//		}
-	//		else if (loopNum == 1) {
-	//			hitCounter = 0.13f;
-	//			loopNum--;
-	//			lastBeforeAttack = true;
-	//		}
-	//		else if (loopNum == 0) {
-	//			loopNum = -1;
-	//			lastAttack = true;
-	//		}
-	//		else if (loopNum > 0) {
-	//			hitCounter = 0.13f;
-	//			loopNum--;
-	//		}
-	//		if (lastAttack) {
-	//			enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
-	//			dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 3500.0f), VECTOR3(100, 100, 100), 0.5f, 1.2f);
-	//			enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
-	//			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE * 14.5f), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-	//			//angleRan = GetRand(360);
-	//			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//			hit = true;
-	//		}
-	//		else if (lastBeforeAttack) {
-	//			dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(100, 100, 100), 0.5f, 0.5f);
-	//			enemyBaseComponent.shaker->ShakeStart(VECTOR3(20, 20, 20), Shaker::HORIZONAL_SHAKE, true, 0.3f);
-	//			enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
-	//			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-	//			angleRan = (float)GetRand(360);
-	//			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//		}
-	//		else {
-	//			//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
-	//			dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(20, 20, 20), 0.2f, 0.02f);
-	//			enemyBaseComponent.control->ControlVibrationStartFrame(450, 20);
-	//			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-	//			angleRan = (float)GetRand(360);
-	//			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//			enemyBaseComponent.playerObj->Component()->GetComponent<Shaker>()->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.05f);
-	//		}
+	for (float& r : random) {
+		r = (float)GetRand(80) - 40.0f;
+	}
+	//プレイヤーの攻撃の種類によってダメージや吹っ飛び方の種類を変える
+	float angleRan = 0.0f;
+	bool lastAttack = false;
+	bool lastBeforeAttack = false;
+	auto enemyParam = bossTable.find(attackID);
+	if (enemyParam != bossTable.end()) {
+		const auto& e = enemyParam->second;
+		switch (e.attackType)
+		{
+		case EnemyInformation::EnemyReaction::Type::Normal:
+			//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
+			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
+			break;
+		case EnemyInformation::EnemyReaction::Type::BlowAway:
+			//enemyBaseComponent.state->NowChangeState(ID::E_BLOWAWAY);
+			break;
+		case EnemyInformation::EnemyReaction::Type::LoopCombo:
+			enemyBaseComponent.sound->RandamSe("swordHit00000", 7);
+			if (loopNum == -1) {
+				hitCounter = 0.23f;
+				loopNum = 5;
+			}
+			else if (loopNum == 1) {
+				hitCounter = 0.13f;
+				loopNum--;
+				lastBeforeAttack = true;
+			}
+			else if (loopNum == 0) {
+				loopNum = -1;
+				lastAttack = true;
+			}
+			else if (loopNum > 0) {
+				hitCounter = 0.13f;
+				loopNum--;
+			}
+			if (lastAttack) {
+				//enemyBaseComponent.state->NowChangeState(state::E_DAMAGE);
+				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 3500.0f), VECTOR3(100, 100, 100), 0.5f, 1.2f);
+				enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
+				enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE * 14.5f), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
+				//angleRan = GetRand(360);
+				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+				hit = true;
+			}
+			else if (lastBeforeAttack) {
+				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(100, 100, 100), 0.5f, 0.5f);
+				enemyBaseComponent.shaker->ShakeStart(VECTOR3(20, 20, 20), Shaker::HORIZONAL_SHAKE, true, 0.3f);
+				enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
+				enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
+				angleRan = (float)GetRand(360);
+				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+			}
+			else {
+				//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
+				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(20, 20, 20), 0.2f, 0.02f);
+				enemyBaseComponent.control->ControlVibrationStartFrame(450, 20);
+				enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
+				angleRan = (float)GetRand(360);
+				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+				enemyBaseComponent.playerObj->Component()->GetComponent<Shaker>()->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.05f);
+			}
 
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//}
+			break;
+		default:
+			break;
+		}
+	}
 	EnemyDamageMove(dInfo);
 	hit = true;
 	hp -= damage;

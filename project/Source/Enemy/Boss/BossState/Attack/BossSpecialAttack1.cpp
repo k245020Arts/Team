@@ -6,6 +6,7 @@
 #include "../../../../Common/Effect/EffectManager.h"
 #include "../../../../Component/Collider/DountCollider.h"
 #include "../../../../Component/EnemyAttackObject/ShockWave/ShockWave.h"
+#include "../../../../Common/Sound/SoundManager.h"
 
 BossSpecialAttack1::BossSpecialAttack1()
 {
@@ -58,6 +59,7 @@ void BossSpecialAttack1::Update()
 				ShockWave* w = obj1->Component()->AddComponent<ShockWave>();
 				b->enemyBaseComponent.effect->ParentTransformRemove(obj1);
 				w->CreateWave(CollsionInformation::B_E_ATTACK, Transform(VZero, VZero, VOne), 50.0f, 50.0f);
+				b->enemyBaseComponent.sound->PlaySe(Sound_ID::GROUND);
 			}
 		}
 		
