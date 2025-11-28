@@ -8,6 +8,8 @@ T_EnemyAttack::T_EnemyAttack()
 	//id = ID::TE_ATTACK;
 	animId = ID::B_N_ATTACK3;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
+
+	damage.hitDamage = 20.0f;
 }
 
 T_EnemyAttack::~T_EnemyAttack()
@@ -22,7 +24,7 @@ void T_EnemyAttack::Update()
 	if (e->enemyBaseComponent.anim->IsFinish())
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 
-	//BossAttackCollsion();
+	BossAttackCollsion();
 	AttackSound();
 	AttackFlash(ID::E_MODEL, 11, "E_AttackV");
 	Trail();
