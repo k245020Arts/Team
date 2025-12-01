@@ -21,6 +21,7 @@
 #include "../../Weapon/CharaWeapon.h"
 #include "../../Common/LoadManager.h"
 
+#include "TrashEnemyState/T_EnemyStatus.h"
 #include "TrashEnemyState/T_EnemyIdol.h"
 #include "TrashEnemyState/T_EnemyRun.h"
 #include "TrashEnemyState/T_EnemyAttack.h"
@@ -83,8 +84,9 @@ namespace
 TrashEnemy::TrashEnemy()
 {
 	tag = Function::GetClassNameC<TrashEnemy>();
+	eStatus = new T_EnemyStatus;
 
-	hp = 100;
+	hp = eStatus->GetStatus().maxHp;
 	maxHp = hp;
 }
 
@@ -100,7 +102,7 @@ void TrashEnemy::Update()
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 
 	if (CheckHitKey(KEY_INPUT_9))
-		hp -= 100;
+		hp -= maxHp;
 }
 
 void TrashEnemy::Draw()

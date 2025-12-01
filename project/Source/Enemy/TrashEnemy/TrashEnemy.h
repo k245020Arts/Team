@@ -6,6 +6,7 @@
 class StateManager;
 class EnemyStateManager;
 class CharaWeapon;
+class T_EnemyStatus;
 
 class TrashEnemy : public EnemyBase
 {
@@ -46,6 +47,7 @@ public:
 
 private:
 	CharaWeapon* chara;
+	T_EnemyStatus* eStatus;
 	void LookPlayer();
 	bool active;
 };

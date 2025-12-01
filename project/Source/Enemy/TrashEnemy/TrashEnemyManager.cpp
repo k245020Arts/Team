@@ -33,22 +33,22 @@ TrashEnemyManager::~TrashEnemyManager()
 
 void TrashEnemyManager::Update()
 {
-	//if (CheckHitKey(KEY_INPUT_0))
-	//	CreateEnemy(VZero, 3);
+	if (CheckHitKey(KEY_INPUT_0))
+		CreateEnemy(VZero, 3);
 
-	//if (enemies.empty() == false)
-	//{
-	//	for (auto itr = enemies.begin(); itr != enemies.end(); )
-	//	{
-	//		if (!(*itr)->GetActive())
-	//		{
-	//			(*itr)->GetEnemyObj()->DestroyMe();
-	//			itr = enemies.erase(itr);  // 次の要素のイテレータが返る
-	//		}
-	//		else
-	//			++itr;
-	//	}
-	//}
+	if (enemies.empty() == false)
+	{
+		for (auto itr = enemies.begin(); itr != enemies.end(); )
+		{
+			if (!(*itr)->GetActive())
+			{
+				(*itr)->GetEnemyObj()->DestroyMe();
+				itr = enemies.erase(itr);  // 次の要素のイテレータが返る
+			}
+			else
+				++itr;
+		}
+	}
 }
 
 void TrashEnemyManager::Draw()
