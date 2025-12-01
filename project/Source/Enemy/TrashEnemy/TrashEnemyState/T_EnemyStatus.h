@@ -11,7 +11,8 @@ private:
 		const float coolTime = 30.0f;		//ˆê’i–Ú‚ÌUŒ‚‚Ü‚Å‚ÌŠÔ
 		const float runSpeed = 5.0f;		//ˆÚ“®‘¬“x
 		//float fallFrame = 50.0f;			//Ÿ‚ÌUŒ‚‚ÌŠÔŠu‚ğ’Z‚­‚·‚é
-		const float range = 1400.0f;		//“G‚ªUŒ‚‚·‚é‚Ü‚Å‚ÌƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
+		const float range = 1400.0f;		//idel‚Ærun‚ÌØ‚è‘Ö‚í‚è
+		const float atkRang = 500.0f;		//run‚ÆUŒ‚‚ÌØ‚è‘Ö‚í‚è
 		const float chaseRange = 5000.0f;	//ƒvƒŒƒCƒ„[‚Æ—£‚ê‚½‚Æ‚«‚ÉØ‚è‘Ö‚í‚é
 	};
 	Status status;

@@ -48,6 +48,8 @@ public:
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
-	void LookPlayer();
+	void LookTarget();
 	bool active;
+
+	VECTOR3 targetPos;
 };

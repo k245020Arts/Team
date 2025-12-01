@@ -20,7 +20,7 @@ void T_EnemyAttack::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	const float MSPEED = 60.0f;//ƒ‚[ƒVƒ‡ƒ“‚Ì‘¬“x’²®
-	e->LookPlayer();
+	e->LookTarget();
 
 	if (e->enemyBaseComponent.anim->IsFinish())
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);

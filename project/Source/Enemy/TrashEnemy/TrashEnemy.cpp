@@ -92,7 +92,8 @@ TrashEnemy::TrashEnemy()
 
 TrashEnemy::~TrashEnemy()
 {
-	
+	delete eStatus;
+	eStatus = nullptr;
 }
 
 void TrashEnemy::Update()
@@ -150,12 +151,11 @@ void TrashEnemy::Start(Object3D* _obj)
 void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos)
 {
 	obj->GetTransform()->position = _pos;
+	targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
 }
 
-void TrashEnemy::LookPlayer()
+void TrashEnemy::LookTarget()
 {
-	//プレイヤーのポジションを格納させる
-	VECTOR3 targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
 	VECTOR3 distance = targetPos - obj->GetTransform()->position;
 	//向くべき角度
 	float direction = -atan2f(distance.z, distance.x) - 0.5f * DX_PI_F;
