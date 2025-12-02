@@ -39,7 +39,9 @@ void FreeCamera::Update()
 	}
 	//プレイヤーの追従処理
 	c->Follow();
-
+	if (c->hit) {
+		return;
+	}
 	//スティック移動
 	if (c->cameraComponent.control->GetStickInput().rightStick.x >= 0.3f) {
 		c->cameraComponent.cameraTransform->rotation.y += 180.0f * Time::DeltaTimeRate() * DegToRad;
@@ -48,7 +50,7 @@ void FreeCamera::Update()
 		c->cameraComponent.cameraTransform->rotation.y -= 180.0f * Time::DeltaTimeRate() * DegToRad;
 	}
 	if (c->cameraComponent.control->GetStickInput().rightStick.y >= 0.3f) {
-		if (c->cameraComponent.cameraTransform->rotation.x >= 0.0f * DegToRad) {
+		if (c->cameraComponent.cameraTransform->rotation.x >= -50.0f * DegToRad) {
 			c->cameraComponent.cameraTransform->rotation.x -= 180.0f * Time::DeltaTimeRate() * DegToRad;
 		}
 

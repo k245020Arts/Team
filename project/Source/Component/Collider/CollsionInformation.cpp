@@ -23,7 +23,7 @@ void CollsionInformation::InitSetPair()
     SetPair(PLAYER, B_E_ATTACK);
     SetPair(PLAYER, E_ATTACK);
     SetPair(PLAYER, WALL);
-    //SetPair(CAMERA, WALL);
+    //SetPair(CAMERA, FLOOR);
     SetPair(ENEMY, P_ATTACK);
     SetPair(ENEMY, WALL);
     SetPair(PLAYER, B_ATTACK);
@@ -54,10 +54,10 @@ void Pushback::Clear() {
     pushes.clear();
 }
 
-void Pushback::AddPush(const VECTOR3& normal, float penetration, CollsionInformation::Shape _shape)
+void Pushback::AddPush(const VECTOR3& normal, float penetration, CollsionInformation::Shape _shape,VECTOR3 _targetPos)
 {
     if (penetration > 0.0f) {
-        PushInfo i(normal, penetration, _shape);
+        PushInfo i(normal, penetration, _shape,_targetPos);
 
         pushes.emplace_back(i);
     }

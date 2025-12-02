@@ -66,9 +66,10 @@ struct PushInfo {
 	VECTOR3 normal;      // 法線ベクトル
 	float penetration; // めり込み量
 	CollsionInformation::Shape shape;
+	VECTOR3 targetPos;
 
-	PushInfo(const VECTOR3& n, float p, CollsionInformation::Shape _shape)
-		: normal(n), penetration(p) ,shape(_shape) {
+	PushInfo(const VECTOR3& n, float p, CollsionInformation::Shape _shape,VECTOR3 _targetPos)
+		: normal(n), penetration(p) ,shape(_shape) , targetPos(_targetPos) {
 	}
 };
 
@@ -79,7 +80,7 @@ public:
 	void Clear();
 
 	// 押し返しデータを追加
-	void AddPush(const VECTOR3& normal, float penetration, CollsionInformation::Shape _shape);
+	void AddPush(const VECTOR3& normal, float penetration, CollsionInformation::Shape _shape, VECTOR3 _targetPos);
 
 	// 押し返しベクトルを計算して返す
 	VECTOR3 ResultPushback(float maxLength = 5.0f);
@@ -87,6 +88,7 @@ public:
 	// 位置と速度に押し返しを適用
 	void Apply(Transform* transform, Physics* physics, bool affectVelocity = true, float maxLength = 5.0f);
 	bool IsGrounded(float minYNormal = 0.6f) const;
+	std::vector<PushInfo>& GetPushInfo() { return pushes; }
 private:
 	std::vector<PushInfo> pushes;
 };
