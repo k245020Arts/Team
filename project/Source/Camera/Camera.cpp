@@ -49,6 +49,13 @@ Camera::~Camera()
 
 void Camera::Update()
 {
+	cameraComponent.enemyManager->NearEnemyAlpha(cameraComponent.cameraTransform->position);
+	if (hit) {
+		hit = false;
+	}
+	else {
+		counter = 0.0f;
+	}
 	if (input->KeyInputDown("camera")) {
 		if (!rockOn) {
 			if (cameraComponent.enemyManager->PlayerDistance(this)) {
@@ -212,4 +219,15 @@ void Camera::Follow()
 	}
 
 	beforePos = cameraComponent.cameraTransform->position.y;
+}
+
+void Camera::PushCamera(VECTOR3 norm, float size, VECTOR3 groundPos)
+{
+	float offset = 5.0f; 
+	float newDist = max(0, size - offset);
+	counter = counter > 1.0f ? 1.0f : counter + Time::DeltaTimeRate() * 3.0f;
+	float rate = counter / 1.0f;
+	currentDistance.z = Easing::Lerp(defalutDistance.z, 1000.0f, rate);
+	hit = true;
+	cameraComponent.cameraTransform->position = VECTOR3(cameraComponent.cameraTransform->position.x ,groundPos.y + 100.0f, cameraComponent.cameraTransform->position.z);
 }

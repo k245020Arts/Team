@@ -13,6 +13,7 @@ EnemyBase::EnemyBase()
 	hit = false;
 	hitCounter = 0.0f;
 	pState = nullptr;
+	alpha = 255;
 }
 
 EnemyBase::~EnemyBase()
@@ -52,6 +53,8 @@ void EnemyBase::Update()
 			hit = false;
 		}
 	}
+	const Color::Rgb r = enemyBaseComponent.color->GetRgb();
+	enemyBaseComponent.color->setRGB(Color::Rgb(r.r, r.g, r.b, alpha));
 }
 
 void EnemyBase::Draw()

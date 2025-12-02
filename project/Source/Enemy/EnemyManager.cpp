@@ -18,6 +18,7 @@
 #include "../Component/Collider/rayCollider.h"
 #include "../Component/Collider/ModelCollider.h"
 #include "../Component/Shadow/Shadow.h"
+#include "../Common/Easing.h"
 
 EnemyManager::EnemyManager()
 {
@@ -252,6 +253,24 @@ void EnemyManager::JustAvoidTargetChange(Object3D* _obj)
 		if ((*itr)->GetLastTarget()) {
 			(*itr)->LastTargetOut();
 			continue;
+		}
+	}
+}
+
+void EnemyManager::NearEnemyAlpha(VECTOR3 camPos)
+{
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		VECTOR3 dist = (*itr)->GetBaseObject()->GetTransform()->position - camPos;
+		if (dist.Size() <= 2000.0f) {
+			float rate = dist.Size() / 2000.0f;
+			float alpha = Easing::Lerp(-500, 255, rate);
+			if (alpha < 0) {
+				alpha = 0;
+			}
+			(*itr)->SetAlpha(alpha);
+		}
+		else {
+			(*itr)->SetAlpha(255);
 		}
 	}
 }

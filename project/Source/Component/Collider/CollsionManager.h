@@ -31,12 +31,12 @@ private:
 	std::list<ColliderBase*> collList;
 
 	
-	typedef bool (CollsionManager::*CollsionKind)(ColliderBase* col1, ColliderBase* col2);
+	typedef bool (CollsionManager::*CollsionKind)(ColliderBase* col1, ColliderBase* col2, Pushback& resolver);
 	std::array<CollsionKind, CollsionInformation::COLLSION_KIND_MAX> collsionKind;
 
-	bool CollsionSphereToSphere(ColliderBase* col1, ColliderBase* col2);
-	bool CollsionModelToRay(ColliderBase* col1, ColliderBase* col2);
-	bool CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2);
-	bool CollsionSphereToDount(ColliderBase* col1, ColliderBase* col2);
+	bool CollsionSphereToSphere(ColliderBase* col1, ColliderBase* col2, Pushback& resolver);
+	bool CollsionModelToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver);
+	bool CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2, Pushback& resolver);
+	bool CollsionSphereToDount(ColliderBase* col1, ColliderBase* col2, Pushback& resolver);
 	CollsionEvent* event;
 };

@@ -42,6 +42,8 @@ public:
 	void Follow();
 	VECTOR3 GetTarget() { return target; }
 
+	void PushCamera(VECTOR3 norm, float size,VECTOR3 groundPos);
+
 private:
 
 	float timeTest;
@@ -60,4 +62,6 @@ private:
 	float beforePos;
 	float nearFog;
 	float farFog;
+	float counter;
+	bool hit;
 };

@@ -5,7 +5,7 @@
 class Object3D;
 class BaseObject;
 class Camera;
-class CharaBase;
+class EnemyBase;
 
 class EnemyManager : public GameObject
 {
@@ -27,10 +27,12 @@ public:
 	bool TargetCancel(Camera* camera);
 	void JustAvoidTargetChange(Object3D* _obj);
 
+	void NearEnemyAlpha(VECTOR3 camPos);
+
 private:
 	
 	std::list<Object3D*> enemy;
 	Object3D* player;
-	std::list<CharaBase*> chara;
+	std::list<EnemyBase*> chara;
 	BaseObject* cameraTargetObj;
 };

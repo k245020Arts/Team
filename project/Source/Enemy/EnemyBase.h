@@ -27,7 +27,7 @@ public:
 
 	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);
 	bool GetHit() { return hit; }
-
+	void SetAlpha(int _alpha) { alpha = _alpha; }
 	
 
 protected:
@@ -41,4 +41,5 @@ protected:
 	
 	const float MAX_HP = 100;
 	bool hit;
+	int alpha;
 };

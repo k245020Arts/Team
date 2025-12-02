@@ -7,6 +7,7 @@
 #include "../../Enemy/TrashEnemy/EnemyState/EnemyStateBase.h"
 #include "../../Enemy/Boss/Boss.h"
 #include "../../Common/Effect/EffectBase.h"
+#include "../../Camera/Camera.h"
 
 CollsionEvent::CollsionEvent()
 {
@@ -16,7 +17,7 @@ CollsionEvent::~CollsionEvent()
 {
 }
 
-void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2)
+void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver)
 {
 	using namespace CollsionInformation;
 	Tag tag1 = _coll1->GetCollTag();
@@ -40,6 +41,10 @@ void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2)
 	if (tag1 == BOSS && tag2 == P_ATTACK) {
 		/*Debug::DebugLog("PlayerAttackHit");*/
 		BossDamageEvent(_coll1, _coll2);
+	}
+
+	if (tag1 == FLOOR && tag2 == C_FLOOR) {
+		CameraPushEvent(_coll1, _coll2, resolver);
 	}
 }
 
@@ -97,4 +102,11 @@ void CollsionEvent::BossDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2)
 	}
 	boss->PlayerHit();
 	player->PlayerAttackHit();
+}
+
+void CollsionEvent::CameraPushEvent(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver)
+{
+	Camera* camera = _coll2->GetBaseObject()->Component()->GetComponent<Camera>();
+	PushInfo info = resolver.GetPushInfo()[0];
+	camera->PushCamera(info.normal, info.penetration, info.targetPos);
 }

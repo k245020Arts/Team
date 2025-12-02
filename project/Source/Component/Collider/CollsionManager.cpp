@@ -11,6 +11,8 @@
 #include "DountCollider.h"
 #include "../Shadow/Shadow.h"
 
+static int plus = 0;
+
 CollsionManager::CollsionManager()
 {
 	using namespace Function;
@@ -59,7 +61,8 @@ void CollsionManager::Update()
 			if (kind == nullptr) {
 				continue;
 			}
-			hit = (this->*kind)((*itr1), (*itr2));
+			Pushback resolver;
+			hit = (this->*kind)((*itr1), (*itr2),resolver);
 			if (!hit) {
 				continue;
 			}
@@ -69,7 +72,7 @@ void CollsionManager::Update()
 			if ((*itr2)->GetOneColl()) {
 				(*itr2)->CollsionFinish();
 			}
-			event->Event((*itr1), (*itr2));
+			event->Event((*itr1), (*itr2),resolver);
 		}
 	}
 }
@@ -99,7 +102,7 @@ void CollsionManager::RemoveCollList(ColliderBase* obj)
 	}
 }
 
-bool CollsionManager::CollsionSphereToSphere(ColliderBase* col1, ColliderBase* col2)
+bool CollsionManager::CollsionSphereToSphere(ColliderBase* col1, ColliderBase* col2, Pushback& resolver)
 {
 	Transform* trans1 = col1->GetTransform();
 	Transform* trans2 = col2->GetTransform();
@@ -113,7 +116,7 @@ bool CollsionManager::CollsionSphereToSphere(ColliderBase* col1, ColliderBase* c
 	return false;
 }
 
-bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2)
+bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver)
 {
 	//Transform* trans1 = col1->GetTransform();
 	//Transform* trans2 = col2->GetTransform();
@@ -139,30 +142,45 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2)
 	VECTOR3 startPos = rayStartTrans->WorldTransform().position;
 	VECTOR3 endPos = rayEndTrans->WorldTransform().position;
 
+	if (col2->GetCollTag() == CollsionInformation::C_FLOOR) {
+		int a = 0;
+	}
+
 	// レイによるモデルの当たり判定
 	auto result = MV1CollCheck_Line(dynamic_cast<ModelCollider*>(col1)->GetModel(),-1,startPos,endPos
 	);
-	if (col2->GetCollTag() == CollsionInformation::P_FLOOR) {
-		//int a;
-	}
+	
 	Physics* p = col2->GetObj()->Component()->GetComponent<Physics>();
-	Pushback resolver;
+	
 
 	if (result.HitFlag != 0) {
 		VECTOR3 push = startPos - result.HitPosition;
 
+		if (col2->GetCollTag() == CollsionInformation::C_FLOOR) {
+			Debug::DebugLogPrintf(Debug::printfString("hit = %d", ++plus));
+		}
+
 		// Y方向のみ押し返し
-		resolver.AddPush(VECTOR3(0, 1, 0), push.Size(), CollsionInformation::Shape::RAY);
+		resolver.AddPush(VECTOR3(0, 1, 0), push.Size(), CollsionInformation::Shape::RAY,result.HitPosition);
 
 		if (col2->GetCollTag() == CollsionInformation::SHADOW) {
 			col2->GetBaseObject()->Component()->GetComponent<Shadow>()->ChangeScale(push,result.HitPosition);
 		}
-	}
-	resolver.Apply(col2->GetObj()->GetTransform(), p, true, 2.0f * Time::DeltaTimeRate());
+		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 2.0f * Time::DeltaTimeRate());
 
-	if (p != nullptr) {
-		p->SetGround(resolver.IsGrounded(0.7f));
+		if (p != nullptr) {
+			p->SetGround(resolver.IsGrounded(0.7f));
+		}
 	}
+	else {
+		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 2.0f * Time::DeltaTimeRate());
+
+		if (p != nullptr) {
+			p->SetGround(resolver.IsGrounded(0.7f));
+		}
+		return false;
+	}
+	
 	
 	//地面の判定は当たり判定から行う
 	
@@ -170,7 +188,7 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2)
 
 }
 
-bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2)
+bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2, Pushback& resolver)
 {
 	Transform* trans1 = col1->GetTransform();
 	Transform* trans2 = col2->GetTransform();
@@ -184,7 +202,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Sphere(dynamic_cast<ModelCollider*>(col2)->GetModel(), -1, pos, raius);
 	VECTOR3 ret = VZero;
 
-	Pushback resolver;
+	//Pushback resolver;
 
 	for (int i = 0; i < result.HitNum; i++) {
 		auto& pol = result.Dim[i];
@@ -192,7 +210,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 		VECTOR3 centerToPoly = pos - pol.Position[i];
 		float penetration = VDot(pol.Normal, centerToPoly);
 
-		resolver.AddPush(pol.Normal, penetration,CollsionInformation::SPHERE);
+		resolver.AddPush(pol.Normal, penetration,CollsionInformation::SPHERE, pol.HitPosition);
 	}
 
 	// 解決
@@ -205,7 +223,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 
 }
 
-bool CollsionManager::CollsionSphereToDount(ColliderBase* col1, ColliderBase* col2)
+bool CollsionManager::CollsionSphereToDount(ColliderBase* col1, ColliderBase* col2, Pushback& resolver)
 {
 	Transform* trans1 = col1->GetTransform();
 	Transform* trans2 = col2->GetTransform();
