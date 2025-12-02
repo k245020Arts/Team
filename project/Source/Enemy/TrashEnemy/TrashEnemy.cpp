@@ -99,6 +99,7 @@ TrashEnemy::~TrashEnemy()
 void TrashEnemy::Update()
 {
 	EnemyBase::Update();
+
 	if (hp <= 0)
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 
@@ -287,4 +288,9 @@ void TrashEnemy::PlayerHit()
 	enemyBaseComponent.sound->RandamSe("E_DamageV", 2);
 	enemyBaseComponent.color->setRGB(Color::Rgb(255, 0, 0, 255));
 	damageFlash = 0.5f;
+}
+
+void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
+{
+	targetPos = _pos;
 }

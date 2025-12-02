@@ -25,12 +25,15 @@ public:
 	void Start(Object3D* _obj);
 
 	void CreateTrashEnemy(VECTOR3 _pos);
-	VECTOR3 GetPos() { return obj->GetTransform()->position; }
 	bool GetActive() { return active; }
 
 	void Trail();
 
 	void PlayerHit()override;
+
+	//
+	void SetTargetPos(VECTOR3 _pos, StateID::State_ID _id);
+	VECTOR3 GetPos() { return obj->GetTransform()->position; }
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)
