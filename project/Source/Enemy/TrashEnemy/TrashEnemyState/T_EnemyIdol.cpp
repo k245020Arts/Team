@@ -2,6 +2,7 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
+#include "T_EnemyStatus.h"
 
 T_EnemyIdol::T_EnemyIdol()
 {
@@ -20,7 +21,7 @@ void T_EnemyIdol::Update()
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
 		//EnemyTransform->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	if (targetVec.Size() < 2000)
+	if (targetVec.Size() < e->eStatus->GetStatus().chaseRange)
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 }
 

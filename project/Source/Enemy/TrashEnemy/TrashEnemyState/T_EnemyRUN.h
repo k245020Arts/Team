@@ -14,4 +14,6 @@ public:
 private:
 	VECTOR3 rotation;
 	VECTOR3 velocity;
+
+	float speed;
 };

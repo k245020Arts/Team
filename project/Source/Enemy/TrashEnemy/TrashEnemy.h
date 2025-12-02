@@ -6,6 +6,7 @@
 class StateManager;
 class EnemyStateManager;
 class CharaWeapon;
+class T_EnemyStatus;
 
 class TrashEnemy : public EnemyBase
 {
@@ -46,6 +47,9 @@ public:
 
 private:
 	CharaWeapon* chara;
-	void LookPlayer();
+	T_EnemyStatus* eStatus;
+	void LookTarget();
 	bool active;
+
+	VECTOR3 targetPos;
 };

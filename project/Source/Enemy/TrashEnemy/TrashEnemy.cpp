@@ -21,6 +21,7 @@
 #include "../../Weapon/CharaWeapon.h"
 #include "../../Common/LoadManager.h"
 
+#include "TrashEnemyState/T_EnemyStatus.h"
 #include "TrashEnemyState/T_EnemyIdol.h"
 #include "TrashEnemyState/T_EnemyRun.h"
 #include "TrashEnemyState/T_EnemyAttack.h"
@@ -83,14 +84,16 @@ namespace
 TrashEnemy::TrashEnemy()
 {
 	tag = Function::GetClassNameC<TrashEnemy>();
+	eStatus = new T_EnemyStatus;
 
-	hp = 100;
+	hp = eStatus->GetStatus().maxHp;
 	maxHp = hp;
 }
 
 TrashEnemy::~TrashEnemy()
 {
-	
+	delete eStatus;
+	eStatus = nullptr;
 }
 
 void TrashEnemy::Update()
@@ -100,7 +103,7 @@ void TrashEnemy::Update()
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 
 	if (CheckHitKey(KEY_INPUT_9))
-		hp -= 100;
+		hp -= maxHp;
 }
 
 void TrashEnemy::Draw()
@@ -148,12 +151,11 @@ void TrashEnemy::Start(Object3D* _obj)
 void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos)
 {
 	obj->GetTransform()->position = _pos;
+	targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
 }
 
-void TrashEnemy::LookPlayer()
+void TrashEnemy::LookTarget()
 {
-	//プレイヤーのポジションを格納させる
-	VECTOR3 targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
 	VECTOR3 distance = targetPos - obj->GetTransform()->position;
 	//向くべき角度
 	float direction = -atan2f(distance.z, distance.x) - 0.5f * DX_PI_F;
