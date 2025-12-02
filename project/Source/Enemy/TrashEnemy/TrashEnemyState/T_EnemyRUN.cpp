@@ -28,11 +28,18 @@ void T_EnemyRun::Update()
 	//計算したものをポジションに足す
 	e->obj->GetTransform()->position += velocity;
 
-	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
-	static const float  RANG = 1200.0f;
+	if (e->isCooperate)
+	{
+		//連携時の動き
+	}
+	else
+	{
+		VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
+		static const float  RANG = 1200.0f;
 
-	if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)
-		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
+		if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)
+			e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
+	}
 }
 
 void T_EnemyRun::Start()

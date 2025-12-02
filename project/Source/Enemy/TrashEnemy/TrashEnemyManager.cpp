@@ -137,8 +137,7 @@ void TrashEnemyManager::ImguiDraw()
     ImGui::Begin("TrashEnemyManager");
 	for (auto& itr : enemies)
 	{
-		ImGui::Text("enemiesX: %d", itr->GetTargetPos().x);
-		ImGui::Text("enemiesY: %d", itr->GetTargetPos().y);
+		//ImGui::Text("enemiesX: %d", itr->GetTargetPos().x);
 	}
 
     ImGui::End();

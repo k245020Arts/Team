@@ -31,7 +31,7 @@ public:
 
 	void PlayerHit()override;
 
-	//
+	//targetPos‚ğ•Ï‚¦‚éŠÖ”
 	void SetTargetPos(VECTOR3 _pos, StateID::State_ID _id);
 	VECTOR3 GetPos() { return obj->GetTransform()->position; }
 
@@ -51,8 +51,11 @@ public:
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
+	//targetPos‚É“ü‚Á‚Ä‚é•ûŒü‚ÉŒü‚­
 	void LookTarget();
 	bool active;
-
+	//‚Ç‚±‚ÉŒü‚­‚©
 	VECTOR3 targetPos;
+	//˜AŒgUŒ‚‚µ‚Ä‚é‚©
+	bool isCooperate;
 };
