@@ -4,6 +4,7 @@
 #include "../../../../State/StateManager.h"
 #include "../../../../Common/Easing.h"
 #include "../BossStatus.h"
+#include "../../../../Camera/Camera.h"
 
 BossNormalAttack3::BossNormalAttack3()
 {
@@ -63,6 +64,7 @@ void BossNormalAttack3::Start()
 
 	b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionMaxSpeed);
 	damage.motionSpeed = damage.motionMaxSpeed;
+	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform);
 }
 
 void BossNormalAttack3::Finish()

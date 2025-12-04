@@ -42,7 +42,13 @@ public:
 	void Follow();
 	VECTOR3 GetTarget() { return target; }
 
+	void CollsionPosHit(VECTOR3 norm, float size, VECTOR3 groundPos);
+
 	void PushCamera(VECTOR3 norm, float size,VECTOR3 groundPos);
+
+	void AttackEnemyFovChange(Transform* _targetTransform);
+
+	bool IsFovIn(const Transform& _targetTransform,float maxFov);
 
 private:
 
@@ -64,4 +70,11 @@ private:
 	float farFog;
 	float counter;
 	bool hit;
+	float rokPos;
+	float moveAmout;
+	VECTOR3 hitNormal;
+	float  hitDist;
+	VECTOR3 hitPos;
+	EnemyAttackChangeCameraDirection direction;
+	Transform* targetEnemyTransform;
 };

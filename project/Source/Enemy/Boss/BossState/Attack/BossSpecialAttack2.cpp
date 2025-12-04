@@ -3,6 +3,7 @@
 #include "../../../../State/StateManager.h"
 #include "../../../../Component/Animator/Animator.h"
 #include "../../../../Component/Physics/Physics.h"
+#include "../../../../Camera/Camera.h"
 
 BossSpecialAttack2::BossSpecialAttack2()
 {
@@ -78,6 +79,7 @@ void BossSpecialAttack2::Start()
 	/*if (!b->comboFirstAttack) {
 		AttackStart();
 	}*/
+	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform);
 }
 
 void BossSpecialAttack2::Finish()
@@ -104,4 +106,5 @@ void BossSpecialAttack2::AttackStart()
 	firstColl = true;
 	look = true;
 	distance = pos.Size();
+	
 }

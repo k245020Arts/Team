@@ -24,7 +24,7 @@ Camera::Camera()
 	normalCamera = true;
 	targetChangeButton = 1;
 	reap = 0.0f;
-	reap = 0.2f;
+	reap = CameraInformation::DEFALUT_RAPE;
 
 	defalutDistance = VECTOR3(0.0f,0.0f, -1500.0f);
 	currentDistance = defalutDistance;
@@ -38,6 +38,7 @@ Camera::Camera()
 	beforePos = 0.0f;
 	nearFog = 10000.0f;
 	farFog = 1800000.0f;
+	direction = EnemyAttackChangeCameraDirection::NONE;
 }
 
 Camera::~Camera()
@@ -50,12 +51,13 @@ Camera::~Camera()
 void Camera::Update()
 {
 	cameraComponent.enemyManager->NearEnemyAlpha(cameraComponent.cameraTransform->position);
-	if (hit) {
-		hit = false;
-	}
-	else {
-		counter = 0.0f;
-	}
+	//if (hit) {
+	//	hit = false;
+	//	//cameraComponent.cameraTransform->position.y += moveAmout;
+	//}
+	//else {
+	//	counter = 0.0f;
+	//}
 	if (input->KeyInputDown("camera")) {
 		if (!rockOn) {
 			if (cameraComponent.enemyManager->PlayerDistance(this)) {
@@ -109,7 +111,7 @@ void Camera::Start(BaseObject* _eObj)
 	cameraComponent.control = FindGameObject<ControllerInputManager>();
 	cameraComponent.shaker = obj->Component()->AddComponent<Shaker>();
 	
-	cameraComponent.state = obj->Component()->AddComponent<StateManager>();
+	cameraComponent.state = obj->Component()->GetComponent<StateManager>();
 }
 
 void Camera::ImguiDraw()
@@ -140,8 +142,6 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.cameraTransform->rotation.x = 30.0f * DegToRad;
 	cameraComponent.player.shaker = _obj->Component()->GetComponent<Shaker>();
 	cameraComponent.enemyManager = FindGameObject<EnemyManager>();
-
-	using namespace ID;
 
 	//stateを登録
 	cameraComponent.state->CreateState<FollowCamera>("_FollowCamera", StateID::FOLLOW_CAMERA_S);
@@ -214,20 +214,76 @@ void Camera::Follow()
 	cameraComponent.cameraTransform->position = Easing::Lerp(cameraComponent.cameraTransform->position, desiredCamPos, reap);
 	//そのあとにカメラshakeをかける
 	cameraComponent.cameraTransform->position += cameraComponent.shaker->GetShakePower();
-	if (fabs(beforePos - cameraComponent.cameraTransform->position.y) <= 1.5f) {
+	/*if (fabs(beforePos - cameraComponent.cameraTransform->position.y) <= 1.5f) {
 		cameraComponent.cameraTransform->position.y = beforePos;
 	}
 
-	beforePos = cameraComponent.cameraTransform->position.y;
+	beforePos = cameraComponent.cameraTransform->position.y;*/
+}
+
+void Camera::CollsionPosHit(VECTOR3 norm, float size, VECTOR3 groundPos)
+{
+	hitPos = groundPos;
+	hitNormal = norm;
+	hitDist = size;
+	hit = true;
 }
 
 void Camera::PushCamera(VECTOR3 norm, float size, VECTOR3 groundPos)
 {
+	//// カメラの現在位置
+	//VECTOR3 camPos = cameraComponent.cameraTransform->position;
+
+	//// 最低でも保ちたい距離（プレイヤーとカメラの離隔距離）
+	//const float MIN_DIST = 150.0f;  // 好みで調整
+
+	//// 衝突点 → カメラの方向（角度が重要なので正規化する）
+	//VECTOR3 toCam = (camPos - norm);
+	//float dist = toCam.Size();
+
+	//// 遠いなら押し返す必要なし
+	//if (dist >= MIN_DIST)
+	//	return;
+
+	//toCam = toCam.Normalize();
+
+	//// 足りていない距離（押し返す量）
+	//float pushAmount =  dist;
+
+	//// 角度を維持したまま押し返す（法線ではなく toCam 方向！）
+	//VECTOR3 correctedPos = camPos + toCam * pushAmount;
+
+	//// ガタつかないように Lerp で補正
+	//cameraComponent.cameraTransform->position =
+	//	Easing::Lerp(camPos, correctedPos, 1.0f);
+
+	//currentDistance.z = (defalutDistance.z, 100.0f, 1.0f);
 	float offset = 5.0f; 
 	float newDist = max(0, size - offset);
 	counter = counter > 1.0f ? 1.0f : counter + Time::DeltaTimeRate() * 3.0f;
 	float rate = counter / 1.0f;
-	currentDistance.z = Easing::Lerp(defalutDistance.z, 1000.0f, rate);
+	//currentDistance.z = Easing::Lerp(defalutDistance.z, 1000.0f, rate);
 	hit = true;
-	cameraComponent.cameraTransform->position = VECTOR3(cameraComponent.cameraTransform->position.x ,groundPos.y + 100.0f, cameraComponent.cameraTransform->position.z);
+	cameraComponent.cameraTransform->position = VECTOR3(cameraComponent.cameraTransform->position.x ,groundPos.y + 280.0f, cameraComponent.cameraTransform->position.z);
+}
+
+void Camera::AttackEnemyFovChange(Transform* _targetTransform)
+{
+	direction = cameraComponent.enemyManager->BossAttackCamera(this, *_targetTransform);
+	targetEnemyTransform = _targetTransform;
+}
+
+bool Camera::IsFovIn(const Transform& _targetTransform, float maxFov)
+{
+	VECTOR3 dir = target - cameraComponent.cameraTransform->position;
+	dir = dir.Normalize();
+
+	VECTOR3 target = _targetTransform.position - cameraComponent.player.obj->GetTransform()->position;
+	float dist = target.Size();
+	if (VDot(dir.Normalize(), target.Normalize()) < cosf(maxFov)) {
+		return false;
+	}
+	else {
+		return true;
+	}
 }

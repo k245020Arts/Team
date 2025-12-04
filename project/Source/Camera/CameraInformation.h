@@ -8,6 +8,12 @@ class StateManager;
 class ControllerInputManager;
 class EnemyManager;
 
+enum class EnemyAttackChangeCameraDirection {
+	NONE  = -1,
+	RIGHT = 0,
+	LEFT,
+};
+
 namespace CameraInformation {
 	//カメラのプレイヤーやエネミーのほしい情報をまとめた構造体
 	struct CharaInformation
@@ -51,4 +57,5 @@ namespace CameraInformation {
 		//VECTOR3* currentDistance;
 		//VECTOR3* defalutDistance;
 	};
+	const float DEFALUT_RAPE = 0.2f;
 }

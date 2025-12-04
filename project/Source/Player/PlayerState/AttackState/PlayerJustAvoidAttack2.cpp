@@ -54,6 +54,10 @@ void PlayerJustAvoidAttack2::Update()
 			p->playerCom.anim->SetPlaySpeed(0.8f);
 			p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(30000.0f, 30000.0f, 30000.0f));
 		}
+		else {
+			angle = atan2f(dist.x, dist.z);
+			p->playerCom.physics->AddVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle),false);
+		}
 		if (p->playerCom.anim->AnimEventCan()) {	
 			p->playerCom.anim->SetPlaySpeed(1.6f);
 			beforeAttack = false;

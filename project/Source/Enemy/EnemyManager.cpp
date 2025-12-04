@@ -170,6 +170,7 @@ void EnemyManager::CreateBoss()
 	g->GuageDrawReady<Boss>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	chara.emplace_back(b);
 	enemy.emplace_back(boss);
+	//bossList.emplace_back(b);
 
 	Object3D* shadow = new Object3D();
 	shadow->Init(Transform(VECTOR3(0.0f, -20.0f, 0.0f), VZero, VECTOR3(boss->GetTransform()->scale.x - 2.0f, 0.1f, boss->GetTransform()->scale.z - 2.0f)), "BossShadow");
@@ -261,9 +262,9 @@ void EnemyManager::NearEnemyAlpha(VECTOR3 camPos)
 {
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
 		VECTOR3 dist = (*itr)->GetBaseObject()->GetTransform()->position - camPos;
-		if (dist.Size() <= 2000.0f) {
-			float rate = dist.Size() / 2000.0f;
-			float alpha = Easing::Lerp(-500, 255, rate);
+		if (dist.Size() <= 1000.0f) {
+			float rate = dist.Size() / 1000.0f;
+			float alpha = Easing::Lerp(-700, 255, rate);
 			if (alpha < 0) {
 				alpha = 0;
 			}
@@ -274,6 +275,49 @@ void EnemyManager::NearEnemyAlpha(VECTOR3 camPos)
 		}
 	}
 }
+
+Transform EnemyManager::NearEnemyPos(const VECTOR3& _pos)
+{
+	float nearDist = 10000.0f;
+	Transform nearTransform = *(*chara.begin())->GetBaseObject()->GetTransform();
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		VECTOR3 dist = (*itr)->GetBaseObject()->GetTransform()->position - _pos;
+		if (dist.Size() <= nearDist) {
+			nearTransform = *(*itr)->GetBaseObject()->GetTransform();
+			nearDist = dist.Size();
+		}
+	}
+	return nearTransform;
+}
+
+EnemyAttackChangeCameraDirection EnemyManager::BossAttackCamera(Camera* camera, const Transform& _targetTransform)
+{
+	//ƒ{ƒX‚ªUŒ‚‚ðŽn‚ß‚½‚ç‚±‚ÌŠÖ”‚ðŒÄ‚Ô
+	//ƒJƒƒ‰‚ÌŽ‹–ì‚ª90‹‚æ‚è“G‘¤‚ÉŒü‚¢‚Ä‚¢‚È‚©‚Á‚½‚ç“G‚Ì•ûŒü‚ÉŒü‚¯‚Ä¶‘¤‚É•ª‚¯‚é‚©‰E‘¤‚É•ª‚¯‚é‚©‚ðŒˆ’è‚·‚éB
+	VECTOR3 dir = camera->GetTarget() - camera->GetCameraTransform()->position;
+	dir = dir.Normalize();
+
+	VECTOR3 target = _targetTransform.position - player->GetTransform()->position;
+	float dist = target.Size();
+
+	if (VDot(dir, target.Normalize()) > cosf(90.0f * DegToRad)) {
+		return EnemyAttackChangeCameraDirection::NONE;
+	}
+
+	VECTOR3 right = target.Normalize() * MGetRotY(90 * DegToRad);
+	VECTOR3 tar = player->GetTransform()->position - _targetTransform.position;
+	tar.y = 0;
+
+	if (VDot(right, tar) > 0) {
+		
+		return EnemyAttackChangeCameraDirection::RIGHT;
+	}
+	else {
+		
+		return EnemyAttackChangeCameraDirection::LEFT;
+	}
+}
+
 
 	/*for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {
 		CharaBase* e;

@@ -7,6 +7,7 @@
 #include "../../../Weapon/WeaponManager.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../Component/MotionBlur/MotionBlur.h"
+#include "../../../Enemy/EnemyManager.h"
 
 PlayerAttackStateBase::PlayerAttackStateBase()
 {
@@ -40,6 +41,11 @@ void PlayerAttackStateBase::Update()
 	}
 	//p->playerCom.player->DrawTrail();
 	//ŒãŒ„‚ÌÝ’è
+	if (nextAvoid) {
+		p->playerCom.player->AvoidReady();
+		noStateChange = true;
+		nextAvoid = false;
+	}
 	if (runTimer > 0.0f) {
 		runTimer -= Time::DeltaTimeRate();
 		//ŒãŒ„‚ªI‚í‚Á‚½‚çŽŸ‚Ìó‘Ô‚É‘JˆÚ
@@ -47,10 +53,7 @@ void PlayerAttackStateBase::Update()
 			if (nextAttack) {
 				p->playerCom.stateManager->ChangeState(nextAttackID);
 			}
-			else if (nextAvoid) {
-				p->playerCom.player->AvoidReady();
-				noStateChange = true;
-			}
+			
 			else {
 				if (id == ID::P_ANIM_JUST_AVOID_ATTACK5) {
 					p->playerCom.player->AvoidFinishState();
@@ -89,8 +92,9 @@ void PlayerAttackStateBase::Start()
 		targetTrans = *(p->playerCom.targetObj->GetTransform());
 	}
 	else {
-		targetTrans = Transform();
-		targetTrans.position = VECTOR3(0, 0, 1) * p->playerTransform->rotation;
+		Transform nearEnemyPos = p->playerCom.enemyManager->NearEnemyPos(p->playerTransform->position);
+		targetTrans = nearEnemyPos;
+		//targetTrans.position = VECTOR3(0, 0, 1) * p->playerTransform->rotation;
 	}
 	
 	//“G‚ÆƒvƒŒƒCƒ„[‚Ì‹——£‚ð‚Æ‚é
@@ -105,7 +109,7 @@ void PlayerAttackStateBase::Start()
 	p->playerCom.sound->RandamSe("P_AttackV", 3);
 	beforeAttack = true;
 	runTimer = 0.0f;
-	if (dist.Size() >= 3000 || p->playerCom.targetObj != nullptr) {
+	if (dist.Size() >= 3000) {
 		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
 		rotation = false;;
 		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));

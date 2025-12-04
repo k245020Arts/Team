@@ -31,35 +31,26 @@ void FreeCamera::Update()
 		c->currentDistance = c->defalutDistance;
 		VECTOR3 targetp = c->cameraComponent.player.transform->position;
 		
-		if (fabs(beforeTarget - c->cameraComponent.player.transform->position.y) <= 1.0f) {
+		/*if (fabs(beforeTarget - c->cameraComponent.player.transform->position.y) <= 1.0f) {
 			targetp.y = beforeTarget;
-		}
-		c->target = targetp+ VECTOR3(0,400,0);
-		beforeTarget = targetp.y;
+		}*/
+		c->target = targetp + VECTOR3(0,400,0);
+		//beforeTarget = targetp.y;
 	}
+	if (c->direction == EnemyAttackChangeCameraDirection::NONE) {
+		StickMove();
+	}
+	else {
+		EnemyChangeDir();
+	}
+	
+
 	//プレイヤーの追従処理
 	c->Follow();
-	if (c->hit) {
+	/*if (c->hit) {
 		return;
-	}
-	//スティック移動
-	if (c->cameraComponent.control->GetStickInput().rightStick.x >= 0.3f) {
-		c->cameraComponent.cameraTransform->rotation.y += 180.0f * Time::DeltaTimeRate() * DegToRad;
-	}
-	if (c->cameraComponent.control->GetStickInput().rightStick.x <= -0.3f) {
-		c->cameraComponent.cameraTransform->rotation.y -= 180.0f * Time::DeltaTimeRate() * DegToRad;
-	}
-	if (c->cameraComponent.control->GetStickInput().rightStick.y >= 0.3f) {
-		if (c->cameraComponent.cameraTransform->rotation.x >= -50.0f * DegToRad) {
-			c->cameraComponent.cameraTransform->rotation.x -= 180.0f * Time::DeltaTimeRate() * DegToRad;
-		}
-
-	}
-	if (c->cameraComponent.control->GetStickInput().rightStick.y <= -0.3f) {
-		if (c->cameraComponent.cameraTransform->rotation.x <= 60.0f * DegToRad) {
-			c->cameraComponent.cameraTransform->rotation.x += 180.0f * Time::DeltaTimeRate() * DegToRad;
-		}
-	}
+	}*/
+	
 }
 
 void FreeCamera::Draw()
@@ -77,4 +68,49 @@ void FreeCamera::Start()
 
 void FreeCamera::Finish()
 {
+}
+
+void FreeCamera::EnemyChangeDir()
+{
+	Camera* c = GetBase<Camera>();
+	if (c->direction == EnemyAttackChangeCameraDirection::RIGHT) {
+		if (c->IsFovIn(*c->targetEnemyTransform, 30.0f * DegToRad)) {
+			c->direction = EnemyAttackChangeCameraDirection::NONE;
+		}
+		else {
+			c->cameraComponent.cameraTransform->rotation.y += 600.0f * Time::DeltaTimeRate() * DegToRad;
+		}
+		
+	}
+	else {
+		if (c->IsFovIn(*c->targetEnemyTransform, 30.0f * DegToRad)) {
+			c->direction = EnemyAttackChangeCameraDirection::NONE;
+		}
+		else {
+			c->cameraComponent.cameraTransform->rotation.y -= 600.0f * Time::DeltaTimeRate() * DegToRad;
+		}
+	}
+}
+
+void FreeCamera::StickMove()
+{
+	Camera* c = GetBase<Camera>();
+	//スティック移動
+	if (c->cameraComponent.control->GetStickInput().rightStick.x >= 0.3f) {
+		c->cameraComponent.cameraTransform->rotation.y += 180.0f * Time::DeltaTimeRate() * DegToRad;
+	}
+	if (c->cameraComponent.control->GetStickInput().rightStick.x <= -0.3f) {
+		c->cameraComponent.cameraTransform->rotation.y -= 180.0f * Time::DeltaTimeRate() * DegToRad;
+	}
+	if (c->cameraComponent.control->GetStickInput().rightStick.y >= 0.3f) {
+		if (c->cameraComponent.cameraTransform->rotation.x >= -50.0f * DegToRad) {
+			c->cameraComponent.cameraTransform->rotation.x -= 180.0f * Time::DeltaTimeRate() * DegToRad;
+		}
+
+	}
+	if (c->cameraComponent.control->GetStickInput().rightStick.y <= -0.3f) {
+		if (c->cameraComponent.cameraTransform->rotation.x <= 70.0f * DegToRad) {
+			c->cameraComponent.cameraTransform->rotation.x += 180.0f * Time::DeltaTimeRate() * DegToRad;
+		}
+	}
 }

@@ -13,6 +13,9 @@ public:
 	void Start()override;
 	void Finish()override;
 
+	void EnemyChangeDir();
+	void StickMove();
+
 private:
 	float backCounter;
 

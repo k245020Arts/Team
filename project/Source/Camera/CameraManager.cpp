@@ -10,6 +10,7 @@
 #include "../Component/Collider/SphereCollider.h"
 #include "../Component/Collider/RayCollider.h"
 #include "../../Source/Component/Physics/Physics.h"
+#include "../State/StateManager.h"
 
 CameraManager::CameraManager()
 {
@@ -31,6 +32,8 @@ void CameraManager::CreateCamera()
 {
 	mainCamera = new Object3D();
 	mainCamera->Init(VECTOR3(0,0,-1500), VZero, VECTOR3(1, 1, 1), "CAMERA_OBJ");
+
+	mainCamera->Component()->AddComponent<StateManager>();
 
 	Camera* camera = mainCamera->Component()->AddComponent<Camera>();
 	camera->Start(nullptr);
@@ -62,5 +65,5 @@ void CameraManager::ParentObj(std::string _str)
 	info.parentTransfrom = mainCamera->Component()->GetComponent<Camera>()->GetCameraTransform();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::C_FLOOR;
-	c->RaySet(info, Transform(VECTOR3(0, -10, 0), VZero, VOne), Transform(VECTOR3(0, 100, 0), VZero, VOne));
+	c->RaySet(info, Transform(VECTOR3(0, -100, 0), VZero, VOne), Transform(VECTOR3(0, 100, 0), VZero, VOne));
 }
