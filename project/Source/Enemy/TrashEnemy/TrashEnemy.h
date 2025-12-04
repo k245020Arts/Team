@@ -15,6 +15,7 @@ public:
 	friend class T_EnemyRun;
 	friend class T_EnemyAttack;
 	friend class T_EnemyDead;
+	friend class CooperateAttack1;
 
 	TrashEnemy();
 	~TrashEnemy();
@@ -25,12 +26,15 @@ public:
 	void Start(Object3D* _obj);
 
 	void CreateTrashEnemy(VECTOR3 _pos);
-	VECTOR3 GetPos() { return obj->GetTransform()->position; }
 	bool GetActive() { return active; }
 
 	void Trail();
 
 	void PlayerHit()override;
+
+	//targetPos‚ğ•Ï‚¦‚éŠÖ”
+	void SetTargetPos(VECTOR3 _pos, StateID::State_ID _id);
+	VECTOR3 GetPos() { return obj->GetTransform()->position; }
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)
@@ -48,8 +52,11 @@ public:
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
+	//targetPos‚É“ü‚Á‚Ä‚é•ûŒü‚ÉŒü‚­
 	void LookTarget();
 	bool active;
-
+	//‚Ç‚±‚ÉŒü‚­‚©
 	VECTOR3 targetPos;
+	//˜AŒgUŒ‚‚µ‚Ä‚é‚©
+	bool isCooperate;
 };

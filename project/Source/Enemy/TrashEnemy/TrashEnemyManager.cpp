@@ -24,7 +24,7 @@
 
 TrashEnemyManager::TrashEnemyManager()
 {
-	
+	player = FindGameObjectWithTag<Object3D>("PLAYER");
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -34,16 +34,18 @@ TrashEnemyManager::~TrashEnemyManager()
 void TrashEnemyManager::Update()
 {
 	if (CheckHitKey(KEY_INPUT_0))
-		CreateEnemy(VZero, 3);
+		CreateEnemy(VZero, 4);
 
-	if (enemies.empty() == false)
+	if (!enemies.empty())
 	{
 		for (auto itr = enemies.begin(); itr != enemies.end(); )
 		{
+			//雑魚敵が死んでたらlistから削除する
 			if (!(*itr)->GetActive())
 			{
 				(*itr)->GetEnemyObj()->DestroyMe();
-				itr = enemies.erase(itr);  // 次の要素のイテレータが返る
+				//次の要素のイテレータが返る
+				itr = enemies.erase(itr); 
 			}
 			else
 				++itr;
@@ -114,8 +116,9 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 
         // 位置を決める
         const float R_MAX = 1000.0f;
-        float range = GetRand(R_MAX * 2) - R_MAX;
-        VECTOR3 pos = VECTOR3(range, 0, range);
+        float rangeX = GetRand(R_MAX * 2) - R_MAX;
+		float rangeY = GetRand(R_MAX * 2) - R_MAX;
+        VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
         t->CreateTrashEnemy(_pos + pos);
 		//hp表示
 		Object2D* guage = new Object2D();
@@ -133,9 +136,25 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 
 void TrashEnemyManager::ImguiDraw()
 {
-    /*ImGui::Begin("TrashEnemyManager");
+    ImGui::Begin("TrashEnemyManager");
 	for (auto& itr : enemies)
-    ImGui::Text("enemies: %d", itr->GetHp());
+	{
+		//ImGui::Text("enemiesX: %d", itr->GetTargetPos().x);
+	}
 
-    ImGui::End();*/
+    ImGui::End();
+}
+
+void TrashEnemyManager::Cooperate(StateID::State_ID _id)
+{
+	//プレイヤーと雑魚敵の距離
+	static const float  RANG = 1200.0f;
+
+	for (auto& itr : enemies)
+	{
+		player->GetTransform()->position;
+		VECTOR3 vec = player->GetTransform()->position - itr->GetPos();
+		float targetDirection = atan2f(vec.z, vec.x) + DX_PI_F + 180 * DegToRad;
+		itr->SetTargetPos(targetDirection, _id);
+	}
 }

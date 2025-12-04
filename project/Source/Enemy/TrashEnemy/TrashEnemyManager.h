@@ -4,6 +4,7 @@
 #include <list>
 
 class TrashEnemy;
+class Object3D;
 
 class TrashEnemyManager : public GameObject
 {
@@ -24,6 +25,10 @@ public:
 
 	void ImguiDraw();
 
+	//˜AŒgUŒ‚
+	void Cooperate(StateID::State_ID _id);
+
 private:
 	std::list<TrashEnemy*> enemies;
+	Object3D* player;
 };

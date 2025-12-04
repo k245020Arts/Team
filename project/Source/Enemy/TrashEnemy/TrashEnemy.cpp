@@ -26,6 +26,7 @@
 #include "TrashEnemyState/T_EnemyRun.h"
 #include "TrashEnemyState/T_EnemyAttack.h"
 #include "TrashEnemyState/T_EnemyDead.h"
+#include "TrashEnemyState/CooperateAttack1.h"
 
 namespace
 {
@@ -88,6 +89,8 @@ TrashEnemy::TrashEnemy()
 
 	hp = eStatus->GetStatus().maxHp;
 	maxHp = hp;
+
+	isCooperate = false;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -99,6 +102,7 @@ TrashEnemy::~TrashEnemy()
 void TrashEnemy::Update()
 {
 	EnemyBase::Update();
+
 	if (hp <= 0)
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 
@@ -134,6 +138,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<T_EnemyRun>("_T_EnemyRun", StateID::T_ENEMY_RUN_S);
 	enemyBaseComponent.state->CreateState<T_EnemyAttack>("_T_EnemyAttack", StateID::T_ENEMY_ATTACK_S);
 	enemyBaseComponent.state->CreateState<T_EnemyDead>("_T_EnemyDead", StateID::T_ENEMY_DEAD);
+	enemyBaseComponent.state->CreateState<CooperateAttack1>("_CooperateAttack1", StateID::COOPERATEATTACK1);
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
@@ -287,4 +292,9 @@ void TrashEnemy::PlayerHit()
 	enemyBaseComponent.sound->RandamSe("E_DamageV", 2);
 	enemyBaseComponent.color->setRGB(Color::Rgb(255, 0, 0, 255));
 	damageFlash = 0.5f;
+}
+
+void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
+{
+	targetPos = _pos;
 }
