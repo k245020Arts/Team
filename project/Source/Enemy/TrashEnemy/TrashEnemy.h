@@ -15,6 +15,7 @@ public:
 	friend class T_EnemyRun;
 	friend class T_EnemyAttack;
 	friend class T_EnemyDead;
+	friend class CooperateAttack1;
 
 	TrashEnemy();
 	~TrashEnemy();

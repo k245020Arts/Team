@@ -24,7 +24,7 @@
 
 TrashEnemyManager::TrashEnemyManager()
 {
-	
+	player = FindGameObjectWithTag<Object3D>("PLAYER");
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -36,14 +36,16 @@ void TrashEnemyManager::Update()
 	if (CheckHitKey(KEY_INPUT_0))
 		CreateEnemy(VZero, 4);
 
-	if (enemies.empty() == false)
+	if (!enemies.empty())
 	{
 		for (auto itr = enemies.begin(); itr != enemies.end(); )
 		{
+			//ŽG‹›“G‚ªŽ€‚ñ‚Å‚½‚çlist‚©‚çíœ‚·‚é
 			if (!(*itr)->GetActive())
 			{
 				(*itr)->GetEnemyObj()->DestroyMe();
-				itr = enemies.erase(itr);  // ŽŸ‚Ì—v‘f‚ÌƒCƒeƒŒ[ƒ^‚ª•Ô‚é
+				//ŽŸ‚Ì—v‘f‚ÌƒCƒeƒŒ[ƒ^‚ª•Ô‚é
+				itr = enemies.erase(itr); 
 			}
 			else
 				++itr;
@@ -146,12 +148,13 @@ void TrashEnemyManager::ImguiDraw()
 void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 {
 	//ƒvƒŒƒCƒ„[‚ÆŽG‹›“G‚Ì‹——£
-	/*static const float  RANG = 1200.0f;
+	static const float  RANG = 1200.0f;
 
 	for (auto& itr : enemies)
 	{
-		VECTOR3 vec = itr->GetTargetPos() - itr->GetPos();
+		player->GetTransform()->position;
+		VECTOR3 vec = player->GetTransform()->position - itr->GetPos();
 		float targetDirection = atan2f(vec.z, vec.x) + DX_PI_F + 180 * DegToRad;
 		itr->SetTargetPos(targetDirection, _id);
-	}*/
+	}
 }

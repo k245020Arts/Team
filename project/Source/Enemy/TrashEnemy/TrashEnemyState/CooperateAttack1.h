@@ -1,16 +1,17 @@
 #pragma once
-#include "../../Boss/BossState/Attack/BossAttackBase.h"
+#include "T_EnemyAttack.h"
 
-class CooperateAttack1 :public BossAttackBase
+class CooperateAttack1 :public T_EnemyAttack
 {
 public:
 	CooperateAttack1();
 	~CooperateAttack1();
-	void Update()override;
-	void Draw()override;
 
 	void Start()override;
 	void Finish()override;
 private:
+	VECTOR3 rotation;
+	VECTOR3 velocity;
 
+	float speed;
 };
