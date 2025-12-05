@@ -28,22 +28,12 @@ void T_EnemyRun::Update()
 	//計算したものをポジションに足す
 	e->obj->GetTransform()->position += velocity;
 
-	if (e->isCooperate)
-	{
-		//連携時の動き
-		//指定されたポジションに行く
-		//周りがポジションにつくまで待機
-		//周りが着いたらプレイヤーに向かってく
-		//攻撃範囲まで来たら攻撃ステートに変更
-	}
-	else
-	{
-		VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
-		static const float  RANG = 1200.0f;
+	VECTOR3 targetVec = e->obj->GetTransform()->position - e->targetPos;//e->enemyBaseComponent.playerObj->GetTransform()->position;
+	static const float  RANG = 1200.0f;
 
-		if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)
-			e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
-	}
+	if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)
+		e->enemyBaseComponent.state->ChangeState(e->attackId);
+
 }
 
 void T_EnemyRun::Start()
