@@ -975,6 +975,9 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\Transform\Quaternion.h">
+      <Filter>Component\Transform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
