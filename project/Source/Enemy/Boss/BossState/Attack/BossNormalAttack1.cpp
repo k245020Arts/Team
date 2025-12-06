@@ -20,6 +20,7 @@ BossNormalAttack1::~BossNormalAttack1()
 
 void BossNormalAttack1::Update()
 {
+	EnemyStateBase::Update();
 	Boss* boss = GetBase<Boss>();
 	if (boss->enemyBaseComponent.anim->GetMaxFrame() - fallFrame <= boss->enemyBaseComponent.anim->GetCurrentFrame())
 	{
@@ -37,6 +38,7 @@ void BossNormalAttack1::Update()
 	AttackSound();
 	AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
 	BossTrail(true);
+	
 }
 
 void BossNormalAttack1::Draw()

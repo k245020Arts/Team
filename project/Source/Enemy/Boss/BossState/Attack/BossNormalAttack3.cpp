@@ -24,18 +24,13 @@ void BossNormalAttack3::Update()
 	Boss* b = GetBase<Boss>();
 	const float MSPEED = 60.0f;//モーションの速度調整
 
-	counter++;
-	//モーションの速度減速
-	if (counter < MSPEED && damage.motionSpeed >= 0)
-		damage.motionSpeed -= damage.motionMaxSpeed / MSPEED;
-	//モーションの速度加速
-	else if (damage.motionSpeed <= damage.motionMaxSpeed)
-		damage.motionSpeed += damage.motionMaxSpeed / MSPEED;
+	EnemyStateBase::Update();
+
 	//どこまでプレイヤーの方を見るか(今後回避行動取るまでに変更)
 	if (counter <= 50)
 		b->LookPlayer();
 
-	b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionSpeed);
+	//b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionSpeed);
 
 	if (b->enemyBaseComponent.anim->IsFinish())
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
@@ -62,7 +57,7 @@ void BossNormalAttack3::Start()
 
 	damage.motionMaxSpeed = b->bs->GetStatus().motionSpeed;
 
-	b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionMaxSpeed);
+	//b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionMaxSpeed);
 	damage.motionSpeed = damage.motionMaxSpeed;
 	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform);
 }

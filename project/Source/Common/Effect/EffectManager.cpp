@@ -15,7 +15,7 @@ namespace {
 
 EffectManager::EffectManager()
 {
-	Load::LoadEffect("enemyChrage2", Effect_ID::ENEMY_FLASH, 50.0f);
+	Load::LoadEffect("enemyChrage3", Effect_ID::ENEMY_FLASH, 50.0f);
 	Load::LoadEffect("hitEffect", Effect_ID::HIT_EFFECT, 50.0f);
 	Load::LoadEffect("specialHit", Effect_ID::SPECIAL_HIT_EFFECT, 50.0f);
 	Load::LoadEffect("justAvoidEffect", Effect_ID::JUST_AVOID_EFFECT, 50.0f);

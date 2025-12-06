@@ -66,10 +66,20 @@ void BlurScreen::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(alpha));
 
 	screenDraw += Time::DeltaTimeRate();
-	if (screenDraw > 0.2f) {
-		//DrawExtendGraphF(0.0f, 0.0f, Screen::WIDTH, Screen::HEIGHT, blurScreen[1 - currentScreen], false);
-	}
+	//if (screenDraw > 0.2f) {
+	//	//DrawExtendGraphF(0.0f, 0.0f, Screen::WIDTH, Screen::HEIGHT, blurScreen[1 - currentScreen], false);
+	//}
+	/*int smallW = Screen::WIDTH / 4;
+	int smallH = Screen::HEIGHT / 4;
+
+	int smallScreen = MakeScreen(smallW, smallH, true);
+	SetDrawScreen(smallScreen);*/
+
+	//// í·âëúìxÇ÷èkè¨ï`âÊ
+	/*DrawExtendGraph(0, 0, smallW, smallH, blurScreen[currentScreen], TRUE);*/
+
 	
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetDrawBlendMode(blendMode, param); 
 	

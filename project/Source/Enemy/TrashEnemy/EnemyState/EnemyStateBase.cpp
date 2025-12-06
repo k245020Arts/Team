@@ -24,6 +24,17 @@ EnemyStateBase::~EnemyStateBase()
 {
 }
 
+void EnemyStateBase::Update()
+{
+	EnemyBase* e = GetBase<EnemyBase>();
+	if (animSlowCounter > 0.0f) {
+		animSlowCounter -= Time::DeltaTimeRate();
+		if (animSlowCounter < 0.0f) {
+			e->enemyBaseComponent.anim->SetPlaySpeed(keepAnimSpeed + 0.3f);
+		}
+	}
+}
+
 void EnemyStateBase::Start()
 {
 	EnemyBase* e = GetBase<EnemyBase>();
@@ -86,11 +97,26 @@ void EnemyStateBase::AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std
 {
 	EnemyBase* e = GetBase<EnemyBase>();
 	if (sound) {
-		e->enemyBaseComponent.effect->CreateEffekseer(Transform(MV1GetFramePosition(Load::GetHandle(_modelId), _modelFrame), VZero, VOne * 3.0f), nullptr, Effect_ID::ENEMY_FLASH, 1.0f);
+
+		MATRIX matrixWorld = MV1GetFrameLocalWorldMatrix(Load::GetHandle(_modelId), _modelFrame);
+		// WORLD座標を取得（DXの関数。既にワールド座標の場合が多い）
+		VECTOR3 frameWorldPos = MV1GetFramePosition(Load::GetHandle(_modelId), _modelFrame);
+
+		
+		MATRIX objWorldMat = obj->GetTransform()->WorldTransform().GetMatrix();
+		MATRIX invObjWorldMat = MInverse(objWorldMat); // プロジェクトに合わせること
+		VECTOR3 frashPosLocal = frameWorldPos * invObjWorldMat; // VECTOR3 * MATRIX の定義に依存
+		//e->enemyBaseComponent.effect->CreateEffekseer(Transform(frashPos_local, VZero, VOne), obj, Effect_ID::ENEMY_FLASH, 1.0f);
+
+		e->enemyBaseComponent.effect->CreateEffekseer(Transform(frashPosLocal, VZero, VOne), obj, Effect_ID::ENEMY_FLASH, 1.0f);
 		e->enemyBaseComponent.sound->PlaySe(Sound_ID::ENEMY_ATTACK_BEFORE);
 		e->enemyBaseComponent.sound->RandamSe(_voice, 3);
 		//com.weapon->CreateTrailEnemy(VECTOR3(0, 0, 0), VECTOR3(500, 500, 1000) * MGetRotY(com.enemy->GetEnemyTransform()->rotation.y), 100.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
 		sound = false;
+		keepAnimSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
+		e->enemyBaseComponent.anim->SetPlaySpeed(0.2f);
+		animSlowCounter = 0.2f;
+		
 	}
 }
 

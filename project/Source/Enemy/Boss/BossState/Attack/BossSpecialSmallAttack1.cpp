@@ -27,6 +27,8 @@ void BossSpecialSmallAttack1::Update()
 {
 	Boss* b = GetBase<Boss>();
 
+	EnemyStateBase::Update();
+
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= attackStart) {
 		return;
 	}

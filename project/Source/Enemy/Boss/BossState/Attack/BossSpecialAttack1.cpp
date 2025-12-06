@@ -30,7 +30,7 @@ BossSpecialAttack1::~BossSpecialAttack1()
 void BossSpecialAttack1::Update()
 {
 	Boss* b = GetBase<Boss>();
-
+	EnemyStateBase::Update();
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= attackStart) {
 		return;
 	}
@@ -44,7 +44,7 @@ void BossSpecialAttack1::Update()
 
 			VECTOR3 sub = pos - b->GetBaseObject()->GetTransform()->position;
 			b->enemyBaseComponent.physics->AddVelocity(sub, false);
-			AttackBeforeFrash(ID::B_MODEL, b->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
+			
 		}
 	}
 
@@ -91,7 +91,7 @@ void BossSpecialAttack1::Update()
 	
 	
 	BossAttackCollsion();
-	
+	AttackFlash (ID::B_MODEL, 36, "E_AttackV");
 }
 
 void BossSpecialAttack1::Draw()

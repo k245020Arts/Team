@@ -235,6 +235,7 @@
     <ClInclude Include="Source\Component\Physics\Physics.h" />
     <ClInclude Include="Source\Component\Shadow\Shadow.h" />
     <ClInclude Include="Source\Component\Shaker\Shaker.h" />
+    <ClInclude Include="Source\Component\Transform\Quaternion.h" />
     <ClInclude Include="Source\Component\Transform\Transform.h" />
     <ClInclude Include="Source\Enemy\Boss\Boss.h" />
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />

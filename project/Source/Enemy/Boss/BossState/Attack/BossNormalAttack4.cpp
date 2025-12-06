@@ -22,6 +22,7 @@ BossNormalAttack4::~BossNormalAttack4()
 void BossNormalAttack4::Update()
 {
 	Boss* boss = GetBase<Boss>();
+	EnemyStateBase::Update();
 	if (boss->enemyBaseComponent.anim->GetMaxFrame() - fallFrame <= boss->enemyBaseComponent.anim->GetCurrentFrame())
 	{
 		if (boss->maxAttack != -1)

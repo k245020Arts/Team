@@ -39,7 +39,7 @@ void PlayerJustAvoid::Update()
 		return;
 	}
 	Time::ChangeDeltaRate(0.4f);
-	p->playerCom.hitObj->SetObjectTimeRate(0.6f);
+	//p->playerCom.hitObj->SetObjectTimeRate(0.6f);
 	easingCount += Time::DeltaTime() * 0.8f;
 	if (easingCount >= 1.0f) {
 		easingCount = 1.0f;
@@ -148,7 +148,7 @@ void PlayerJustAvoid::Start()
 	p->playerCom.camera->ChangeStateCamera(StateID::JUST_AVOID_CAMERA_S);
 	attack = false;
 	//“G‚ÌUŒ‚‚ð’x‚­‚·‚é
-	p->playerCom.hitObj->SetObjectTimeRate(0.6f);
+	p->playerCom.hitObj->SetObjectTimeRate(PlayerInformation::JUST_AVOID_ENEMY_TIME_SCALE);
 	p->playerCom.hitObj->SetObjectTimeRate(0.01f);
 	Time::ChangeDeltaRate(0.01f);
 	p->playerCom.anim->SetFrame(12.0f);

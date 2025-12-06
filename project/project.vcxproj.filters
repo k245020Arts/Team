@@ -969,6 +969,7 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\Transform\Quaternion.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">

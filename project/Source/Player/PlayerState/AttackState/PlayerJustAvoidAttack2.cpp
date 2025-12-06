@@ -140,6 +140,7 @@ void PlayerJustAvoidAttack2::Start()
 	attack = false;
 	p->playerCom.shaker->ShakeStart(VECTOR3(20.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 1.0f);
 	p->playerCom.controller->ControlVibrationStartFrame(100, 20);
+	p->playerCom.hitObj->SetObjectTimeRate(PlayerInformation::JUST_AVOID_ENEMY_TIME_SCALE);
 	/*p->playerCom.anim->SetPlaySpeed(0.1f);
 	timer = 0.5f;
 	p->playerCom.shaker->ShakeStart(VECTOR3(30.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 0.4f);*/
@@ -154,4 +155,5 @@ void PlayerJustAvoidAttack2::Finish()
 	p->playerCom.anim->AnimEventReset();
 	p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
 	PlayerAttackStateBase::Finish();
+	p->playerCom.hitObj->SetObjectTimeRate();
 }

@@ -9,6 +9,8 @@ public:
 	EnemyStateBase();
 	~EnemyStateBase();
 
+	void Update()override;
+
 	void Start()override;
 	void AttackCollsion();
 	void BossAttackCollsion();
@@ -29,4 +31,6 @@ protected:
 	bool sound;
 
 	float fallFrame;
+	float animSlowCounter;
+	float keepAnimSpeed;
 };

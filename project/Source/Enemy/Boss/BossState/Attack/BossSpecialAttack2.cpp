@@ -22,6 +22,7 @@ BossSpecialAttack2::~BossSpecialAttack2()
 void BossSpecialAttack2::Update()
 {
 	Boss* b = GetBase<Boss>();
+	EnemyStateBase::Update();
 	if (b->enemyBaseComponent.anim->IsFinish()) {
 		if (b->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(ID::B_S_ATTACK2_STOP)) {
 			if (b->maxAttack != -1)

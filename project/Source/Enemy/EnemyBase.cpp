@@ -43,7 +43,7 @@ void EnemyBase::Update()
 	//	enemyBaseComponent.state->SetNoStateChange(true);
 	//}
 	if (loopNum >= 0) {
-		hitCounter -= obj->GetObjectTimeRate();
+		hitCounter -= Time::DeltaTimeRate();
 		if (hitCounter <= 0.0f) {
 			PlayerHit();
 		}
