@@ -25,6 +25,8 @@
 TrashEnemyManager::TrashEnemyManager()
 {
 	player = FindGameObjectWithTag<Object3D>("PLAYER");
+	comboRequest = false;
+	counter = 0;
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -40,6 +42,16 @@ void TrashEnemyManager::Update()
 	{
 		for (auto itr = enemies.begin(); itr != enemies.end(); )
 		{
+			//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
+			if ((*itr)->GetStandby())
+				counter++;
+			//“G‘Sˆõ‚ª€”õŠ®—¹‚µ‚½‚çUŒ‚‚ÉˆÚ‚é
+			if (enemies.max_size() >= counter)
+			{
+				(*itr)->ChangeState(StateID::T_ENEMY_RUN_S);
+				counter = 0;
+			}
+
 			//ŽG‹›“G‚ªŽ€‚ñ‚Å‚½‚çlist‚©‚çíœ‚·‚é
 			if (!(*itr)->GetActive())
 			{
@@ -51,6 +63,9 @@ void TrashEnemyManager::Update()
 				++itr;
 		}
 	}
+
+	if (CheckHitKey(KEY_INPUT_8))
+		Cooperate(StateID::COOPERATEATTACK1);
 }
 
 void TrashEnemyManager::Draw()
@@ -139,7 +154,8 @@ void TrashEnemyManager::ImguiDraw()
     ImGui::Begin("TrashEnemyManager");
 	for (auto& itr : enemies)
 	{
-		//ImGui::Text("enemiesX: %d", itr->GetTargetPos().x);
+		/*ImGui::Text("enemiesX: %d", itr->GetPos().x);
+		ImGui::Text("enemiesX: %d", itr->GetPos().z);*/
 	}
 
     ImGui::End();
@@ -147,14 +163,12 @@ void TrashEnemyManager::ImguiDraw()
 
 void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 {
-	//ƒvƒŒƒCƒ„[‚ÆŽG‹›“G‚Ì‹——£
-	static const float  RANG = 1200.0f;
-
+	VECTOR3 pPos = player->GetTransform()->position;
 	for (auto& itr : enemies)
 	{
-		player->GetTransform()->position;
-		VECTOR3 vec = player->GetTransform()->position - itr->GetPos();
-		float targetDirection = atan2f(vec.z, vec.x) + DX_PI_F + 180 * DegToRad;
-		itr->SetTargetPos(targetDirection, _id);
+		//‚Ç‚±‚Ì•ûŠp‚És‚­‚©Œˆ‚ß‚éˆ—
+		VECTOR3 vec = pPos - itr->GetPos();
+		VECTOR3 newVec = vec * -1;
+		itr->SetTargetPos(newVec, _id);	
 	}
 }

@@ -31,4 +31,7 @@ public:
 private:
 	std::list<TrashEnemy*> enemies;
 	Object3D* player;
+
+	bool comboRequest;
+	int counter;
 };

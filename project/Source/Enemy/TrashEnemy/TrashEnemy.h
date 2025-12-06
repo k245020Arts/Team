@@ -15,6 +15,7 @@ public:
 	friend class T_EnemyRun;
 	friend class T_EnemyAttack;
 	friend class T_EnemyDead;
+	friend class Standby;
 	friend class CooperateAttack1;
 
 	TrashEnemy();
@@ -34,7 +35,11 @@ public:
 
 	//targetPosを変える関数
 	void SetTargetPos(VECTOR3 _pos, StateID::State_ID _id);
+	//敵のステートを変える関数
+	void ChangeState(StateID::State_ID _id);
 	VECTOR3 GetPos() { return obj->GetTransform()->position; }
+
+	bool GetStandby() { return isStandby; }
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)
@@ -52,11 +57,14 @@ public:
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
+
+	StateID::State_ID attackId;
+
 	//targetPosに入ってる方向に向く
 	void LookTarget();
 	bool active;
 	//どこに向くか
 	VECTOR3 targetPos;
 	//連携攻撃してるか
-	bool isCooperate;
+	bool isStandby;
 };

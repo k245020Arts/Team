@@ -458,6 +458,9 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -969,7 +972,9 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\Transform\Quaternion.h" />
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">

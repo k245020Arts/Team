@@ -27,6 +27,7 @@
 #include "TrashEnemyState/T_EnemyAttack.h"
 #include "TrashEnemyState/T_EnemyDead.h"
 #include "TrashEnemyState/CooperateAttack1.h"
+#include "TrashEnemyState/Standby.h"
 
 namespace
 {
@@ -90,7 +91,7 @@ TrashEnemy::TrashEnemy()
 	hp = eStatus->GetStatus().maxHp;
 	maxHp = hp;
 
-	isCooperate = false;
+	isStandby = false;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -139,8 +140,11 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<T_EnemyAttack>("_T_EnemyAttack", StateID::T_ENEMY_ATTACK_S);
 	enemyBaseComponent.state->CreateState<T_EnemyDead>("_T_EnemyDead", StateID::T_ENEMY_DEAD);
 	enemyBaseComponent.state->CreateState<CooperateAttack1>("_CooperateAttack1", StateID::COOPERATEATTACK1);
+	enemyBaseComponent.state->CreateState<Standby>("_Standby", StateID::T_ENEMY_STANDBY);
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
+
+	attackId = StateID::T_ENEMY_ATTACK_S;
 
 	// スタートステートも StateID 化
 	enemyBaseComponent.state->StartState(StateID::T_ENEMY_IDOL_S);
@@ -297,4 +301,11 @@ void TrashEnemy::PlayerHit()
 void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 {
 	targetPos = _pos;
+	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
+	attackId = StateID::T_ENEMY_STANDBY;
+}
+
+void TrashEnemy::ChangeState(StateID::State_ID _id)
+{
+	enemyBaseComponent.state->ChangeState(_id);
 }
