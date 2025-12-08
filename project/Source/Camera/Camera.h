@@ -3,6 +3,7 @@
 #include "../Component/Shaker/Shaker.h"
 #include "cameraInformation.h"
 #include "../Common/ID/StateID.h"
+#include "../Component/Transform/Quaternion.h"
 
 class ControllerInputManager;
 class InputManager;
@@ -77,4 +78,42 @@ private:
 	VECTOR3 hitPos;
 	EnemyAttackChangeCameraDirection direction;
 	Transform* targetEnemyTransform;
+	Quaternion cameraQuaternion;
 };
+
+inline MATRIX MyLookAt(const VECTOR& eye, const VECTOR& target, const VECTOR& up)
+{
+	MATRIX m;
+
+	// ========= 1. 前方向 =========
+	VECTOR forward = VNorm(VSub(target, eye));  // (target - eye)
+
+	// ========= 2. 右方向 =========
+	VECTOR right = VNorm(VCross(up, forward));
+
+	// ========= 3. 実上方向（再計算） =========
+	VECTOR newUp = VCross(forward, right);
+
+	// ========= 4. 行列を詰める =========
+	m.m[0][0] = right.x;
+	m.m[0][1] = right.y;
+	m.m[0][2] = right.z;
+	m.m[0][3] = 0.0f;
+
+	m.m[1][0] = newUp.x;
+	m.m[1][1] = newUp.y;
+	m.m[1][2] = newUp.z;
+	m.m[1][3] = 0.0f;
+
+	m.m[2][0] = forward.x;
+	m.m[2][1] = forward.y;
+	m.m[2][2] = forward.z;
+	m.m[2][3] = 0.0f;
+
+	m.m[3][0] = 0.0f;
+	m.m[3][1] = 0.0f;
+	m.m[3][2] = 0.0f;
+	m.m[3][3] = 1.0f;
+
+	return m;
+}

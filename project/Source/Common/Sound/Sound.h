@@ -7,6 +7,9 @@ class Sound
 public:
 	Sound();
 	~Sound();
+
+	void Update();
+
 	void SoundData(int _soundHandle,int _volume);
 	//í èÌçƒê∂
 	void PlaySe();
@@ -17,6 +20,11 @@ public:
 	void StopBGM();
 	void StopSE();
 
+	void BGMFeedIn(float time);
+	void BGMFeedOut(float time);
+
+	bool IsActive() { return active; }
+
 
 private:
 
@@ -25,4 +33,10 @@ private:
 	bool loop;
 	bool firstPlay;
 	int lastPlayintBgm;
+
+	float feedInTime;
+	float feedOutTime;
+	float timeMax;
+
+	bool active;
 };

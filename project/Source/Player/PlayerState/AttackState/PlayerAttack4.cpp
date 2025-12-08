@@ -44,10 +44,12 @@ void PlayerAttack4::Update()
 			p->playerCom.anim->SetPlaySpeed(1.0f);
 		}
 		if (p->playerCom.anim->AnimEventCan()) {
-			p->playerCom.anim->SetPlaySpeed(2.5f);
+			if (beforeAttack) {
+				AttackMoveStart();
+			}
 			beforeAttack = false;
 			//p->playerCom.physics->SetVelocity(VZero);
-			p->playerCom.physics->AddVelocity(VECTOR3(0, 50000, 0), true);
+			p->playerCom.physics->AddVelocity(VECTOR3(0, 20000, 0), true);
 		}
 		else {
 			if (beforeAttack) {

@@ -124,6 +124,7 @@ void PlayerJustAvoid::Start()
 	easingCount = 0.0f;
 	Time::ChangeDeltaRate(0.4f);//世界を遅くする
 	p->playerCom.anim->SetPlaySpeed(1.0f);
+	p->playerCom.sound->FeedInOut(Sound_ID::PLAY_BGM,0.2f);
 	//JustAvoidShadow();
 	cameraAngle = p->playerCom.camera->GetCameraTransform()->rotation.y;
 	//スティックをみる
@@ -167,6 +168,10 @@ void PlayerJustAvoid::Finish()
 	p->playerCom.player->PlayerStickInput();
 	p->playerCom.camera->CameraLeapSet(0.2f);
 	p->playerCom.hitObj->SetObjectTimeRate();
+	if (!attack) {
+		p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
+	}
+	
 }
 
 void PlayerJustAvoid::JustAvoidShadow()

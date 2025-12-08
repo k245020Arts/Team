@@ -52,8 +52,14 @@ public:
 	//‰¹‚ªÄ¶‚³‚¹‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ’²‚×‚é
 	bool CheckSe(Sound_ID::SOUND_ID _id);
 
+	void FeedInStart(Sound_ID::SOUND_ID _id,float _time);
+	void FeedInOut(Sound_ID::SOUND_ID _id, float _time);
+
+	void SetFeedInOutList(Sound* sound);
 
 private:
 	
 	std::unordered_map<std::string,Sound*> sound;
+
+	std::list<Sound*> feedInOutList;
 };

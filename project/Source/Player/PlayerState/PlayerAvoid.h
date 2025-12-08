@@ -23,4 +23,6 @@ private:
 	float time;
 	float cameraAngle;
 	float maxFrame;
+	float animTime;
+
 };

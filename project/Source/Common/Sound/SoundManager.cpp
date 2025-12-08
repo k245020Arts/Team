@@ -15,6 +15,15 @@ SoundManager::~SoundManager()
 
 void SoundManager::Update()
 {
+	for (auto itr = feedInOutList.begin(); itr != feedInOutList.end(); ) {
+		if ((*itr)->IsActive()) {
+			(*itr)->Update();
+			++itr;
+		}
+		else {
+			itr = feedInOutList.erase(itr);
+		}
+	}
 }
 
 void SoundManager::Draw()
@@ -30,37 +39,37 @@ void SoundManager::SoundLoad(Sound_ID::SOUND_ID _type, std::string path, std::st
 
 void SoundManager::PlaySceneLoad()
 {
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND,"swordHit", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND1,"swordHit000001", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND2,"swordHit000002", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND3,"swordHit000003", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND4,"swordHit000004", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND5,"swordHit000005", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND6,"swordHit000006", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND7,"swordHit000007", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND8,"swordHit0008", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND9,"swordHit0009", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_HIT_SOUND10,"swordHit00010", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND,"swordHit", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND1,"swordHit000001", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND2,"swordHit000002", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND3,"swordHit000003", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND4,"swordHit000004", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND5,"swordHit000005", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND6,"swordHit000006", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND7,"swordHit000007", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND8,"swordHit0008", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND9,"swordHit0009", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND10,"swordHit00010", ".wav", 255);
 
-	SoundLoad(Sound_ID::SWORD_WIND_SOUND1, "swordWind1", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_WIND_SOUND2, "swordWind2", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_WIND_SOUND3, "swordWind3", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_WIND_SOUND4, "swordWind4", ".wav", 255);
-	SoundLoad(Sound_ID::SWORD_WIND_SOUND5, "swordWind5", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_WIND_SOUND1, "swordWind1", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_WIND_SOUND2, "swordWind2", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_WIND_SOUND3, "swordWind3", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_WIND_SOUND4, "swordWind4", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::SWORD_WIND_SOUND5, "swordWind5", ".wav", 255);
 
-	SoundLoad(Sound_ID::JUST_AVOID_SOUND, "justAvoid10", ".wav", 200);
-	SoundLoad(Sound_ID::ENEMY_ATTACK_BEFORE, "EnemyAttackBefore1", ".wav", 255);
-	SoundLoad(Sound_ID::PLAYER_ATTACK_BEFORE, "PlayerAttackBefore", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::JUST_AVOID_SOUND, "justAvoid10", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::ENEMY_ATTACK_BEFORE, "EnemyAttackBefore1", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::PLAYER_ATTACK_BEFORE, "PlayerAttackBefore", ".wav", 255);
 
-	SoundLoad(Sound_ID::ENEMY_SWORD_WIND1, "EnemySword1", ".wav", 200);
-	SoundLoad(Sound_ID::ENEMY_SWORD_WIND2, "EnemySword2", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::ENEMY_SWORD_WIND1, "EnemySword1", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::ENEMY_SWORD_WIND2, "EnemySword2", ".wav", 200);
 
-	SoundLoad(Sound_ID::ENEMY_ATTACK_HIT1, "EnemyAttackHit1", ".wav", 200);
-	SoundLoad(Sound_ID::ENEMY_ATTACK_HIT2, "EnemyAttackHit2", ".wav", 200);
-	SoundLoad(Sound_ID::ENEMY_ATTACK_HIT3, "EnemyAttackHit3", ".wav", 200);
-	SoundLoad(Sound_ID::ENEMY_ATTACK_HIT4, "EnemyAttackHit4", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::ENEMY_ATTACK_HIT1, "EnemyAttackHit1", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::ENEMY_ATTACK_HIT2, "EnemyAttackHit2", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::ENEMY_ATTACK_HIT3, "EnemyAttackHit3", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::ENEMY_ATTACK_HIT4, "EnemyAttackHit4", ".wav", 200);
 
-	SoundLoad(Sound_ID::ENEMY_FALL, "EnemyFall2", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::ENEMY_FALL, "EnemyFall2", ".wav", 255);
 
 	SoundLoad(Sound_ID::SOUND_ID::V_P_ATTACK1, "P_AttackV1", ".wav", 180);
 	SoundLoad(Sound_ID::SOUND_ID::V_P_ATTACK2, "P_AttackV2", ".wav", 180);
@@ -68,29 +77,29 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::SOUND_ID::V_P_ATTACK4, "P_AttackV4", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::V_P_LOSE, "P_V_AttackLose", ".wav", 255);
 
-	SoundLoad(Sound_ID::V_P_DAMAGE1, "P_DamageV1", ".wav", 255);
-	SoundLoad(Sound_ID::V_P_DAMAGE2, "P_DamageV2", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::V_P_DAMAGE1, "P_DamageV1", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::V_P_DAMAGE2, "P_DamageV2", ".wav", 255);
 
-	SoundLoad(Sound_ID::V_P_JUST_AVOID, "P_JustAvoidV", ".wav", 255);
-	SoundLoad(Sound_ID::V_P_AVOID, "P_AvoidV", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::V_P_JUST_AVOID, "P_JustAvoidV", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::V_P_AVOID, "P_AvoidV", ".wav", 255);
 
-	SoundLoad(Sound_ID::V_E_ATTACK1, "E_AttackV1", ".wav",255);
-	SoundLoad(Sound_ID::V_E_ATTACK2, "E_AttackV2", ".wav",255);
-	SoundLoad(Sound_ID::V_E_ATTACK3, "E_AttackV3", ".wav",255);
+	SoundLoad(Sound_ID::SOUND_ID::V_E_ATTACK1, "E_AttackV1", ".wav",255);
+	SoundLoad(Sound_ID::SOUND_ID::V_E_ATTACK2, "E_AttackV2", ".wav",255);
+	SoundLoad(Sound_ID::SOUND_ID::V_E_ATTACK3, "E_AttackV3", ".wav",255);
 
-	SoundLoad(Sound_ID::V_E_DAMAGE1, "E_DamageV1", ".wav", 200);
-	SoundLoad(Sound_ID::V_E_DAMAGE2, "E_DamageV2", ".wav", 200);
-	SoundLoad(Sound_ID::V_E_DAMAGE3, "E_DamageV3", ".wav", 200);
-	SoundLoad(Sound_ID::V_E_DAMAGE4, "E_DamageV4", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::V_E_DAMAGE1, "E_DamageV1", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::V_E_DAMAGE2, "E_DamageV2", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::V_E_DAMAGE3, "E_DamageV3", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::V_E_DAMAGE4, "E_DamageV4", ".wav", 200);
 
-	SoundLoad(Sound_ID::JUST_AVOID_SUCCESS, "success", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::JUST_AVOID_SUCCESS, "success", ".wav", 255);
 
-	SoundLoad(Sound_ID::PLAY_BGM, "PlaySceneBGM", ".wav", 150);
-	SoundLoad(Sound_ID::WIN, "winSe", ".wav", 200);
-	SoundLoad(Sound_ID::LOSE, "loseSe", ".mp3", 200);
+	SoundLoad(Sound_ID::SOUND_ID::PLAY_BGM, "PlaySceneBGM", ".wav", 150);
+	SoundLoad(Sound_ID::SOUND_ID::WIN, "winSe", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::LOSE, "loseSe", ".mp3", 200);
 
-	SoundLoad(Sound_ID::GROUND, "Ground", ".wav", 255);
-	SoundLoad(Sound_ID::V_B_ROAR, "B_ROAR", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::GROUND, "Ground", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::V_B_ROAR, "B_ROAR", ".wav", 255);
 	
 }
 
@@ -151,4 +160,26 @@ void SoundManager::RandamSe(std::string _name, int num)
 bool SoundManager::CheckSe(Sound_ID::SOUND_ID _id)
 {
 	return CheckSoundMem(Load::GetSoundHandle(_id));
+}
+
+void SoundManager::FeedInStart(Sound_ID::SOUND_ID _id, float _time)
+{
+	sound[Sound_ID::GetSoundID(_id)]->BGMFeedIn(_time);
+	SetFeedInOutList(sound[Sound_ID::GetSoundID(_id)]);
+}
+
+void SoundManager::FeedInOut(Sound_ID::SOUND_ID _id, float _time)
+{
+	sound[Sound_ID::GetSoundID(_id)]->BGMFeedOut(_time);
+	SetFeedInOutList(sound[Sound_ID::GetSoundID(_id)]);
+}
+
+void SoundManager::SetFeedInOutList(Sound* sound)
+{
+	for (auto itr = feedInOutList.begin(); itr != feedInOutList.end();) {
+		if ((*itr) == sound) {
+			itr = feedInOutList.erase(itr);
+		}
+	}
+	feedInOutList.push_back(sound);
 }

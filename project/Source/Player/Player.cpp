@@ -252,7 +252,7 @@ void Player::Move(float _speed, float _speedMax)
 	//スティックの傾きの量が少なかったら移動しない
 	if ((fabs(walkAngle.x) >= 0.3f || fabs(walkAngle.z) >= 0.3f) && hp > 0.0f) {
 		//回転処理
-		RotationChange(walkAngle,5.0f);
+		RotationChange(walkAngle,9.0f);
 
 		VECTOR3 dir = VZero;
 		dir.x = walkAngle.x * 1.0f * _speed;
@@ -308,10 +308,11 @@ void Player::Avoid(float _speed, float _speedMax, float cameraAngle, float _upSp
 {
 	//回避の共通処理
 	VECTOR dir = VZero;
-	dir.x = walkAngle.x * 1.0f * _speed;
-	dir.z = walkAngle.z * 1.0f * _speed;
+	dir = VECTOR3(0.0f, 0.0f, _speed) * MGetRotY(playerTransform->rotation.y);
+	/*dir.x = playerTransform->rotation.y * 1.0f * _speed;
+	dir.z = playerTransform->rotation.y * 1.0f * _speed;*/
 	dir.y *= 0.0f;
-	dir = dir * MGetRotY(cameraAngle);
+	//dir = dir * MGetRotY(cameraAngle);
 	dir.y += _upSpeed;
 	playerCom.physics->SetVelocity(dir);
 

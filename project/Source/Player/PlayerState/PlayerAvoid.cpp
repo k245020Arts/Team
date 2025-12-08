@@ -61,8 +61,15 @@ void PlayerAvoid::Update()
 			/*p->playerCom.physics->SetFirction(VECTOR3(250.0f, 250.0f, 250.0f));*/
 		}
 		//スピードの調整
+		float easeIng;
+		if (animTime <= p->playerCom.anim->GetCurrentFrame()) {
+			easeIng = 1500.0f;
+		}
+		else {
+			easeIng = Easing::Sin90Cube(9000.0f, 200.0f, time);
+		}
 		float animEasing = Easing::Sin90Cube(1.0f, 0.8f,time);
-		float easeIng = Easing::Sin90Cube(7000.0f, 200.0f, time);
+		
 		float ySpeed = Easing::SinCube(800.0f, 0.0f, time);
 		p->playerCom.player->Avoid(easeIng, 6000.0f,cameraAngle,ySpeed);
 		p->playerCom.anim->SetPlaySpeed(animEasing);
@@ -88,9 +95,10 @@ void PlayerAvoid::Start()
 	p->playerCom.physics->SetGravity(VECTOR3(0.0f, -6000.0f, 0.0f));
 	p->playerCom.camera->CameraLeapSet(0.13f);
 	p->playerCom.sound->PlaySe(Sound_ID::V_P_AVOID);
+
 	maxFrame = p->playerCom.anim->GetMaxFrame();
-	
-	
+	maxFrame -= 10.0f;
+	animTime = 18.0f;
 }
 
 void PlayerAvoid::Finish()

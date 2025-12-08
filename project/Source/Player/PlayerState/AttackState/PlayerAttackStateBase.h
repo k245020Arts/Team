@@ -17,6 +17,8 @@ public:
 	float GetHitDamage() { return hitDamage; }
 	bool IsAttack();
 
+	void AttackMoveStart();
+
 protected:
 	float easingCount;
 	float beforeAngle;
@@ -44,5 +46,6 @@ protected:
 
 	float hitDamage;
 	bool defalutTrail;
+	bool rockOn;
 
 };

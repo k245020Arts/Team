@@ -9,6 +9,7 @@
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Component/Color/Color.h"
 #include "../../../Common/InputManager/InputManager.h"
+#include "../../../Common/Sound/SoundManager.h"
 
 PlayerJustAvoidAttack2::PlayerJustAvoidAttack2()
 {
@@ -156,4 +157,5 @@ void PlayerJustAvoidAttack2::Finish()
 	p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
 	PlayerAttackStateBase::Finish();
 	p->playerCom.hitObj->SetObjectTimeRate();
+	p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 }

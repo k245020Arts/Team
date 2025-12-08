@@ -69,6 +69,9 @@ void PlayerAttackStateBase::Update()
 
 void PlayerAttackStateBase::EnemyRotation()
 {
+	if (!rockOn) {
+		return;
+	}
 	Player* p = GetBase<Player>();
 	//“G‚ªˆê’èˆÈã‚æ‚è‰“‚¢‚©‰ñ“]‚ªI‚í‚Á‚½‚ç‚±‚±‚Ìˆ—‚ðƒXƒ‹[‚·‚é
 	if (easingCount > 1.0f || !rotation) {
@@ -99,26 +102,28 @@ void PlayerAttackStateBase::Start()
 	
 	//“G‚ÆƒvƒŒƒCƒ„[‚Ì‹——£‚ð‚Æ‚é
 	dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
-	//Šp“xŒvŽZ
-	angle = atan2f(dist.x, dist.z);
-	easingCount = 0.0f;
+	
+	VECTOR3 frontVector = VECTOR3(0.0f, 0.0f, 1.0f) * MGetRotY(p->playerTransform->rotation.y);
+	rockOn = false;
 	beforeAngle = p->playerCom.player->GetPlayerTransform()->rotation.y;
+	if (VDot(dist, frontVector) >= 60.0f * DegToRad) {
+		//Šp“xŒvŽZ
+		angle = atan2f(dist.x, dist.z);
+		rockOn = true;
+	}
+	else {
+		angle = beforeAngle;
+	}
+
+	
+	easingCount = 0.0f;
 	firstColl = true;
 	distSize = dist.Size();
 	norm = dist.Normalize();
 	p->playerCom.sound->RandamSe("P_AttackV", 3);
 	beforeAttack = true;
 	runTimer = 0.0f;
-	if (dist.Size() >= 3000) {
-		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
-		rotation = false;;
-		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));
-	}
-	else {
-		//‹ß‚¢‚Æ“G‚Ì•ûŒü‚ÉŒü‚©‚Á‚ÄUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
-		rotation = true;
-		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
-	}
+	
 	
 }
 
@@ -132,4 +137,19 @@ bool PlayerAttackStateBase::IsAttack()
 {
 	Player* p = GetBase<Player>();
 	return p->playerCom.anim->AnimEventCan();
+}
+
+void PlayerAttackStateBase::AttackMoveStart()
+{
+	Player* p = GetBase<Player>();
+	if (dist.Size() >= 5000) {
+		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
+		rotation = false;;
+		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));
+	}
+	else {
+		//‹ß‚¢‚Æ“G‚Ì•ûŒü‚ÉŒü‚©‚Á‚ÄUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
+		rotation = true;
+		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
+	}
 }

@@ -17,7 +17,7 @@ PlayerAttack3::PlayerAttack3()
 	animId = ID::P_ANIM_ATTACK3;
 	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	nextAttackID = StateID::PLAYER_ATTACK4_S; 
-	frontSpeed = 1000.0f;
+	frontSpeed = 1500.0f;
 	hitDamage = 15.0f;
 }
 
@@ -43,14 +43,18 @@ void PlayerAttack3::Update()
 		}
 		//当たり判定がある間はスピードを早く
 		if (p->playerCom.anim->AnimEventCan()) {
-			p->playerCom.anim->SetPlaySpeed(3.5f);
+			if (beforeAttack) {
+				AttackMoveStart();
+			}
+			p->playerCom.anim->SetPlaySpeed(3.0f);
 			beforeAttack = false;
-			p->playerCom.physics->SetVelocity(VZero);
+			
 		}
 		else {
 			if (beforeAttack)
 			p->playerCom.anim->SetPlaySpeed(1.0f);
 			else {
+				p->playerCom.physics->SetVelocity(VZero);
 				if (nextAttack) {
 					//次の攻撃に行くときの設定
 					runTimer = 0.1f;
