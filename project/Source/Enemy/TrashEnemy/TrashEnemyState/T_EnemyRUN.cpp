@@ -22,7 +22,7 @@ void T_EnemyRun::Update()
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
 
 	//スピードをポジションに足す
-	e->Move(e->speed, 1500);
+	e->Move(e->speed, 2000);
 
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->targetPos;//e->enemyBaseComponent.playerObj->GetTransform()->position;
 	static const float  RANG = 1200.0f;

@@ -33,6 +33,7 @@ public:
 private:
 	std::list<TrashEnemy*> enemies;
 	Object3D* player;
+	Object3D* camera;
 
 	bool comboRequest;
 	int counter;
