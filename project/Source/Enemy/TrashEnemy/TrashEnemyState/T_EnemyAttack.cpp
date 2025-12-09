@@ -21,8 +21,8 @@ void T_EnemyAttack::Update()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->LookTarget();
 
-	/*if (e->enemyBaseComponent.anim->IsFinish())
-		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);*/
+	if (e->enemyBaseComponent.anim->IsFinish())
+		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 
 	AttackCollsion();
 	AttackSound();

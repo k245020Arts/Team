@@ -15,7 +15,11 @@ T_EnemyDead::~T_EnemyDead()
 
 void T_EnemyDead::Update()
 {
+	TrashEnemy* e = GetBase<TrashEnemy>();
+	counter ++;
 
+	if(counter>=120)
+		e->active = false;
 }
 
 void T_EnemyDead::Draw()
@@ -24,9 +28,8 @@ void T_EnemyDead::Draw()
 
 void T_EnemyDead::Start()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
 	EnemyStateBase::Start();
-	e->active = false;
+	counter = 0;
 }
 
 void T_EnemyDead::Finish()

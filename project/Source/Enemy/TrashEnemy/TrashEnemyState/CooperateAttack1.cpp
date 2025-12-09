@@ -9,6 +9,8 @@ CooperateAttack1::CooperateAttack1()
 	animId = ID::TE_ATTACK2;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	damage.damagePattern = BossAttackBase::NO_BACK;
+
+	damage.hitDamage = 30;
 }
 
 CooperateAttack1::~CooperateAttack1()
