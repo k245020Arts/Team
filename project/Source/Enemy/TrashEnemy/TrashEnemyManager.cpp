@@ -21,6 +21,7 @@
 #include "../Boss/Boss.h"
 #include "../../Component/Collider/rayCollider.h"
 #include "../../Component/Collider/ModelCollider.h"
+#include "../../Common/Random.h"
 
 TrashEnemyManager::TrashEnemyManager()
 {
@@ -165,11 +166,17 @@ void TrashEnemyManager::ImguiDraw()
 void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 {
 	VECTOR3 pPos = player->GetTransform()->position;
+	const float RANGE = 1000.00f;
 	for (auto& itr : enemies)
 	{
 		//‚Ç‚±‚Ì•ûŠp‚És‚­‚©Œˆ‚ß‚éˆ—
-		VECTOR3 vec = pPos - itr->GetPos();
-		VECTOR3 newVec = vec * -1;
+		/*VECTOR3 vec = pPos - itr->GetPos();
+		VECTOR3 newVec = vec * -1;*/
+
+		float _x = Random::GetReal();
+		float _z = Random::GetReal();
+		VECTOR3 vec = VECTOR3(_x, 0, _z) * MGetRotY(player->GetTransform()->rotation.y);
+		VECTOR3 newVec = vec.Normalize() * RANGE;
 		itr->SetTargetPos(newVec, _id);	
 	}
 }
