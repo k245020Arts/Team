@@ -91,6 +91,7 @@ TrashEnemy::TrashEnemy()
 	hp = eStatus->GetStatus().maxHp;
 	maxHp = hp;
 
+	speed = eStatus->GetStatus().runSpeed;
 	isStandby = false;
 }
 
@@ -302,6 +303,7 @@ void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 {
 	targetPos = _pos;
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
+	speed = eStatus->GetStatus().cooperateSoeed;
 	attackId = StateID::T_ENEMY_STANDBY;
 }
 

@@ -40,6 +40,9 @@ public:
 	VECTOR3 GetPos() { return obj->GetTransform()->position; }
 
 	bool GetStandby() { return isStandby; }
+	float Speed() { return speed; }
+
+	void isStandbyF() { isStandby = false; }
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)
@@ -65,6 +68,8 @@ private:
 	bool active;
 	//‚Ç‚±‚ÉŒü‚­‚©
 	VECTOR3 targetPos;
-	//˜AŒgUŒ‚‚µ‚Ä‚é‚©
+	//˜AŒgUŒ‚‚Ì€”õ‚ª‚Å‚«‚Ä‚é‚©
 	bool isStandby;
+
+	float speed;
 };

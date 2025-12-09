@@ -22,8 +22,8 @@ void T_EnemyRun::Update()
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
 
 	//移動の計算
-	velocity.x = speed * cosf(ROTY);
-	velocity.z = speed * sinf(ROTY);
+	velocity.x = e->speed * cosf(ROTY);
+	velocity.z = e->speed * sinf(ROTY);
 
 	//計算したものをポジションに足す
 	e->obj->GetTransform()->position += velocity;
@@ -40,7 +40,6 @@ void T_EnemyRun::Start()
 {
 	EnemyStateBase::Start();
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	speed = e->eStatus->GetStatus().runSpeed;
 }
 
 void T_EnemyRun::Finish()

@@ -44,13 +44,10 @@ void TrashEnemyManager::Update()
 		{
 			//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
 			if ((*itr)->GetStandby())
-				counter++;
+				counter ++;
 			//“G‘Sˆõ‚ª€”õŠ®—¹‚µ‚½‚çUŒ‚‚ÉˆÚ‚é
-			if (enemies.max_size() >= counter)
-			{
+			if (enemies.size() <= counter)
 				(*itr)->ChangeState(StateID::T_ENEMY_RUN_S);
-				counter = 0;
-			}
 
 			//ŽG‹›“G‚ªŽ€‚ñ‚Å‚½‚çlist‚©‚çíœ‚·‚é
 			if (!(*itr)->GetActive())
@@ -61,6 +58,12 @@ void TrashEnemyManager::Update()
 			}
 			else
 				++itr;
+		}
+	
+		if (enemies.size() <= counter)
+		{
+			counter = 0;
+			//(*itr)->isStandbyF();
 		}
 	}
 
@@ -154,8 +157,7 @@ void TrashEnemyManager::ImguiDraw()
     ImGui::Begin("TrashEnemyManager");
 	for (auto& itr : enemies)
 	{
-		/*ImGui::Text("enemiesX: %d", itr->GetPos().x);
-		ImGui::Text("enemiesX: %d", itr->GetPos().z);*/
+		//ImGui::Text("enemiesGetStandby: %d", itr->GetStandby());
 	}
 
     ImGui::End();

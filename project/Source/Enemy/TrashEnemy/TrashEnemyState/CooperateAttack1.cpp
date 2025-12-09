@@ -24,4 +24,6 @@ void CooperateAttack1::Start()
 
 void CooperateAttack1::Finish()
 {
+	TrashEnemy* e = GetBase<TrashEnemy>();
+	e->attackId = StateID::T_ENEMY_ATTACK_S;
 }
