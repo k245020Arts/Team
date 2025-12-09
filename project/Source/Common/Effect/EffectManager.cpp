@@ -173,3 +173,4 @@ void EffectManager::ParentTransformRemove(BaseObject* _obj)
 		}
 	}
 }
+

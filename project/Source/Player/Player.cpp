@@ -145,6 +145,7 @@ void Player::Draw()
 	playerCom.stateManager->Draw();
 	playerCom.renderer->Draw();
 
+	return;
 	if (!largeJustAvoid) {
 		return;
 	}

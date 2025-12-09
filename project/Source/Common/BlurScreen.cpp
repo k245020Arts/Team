@@ -17,12 +17,14 @@ BlurScreen::BlurScreen()
 
 	Reset();
 
-	defalutAlpha = 50.0f;
+	defalutAlpha = 150.0f;
 	alpha = defalutAlpha;
 	smallScreen = -1;
 	vignetteGraph = -1;
 
+	
 	vignetteGraph = Load::LoadImageGraph(Load::IMAGE_PATH + "Vignette", ID::SCREEN_BLUR_IMAGE);
+	
 }
 
 BlurScreen::~BlurScreen()
@@ -61,7 +63,7 @@ void BlurScreen::Update()
 
 void BlurScreen::Draw()
 {
-#if 1
+#if 0
 	if (!use) {
 		return;
 	}
@@ -108,7 +110,7 @@ void BlurScreen::Draw()
 	SetDrawBright(0, 0, 0);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)(alpha * 1.2f));
 	if (vignetteGraph != -1) {
-		DrawRotaGraph(Screen::WIDTH / 2, Screen::HEIGHT / 2,1.5f,0.0f, vignetteGraph, true);
+		DrawRotaGraph(Screen::WIDTH / 2, Screen::HEIGHT / 2,1.0f,0.0f, vignetteGraph, true);
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -126,7 +128,7 @@ void BlurScreen::Draw()
 
 void BlurScreen::Play(float _time, float _fadeTime)
 {
-#if 1
+#if 0
 	Reset();
 	SetUseSetDrawScreenSettingReset(FALSE);//SetDrawScreenをしてもカメラが影響ないようにする
 	for (int i = 0; i < SCREEN_NUM; i++) {
@@ -134,6 +136,7 @@ void BlurScreen::Play(float _time, float _fadeTime)
 			DeleteGraph(blurScreen[i]);
 		}
 		blurScreen[i] = MakeScreen(Screen::WIDTH, Screen::HEIGHT, true); //スクリーンの生成
+		//GraphFilter(blurScreen[i], DX_GRAPH_FILTER_GAUSS, 2, 2);
 	}
 
 	alpha = defalutAlpha;
@@ -153,11 +156,14 @@ void BlurScreen::Play(float _time, float _fadeTime)
 
 	vignetteGraph = Load::GetHandle(ID::SCREEN_BLUR_IMAGE);
 
+	//GraphFilter(vignetteGraph, DX_GRAPH_FILTER_GAUSS, 1024);
+
 	for (int i = 0; i < SCREEN_NUM; i++) {
 		if (blurScreen[i] != -1) {
 			DeleteGraph(blurScreen[i]);
 		}
 		blurScreen[i] = MakeScreen(Screen::WIDTH, Screen::HEIGHT, TRUE);
+		
 	}
 
 	use = true;
@@ -168,6 +174,8 @@ void BlurScreen::Play(float _time, float _fadeTime)
 	defalutFadeTime = _fadeTime;
 
 	alpha = defalutAlpha;
+
+
 #endif
 }
 
