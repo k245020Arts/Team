@@ -81,6 +81,9 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 {
     for (int i = 0; i < enemySpawnCounter; i++)
     {
+		if (enemies.size() >= 4)
+			break;
+
 		// ŒÂ•Ê‚Ìenemy‚ğì‚é
 		Object3D* e;
 		e = new Object3D();

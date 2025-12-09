@@ -193,6 +193,9 @@ void TrashEnemy::Trail()
 
 void TrashEnemy::PlayerHit()
 {
+	if (hp <= 0)
+		return;
+
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
 	float damage = 0;;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr)
