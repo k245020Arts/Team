@@ -34,8 +34,6 @@ void Standby::Start()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->attackId = StateID::COOPERATEATTACK1;
 	e->targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
-	e->speed = 10;
-	//counter = 0;
 	EnemyStateBase::Start();
 }
 
