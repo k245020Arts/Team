@@ -47,4 +47,9 @@ private:
 	float screenDraw;
 
 	int currentScreen;
+
+	int smallScreen;
+	int smallW;
+	int	smallH;
+	int vignetteGraph;
 };

@@ -6,6 +6,8 @@
 #include  "../Common/ID/EffectID.h"
 #include "../Common/ID/SoundID.h"
 
+class BossAttackBase;
+
 class Player : public CharaBase
 {
 public:
@@ -127,6 +129,8 @@ public:
 
 	bool GetBossThreat() { return bossThreat; }
 	void BossThreatFinish() { bossThreat = false; }
+
+	bool LargeJustAvoid(std::shared_ptr<BossAttackBase> _attack);
 
 private:
 	PlayerInformation::CharaComponent playerCom;

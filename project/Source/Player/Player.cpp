@@ -145,7 +145,7 @@ void Player::Draw()
 	playerCom.stateManager->Draw();
 	playerCom.renderer->Draw();
 
-	if (!justAvoid) {
+	if (!largeJustAvoid) {
 		return;
 	}
 #if 1
@@ -453,6 +453,9 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f || startTime >= 0.0f) {
+			if (!LargeJustAvoid(attack)) {
+				return true;
+			}
 			playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
 			playerCom.hitObj = _obj;
 			playerCom.enemyManager->JustAvoidTargetChange(dynamic_cast<Object3D*>(_obj));
@@ -594,6 +597,7 @@ bool Player::EnemyAttackObjectHitIsPlayer()
 		justAvoidCanCounter = 0.0f;
 		justAvoid = true;
 		justFeedInTime = JUST_FEED_IN_TIME;
+		largeJustAvoid = true;
 	}
 	else {	
 		//出来なかったらダメージを食らう
@@ -612,4 +616,15 @@ bool Player::EnemyAttackObjectHitIsPlayer()
 		}
 	}
 	return true;
+}
+
+bool Player::LargeJustAvoid(std::shared_ptr<BossAttackBase> _attack)
+{
+	if (_attack->GetDamageParam().flash) {
+		largeJustAvoid = true;
+	}
+	else {
+		largeJustAvoid = false;
+	}
+	return largeJustAvoid;
 }

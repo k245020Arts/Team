@@ -1,5 +1,11 @@
 #include "BlurScreen.h"
 #include "../../Source/Screen.h"
+#include "LoadManager.h"
+
+#define NEW_VERSION  (0);
+#define OLD_VERSION  (1);
+
+#define BLUR_VERSION  0;
 
 //const int BlurScreen::SCREEN_NUM = 2;
 
@@ -11,8 +17,12 @@ BlurScreen::BlurScreen()
 
 	Reset();
 
-	defalutAlpha = 150.0f;
+	defalutAlpha = 50.0f;
 	alpha = defalutAlpha;
+	smallScreen = -1;
+	vignetteGraph = -1;
+
+	vignetteGraph = Load::LoadImageGraph(Load::IMAGE_PATH + "Vignette", ID::SCREEN_BLUR_IMAGE);
 }
 
 BlurScreen::~BlurScreen()
@@ -51,6 +61,7 @@ void BlurScreen::Update()
 
 void BlurScreen::Draw()
 {
+#if 1
 	if (!use) {
 		return;
 	}
@@ -66,23 +77,12 @@ void BlurScreen::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(alpha));
 
 	screenDraw += Time::DeltaTimeRate();
-	//if (screenDraw > 0.2f) {
-	//	//DrawExtendGraphF(0.0f, 0.0f, Screen::WIDTH, Screen::HEIGHT, blurScreen[1 - currentScreen], false);
-	//}
-	/*int smallW = Screen::WIDTH / 4;
-	int smallH = Screen::HEIGHT / 4;
 
-	int smallScreen = MakeScreen(smallW, smallH, true);
-	SetDrawScreen(smallScreen);*/
 
-	//// 低解像度へ縮小描画
-	/*DrawExtendGraph(0, 0, smallW, smallH, blurScreen[currentScreen], TRUE);*/
-
-	
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	SetDrawBlendMode(blendMode, param); 
-	
+	SetDrawBlendMode(blendMode, param);
+
 	SetDrawMode(drawMode);
 
 	SetDrawScreen(DX_SCREEN_BACK);
@@ -92,11 +92,41 @@ void BlurScreen::Draw()
 	ScreenFlip();
 
 	currentScreen = 1 - currentScreen;
+#else
+	if (!use) {
+		return;
+	}
 
+	SetDrawScreen(smallScreen);
+	DrawExtendGraph(0, 0, smallW, smallH, blurScreen[currentScreen], true);
+
+	SetDrawScreen(DX_SCREEN_BACK);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
+
+	DrawExtendGraph(0, 0, Screen::WIDTH, Screen::HEIGHT, smallScreen, true);
+
+	SetDrawBright(0, 0, 0);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)(alpha * 1.2f));
+	if (vignetteGraph != -1) {
+		DrawRotaGraph(Screen::WIDTH / 2, Screen::HEIGHT / 2,1.5f,0.0f, vignetteGraph, true);
+	}
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	SetDrawBright(255, 255, 255);
+
+
+	// スクリーン切り替え
+	currentScreen = 1 - currentScreen;
+
+#endif
+	
+
+	
 }
 
 void BlurScreen::Play(float _time, float _fadeTime)
 {
+#if 1
 	Reset();
 	SetUseSetDrawScreenSettingReset(FALSE);//SetDrawScreenをしてもカメラが影響ないようにする
 	for (int i = 0; i < SCREEN_NUM; i++) {
@@ -113,6 +143,32 @@ void BlurScreen::Play(float _time, float _fadeTime)
 	fadeTime = _fadeTime;
 	defalutFadeTime = _fadeTime;
 	fadeOut = false;
+#else
+	Reset();
+
+	
+	smallW = Screen::WIDTH / 4;
+	smallH = Screen::HEIGHT / 4;
+	smallScreen = MakeScreen(smallW, smallH, TRUE);
+
+	vignetteGraph = Load::GetHandle(ID::SCREEN_BLUR_IMAGE);
+
+	for (int i = 0; i < SCREEN_NUM; i++) {
+		if (blurScreen[i] != -1) {
+			DeleteGraph(blurScreen[i]);
+		}
+		blurScreen[i] = MakeScreen(Screen::WIDTH, Screen::HEIGHT, TRUE);
+	}
+
+	use = true;
+	fadeOut = false;
+
+	time = _time;
+	fadeTime = _fadeTime;
+	defalutFadeTime = _fadeTime;
+
+	alpha = defalutAlpha;
+#endif
 }
 
 
@@ -124,7 +180,14 @@ void BlurScreen::ScreenFinish()
 			blurScreen[i] = -1;
 		}
 	}
-	
+	if (smallScreen != -1) {
+		DeleteGraph(smallScreen);
+		smallScreen = -1;
+	}
+	if (vignetteGraph != -1) {
+		//DeleteGraph(vignetteGraph);
+		vignetteGraph = -1;
+	}
 	SetDrawScreen(DX_SCREEN_BACK);
 }
 
