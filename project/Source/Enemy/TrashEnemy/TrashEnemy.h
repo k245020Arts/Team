@@ -57,6 +57,7 @@ public:
 		return static_cast<T*>(attackColl);
 	}
 
+	void Move(float _speed, float _max);
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;

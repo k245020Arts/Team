@@ -21,12 +21,8 @@ void T_EnemyRun::Update()
 	e->LookTarget();
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
 
-	//移動の計算
-	velocity.x = e->speed * cosf(ROTY);
-	velocity.z = e->speed * sinf(ROTY);
-
-	//計算したものをポジションに足す
-	e->obj->GetTransform()->position += velocity;
+	//スピードをポジションに足す
+	e->Move(e->speed, 2000);
 
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->targetPos;//e->enemyBaseComponent.playerObj->GetTransform()->position;
 	static const float  RANG = 1200.0f;

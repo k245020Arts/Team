@@ -302,6 +302,7 @@ void TrashEnemy::PlayerHit()
 void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 {
 	targetPos = _pos;
+
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 	speed = eStatus->GetStatus().cooperateSoeed;
 	attackId = StateID::T_ENEMY_STANDBY;
@@ -310,4 +311,43 @@ void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 void TrashEnemy::ChangeState(StateID::State_ID _id)
 {
 	enemyBaseComponent.state->ChangeState(_id);
+}
+
+void TrashEnemy::Move(float _speed, float _max)
+{
+	VECTOR3 pos = GetBaseObject()->GetTransform()->position;
+
+	// ターゲット座標へ向かうベクトル
+	VECTOR3 dir = VECTOR3(targetPos - pos).Normalize();
+	dir.y = 0;
+
+	// スピードをかける
+	VECTOR3 velocity = dir * _speed;
+
+	enemyBaseComponent.physics->AddVelocity(velocity, false);
+
+	VECTOR3 moveVelo = enemyBaseComponent.physics->GetVelocity() * VECTOR3(1, 0, 1);
+
+	// 最大速度制限
+	if (moveVelo.SquareSize() >= _max * _max) {
+		moveVelo = moveVelo.Normalize() * _max;
+		moveVelo.y = enemyBaseComponent.physics->GetVelocity().y;
+		enemyBaseComponent.physics->SetVelocity(moveVelo);
+	}
+
+	//VECTOR3 dir = VZero;
+	//dir.y *= 0.0f;
+	////b->bossTransform->GetRotationMatrix();
+	//dir = GetBaseObject()->GetTransform()->Forward() * -_speed;
+	//enemyBaseComponent.physics->AddVelocity(dir, false);
+	//VECTOR3 moveVelo;
+	//moveVelo = enemyBaseComponent.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
+
+	//float max = _max;
+	////最大速度までいったらスピードマックスに補正
+	//if (moveVelo.SquareSize() >= max * max) {
+	//	moveVelo = moveVelo.Normalize() * max;
+	//	moveVelo.y = enemyBaseComponent.physics->GetVelocity().y;
+	//	enemyBaseComponent.physics->SetVelocity(moveVelo);
+	//}
 }

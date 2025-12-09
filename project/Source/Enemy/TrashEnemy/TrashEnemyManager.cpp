@@ -21,10 +21,13 @@
 #include "../Boss/Boss.h"
 #include "../../Component/Collider/rayCollider.h"
 #include "../../Component/Collider/ModelCollider.h"
+#include "../../Common/Random.h"
 
 TrashEnemyManager::TrashEnemyManager()
 {
 	player = FindGameObjectWithTag<Object3D>("PLAYER");
+	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ");
+
 	comboRequest = false;
 	counter = 0;
 }
@@ -117,7 +120,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
 		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
 		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 0.7f, 20.0f, 30.0f);
-		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 3.0f, 20.0f, 30.0f);
+		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 2.5f, 20.0f, 30.0f);
 		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
 		
 		anim->Play(ID::TE_IDOL);
@@ -164,13 +167,39 @@ void TrashEnemyManager::ImguiDraw()
 
 void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 {
-	VECTOR3 pPos = player->GetTransform()->position;
-	for (auto& itr : enemies)
+	const float RANGE = 1500.0f; // プレイヤー中心の半径
+	const float BIAS_FOV = -180 * DegToRad; // プレイヤーの向きへ寄せる幅（0で無効）
+
+	VECTOR3 playerPos = player->GetTransform()->position;
+	float playerRot = camera->GetTransform()->rotation.y;
+
+	int count = enemies.size();
+	int index = 0;
+
+	for (auto& e : enemies)
 	{
-		//どこの方角に行くか決める処理
-		VECTOR3 vec = pPos - itr->GetPos();
-		VECTOR3 newVec = vec * -1;
-		itr->SetTargetPos(newVec, _id);	
+		// --- まずは360°を均等に割って円形に配置 ---
+		float angle = (2.0f * DX_PI_F) * (float)index / (float)count;
+
+		// --- 円形の基本方向 ---
+		VECTOR3 dir = VECTOR3(cosf(angle), 0, sinf(angle));
+
+		// --- プレイヤーの向きを基準に回転させて“前に寄せる” ---
+		float finalAngle = angle + playerRot;
+
+		// プレイヤー方向にさらに寄せたい場合（オプション）
+		//finalAngle = playerRot + sinf(angle) * (BIAS_FOV * 0.5f);
+
+		// --- 回転を反映した方向 ---
+		VECTOR3 rotatedDir = VECTOR3(cosf(finalAngle), 0, sinf(finalAngle));
+
+		// --- プレイヤーからの絶対座標 ---
+		VECTOR3 target = playerPos + rotatedDir * RANGE;
+
+		// --- 敵にセット ---
+		e->SetTargetPos(target, StateID::T_ENEMY_RUN_S);
+
+		index++;
 	}
 }
 
