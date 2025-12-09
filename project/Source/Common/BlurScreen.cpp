@@ -23,13 +23,20 @@ BlurScreen::BlurScreen()
 	vignetteGraph = -1;
 
 	
-	vignetteGraph = Load::LoadImageGraph(Load::IMAGE_PATH + "Vignette", ID::SCREEN_BLUR_IMAGE);
+	vignetteGraph = Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::SCREEN_BLUR_IMAGE);
+	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_DOWN_SCALE, 4);
+	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_GAUSS, 256, 32);
 	
 }
 
 BlurScreen::~BlurScreen()
 {
 	ScreenFinish();
+
+	if (vignetteGraph != -1) {
+		//DeleteGraph(vignetteGraph);
+		vignetteGraph = -1;
+	}
 }
 
 void BlurScreen::Update()
@@ -107,10 +114,11 @@ void BlurScreen::Draw()
 
 	DrawExtendGraph(0, 0, Screen::WIDTH, Screen::HEIGHT, smallScreen, true);
 
-	SetDrawBright(0, 0, 0);
+	SetDrawBright(80, 200, 255);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)(alpha * 1.2f));
 	if (vignetteGraph != -1) {
-		DrawRotaGraph(Screen::WIDTH / 2, Screen::HEIGHT / 2,1.0f,0.0f, vignetteGraph, true);
+		//âÊëúÇ™ëÂÇ´Ç¢ÇÃÇ≈è≠Çµí[Ç¡Ç±Ç©ÇÁÇ®Ç¢ÇƒÇ¢ÇÈÅB
+		DrawExtendGraph(-1500.0f, -1500.0f, Screen::WIDTH * 10, Screen::HEIGHT * 10,vignetteGraph, true);
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -150,11 +158,12 @@ void BlurScreen::Play(float _time, float _fadeTime)
 	Reset();
 
 	
-	smallW = Screen::WIDTH / 4;
-	smallH = Screen::HEIGHT / 4;
+	smallW = Screen::WIDTH / 2;
+	smallH = Screen::HEIGHT / 2;
 	smallScreen = MakeScreen(smallW, smallH, TRUE);
 
-	vignetteGraph = Load::GetHandle(ID::SCREEN_BLUR_IMAGE);
+	//vignetteGraph = Load::GetHandle(ID::SCREEN_BLUR_IMAGE);
+	
 
 	//GraphFilter(vignetteGraph, DX_GRAPH_FILTER_GAUSS, 1024);
 
@@ -192,10 +201,7 @@ void BlurScreen::ScreenFinish()
 		DeleteGraph(smallScreen);
 		smallScreen = -1;
 	}
-	if (vignetteGraph != -1) {
-		//DeleteGraph(vignetteGraph);
-		vignetteGraph = -1;
-	}
+	
 	SetDrawScreen(DX_SCREEN_BACK);
 }
 
