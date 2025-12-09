@@ -42,6 +42,7 @@
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/Boss/BossState/Attack/BossAttackBase.h"
+#include "../Common/Easing.h"
 
 namespace {
 
@@ -76,7 +77,9 @@ Player::Player()
 	hp = MAX_HP;
 	maxHp = hp;
 	avoidReadyCounter = 0.0f;
-
+	justAvoidBlurImage = Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect",ID::JUST_AVOID_BLUR);
+	justFeedInTime = 0.0f;
+	justFeedOutTime = 0.0f;
 }
 //
 //Object2D* guage = new Object2D();
@@ -93,6 +96,8 @@ Player::Player()
 Player::~Player()
 {
 	//delete playerCom.stateManager;
+	DeleteGraph(justAvoidBlurImage);
+	justAvoidBlurImage = -1;
 }
 
 void Player::Update()
@@ -113,11 +118,7 @@ void Player::Update()
 			DeleteCollision();
 		}
 	}
-	if (justAvoid) {
-		if (playerCom.stateManager->GetState<StateBase>()->GetString() != "PlayerJustAvoid") {
-			justAvoid = false;
-		}
-	}
+	
 	//死亡条件
 	if (hp <= 0.0f && (playerCom.stateManager->GetState<StateBase>()->GetID() == StateID::PLAYER_WAIT_S)) {
 		playerCom.stateManager->NowChangeState(StateID::PLAYER_DIE_S);
@@ -142,6 +143,40 @@ void Player::Draw()
 {
 	playerCom.stateManager->Draw();
 	playerCom.renderer->Draw();
+
+	if (!justAvoid) {
+		return;
+	}
+#if 1
+	float alpha = 0.0f;
+	if (justFeedInTime > 0.0f) {
+		alpha = Easing::EasingFlow<float>(&justFeedInTime, JUST_FEED_IN_TIME, 150.0f, 0.0f, Easing::EaseIn<float>);
+	}
+	if (justFeedOutTime > 0.0f) {
+		alpha = Easing::EasingFlow<float>(&justFeedOutTime, JUST_FEED_OUT_TIME, 0.0f, 150.0f, Easing::EaseIn<float>);
+	}
+#else
+	float alpha = 0;
+	if (justFeedInTime > 0.0f) {
+		justFeedInTime = max(justFeedInTime - Time::DeltaTimeRate(), 0.0f);
+		float rate = justFeedInTime / JUST_FEED_IN_TIME;
+		alpha = Easing::EaseIn(150.0f, 0.0f, rate);
+	}
+	else if (justFeedOutTime > 0.0f) {
+		justFeedOutTime = max(justFeedOutTime - Time::DeltaTimeRate(), 0.0f);
+		float rate = justFeedOutTime / JUST_FEED_OUT_TIME;
+		alpha = Easing::EaseIn(0.0f, 150.0f, rate);
+	}
+
+#endif
+	
+	
+
+	SetDrawBright(40, 220, 255);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	DrawGraph(0, 0, justAvoidBlurImage, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	SetDrawBright(255, 255, 255);
 
 	//DrawLine3D(playerCom.camera->GetCameraTransform()->position, playerCom.camera->GetCameraTransform()->position + VECTOR3(0, 0, 1000) * obj->GetTransform()->GetRotationMatrix(), 0xffffff);
 
@@ -426,6 +461,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 			avoidReady = false;
 			justAvoidCanCounter = 0.0f;
 			justAvoid = true;
+			justFeedInTime = JUST_FEED_IN_TIME;
 		}
 	}
 	else {
@@ -556,7 +592,7 @@ bool Player::EnemyAttackObjectHitIsPlayer()
 		avoidReady = false;
 		justAvoidCanCounter = 0.0f;
 		justAvoid = true;
-		
+		justFeedInTime = JUST_FEED_IN_TIME;
 	}
 	else {	
 		//出来なかったらダメージを食らう

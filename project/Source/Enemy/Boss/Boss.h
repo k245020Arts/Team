@@ -86,4 +86,6 @@ private:
 
 	TrashEnemyManager* trashEnemy;
 	float coolTime;
+
+	float attackNum;
 };

@@ -36,7 +36,10 @@ void BossNormalAttack2::Update()
 		boss->bossTransform->rotation.y -= averageSpeed * DegToRad;
 	}
 	AttackSound();
-	AttackFlash(ID::B_MODEL, boss->BOSS_LEFT_HAND_FRAME, "E_AttackV");
+	if (boss->maxAttack <= 0) {
+		AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
+	}
+
 	BossTrail(false);
 }
 

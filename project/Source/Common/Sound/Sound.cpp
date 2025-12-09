@@ -5,7 +5,8 @@
 
 Sound::Sound()
 {
-
+	feedInTime = 0.0f;
+	feedOutTime = 0.0f;
 }
 
 Sound::~Sound()
@@ -16,23 +17,11 @@ Sound::~Sound()
 void Sound::Update()
 {
 	if (feedInTime > 0.0f) {
-		feedInTime -= Time::DeltaTimeRate();
-		if (feedInTime <= 0.0f) {
-			feedInTime = 0.0f;
-			active = false;
-		}
-		float rate = feedInTime / timeMax;
-		float valume = Easing::EaseIn(volume, 0, rate);
+		float valume = Easing::EasingFlow<float>(&feedInTime, timeMax, volume, 0, Easing::EaseIn<float>);
 		ChangeVolumeSoundMem(valume, soundHandle);
 	}
 	if (feedOutTime > 0.0f) {
-		feedOutTime -= Time::DeltaTimeRate();
-		if (feedOutTime <= 0.0f) {
-			feedOutTime = 0.0f;
-			active = false;
-		}
-		float rate = feedOutTime / timeMax;
-		float valume = Easing::EaseIn(0, volume, rate);
+		float valume = Easing::EasingFlow<float>(&feedOutTime, timeMax, 0, volume, Easing::EaseIn<float>);
 		ChangeVolumeSoundMem(valume, soundHandle);
 	}
 }

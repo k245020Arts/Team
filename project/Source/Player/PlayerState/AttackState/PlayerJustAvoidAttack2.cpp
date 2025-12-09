@@ -158,4 +158,6 @@ void PlayerJustAvoidAttack2::Finish()
 	PlayerAttackStateBase::Finish();
 	p->playerCom.hitObj->SetObjectTimeRate();
 	p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
+	p->justAvoid = false;
+	p->justFeedOutTime = p->JUST_FEED_OUT_TIME;
 }

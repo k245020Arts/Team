@@ -41,7 +41,9 @@ void BossNormalAttack6::Update()
 	
 	}
 	AttackSound();
-	AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
+	if (boss->maxAttack <= 0) {
+		AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
+	}
 	BossTrail(true);
 }
 

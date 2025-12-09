@@ -38,7 +38,9 @@ void BossNormalAttack5::Update()
 		boss->enemyBaseComponent.physics->AddVelocity(normal * 6500.0f, true);
 	}
 	AttackSound();
-	AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
+	if (boss->maxAttack <= 0) {
+		AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
+	}
 	BossTrail(true);
 }
 

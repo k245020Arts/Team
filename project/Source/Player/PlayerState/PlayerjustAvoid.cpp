@@ -121,39 +121,50 @@ void PlayerJustAvoid::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
+
 	easingCount = 0.0f;
 	Time::ChangeDeltaRate(0.4f);//世界を遅くする
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.sound->FeedInOut(Sound_ID::PLAY_BGM,0.2f);
+
 	//JustAvoidShadow();
 	cameraAngle = p->playerCom.camera->GetCameraTransform()->rotation.y;
+
 	//スティックをみる
 	p->playerCom.player->PlayerStickInput();
 	cameraRotation = p->playerCom.camera->GetCameraTransform()->rotation;
+
 	//音を鳴らす
 	p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
 	p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
+
 	//エフェクトの再生
 	p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f , Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, Effect_ID::JUST_AVOID_EFFECT, 1.0f, false);
 	p->playerCom.effect->CreateEffekseer(Transform(MV1GetFramePosition(Load::GetHandle(ID::IDType::P_MODEL), 12), VZero, VOne * 1.0f), nullptr, Effect_ID::PLAYER_FLASH, 1.0f);
 	//p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VZero, VOne), p->playerCom.player->GetPlayerObj(), ID::PLAYER_AURA, 10.0f);
+
 	//プレイヤーを青くする
 	p->playerCom.color->setRGB(Color::Rgb(0,0,255,255));
 	p->playerCom.controller->ControlVibrationStartFrame(50, 10);
+
 	//カメラの追従速度を遅くする
 	cameraLeap = 0.02f;
 	p->playerCom.camera->CameraLeapSet(cameraLeap);
 	p->playerCom.camera->TargetSet(p->playerCom.hitObj);
 	p->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
+
+
 	//カメラの状態遷移
 	p->playerCom.camera->ChangeStateCamera(StateID::JUST_AVOID_CAMERA_S);
 	attack = false;
+
 	//敵の攻撃を遅くする
 	p->playerCom.hitObj->SetObjectTimeRate(PlayerInformation::JUST_AVOID_ENEMY_TIME_SCALE);
 	p->playerCom.hitObj->SetObjectTimeRate(0.01f);
 	Time::ChangeDeltaRate(0.01f);
 	p->playerCom.anim->SetFrame(12.0f);
 	num = 0;
+
 	//ブラースクリーンを再生する
 	blurScreen->Play(0.25f, 0.25f);
 	startTimer = 0.0f;
@@ -170,6 +181,8 @@ void PlayerJustAvoid::Finish()
 	p->playerCom.hitObj->SetObjectTimeRate();
 	if (!attack) {
 		p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
+		p->justAvoid = false;
+		p->justFeedOutTime = p->JUST_FEED_OUT_TIME;
 	}
 	
 }

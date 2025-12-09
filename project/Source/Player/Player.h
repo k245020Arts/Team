@@ -141,4 +141,9 @@ private:
 
 	const float MAX_HP = 2000;
 	float redCounter;
+	int justAvoidBlurImage;
+	float justFeedInTime;
+	float justFeedOutTime;
+	const float JUST_FEED_IN_TIME = 1.0f;
+	const float JUST_FEED_OUT_TIME = 1.0f;
 };

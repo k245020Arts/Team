@@ -506,13 +506,13 @@ float Boss::GetAttackCoolTime()
 	switch (hpRate)
 	{
 	case Boss::MAX:
-		coolTime = 1.0f;
+		coolTime = 0.3f;
 		break;
 	case Boss::EIGHT:
-		coolTime = 0.5f;
+		coolTime = 0.2f;
 		break;
 	case Boss::FIVE:
-		coolTime = 0.2f;
+		coolTime = 0.1f;
 		break;
 	case Boss::THREE:
 		coolTime = 0.0f;

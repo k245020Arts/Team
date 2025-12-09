@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 
 /// <summary>
 /// easing‚ğg‚¤‚Æ‚«‚Í‚±‚ÌŠÖ”‚ğg‚¤
@@ -129,6 +130,16 @@ namespace Easing {
         t = sinf(t * DX_PI_F / 2);
         return Lerp<T>(a, b, t);
 
+    }
+
+    template<typename T>
+    T EasingFlow(float* _counter, float _maxTime, T min, T max, std::function<T(T, T, float)> _func) {
+        if (*_counter <= 0.0f) {
+            return T();
+        }
+        *_counter = max(*_counter - Time::DeltaTimeRate(), 0.0f);
+        float rate = *_counter / _maxTime;
+        return _func(min, max, rate);
     }
 
 }

@@ -82,6 +82,7 @@ namespace ID {
 		SHADOW,
 		B_DUSH,
 		B_ROAR,
+		JUST_AVOID_BLUR,
 
 		ID_MAX,
 	};

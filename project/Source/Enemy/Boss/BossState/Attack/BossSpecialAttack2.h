@@ -19,4 +19,6 @@ private:
 	float distance;
 	bool look;
 	void AttackStart();
+
+	float turningTime;
 };

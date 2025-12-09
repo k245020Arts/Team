@@ -39,12 +39,25 @@ void BossSpecialAttack2::Update()
 		b->LookPlayer(0.09f);
 		return;
 	}
-	attackCount -= Time::DeltaTimeRate();
-	if (attackCount <= 0.0f) {
-	/*	if (b->comboFirstAttack) {
+	if (turningTime > 0.0f) {
+		turningTime -= obj->GetObjectTimeRate();
+		if (turningTime <= 0.0f) {
+			turningTime = 0.0f;
 			b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
+		}
+		b->LookPlayer(0.2f);
+		b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 0, -11000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix(), true);
+		return;
+	}
+	
+	attackCount -= obj->GetObjectTimeRate();
+	if (attackCount <= 0.0f) {
+		if (b->maxAttack > 0) {
+			
+			//look = true;
+			turningTime = 1.0f;
 			return;
-		}*/
+		}
 		b->enemyBaseComponent.anim->Play(ID::B_S_ATTACK2_STOP);
 		VECTOR3 p = b->enemyBaseComponent.physics->GetVelocity().Normalize();
 		b->enemyBaseComponent.physics->AddVelocity(p * -5000.0f, true);
@@ -77,9 +90,10 @@ void BossSpecialAttack2::Start()
 {
 	Boss* b = GetBase<Boss>();
 	EnemyStateBase::Start();
-	/*if (!b->comboFirstAttack) {
+	if (!b->comboFirstAttack) {
+		//b->enemyBaseComponent.anim->SetPlaySpeed(3.0f);
 		AttackStart();
-	}*/
+	}
 	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform);
 }
 
@@ -87,17 +101,18 @@ void BossSpecialAttack2::Finish()
 {
 	EnemyStateBase::Start();
 	Boss* b = GetBase<Boss>();
-	//if (!b->comboFirstAttack) {
+	if (b->maxAttack > 0) {
+		b->LookPlayer(1.0f);
 		b->enemyBaseComponent.physics->SetVelocity(VECTOR3(0, 0, -1000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix());
 		b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	//}
-	
+	}
 }
 
 void BossSpecialAttack2::AttackStart()
 {
 	Boss* b = GetBase<Boss>();
 	b->enemyBaseComponent.anim->Play(ID::B_S_ATTACK2);
+	//b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	attackCount = 1.5f;
 	//b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 3000, 0), false);
 	VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;

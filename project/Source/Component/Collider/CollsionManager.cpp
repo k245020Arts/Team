@@ -32,6 +32,8 @@ CollsionManager::CollsionManager()
 CollsionManager::~CollsionManager()
 {
 	delete event;
+	event = nullptr;
+
 }
 
 void CollsionManager::Update()
@@ -214,7 +216,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 	}
 
 	// ‰ðŒˆ
-	resolver.Apply(col1->GetObj()->GetTransform(), phy,true,10.0f);
+	resolver.Apply(col1->GetObj()->GetTransform(), phy,true,30.0f);
 
 
 	
