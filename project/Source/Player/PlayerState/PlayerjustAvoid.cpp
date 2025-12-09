@@ -66,7 +66,13 @@ void PlayerJustAvoid::Update()
 	//Ä¶‘¬“x‚ð’x‚­‚µ‚Ä‚¢‚é
 	if (p->playerCom.anim->GetCurrentFrame() >= 14.0f && p->playerCom.anim->GetCurrentFrame() <= 17.0f){
 		//p->playerCom.player->GetPlayerObj()->SetObjectTimeRate(0.5f);
-		Time::ChangeDeltaRate(0.1f);
+		if (p->largeJustAvoid) {
+			Time::ChangeDeltaRate(0.1f);
+		}
+		else {
+			p->playerCom.anim->SetPlaySpeed(0.5f);
+		}
+		
 	}
 	//‚»‚±‚©‚ç‘‚­‚·‚é
 	else if (p->playerCom.anim->GetCurrentFrame() >= 17.0f) {
@@ -81,7 +87,13 @@ void PlayerJustAvoid::Update()
 	}
 	if (easingCount >= 0.5f) {
 		if (attack) {
-			p->playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_ATTACK2_S);
+			if (p->largeJustAvoid) {
+				p->playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_ATTACK2_S);
+			}
+			else {
+				p->playerCom.stateManager->ChangeState(StateID::PLAYER_ATTACK1_S);
+			}
+			
 		}
 	}
 	//Žc‘œ‚ð•t‚¯‚é
@@ -121,9 +133,9 @@ void PlayerJustAvoid::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
-
+	p->largeJustAvoid = true;
 	easingCount = 0.0f;
-	Time::ChangeDeltaRate(0.4f);//¢ŠE‚ð’x‚­‚·‚é
+	
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.sound->FeedInOut(Sound_ID::PLAY_BGM,0.2f);
 
@@ -148,7 +160,20 @@ void PlayerJustAvoid::Start()
 	p->playerCom.controller->ControlVibrationStartFrame(50, 10);
 
 	//ƒJƒƒ‰‚Ì’Ç]‘¬“x‚ð’x‚­‚·‚é
-	cameraLeap = 0.02f;
+
+	//“G‚ÌUŒ‚‚ð’x‚­‚·‚é
+	if (p->largeJustAvoid) {
+		p->playerCom.hitObj->SetObjectTimeRate(0.01f);
+		Time::ChangeDeltaRate(0.4f);//¢ŠE‚ð’x‚­‚·‚é
+		cameraLeap = 0.02f;
+	}
+	else {
+		p->playerCom.hitObj->SetObjectTimeRate(0.6f);
+		Time::ChangeDeltaRate(0.6f);//¢ŠE‚ð’x‚­‚·‚é
+		cameraLeap = 0.2f;
+	}
+	
+	
 	p->playerCom.camera->CameraLeapSet(cameraLeap);
 	p->playerCom.camera->TargetSet(p->playerCom.hitObj);
 	p->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
@@ -158,10 +183,8 @@ void PlayerJustAvoid::Start()
 	p->playerCom.camera->ChangeStateCamera(StateID::JUST_AVOID_CAMERA_S);
 	attack = false;
 
-	//“G‚ÌUŒ‚‚ð’x‚­‚·‚é
-	p->playerCom.hitObj->SetObjectTimeRate(PlayerInformation::JUST_AVOID_ENEMY_TIME_SCALE);
-	p->playerCom.hitObj->SetObjectTimeRate(0.01f);
-	Time::ChangeDeltaRate(0.01f);
+	
+	//Time::ChangeDeltaRate(0.01f);
 	p->playerCom.anim->SetFrame(12.0f);
 	num = 0;
 
@@ -184,6 +207,7 @@ void PlayerJustAvoid::Finish()
 	p->justFeedOutTime = p->JUST_FEED_OUT_TIME;
 	if (!attack) {
 		p->bossThreat = true;
+		p->largeJustAvoid = false;
 	}
 	
 }

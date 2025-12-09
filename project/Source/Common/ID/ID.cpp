@@ -102,7 +102,7 @@ void ID::SetID(std::string _model, IDType _type)
 {
 	int type = (int)_type;
 	if (type < 0 && type >= (int)ID_MAX) {
-		Debug::CreateMessageBox("soundHandleSetMiss", "miss");
+		Debug::CreateMessageBox("modelHandleSetMiss", "miss");
 	}
 	modelId[type] = _model;
 }
