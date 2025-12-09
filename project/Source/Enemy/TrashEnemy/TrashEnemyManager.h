@@ -27,6 +27,8 @@ public:
 
 	//連携攻撃
 	void Cooperate(StateID::State_ID _id);
+	//敵のステートを強制的に全員変える
+	void AllChangeState(StateID::State_ID _id);
 
 private:
 	std::list<TrashEnemy*> enemies;

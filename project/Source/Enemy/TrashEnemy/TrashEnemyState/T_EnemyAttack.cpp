@@ -19,7 +19,6 @@ T_EnemyAttack::~T_EnemyAttack()
 void T_EnemyAttack::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	const float MSPEED = 60.0f;//ƒ‚[ƒVƒ‡ƒ“‚Ì‘¬“x’²®
 	e->LookTarget();
 
 	/*if (e->enemyBaseComponent.anim->IsFinish())

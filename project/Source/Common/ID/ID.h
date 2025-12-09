@@ -79,6 +79,7 @@ namespace ID {
 		TE_IDOL,
 		TE_RUN,
 		TE_ATTACK,
+		TE_ATTACK2,
 		SHADOW,
 		B_DUSH,
 		B_ROAR,

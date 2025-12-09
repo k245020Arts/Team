@@ -38,33 +38,31 @@ void TrashEnemyManager::Update()
 	if (CheckHitKey(KEY_INPUT_0))
 		CreateEnemy(VZero, 4);
 
-	if (!enemies.empty())
-	{
-		for (auto itr = enemies.begin(); itr != enemies.end(); )
-		{
-			//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
-			if ((*itr)->GetStandby())
-				counter ++;
-			//“G‘Sˆõ‚ª€”õŠ®—¹‚µ‚½‚çUŒ‚‚ÉˆÚ‚é
-			if (enemies.size() <= counter)
-				(*itr)->ChangeState(StateID::T_ENEMY_RUN_S);
+	if (enemies.empty())
+		return;
 
-			//G‹›“G‚ª€‚ñ‚Å‚½‚çlist‚©‚çíœ‚·‚é
-			if (!(*itr)->GetActive())
-			{
-				(*itr)->GetEnemyObj()->DestroyMe();
-				//Ÿ‚Ì—v‘f‚ÌƒCƒeƒŒ[ƒ^‚ª•Ô‚é
-				itr = enemies.erase(itr); 
-			}
-			else
-				++itr;
-		}
-	
-		if (enemies.size() <= counter)
+	for (auto itr = enemies.begin(); itr != enemies.end(); )
+	{
+		//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
+		if ((*itr)->GetStandby())
+			counter++;
+		//“G‘Sˆõ‚ª€”õŠ®—¹‚µ‚½‚çUŒ‚‚ÉˆÚ‚é
+		if (enemies.size() == counter)
 		{
+			AllChangeState(StateID::T_ENEMY_RUN_S);
 			counter = 0;
-			//(*itr)->isStandbyF();
+			break;
 		}
+		
+		//G‹›“G‚ª€‚ñ‚Å‚½‚çlist‚©‚çíœ‚·‚é
+		if (!(*itr)->GetActive())
+		{
+			(*itr)->GetEnemyObj()->DestroyMe();
+			//Ÿ‚Ì—v‘f‚ÌƒCƒeƒŒ[ƒ^‚ª•Ô‚é
+			itr = enemies.erase(itr);
+		}
+		else
+			++itr;
 	}
 
 	if (CheckHitKey(KEY_INPUT_8))
@@ -119,6 +117,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
 		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
 		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 0.7f, 20.0f, 30.0f);
+		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 3.0f, 20.0f, 30.0f);
 		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
 		
 		anim->Play(ID::TE_IDOL);
@@ -172,5 +171,13 @@ void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 		VECTOR3 vec = pPos - itr->GetPos();
 		VECTOR3 newVec = vec * -1;
 		itr->SetTargetPos(newVec, _id);	
+	}
+}
+
+void TrashEnemyManager::AllChangeState(StateID::State_ID _id)
+{
+	for (auto& itr : enemies)
+	{
+		itr->ChangeState(_id);
 	}
 }
