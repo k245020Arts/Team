@@ -154,6 +154,7 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::BOSS_DIE, "B_DIE", false,1.2f);
 	anim->AddFile(ID::B_ROAR, "B_ROAR", false,1.2f,30.0f,40.0f);
 	anim->AddFile(ID::B_DUSH, "B_RUN", true,1.2f,30.0f,40.0f);
+	anim->AddFile(ID::B_THREAT, "B_THREAT", false,1.2f,10.0f,70.0f);
 	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 
 

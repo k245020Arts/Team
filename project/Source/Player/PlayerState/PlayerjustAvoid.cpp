@@ -179,10 +179,11 @@ void PlayerJustAvoid::Finish()
 	p->playerCom.player->PlayerStickInput();
 	p->playerCom.camera->CameraLeapSet(0.2f);
 	p->playerCom.hitObj->SetObjectTimeRate();
+	p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
+	p->justAvoid = false;
+	p->justFeedOutTime = p->JUST_FEED_OUT_TIME;
 	if (!attack) {
-		p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
-		p->justAvoid = false;
-		p->justFeedOutTime = p->JUST_FEED_OUT_TIME;
+		p->bossThreat = true;
 	}
 	
 }

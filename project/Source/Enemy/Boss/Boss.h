@@ -26,6 +26,8 @@ public:
 	friend class BossSpecialAttack2;
 	friend class BossDie;
 	friend class BossRoar;
+	friend class BossThreat;
+	friend class BossAttackBase;
 	
 	enum HP_RATE
 	{
@@ -88,4 +90,6 @@ private:
 	float coolTime;
 
 	float attackNum;
+	Player* player;
+	bool threat;
 };

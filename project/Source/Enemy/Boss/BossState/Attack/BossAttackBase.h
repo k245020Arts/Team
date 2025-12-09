@@ -20,11 +20,15 @@ public:
 		float motionSpeed;
 		float motionMaxSpeed;
 		PlayerDamagePattern damagePattern;
+		bool flash;
 	};
 
 	
 	BossAttackBase();
 	~BossAttackBase();
+
+	void BossStart();
+	void BossFinish();
 
 	float GetHitDamage() { return damage.hitDamage; }
 	const DamagePattern& GetDamageParam() { return damage; }

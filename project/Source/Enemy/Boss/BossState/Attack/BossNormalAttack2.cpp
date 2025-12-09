@@ -38,6 +38,7 @@ void BossNormalAttack2::Update()
 	AttackSound();
 	if (boss->maxAttack <= 0) {
 		AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
+		damage.flash = true;
 	}
 
 	BossTrail(false);
@@ -51,16 +52,20 @@ void BossNormalAttack2::Start()
 {
 	Boss* boss = GetBase<Boss>();
 	EnemyStateBase::Start();
+	BossAttackBase::BossStart();
 	firstColl = true;
 	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
 	fallFrame = boss->bs->GetStatus().fallFrame;
 	boss->enemyBaseComponent.anim->SetFrame(5.0f);
+	boss->threat = false;
 }
 
 void BossNormalAttack2::Finish()
 {
 	Boss* boss = GetBase<Boss>();
 	boss->DeleteCollision();
+	BossAttackBase::BossFinish();
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	boss->threat = true;
 }

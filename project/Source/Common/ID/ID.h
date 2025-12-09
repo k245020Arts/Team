@@ -83,6 +83,7 @@ namespace ID {
 		B_DUSH,
 		B_ROAR,
 		JUST_AVOID_BLUR,
+		B_THREAT,
 
 		ID_MAX,
 	};

@@ -92,6 +92,7 @@ void BossSpecialAttack1::Update()
 	
 	BossAttackCollsion();
 	AttackFlash (ID::B_MODEL, 36, "E_AttackV");
+	damage.flash = true;
 }
 
 void BossSpecialAttack1::Draw()
@@ -102,17 +103,21 @@ void BossSpecialAttack1::Start()
 {
 	EnemyStateBase::Start();
 	Boss* b = GetBase<Boss>();
+	BossAttackBase::BossStart();
 	
 	b->enemyBaseComponent.anim->AnimEventReset();
 	firstColl = true;
 	attackStart = 15.0f;
 	firstCount = true;
 	effect = true;
+	b->threat = false;
 }
 
 void BossSpecialAttack1::Finish()
 {
 	Boss* b = GetBase<Boss>();
+	BossAttackBase::BossFinish();
 	b->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));
 	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	b->threat = false;
 }

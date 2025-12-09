@@ -157,7 +157,7 @@ void PlayerJustAvoidAttack2::Finish()
 	p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
 	PlayerAttackStateBase::Finish();
 	p->playerCom.hitObj->SetObjectTimeRate();
-	p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
+	/*p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 	p->justAvoid = false;
-	p->justFeedOutTime = p->JUST_FEED_OUT_TIME;
+	p->justFeedOutTime = p->JUST_FEED_OUT_TIME;*/
 }

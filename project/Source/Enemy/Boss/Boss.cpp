@@ -36,6 +36,7 @@
 #include "../Boss/BossState/BossStatus.h"
 #include "../Boss/BossState/BossDie.h"
 #include "../Boss/BossState/BossRoar.h"
+#include "../Boss/BossState/BossThreat.h"
 #include "../TrashEnemy/TrashEnemyManager.h"//
 
 namespace {
@@ -147,6 +148,13 @@ void Boss::Update()
 		}
 		
 	}
+	if (player->GetBossThreat()) {
+		if (threat) {
+			enemyBaseComponent.state->ChangeState(StateID::B_THREAT_S);
+			player->BossThreatFinish();
+			threat = false;
+		}
+	}
 
 }
 
@@ -159,7 +167,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state = obj->Component()->AddComponent<StateManager>();
 	enemyBaseComponent.playerObj = FindGameObjectWithTag<Object3D>("PLAYER");
 	pState = enemyBaseComponent.playerObj->Component()->GetComponent<Player>()->GetPlayerStateManager();
-
+	player = enemyBaseComponent.playerObj->Component()->GetComponent<Player>();
 	bossTransform = obj->GetTransform();
 
 	enemyBaseComponent.collider = FindGameObjects<ColliderBase>();
@@ -202,6 +210,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossSpecialAttack2>("BossSpecialAttack2", StateID::BOSS_SPECIAL_ATTACK2_S);
 	enemyBaseComponent.state->CreateState<BossDie>("BossDie", StateID::BOSS_DIE_S);
 	enemyBaseComponent.state->CreateState<BossRoar>("BossRoar", StateID::B_ROAR_S);
+	enemyBaseComponent.state->CreateState<BossThreat>("BossThreat", StateID::B_THREAT_S);
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 

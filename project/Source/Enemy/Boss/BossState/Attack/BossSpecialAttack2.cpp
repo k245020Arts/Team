@@ -90,17 +90,20 @@ void BossSpecialAttack2::Start()
 {
 	Boss* b = GetBase<Boss>();
 	EnemyStateBase::Start();
+	BossAttackBase::BossStart();
 	if (!b->comboFirstAttack) {
 		//b->enemyBaseComponent.anim->SetPlaySpeed(3.0f);
 		AttackStart();
 	}
 	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform);
+
 }
 
 void BossSpecialAttack2::Finish()
 {
 	EnemyStateBase::Start();
 	Boss* b = GetBase<Boss>();
+	BossAttackBase::BossFinish();
 	if (b->maxAttack > 0) {
 		b->LookPlayer(1.0f);
 		b->enemyBaseComponent.physics->SetVelocity(VECTOR3(0, 0, -1000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix());
@@ -112,6 +115,8 @@ void BossSpecialAttack2::AttackStart()
 {
 	Boss* b = GetBase<Boss>();
 	b->enemyBaseComponent.anim->Play(ID::B_S_ATTACK2);
+	
+	
 	//b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	attackCount = 1.5f;
 	//b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 3000, 0), false);

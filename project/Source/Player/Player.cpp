@@ -80,6 +80,7 @@ Player::Player()
 	justAvoidBlurImage = Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect",ID::JUST_AVOID_BLUR);
 	justFeedInTime = 0.0f;
 	justFeedOutTime = 0.0f;
+	bossThreat = false;
 }
 //
 //Object2D* guage = new Object2D();

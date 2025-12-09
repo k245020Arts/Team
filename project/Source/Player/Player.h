@@ -125,6 +125,9 @@ public:
 
 	bool EnemyAttackObjectHitIsPlayer();
 
+	bool GetBossThreat() { return bossThreat; }
+	void BossThreatFinish() { bossThreat = false; }
+
 private:
 	PlayerInformation::CharaComponent playerCom;
 	float size;
@@ -146,4 +149,7 @@ private:
 	float justFeedOutTime;
 	const float JUST_FEED_IN_TIME = 1.0f;
 	const float JUST_FEED_OUT_TIME = 1.0f;
+
+	bool largeJustAvoid;
+	bool bossThreat;
 };
