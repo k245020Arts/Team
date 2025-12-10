@@ -6,6 +6,7 @@
 
 T_EnemyAttack::T_EnemyAttack()
 {
+	string = Function::GetClassNameC<T_EnemyAttack>();
 	animId = ID::TE_ATTACK;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 
@@ -26,7 +27,7 @@ void T_EnemyAttack::Update()
 
 	AttackCollsion();
 	AttackSound();
-	AttackFlash(ID::E_MODEL, 11, "E_AttackV");
+	//AttackFlash(ID::E_MODEL, 35, "E_AttackV");
 	Trail();
 }
 
@@ -39,6 +40,7 @@ void T_EnemyAttack::Start()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	EnemyStateBase::Start();
 	firstColl = true;
+	e->enemyBaseComponent.anim->SetFrame(5.0f);
 	damage.hitDamage = e->eStatus->GetStatus().normalAttack1;
 }
 

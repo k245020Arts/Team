@@ -6,9 +6,10 @@
 
 CooperateAttack1::CooperateAttack1()
 {
+	string = Function::GetClassNameC<CooperateAttack1>();
 	animId = ID::TE_ATTACK2;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
-	damage.damagePattern = BossAttackBase::NO_BACK;
+	damage.damagePattern = BossAttackBase::BACK;
 
 	damage.hitDamage = 30;
 }
@@ -17,10 +18,12 @@ CooperateAttack1::~CooperateAttack1()
 {
 }
 
+
 void CooperateAttack1::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	EnemyStateBase::Start();
+	e->enemyBaseComponent.anim->SetFrame(5.0f);
 	firstColl = true;
 }
 
@@ -29,4 +32,5 @@ void CooperateAttack1::Finish()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->attackId = StateID::T_ENEMY_ATTACK_S;
 	e->speed=e->eStatus->GetStatus().runSpeed;
+	e->targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 }

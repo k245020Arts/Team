@@ -176,7 +176,7 @@ void TrashEnemy::LookTarget()
 	if (sign > DX_PI_F)
 		sign -= 2 * DX_PI_F;
 	//向くスピード(ラジアン)
-	const float LOOK_SPEED = 0.1;
+	const float LOOK_SPEED = 0.5;
 	//Playerの方をゆっくり向く
 	if (sign > LOOK_SPEED)
 		obj->GetTransform()->rotation.y += LOOK_SPEED;

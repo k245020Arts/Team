@@ -19,7 +19,7 @@ void Standby::Update()
 	
 	counter++;
 
-	if (counter == 100)
+	if (counter == 60)
 		e->isStandby = true;
 	else
 		e->isStandby = false;
