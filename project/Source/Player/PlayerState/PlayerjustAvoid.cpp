@@ -189,7 +189,7 @@ void PlayerJustAvoid::Start()
 	num = 0;
 
 	//ブラースクリーンを再生する
-	blurScreen->Play(0.25f, 0.25f);
+	blurScreen->Play(0.25f, 0.1f);
 	startTimer = 0.0f;
 }
 

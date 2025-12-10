@@ -65,10 +65,16 @@ void BossSpecialAttack2::Update()
 	}
 	//b->enemyBaseComponent.physics->AddVelocity(rotation * 10000.0f, true);
 	BossAttackCollsion();
+	
 	VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
 	VECTOR3 angle = pos - b->GetBaseObject()->GetTransform()->position;
 	distance = angle.Size();
-	b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 0, -11000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix(), true);
+	if (b->maxAttack <= 0) {
+		b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 0, -11000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix(), true);
+	}
+	else {
+		b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 0, -25000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix(), true);
+	}
 	if (!look) {
 		return;
 	}
@@ -95,6 +101,7 @@ void BossSpecialAttack2::Start()
 		//b->enemyBaseComponent.anim->SetPlaySpeed(3.0f);
 		AttackStart();
 	}
+	
 	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform);
 
 }
@@ -118,7 +125,7 @@ void BossSpecialAttack2::AttackStart()
 	
 	
 	//b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	attackCount = 1.5f;
+	
 	//b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 3000, 0), false);
 	VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
 
@@ -127,5 +134,14 @@ void BossSpecialAttack2::AttackStart()
 	firstColl = true;
 	look = true;
 	distance = pos.Size();
+
+	if (b->maxAttack <= 0) {
+		AttackBeforeFrash(ID::B_MODEL, 36, "E_AttackV");
+		damage.flash = true;
+		attackCount = 1.5f;
+	}
+	else {
+		attackCount = 0.7f;
+	}
 	
 }

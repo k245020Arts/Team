@@ -25,7 +25,7 @@ BlurScreen::BlurScreen()
 	
 	vignetteGraph = Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::SCREEN_BLUR_IMAGE);
 	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_DOWN_SCALE, 4);
-	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_GAUSS, 256, 32);
+	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_GAUSS, 256, 128);
 	
 }
 
@@ -118,7 +118,7 @@ void BlurScreen::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)(alpha * 1.2f));
 	if (vignetteGraph != -1) {
 		//âÊëúÇ™ëÂÇ´Ç¢ÇÃÇ≈è≠Çµí[Ç¡Ç±Ç©ÇÁÇ®Ç¢ÇƒÇ¢ÇÈÅB
-		DrawExtendGraph(-1500.0f, -1500.0f, Screen::WIDTH * 10, Screen::HEIGHT * 10,vignetteGraph, true);
+		DrawExtendGraph(-2000.0f, -2000.0f, Screen::WIDTH * 11, Screen::HEIGHT * 11,vignetteGraph, true);
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

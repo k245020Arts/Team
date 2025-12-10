@@ -47,7 +47,7 @@ namespace {
 		{StateID::BOSS_NORMAL_ATTACK1_S, StateID::BOSS_NORMAL_ATTACK2_S, StateID::BOSS_NORMAL_ATTACK3_S},
 		{StateID::BOSS_NORMAL_ATTACK4_S, StateID::BOSS_NORMAL_ATTACK5_S, StateID::BOSS_NORMAL_ATTACK6_S},
 		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_ATTACK1_S },
-		{StateID::BOSS_SPECIAL_ATTACK2_S, StateID::BOSS_SPECIAL_ATTACK2_S }
+		{StateID::BOSS_SPECIAL_ATTACK2_S, StateID::BOSS_SPECIAL_ATTACK2_S, StateID::BOSS_SPECIAL_ATTACK2_S,StateID::BOSS_SPECIAL_ATTACK2_S}
 	};
 }
 
@@ -120,8 +120,11 @@ void AttackSorting::Start()
 	animId = ID::B_IDOL;
 	EnemyStateBase::Start();
 	Boss* b = GetBase<Boss>();
-	if (b->maxAttack != -1) {
+	if (b->maxAttack >= 0) {
 		b->maxAttack--;
+		if (b->maxAttack == -1) {
+			NormalAttackSelect();
+		}
 		b->comboFirstAttack = false;
 		return;
 	}
@@ -150,7 +153,7 @@ void AttackSorting::Start()
 		VECTOR3 dist = b->obj->GetTransform()->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 		float size = dist.Size();
 		if (size >= 5000.0f) {
-			rand[2] += 2.0f;
+			rand[3] += 2.0f;
 		}
 		kind = Random::GetWeightedIndex(rand);
 		b->maxAttack = comboOrder[kind].size() - 1;
