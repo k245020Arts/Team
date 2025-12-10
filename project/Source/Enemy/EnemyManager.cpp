@@ -132,7 +132,7 @@ void EnemyManager::CreateBoss()
 	Boss* b = boss->Component()->AddComponent<Boss>();
 
 	Physics* physics = boss->Component()->AddComponent<Physics>();
-	physics->Start(VECTOR3(0.0f, -1500.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));
+	physics->Start(VECTOR3(0.0f, -1500.0f, 0.0f), BossInformation::BASE_FIRCTION);
 
 	Animator* anim = boss->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL), 1);

@@ -13,6 +13,7 @@ BossNormalAttack5::BossNormalAttack5()
 	animId = ID::B_N_ATTACK5;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	damage.damagePattern = BossAttackBase::NO_BACK;
+	oneMove = false;
 }
 
 BossNormalAttack5::~BossNormalAttack5()
@@ -25,17 +26,17 @@ void BossNormalAttack5::Update()
 	EnemyStateBase::Update();
 	if (boss->enemyBaseComponent.anim->GetMaxFrame() - fallFrame <= boss->enemyBaseComponent.anim->GetCurrentFrame())
 	{
-		if (boss->maxAttack != -1)
-			boss->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
-		else
-			boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+		boss->BossAttackStateChange();
 	}
 	BossAttackCollsion();
 	boss->LookPlayer();
-	if (!boss->enemyBaseComponent.anim->AnimEventCan()) {
-		VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
-		normal = dis.Normalize();
-		boss->enemyBaseComponent.physics->AddVelocity(normal * 6500.0f, true);
+	if (boss->enemyBaseComponent.anim->EventStartTime(animId) - boss->enemyBaseComponent.anim->GetCurrentFrame() <= 6.0f) {
+		if (oneMove) {
+			VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
+			normal = dis.Normalize();
+			boss->enemyBaseComponent.physics->AddVelocity(normal * 4500.0f, false);
+			oneMove = false;
+		}
 	}
 	AttackSound();
 	if (boss->maxAttack <= 0) {
@@ -59,11 +60,12 @@ void BossNormalAttack5::Start()
 	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
 	keepPlayerPosition = boss->enemyBaseComponent.playerObj->GetTransform()->position;
 	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
-	VECTOR3 dis = keepPlayerPosition - boss->bossTransform->position;
+	/*VECTOR3 dis = keepPlayerPosition - boss->bossTransform->position;
 	normal = dis.Normalize();
-	boss->enemyBaseComponent.physics->AddVelocity(normal * 2500.0f, false);
+	boss->enemyBaseComponent.physics->AddVelocity(normal * 2500.0f, false);*/
 	fallFrame = 0;
 	boss->threat = false;
+	oneMove = true;
 	/*if (boss->comboFirstAttack)
 		boss->enemyBaseComponent.anim->SetFrame(0.0f);
 	else
@@ -78,4 +80,5 @@ void BossNormalAttack5::Finish()
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	boss->threat = true;
+	oneMove = false;
 }

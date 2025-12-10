@@ -25,20 +25,21 @@ void BossNormalAttack6::Update()
 	EnemyStateBase::Update();
 	if (boss->enemyBaseComponent.anim->GetMaxFrame() - fallFrame <= boss->enemyBaseComponent.anim->GetCurrentFrame())
 	{
-		if (boss->maxAttack != -1)
-			boss->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
-		else
-			boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+		boss->BossAttackStateChange();
 	}
 	BossAttackCollsion();
-	boss->LookPlayer();
+	//boss->LookPlayer();
 	if (!boss->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
-			VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
-			normal = dis.Normalize();
-			boss->enemyBaseComponent.physics->AddVelocity(normal * 6500.0f, true);
+			/*VECTOR3 dis = boss->bossTransform->position - keepPlayerPosition ;
+			normal = dis.Normalize();*/
+			boss->enemyBaseComponent.physics->AddVelocity(normal * -6500.0f, true);
+			
 		}
 	
+	}
+	if (boss->enemyBaseComponent.anim->EventFinishTime(animId) - boss->enemyBaseComponent.anim->GetCurrentFrame() <= 5.0f) {
+		boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
 	}
 	AttackSound();
 	if (boss->maxAttack <= 0) {
@@ -62,9 +63,10 @@ void BossNormalAttack6::Start()
 	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
 	keepPlayerPosition = boss->enemyBaseComponent.playerObj->GetTransform()->position;
 	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
-	VECTOR3 dis = keepPlayerPosition - boss->bossTransform->position;
+	VECTOR3 dis = boss->bossTransform->position - keepPlayerPosition ;
 	normal = dis.Normalize();
-	boss->enemyBaseComponent.physics->AddVelocity(normal * 1500.0f, false);
+	boss->bossTransform->rotation.y = atan2f(dis.x, dis.z);
+	boss->enemyBaseComponent.physics->AddVelocity(normal * -1500.0f, false);
 	fallFrame = 0.0f;
 	boss->threat = false;
 }
@@ -77,4 +79,5 @@ void BossNormalAttack6::Finish()
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	boss->threat = true;
+	boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
 }

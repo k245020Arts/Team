@@ -69,6 +69,9 @@ public:
 	void MoveBoss(float _speed,float _max);
 	float GetAttackCoolTime();
 
+	void BossAttackStateChange();
+	bool RunChangeAttack();
+
 private:
 	Boss* boss;
 	BossStatus* bs;
@@ -92,4 +95,7 @@ private:
 	float attackNum;
 	Player* player;
 	bool threat;
+
+	float noAttackChangeCounter;
+	int alotAttack;
 };

@@ -53,4 +53,6 @@ namespace BossInformation {
 	//ç≈èâÇÃÉ|ÉWÉVÉáÉì
 	const VECTOR3 BASE_POS = VECTOR3(500, 0, 0);
 
+	const VECTOR3 BASE_FIRCTION = VECTOR3(3000.0f, 3000.0f, 3000.0f);
+
 };

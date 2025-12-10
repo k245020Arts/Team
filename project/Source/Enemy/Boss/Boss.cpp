@@ -38,6 +38,7 @@
 #include "../Boss/BossState/BossRoar.h"
 #include "../Boss/BossState/BossThreat.h"
 #include "../TrashEnemy/TrashEnemyManager.h"//
+#include "../../Common/Random.h"
 
 namespace {
 	const std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable = {
@@ -104,6 +105,8 @@ Boss::Boss()
 	maxAttack = -1;
 	comboFirstAttack = false;
 	roaf = false;
+	noAttackChangeCounter = 0.0f;
+	alotAttack = 0;
 }
 
 Boss::~Boss()
@@ -155,7 +158,9 @@ void Boss::Update()
 			threat = false;
 		}
 	}
-
+	if (noAttackChangeCounter > 0.0f) {
+		noAttackChangeCounter -= Time::DeltaTimeRate();
+	}
 }
 
 void Boss::Draw()
@@ -530,4 +535,40 @@ float Boss::GetAttackCoolTime()
 		break;
 	}
 	return coolTime;
+}
+
+void Boss::BossAttackStateChange()
+{
+	if (maxAttack != -1) {
+		enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
+	}
+	else {
+		if (RunChangeAttack()) {
+			enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
+			alotAttack++;
+			if (alotAttack >= 3) {
+				noAttackChangeCounter = Random::GetInt(1,2) * 0.5f;
+				alotAttack = 0;
+				enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+			}
+		}
+		else {
+			enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+			alotAttack = 0;
+		}
+		
+	}
+}
+
+bool Boss::RunChangeAttack()
+{
+	bool result = false;
+	if (noAttackChangeCounter > 0.0f) {
+		return result;
+	}
+	VECTOR3 targetVec = bossTransform->position - enemyBaseComponent.playerObj->GetTransform()->position;
+	if (targetVec.Size() <= bs->GetStatus().range) {
+		result = true;
+	}
+	return result;
 }

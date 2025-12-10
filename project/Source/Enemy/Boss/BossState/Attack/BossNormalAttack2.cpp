@@ -24,10 +24,7 @@ void BossNormalAttack2::Update()
 	Boss* boss = GetBase<Boss>();
 	if (boss->enemyBaseComponent.anim->GetMaxFrame() - fallFrame <= boss->enemyBaseComponent.anim->GetCurrentFrame())
 	{
-		if (boss->maxAttack != -1)
-			boss->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
-		else
-			boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+		boss->BossAttackStateChange();
 	}
 	BossAttackCollsion();
 	if (boss->enemyBaseComponent.anim->AnimEventCan()) {

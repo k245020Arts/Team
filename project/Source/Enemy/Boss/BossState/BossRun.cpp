@@ -54,8 +54,9 @@ void BossRun::Update()
 	if (targetVec.Size() >= bs->GetStatus().chaseRange)
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_IDOL_S);
 	//プレイヤーに近づいたら攻撃に移行
-	if (targetVec.Size() <= bs->GetStatus().range)
+	if (b->RunChangeAttack()) {
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_COOL_TIME_S);
+	}
 }
 
 void BossRun::Draw()

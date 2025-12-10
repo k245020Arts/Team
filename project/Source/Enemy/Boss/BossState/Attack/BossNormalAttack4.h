@@ -17,4 +17,5 @@ private:
 	float averageSpeed;
 	VECTOR3 keepPlayerPosition;
 	VECTOR3 normal;
+	bool oneMove;
 };

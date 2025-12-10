@@ -25,10 +25,7 @@ void BossSpecialAttack2::Update()
 	EnemyStateBase::Update();
 	if (b->enemyBaseComponent.anim->IsFinish()) {
 		if (b->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(ID::B_S_ATTACK2_STOP)) {
-			if (b->maxAttack != -1)
-				b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
-			else
-				b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+			b->BossAttackStateChange();
 		}
 		else {
 			
@@ -70,10 +67,10 @@ void BossSpecialAttack2::Update()
 	VECTOR3 angle = pos - b->GetBaseObject()->GetTransform()->position;
 	distance = angle.Size();
 	if (b->maxAttack <= 0) {
-		b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 0, -11000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix(), true);
+		b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 0, -15000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix(), true);
 	}
 	else {
-		b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 0, -25000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix(), true);
+		b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 0, -15000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix(), true);
 	}
 	if (!look) {
 		return;
@@ -114,8 +111,9 @@ void BossSpecialAttack2::Finish()
 	if (b->maxAttack > 0) {
 		b->LookPlayer(1.0f);
 		b->enemyBaseComponent.physics->SetVelocity(VECTOR3(0, 0, -1000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix());
-		b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+		
 	}
+	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 }
 
 void BossSpecialAttack2::AttackStart()
@@ -138,10 +136,12 @@ void BossSpecialAttack2::AttackStart()
 	if (b->maxAttack <= 0) {
 		AttackBeforeFrash(ID::B_MODEL, 36, "E_AttackV");
 		damage.flash = true;
-		attackCount = 1.5f;
+		attackCount = 1.0f;
+		b->enemyBaseComponent.anim->SetPlaySpeed(2.0f);
 	}
 	else {
-		attackCount = 0.7f;
+		attackCount = 1.0f;
+		b->enemyBaseComponent.anim->SetPlaySpeed(2.0f);
 	}
 	
 }

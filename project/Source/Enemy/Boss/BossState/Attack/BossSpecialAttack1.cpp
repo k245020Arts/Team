@@ -66,13 +66,7 @@ void BossSpecialAttack1::Update()
 		}
 		
 		if (b->enemyBaseComponent.anim->IsFinish()) {
-			if (b->maxAttack != -1)
-				b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
-			else
-				b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
-
-			
-			
+			b->BossAttackStateChange();
 		}
 	}
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= b->enemyBaseComponent.anim->EventFinishTime(animId)) {

@@ -33,7 +33,7 @@ void BossNormalAttack3::Update()
 	//b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionSpeed);
 
 	if (b->enemyBaseComponent.anim->IsFinish())
-		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+		b->BossAttackStateChange();
 
 	BossAttackCollsion();
 	AttackSound();
