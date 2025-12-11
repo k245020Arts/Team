@@ -56,7 +56,7 @@ void Camera::Update()
 	else if (CheckHitKey(KEY_INPUT_7) && !b)
 		b = true;
 	if (b == true)
-		a = VECTOR3(0, 6000, 0);
+		a = VECTOR3(0, 4000, 0);
 	else
 		a = VZero;
 	cameraComponent.enemyManager->NearEnemyAlpha(cameraComponent.cameraTransform->position);

@@ -38,9 +38,6 @@ TrashEnemyManager::~TrashEnemyManager()
 
 void TrashEnemyManager::Update()
 {
-	if (CheckHitKey(KEY_INPUT_0))
-		CreateEnemy(VZero, 4);
-
 	if (enemies.empty())
 		return;
 
@@ -67,9 +64,6 @@ void TrashEnemyManager::Update()
 		else
 			++itr;
 	}
-
-	if (CheckHitKey(KEY_INPUT_8))
-		Cooperate(StateID::COOPERATEATTACK1);
 }
 
 void TrashEnemyManager::Draw()
@@ -160,6 +154,12 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 void TrashEnemyManager::ImguiDraw()
 {
     ImGui::Begin("TrashEnemyManager");
+
+	if (ImGui::Button("enemySpwn"))
+		CreateEnemy(VZero, 4);
+	if (ImGui::Button("ack1"))
+		Cooperate(StateID::COOPERATEATTACK1);
+
 	for (auto& itr : enemies)
 	{
 		//ImGui::Text("enemiesGetStandby: %d", itr->GetStandby());
