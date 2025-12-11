@@ -12,5 +12,10 @@ public:
 	void Start()override;
 	void Finish()override;
 private:
+	void NormalMove();
+	void RotateMove(int _index);
+
+	int aiMove;
 	int counter;
+	float angle;
 };

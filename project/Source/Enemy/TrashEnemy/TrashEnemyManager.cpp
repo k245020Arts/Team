@@ -30,6 +30,8 @@ TrashEnemyManager::TrashEnemyManager()
 
 	comboRequest = false;
 	counter = 0;
+	attackCounter = 0;
+	standbyCounter = 0;
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -40,17 +42,25 @@ void TrashEnemyManager::Update()
 {
 	if (enemies.empty())
 		return;
-
+	counter++;
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
+		if (counter == 200 && (*itr)->GetNumber()==attackCounter)
+		{
+			(*itr)->AttackON();
+			counter = 0;
+			attackCounter++;
+			if (attackCounter >= enemies.size())
+				attackCounter = 0;
+		}
 		//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
 		if ((*itr)->GetStandby())
-			counter++;
+			standbyCounter++;
 		//“G‘Sˆõ‚ª€”õŠ®—¹‚µ‚½‚çUŒ‚‚ÉˆÚ‚é
-		if (enemies.size() == counter)
+		if (enemies.size() == standbyCounter)
 		{
 			AllChangeState(StateID::T_ENEMY_RUN_S);
-			counter = 0;
+			standbyCounter = 0;
 			break;
 		}
 		
@@ -136,7 +146,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
         float rangeX = GetRand(R_MAX * 2) - R_MAX;
 		float rangeY = GetRand(R_MAX * 2) - R_MAX;
         VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
-        t->CreateTrashEnemy(_pos + pos);
+        t->CreateTrashEnemy(_pos + pos,i);
 		//hp•\Ž¦
 		Object2D* guage = new Object2D();
 

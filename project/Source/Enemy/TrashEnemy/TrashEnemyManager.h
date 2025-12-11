@@ -37,4 +37,6 @@ private:
 
 	bool comboRequest;
 	int counter;
+	int attackCounter;
+	int standbyCounter;
 };

@@ -13,5 +13,5 @@ public:
 	void Finish()override;
 
 private:
-
+	float counter;
 };
