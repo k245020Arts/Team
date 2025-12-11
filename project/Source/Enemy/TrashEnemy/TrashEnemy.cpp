@@ -308,7 +308,8 @@ void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 	speed = eStatus->GetStatus().cooperateSoeed;
-	attackId = StateID::T_ENEMY_STANDBY;
+	isCooperateAtk = true;
+	//attackId = StateID::T_ENEMY_STANDBY;
 }
 
 void TrashEnemy::ChangeState(StateID::State_ID _id)

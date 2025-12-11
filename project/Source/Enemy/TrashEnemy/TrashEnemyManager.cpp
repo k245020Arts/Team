@@ -156,7 +156,7 @@ void TrashEnemyManager::ImguiDraw()
     ImGui::Begin("TrashEnemyManager");
 
 	if (ImGui::Button("enemySpwn"))
-		CreateEnemy(VZero, 4);
+		CreateEnemy(VZero, 1);
 	if (ImGui::Button("ack1"))
 		Cooperate(StateID::COOPERATEATTACK1);
 

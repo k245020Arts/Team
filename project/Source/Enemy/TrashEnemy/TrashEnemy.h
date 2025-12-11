@@ -69,6 +69,8 @@ private:
 	bool active;
 	//‚Ç‚±‚ÉŒü‚­‚©
 	VECTOR3 targetPos;
+	//˜AŒgUŒ‚‚Ìó‘Ô
+	bool isCooperateAtk;
 	//˜AŒgUŒ‚‚Ì€”õ‚ª‚Å‚«‚Ä‚é‚©
 	bool isStandby;
 

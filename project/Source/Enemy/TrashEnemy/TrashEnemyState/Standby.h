@@ -12,5 +12,14 @@ public:
 	void Start()override;
 	void Finish()override;
 private:
+	void NormalMove();
+	void RotateMove(float index);
+	VECTOR3 vec;
+	VECTOR3 velocity;
+	VECTOR3 pPos;
+	float targetDirection;
+
+	int aiMove;
+	bool acquisition;
 	int counter;
 };
