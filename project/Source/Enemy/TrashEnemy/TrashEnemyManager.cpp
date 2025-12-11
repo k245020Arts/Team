@@ -163,6 +163,7 @@ void TrashEnemyManager::ImguiDraw()
 	for (auto& itr : enemies)
 	{
 		//ImGui::Text("enemiesGetStandby: %d", itr->GetStandby());
+		//ImGui::RadioButton("enemy", &debugButton, 0);
 	}
 
     ImGui::End();
