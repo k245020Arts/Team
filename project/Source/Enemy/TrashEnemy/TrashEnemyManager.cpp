@@ -159,13 +159,13 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 
 void TrashEnemyManager::ImguiDraw()
 {
-    ImGui::Begin("TrashEnemyManager");
-	for (auto& itr : enemies)
-	{
-		//ImGui::Text("enemiesGetStandby: %d", itr->GetStandby());
-	}
+ //   ImGui::Begin("TrashEnemyManager");
+	//for (auto& itr : enemies)
+	//{
+	//	//ImGui::Text("enemiesGetStandby: %d", itr->GetStandby());
+	//}
 
-    ImGui::End();
+ //   ImGui::End();
 }
 
 void TrashEnemyManager::Cooperate(StateID::State_ID _id)

@@ -68,6 +68,8 @@ void PlayerJustAvoid::Update()
 		//p->playerCom.player->GetPlayerObj()->SetObjectTimeRate(0.5f);
 		if (p->largeJustAvoid) {
 			Time::ChangeDeltaRate(0.1f);
+			p->playerCom.anim->SetPlaySpeed(2.0f);
+			//Time::ChangeDeltaRate(0.1f);
 		}
 		else {
 			p->playerCom.anim->SetPlaySpeed(0.5f);
@@ -163,9 +165,13 @@ void PlayerJustAvoid::Start()
 
 	//“G‚ÌUŒ‚‚ð’x‚­‚·‚é
 	if (p->largeJustAvoid) {
-		p->playerCom.hitObj->SetObjectTimeRate(0.01f);
-		Time::ChangeDeltaRate(0.4f);//¢ŠE‚ð’x‚­‚·‚é
+		p->playerCom.hitObj->SetObjectTimeRate(0.8f);
+		Time::ChangeDeltaRate(0.6f);//¢ŠE‚ð’x‚­‚·‚é
 		cameraLeap = 0.02f;
+
+		//p->playerCom.hitObj->SetObjectTimeRate(0.01f);
+		//Time::ChangeDeltaRate(0.4f);//¢ŠE‚ð’x‚­‚·‚é
+		//cameraLeap = 0.02f;
 	}
 	else {
 		p->playerCom.hitObj->SetObjectTimeRate(0.6f);
