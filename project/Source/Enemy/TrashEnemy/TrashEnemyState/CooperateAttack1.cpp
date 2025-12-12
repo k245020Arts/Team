@@ -34,4 +34,5 @@ void CooperateAttack1::Finish()
 	e->speed=e->eStatus->GetStatus().runSpeed;
 	e->targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	e->isCooperateAtk = false;
+	e->DeleteCollision();
 }
