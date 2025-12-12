@@ -30,7 +30,7 @@ void T_EnemyAttack::Update()
 		{
 			e->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 			e->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
-		}				
+		}			
 	}
 
 	if (e->enemyBaseComponent.anim->IsFinish())

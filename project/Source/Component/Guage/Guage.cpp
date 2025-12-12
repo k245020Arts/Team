@@ -19,7 +19,9 @@ Guage::Guage()
 
 Guage::~Guage()
 {
-
+	edge = nullptr;
+	guage = nullptr;
+	hp = nullptr;
 }
 
 void Guage::Update()
@@ -33,7 +35,6 @@ void Guage::Update()
 
 		VECTOR headPos = VAdd(worldPos,plus);
 
-		// ‡B 3D -> 2D•ÏŠ·
 		VECTOR3 screenPos = VECTOR3(0,0,0);
 		screenPos = ConvWorldPosToScreenPos(headPos);
 		obj->GetTransform()->position = screenPos;

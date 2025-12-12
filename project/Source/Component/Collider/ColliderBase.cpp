@@ -7,6 +7,9 @@ ColliderBase::ColliderBase()
 
 ColliderBase::~ColliderBase()
 {
+	if (collTag == CollsionInformation::ENEMY) {
+		int a = 0;
+	}
 	delete collTransform;
 	CollsionManager* coll = FindGameObject<CollsionManager>();
 	coll->RemoveCollList(this);

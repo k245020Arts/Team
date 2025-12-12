@@ -53,8 +53,8 @@ public:
 		{
 			CollsionInfo info = CharaBase::CollsionInstant<T>(_shape, _trans);
 			info.tag = CollsionInformation::Tag::E_ATTACK;
-			//collName = "e_attack"
-			attackColl->CollsionAdd(info, _trans, "e_attack");
+			collName = "e_attack";
+			attackColl->CollsionAdd(info, _trans, collName);
 		};
 		return static_cast<T*>(attackColl);
 	}
