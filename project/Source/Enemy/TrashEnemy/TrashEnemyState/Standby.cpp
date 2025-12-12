@@ -20,12 +20,10 @@ void Standby::Update()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->LookTarget();
 
-	v = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
-	
+	vec = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
 	if (!e->isCooperateAtk)
 	{
-		if (v.Size() <= e->eStatus->GetStatus().atkRang && counter == 0)
-
+		if (vec.Size() <= e->eStatus->GetStatus().atkRang && counter == 0)
 		{
 			float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
 
@@ -52,7 +50,7 @@ void Standby::Update()
 			e->isStandby = false;
 	}
 
-	if (v.Size() >= e->eStatus->GetStatus().chaseRange)
+	if (vec.Size() >= e->eStatus->GetStatus().chaseRange)
 		e->ChangeState(StateID::T_ENEMY_RUN_S);
 }
 
@@ -63,11 +61,11 @@ void Standby::Draw()
 void Standby::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	v = e->GetPos() - e->enemyBaseComponent.playerObj->GetTransform()->position;
+	vec = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
 	
-	angle = atan2f(v.z, v.x);
+	angle = -atan2f(vec.z, vec.x);
 
-	RANGE = e->eStatus->GetStatus().range;
+	range = e->eStatus->GetStatus().range;
 
 	if (e->isCooperateAtk) 
 		e->NextId = StateID::COOPERATEATTACK1; 
@@ -95,14 +93,15 @@ void Standby::NormalMove()
 {
 	//TrashEnemy* e = GetBase<TrashEnemy>(); 
 	if (aiMove == 0) 
-		aiMove = 1 + GetRand(1); 
+		aiMove = 1 + GetRand(1);
+
 	if (aiMove == 1) 
 		RotateMove(1); 
 	else if (aiMove == 2) 
 		RotateMove(-1); 
 }
 
-void Standby::RotateMove(int index)
+void Standby::RotateMove(int rotDir)
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
@@ -111,12 +110,12 @@ void Standby::RotateMove(int index)
 	VECTOR3 enemyPos = e->GetPos();
 
 	// 円運動のための角度を進める
-	angle += 0.005f * index;
+	angle += 0.5f * DegToRad * rotDir;
 
 	// プレイヤー中心の円周上の位置を計算
 	VECTOR3 newPos;
-	newPos.x = pPos.x + cosf(angle) * RANGE * 0.5;
-	newPos.z = pPos.z + sinf(angle) * RANGE * 0.5;
+	newPos.x = pPos.x + cosf(angle) * range;
+	newPos.z = pPos.z + sinf(angle) * range;
 	//newPos.y = enemyPos.y;
 
 	// 移動

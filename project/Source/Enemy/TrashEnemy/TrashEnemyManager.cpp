@@ -53,6 +53,9 @@ void TrashEnemyManager::Update()
 			if (attackCounter >= enemies.size())
 				attackCounter = 0;
 		}
+		if ((*itr)->GetNumber() > enemies.size())
+			(*itr)->AddAttackID(-1);
+
 		//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
 		if ((*itr)->GetStandby())
 			standbyCounter++;

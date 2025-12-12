@@ -45,6 +45,7 @@ public:
 
 	void isStandbyF() { isStandby = false; }
 	void AttackON() { isAttack = true; }
+	void AddAttackID(int index);
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)

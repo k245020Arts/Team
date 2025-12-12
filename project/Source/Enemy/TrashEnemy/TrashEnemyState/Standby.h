@@ -15,12 +15,12 @@ private:
 	void NormalMove();
 	void RotateMove(int _index);
 
-	VECTOR3 v;
+	VECTOR3 vec;
 	VECTOR3 pPos;
 
 	int aiMove;
 	int counter;
 	float angle;
-	float RANGE;
+	float range;
 	bool isBach;
 };

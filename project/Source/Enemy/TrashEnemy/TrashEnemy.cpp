@@ -320,6 +320,11 @@ void TrashEnemy::ChangeState(StateID::State_ID _id)
 	enemyBaseComponent.state->ChangeState(_id);
 }
 
+void TrashEnemy::AddAttackID(int index)
+{
+	number += index;
+}
+
 void TrashEnemy::Move(float _speed, float _max)
 {
 	VECTOR3 pos = GetBaseObject()->GetTransform()->position;
