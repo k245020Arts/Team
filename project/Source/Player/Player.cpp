@@ -260,30 +260,31 @@ void Player::Start(Object3D* _obj)
 
 void Player::Move(float _speed, float _speedMax)
 {
-	if (CheckHitKey(KEY_INPUT_RIGHT)) {
-		//VECTOR3 power = com.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
-		//if (power.Size() <= 1.0f) {
-		playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
-		//}
+	//if (CheckHitKey(KEY_INPUT_RIGHT)) {
+	//	//VECTOR3 power = com.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
+	//	//if (power.Size() <= 1.0f) {
+	//	playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
+	//	//}
 
-	}
-	else if (CheckHitKey(KEY_INPUT_LEFT)) {
+	//}
+	PlayerStickInput();
+	if (CheckHitKey(KEY_INPUT_A)) {
 		//VECTOR3 power = com.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
 		//if (power.Size() >= -1.0f) {
-		playerCom.physics->AddVelocity(VECTOR3(-50.0f, 0.0f, 0.0f), false);
+		walkAngle.x = -1.0f;
 		//}
 	}
-	else if (CheckHitKey(KEY_INPUT_UP)) {
-		playerCom.physics->AddVelocity(VECTOR3(0.0f, 0.0f, 50.0f), false);
+	else if (CheckHitKey(KEY_INPUT_W)) {
+		walkAngle.z = 1.0f;
 	}
-	else if (CheckHitKey(KEY_INPUT_DOWN)) {
-		playerCom.physics->AddVelocity(VECTOR3(0.0f, 0.0f, -50.0f), false);
+	else if (CheckHitKey(KEY_INPUT_S)) {
+		walkAngle.z = -1.0f;
 	}
-	if (CheckHitKey(KEY_INPUT_SPACE)) {
-		playerCom.physics->SetVelocity(VGet(0.0f, 300.0f, 0.0f));
+	else if (CheckHitKey(KEY_INPUT_D)) {
+		walkAngle.x = 1.0f;
 	}
 
-	PlayerStickInput();
+	
 	std::shared_ptr<PlayerStateBase> pB = playerCom.stateManager->GetState<PlayerStateBase>();
 	
 	//スティックの傾きの量が少なかったら移動しない
@@ -572,7 +573,6 @@ void Player::AvoidFinishState()
 void Player::DrawTrail()
 {
 	DrawTrail(VECTOR3(-23, -4, -200), VECTOR3(23, 4, 16), 0.0f, 0.0f, 255.0f, 100.0f, 28, 0.25f);
-	
 }
 
 void Player::DrawTrail(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, float index, float _time)

@@ -78,5 +78,5 @@ void BossNormalAttack4::Finish()
 	BossAttackBase::BossFinish();
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	boss->threat = true;
+	//boss->threat = true;
 }

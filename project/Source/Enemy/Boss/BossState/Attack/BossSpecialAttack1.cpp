@@ -113,5 +113,5 @@ void BossSpecialAttack1::Finish()
 	BossAttackBase::BossFinish();
 	b->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));
 	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	b->threat = false;
+	//b->threat = false;
 }

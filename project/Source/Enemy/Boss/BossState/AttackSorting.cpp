@@ -40,8 +40,8 @@ namespace {
 	const std::vector<std::vector<double>> comboAttackParam{
 		{ 1.0,0.5,0.0,0.0},
 		{ 0.8,0.7,0.2,0.0},
-		{ 0.5,1.0,0.5,0.5},
-		{ 0.2,0.5,0.7,0.5},
+		{ 0.5,1.0,0.5,0.1},
+		{ 0.2,0.5,0.7,0.1},
 	};
 	const std::vector<std::vector<StateID::State_ID>> comboOrder{
 		{StateID::BOSS_NORMAL_ATTACK1_S, StateID::BOSS_NORMAL_ATTACK2_S, StateID::BOSS_NORMAL_ATTACK3_S},
