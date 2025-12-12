@@ -96,19 +96,19 @@ void FreeCamera::StickMove()
 {
 	Camera* c = GetBase<Camera>();
 	//スティック移動
-	if (c->cameraComponent.control->GetStickInput().rightStick.x >= 0.3f) {
+	if (c->cameraComponent.control->GetStickInput().rightStick.x >= 0.3f || CheckHitKey(KEY_INPUT_RIGHT)) {
 		c->cameraComponent.cameraTransform->rotation.y += 180.0f * Time::DeltaTimeRate() * DegToRad;
 	}
-	if (c->cameraComponent.control->GetStickInput().rightStick.x <= -0.3f) {
+	if (c->cameraComponent.control->GetStickInput().rightStick.x <= -0.3f || CheckHitKey(KEY_INPUT_LEFT)) {
 		c->cameraComponent.cameraTransform->rotation.y -= 180.0f * Time::DeltaTimeRate() * DegToRad;
 	}
-	if (c->cameraComponent.control->GetStickInput().rightStick.y >= 0.3f) {
+	if (c->cameraComponent.control->GetStickInput().rightStick.y >= 0.3f || CheckHitKey(KEY_INPUT_UP)) {
 		if (c->cameraComponent.cameraTransform->rotation.x >= -50.0f * DegToRad) {
 			c->cameraComponent.cameraTransform->rotation.x -= 180.0f * Time::DeltaTimeRate() * DegToRad;
 		}
 
 	}
-	if (c->cameraComponent.control->GetStickInput().rightStick.y <= -0.3f) {
+	if (c->cameraComponent.control->GetStickInput().rightStick.y <= -0.3f || CheckHitKey(KEY_INPUT_DOWN)) {
 		if (c->cameraComponent.cameraTransform->rotation.x <= 70.0f * DegToRad) {
 			c->cameraComponent.cameraTransform->rotation.x += 180.0f * Time::DeltaTimeRate() * DegToRad;
 		}

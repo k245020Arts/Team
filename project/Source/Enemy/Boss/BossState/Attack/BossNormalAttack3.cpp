@@ -78,5 +78,5 @@ void BossNormalAttack3::Finish()
 	if (boss->maxAttack == 0)
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.2f);
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	boss->threat = true;
+	//boss->threat = true;
 }

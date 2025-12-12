@@ -549,9 +549,6 @@
     <ClInclude Include="Library\MemoryCount.h">
       <Filter>Library</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Common\BlurScreen.h">
-      <Filter>Common\BlurScreen</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Common\Debug\Debug.h">
       <Filter>Common\Debug</Filter>
     </ClInclude>
@@ -983,6 +980,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossState\BossThreat.h">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Common\BlurScreen.h">
+      <Filter>Common\BlurScreen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

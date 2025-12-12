@@ -30,7 +30,8 @@ Animator::~Animator()
     {
         if (inf.second.hModel > 0)
         {
-            MV1DeleteModel(inf.second.hModel);
+
+            /*MV1DeleteModel(inf.second.hModel);*/
             inf.second.hModel = -1;
         }
     }
