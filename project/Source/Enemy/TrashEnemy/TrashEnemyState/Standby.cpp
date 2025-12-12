@@ -2,6 +2,7 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
+#include "T_EnemyStatus.h"
 
 Standby::Standby()
 {
@@ -15,8 +16,9 @@ Standby::~Standby()
 void Standby::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
+	e->targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	e->LookTarget();
-	
+	v = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
 	counter++;
 
 	if (!e->isCooperateAtk)
@@ -33,6 +35,9 @@ void Standby::Update()
 		else
 			e->isStandby = false;
 	}
+
+	if (v.Size() >= e->eStatus->GetStatus().chaseRange)
+		e->ChangeState(StateID::T_ENEMY_RUN_S);
 }
 
 void Standby::Draw()
@@ -42,7 +47,7 @@ void Standby::Draw()
 void Standby::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	VECTOR3 v = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
+	v = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
 	angle = -atan2f(v.z, v.x);
 	if (e->isCooperateAtk) 
 		e->NextId = StateID::COOPERATEATTACK1; 
@@ -50,7 +55,9 @@ void Standby::Start()
 		e->NextId = StateID::T_ENEMY_ATTACK_S;
 
 	e->targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
+	pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	aiMove = 0;
+	e->isAttack = false;
 	EnemyStateBase::Start();
 }
 
@@ -60,6 +67,8 @@ void Standby::Finish()
 	counter = 0;
 	e->isStandby = false;
 	e->isAttack = false;
+	if (!e->isCooperateAtk)
+		e->NextId = StateID::T_ENEMY_STANDBY;
 }
 
 void Standby::NormalMove()
@@ -77,24 +86,30 @@ void Standby::RotateMove(int index)
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
-	// プレイヤー位置（毎フレーム更新）
-	VECTOR3 pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
+	float RANGE = e->eStatus->GetStatus().atkRang;
 
-	// 敵の現在位置
-	VECTOR3 enemyPos = e->GetPos();
+	//if (v.Size() < RANGE)
+	//{
+	//	float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
+	//	e->GetEnemyObj()->GetTransform()->position.x -= 10 * cosf(rotY - 0.5f * DX_PI_F) / 2;
+	//	e->GetEnemyObj()->GetTransform()->position.z -= 10 * sinf(rotY - 0.5f * DX_PI_F) / 2;
+	//	angle = -atan2f(v.z, v.x);
+	//}
+	//else
+	//{
+	//	// 敵の現在位置
+	//	VECTOR3 enemyPos = e->GetPos();
 
-	// 円運動のための角度を進める
-	angle += 0.02f * index;
+	//	// 円運動のための角度を進める
+	//	angle += 0.02f * index;
 
-	float RANGE = 800.0f;
+	//	// プレイヤー中心の円周上の位置を計算
+	//	VECTOR3 newPos;
+	//	newPos.x = pPos.x + cosf(angle) * RANGE * 0.5;
+	//	newPos.z = pPos.z + sinf(angle) * RANGE * 0.5;
+	//	//newPos.y = enemyPos.y;
 
-	// プレイヤー中心の円周上の位置を計算
-	VECTOR3 newPos;
-	newPos.x = pPos.x + cosf(angle) * RANGE;
-	newPos.z = pPos.z + sinf(angle) * RANGE;
-	newPos.y = enemyPos.y;
-
-	// 移動
-	e->GetEnemyObj()->GetTransform()->position = newPos;
+	//	// 移動
+	//	e->GetEnemyObj()->GetTransform()->position = newPos;
+	//}
 }
-
