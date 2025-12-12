@@ -14,6 +14,7 @@ public:
 private:
 	void NormalMove();
 	void RotateMove(int _index);
+	float CalculateAngle();
 
 	VECTOR3 vec;
 	VECTOR3 pPos;

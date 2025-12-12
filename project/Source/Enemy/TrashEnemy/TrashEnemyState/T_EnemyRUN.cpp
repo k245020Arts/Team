@@ -17,6 +17,7 @@ T_EnemyRun::~T_EnemyRun()
 void T_EnemyRun::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
+
 	rotation = e->obj->GetTransform()->rotation;
 	e->LookTarget();
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
@@ -24,7 +25,7 @@ void T_EnemyRun::Update()
 	//スピードをポジションに足す
 	e->Move(e->speed, 2000);
 
-	VECTOR3 targetVec = e->obj->GetTransform()->position - e->targetPos;//e->enemyBaseComponent.playerObj->GetTransform()->position;
+	VECTOR3 targetVec = e->obj->GetTransform()->position - e->targetPos;/*e->enemyBaseComponent.playerObj->GetTransform()->position;*/
 	//static const float  RANG = 1200.0f;
 
 	if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)

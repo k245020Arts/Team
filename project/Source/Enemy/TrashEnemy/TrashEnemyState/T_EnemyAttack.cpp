@@ -26,7 +26,7 @@ void T_EnemyAttack::Update()
 	{
 		counter++;
 
-		if (counter >= 5&&counter<=10)
+		if (counter >= 5 && counter<=10)
 		{
 			e->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 			e->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);

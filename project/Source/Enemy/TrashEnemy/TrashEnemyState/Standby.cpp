@@ -23,20 +23,24 @@ void Standby::Update()
 	vec = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
 	if (!e->isCooperateAtk)
 	{
-		if (vec.Size() <= e->eStatus->GetStatus().atkRang && counter == 0)
+		if (counter < 20)
 		{
-			float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
+			if (vec.Size() <= e->eStatus->GetStatus().atkRang)
+			{
+				float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
 
-			e->GetEnemyObj()->GetTransform()->position.x += -10 * cosf(rotY - 0.5f * DX_PI_F) / 2;
-			e->GetEnemyObj()->GetTransform()->position.z += -10 * sinf(rotY - 0.5f * DX_PI_F) / 2;
+				// ’²®‚µ‚Ä‚­‚ê
+				e->GetEnemyObj()->GetTransform()->position.x -= range / 20 * cosf(rotY - 0.5f * DX_PI_F);
+				e->GetEnemyObj()->GetTransform()->position.z -= range / 20 * sinf(rotY - 0.5f * DX_PI_F);
+			}
 
-			//RANGE = v.Size();
+			angle = CalculateAngle();
+			counter++;
 		}
 		else
-			counter++;
-
-		if(counter > 20)
+		{
 			NormalMove();
+		}
 
 		if (e->isAttack)
 			e->ChangeState(e->NextId);
@@ -60,10 +64,7 @@ void Standby::Draw()
 
 void Standby::Start()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
-	vec = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
-	
-	angle = -atan2f(vec.z, vec.x);
+	TrashEnemy* e = GetBase<TrashEnemy>();	
 
 	range = e->eStatus->GetStatus().range;
 
@@ -91,7 +92,6 @@ void Standby::Finish()
 
 void Standby::NormalMove()
 {
-	//TrashEnemy* e = GetBase<TrashEnemy>(); 
 	if (aiMove == 0) 
 		aiMove = 1 + GetRand(1);
 
@@ -105,10 +105,6 @@ void Standby::RotateMove(int rotDir)
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
-	//pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
-	// “G‚ÌŒ»ÝˆÊ’u
-	VECTOR3 enemyPos = e->GetPos();
-
 	// ‰~‰^“®‚Ì‚½‚ß‚ÌŠp“x‚ði‚ß‚é
 	angle += 0.5f * DegToRad * rotDir;
 
@@ -116,8 +112,12 @@ void Standby::RotateMove(int rotDir)
 	VECTOR3 newPos;
 	newPos.x = pPos.x + cosf(angle) * range;
 	newPos.z = pPos.z + sinf(angle) * range;
-	//newPos.y = enemyPos.y;
 
 	// ˆÚ“®
 	e->GetEnemyObj()->GetTransform()->position = newPos;
+}
+
+float Standby::CalculateAngle()
+{
+	return -GetBase<TrashEnemy>()->GetEnemyObj()->GetTransform()->rotation.y + 0.5f * DX_PI_F;
 }
