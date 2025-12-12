@@ -6,6 +6,8 @@
 
 Standby::Standby()
 {
+	animId = ID::TE_IDOL;
+	string = Function::GetClassNameC<Standby>();
 	counter = 0;
 }
 
@@ -16,21 +18,35 @@ Standby::~Standby()
 void Standby::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	e->targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	e->LookTarget();
-	v = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
-	counter++;
 
+	v = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
+	
 	if (!e->isCooperateAtk)
 	{
-		if (counter > 20)
+		if (v.Size() <= e->eStatus->GetStatus().atkRang && counter == 0)
+
+		{
+			float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
+
+			e->GetEnemyObj()->GetTransform()->position.x += -10 * cosf(rotY - 0.5f * DX_PI_F) / 2;
+			e->GetEnemyObj()->GetTransform()->position.z += -10 * sinf(rotY - 0.5f * DX_PI_F) / 2;
+
+			//RANGE = v.Size();
+		}
+		else
+			counter++;
+
+		if(counter > 20)
 			NormalMove();
+
 		if (e->isAttack)
 			e->ChangeState(e->NextId);
 	}
 	else
 	{
-		if (counter == 60)
+		counter++;
+		if (counter == 40)
 			e->isStandby = true;
 		else
 			e->isStandby = false;
@@ -47,8 +63,12 @@ void Standby::Draw()
 void Standby::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	v = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
-	angle = -atan2f(v.z, v.x);
+	v = e->GetPos() - e->enemyBaseComponent.playerObj->GetTransform()->position;
+	
+	angle = atan2f(v.z, v.x);
+
+	RANGE = e->eStatus->GetStatus().range;
+
 	if (e->isCooperateAtk) 
 		e->NextId = StateID::COOPERATEATTACK1; 
 	else 
@@ -86,30 +106,19 @@ void Standby::RotateMove(int index)
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
-	float RANGE = e->eStatus->GetStatus().atkRang;
+	//pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
+	// “G‚ÌŒ»ÝˆÊ’u
+	VECTOR3 enemyPos = e->GetPos();
 
-	//if (v.Size() < RANGE)
-	//{
-	//	float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
-	//	e->GetEnemyObj()->GetTransform()->position.x -= 10 * cosf(rotY - 0.5f * DX_PI_F) / 2;
-	//	e->GetEnemyObj()->GetTransform()->position.z -= 10 * sinf(rotY - 0.5f * DX_PI_F) / 2;
-	//	angle = -atan2f(v.z, v.x);
-	//}
-	//else
-	//{
-	//	// “G‚ÌŒ»ÝˆÊ’u
-	//	VECTOR3 enemyPos = e->GetPos();
+	// ‰~‰^“®‚Ì‚½‚ß‚ÌŠp“x‚ði‚ß‚é
+	angle += 0.005f * index;
 
-	//	// ‰~‰^“®‚Ì‚½‚ß‚ÌŠp“x‚ði‚ß‚é
-	//	angle += 0.02f * index;
+	// ƒvƒŒƒCƒ„[’†S‚Ì‰~Žüã‚ÌˆÊ’u‚ðŒvŽZ
+	VECTOR3 newPos;
+	newPos.x = pPos.x + cosf(angle) * RANGE * 0.5;
+	newPos.z = pPos.z + sinf(angle) * RANGE * 0.5;
+	//newPos.y = enemyPos.y;
 
-	//	// ƒvƒŒƒCƒ„[’†S‚Ì‰~Žüã‚ÌˆÊ’u‚ðŒvŽZ
-	//	VECTOR3 newPos;
-	//	newPos.x = pPos.x + cosf(angle) * RANGE * 0.5;
-	//	newPos.z = pPos.z + sinf(angle) * RANGE * 0.5;
-	//	//newPos.y = enemyPos.y;
-
-	//	// ˆÚ“®
-	//	e->GetEnemyObj()->GetTransform()->position = newPos;
-	//}
+	// ˆÚ“®
+	e->GetEnemyObj()->GetTransform()->position = newPos;
 }
