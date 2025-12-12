@@ -30,6 +30,8 @@ TrashEnemyManager::TrashEnemyManager()
 
 	comboRequest = false;
 	counter = 0;
+	attackCounter = 0;
+	standbyCounter = 0;
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -38,22 +40,27 @@ TrashEnemyManager::~TrashEnemyManager()
 
 void TrashEnemyManager::Update()
 {
-	if (CheckHitKey(KEY_INPUT_0))
-		CreateEnemy(VZero, 4);
-
 	if (enemies.empty())
 		return;
-
+	counter++;
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
+		if (counter == 200 && (*itr)->GetNumber()==attackCounter)
+		{
+			(*itr)->AttackON();
+			counter = 0;
+			attackCounter++;
+			if (attackCounter >= enemies.size())
+				attackCounter = 0;
+		}
 		//連携攻撃のときにその敵が準備完了したかどうか
 		if ((*itr)->GetStandby())
-			counter++;
+			standbyCounter++;
 		//敵全員が準備完了したら攻撃に移る
-		if (enemies.size() == counter)
+		if (enemies.size() == standbyCounter)
 		{
 			AllChangeState(StateID::T_ENEMY_RUN_S);
-			counter = 0;
+			standbyCounter = 0;
 			break;
 		}
 		
@@ -67,9 +74,6 @@ void TrashEnemyManager::Update()
 		else
 			++itr;
 	}
-
-	if (CheckHitKey(KEY_INPUT_8))
-		Cooperate(StateID::COOPERATEATTACK1);
 }
 
 void TrashEnemyManager::Draw()
@@ -122,8 +126,8 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		anim->BaseModelSet(handle, 1);
 		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
 		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
-		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 0.7f, 20.0f, 30.0f);
-		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 2.5f, 20.0f, 30.0f);
+		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 1.2f, 25.0f, 40.0f);
+		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 1.0f, 25.0f, 40.0f);
 		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
 		
 		anim->Play(ID::TE_IDOL);
@@ -142,7 +146,8 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
         float rangeX = GetRand(R_MAX * 2) - R_MAX;
 		float rangeY = GetRand(R_MAX * 2) - R_MAX;
         VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
-        t->CreateTrashEnemy(_pos + pos);
+
+		t->CreateTrashEnemy(C_Attack1Pos(i), i);
 		//hp表示
 		Object2D* guage = new Object2D();
 
@@ -155,22 +160,31 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		g->GuageDrawReady<TrashEnemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 		g->WorldToScreenMode(true, VECTOR3(0, 500, 0));
     }
+
+	Cooperate(StateID::COOPERATEATTACK1);
 }
 
 void TrashEnemyManager::ImguiDraw()
 {
- //   ImGui::Begin("TrashEnemyManager");
-	//for (auto& itr : enemies)
-	//{
-	//	//ImGui::Text("enemiesGetStandby: %d", itr->GetStandby());
-	//}
+    ImGui::Begin("TrashEnemyManager");
 
- //   ImGui::End();
+	if (ImGui::Button("enemySpwn"))
+		CreateEnemy(VZero, 4);
+	if (ImGui::Button("ack1"))
+		Cooperate(StateID::COOPERATEATTACK1);
+
+	for (auto& itr : enemies)
+	{
+		//ImGui::Text("enemiesGetStandby: %d", itr->GetStandby());
+		//ImGui::RadioButton("enemy", &debugButton, 0);
+	}
+
+    ImGui::End();
 }
 
 void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 {
-	const float RANGE = 1500.0f; // プレイヤー中心の半径
+	const float RANGE = 2000.0f; // プレイヤー中心の半径
 	const float BIAS_FOV = -180 * DegToRad; // プレイヤーの向きへ寄せる幅（0で無効）
 
 	VECTOR3 playerPos = player->GetTransform()->position;
@@ -181,26 +195,8 @@ void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 
 	for (auto& e : enemies)
 	{
-		// --- まずは360°を均等に割って円形に配置 ---
-		float angle = (2.0f * DX_PI_F) * (float)index / (float)count;
-
-		// --- 円形の基本方向 ---
-		VECTOR3 dir = VECTOR3(cosf(angle), 0, sinf(angle));
-
-		// --- プレイヤーの向きを基準に回転させて“前に寄せる” ---
-		float finalAngle = angle + playerRot;
-
-		// プレイヤー方向にさらに寄せたい場合（オプション）
-		//finalAngle = playerRot + sinf(angle) * (BIAS_FOV * 0.5f);
-
-		// --- 回転を反映した方向 ---
-		VECTOR3 rotatedDir = VECTOR3(cosf(finalAngle), 0, sinf(finalAngle));
-
-		// --- プレイヤーからの絶対座標 ---
-		VECTOR3 target = playerPos + rotatedDir * RANGE;
-
 		// --- 敵にセット ---
-		e->SetTargetPos(target, StateID::T_ENEMY_RUN_S);
+		e->SetTargetPos(C_Attack1Pos(index), StateID::T_ENEMY_RUN_S);
 
 		index++;
 	}
@@ -212,4 +208,35 @@ void TrashEnemyManager::AllChangeState(StateID::State_ID _id)
 	{
 		itr->ChangeState(_id);
 	}
+}
+
+VECTOR3 TrashEnemyManager::C_Attack1Pos(int index)
+{
+	const float RANGE = 2000.0f; // プレイヤー中心の半径
+	const float BIAS_FOV = -180 * DegToRad; // プレイヤーの向きへ寄せる幅（0で無効）
+
+	VECTOR3 playerPos = player->GetTransform()->position;
+	float playerRot = camera->GetTransform()->rotation.y;
+
+	int count = enemies.size();
+
+	// --- まずは360°を均等に割って円形に配置 ---
+	float angle = (2.0f * DX_PI_F) * (float)index / (float)count;
+
+	// --- 円形の基本方向 ---
+	VECTOR3 dir = VECTOR3(cosf(angle), 0, sinf(angle));
+
+	// --- プレイヤーの向きを基準に回転させて“前に寄せる” ---
+	float finalAngle = angle + playerRot;
+
+	// プレイヤー方向にさらに寄せたい場合（オプション）
+	//finalAngle = playerRot + sinf(angle) * (BIAS_FOV * 0.5f);
+
+	// --- 回転を反映した方向 ---
+	VECTOR3 rotatedDir = VECTOR3(cosf(finalAngle), 0, sinf(finalAngle));
+
+	// --- プレイヤーからの絶対座標 ---
+	VECTOR3 target = playerPos + rotatedDir * RANGE;
+
+	return target;
 }

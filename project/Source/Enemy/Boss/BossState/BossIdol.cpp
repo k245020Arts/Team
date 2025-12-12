@@ -21,10 +21,6 @@ void BossIdol::Update()
 
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	if (CheckHitKey(KEY_INPUT_M)) {
-		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK1_S);
-	}
-
 	/*if (targetVec.Size() < b->bs->GetStatus().chaseRange)
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 	timer -= Time::DeltaTimeRate();

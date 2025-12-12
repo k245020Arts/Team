@@ -25,10 +25,10 @@ void T_EnemyRun::Update()
 	e->Move(e->speed, 2000);
 
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->targetPos;//e->enemyBaseComponent.playerObj->GetTransform()->position;
-	static const float  RANG = 1200.0f;
+	//static const float  RANG = 1200.0f;
 
 	if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)
-		e->enemyBaseComponent.state->ChangeState(e->attackId);
+		e->enemyBaseComponent.state->ChangeState(e->NextId);
 }
 
 void T_EnemyRun::Start()
