@@ -92,7 +92,9 @@ TrashEnemy::TrashEnemy()
 	maxHp = hp;
 
 	speed = eStatus->GetStatus().runSpeed;
+	isAttack = false;
 	isStandby = false;
+	isCooperateAtk = false;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -145,7 +147,7 @@ void TrashEnemy::Start(Object3D* _obj)
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
-	attackId = StateID::T_ENEMY_ATTACK_S;
+	NextId = StateID::T_ENEMY_STANDBY;
 
 	// スタートステートも StateID 化
 	enemyBaseComponent.state->StartState(StateID::T_ENEMY_IDOL_S);
@@ -158,9 +160,10 @@ void TrashEnemy::Start(Object3D* _obj)
 	active = true;
 }
 
-void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos)
+void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int _number)
 {
 	obj->GetTransform()->position = _pos;
+	number = _number;
 	targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
 }
 
@@ -308,7 +311,8 @@ void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 	speed = eStatus->GetStatus().cooperateSoeed;
-	attackId = StateID::T_ENEMY_STANDBY;
+	NextId = StateID::T_ENEMY_STANDBY;
+	isCooperateAtk = true;
 }
 
 void TrashEnemy::ChangeState(StateID::State_ID _id)

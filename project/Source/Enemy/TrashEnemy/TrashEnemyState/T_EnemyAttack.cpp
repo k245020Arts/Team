@@ -22,6 +22,17 @@ void T_EnemyAttack::Update()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->LookTarget();
 
+	if (!e->isCooperateAtk)
+	{
+		counter++;
+
+		if (counter >= 5&&counter<=10)
+		{
+			e->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
+			e->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
+		}				
+	}
+
 	if (e->enemyBaseComponent.anim->IsFinish())
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 
@@ -42,8 +53,13 @@ void T_EnemyAttack::Start()
 	firstColl = true;
 	e->enemyBaseComponent.anim->SetFrame(5.0f);
 	damage.hitDamage = e->eStatus->GetStatus().normalAttack1;
+	counter = 0;
 }
 
 void T_EnemyAttack::Finish()
 {
+	TrashEnemy* e = GetBase<TrashEnemy>();
+	e->isAttack = false;
+	e->NextId = StateID::T_ENEMY_STANDBY;
+	e->DeleteCollision();
 }

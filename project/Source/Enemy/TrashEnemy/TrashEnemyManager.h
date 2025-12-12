@@ -35,6 +35,10 @@ private:
 	Object3D* player;
 	Object3D* camera;
 
+	VECTOR3 C_Attack1Pos(int index);
+
 	bool comboRequest;
 	int counter;
+	int attackCounter;
+	int standbyCounter;
 };

@@ -26,7 +26,7 @@ public:
 
 	void Start(Object3D* _obj);
 
-	void CreateTrashEnemy(VECTOR3 _pos);
+	void CreateTrashEnemy(VECTOR3 _pos,int _number);
 	bool GetActive() { return active; }
 
 	void Trail();
@@ -40,9 +40,11 @@ public:
 	VECTOR3 GetPos() { return obj->GetTransform()->position; }
 
 	bool GetStandby() { return isStandby; }
+	int GetNumber() { return number; }
 	float Speed() { return speed; }
 
 	void isStandbyF() { isStandby = false; }
+	void AttackON() { isAttack = true; }
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)
@@ -62,13 +64,19 @@ private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
 
-	StateID::State_ID attackId;
+	StateID::State_ID NextId;
+
+	int number;
 
 	//targetPos‚É“ü‚Á‚Ä‚é•ûŒü‚ÉŒü‚­
 	void LookTarget();
 	bool active;
 	//‚Ç‚±‚ÉŒü‚­‚©
 	VECTOR3 targetPos;
+	//’ÊíUŒ‚‚ğ‚µ‚Ä‚à‚æ‚¢‚©
+	bool isAttack;
+	//˜AŒgUŒ‚‚ğ‚·‚é‚©‚µ‚È‚¢‚©
+	bool isCooperateAtk;
 	//˜AŒgUŒ‚‚Ì€”õ‚ª‚Å‚«‚Ä‚é‚©
 	bool isStandby;
 
