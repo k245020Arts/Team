@@ -21,12 +21,12 @@ void BossIdol::Update()
 
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	if (targetVec.Size() < b->bs->GetStatus().chaseRange)
+	/*if (targetVec.Size() < b->bs->GetStatus().chaseRange)
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 	timer -= Time::DeltaTimeRate();
 	if (timer <= 0.0f) {
 		b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
-	}
+	}*/
 }
 
 void BossIdol::Draw()

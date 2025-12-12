@@ -21,4 +21,6 @@ private:
 	int aiMove;
 	int counter;
 	float angle;
+	float RANGE;
+	bool isBach;
 };

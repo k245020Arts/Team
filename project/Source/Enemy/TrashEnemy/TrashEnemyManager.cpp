@@ -45,7 +45,7 @@ void TrashEnemyManager::Update()
 	counter++;
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
-		if (counter == 200 && (*itr)->GetNumber()==attackCounter)
+		if (counter >= 200 && (*itr)->GetNumber()== attackCounter)
 		{
 			(*itr)->AttackON();
 			counter = 0;
@@ -212,7 +212,7 @@ void TrashEnemyManager::AllChangeState(StateID::State_ID _id)
 
 VECTOR3 TrashEnemyManager::C_Attack1Pos(int index)
 {
-	const float RANGE = 2000.0f; // プレイヤー中心の半径
+	const float RANGE = 1200.0f; // プレイヤー中心の半径
 	const float BIAS_FOV = -180 * DegToRad; // プレイヤーの向きへ寄せる幅（0で無効）
 
 	VECTOR3 playerPos = player->GetTransform()->position;
@@ -237,6 +237,7 @@ VECTOR3 TrashEnemyManager::C_Attack1Pos(int index)
 
 	// --- プレイヤーからの絶対座標 ---
 	VECTOR3 target = playerPos + rotatedDir * RANGE;
+	target.y = 0;
 
 	return target;
 }
