@@ -457,9 +457,9 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f || startTime >= 0.0f) {
-			if (!LargeJustAvoid(attack)) {
+			/*if (!LargeJustAvoid(attack)) {
 				return true;
-			}
+			}*/
 			playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
 			playerCom.hitObj = _obj;
 			playerCom.enemyManager->JustAvoidTargetChange(dynamic_cast<Object3D*>(_obj));

@@ -45,6 +45,5 @@ void CharaBase::DeleteCollision()
 	if (attackColl != nullptr) {
 		DeleteColliderComponent();
 		attackColl = nullptr;
-
 	}
 }

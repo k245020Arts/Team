@@ -118,7 +118,7 @@ void BlurScreen::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)(alpha * 1.2f));
 	if (vignetteGraph != -1) {
 		//‰æ‘œ‚ª‘å‚«‚¢‚Ì‚Å­‚µ’[‚Á‚±‚©‚ç‚¨‚¢‚Ä‚¢‚éB
-		DrawExtendGraph(-2000.0f, -2000.0f, Screen::WIDTH * 11, Screen::HEIGHT * 11,vignetteGraph, true);
+		DrawExtendGraph(-2000.0f, -2000.0f, Screen::WIDTH * 10, Screen::HEIGHT * 10,vignetteGraph, true);
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

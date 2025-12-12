@@ -114,7 +114,7 @@ void EnemyStateBase::AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std
 		//com.weapon->CreateTrailEnemy(VECTOR3(0, 0, 0), VECTOR3(500, 500, 1000) * MGetRotY(com.enemy->GetEnemyTransform()->rotation.y), 100.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
 		sound = false;
 		keepAnimSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
-		e->enemyBaseComponent.anim->SetPlaySpeed(0.2f);
+		e->enemyBaseComponent.anim->SetPlaySpeed(0.1f);
 		animSlowCounter = 0.2f;
 		
 	}
