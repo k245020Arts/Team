@@ -18,17 +18,21 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	std::list<Object3D*> GetEnemy();
-	std::list<Object3D*>::iterator GetItr();
+	std::list<BaseObject*> GetEnemy();
+	std::list<BaseObject*>::iterator GetItr();
 
 	void CreateEnemy();
 	void PlayerObjPointer();
 
 	void CreateBoss();
 
+	void AddList(EnemyBase* _enemy, BaseObject* _obj);
+
+	void RemoveList(EnemyBase* _enemy, BaseObject* _obj);
+
 	bool PlayerDistance(Camera* camera);
 	bool TargetCancel(Camera* camera);
-	void JustAvoidTargetChange(Object3D* _obj);
+	void JustAvoidTargetChange(BaseObject* _obj);
 
 	void NearEnemyAlpha(VECTOR3 camPos);
 	Transform NearEnemyPos(const VECTOR3& _pos);
@@ -37,7 +41,7 @@ public:
 
 private:
 	
-	std::list<Object3D*> enemy;
+	std::list<BaseObject*> enemy;
 	Object3D* player;
 	std::list<EnemyBase*> chara;
 	BaseObject* cameraTargetObj;

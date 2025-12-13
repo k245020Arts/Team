@@ -10,7 +10,7 @@ class BaseObject : public GameObject
 {
 public:
 	BaseObject();
-	~BaseObject();
+	virtual ~BaseObject();
 	virtual void Update()override;
 	virtual void Draw()override;
 

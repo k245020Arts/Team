@@ -9,7 +9,7 @@ class EnemyBase : public CharaBase
 public:
 	friend class EnemyStateBase;
 	EnemyBase();
-	~EnemyBase();
+	virtual ~EnemyBase();
 
 	void Update()override;
 	void Draw()override;

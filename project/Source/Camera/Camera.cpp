@@ -171,6 +171,12 @@ void Camera::CameraShakeStop()
 
 void Camera::TargetSet(BaseObject* _obj)
 {
+	if (_obj == nullptr) {
+		cameraComponent.target.obj = _obj;
+		rockOn = false;
+		cameraComponent.state->NowChangeState(StateID::FREE_CAMERA_S);
+		return;
+	}
 	cameraComponent.target.obj = _obj;
 	cameraComponent.target.transform = cameraComponent.target.obj->GetTransform();
 	rockOn = true;

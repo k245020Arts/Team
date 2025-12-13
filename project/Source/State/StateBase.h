@@ -16,7 +16,7 @@ public:
 		obj = nullptr;
 		com = nullptr;
 	}
-	~StateBase(){}
+	virtual ~StateBase(){}
 
 	void Init(BaseObject* _base,StateID::State_ID _id) {
 		obj = _base;

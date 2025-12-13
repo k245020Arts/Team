@@ -92,6 +92,8 @@ public:
 	/// </summary>
 	/// <param name="_base"></param>
 	void TargetObjSet(BaseObject* _base);
+
+	BaseObject* GetTargetObj() { return playerCom.targetObj; }
 	/// <summary>
 	/// 攻撃を食らったりしたときとか、ジャスト回避した敵の種類をエル関数
 	/// </summary>

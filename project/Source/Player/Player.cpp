@@ -511,6 +511,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 			}
 			playerCom.color->setRGB(Color::Rgb(255.0f, 0.0f, 0.0f, 255.0f));
 			redCounter = 0.5f;
+			playerCom.hitObj = _obj;
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
 			playerCom.sound->RandamSe("EnemyAttackHit",4);
 			playerCom.sound->RandamSe("P_DamageV",2);
@@ -526,6 +527,9 @@ void Player::JustAvoidCan()
 
 void Player::TargetObjSet(BaseObject* _base)
 {
+	if (_base == nullptr) {
+		playerCom.camera->TargetSet(nullptr);
+	}
 	playerCom.targetObj = _base;
 }
 

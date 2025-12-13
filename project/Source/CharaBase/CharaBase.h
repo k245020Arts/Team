@@ -11,7 +11,7 @@ class CharaBase : public Component
 {
 public:
 	CharaBase();
-	~CharaBase();
+	virtual ~CharaBase();
 
 	void Update()override;
 	void Draw()override;

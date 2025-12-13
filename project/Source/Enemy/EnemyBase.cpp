@@ -6,6 +6,7 @@
 #include "../Component/Physics/Physics.h"
 #include "../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
 #include "../../Library/MemoryCount.h"
+#include "EnemyManager.h"
 
 EnemyBase::EnemyBase()
 {
@@ -14,10 +15,12 @@ EnemyBase::EnemyBase()
 	hitCounter = 0.0f;
 	pState = nullptr;
 	alpha = 255;
+	FindGameObject<EnemyManager>()->AddList(this, obj);
 }
 
 EnemyBase::~EnemyBase()
 {
+	FindGameObject<EnemyManager>()->RemoveList(this, obj);
 }
 
 void EnemyBase::Update()

@@ -25,6 +25,7 @@ EnemyManager::EnemyManager()
 	//CreateEnemy();
 	enemy.clear();
 	player = nullptr;
+	SetDrawOrder(-10);
 }
 
 EnemyManager::~EnemyManager()
@@ -42,12 +43,12 @@ void EnemyManager::Draw()
 {
 }
 
-std::list<Object3D*> EnemyManager::GetEnemy()
+std::list<BaseObject*> EnemyManager::GetEnemy()
 {
 	return enemy;
 }
 
-std::list<Object3D*>::iterator EnemyManager::GetItr()
+std::list<BaseObject*>::iterator EnemyManager::GetItr()
 {
 	auto e = enemy.begin();
 	return e;
@@ -68,8 +69,8 @@ void EnemyManager::PlayerObjPointer()
 	for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {
 		Enemy* e = (*itr)->Component()->GetComponent<Enemy>();
 		//e->PlayerPointerSet(obj);
-		e->Start((*itr));
-		(*itr)->SetDrawOrder(-1);
+		//e->Start((*itr));
+		(*itr)->SetDrawOrder(-20);
 
 		Object2D* guage = new Object2D();
 
@@ -120,7 +121,7 @@ void EnemyManager::CreateBoss()
 	ModelCollider* collider4 = boss->Component()->AddComponent<ModelCollider>();
 	info.shape = CollsionInformation::MODEL;
 	info.tag = CollsionInformation::BOSS;
-	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), Load::LoadModel(Load::MODEL_PATH + "wall",ID::BOSS_PUSH));
+	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), Load::LoadModel(Load::MODEL_PATH + "wall", ID::BOSS_PUSH));
 
 
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
@@ -137,24 +138,24 @@ void EnemyManager::CreateBoss()
 	Animator* anim = boss->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL), 1);
 
-	anim->AddFile(ID::B_IDOL, "B_IDLE", true,1.0f);
+	anim->AddFile(ID::B_IDOL, "B_IDLE", true, 1.0f);
 	anim->AddFile(ID::B_COOLTIME, "B_IDLE2", true, 1.0f);
 	anim->AddFile(ID::B_RUN, "B_WALK", true, 1.2f, 30.0f, 45.0f);
-	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false,1.2f,25.0f,60.0f);
-	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false,1.2f,25.0f,60.0f);
-	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false,1.2f,40.0f,55.0f);
-	anim->AddFile(ID::B_N_ATTACK4, "B_ATTACK4", false,1.2f,20.0f,55.0f);
-	anim->AddFile(ID::B_N_ATTACK5, "B_ATTACK5", false,1.2f,20.0f,55.0f);
-	anim->AddFile(ID::B_N_ATTACK6, "B_ATTACK6", false,1.2f,50.0f,65.0f);
-	anim->AddFile(ID::B_S_ATTACK1, "B_SATTACK1", false,1.0f,50.0f,60.0f);
-	anim->AddFile(ID::B_S_ATTACK2, "B_SATTACK2", true,1.0f,0.0f,100.0f);
-	anim->AddFile(ID::B_S_ATTACK2_STOP, "B_SATTACK2_STOP", false,1.0f);
-	anim->AddFile(ID::B_S_ATTACK2_BEFORE, "B_SATTACK2_BEFORE", false,1.0f,0.0f,100.0f);
-	anim->AddFile(ID::B_S_ATTACK1_SMALL, "B_SATTACK1_SAMLL", false,1.3f,40.0f,55.0f);
-	anim->AddFile(ID::BOSS_DIE, "B_DIE", false,1.2f);
-	anim->AddFile(ID::B_ROAR, "B_ROAR", false,1.2f,30.0f,40.0f);
-	anim->AddFile(ID::B_DUSH, "B_RUN", true,1.2f,30.0f,40.0f);
-	anim->AddFile(ID::B_THREAT, "B_THREAT", false,1.2f,10.0f,70.0f);
+	anim->AddFile(ID::B_N_ATTACK1, "B_ATTACK1", false, 1.2f, 25.0f, 60.0f);
+	anim->AddFile(ID::B_N_ATTACK2, "B_ATTACK2", false, 1.2f, 25.0f, 60.0f);
+	anim->AddFile(ID::B_N_ATTACK3, "B_ATTACK3", false, 1.2f, 40.0f, 55.0f);
+	anim->AddFile(ID::B_N_ATTACK4, "B_ATTACK4", false, 1.2f, 20.0f, 55.0f);
+	anim->AddFile(ID::B_N_ATTACK5, "B_ATTACK5", false, 1.2f, 20.0f, 55.0f);
+	anim->AddFile(ID::B_N_ATTACK6, "B_ATTACK6", false, 1.2f, 50.0f, 65.0f);
+	anim->AddFile(ID::B_S_ATTACK1, "B_SATTACK1", false, 1.0f, 50.0f, 60.0f);
+	anim->AddFile(ID::B_S_ATTACK2, "B_SATTACK2", true, 1.0f, 0.0f, 100.0f);
+	anim->AddFile(ID::B_S_ATTACK2_STOP, "B_SATTACK2_STOP", false, 1.0f);
+	anim->AddFile(ID::B_S_ATTACK2_BEFORE, "B_SATTACK2_BEFORE", false, 1.0f, 0.0f, 100.0f);
+	anim->AddFile(ID::B_S_ATTACK1_SMALL, "B_SATTACK1_SAMLL", false, 1.3f, 40.0f, 55.0f);
+	anim->AddFile(ID::BOSS_DIE, "B_DIE", false, 1.2f);
+	anim->AddFile(ID::B_ROAR, "B_ROAR", false, 1.2f, 30.0f, 40.0f);
+	anim->AddFile(ID::B_DUSH, "B_RUN", true, 1.2f, 30.0f, 40.0f);
+	anim->AddFile(ID::B_THREAT, "B_THREAT", false, 1.2f, 10.0f, 70.0f);
 	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 
 
@@ -169,8 +170,7 @@ void EnemyManager::CreateBoss()
 	Guage* g = guage->Component()->AddComponent<Guage>();
 	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
 	g->GuageDrawReady<Boss>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
-	chara.emplace_back(b);
-	enemy.emplace_back(boss);
+	
 	//bossList.emplace_back(b);
 
 	Object3D* shadow = new Object3D();
@@ -181,12 +181,49 @@ void EnemyManager::CreateBoss()
 	RayCollider* collider5 = shadow->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::SHADOW;
-	collider5->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist() , 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider5->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist(), 0), VZero, VECTOR3(1.0f, 1, 1)));
 	boss->AddChild(shadow);
 
 	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());
 	player->Component()->GetComponent<Player>()->HitObjectSet(*enemy.begin());
-	FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>()->TargetSet(*enemy.begin());
+	//FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>()->TargetSet(*enemy.begin());
+}
+
+void EnemyManager::AddList(EnemyBase* _enemy, BaseObject* _obj)
+{
+	chara.emplace_back(_enemy);
+	enemy.emplace_back(_obj);
+}
+
+void EnemyManager::RemoveList(EnemyBase* _enemy, BaseObject* _obj)
+{
+
+	//死んでた時にカメラのロックオンされた敵がいたのならロックオンを解除
+	if (cameraTargetObj != nullptr) {
+		if (_obj == cameraTargetObj) {
+			TargetCancel(nullptr);
+		}
+	}
+
+	for (auto itr = chara.begin(); itr != chara.end();) {
+		if (*itr == _enemy) {
+			itr = chara.erase(itr);
+		}
+		else {
+			itr++;
+		}
+	}
+
+	
+	for (auto itrObj = enemy.begin(); itrObj != enemy.end();) {
+		if (*itrObj == _obj) {
+			itrObj = enemy.erase(itrObj);
+		}
+		else {
+			itrObj++;
+		}
+	}
+	
 }
 
 bool EnemyManager::PlayerDistance(Camera* camera)
@@ -237,13 +274,14 @@ bool EnemyManager::TargetCancel(Camera* camera)
 		if ((*itr)->GetBaseObject() == cameraTargetObj) {
 			(*itr)->LastTargetOut();
 			player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);
+			cameraTargetObj = nullptr;
 			return true;
 		}
 	}
 	return false;
 }
 
-void EnemyManager::JustAvoidTargetChange(Object3D* _obj)
+void EnemyManager::JustAvoidTargetChange(BaseObject* _obj)
 {
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
 		if ((*itr)->GetBaseObject() == _obj) {
