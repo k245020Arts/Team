@@ -70,7 +70,7 @@ void EnemyManager::PlayerObjPointer()
 		Enemy* e = (*itr)->Component()->GetComponent<Enemy>();
 		//e->PlayerPointerSet(obj);
 		//e->Start((*itr));
-		(*itr)->SetDrawOrder(-20);
+		(*itr)->SetDrawOrder(-5);
 
 		Object2D* guage = new Object2D();
 

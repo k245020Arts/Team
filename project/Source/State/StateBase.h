@@ -43,6 +43,8 @@ public:
 		return dynamic_cast<T*>(com);
 	}
 
+	virtual void StateImguiDraw() { ; };
+
 protected:
 	std::string string;
 	StateID::State_ID id;

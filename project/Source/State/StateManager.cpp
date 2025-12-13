@@ -221,7 +221,7 @@ void StateManager::StateNodeDraw()
 void StateManager::ImguiDraw()
 {
 	ImGui::Text("%s", state->GetString().c_str());
-	if (ImGui::TreeNode("state")) {
+	if (ImGui::TreeNode("stateChange")) {
 		for (auto& t : stateInfo) {
 			std::string name = t.second->GetString();
 			if (ImGui::Button(name.c_str())) {
@@ -230,7 +230,14 @@ void StateManager::ImguiDraw()
 		}
 		ImGui::TreePop();
 	}
-
+	ImGui::Separator();
+	for (auto& t : stateInfo) {
+		std::string name = t.second->GetString() + "__Window";
+		if (ImGui::TreeNode(name.c_str())) {
+			t.second->StateImguiDraw();
+			ImGui::TreePop();
+		}
+	}
 }
 
 void StateManager::Change(StateID::State_ID _id)

@@ -86,6 +86,7 @@ namespace ID {
 		JUST_AVOID_BLUR,
 		B_THREAT,
 		SCREEN_BLUR_IMAGE,
+		CURSOL,
 
 		ID_MAX,
 	};

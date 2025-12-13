@@ -7,6 +7,7 @@
 #include "../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
 #include "../../Library/MemoryCount.h"
 #include "EnemyManager.h"
+#include "../Common/LoadManager.h"
 
 EnemyBase::EnemyBase()
 {
@@ -16,6 +17,7 @@ EnemyBase::EnemyBase()
 	pState = nullptr;
 	alpha = 255;
 	FindGameObject<EnemyManager>()->AddList(this, obj);
+	upPos = VECTOR3(0, 600, 0);
 }
 
 EnemyBase::~EnemyBase()
@@ -62,6 +64,10 @@ void EnemyBase::Update()
 
 void EnemyBase::Draw()
 {
+	if (!lastTarget) {
+		return;
+	}
+	DrawSphere3D(obj->GetTransform()->position + upPos, 20, 2, 0xffff00, 0xffff00, true);
 }
 
 void EnemyBase::DrawTrail() {

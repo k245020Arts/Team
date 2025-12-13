@@ -107,6 +107,8 @@ Boss::Boss()
 	roaf = false;
 	noAttackChangeCounter = 0.0f;
 	alotAttack = 0;
+
+	upPos = VECTOR3(0, 1500, 0);
 }
 
 Boss::~Boss()
@@ -165,6 +167,7 @@ void Boss::Update()
 
 void Boss::Draw()
 {
+	EnemyBase::Draw();
 }
 
 void Boss::Start(Object3D* _obj) 

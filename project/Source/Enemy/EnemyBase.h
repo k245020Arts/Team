@@ -42,4 +42,8 @@ protected:
 	const float MAX_HP = 100;
 	bool hit;
 	int alpha;
+
+	int cursolImage;
+
+	VECTOR3 upPos;
 };

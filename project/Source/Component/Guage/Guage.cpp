@@ -27,13 +27,13 @@ Guage::~Guage()
 void Guage::Update()
 {
 	if (screenMode) {
-		VECTOR3 worldPos(
+		VECTOR3 worldPos = VECTOR3(
 			obj->GetParent()->GetTransform()->position.x,
 			obj->GetParent()->GetTransform()->position.y,
 			obj->GetParent()->GetTransform()->position.z
 		);
 
-		VECTOR headPos = VAdd(worldPos,plus);
+		VECTOR headPos = worldPos + plus;
 
 		VECTOR3 screenPos = VECTOR3(0,0,0);
 		screenPos = ConvWorldPosToScreenPos(headPos);
