@@ -34,7 +34,7 @@ void T_EnemyAttack::Update()
 	}
 
 	if (e->enemyBaseComponent.anim->IsFinish())
-		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
+		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
 
 	AttackCollsion();
 	AttackSound();

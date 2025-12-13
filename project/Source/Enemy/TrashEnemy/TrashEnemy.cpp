@@ -366,3 +366,8 @@ void TrashEnemy::Move(float _speed, float _max)
 	//	enemyBaseComponent.physics->SetVelocity(moveVelo);
 	//}
 }
+
+void TrashEnemy::AddPos(VECTOR3 _pos)
+{
+	obj->GetTransform()->position = obj->GetTransform()->position + _pos;
+}

@@ -61,6 +61,8 @@ public:
 	}
 
 	void Move(float _speed, float _max);
+
+	void AddPos(VECTOR3 _pos);
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;

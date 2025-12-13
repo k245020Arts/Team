@@ -18,7 +18,6 @@ CooperateAttack1::~CooperateAttack1()
 {
 }
 
-
 void CooperateAttack1::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();

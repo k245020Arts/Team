@@ -42,7 +42,9 @@ void TrashEnemyManager::Update()
 {
 	if (enemies.empty())
 		return;
+	Separation();
 	counter++;
+	int enemiesMax = enemies.size();
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
 		if (counter >= 200 && (*itr)->GetNumber()== attackCounter)
@@ -50,17 +52,17 @@ void TrashEnemyManager::Update()
 			(*itr)->AttackON();
 			counter = 0;
 			attackCounter++;
-			if (attackCounter >= enemies.size())
+			if (attackCounter >= enemiesMax)
 				attackCounter = 0;
 		}
-		if ((*itr)->GetNumber() > enemies.size())
+		if ((*itr)->GetNumber() > enemiesMax)
 			(*itr)->AddAttackID(-1);
 
 		//連携攻撃のときにその敵が準備完了したかどうか
 		if ((*itr)->GetStandby())
 			standbyCounter++;
 		//敵全員が準備完了したら攻撃に移る
-		if (enemies.size() == standbyCounter)
+		if ( standbyCounter == enemiesMax)
 		{
 			AllChangeState(StateID::T_ENEMY_RUN_S);
 			standbyCounter = 0;
@@ -130,7 +132,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
 		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
 		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 1.2f, 25.0f, 40.0f);
-		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 1.0f, 25.0f, 40.0f);
+		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 1.0f, 25.0f, 30.0f);
 		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
 		
 		anim->Play(ID::TE_IDOL);
@@ -243,4 +245,32 @@ VECTOR3 TrashEnemyManager::C_Attack1Pos(int index)
 	target.y = 0;
 
 	return target;
+}
+
+void TrashEnemyManager::Separation()
+{
+	VECTOR pos1 = { 0,0,0 };
+	VECTOR pos2 = { 0,0,0 };
+	const float E_SIZE = 500;
+	for (auto& itr1 : enemies)
+	{
+		for (auto& itr2 : enemies)
+		{
+			if (itr1 == itr2)
+				continue;
+
+			pos1 = itr1->GetPos();
+			pos2 = itr2->GetPos();
+			VECTOR3 vec = pos1 - pos2;
+
+			vec.y = 0;
+			
+			//エネミーの分散
+			if (vec.Size() <= E_SIZE)
+			{
+				itr1->AddPos(VNorm(VSub(pos1, pos2)));
+				itr2->AddPos(VNorm(VSub(pos2, pos1)));
+			}
+		}
+	}
 }
