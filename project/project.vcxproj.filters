@@ -464,6 +464,9 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossThreat.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossDamage.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -983,6 +986,9 @@
     </ClInclude>
     <ClInclude Include="Source\Common\BlurScreen.h">
       <Filter>Common\BlurScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossDamage.h">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

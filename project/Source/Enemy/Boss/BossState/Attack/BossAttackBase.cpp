@@ -20,7 +20,7 @@ void BossAttackBase::BossStart()
 void BossAttackBase::BossFinish()
 {
 	Boss* boss = GetBase<Boss>();
-	if (boss->maxAttack <= 0) {
+	if (boss->maxAttack < 0) {
 		boss->threat = true;
 	}
 }

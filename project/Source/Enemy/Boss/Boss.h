@@ -28,6 +28,7 @@ public:
 	friend class BossRoar;
 	friend class BossThreat;
 	friend class BossAttackBase;
+	friend class BossDamage;
 	
 	enum HP_RATE
 	{

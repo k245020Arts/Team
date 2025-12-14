@@ -38,6 +38,7 @@ namespace StateID{
         BOSS_DIE_S,
         B_ROAR_S,
         B_THREAT_S,
+        BOSS_DAMAGE_S,
 
         FOLLOW_CAMERA_S,
         JUST_AVOID_CAMERA_S,

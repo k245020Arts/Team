@@ -87,6 +87,7 @@ namespace ID {
 		B_THREAT,
 		SCREEN_BLUR_IMAGE,
 		CURSOL,
+		BOSS_DAMAGE,
 
 		ID_MAX,
 	};
