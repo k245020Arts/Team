@@ -1,5 +1,6 @@
 #include "BossAttackBase.h"
 #include "../../Boss.h"
+#include "../../../../Component/Animator/Animator.h"
 
 BossAttackBase::BossAttackBase()
 {
@@ -23,4 +24,5 @@ void BossAttackBase::BossFinish()
 	if (boss->maxAttack < 0) {
 		boss->threat = true;
 	}
+	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 }

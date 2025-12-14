@@ -127,7 +127,7 @@ public:
 
 	void DeleteCollision() override;
 
-	bool EnemyAttackObjectHitIsPlayer();
+	bool EnemyAttackObjectHitIsPlayer(BaseObject* _obj);
 
 	bool GetBossThreat() { return bossThreat; }
 	void BossThreatFinish() { bossThreat = false; }

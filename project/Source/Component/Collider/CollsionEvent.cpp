@@ -87,7 +87,7 @@ void CollsionEvent::PlayerDamageBossEffectEvent(ColliderBase* _coll1, ColliderBa
 	EffectBase* effect = _coll2->GetObj()->Component()->GetComponent<EffectBase>();
 	Boss* b = effect->GetBaseObject()->GetParent()->Component()->GetComponent<Boss>();
 
-	bool damage = player->EnemyAttackObjectHitIsPlayer();
+	bool damage = player->EnemyAttackObjectHitIsPlayer(b->GetBaseObject());
 	if (!damage) {
 		_coll2->CollsionRespown();
 	}

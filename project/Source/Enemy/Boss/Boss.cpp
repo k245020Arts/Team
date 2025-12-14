@@ -154,6 +154,9 @@ void Boss::Update()
 		}
 		
 	}
+	if (maxAttack >= 0) {
+		player->BossThreatFinish();
+	}
 	if (player->GetBossThreat()) {
 		if (threat) {
 			enemyBaseComponent.state->ChangeState(StateID::B_THREAT_S);
@@ -437,7 +440,6 @@ void Boss::PlayerHit()
 				//angleRan = GetRand(360);
 				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				hit = true;
-				enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
 			}
 			else if (lastBeforeAttack) {
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(100, 100, 100), 0.5f, 0.5f);
@@ -457,7 +459,9 @@ void Boss::PlayerHit()
 				enemyBaseComponent.playerObj->Component()->GetComponent<Shaker>()->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.05f);
 				enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
 			}
-
+			if (maxAttack < 0) {
+				enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
+			}
 			break;
 		default:
 			break;

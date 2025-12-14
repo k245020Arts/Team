@@ -590,11 +590,12 @@ void Player::DeleteCollision()
 	CharaBase::DeleteCollision();
 }
 
-bool Player::EnemyAttackObjectHitIsPlayer()
+bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj)
 {
 	//敵の攻撃が当たった時の処理
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
 	bool damage = false;
+	playerCom.hitObj = _obj;
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 		
