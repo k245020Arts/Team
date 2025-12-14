@@ -158,4 +158,5 @@ private:
 
 	bool largeJustAvoid;
 	bool bossThreat;
+	bool noDamage;
 };

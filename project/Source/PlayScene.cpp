@@ -88,7 +88,7 @@ PlayScene::PlayScene()
 	//ya.SaveVector<P>("ala", pl);
 	FindGameObject<SoundManager>()->AllDeleteSound();
 	FindGameObject<SoundManager>()->PlaySceneLoad();
-	//FindGameObject<SoundManager>()->PlayBGM(Sound_ID::PLAY_BGM,true,true);
+	FindGameObject<SoundManager>()->PlayBGM(Sound_ID::PLAY_BGM,true,true);
 	input = FindGameObject<InputManager>();
 
 	blur->SetDrawOrder(-500);

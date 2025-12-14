@@ -43,6 +43,7 @@ void PlayerJustAvoid::Update()
 	easingCount += Time::DeltaTime() * 0.8f;
 	if (easingCount >= 1.0f) {
 		easingCount = 1.0f;
+		
 	}
 	JustAvoidRotation();
 	float rate = Easing::SinCube(1.7f, 0.7f, easingCount);
@@ -57,6 +58,7 @@ void PlayerJustAvoid::Update()
 	//カメラの追従速度を早くする
 	float leap = Easing::EaseIn(cameraLeap, 0.2f, easingCount / 2.0f);
 	p->playerCom.camera->CameraLeapSet(leap);
+
 	if (p->playerCom.anim->IsFinish())
 	{
 		p->playerCom.player->AvoidFinishState();
@@ -69,6 +71,7 @@ void PlayerJustAvoid::Update()
 		if (p->largeJustAvoid) {
 			Time::ChangeDeltaRate(0.1f);
 			p->playerCom.anim->SetPlaySpeed(2.0f);
+			p->noDamage = false;
 			//Time::ChangeDeltaRate(0.1f);
 		}
 		else {
@@ -79,6 +82,7 @@ void PlayerJustAvoid::Update()
 	//そこから早くする
 	else if (p->playerCom.anim->GetCurrentFrame() >= 17.0f) {
 		p->playerCom.anim->SetPlaySpeed(2.0f);
+		
 	}
 	else {
 		p->playerCom.player->GetPlayerObj()->SetObjectTimeRate(1.0f);
@@ -161,6 +165,7 @@ void PlayerJustAvoid::Start()
 	p->playerCom.color->setRGB(Color::Rgb(0,0,255,255));
 	p->playerCom.controller->ControlVibrationStartFrame(50, 10);
 
+	p->noDamage = true;
 	//カメラの追従速度を遅くする
 
 	//敵の攻撃を遅くする

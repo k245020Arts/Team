@@ -445,6 +445,9 @@ void Player::AvoidRotationChange()
 
 bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 {
+	if (noDamage) {
+		return true;
+	}
 	//“G‚ÌUŒ‚‚ª“–‚½‚Á‚½‚Ìˆ—
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
 	Animator* enemyAnim = _obj->Component()->GetComponent<Animator>();
@@ -593,6 +596,9 @@ void Player::DeleteCollision()
 bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj)
 {
 	//“G‚ÌUŒ‚‚ª“–‚½‚Á‚½‚Ìˆ—
+	if (noDamage) {
+		return true;
+	}
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
 	bool damage = false;
 	playerCom.hitObj = _obj;
