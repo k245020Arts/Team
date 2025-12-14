@@ -29,6 +29,8 @@ public:
 	void Cooperate(StateID::State_ID _id);
 	//敵のステートを強制的に全員変える
 	void AllChangeState(StateID::State_ID _id);
+	//雑魚的どうしであたった時の押し返し
+	void Separation();
 
 private:
 	std::list<TrashEnemy*> enemies;

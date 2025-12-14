@@ -15,6 +15,7 @@ private:
 	void NormalMove();
 	void RotateMove(int _index);
 	float CalculateAngle();
+	const float BACKSPEED = 60.0f;
 
 	VECTOR3 vec;
 	VECTOR3 pPos;
@@ -23,5 +24,6 @@ private:
 	int counter;
 	float angle;
 	float range;
+	float randomSpeed;
 	bool isBach;
 };

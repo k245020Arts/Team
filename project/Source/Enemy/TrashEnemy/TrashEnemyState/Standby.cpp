@@ -3,12 +3,15 @@
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
 #include "T_EnemyStatus.h"
+#include "../../../Common/Random.h"
 
 Standby::Standby()
 {
 	animId = ID::TE_IDOL;
 	string = Function::GetClassNameC<Standby>();
 	counter = 0;
+
+	randomSpeed = 0;
 }
 
 Standby::~Standby()
@@ -23,23 +26,28 @@ void Standby::Update()
 	vec = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
 	if (!e->isCooperateAtk)
 	{
-		if (counter < 20)
+		if (counter < BACKSPEED)
 		{
-			if (vec.Size() <= e->eStatus->GetStatus().atkRang)
+			if (vec.Size() <= range)
 			{
 				float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
 
-				// 調整してくれ
-				e->GetEnemyObj()->GetTransform()->position.x -= range / 20 * cosf(rotY - 0.5f * DX_PI_F);
-				e->GetEnemyObj()->GetTransform()->position.z -= range / 20 * sinf(rotY - 0.5f * DX_PI_F);
+				e->GetEnemyObj()->GetTransform()->position.x -= range / BACKSPEED * cosf(rotY - 0.5f * DX_PI_F);
+				e->GetEnemyObj()->GetTransform()->position.z -= range / BACKSPEED * sinf(rotY - 0.5f * DX_PI_F);
 			}
+			else
+				counter++;
 
 			angle = CalculateAngle();
-			counter++;
 		}
 		else
 		{
 			NormalMove();
+			if (vec.Size() <= range / 2)
+			{
+				pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
+				counter = 0;
+			}
 		}
 
 		if (e->isAttack)
@@ -48,7 +56,7 @@ void Standby::Update()
 	else
 	{
 		counter++;
-		if (counter == 40)
+		if (counter == 20)
 			e->isStandby = true;
 		else
 			e->isStandby = false;
@@ -66,17 +74,20 @@ void Standby::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();	
 
-	range = e->eStatus->GetStatus().range;
+	range = e->eStatus->GetStatus().atkRang/*range*/;
 
 	if (e->isCooperateAtk) 
 		e->NextId = StateID::COOPERATEATTACK1; 
 	else 
 		e->NextId = StateID::T_ENEMY_ATTACK_S;
 
-	e->targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
+
+	e->targetPos = pPos;
 	aiMove = 0;
 	e->isAttack = false;
+
+	randomSpeed = Random::GetReal();
 	EnemyStateBase::Start();
 }
 
@@ -106,7 +117,7 @@ void Standby::RotateMove(int rotDir)
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
 	// 円運動のための角度を進める
-	angle += 0.5f * DegToRad * rotDir;
+	angle += 0.5f * randomSpeed * DegToRad * rotDir;
 
 	// プレイヤー中心の円周上の位置を計算
 	VECTOR3 newPos;
