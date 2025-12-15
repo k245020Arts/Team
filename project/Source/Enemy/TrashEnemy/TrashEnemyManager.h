@@ -34,13 +34,16 @@ public:
 
 private:
 	std::list<TrashEnemy*> enemies;
+	//連携攻撃時の決めたポジションを保管する変数
+	std::list<VECTOR3> savePos;
 	Object3D* player;
 	Object3D* camera;
 
-	VECTOR3 C_Attack1Pos(int index);
+	void SavePos();
+	VECTOR3 C_Attack1Pos(VECTOR3 _pos);
 
 	bool comboRequest;
-	int counter;
+	//int counter;
 	int attackCounter;
 	int standbyCounter;
 };
