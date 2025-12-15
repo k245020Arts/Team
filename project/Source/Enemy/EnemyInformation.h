@@ -37,6 +37,7 @@ namespace EnemyInformation {
 			sound = nullptr;
 			weapon = nullptr;
 			gameManager = nullptr;
+			trashEnemy = nullptr;
 		}
 		StateManager* state;
 		Enemy* enemy;

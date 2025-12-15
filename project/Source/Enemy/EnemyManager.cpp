@@ -26,6 +26,8 @@ EnemyManager::EnemyManager()
 	enemy.clear();
 	player = nullptr;
 	SetDrawOrder(-10);
+	cameraTargetObj = nullptr;
+
 }
 
 EnemyManager::~EnemyManager()
@@ -304,11 +306,11 @@ void EnemyManager::NearEnemyAlpha(VECTOR3 camPos)
 		VECTOR3 dist = (*itr)->GetBaseObject()->GetTransform()->position - camPos;
 		if (dist.Size() <= 1000.0f) {
 			float rate = dist.Size() / 1000.0f;
-			float alpha = Easing::Lerp(-700, 255, rate);
+			float alpha = Easing::Lerp(-700.0f, 255.0f, rate);
 			if (alpha < 0) {
 				alpha = 0;
 			}
-			(*itr)->SetAlpha(alpha);
+			(*itr)->SetAlpha((int)alpha);
 		}
 		else {
 			(*itr)->SetAlpha(255);

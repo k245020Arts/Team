@@ -81,6 +81,10 @@ Player::Player()
 	justFeedInTime = 0.0f;
 	justFeedOutTime = 0.0f;
 	bossThreat = false;
+	largeJustAvoid = false;
+	noDamage = false;
+	redCounter = 0.0f;
+	playerCom = PlayerInformation::CharaComponent();
 }
 //
 //Object2D* guage = new Object2D();
@@ -175,7 +179,7 @@ void Player::Draw()
 	
 
 	SetDrawBright(40, 220, 255);
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
 	DrawGraph(0, 0, justAvoidBlurImage, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	SetDrawBright(255, 255, 255);

@@ -13,6 +13,13 @@ BossSpecialAttack2::BossSpecialAttack2()
 	collTrans = Transform(VECTOR3(0, 0, -50), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
 	damage.damagePattern = BossAttackBase::BLOW_AWAY;
 	damage.hitDamage = 50.0f;
+
+	attackCount = 0.0f;
+	rotation = VZero;
+	distance = 0.0f;
+	look = false;
+
+	turningTime = 0.0f;
 }
 
 BossSpecialAttack2::~BossSpecialAttack2()

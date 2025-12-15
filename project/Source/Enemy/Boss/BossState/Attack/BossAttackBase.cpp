@@ -4,7 +4,7 @@
 
 BossAttackBase::BossAttackBase()
 {
-	
+	damage = DamagePattern();
 }
 
 BossAttackBase::~BossAttackBase()

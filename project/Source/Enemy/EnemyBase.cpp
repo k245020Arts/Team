@@ -18,6 +18,9 @@ EnemyBase::EnemyBase()
 	alpha = 255;
 	FindGameObject<EnemyManager>()->AddList(this, obj);
 	upPos = VECTOR3(0, 600, 0);
+	cursolImage = -1;
+	damageFlash = 0.0f;
+
 }
 
 EnemyBase::~EnemyBase()
@@ -59,7 +62,7 @@ void EnemyBase::Update()
 		}
 	}
 	const Color::Rgb r = enemyBaseComponent.color->GetRgb();
-	enemyBaseComponent.color->setRGB(Color::Rgb(r.r, r.g, r.b, alpha));
+	enemyBaseComponent.color->setRGB(Color::Rgb(r.r, r.g, r.b, (float)alpha));
 }
 
 void EnemyBase::Draw()

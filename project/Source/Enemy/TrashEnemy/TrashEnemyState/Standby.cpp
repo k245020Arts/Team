@@ -87,7 +87,7 @@ void Standby::Start()
 	aiMove = 0;
 	e->isAttack = false;
 
-	randomSpeed = Random::GetReal();
+	randomSpeed = (float)Random::GetReal();
 	EnemyStateBase::Start();
 }
 

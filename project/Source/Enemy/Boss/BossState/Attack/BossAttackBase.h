@@ -16,6 +16,13 @@ public:
 
 	struct DamagePattern
 	{
+		DamagePattern() {
+			hitDamage = 0.0f;
+			motionMaxSpeed = 0.0f;
+			motionSpeed = 0.0f;
+			damagePattern = NONE;
+			flash = true;
+		}
 		float hitDamage;
 		float motionSpeed;
 		float motionMaxSpeed;

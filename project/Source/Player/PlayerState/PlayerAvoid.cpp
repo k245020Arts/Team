@@ -28,7 +28,8 @@ PlayerAvoid::PlayerAvoid()
 	}*/
 	cameraAngle = 0.0f;
 	maxFrame = 0.0f;
-	
+	animTime = 0.0f;
+
 }
 
 PlayerAvoid::~PlayerAvoid()

@@ -44,6 +44,8 @@ namespace Debug {
 
 	void UpdateLogger();
 
+	bool GetDebugMode();
+
 	//ログ出力をリセットする
 	void ClearLogger();
 	//ヒットストップを削除

@@ -7,6 +7,14 @@ Sound::Sound()
 {
 	feedInTime = 0.0f;
 	feedOutTime = 0.0f;
+	active = false;
+	firstPlay = false;
+	loop = false;
+	volume = 0;
+	lastPlayintBgm = 0;
+	soundHandle = -1;
+	timeMax = 0.0f;
+
 }
 
 Sound::~Sound()
@@ -17,12 +25,12 @@ Sound::~Sound()
 void Sound::Update()
 {
 	if (feedInTime > 0.0f) {
-		float valume = Easing::EasingFlow<float>(&feedInTime, timeMax, volume, 0, Easing::EaseIn<float>);
-		ChangeVolumeSoundMem(valume, soundHandle);
+		float valume = Easing::EasingFlow<float>(&feedInTime, timeMax, (float)volume, 0, Easing::EaseIn<float>);
+		ChangeVolumeSoundMem((int)valume, soundHandle);
 	}
 	if (feedOutTime > 0.0f) {
-		float valume = Easing::EasingFlow<float>(&feedOutTime, timeMax, 0, volume, Easing::EaseIn<float>);
-		ChangeVolumeSoundMem(valume, soundHandle);
+		float valume = Easing::EasingFlow<float>(&feedOutTime, timeMax, 0, (float)volume, Easing::EaseIn<float>);
+		ChangeVolumeSoundMem((int)valume, soundHandle);
 	}
 }
 

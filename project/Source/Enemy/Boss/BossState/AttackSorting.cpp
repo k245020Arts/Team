@@ -156,7 +156,7 @@ void AttackSorting::Start()
 			rand[3] += 2.0f;
 		}
 		kind = Random::GetWeightedIndex(rand);
-		b->maxAttack = comboOrder[kind].size() - 1;
+		b->maxAttack = (int)comboOrder[kind].size() - 1;
 		attackNum = b->maxAttack;
 		b->comboFirstAttack = true;
 	}

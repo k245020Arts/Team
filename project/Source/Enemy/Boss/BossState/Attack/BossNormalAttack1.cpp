@@ -12,6 +12,8 @@ BossNormalAttack1::BossNormalAttack1()
 	animId = ID::B_N_ATTACK1;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	damage.damagePattern = BossAttackBase::NO_BACK;
+	averageSpeed = 0.0f;
+
 }
 
 BossNormalAttack1::~BossNormalAttack1()

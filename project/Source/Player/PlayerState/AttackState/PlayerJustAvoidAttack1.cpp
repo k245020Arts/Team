@@ -28,6 +28,7 @@ PlayerJustAvoidAttack1::PlayerJustAvoidAttack1()
 	hitDamage = 1;
 	animSpeed = 0.0f;
 	count = 0;
+	timer = 0.0f;
 }
 
 PlayerJustAvoidAttack1::~PlayerJustAvoidAttack1()

@@ -44,7 +44,7 @@ void TrashEnemyManager::Update()
 		return;
 	Separation();
 	counter++;
-	int enemiesMax = enemies.size();
+	int enemiesMax = (int)enemies.size();
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
 		if (counter >= 200 && (*itr)->GetNumber()== attackCounter)
@@ -148,8 +148,8 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 
         // ˆÊ’u‚ðŒˆ‚ß‚é
         const float R_MAX = 1000.0f;
-        float rangeX = GetRand(R_MAX * 2) - R_MAX;
-		float rangeY = GetRand(R_MAX * 2) - R_MAX;
+        float rangeX = (float)GetRand(R_MAX * 2) - R_MAX;
+		float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
         VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
 
 		t->CreateTrashEnemy(C_Attack1Pos(i), i);
@@ -171,20 +171,20 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 
 void TrashEnemyManager::ImguiDraw()
 {
-    ImGui::Begin("TrashEnemyManager");
+ //   ImGui::Begin("TrashEnemyManager");
 
-	if (ImGui::Button("enemySpwn"))
-		CreateEnemy(VZero, 4);
-	if (ImGui::Button("ack1"))
-		Cooperate(StateID::COOPERATEATTACK1);
+	//if (ImGui::Button("enemySpwn"))
+	//	CreateEnemy(VZero, 4);
+	//if (ImGui::Button("ack1"))
+	//	Cooperate(StateID::COOPERATEATTACK1);
 
-	for (auto& itr : enemies)
-	{
-		//ImGui::Text("enemiesGetStandby: %d", itr->GetStandby());
-		//ImGui::RadioButton("enemy", &debugButton, 0);
-	}
+	//for (auto& itr : enemies)
+	//{
+	//	//ImGui::Text("enemiesGetStandby: %d", itr->GetStandby());
+	//	//ImGui::RadioButton("enemy", &debugButton, 0);
+	//}
 
-    ImGui::End();
+ //   ImGui::End();
 }
 
 void TrashEnemyManager::Cooperate(StateID::State_ID _id)

@@ -5,11 +5,11 @@ void ErrorAssert(std::string_view errMsg, const char* file, int line)
 	//Releaseにはwassertはない！
 #ifdef _DEBUG
 
-	//==文字列をワイド文字列に変換する===
-	std::wstring wErrStr = sjis_to_wide(errMsg.data());
-	std::wstring wErrFile = sjis_to_wide(file);
-	std::wstring wErrLine = sjis_to_wide(file);
+    // errMsg は string_view なので安全に std::string に変換
+    std::wstring wErrStr = sjis_to_wide(std::string(errMsg));
+    std::wstring wErrFile = sjis_to_wide(file);
 
-	_wassert(wErrStr.data(), wErrFile.data(), (unsigned int)wErrLine.data());
+    // 安全に行番号を渡す
+    _wassert(wErrStr.c_str(), wErrFile.c_str(), static_cast<unsigned int>(line));
 #endif // DEBUG
 }

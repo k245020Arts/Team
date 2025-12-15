@@ -68,7 +68,7 @@ void Hierachy::Update()
 		debug = !debug; //デバックウィンドウの出し入れ
 	}
 	//デバックモードのみで作成
-	if (debug) {
+	if (Debug::GetDebugMode()) {
 		bool open = ImGui::Begin("Hierachy",&open, ImGuiWindowFlags_UnsavedDocument);
 		float t = static_cast<float>(ImGui::GetTime());
 		float alpha = 0.8f + 0.2f * sin(t * 4.0f); // 点滅エフェクト

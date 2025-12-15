@@ -6,6 +6,8 @@ CharaBase::CharaBase()
 	lastTarget = false;
 	collShape = CollsionInformation::Shape::SPHERE;
 	maxHp = 0;
+	attackColl = nullptr;
+	hp = 0;
 }
 
 CharaBase::~CharaBase()

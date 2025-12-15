@@ -13,6 +13,9 @@ BossNormalAttack5::BossNormalAttack5()
 	animId = ID::B_N_ATTACK5;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	damage.damagePattern = BossAttackBase::NO_BACK;
+	averageSpeed = 0.0f;
+	keepPlayerPosition = VZero;
+	normal = VZero;
 	oneMove = false;
 }
 

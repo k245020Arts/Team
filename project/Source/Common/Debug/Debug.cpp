@@ -38,7 +38,7 @@ void Debug::InitDebug(InputManager* _input)
 	inputManager = _input;
 
 #ifdef _DEBUG
-	debug = true;
+	debug = false;
 #else
 	debug = false;
 
@@ -159,6 +159,11 @@ void Debug::UpdateLogger()
 		logger.pop_front();
 	}
 	
+}
+
+bool Debug::GetDebugMode()
+{
+	return debug;
 }
 
 void Debug::ClearLogger()

@@ -15,7 +15,6 @@ public:
 private:
 	VECTOR3 velocity;
 	VECTOR3 rotation;
-	int a;
 	float counter;
 	float copyPos;
 	float count;

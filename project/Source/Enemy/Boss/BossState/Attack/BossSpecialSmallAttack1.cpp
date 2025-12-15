@@ -17,6 +17,12 @@ BossSpecialSmallAttack1::BossSpecialSmallAttack1()
 	collTrans = Transform(VECTOR3(0, -50, 0), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
 	damage.damagePattern = BossAttackBase::BACK;
 	damage.hitDamage = 50.0f;
+
+	subSpeed = 0.0f;
+	attackStart = 0.0f;
+	firstCount = false;
+	effect = false;
+
 }
 
 BossSpecialSmallAttack1::~BossSpecialSmallAttack1()

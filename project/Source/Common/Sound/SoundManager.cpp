@@ -135,6 +135,7 @@ void SoundManager::StopSE(Sound_ID::SOUND_ID _type)
 
 void SoundManager::AllDeleteSound()
 {
+	feedInOutList.clear();
 	for (auto& s : sound) {
 		delete s.second;
 	}
@@ -179,6 +180,9 @@ void SoundManager::SetFeedInOutList(Sound* sound)
 	for (auto itr = feedInOutList.begin(); itr != feedInOutList.end();) {
 		if ((*itr) == sound) {
 			itr = feedInOutList.erase(itr);
+		}
+		else {
+			itr++;
 		}
 	}
 	feedInOutList.push_back(sound);
