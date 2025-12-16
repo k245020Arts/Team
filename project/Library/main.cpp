@@ -4,9 +4,12 @@
 /// </summary>
 /// <author>N.Hanai</author>
 /// 
+
 #define _CRTDBG_MAP_ALLOC
 #ifdef _CRTDBG_MAP_ALLOC
+#include "MemoryCount.h"
 #include <crtdbg.h>
+#include <cstdlib>
 #ifdef _DEBUG
 #define DBG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__);
 #else
@@ -31,6 +34,10 @@ const char* Version() {
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+#ifdef _DEBUG
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(20813);
+#endif
 	SetGraphMode(Screen::WIDTH, Screen::HEIGHT, 32);
 	SetOutApplicationLogValidFlag(FALSE); // ログを出さない
 
@@ -205,6 +212,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 #endif
 	}
 	AppRelease();
+	size_t memorySize = GetMemory();
 #if IMGUI
 	ImGui_ImplDXlib_Shutdown();
 	ImGui::DestroyContext();
@@ -215,8 +223,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 #ifdef _CRTDBG_MAP_ALLOC
 #ifdef _DEBUG
+	size_t memorySize2 = GetMemory();
 	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
 	_CrtDumpMemoryLeaks();
+	
 #endif
 #endif
 	return 0;				// ソフトの終了 

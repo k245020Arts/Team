@@ -8,6 +8,11 @@ namespace {
 	std::unordered_map<int, std::string> stateId;
 }
 
+void StateID::DeleteStateID()
+{
+	stateId.clear();
+}
+
 std::string StateID::GetID(State_ID _type)
 {
 	int type = (int)_type;

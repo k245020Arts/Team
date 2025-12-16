@@ -10,6 +10,7 @@ namespace {
 
 	enum class Type
 	{
+		NONE = 1,
 		MODEL = 0,
 		ANIM,
 		IMAGE,
@@ -19,8 +20,33 @@ namespace {
 
 	struct LoadData
 	{
+		LoadData() {
+			type = Type::NONE;
+			handle = -1;
+		}
+		~LoadData() {
+			/*switch (type)
+			{
+			case Type::MODEL:
+			case Type::ANIM:
+				MV1DeleteModel(handle);
+				break;
+			case Type::SOUND:
+				DeleteSoundMem(handle);
+				break;
+			case Type::EFFECT:
+				DeleteEffekseerEffect(handle);
+				break;
+			case Type::IMAGE:
+				DeleteGraph(handle);
+				break;
+			default:
+				my_error_assert("リソースデータ削除ミス");
+			}*/
+			
+		}
 		Type type;
-		int handle = -1;
+		int handle;
 	};
 
 	std::unordered_map <std::string, LoadData> fileLoad;
@@ -38,6 +64,9 @@ namespace {
 	std::string ID(Sound_ID::SOUND_ID type) {
 		return Sound_ID::GetSoundID(type);
 	}
+
+	//int counter = 0;
+	
 }
 
 void Load::Init()
@@ -48,112 +77,112 @@ void Load::Init()
 int Load::LoadModel(std::string path,ID::IDType id)
 {
 	std::string name = path;
-	LoadData data = fileLoad[name];
-	if (data.handle == -1) {
+	//LoadData data = fileLoad[name];
+	if (fileLoad[name].handle == -1) {
 		//拡張子はこっちで指定する分楽にできるようにする
 		ID::SetID(path, id);
 		path += ".mv1";
-		data.handle = MV1LoadModel(path.c_str());
-		data.type = Type::MODEL;
-		
+		fileLoad[name].handle = MV1LoadModel(path.c_str());
+		fileLoad[name].type = Type::MODEL;
 	}
-	if (data.handle == -1) {
+	if (fileLoad[name].handle == -1) {
 		ShowLoadError("Model", name);
 		return -1;
 		
 	}
-	else {
-		fileLoad[name] = data;
-	}
-	return data.handle;
+	Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+	return fileLoad[name].handle;
 }
 
 int Load::LoadSound(std::string path,std::string exten, Sound_ID::SOUND_ID id)
 {
 	std::string name = path;
-	LoadData data = fileLoad[name];
+	//LoadData data = fileLoad[name];
 	std::string loadName = Load::SOUND_PATH + path;
-	if (data.handle == -1) {
+	if (fileLoad[name].handle == -1) {
 		//soundだけは拡張子が様々なので引数で指定
 		loadName += exten;
-		data.handle = LoadSoundMem(loadName.c_str());
-		data.type = Type::SOUND;
+		fileLoad[name].handle = LoadSoundMem(loadName.c_str());
+		fileLoad[name].type = Type::SOUND;
 		Sound_ID::SetSoundId(path, id);
 	}
-	if (data.handle == -1) {
+	if (fileLoad[name].handle == -1) {
 		ShowLoadError("Sound", name);
 		return -1;
 	}
-	else {
+	/*else {
 		fileLoad[name] = data;
-	}
-	return data.handle;
+	}*/
+	Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+	return fileLoad[name].handle;
 }
 
 int Load::LoadEffect(std::string path, Effect_ID::EFFECT_ID id,float size)
 {
 	//std::string name = ID::GetEffectID(id);
 	std::string name = path;
-	LoadData data = fileLoad[name];
+	//LoadData data = fileLoad[name];
 	std::string loadName = Load::EFFECT_PATH + path;
-	if (data.handle == -1) {
+	if (fileLoad[name].handle == -1) {
 		//拡張子はこっちで指定する分楽にできるようにする
 		loadName += ".efkefc";
-		data.handle = LoadEffekseerEffect(loadName.c_str(),size);
-		data.type = Type::EFFECT;
+		fileLoad[name].handle = LoadEffekseerEffect(loadName.c_str(),size);
+		fileLoad[name].type = Type::EFFECT;
 		Effect_ID::SetEffectID(path, id);
 	}
-	if (data.handle == -1) {
+	if (fileLoad[name].handle == -1) {
 		ShowLoadError("Effect", name);
 		return -1;
 	}
-	else {
+	/*else {
 		fileLoad[name] = data;
-	}
-	return data.handle;
+	}*/
+	Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+	return fileLoad[name].handle;
 }
 
 int Load::LoadImageGraph(std::string path, ID::IDType id)
 {
 	std::string name = path;
-	LoadData data = fileLoad[name];
-	if (data.handle == -1) {
+	//LoadData data = fileLoad[name];
+	if (fileLoad[name].handle == -1) {
 		//拡張子はこっちで指定する分楽にできるようにする
 		ID::SetID(path, id);
 		path += ".png";
-		data.handle = LoadGraph(path.c_str());
-		data.type = Type::IMAGE;
+		fileLoad[name].handle = LoadGraph(path.c_str());
+		fileLoad[name].type = Type::IMAGE;
 	}
-	if (data.handle == -1) {
+	if (fileLoad[name].handle == -1) {
 		ShowLoadError("Image", name);
 		return -1;
 	}
-	else {
+	/*else {
 		fileLoad[name] = data;
-	}
-	return data.handle;
+	}*/
+	Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+	return fileLoad[name].handle;
 }
 
 int Load::LoadAnim(std::string path, ID::IDType id)
 {
 	std::string name = path;
-	LoadData data = fileLoad[name];
-	if (data.handle == -1) {
+	//LoadData data = fileLoad[name];
+	if (fileLoad[name].handle == -1) {
 		//拡張子はこっちで指定する分楽にできるようにする
 		ID::SetID(path, id);
 		path += ".mv1";
-		data.handle = MV1LoadModel(path.c_str());
-		data.type = Type::ANIM;
-		
+		fileLoad[name].handle = MV1LoadModel(path.c_str());
+		fileLoad[name].type = Type::ANIM;
 	}
-	if (data.handle == -1) {
+	if (fileLoad[name].handle == -1) {
 		ShowLoadError("Anim", name);
 		return -1;
 	}
-	else {
+	/*else {
 		fileLoad[name] = data;
-	}
-	return data.handle;
+	}*/
+	Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+	return fileLoad[name].handle;
 }
 
 void Load::DeleteData(ID::IDType id)
@@ -204,7 +233,11 @@ void Load::AllDelete()
 		case Type::IMAGE:
 			DeleteGraph(f.second.handle);
 			break;
+		default:
+			my_error_assert("リソースデータ削除ミス");
 		}
+		Debug::DebugOutPutPrintf("%s : Deleteしました。", f.first.c_str());
+
 	}
 	fileLoad.clear();
 }

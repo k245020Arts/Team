@@ -124,7 +124,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 
 		MeshRenderer* me = e->Component()->AddComponent<MeshRenderer>();
 		int handle = MV1DuplicateModel( Load::LoadModel(Load::MODEL_PATH + "Ch45_nonPBR", ID::IDType::E_MODEL));
-		me->ModelHandle(handle);
+		me->ModelHandle(handle,true);
 		me->RotationMesh(1, DX_PI_F);
 
 		Animator* anim = e->Component()->AddComponent<Animator>();

@@ -66,4 +66,15 @@ namespace Debug {
 		_vstprintf_s(strPrintf, _format, args);
 		return strPrintf;
 	}
+
+	inline void DebugOutPutPrintf(const char* fmt, ...)
+	{
+		char buf[1024];
+		va_list ap;
+		va_start(ap, fmt);
+		vsnprintf_s(buf, sizeof(buf), _TRUNCATE, fmt, ap);
+		va_end(ap);
+		OutputDebugStringA(buf);
+		OutputDebugStringA("\n");
+	}
 }

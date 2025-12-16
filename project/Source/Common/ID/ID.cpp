@@ -89,6 +89,11 @@ void ID::Init() {
 	}*/
 }
 
+void ID::DeleteID()
+{
+	modelId.clear();
+}
+
 std::string ID::GetID(IDType _type)
 {
 	int type = (int)_type;

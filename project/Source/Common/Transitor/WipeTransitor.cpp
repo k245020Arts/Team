@@ -9,6 +9,9 @@ WipeTransitor::WipeTransitor()
 
 WipeTransitor::~WipeTransitor()
 {
+	if (hGradation != -1) {
+		DeleteGraph(hGradation);
+	}
 }
 
 void WipeTransitor::Update()

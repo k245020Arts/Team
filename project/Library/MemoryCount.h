@@ -6,6 +6,21 @@
 #pragma warning(disable:28251) //どうしてもwaringが直らなかったのでこれで苦肉の策
 #pragma warning(error : 4834) //new演算子に入れるときに引数の値を使わなかった場合エラーを吐くようにする
 
+#include <cstddef>
+#include <new>
+#include <atomic>
+
+#ifdef _DEBUG
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#endif
+
+#ifdef _DEBUG
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#else
+#define DEBUG_NEW new
+#endif
+
 /// <summary>
 /// new演算子のオーバーロード
 /// 

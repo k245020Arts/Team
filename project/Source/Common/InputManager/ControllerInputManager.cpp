@@ -11,6 +11,7 @@ ControllerInputManager::~ControllerInputManager()
 {
 	//コントローラーの振動を最後に止める。
 	StopJoypadVibration(playerNumber);
+	input.clear();
 }
 
 void ControllerInputManager::Update()
