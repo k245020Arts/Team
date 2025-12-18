@@ -82,7 +82,7 @@ bool ControllerInputManager::GetAnyButtonPush(bool _getStick, int _backFrame)
 			return true;
 		}
 	}
-
+	
 	//ã‚Ì‚Ç‚ê‚É‚à“–‚Ä‚Í‚Ü‚ç‚È‚¢‚È‚çfalse‚ğ•Ô‚·
 	return false;
 }

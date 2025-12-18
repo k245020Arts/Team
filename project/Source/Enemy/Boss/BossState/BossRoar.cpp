@@ -13,6 +13,7 @@ BossRoar::BossRoar()
 	animId = ID::B_ROAR;
 	//id = ID::B_IDOL;
 	string = Function::GetClassNameC<BossRoar>();
+	first = false;
 }
 
 BossRoar::~BossRoar()

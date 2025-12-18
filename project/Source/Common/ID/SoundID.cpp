@@ -8,9 +8,6 @@ namespace {
 	std::unordered_map<int, std::string> soundId;
 }
 
-
-
-
 void Sound_ID::DeleteSoundID()
 {
 	soundId.clear();

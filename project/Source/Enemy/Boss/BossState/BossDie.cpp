@@ -17,6 +17,7 @@ BossDie::BossDie()
 	//id = ID::BOSS_DIE;
 	string = Function::GetClassNameC<BossDie>();
 	one = true;
+	slowTime = 0.0f;
 }
 
 BossDie::~BossDie()

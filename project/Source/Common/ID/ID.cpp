@@ -6,7 +6,7 @@
 namespace {
 	std::unordered_map<int,std::string> modelId;
 
-	std::string InitID[ID::ID_MAX] = {
+	/*std::string InitID[ID::ID_MAX] = {
 		"enemy",
 		"player",
 		"stage",
@@ -79,7 +79,7 @@ namespace {
 		"te_run",
 		"te_attack",
 		"shadow",
-	};
+	};*/
 }
 
 void ID::Init() {

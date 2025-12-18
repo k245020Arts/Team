@@ -21,7 +21,6 @@ public:
 private:
 	static const int SHADOW_NUM_MAX = 10;
 	int shadowNum;
-	bool avoidShadowStart;
 	float easingCount;
 	float cameraAngle;
 	VECTOR3 cameraRotation;

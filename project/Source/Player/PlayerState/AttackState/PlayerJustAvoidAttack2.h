@@ -16,6 +16,7 @@ public:
 	void Finish()override;
 
 	void Again();
+	void StateImguiDraw() override;
 
 private:
 	float timer;

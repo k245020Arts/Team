@@ -25,6 +25,11 @@ PlayerJustAvoid::PlayerJustAvoid()
 	blurScreen = FindGameObject<BlurScreen>();
 	cameraAngle = 0.0f;
 	cameraLeap = 0.0f;
+	startTimer = 0.0f;
+	shadowNum = 0;
+	num = 0;
+	easingCount = 0.0f;
+	
 }
 
 PlayerJustAvoid::~PlayerJustAvoid()

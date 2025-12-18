@@ -33,7 +33,6 @@ CollsionManager::~CollsionManager()
 {
 	delete event;
 	event = nullptr;
-
 }
 
 void CollsionManager::Update()

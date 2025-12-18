@@ -80,6 +80,7 @@ void SceneManager::Release()
 	StateID::DeleteStateID();
 	Effect_ID::DeleteEffectID();
 	Sound_ID::DeleteSoundID();
+	Debug::ClearLogger();
 }
 
 void SceneManager::ChangeScene(const std::string& sceneName)
