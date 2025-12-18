@@ -36,7 +36,7 @@ public:
 private:
 	std::list<TrashEnemy*> enemies;
 	//連携攻撃時の決めたポジションを保管する変数
-	std::list<VECTOR3> savePos;
+	//std::list<VECTOR3> savePos;
 	struct WayPoint
 	{
 		VECTOR3 position;
@@ -60,7 +60,7 @@ private:
 	Object3D* player;
 	Camera* camera;
 
-	void SavePos();
+	//void SavePos();
 	//ウェイポイントを最初に作る
 	void WayPointOffset();
 	//プレイヤーの周りにポイントを作る
