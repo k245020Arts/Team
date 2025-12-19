@@ -33,6 +33,9 @@ TransitorManager::TransitorManager()
 
 TransitorManager::~TransitorManager()
 {
+	for (Transitor* transitor : list) {
+		transitor->DestroyMe();
+	}
 	list.clear();
 }
 

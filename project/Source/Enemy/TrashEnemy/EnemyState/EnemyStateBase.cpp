@@ -18,6 +18,15 @@ EnemyStateBase::EnemyStateBase()
 	firstColl = false;
 	animId = ID::E_GETUP;
 	attackTime = 0.0f;
+	keepAnimSpeed = 0.0f;
+
+
+
+	collTrans = Transform();
+	sound = false;;
+
+	fallFrame = 0.0f;
+	animSlowCounter = 0.0f;
 }
 
 EnemyStateBase::~EnemyStateBase()

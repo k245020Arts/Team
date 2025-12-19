@@ -9,6 +9,8 @@ BossCoolTime::BossCoolTime()
 	animId = ID::B_COOLTIME;
 	string = Function::GetClassNameC<BossCoolTime>();
 	//id = ID::B_COOLTIME;
+	bs = nullptr;
+	coolTime = 0.0f;
 }
 
 BossCoolTime::~BossCoolTime()

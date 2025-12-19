@@ -70,6 +70,7 @@ namespace Load {
 	int GetSoundHandle(Sound_ID::SOUND_ID id);
 
 	int GetEffectHandle(Effect_ID::EFFECT_ID id);
+	//int GetCounter();
 	//パスの定数
 	//パスを毎回書くのは手間なので定数にして行う
 	const std::string MODEL_PATH = "data/model/";

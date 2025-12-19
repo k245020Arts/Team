@@ -14,6 +14,7 @@ public:
 	void Update()override;
 	void Draw()override;
 	
+	void ModelHandle(int _hHandle,bool _depricate);
 	void ModelHandle(int _hHandle);
 	void ImguiDraw()override;
 
@@ -40,4 +41,5 @@ private:
 
 	Shaker* shaker;
 	bool worldTransform;
+	bool depricate;
 };

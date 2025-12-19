@@ -100,6 +100,7 @@ PlayScene::PlayScene()
 PlayScene::~PlayScene()
 {
 	Load::AllDelete();
+	//int i = Load::GetCounter();
 	Debug::ClearLogger();
 }
 

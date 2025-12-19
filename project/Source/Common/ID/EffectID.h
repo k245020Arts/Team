@@ -23,6 +23,8 @@ namespace Effect_ID {
 		EFFECT_MAX
 	};
 
+	void DeleteEffectID();
+
 	std::string GetEffectID(EFFECT_ID _type);
 
 	void SetEffectID(std::string _effect, EFFECT_ID _type);

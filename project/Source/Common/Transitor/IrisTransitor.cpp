@@ -12,7 +12,13 @@ IrisTransitor::IrisTransitor()
 
 IrisTransitor::~IrisTransitor()
 {
-	DeleteMask(maskHandle);
+	if (maskHandle != -1) {
+		DeleteMask(maskHandle);
+	}
+	
+	if (maskScreen != -1) {
+		DeleteGraph(maskScreen);
+	}
 }
 
 void IrisTransitor::Update()
@@ -39,6 +45,7 @@ void IrisTransitor::Update()
 		SetDrawScreen(DX_SCREEN_BACK);
 		transitorType = STAY;
 		DeleteMask(maskHandle);
+		maskHandle = -1;
 		break;
 	default:
 		break;

@@ -25,6 +25,17 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	beforeAttack = false;
 	defalutTrail = true;
 	nextAvoid = false;
+	rockOn = false;
+	hitDamage = 0.0f;
+
+	targetTrans = Transform();
+	dist = VZero;
+	norm = VZero;
+
+	frontSpeed = 0.0f;
+
+	rotation = false;
+	defalutTrail = true;
 }
 
 PlayerAttackStateBase::~PlayerAttackStateBase()

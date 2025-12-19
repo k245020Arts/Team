@@ -25,6 +25,7 @@ PlayerJustAvoidAttack2::PlayerJustAvoidAttack2()
 	attack = false;
 	count = 0;
 	timer = 0.0f;
+	distSize = 0.0f;
 }
 
 PlayerJustAvoidAttack2::~PlayerJustAvoidAttack2()
@@ -51,7 +52,8 @@ void PlayerJustAvoidAttack2::Update()
 			nextAttack = true;
 		}
 		dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
-		if (dist.Size() <= DISTANCE_MOVE && beforeAttack) {
+		distSize = dist.Size();
+		if (distSize <= DISTANCE_MOVE && beforeAttack) {
 			p->playerCom.anim->SetPlaySpeed(0.8f);
 			p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(30000.0f, 30000.0f, 30000.0f));
 		}
@@ -109,6 +111,7 @@ void PlayerJustAvoidAttack2::Start()
 	else {
 		targetTrans = Transform();
 	}
+	rockOn = true;
 
 	dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
 
@@ -163,4 +166,9 @@ void PlayerJustAvoidAttack2::Finish()
 	/*p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 	p->justAvoid = false;
 	p->justFeedOutTime = p->JUST_FEED_OUT_TIME;*/
+}
+
+void PlayerJustAvoidAttack2::StateImguiDraw()
+{
+	ImGui::Text("distSize = %.f1", distSize);
 }

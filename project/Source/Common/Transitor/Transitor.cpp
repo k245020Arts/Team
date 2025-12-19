@@ -13,8 +13,12 @@ Transitor::Transitor()
 
 Transitor::~Transitor()
 {
-	DeleteGraph(oldWindow);
-	DeleteGraph(newWindow);
+	if (oldWindow != -1) {
+		DeleteGraph(oldWindow);
+	}
+	if (newWindow != -1) {
+		DeleteGraph(newWindow);
+	}
 }
 
 void Transitor::StartTransitor(std::string _sceneName, float _time)

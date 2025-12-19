@@ -33,7 +33,6 @@ CollsionManager::~CollsionManager()
 {
 	delete event;
 	event = nullptr;
-
 }
 
 void CollsionManager::Update()
@@ -180,6 +179,7 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 		if (p != nullptr) {
 			p->SetGround(resolver.IsGrounded(0.7f));
 		}
+		
 		return false;
 	}
 	
@@ -219,7 +219,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 	resolver.Apply(col1->GetObj()->GetTransform(), phy,true,30.0f);
 
 
-	
+	MV1CollResultPolyDimTerminate(result);
 
 	return false;
 

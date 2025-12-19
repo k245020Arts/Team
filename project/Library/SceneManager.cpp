@@ -5,6 +5,10 @@
 #include "MemoryCount.h"
 #include "../Source/Common/Debug/Debug.h"
 #include "../Source/Common/LoadManager.h"
+#include "../Source/Common/ID/EffectID.h"
+#include "../Source/Common/ID/ID.h"
+#include "../Source/Common/ID/SoundID.h"
+#include "../Source/Common/ID/StateID.h"
 
 namespace
 {
@@ -72,6 +76,11 @@ void SceneManager::Release()
 	}
 	delete m_currentName;
 	delete m_nextName;
+	ID::DeleteID();
+	StateID::DeleteStateID();
+	Effect_ID::DeleteEffectID();
+	Sound_ID::DeleteSoundID();
+	Debug::ClearLogger();
 }
 
 void SceneManager::ChangeScene(const std::string& sceneName)

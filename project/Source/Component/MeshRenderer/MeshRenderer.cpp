@@ -15,11 +15,17 @@ MeshRenderer::MeshRenderer()
 	color = nullptr;
 	meshNum = 0;
 	worldTransform = true;
+	depricate = false;
 }
 
 MeshRenderer::~MeshRenderer()
 {
-	MV1DeleteModel(hModel);
+	if (depricate) {
+		if (hModel != -1) {
+			MV1DeleteModel(hModel);
+		}
+	}
+	
 }
 
 void MeshRenderer::Update()
@@ -52,11 +58,17 @@ void MeshRenderer::Draw()
 	MV1DrawModel(hModel);
 }
 
-void MeshRenderer::ModelHandle(int _hHandle)
+void MeshRenderer::ModelHandle(int _hHandle, bool _depricate)
 {
 	hModel = _hHandle;
 	color = obj->Component()->GetComponent<Color>();
 	shaker = obj->Component()->GetComponent<Shaker>();
+	depricate = _depricate;
+}
+
+void MeshRenderer::ModelHandle(int _hHandle)
+{
+	ModelHandle(_hHandle, false);
 }
 
 void MeshRenderer::ImguiDraw()

@@ -12,6 +12,7 @@ MouseInputManager::MouseInputManager()
 
 MouseInputManager::~MouseInputManager()
 {
+	buttonInput.clear();
 }
 
 void MouseInputManager::Update()

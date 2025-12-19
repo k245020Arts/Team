@@ -116,3 +116,30 @@ size_t GetTotalMemory()
 #endif
     return 0;
 }
+
+//======================================
+// CRTデバッグ対応版（★重要）
+//======================================
+#ifdef _DEBUG
+void* operator new(
+    size_t size,
+    int blockType,
+    const char* file,
+    int line)
+{
+    void* raw = _malloc_dbg(size + HEADER_SIZE, blockType, file, line);
+    if (!raw) throw std::bad_alloc();
+    *static_cast<size_t*>(raw) = size;
+    totalMemorySize += size;
+    return static_cast<char*>(raw) + HEADER_SIZE;
+}
+
+void operator delete(
+    void* ptr,
+    int,
+    const char*,
+    int) noexcept
+{
+    tracked_delete(ptr);
+}
+#endif

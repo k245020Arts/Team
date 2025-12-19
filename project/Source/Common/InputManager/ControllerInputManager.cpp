@@ -11,6 +11,7 @@ ControllerInputManager::~ControllerInputManager()
 {
 	//コントローラーの振動を最後に止める。
 	StopJoypadVibration(playerNumber);
+	input.clear();
 }
 
 void ControllerInputManager::Update()
@@ -81,7 +82,7 @@ bool ControllerInputManager::GetAnyButtonPush(bool _getStick, int _backFrame)
 			return true;
 		}
 	}
-
+	
 	//上のどれにも当てはまらないならfalseを返す
 	return false;
 }

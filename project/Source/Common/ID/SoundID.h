@@ -59,6 +59,7 @@ namespace Sound_ID {
 		SOUND_MAX
 	};
 
+	void DeleteSoundID();
 	std::string GetSoundID(SOUND_ID _type);
 
 	void SetSoundId(std::string	_sound, SOUND_ID _type);

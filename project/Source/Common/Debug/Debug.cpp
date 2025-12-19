@@ -37,6 +37,8 @@ void Debug::InitDebug(InputManager* _input)
 	rayColliderDraw = false;
 	inputManager = _input;
 
+	logger.clear();
+
 #ifdef _DEBUG
 	debug = false;
 #else

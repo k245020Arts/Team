@@ -7,6 +7,7 @@ KeyboardInputManager::KeyboardInputManager()
 
 KeyboardInputManager::~KeyboardInputManager()
 {
+	keyboardInput.clear();
 }
 
 void KeyboardInputManager::Update()

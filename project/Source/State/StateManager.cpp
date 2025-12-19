@@ -11,6 +11,9 @@ StateManager::StateManager()
 	stateNoChange = false;
 	debugId = 20;
 	tag = Function::GetClassNameC<StateManager>();
+	beforeId = StateID::STATE_MAX;
+	newLinkIdNum = 0;
+
 }
 
 StateManager::~StateManager()

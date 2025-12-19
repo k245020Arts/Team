@@ -13,7 +13,7 @@ public:
 	};
 
 	Transitor();
-	~Transitor();
+	virtual ~Transitor();
 	/// <summary>
 	/// ê–Ê‘JˆÚ‚ÌŠJn
 	/// </summary>

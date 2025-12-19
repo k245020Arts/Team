@@ -19,7 +19,7 @@ Sound::Sound()
 
 Sound::~Sound()
 {
-	StopSound();
+	StopBGM();
 }
 
 void Sound::Update()

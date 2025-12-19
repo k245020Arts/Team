@@ -7,6 +7,11 @@ namespace {
 	std::unordered_map<int, std::string> effectId;
 }
 
+void Effect_ID::DeleteEffectID()
+{
+	effectId.clear();
+}
+
 std::string Effect_ID::GetEffectID(EFFECT_ID _type)
 {
 	int type = (int)_type;

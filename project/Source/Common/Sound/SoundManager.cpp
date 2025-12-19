@@ -34,7 +34,7 @@ void SoundManager::SoundLoad(Sound_ID::SOUND_ID _type, std::string path, std::st
 {
 	Sound* soundData = new Sound();
 	soundData->SoundData(Load::LoadSound(path, exten, _type), volume);
-	sound[Sound_ID::GetSoundID(_type)] = soundData;
+	sound.emplace(Sound_ID::GetSoundID(_type), soundData);
 }
 
 void SoundManager::PlaySceneLoad()

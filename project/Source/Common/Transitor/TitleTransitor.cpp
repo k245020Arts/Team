@@ -7,12 +7,13 @@ TitleTransitor::TitleTransitor()
 	gravityTime = 0.15f;
 	erase = false;
 	useGravity = false;
+	tile.clear();
 
 }
 
 TitleTransitor::~TitleTransitor()
 {
-
+	tile.clear();
 }
 
 void TitleTransitor::Update()
