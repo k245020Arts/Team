@@ -467,6 +467,9 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossDamage.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Wave\Wave.cpp">
+      <Filter>PlayScene\Wave</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -990,6 +993,9 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\BossDamage.h">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Wave\Wave.h">
+      <Filter>PlayScene\Wave</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1174,6 +1180,9 @@
     </Filter>
     <Filter Include="PlayScene\Enemy\Boss\BossState\Attack">
       <UniqueIdentifier>{e4d7576d-2312-43bf-a6ee-ae1af44846fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Wave">
+      <UniqueIdentifier>{7749ddb7-107e-4428-ab1e-f47b1def556e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

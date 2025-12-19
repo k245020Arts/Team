@@ -93,9 +93,8 @@ void TrashEnemyManager::Update()
 void TrashEnemyManager::Draw()
 {
     ImguiDraw();
-	/*if (!debugWaypoint)
-		return;*/
-
+	if (!debugWaypoint)
+		return;
 	
 	for (auto itr : wayPoint)
 	{
@@ -109,7 +108,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 {
     for (int i = 0; i < enemySpawnCounter; i++)
     {
-		if (enemies.size() >= 4)
+		if (enemies.size() >= ENEMIESMAX)
 			break;
 
 		// å¬ï ÇÃenemyÇçÏÇÈ
@@ -192,6 +191,8 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 void TrashEnemyManager::ImguiDraw()
 {
     ImGui::Begin("TrashEnemyManager");
+
+	ImGui::Text("enemiesSize: %d", enemies.size());
 
 	if (ImGui::Button("enemySpwn"))
 		CreateEnemy(VZero, 4);
@@ -309,6 +310,7 @@ void TrashEnemyManager::PlayerWayPoint()
 
 void TrashEnemyManager::CloseWayPoint()
 {
+	//camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
 	VECTOR3 position = camera->GetCameraTransform()->position;
 	position.y = 0;
 	//ê≥ñ Ç◊Ç≠

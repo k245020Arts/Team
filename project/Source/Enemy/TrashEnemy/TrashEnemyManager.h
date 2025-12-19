@@ -35,6 +35,7 @@ public:
 
 private:
 	std::list<TrashEnemy*> enemies;
+	const int ENEMIESMAX = 30;
 	//連携攻撃時の決めたポジションを保管する変数
 	//std::list<VECTOR3> savePos;
 	struct WayPoint
