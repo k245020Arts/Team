@@ -38,7 +38,7 @@ void T_EnemyAttack::Update()
 
 	AttackCollsion();
 	AttackSound();
-	//AttackFlash(ID::E_MODEL, 35, "E_AttackV");
+	AttackFlash(ID::E_MODEL, 35, "E_AttackV");
 	Trail();
 }
 
