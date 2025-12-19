@@ -14,7 +14,7 @@
 #include "../Common/InputManager/InputManager.h"
 #include "../Camera/CameraState/FreeCamera.h"
 #include "../Enemy/EnemyManager.h"
-bool b=false;
+
 Camera::Camera()
 {
 	cameraComponent.target.transform = nullptr;
@@ -50,15 +50,6 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	VECTOR3 a = 0;
-	if (CheckHitKey(KEY_INPUT_7) && b)
-		b = false;
-	else if (CheckHitKey(KEY_INPUT_7) && !b)
-		b = true;
-	if (b == true)
-		a = VECTOR3(0, 6000, 0);
-	else
-		a = VZero;
 	cameraComponent.enemyManager->NearEnemyAlpha(cameraComponent.cameraTransform->position);
 	//if (hit) {
 	//	hit = false;
@@ -94,7 +85,7 @@ void Camera::Update()
 		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);
 	}
 	else if (!rockOn) {
-		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position+a, target);
+		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);
 	}
 }
 

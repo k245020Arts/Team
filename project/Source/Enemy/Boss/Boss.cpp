@@ -102,7 +102,7 @@ Boss::Boss()
 
 	hp = bs->GetStatus().maxHp;
 	maxHp = hp;
-	//trashEnemy = new TrashEnemyManager();
+	trashEnemy = FindGameObject< TrashEnemyManager>();
 	maxAttack = -1;
 	comboFirstAttack = false;
 	roaf = false;
