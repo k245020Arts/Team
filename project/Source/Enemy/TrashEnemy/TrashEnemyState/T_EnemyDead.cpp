@@ -2,6 +2,8 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
+#include "../../../Component/Collider/ModelCollider.h"
+#include "../../../Component/Collider/SphereCollider.h"
 
 T_EnemyDead::T_EnemyDead()
 {
@@ -35,6 +37,8 @@ void T_EnemyDead::Start()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	EnemyStateBase::Start();
 	e->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	obj->Component()->RemoveAllComponent<SphereCollider>();
+	obj->Component()->RemoveAllComponent<ModelCollider>();
 }
 
 void T_EnemyDead::Finish()

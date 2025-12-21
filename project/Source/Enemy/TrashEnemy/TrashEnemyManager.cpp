@@ -99,7 +99,10 @@ void TrashEnemyManager::Update()
 
 void TrashEnemyManager::Draw()
 {
-    ImguiDraw();
+#ifdef _DEBUG
+	ImguiDraw();
+#endif
+   
 	if (!debugWaypoint)
 		return;
 	
