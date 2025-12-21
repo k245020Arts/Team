@@ -38,6 +38,7 @@ void PlayerWalk::Start()
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
+	blendSpeed = 0.2f;
 }
 
 void PlayerWalk::Finish()

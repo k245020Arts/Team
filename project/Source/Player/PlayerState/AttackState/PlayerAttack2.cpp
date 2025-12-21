@@ -16,7 +16,7 @@ PlayerAttack2::PlayerAttack2()
 	animId			= ID::P_ANIM_ATTACK2;
 	collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	nextAttackID	= StateID::PLAYER_ATTACK3_S;
-	frontSpeed		= 3500.0f;
+	frontSpeed		= 5500.0f;
 	hitDamage		= 15.0f;
 }
 

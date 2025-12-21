@@ -111,6 +111,10 @@ public:
 	/// <param name="_deadZone">デッドゾーン(全体の何割が倒れていたら反応させるか)</param>
 	/// /// <param name="_backFrame">何フレーム前の入力を取るか</param>
 	StickDirection GetStickKnocking(float _deadZone, int _backFrame);
+	///<summary>スティックが倒されている方向の逆方向をしらべる</summary>
+	/// <param name="_deadZone">デッドゾーン(全体の何割が倒れていたら反応させるか)</param>
+	/// /// <param name="_backFrame">何フレーム前の入力を取るか</param>
+	StickDirection GetStickKnockingReverce(float _deadZone, int _backFrame);
 
 	///<summary>スティックが倒されている方向を調べる</summary>
 	/// <param name="_deadZone">デッドゾーン(全体の何割が倒れていたら反応させるか)</param>
@@ -147,6 +151,8 @@ private:
 	bool GetAnyButtonPush(bool _getStick, int _backFrame);
 
 	StickDirections GetDirection(float _rot);
+
+	StickDirections ReverceDirection(StickDirections _direction);
 
 	const int BUTTON_MAX = 16;//XINPUTで使うボタンの数
 	const float ANY_KEY_TRIGGER_DEADZONE = 0.5f;//AnyButtonPushで使うトリガーのデッドゾーン

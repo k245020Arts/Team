@@ -14,6 +14,7 @@ PlayerStateBase::PlayerStateBase()
 	nextAttack		= false;
 	noStateChange	= false;
 	animId = ID::P_ANIM_IDOL;
+	blendSpeed = 0.1f;
 }
 
 PlayerStateBase::~PlayerStateBase()
@@ -38,7 +39,7 @@ void PlayerStateBase::AvoidStart()
 
 void PlayerStateBase::Start() {
 	Player* p		= GetBase<Player>();
-	p->playerCom.anim->Play(animId,0.1f);
+	p->playerCom.anim->Play(animId,blendSpeed);
 	noStateChange	= false;
 	//Debug::DebugLog(string);
 }
