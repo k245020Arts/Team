@@ -88,6 +88,7 @@ namespace ID {
 		SCREEN_BLUR_IMAGE,
 		CURSOL,
 		BOSS_DAMAGE,
+		P_TURN_ANIM,
 
 		ID_MAX,
 	};

@@ -26,6 +26,7 @@
 #include "../Player/PlayerState/playerDamage.h"
 #include "../Player/PlayerState/playerjustAvoid.h"
 #include "../Player/PlayerState/PlayerBlowAway.h"
+#include "../Player/PlayerState/PlayerTurn.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack1.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack2.h"
 #include "../Player/PlayerState/AttackState/playerAttack3.h"
@@ -43,6 +44,7 @@
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/Boss/BossState/Attack/BossAttackBase.h"
 #include "../Common/Easing.h"
+
 
 namespace {
 
@@ -219,6 +221,7 @@ void Player::Start(Object3D* _obj)
 	playerCom.stateManager->CreateState<PlayerDamage>			("PlayerDamage", StateID::PLAYER_DAMAGE_S);
 	playerCom.stateManager->CreateState<PlayerBlowAway>			("PlayerBlowAway", StateID::PLAYER_BLOW_AWAY_S);
 	playerCom.stateManager->CreateState<PlayerDie>				("PlayerDie", StateID::PLAYER_DIE_S);
+	playerCom.stateManager->CreateState<PlayerTurn>				("PlayerTurn", StateID::PLAYER_TURN_S);
 
 	playerCom.stateManager->NodeDrawReady();
 	playerCom.stateManager->SetComponent<Player>(this);
@@ -259,7 +262,7 @@ void Player::Move(float _speed, float _speedMax)
 	//スティックの傾きの量が少なかったら移動しない
 	if ((fabs(walkAngle.x) >= 0.3f || fabs(walkAngle.z) >= 0.3f) && hp > 0.0f) {
 		//回転処理
-		RotationChange(walkAngle,9.0f);
+		RotationChange(walkAngle,12.0f);
 
 		VECTOR3 dir = VZero;
 		dir.x		= walkAngle.x * 1.0f * _speed;
@@ -281,10 +284,23 @@ void Player::Move(float _speed, float _speedMax)
 		playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 		//アニメーションのスピードを傾き方で測定
 		playerCom.anim->SetPlaySpeed(walkAngle.Size());
+
+		StickDirections stick = playerCom.controller->GetStickKnocking(0.6f, 60).leftStick;
+		StickDirections nowStick = playerCom.controller->GetStickKnockingReverce(0.6f,1).leftStick;
+		ImGui::Begin("stick");
+		ImGui::Text("past = %d : now = %d", stick, nowStick);
+		ImGui::End();
+		if (nowStick == S_NO_DIRECTION || stick == S_NO_DIRECTION) {
+			return;
+		}
+		if (nowStick == stick) {
+			playerCom.stateManager->ChangeState(StateID::PLAYER_TURN_S);
+		}
 	}
 	else {
 		playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 	}
+	
 }
 
 void Player::RotationChange(VECTOR3 _angle,float _speed)

@@ -302,6 +302,7 @@
     <ClInclude Include="Source\Player\PlayerState\PlayerjustAvoid.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerStateBase.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerStateManager.h" />
+    <ClInclude Include="Source\Player\PlayerState\PlayerTurn.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerWait.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerWalk.h" />
     <ClInclude Include="Source\Screen.h" />
@@ -463,6 +464,7 @@
     <ClCompile Include="Source\Player\PlayerState\PlayerjustAvoid.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerStateBase.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerStateManager.cpp" />
+    <ClCompile Include="Source\Player\PlayerState\PlayerTurn.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerWait.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerWalk.cpp" />
     <ClCompile Include="Source\PlayScene.cpp" />

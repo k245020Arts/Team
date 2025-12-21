@@ -85,19 +85,20 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_ANIM_IDOL,					"P_IDOL_M3", true, 1.0f);
 	anim->AddFile(ID::IDType::P_ANIM_RUN,					"P_RUN_M_1", true, 1.5f);
 	anim->AddFile(ID::IDType::P_ANIM_AVOID,					"P_AVOID_M_1", false, 2.0f,0.0f,5.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID,			 "P_JUST_AVOID_M_1", false, 1.5f,10.0f,25.0f);
+	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID,			"P_JUST_AVOID_M_1", false, 1.5f,10.0f,25.0f);
 	anim->AddFile(ID::IDType::P_DAMAGE,						"P_DAMAGE_M_1", false, 2.0f,0.0f,10.0f);
 	anim->AddFile(ID::IDType::P_FALL,						"P_FALL_M_1", true, 1.0f,0.0f,10.0f);
 	anim->AddFile(ID::IDType::P_GETUP,						"P_GETUP_M_1", false, 1.0f,0.0f,10.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK1,				"P_ATTACK01_M_1", false, 1.8f,20.0f,35.0f);
+	anim->AddFile(ID::IDType::P_ANIM_ATTACK1,				"P_ATTACK01_M_1", false, 2.3f,20.0f,35.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1,	"P_ATTACK11", false, 9.0f,7.0f,25.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK2,				"P_ATTACK02_M_1", false, 1.6f, 10.0f, 30.0f);
+	anim->AddFile(ID::IDType::P_ANIM_ATTACK2,				"P_ATTACK02_M_1", false, 2.1f, 10.0f, 30.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK2,	"P_ATTACK11_M_1", false, 0.7f, 4.0f, 21.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK3,				"P_ATTACK03_M_1", false, 1.6f, 15.0f, 25.0f);
+	anim->AddFile(ID::IDType::P_ANIM_ATTACK3,				"P_ATTACK03_M_1", false, 2.1f, 15.0f, 25.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK3,	"P_ATTACK05_M_1", false, 1.5f, 23.0f, 30.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK4,				"P_ATTACK04_M_1", false, 2.6f, 30.0f, 42.0f);
+	anim->AddFile(ID::IDType::P_ANIM_ATTACK4,				"P_ATTACK04_M_1", false, 3.1f, 30.0f, 42.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK4,	"P_ATTACK46", false, 2.0f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_DIE,						"P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
+	anim->AddFile(ID::IDType::P_TURN_ANIM,					"P_TURN", false, 1.5f, 9.0f, 12.0f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);
 	
 	MotionBlur* blur = playerPointer->Component()->AddComponent<MotionBlur>();

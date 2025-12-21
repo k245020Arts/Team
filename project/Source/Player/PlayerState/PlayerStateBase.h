@@ -32,4 +32,5 @@ protected:
 	bool firstColl;
 	Transform collTrans;
 	bool nextAttack;
+	float blendSpeed;
 };

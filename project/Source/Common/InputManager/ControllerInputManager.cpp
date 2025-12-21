@@ -325,6 +325,14 @@ StickDirection ControllerInputManager::GetStickKnocking(float _deadZone, int _ba
 	return result;
 }
 
+StickDirection ControllerInputManager::GetStickKnockingReverce(float _deadZone, int _backFrame)
+{
+	StickDirection result =  GetStickKnocking(_deadZone, _backFrame);
+	result.leftStick = ReverceDirection(result.leftStick);
+	result.rightStick = ReverceDirection(result.rightStick);
+	return result;
+}
+
 StickDirection ControllerInputManager::GetStickKnockingPut(float _deadZone)
 {
 	StickDirection result{ S_NO_DIRECTION,S_NO_DIRECTION };
@@ -382,6 +390,41 @@ void ControllerInputManager::ControlVibrationStartTime(int _power, int _timeSeco
 void ControllerInputManager::ControlVibrationStartFrame(int _power, int _timeFrame)
 {
 	StartJoypadVibration(playerNumber, _power, _timeFrame * 1000 / 60);
+}
+
+StickDirections ControllerInputManager::ReverceDirection(StickDirections _direction)
+{
+	StickDirections direction = S_NO_DIRECTION;
+	switch (_direction)
+	{
+	case S_NO_DIRECTION:
+		break;
+	case S_DOWN:
+		direction = S_UP;
+		break;
+	case S_DOWN_RIGHT:
+		direction = S_UP_LEFT;
+		break;
+	case S_RIGHT:
+		direction = S_LEFT;
+		break;
+	case S_UP_RIGHT:
+		direction = S_DOWN_LEFT;
+		break;
+	case S_UP:
+		direction = S_DOWN;
+		break;
+	case S_UP_LEFT:
+		direction = S_DOWN_RIGHT;
+		break;
+	case S_LEFT:
+		direction = S_RIGHT;
+		break;
+	case S_DOWN_LEFT:
+		direction = S_UP_RIGHT;
+		break;
+	}
+	return direction;
 }
 
 StickDirections ControllerInputManager::GetDirection(float _rot)

@@ -30,6 +30,7 @@ public:
 	friend class PlayerJustAvoidAttack5;
 	friend class PlayerAttackStateBase;
 	friend class PlayerStateBase;
+	friend class PlayerTurn;
 
 	Player();
 	~Player();

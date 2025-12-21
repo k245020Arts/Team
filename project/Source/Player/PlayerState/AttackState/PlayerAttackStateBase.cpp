@@ -70,7 +70,7 @@ void PlayerAttackStateBase::Update()
 					p->playerCom.player->AvoidFinishState();
 				}
 				else {
-					p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
+					p->playerCom.player->AvoidFinishState();
 				}
 			}
 			
