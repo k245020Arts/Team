@@ -314,6 +314,7 @@
     <ClInclude Include="Source\State\StateBase.h" />
     <ClInclude Include="Source\State\StateManager.h" />
     <ClInclude Include="Source\TitleScene.h" />
+    <ClInclude Include="Source\Wave\Wave.h" />
     <ClInclude Include="Source\Weapon\CharaWeapon.h" />
     <ClInclude Include="Source\Weapon\SwordEffect.h" />
     <ClInclude Include="Source\Weapon\WeaponManager.h" />
@@ -472,6 +473,7 @@
     <ClCompile Include="Source\Stage\Wall.cpp" />
     <ClCompile Include="Source\State\StateManager.cpp" />
     <ClCompile Include="Source\TitleScene.cpp" />
+    <ClCompile Include="Source\Wave\Wave.cpp" />
     <ClCompile Include="Source\Weapon\CharaWeapon.cpp" />
     <ClCompile Include="Source\Weapon\SwordEffect.cpp" />
     <ClCompile Include="Source\Weapon\WeaponManager.cpp" />

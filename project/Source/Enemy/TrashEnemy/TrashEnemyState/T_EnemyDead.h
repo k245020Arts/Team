@@ -12,5 +12,4 @@ public:
 	void Start()override;
 	void Finish()override;
 private:
-	int counter;
 };

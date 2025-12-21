@@ -96,20 +96,20 @@ namespace {
 
 Boss::Boss()
 {
-	debugId					= 19;
-	tag						= Function::GetClassNameC<Boss>();
-	bs						= new BossStatus;
+	debugId = 19;
+	tag = Function::GetClassNameC<Boss>();
+	bs = new BossStatus;
 
-	hp						= bs->GetStatus().maxHp;
-	maxHp					= hp;
-	trashEnemy				= new TrashEnemyManager();
-	maxAttack				= -1;
-	comboFirstAttack		= false;
-	roaf					= false;
-	noAttackChangeCounter	= 0.0f;
-	alotAttack				= 0;
+	hp = bs->GetStatus().maxHp;
+	maxHp = hp;
+	trashEnemy = FindGameObject< TrashEnemyManager>();
+	maxAttack = -1;
+	comboFirstAttack = false;
+	roaf = false;
+	noAttackChangeCounter = 0.0f;
+	alotAttack = 0;
 
-	upPos					= VECTOR3(0, 1500, 0);
+	upPos = VECTOR3(0, 1500, 0);
 }
 
 Boss::~Boss()
@@ -176,24 +176,24 @@ void Boss::Draw()
 
 void Boss::Start(Object3D* _obj) 
 {
-	enemyBaseComponent.state		= obj->Component()->AddComponent<StateManager>();
-	enemyBaseComponent.playerObj	= FindGameObjectWithTag<Object3D>("PLAYER");
-	pState							= enemyBaseComponent.playerObj->Component()->GetComponent<Player>()->GetPlayerStateManager();
-	player							= enemyBaseComponent.playerObj->Component()->GetComponent<Player>();
+	enemyBaseComponent.state = obj->Component()->AddComponent<StateManager>();
+	enemyBaseComponent.playerObj = FindGameObjectWithTag<Object3D>("PLAYER");
+	pState = enemyBaseComponent.playerObj->Component()->GetComponent<Player>()->GetPlayerStateManager();
+	player = enemyBaseComponent.playerObj->Component()->GetComponent<Player>();
 	bossTransform = obj->GetTransform();
 
 	enemyBaseComponent.collider = FindGameObjects<ColliderBase>();
 
 	//enemyBaseComponent.boss = this;
-	enemyBaseComponent.anim		= obj->Component()->GetComponent<Animator>();
-	enemyBaseComponent.physics	= obj->Component()->GetComponent<Physics>();
-	enemyBaseComponent.control	= FindGameObject<ControllerInputManager>();
-	enemyBaseComponent.color	= obj->Component()->GetComponent<Color>();
+	enemyBaseComponent.anim = obj->Component()->GetComponent<Animator>();
+	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
+	enemyBaseComponent.control = FindGameObject<ControllerInputManager>();
+	enemyBaseComponent.color = obj->Component()->GetComponent<Color>();
 	enemyBaseComponent.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));
-	enemyBaseComponent.shaker	= obj->Component()->GetComponent<Shaker>();
-	enemyBaseComponent.effect	= FindGameObject<EffectManager>();
-	enemyBaseComponent.sound	= FindGameObject<SoundManager>();
-	enemyBaseComponent.physics	= obj->Component()->GetComponent<Physics>();
+	enemyBaseComponent.shaker = obj->Component()->GetComponent<Shaker>();
+	enemyBaseComponent.effect = FindGameObject<EffectManager>();
+	enemyBaseComponent.sound = FindGameObject<SoundManager>();
+	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
 
 	enemyBaseComponent.camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
 	//enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
@@ -207,23 +207,23 @@ void Boss::Start(Object3D* _obj)
 
 	using namespace ID;
 
-	enemyBaseComponent.state->CreateState<BossIdol>					("BossIdol", StateID::BOSS_IDOL_S);
-	enemyBaseComponent.state->CreateState<BossRun>					("BossRun", StateID::BOSS_RUN_S);
-	enemyBaseComponent.state->CreateState<BossCoolTime>				("BossCoolTime", StateID::BOSS_COOL_TIME_S);
-	enemyBaseComponent.state->CreateState<AttackSorting>			("AttackSorting", StateID::ATTACK_SORTING_S);
-	enemyBaseComponent.state->CreateState<BossNormalAttack1>		("BossNormalAttack1", StateID::BOSS_NORMAL_ATTACK1_S);
-	enemyBaseComponent.state->CreateState<BossNormalAttack2>		("BossNormalAttack2", StateID::BOSS_NORMAL_ATTACK2_S);
-	enemyBaseComponent.state->CreateState<BossNormalAttack3>		("BossNormalAttack3", StateID::BOSS_NORMAL_ATTACK3_S);
-	enemyBaseComponent.state->CreateState<BossNormalAttack4>		("BossNormalAttack4", StateID::BOSS_NORMAL_ATTACK4_S);
-	enemyBaseComponent.state->CreateState<BossNormalAttack5>		("BossNormalAttack5", StateID::BOSS_NORMAL_ATTACK5_S);
-	enemyBaseComponent.state->CreateState<BossNormalAttack6>		("BossNormalAttack6", StateID::BOSS_NORMAL_ATTACK6_S);
-	enemyBaseComponent.state->CreateState<BossSpecialAttack1>		("BossSpecialAttack1", StateID::BOSS_SPECIAL_ATTACK1_S);
-	enemyBaseComponent.state->CreateState<BossSpecialSmallAttack1>	("BossSpecialSmallAttack1", StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
-	enemyBaseComponent.state->CreateState<BossSpecialAttack2>		("BossSpecialAttack2", StateID::BOSS_SPECIAL_ATTACK2_S);
-	enemyBaseComponent.state->CreateState<BossDie>					("BossDie", StateID::BOSS_DIE_S);
-	enemyBaseComponent.state->CreateState<BossRoar>					("BossRoar", StateID::B_ROAR_S);
-	enemyBaseComponent.state->CreateState<BossThreat>				("BossThreat", StateID::B_THREAT_S);
-	enemyBaseComponent.state->CreateState<BossDamage>				("BossDamage", StateID::BOSS_DAMAGE_S);
+	enemyBaseComponent.state->CreateState<BossIdol>("BossIdol", StateID::BOSS_IDOL_S);
+	enemyBaseComponent.state->CreateState<BossRun>("BossRun", StateID::BOSS_RUN_S);
+	enemyBaseComponent.state->CreateState<BossCoolTime>("BossCoolTime", StateID::BOSS_COOL_TIME_S);
+	enemyBaseComponent.state->CreateState<AttackSorting>("AttackSorting", StateID::ATTACK_SORTING_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack1>("BossNormalAttack1", StateID::BOSS_NORMAL_ATTACK1_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack2>("BossNormalAttack2", StateID::BOSS_NORMAL_ATTACK2_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack3>("BossNormalAttack3", StateID::BOSS_NORMAL_ATTACK3_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack4>("BossNormalAttack4", StateID::BOSS_NORMAL_ATTACK4_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack5>("BossNormalAttack5", StateID::BOSS_NORMAL_ATTACK5_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack6>("BossNormalAttack6", StateID::BOSS_NORMAL_ATTACK6_S);
+	enemyBaseComponent.state->CreateState<BossSpecialAttack1>("BossSpecialAttack1", StateID::BOSS_SPECIAL_ATTACK1_S);
+	enemyBaseComponent.state->CreateState<BossSpecialSmallAttack1>("BossSpecialSmallAttack1", StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
+	enemyBaseComponent.state->CreateState<BossSpecialAttack2>("BossSpecialAttack2", StateID::BOSS_SPECIAL_ATTACK2_S);
+	enemyBaseComponent.state->CreateState<BossDie>("BossDie", StateID::BOSS_DIE_S);
+	enemyBaseComponent.state->CreateState<BossRoar>("BossRoar", StateID::B_ROAR_S);
+	enemyBaseComponent.state->CreateState<BossThreat>("BossThreat", StateID::B_THREAT_S);
+	enemyBaseComponent.state->CreateState<BossDamage>("BossDamage", StateID::BOSS_DAMAGE_S);
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
@@ -383,7 +383,7 @@ void Boss::PlayerHit()
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
 	float damage = 0;;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
-		damage	= pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
+		damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
 	}
 	else {
 		loopNum = -1;
@@ -396,9 +396,9 @@ void Boss::PlayerHit()
 		r = (float)GetRand(80) - 40.0f;
 	}
 	//プレイヤーの攻撃の種類によってダメージや吹っ飛び方の種類を変える
-	float angleRan			= 0.0f;
-	bool lastAttack			= false;
-	bool lastBeforeAttack	= false;
+	float angleRan = 0.0f;
+	bool lastAttack = false;
+	bool lastBeforeAttack = false;
 
 	auto bossParam = enemyTable.find(attackID);
 	if (bossParam != enemyTable.end()) {
@@ -416,20 +416,20 @@ void Boss::PlayerHit()
 		case EnemyInformation::EnemyReaction::Type::LoopCombo:
 			enemyBaseComponent.sound->RandamSe("swordHit00000", 7);
 			if (loopNum == -1) {
-				hitCounter	= 0.23f;
-				loopNum		= 5;
+				hitCounter = 0.23f;
+				loopNum = 5;
 			}
 			else if (loopNum == 1) {
-				hitCounter			= 0.13f;
+				hitCounter = 0.13f;
 				loopNum--;
-				lastBeforeAttack	= true;
+				lastBeforeAttack = true;
 			}
 			else if (loopNum == 0) {
-				loopNum				= -1;
-				lastAttack			= true;
+				loopNum = -1;
+				lastAttack = true;
 			}
 			else if (loopNum > 0) {
-				hitCounter			= 0.13f;
+				hitCounter = 0.13f;
 				loopNum--;
 			}
 			if (lastAttack) {
@@ -558,8 +558,8 @@ void Boss::BossAttackStateChange()
 			enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 			alotAttack++;
 			if (alotAttack >= 3) {
-				noAttackChangeCounter	= Random::GetInt(1,2) * 0.5f;
-				alotAttack				= 0;
+				noAttackChangeCounter = Random::GetInt(1,2) * 0.5f;
+				alotAttack = 0;
 				enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 			}
 		}
@@ -577,7 +577,7 @@ bool Boss::RunChangeAttack()
 	if (noAttackChangeCounter > 0.0f) {
 		return result;
 	}
-	VECTOR3 targetVec	= bossTransform->position - enemyBaseComponent.playerObj->GetTransform()->position;
+	VECTOR3 targetVec = bossTransform->position - enemyBaseComponent.playerObj->GetTransform()->position;
 	if (targetVec.Size() <= bs->GetStatus().range) {
 		result = true;
 	}

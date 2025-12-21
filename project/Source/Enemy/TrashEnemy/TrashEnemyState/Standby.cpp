@@ -74,7 +74,7 @@ void Standby::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();	
 
-	range = e->eStatus->GetStatus().atkRang/*range*/;
+	range = e->eStatus->GetStatus().atkRang;
 
 	if (e->isCooperateAtk) 
 		e->NextId = StateID::COOPERATEATTACK1; 

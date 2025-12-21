@@ -25,7 +25,7 @@ void BossRoar::Update()
 	Boss* b = GetBase<Boss>();
 	if (b->enemyBaseComponent.anim->AnimEventCan()) {
 		if (first) {
-			b->trashEnemy->CreateEnemy(VZero, 4);;//
+			//b->trashEnemy->CreateEnemy(VZero, 4);
 			first = false;
 			b->enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(0.0f,100.0f,0.0f),VZero,VOne), b->GetBaseObject(), Effect_ID::BOSS_ROAR, 2.0f);
 		}

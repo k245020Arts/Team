@@ -5,6 +5,7 @@
 
 class TrashEnemy;
 class Object3D;
+class Camera;
 
 class TrashEnemyManager : public GameObject
 {
@@ -34,13 +35,46 @@ public:
 
 private:
 	std::list<TrashEnemy*> enemies;
-	Object3D* player;
-	Object3D* camera;
+	const int ENEMIESMAX = 30;
+	//連携攻撃時の決めたポジションを保管する変数
+	//std::list<VECTOR3> savePos;
+	struct WayPoint
+	{
+		VECTOR3 position;
+		bool active;
+		WayPoint()
+		{
+			position = VZero;
+			active = false;
+		}
+		WayPoint(VECTOR3 _pos, bool _active)
+		{
+			position = _pos;
+			active = _active;
+		}
+	};
+	//ウェイポイントの元を保管する変数
+	std::list<VECTOR3> wayPointOffsets;
+	//ウェイポイントを保管する変数
+	std::vector<WayPoint> wayPoint;
 
-	VECTOR3 C_Attack1Pos(int index);
+	Object3D* player;
+	Camera* camera;
+
+	//void SavePos();
+	//ウェイポイントを最初に作る
+	void WayPointOffset();
+	//プレイヤーの周りにポイントを作る
+	void PlayerWayPoint();
+	//一番近いウェイポイントを計算する
+	void CloseWayPoint();
 
 	bool comboRequest;
-	int counter;
+	//int counter;
 	int attackCounter;
 	int standbyCounter;
+
+	float searchCounter;
+
+	bool debugWaypoint;
 };
