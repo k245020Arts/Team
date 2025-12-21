@@ -39,7 +39,7 @@ void Transform::SetParent(Transform* _pare)
 }
 
 Transform Transform::WorldTransform()
-{/*
+{
 	VECTOR3 worldPos = position;
 	VECTOR3 worldRot = rotation;
 	VECTOR3 worldScale = scale;
@@ -48,33 +48,33 @@ Transform Transform::WorldTransform()
 		worldRot += parent->rotation;
 		worldScale *= parent->scale;
 	}
-	return Transform(worldPos, worldRot, worldScale);*/
-
-	Quaternion qLocal = Quaternion::FromEuler(rotation);
-
-	VECTOR3 worldPos = position;
-	Quaternion qWorld = qLocal;
-	VECTOR3 worldScale = scale;
-
-	if (parent != nullptr) {
-		// 親のワールドを一度だけ取得（再帰）
-		Transform pWorld = parent->WorldTransform();
-
-		// 親の回転をクォータニオン化して合成（親 * local）
-		Quaternion qParent = Quaternion::FromEuler(pWorld.rotation);
-		qWorld = qParent * qLocal; // 親の回転が先に来る
-
-		// 位置は親のワールド行列で変換（既存の VECTOR3 * MATRIX 実装を使用）
-		worldPos = position * parent->WorldTransform().GetMatrix();
-
-		// スケールは要素ごとの乗算
-		worldScale *= pWorld.scale;
-	}
-
-	// 合成したクォータニオンをオイラーに戻す（表示や既存コード互換のため）
-	VECTOR3 worldRot = qWorld.ToEuler();
-
 	return Transform(worldPos, worldRot, worldScale);
+
+	//Quaternion qLocal = Quaternion::FromEuler(rotation);
+
+	//VECTOR3 worldPos = position;
+	//Quaternion qWorld = qLocal;
+	//VECTOR3 worldScale = scale;
+
+	//if (parent != nullptr) {
+	//	// 親のワールドを一度だけ取得（再帰）
+	//	Transform pWorld = parent->WorldTransform();
+
+	//	// 親の回転をクォータニオン化して合成（親 * local）
+	//	Quaternion qParent = Quaternion::FromEuler(pWorld.rotation);
+	//	qWorld = qParent * qLocal; // 親の回転が先に来る
+
+	//	// 位置は親のワールド行列で変換（既存の VECTOR3 * MATRIX 実装を使用）
+	//	worldPos = position * parent->WorldTransform().GetMatrix();
+
+	//	// スケールは要素ごとの乗算
+	//	worldScale *= pWorld.scale;
+	//}
+
+	//// 合成したクォータニオンをオイラーに戻す（表示や既存コード互換のため）
+	//VECTOR3 worldRot = qWorld.ToEuler();
+
+	//return Transform(worldPos, worldRot, worldScale);
 }
 
 void Transform::SetWorld(Transform _transform)

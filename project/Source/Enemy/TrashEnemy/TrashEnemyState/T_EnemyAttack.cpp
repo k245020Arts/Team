@@ -37,7 +37,7 @@ void T_EnemyAttack::Update()
 
 	AttackCollsion();
 	AttackSound();
-	AttackFlash(ID::E_MODEL, 1, "E_AttackV");
+	AttackFlash(ID::E_MODEL, 35, "E_AttackV");
 	e->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	Trail();
 }

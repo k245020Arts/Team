@@ -121,7 +121,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		// ŒÂ•Ê‚Ìenemy‚ðì‚é
 		Object3D* e;
 		e = new Object3D();
-		e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(2.5f, 2.5f, 2.5f), "ENEMY");
+		e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(2.5f, 2.5f, 2.5f), "ENEMY" + std::to_string(i));
 		//“–‚½‚è”»’è‚ð¶¬i‚â‚ç‚ê”»’èj
 		SphereCollider* collider = e->Component()->AddComponent<SphereCollider>();
 		CollsionInfo info;
