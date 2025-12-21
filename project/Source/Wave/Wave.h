@@ -9,6 +9,7 @@ public:
 	~Wave();
 	void Update();
 	void Draw();
+
 private:
 	void EnemySpawn();
 	void CooperateAttack();
@@ -21,8 +22,11 @@ private:
 	const int WAVE_MAX = 2;
 
 	int waveNow;
+
 	float battleCounter;
 	int spawn;
 
 	bool isCooperate;
+
+	bool bossCreate;
 };

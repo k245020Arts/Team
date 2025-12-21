@@ -258,6 +258,12 @@ void Player::Move(float _speed, float _speedMax)
 
 	
 	std::shared_ptr<PlayerStateBase> pB = playerCom.stateManager->GetState<PlayerStateBase>();
+
+	/*StickDirections stick = playerCom.controller->GetStickKnocking(0.6f, 360).leftStick;
+	StickDirections nowStick = playerCom.controller->GetStickKnockingReverce(0.6f, 1).leftStick;
+	ImGui::Begin("stick");
+	ImGui::Text("past = %d : now = %d", stick, nowStick);
+	ImGui::End();*/
 	
 	//スティックの傾きの量が少なかったら移動しない
 	if ((fabs(walkAngle.x) >= 0.3f || fabs(walkAngle.z) >= 0.3f) && hp > 0.0f) {
@@ -285,17 +291,13 @@ void Player::Move(float _speed, float _speedMax)
 		//アニメーションのスピードを傾き方で測定
 		playerCom.anim->SetPlaySpeed(walkAngle.Size());
 
-		StickDirections stick = playerCom.controller->GetStickKnocking(0.6f, 60).leftStick;
-		StickDirections nowStick = playerCom.controller->GetStickKnockingReverce(0.6f,1).leftStick;
-		ImGui::Begin("stick");
-		ImGui::Text("past = %d : now = %d", stick, nowStick);
-		ImGui::End();
-		if (nowStick == S_NO_DIRECTION || stick == S_NO_DIRECTION) {
+		
+		/*if (nowStick == S_NO_DIRECTION || stick == S_NO_DIRECTION) {
 			return;
 		}
 		if (nowStick == stick) {
 			playerCom.stateManager->ChangeState(StateID::PLAYER_TURN_S);
-		}
+		}*/
 	}
 	else {
 		playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);

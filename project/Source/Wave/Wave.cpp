@@ -1,5 +1,6 @@
 #include "Wave.h"
 #include "../Enemy/TrashEnemy/TrashEnemyManager.h"
+#include "../Enemy/EnemyManager.h"
 
 Wave::Wave()
 {
@@ -9,6 +10,7 @@ Wave::Wave()
 	battleCounter = 0;
 	spawn = SPAWN_MAX;
 	isCooperate = false;
+	bossCreate = true;
 }
 
 Wave::~Wave()
@@ -19,6 +21,12 @@ void Wave::Update()
 {
 	EnemySpawn();
 	CooperateAttack();
+	if (waveNow == 3) {
+		if (bossCreate) {
+			FindGameObject<EnemyManager>()->CreateBoss();
+			bossCreate = false;
+		}
+	}
 }
 
 void Wave::Draw()
@@ -27,7 +35,7 @@ void Wave::Draw()
 
 void Wave::EnemySpawn()
 {
-	if (waveNow >= WAVE_MAX)
+	if (waveNow > WAVE_MAX)
 		return;
 
 	//一個前のウェーブで敵を倒した速度によって敵の出す数を変えるためのカウンター
@@ -41,7 +49,10 @@ void Wave::EnemySpawn()
 
 	if (tEnemyManager->EnemyList().size() <= 0)
 	{
-		tEnemyManager->CreateEnemy(VZero, spawn);
+		if (waveNow < WAVE_MAX) {
+			tEnemyManager->CreateEnemy(VZero, spawn);
+		}
+		
 		battleCounter = 0;
 		spawn = SPAWN_MAX;
 		waveNow++;

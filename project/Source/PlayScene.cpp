@@ -73,7 +73,7 @@ PlayScene::PlayScene()
 	player->CreatePlayer();
 	//enemy->PlayerObjPointer();
 	cameraManager->ParentObj("PLAYER");
-	enemy->CreateBoss();
+	//enemy->CreateBoss();
 	weapon->CreatePlayerWeapon();
 	//weapon->CreateEnemyWeapon();
 	collManager->SetDrawOrder(-90000);
