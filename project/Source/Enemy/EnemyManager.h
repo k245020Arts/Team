@@ -25,6 +25,7 @@ public:
 	void PlayerObjPointer();
 
 	void CreateBoss();
+	void FindPlayer();
 
 	void AddList(EnemyBase* _enemy, BaseObject* _obj);
 

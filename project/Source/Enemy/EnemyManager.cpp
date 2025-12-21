@@ -91,8 +91,8 @@ void EnemyManager::PlayerObjPointer()
 
 void EnemyManager::CreateBoss()
 {
-	Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
-	player = obj;
+	/*Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
+	player = obj;*/
 	Object3D* boss;
 	boss = new Object3D();
 	float bSize = 8.0f;
@@ -190,6 +190,12 @@ void EnemyManager::CreateBoss()
 	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());
 	player->Component()->GetComponent<Player>()->HitObjectSet(*enemy.begin());
 	//FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>()->TargetSet(*enemy.begin());
+}
+
+void EnemyManager::FindPlayer()
+{
+	Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
+	player = obj;
 }
 
 void EnemyManager::AddList(EnemyBase* _enemy, BaseObject* _obj)
