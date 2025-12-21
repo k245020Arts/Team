@@ -3,11 +3,11 @@
 
 Transitor::Transitor()
 {
-	newWindow = -1;
-	oldWindow = -1;
-	time = -1;
-	timeMax = -1;
-	transitorType = STAY;
+	newWindow		= -1;
+	oldWindow		= -1;
+	time			= -1;
+	timeMax			= -1;
+	transitorType	= STAY;
 	DontDestroyOnSceneChange();
 }
 
@@ -36,14 +36,14 @@ void Transitor::StartTransitor(std::string _sceneName, float _time)
 		oldWindow = -1;
 	}
 
-	newWindow = MakeScreen(size.x, size.y, true);
-	oldWindow = MakeScreen(size.x, size.y, true);
+	newWindow		= MakeScreen(size.x, size.y, true);
+	oldWindow		= MakeScreen(size.x, size.y, true);
 
-	int result = GetDrawScreenGraph(0, 0, size.x, size.y, oldWindow);
-	time = _time;
+	int result		= GetDrawScreenGraph(0, 0, size.x, size.y, oldWindow);
+	time			= _time;
 
-	timeMax = _time;
-	transitorType = PLAY;
+	timeMax			= _time;
+	transitorType	= PLAY;
 
 	SetUseSetDrawScreenSettingReset(FALSE); //カメラのリセット
 

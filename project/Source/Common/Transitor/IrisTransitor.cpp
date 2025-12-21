@@ -4,10 +4,10 @@
 
 IrisTransitor::IrisTransitor()
 {
-	maskHandle = -1;
-	maskScreen = -1;
-	sizeCross = -1;
-	irisOut = false;
+	maskHandle	= -1;
+	maskScreen	= -1;
+	sizeCross	= -1;
+	irisOut		= false;
 }
 
 IrisTransitor::~IrisTransitor()
@@ -58,17 +58,17 @@ void IrisTransitor::Draw()
 		return;
 	}
 
-	float rate = time / timeMax;
+	float rate		= time / timeMax;
 	int backRT;
 	int maskedRT;
 	if (irisOut) {
-		backRT = oldWindow;
-		maskedRT = newWindow;
-		rate = 1.0f - rate;
+		backRT		= oldWindow;
+		maskedRT	= newWindow;
+		rate		= 1.0f - rate;
 	}
 	else {
-		backRT = newWindow;
-		maskedRT = oldWindow;
+		backRT		= newWindow;
+		maskedRT	= oldWindow;
 	}
 	//
 	float radius = (sizeCross )* rate;
@@ -102,9 +102,9 @@ void IrisTransitor::Draw()
 
 void IrisTransitor::SetMask()
 {
-	maskScreen = MakeScreen(size.x, size.y, true);
-	maskHandle = CreateMaskScreen();
-	sizeCross = hypotf((float)size.x,(float)size.y )/ 2.0f;
+	maskScreen	= MakeScreen(size.x, size.y, true);
+	maskHandle	= CreateMaskScreen();
+	sizeCross	= hypotf((float)size.x,(float)size.y )/ 2.0f;
 }
 
 void IrisTransitor::StartIris(std::string _sceneName, float _time, bool _out)

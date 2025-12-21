@@ -10,9 +10,9 @@
 
 PlayerStateBase::PlayerStateBase()
 {
-	firstColl = false;
-	nextAttack = false;
-	noStateChange = false;
+	firstColl		= false;
+	nextAttack		= false;
+	noStateChange	= false;
 	animId = ID::P_ANIM_IDOL;
 }
 
@@ -31,15 +31,15 @@ void PlayerStateBase::Draw()
 
 void PlayerStateBase::AvoidStart()
 {
-	Player* p = GetBase<Player>();
+	Player* p		= GetBase<Player>();
 	p->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
-	noStateChange = false;
+	noStateChange	= false;
 }
 
 void PlayerStateBase::Start() {
-	Player* p = GetBase<Player>();
+	Player* p		= GetBase<Player>();
 	p->playerCom.anim->Play(animId,0.1f);
-	noStateChange = false;
+	noStateChange	= false;
 	//Debug::DebugLog(string);
 }
 

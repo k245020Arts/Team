@@ -61,9 +61,9 @@ void CameraManager::ParentObj(std::string _str)
 
 	RayCollider* c = mainCamera->Component()->AddComponent<RayCollider>();
 	CollsionInfo info;
-	info.oneColl = false;
-	info.parentTransfrom = mainCamera->Component()->GetComponent<Camera>()->GetCameraTransform();
-	info.shape = CollsionInformation::RAY;
-	info.tag = CollsionInformation::C_FLOOR;
+	info.oneColl			= false;
+	info.parentTransfrom	= mainCamera->Component()->GetComponent<Camera>()->GetCameraTransform();
+	info.shape				= CollsionInformation::RAY;
+	info.tag				= CollsionInformation::C_FLOOR;
 	c->RaySet(info, Transform(VECTOR3(0, -100, 0), VZero, VOne), Transform(VECTOR3(0, 100, 0), VZero, VOne));
 }

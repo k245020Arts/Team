@@ -8,10 +8,10 @@
 
 PlayerDie::PlayerDie()
 {
-	animId = ID::P_DIE;
+	animId	= ID::P_DIE;
 	//id = ID::P_DIE;
-	string = Function::GetClassNameC<PlayerDie>();
-	one = false;
+	string	= Function::GetClassNameC<PlayerDie>();
+	one		= false;
 }
 
 PlayerDie::~PlayerDie()
@@ -50,13 +50,13 @@ void PlayerDie::Draw()
 
 void PlayerDie::Start()
 {
-	Player* p = GetBase<Player>();
+	Player* p	= GetBase<Player>();
 	PlayerStateBase::Start();
 	Time::ChangeDeltaRate(0.1f);
-	slowTime = 0.5f;
+	slowTime	= 0.5f;
 	p->playerCom.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	p->playerCom.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
-	one = true;
+	one			= true;
 	p->obj->Component()->RemoveAllComponent<SphereCollider>();
 }
 

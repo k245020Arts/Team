@@ -9,13 +9,13 @@
 BossNormalAttack6::BossNormalAttack6()
 {
 	//id = ID::B_N_ATTACK1;
-	string = Function::GetClassNameC<BossNormalAttack6>();
-	animId = ID::B_N_ATTACK6;
-	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
-	damage.damagePattern = BossAttackBase::BACK;
-	averageSpeed = 0.0f;
-	keepPlayerPosition = VZero;
-	normal = VZero;
+	string					= Function::GetClassNameC<BossNormalAttack6>();
+	animId					= ID::B_N_ATTACK6;
+	collTrans				= Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
+	damage.damagePattern	= BossAttackBase::BACK;
+	averageSpeed			= 0.0f;
+	keepPlayerPosition		= VZero;
+	normal					= VZero;
 }
 
 BossNormalAttack6::~BossNormalAttack6()
@@ -61,15 +61,20 @@ void BossNormalAttack6::Start()
 	Boss* boss = GetBase<Boss>();
 	EnemyStateBase::Start();
 	BossAttackBase::BossStart();
+
 	firstColl = true;
 	boss->enemyBaseComponent.anim->AnimEventReset();
-	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
-	keepPlayerPosition = boss->enemyBaseComponent.playerObj->GetTransform()->position;
-	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
-	VECTOR3 dis = boss->bossTransform->position - keepPlayerPosition ;
-	normal = dis.Normalize();
+
+	damage.hitDamage	= boss->bs->GetStatus().normalAttack1;
+	keepPlayerPosition	= boss->enemyBaseComponent.playerObj->GetTransform()->position;
+	damage.hitDamage	= boss->bs->GetStatus().normalAttack1;
+	VECTOR3 dis			= boss->bossTransform->position - keepPlayerPosition ;
+	normal				= dis.Normalize();
+	//yÀ•W‚ð‚¢‚¶‚è‚½‚­‚È‚¢‚Ì‚Å0‚É‚·‚éB
+	normal.y			= 0.0f;
 	boss->bossTransform->rotation.y = atan2f(dis.x, dis.z);
 	boss->enemyBaseComponent.physics->AddVelocity(normal * -1500.0f, false);
+	
 	fallFrame = 0.0f;
 	boss->threat = false;
 }

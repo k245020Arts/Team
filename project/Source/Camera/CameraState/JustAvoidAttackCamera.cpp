@@ -8,12 +8,12 @@
 
 JustAvoidAttackCamera::JustAvoidAttackCamera()
 {
-	string = Function::GetClassNameC<JustAvoidAttackCamera>();
+	string			= Function::GetClassNameC<JustAvoidAttackCamera>();
 
 	//id = ID::C_AVOID_ATTACK;
-	firstRotation = 0.0f;
-	distanceTimer = 0.0f;
-	timer = 0.0f;
+	firstRotation	= 0.0f;
+	distanceTimer	= 0.0f;
+	timer			= 0.0f;
 }
 
 JustAvoidAttackCamera::~JustAvoidAttackCamera()
@@ -61,10 +61,10 @@ void JustAvoidAttackCamera::Start()
 {
 	Camera* c = GetBase<Camera>();
 	//c->cameraComponent.cameraTransform->rotation.x += 180.0f * DegToRad;
-	distanceTimer = DISTANCE_TIMER_MAX;
-	c->cameraComponent.cameraTransform->rotation.x = 10.0f * DegToRad;
-	firstRotation = c->cameraComponent.cameraTransform->rotation.y;
-	timer = MAX_TIMER;
+	distanceTimer									= DISTANCE_TIMER_MAX;
+	c->cameraComponent.cameraTransform->rotation.x	= 10.0f * DegToRad;
+	firstRotation									= c->cameraComponent.cameraTransform->rotation.y;
+	timer											= MAX_TIMER;
 }
 
 void JustAvoidAttackCamera::Finish()

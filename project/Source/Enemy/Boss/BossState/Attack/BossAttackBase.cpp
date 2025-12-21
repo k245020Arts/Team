@@ -13,9 +13,9 @@ BossAttackBase::~BossAttackBase()
 
 void BossAttackBase::BossStart()
 {
-	Boss* boss = GetBase<Boss>();
-	boss->threat = false;
-	damage.flash = false;
+	Boss* boss		= GetBase<Boss>();
+	boss->threat	= false;
+	damage.flash	= false;
 }
 
 void BossAttackBase::BossFinish()

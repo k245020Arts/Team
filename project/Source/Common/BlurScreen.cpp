@@ -17,13 +17,13 @@ BlurScreen::BlurScreen()
 
 	Reset();
 
-	defalutAlpha = 150.0f;
-	alpha = defalutAlpha;
-	smallScreen = -1;
-	vignetteGraph = -1;
+	defalutAlpha	= 150.0f;
+	alpha			= defalutAlpha;
+	smallScreen		= -1;
+	vignetteGraph	= -1;
 
 	
-	vignetteGraph = Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::SCREEN_BLUR_IMAGE);
+	vignetteGraph	= Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::SCREEN_BLUR_IMAGE);
 	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_DOWN_SCALE, 4);
 	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_GAUSS, 256, 128);
 	
@@ -158,8 +158,8 @@ void BlurScreen::Play(float _time, float _fadeTime)
 	Reset();
 
 	
-	smallW = Screen::WIDTH / 2;
-	smallH = Screen::HEIGHT / 2;
+	smallW		= Screen::WIDTH / 2;
+	smallH		= Screen::HEIGHT / 2;
 	smallScreen = MakeScreen(smallW, smallH, TRUE);
 
 	//vignetteGraph = Load::GetHandle(ID::SCREEN_BLUR_IMAGE);
@@ -175,14 +175,14 @@ void BlurScreen::Play(float _time, float _fadeTime)
 		
 	}
 
-	use = true;
-	fadeOut = false;
+	use				= true;
+	fadeOut			= false;
 
-	time = _time;
-	fadeTime = _fadeTime;
+	time			= _time;
+	fadeTime		= _fadeTime;
 	defalutFadeTime = _fadeTime;
 
-	alpha = defalutAlpha;
+	alpha			= defalutAlpha;
 
 
 #endif
@@ -212,17 +212,17 @@ void BlurScreen::FeedOut()
 
 void BlurScreen::Reset()
 {
-	use = false;
+	use				= false;
 
-	alpha = 0.0f;
+	alpha			= 0.0f;
 
-	fadeOut = false;
+	fadeOut			= false;
 
-	time = 0.0f;
-	fadeTime = 0.0f;
+	time			= 0.0f;
+	fadeTime		= 0.0f;
 
-	currentScreen = 0;
-	screenDraw = 0.0f;
+	currentScreen	= 0;
+	screenDraw		= 0.0f;
 
 }
 

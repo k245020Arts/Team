@@ -9,11 +9,11 @@
 BossNormalAttack3::BossNormalAttack3()
 {
 	//id = ID::B_N_ATTACK3;
-	string = Function::GetClassNameC<BossNormalAttack3>();
-	animId = ID::B_N_ATTACK3;
-	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
-	damage.damagePattern = BossAttackBase::BACK;
-	counter = 0;
+	string					= Function::GetClassNameC<BossNormalAttack3>();
+	animId					= ID::B_N_ATTACK3;
+	collTrans				= Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
+	damage.damagePattern	= BossAttackBase::BACK;
+	counter					= 0;
 }
 
 BossNormalAttack3::~BossNormalAttack3()
@@ -56,18 +56,18 @@ void BossNormalAttack3::Start()
 	EnemyStateBase::Start();
 	BossAttackBase::BossStart();
 
-	firstColl = true;
-	counter = 0;
-	damage.hitDamage = b->bs->GetStatus().normalAttack3;
+	firstColl				= true;
+	counter					= 0;
+	damage.hitDamage		= b->bs->GetStatus().normalAttack3;
 	b->enemyBaseComponent.anim->AnimEventReset();
 
-	damage.motionMaxSpeed = b->bs->GetStatus().motionSpeed;
+	damage.motionMaxSpeed	= b->bs->GetStatus().motionSpeed;
 
 	//b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionMaxSpeed);
-	damage.motionSpeed = damage.motionMaxSpeed;
+	damage.motionSpeed		= damage.motionMaxSpeed;
 	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform);
 
-	b->threat = false;
+	b->threat				= false;
 }
 
 void BossNormalAttack3::Finish()

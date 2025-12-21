@@ -16,19 +16,18 @@
 
 PlayerJustAvoidAttack1::PlayerJustAvoidAttack1()
 {
-	string = Function::GetClassNameC<PlayerJustAvoidAttack1>();
-	//id = ID::P_ANIM_JUST_AVOID_ATTACK1;
-	nextAttack = false;
-	animId = ID::P_ANIM_JUST_AVOID_ATTACK1;
-	collTrans = Transform(VECTOR3(0, 70, 200), VZero, VECTOR3(300, 0, 0));
-	timer = 0.0f;
+	string		= Function::GetClassNameC<PlayerJustAvoidAttack1>();
+	nextAttack	= false;
+	animId		= ID::P_ANIM_JUST_AVOID_ATTACK1;
+	collTrans	= Transform(VECTOR3(0, 70, 200), VZero, VECTOR3(300, 0, 0));
+	timer		= 0.0f;
 	//nextAttackID = ID::P_ANIM_JUST_AVOID_ATTACK4;
 	nextAttackID = StateID::PLAYER_JUST_AVOID_ATTACK4_S;
-	frontSpeed = 2000.0f;
-	hitDamage = 1;
-	animSpeed = 0.0f;
-	count = 0;
-	timer = 0.0f;
+	frontSpeed	= 2000.0f;
+	hitDamage	= 1;
+	animSpeed	= 0.0f;
+	count		= 0;
+	timer		= 0.0f;
 }
 
 PlayerJustAvoidAttack1::~PlayerJustAvoidAttack1()
@@ -55,8 +54,8 @@ void PlayerJustAvoidAttack1::Update()
 			count--;
 			return;
 		}
-		runTimer = 0.1f;
-		noStateChange = true;
+		runTimer		= 0.1f;
+		noStateChange	= true;
 		p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
 	}
 	if (p->playerCom.InputManager->KeyInputDown("avoid")) {
@@ -64,14 +63,14 @@ void PlayerJustAvoidAttack1::Update()
 		noStateChange = true;
 	}
 	if (p->playerCom.InputManager->KeyInput("attack")) {
-		nextAttack = true;
+		nextAttack	= true;
 	}
 	else {
-		runTimer = 0.3f;
-		noStateChange = true;
+		runTimer		= 0.3f;
+		noStateChange	= true;
 		p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
 		p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-		nextAttack = false;
+		nextAttack		= false;
 	}
 	//UŒ‚‚ðÅ‘å‚Ü‚Å‚¢‚Á‚½‚çƒvƒŒƒCƒ„[‚ðŽ~‚ß‚é
 	if (count >= MAX_ATTACKNUM) {
@@ -92,8 +91,8 @@ void PlayerJustAvoidAttack1::Start()
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
-	animSpeed = 1.0f;
-	count = MAX_ATTACKNUM;
+	animSpeed	= 1.0f;
+	count		= MAX_ATTACKNUM;
 	p->playerCom.anim->SetPlaySpeed(0.05f);
 	firstColl = true;
 	if (distSize <= ATTACK_MOVE_DIST) {
@@ -113,10 +112,10 @@ void PlayerJustAvoidAttack1::Finish()
 
 void PlayerJustAvoidAttack1::Again()
 {
-	Player* p = GetBase<Player>();
+	Player* p	= GetBase<Player>();
 	//p->playerCom.anim->Play(ID::P_ANIM_IDOL);
 	p->playerCom.player->DeleteCollision();
-	firstColl = true;
+	firstColl	= true;
 	//PlayerStateBase::Start();
 	if (distSize <= ATTACK_MOVE_DIST) {
 		p->playerCom.physics->SetVelocity(norm * distSize * 2.5f);
@@ -124,6 +123,6 @@ void PlayerJustAvoidAttack1::Again()
 	animSpeed += 0.1f;
 	p->playerCom.anim->SetPlaySpeed(0.0f);
 	p->playerCom.anim->SetFrame(10.0f);
-	timer = 0.12f;
+	timer		= 0.12f;
 	p->playerCom.sound->RandamSe("P_AttackV", 4);
 }

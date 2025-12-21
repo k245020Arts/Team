@@ -5,15 +5,15 @@
 
 Sound::Sound()
 {
-	feedInTime = 0.0f;
-	feedOutTime = 0.0f;
-	active = false;
-	firstPlay = false;
-	loop = false;
-	volume = 0;
-	lastPlayintBgm = 0;
-	soundHandle = -1;
-	timeMax = 0.0f;
+	feedInTime		= 0.0f;
+	feedOutTime		= 0.0f;
+	active			= false;
+	firstPlay		= false;
+	loop			= false;
+	volume			= 0;
+	lastPlayintBgm	= 0;
+	soundHandle		= -1;
+	timeMax			= 0.0f;
 
 }
 
@@ -73,14 +73,14 @@ void Sound::StopSE()
 
 void Sound::BGMFeedIn(float time)
 {
-	feedInTime = time;
-	timeMax = time;
-	active = true;
+	feedInTime	= time;
+	timeMax		= time;
+	active		= true;
 }
 
 void Sound::BGMFeedOut(float time)
 {
 	feedOutTime = time;
-	timeMax = time;
-	active = true;
+	timeMax		= time;
+	active		= true;
 }

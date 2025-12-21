@@ -5,9 +5,9 @@
 
 BossDamage::BossDamage()
 {
-	animId = ID::BOSS_DAMAGE;
+	animId		= ID::BOSS_DAMAGE;
 	//id = ID::BOSS_DIE;
-	string = Function::GetClassNameC<BossDamage>();
+	string		= Function::GetClassNameC<BossDamage>();
 }
 
 BossDamage::~BossDamage()
@@ -16,7 +16,7 @@ BossDamage::~BossDamage()
 
 void BossDamage::Update()
 {
-	Boss* boss = GetBase<Boss>();
+	Boss* boss	= GetBase<Boss>();
 	if (boss->enemyBaseComponent.anim->IsFinish()) {
 		boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 	}

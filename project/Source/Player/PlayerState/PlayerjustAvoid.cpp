@@ -18,17 +18,17 @@
 PlayerJustAvoid::PlayerJustAvoid()
 {
 
-	string = string = Function::GetClassNameC<PlayerJustAvoid>();;
-	animId = ID::P_ANIM_JUST_AVOID;
+	string			= string = Function::GetClassNameC<PlayerJustAvoid>();;
+	animId			= ID::P_ANIM_JUST_AVOID;
 	//id = ID::P_ANIM_JUST_AVOID;
-	attack = false;
-	blurScreen = FindGameObject<BlurScreen>();
-	cameraAngle = 0.0f;
-	cameraLeap = 0.0f;
-	startTimer = 0.0f;
-	shadowNum = 0;
-	num = 0;
-	easingCount = 0.0f;
+	attack			= false;
+	blurScreen		= FindGameObject<BlurScreen>();
+	cameraAngle		= 0.0f;
+	cameraLeap		= 0.0f;
+	startTimer		= 0.0f;
+	shadowNum		= 0;
+	num				= 0;
+	easingCount		= 0.0f;
 	
 }
 
@@ -120,24 +120,7 @@ void PlayerJustAvoid::Update()
 
 void PlayerJustAvoid::Draw()
 {
-	/*if (avoidShadowStart) {
-		shadowAddTime += p->playerCom.player->GetPlayerObj()->GetObjectTimeRate();
-		if (shadowNum < SHADOW_NUM_MAX && shadowAddTime >= 0.015f) {
-			shadowTransform[shadowNum] = *p->playerCom.player->GetPlayerTransform();
-			shadowNum++;
-			shadowAddTime = 0.0f;
-		}
-		for (int i = 0; i < SHADOW_NUM_MAX; i++) {
-			if (i >= shadowNum) {
-				anim[i]->Update();
-			}
-			else {
-				MV1SetMatrix(hModel[i], shadowTransform[i].GetMatrix());
-				MV1SetDifColorScale(hModel[i], GetColorF(1.0f, 1.0f, 0.0f, 0.2f));
-				MV1DrawModel(hModel[i]);
-			}
-		}
-	}*/
+	
 }
 
 void PlayerJustAvoid::Start()
@@ -214,16 +197,18 @@ void PlayerJustAvoid::Finish()
 	Player* p = GetBase<Player>();
 	Time::ChangeDeltaRate(1.0f);
 	p->playerCom.anim->SetPlaySpeed(1.0f);
+
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.player->PlayerStickInput();
 	p->playerCom.camera->CameraLeapSet(0.2f);
 	p->playerCom.hitObj->SetObjectTimeRate();
+
 	p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
-	p->justAvoid = false;
-	p->justFeedOutTime = p->JUST_FEED_OUT_TIME;
+	p->justAvoid			= false;
+	p->justFeedOutTime		= p->JUST_FEED_OUT_TIME;
 	if (!attack) {
-		p->bossThreat = true;
-		p->largeJustAvoid = false;
+		p->bossThreat		= true;
+		p->largeJustAvoid	= false;
 	}
 	
 }
@@ -243,20 +228,20 @@ void PlayerJustAvoid::JustAvoidRotation()
 {
 	Player* p = GetBase<Player>();
 	//ƒvƒŒƒCƒ„[‚ÌŠp“x‚Ì‰ñ“]ˆ—
-	Transform* pl = p->playerCom.player->GetPlayerTransform();
+	Transform* pl	= p->playerCom.player->GetPlayerTransform();
 	VECTOR3 forward = VECTOR3(0, 0, 1) * MGetRotY(pl->rotation.y);
-	VECTOR3 right = VECTOR3(1, 0, 0) * MGetRotY(pl->rotation.y);
-	VECTOR3 target = p->playerCom.player->GetWalkAngle() * MGetRotY(cameraRotation.y);
+	VECTOR3 right	= VECTOR3(1, 0, 0) * MGetRotY(pl->rotation.y);
+	VECTOR3 target	= p->playerCom.player->GetWalkAngle() * MGetRotY(cameraRotation.y);
 	float dot = VDot(target.Normalize(), forward.Normalize());
 	if (dot >= cosf(5.0f * DegToRad)) {
-		float inRot = atan2f(target.x, target.z);
-		pl->rotation.y = inRot;
+		float inRot		= atan2f(target.x, target.z);
+		pl->rotation.y	= inRot;
 	}
 	else if (VDot(right, target) > 0) {
-		pl->rotation.y += 5.0f * DegToRad;
+		pl->rotation.y	+= 5.0f * DegToRad;
 		
 	}
 	else {
-		pl->rotation.y -= 5.0f * DegToRad;
+		pl->rotation.y	-= 5.0f * DegToRad;
 	}
 }

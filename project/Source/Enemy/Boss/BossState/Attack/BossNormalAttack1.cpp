@@ -8,11 +8,11 @@
 BossNormalAttack1::BossNormalAttack1()
 {
 	//id = ID::B_N_ATTACK1;
-	string = Function::GetClassNameC<BossNormalAttack1>();
-	animId = ID::B_N_ATTACK1;
-	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
-	damage.damagePattern = BossAttackBase::NO_BACK;
-	averageSpeed = 0.0f;
+	string					= Function::GetClassNameC<BossNormalAttack1>();
+	animId					= ID::B_N_ATTACK1;
+	collTrans				= Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
+	damage.damagePattern	= BossAttackBase::NO_BACK;
+	averageSpeed			= 0.0f;
 
 }
 
@@ -30,12 +30,15 @@ void BossNormalAttack1::Update()
 	}
 	BossAttackCollsion();
 	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
+		//UŒ‚‚É‚©‚©‚éŽžŠÔ‚Å90‹‰ñ‚µ‚½‚¢‚Ì‚Å‚PƒtƒŒ[ƒ€‚²‚Æ‚Éi‚ÞŠp“x‚ð‹‚ß‚Ä‚¢‚éB
 		averageSpeed = 90.0f / attackTime;
 		averageSpeed *= boss->obj->GetObjectRate();
+
 		boss->bossTransform->rotation.y += averageSpeed * DegToRad;
 	}
 	AttackSound();
 	if (boss->maxAttack <= 0) {
+		//ŽO’iUŒ‚‚Ìˆê”ÔÅŒã‚ÌŽž‚¾‚¯Œõ‚éB
 		AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
 		damage.flash = true;
 	}

@@ -11,31 +11,31 @@
 
 PlayerAttackStateBase::PlayerAttackStateBase()
 {
-	easingCount = 0.0f;
-	beforeAngle = 0.0f;
-	angle = 0.0f;
-	nextAttack = 0.0f;
-	distSize = 0.0f;
-	frontSpeed = 0.0f;
-	nextAttackID = StateID::PLAYER_ATTACK1_S;
-	rotation = 0.0f;
-	runTimer = 0.0f;
-	time = 0.0f;
-	beforeAngle = 0.0f;
-	beforeAttack = false;
-	defalutTrail = true;
-	nextAvoid = false;
-	rockOn = false;
-	hitDamage = 0.0f;
+	easingCount		= 0.0f;
+	beforeAngle		= 0.0f;
+	angle			= 0.0f;
+	nextAttack		= 0.0f;
+	distSize		= 0.0f;
+	frontSpeed		= 0.0f;
+	nextAttackID	= StateID::PLAYER_ATTACK1_S;
+	rotation		= 0.0f;
+	runTimer		= 0.0f;
+	time			= 0.0f;
+	beforeAngle		= 0.0f;
+	beforeAttack	= false;
+	defalutTrail	= true;
+	nextAvoid		= false;
+	rockOn			= false;
+	hitDamage		= 0.0f;
 
-	targetTrans = Transform();
-	dist = VZero;
-	norm = VZero;
+	targetTrans		= Transform();
+	dist			= VZero;
+	norm			= VZero;
 
-	frontSpeed = 0.0f;
+	frontSpeed		= 0.0f;
 
-	rotation = false;
-	defalutTrail = true;
+	rotation		= false;
+	defalutTrail	= true;
 }
 
 PlayerAttackStateBase::~PlayerAttackStateBase()
@@ -97,43 +97,43 @@ void PlayerAttackStateBase::EnemyRotation()
 
 void PlayerAttackStateBase::Start()
 {
-	Player* p = GetBase<Player>();
-	nextAttack = false;
-	nextAvoid = false;
+	Player* p			= GetBase<Player>();
+	nextAttack			= false;
+	nextAvoid			= false;
 	p->playerCom.player->SetAvoidStart(false);
-	noStateChange = false;
+	noStateChange		= false;
 	if (p->playerCom.targetObj != nullptr) {
-		targetTrans = *(p->playerCom.targetObj->GetTransform());
+		targetTrans		= *(p->playerCom.targetObj->GetTransform());
 	}
 	else {
 		Transform nearEnemyPos = p->playerCom.enemyManager->NearEnemyPos(p->playerTransform->position);
-		targetTrans = nearEnemyPos;
+		targetTrans		= nearEnemyPos;
 		//targetTrans.position = VECTOR3(0, 0, 1) * p->playerTransform->rotation;
 	}
 	
 	//“G‚ÆƒvƒŒƒCƒ„[‚Ì‹——£‚ð‚Æ‚é
-	dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
+	dist				= targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
 	
 	VECTOR3 frontVector = VECTOR3(0.0f, 0.0f, 1.0f) * MGetRotY(p->playerTransform->rotation.y);
 	rockOn = false;
-	beforeAngle = p->playerCom.player->GetPlayerTransform()->rotation.y;
+	beforeAngle			= p->playerCom.player->GetPlayerTransform()->rotation.y;
 	if (VDot(dist, frontVector) >= 60.0f * DegToRad) {
 		//Šp“xŒvŽZ
-		angle = atan2f(dist.x, dist.z);
-		rockOn = true;
+		angle			= atan2f(dist.x, dist.z);
+		rockOn			= true;
 	}
 	else {
-		angle = beforeAngle;
+		angle			= beforeAngle;
 	}
 
 	
-	easingCount = 0.0f;
-	firstColl = true;
-	distSize = dist.Size();
-	norm = dist.Normalize();
+	easingCount			= 0.0f;
+	firstColl			= true;
+	distSize			= dist.Size();
+	norm				= dist.Normalize();
 	p->playerCom.sound->RandamSe("P_AttackV", 3);
-	beforeAttack = true;
-	runTimer = 0.0f;
+	beforeAttack		= true;
+	runTimer			= 0.0f;
 	
 	
 }

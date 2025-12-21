@@ -5,9 +5,9 @@
 
 EffectBase::EffectBase()
 {
-	speed = 1.0f;
+	speed	= 1.0f;
 	debugId = 22;
-	tag = Function::GetClassNameC<EffectBase>();
+	tag		= Function::GetClassNameC<EffectBase>();
 }
 
 EffectBase::~EffectBase()
@@ -20,20 +20,20 @@ void EffectBase::Update()
 {
 	(this->*effectPlay)();
 	if (feedInTime <= 0.0f) {
-		time -= Time::DeltaTimeRate();
+		time		-= Time::DeltaTimeRate();
 		if (time <= 0.0f) {
 			(this->*effectStop)();
-			active = false;
+			active	= false;
 		}
 	}
 	else {
-		feedInTime -= Time::DeltaTimeRate();
+		feedInTime		-= Time::DeltaTimeRate();
 		if (feedInTime <= 0.0f) {
-			feedInTime = 0.0f;
+			feedInTime	= 0.0f;
 		}
-		float rate = 1 - (feedInTime / FEEDIN_TIME);
-		float amout = Easing::EaseIn(0.0f, 255.0f, rate);
-		Color::Rgb rgb = Color::Rgb(255.0f, 255.0f, 255.0f, amout);
+		float rate		= 1 - (feedInTime / FEEDIN_TIME);
+		float amout		= Easing::EaseIn(0.0f, 255.0f, rate);
+		Color::Rgb rgb	= Color::Rgb(255.0f, 255.0f, 255.0f, amout);
 		(this->*effectColor)(rgb);
 	}
 	
@@ -60,18 +60,18 @@ void EffectBase::EffectInit(Transform _transform, BaseObject* _parent, Effect_ID
 	time = _time;
 	
 	if (effect3D) {
-		effectPlay = &EffectBase::EffectPlay3D;
-		effectStop = &EffectBase::EffectStop3D;
+		effectPlay	= &EffectBase::EffectPlay3D;
+		effectStop	= &EffectBase::EffectStop3D;
 		effectColor = &EffectBase::SetColor3D;
 		hPlayHandle = PlayEffekseer3DEffect(Load::GetEffectHandle(id));
 	}
 	else {
-		effectPlay = &EffectBase::EffectPlay2D;
-		effectStop = &EffectBase::EffectStop2D;
+		effectPlay	= &EffectBase::EffectPlay2D;
+		effectStop	= &EffectBase::EffectStop2D;
 		effectColor = &EffectBase::SetColor2D;
 		hPlayHandle = PlayEffekseer2DEffect(Load::GetEffectHandle(id));
 	}
-	feedInTime = FEEDIN_TIME;;
+	feedInTime		= FEEDIN_TIME;;
 }
 
 void EffectBase::EffectPlay2D()

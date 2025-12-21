@@ -6,16 +6,16 @@
 
 MeshRenderer::MeshRenderer()
 {
-	hModel = -1;
-	draw = true;
-	shaker = nullptr;
-	debugId = 6;
-	tag = Function::GetClassNameC<MeshRenderer>();
-	angle = 0.0f;
-	color = nullptr;
-	meshNum = 0;
-	worldTransform = true;
-	depricate = false;
+	hModel			= -1;
+	draw			= true;
+	shaker			= nullptr;
+	debugId			= 6;
+	tag				= Function::GetClassNameC<MeshRenderer>();
+	angle			= 0.0f;
+	color			= nullptr;
+	meshNum			= 0;
+	worldTransform	= true;
+	depricate		= false;
 }
 
 MeshRenderer::~MeshRenderer()

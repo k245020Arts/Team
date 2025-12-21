@@ -12,13 +12,12 @@
 
 PlayerAttack4::PlayerAttack4()
 {
-	string = Function::GetClassNameC<PlayerAttack4>();
-	//id = ID::P_ANIM_ATTACK4;
-	animId = ID::P_ANIM_ATTACK4;
-	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
-	frontSpeed = 2000.0f;
-	hitDamage = 30.0f;
-	nextAttackID = StateID::PLAYER_JUST_AVOID_ATTACK3_S;
+	string			= Function::GetClassNameC<PlayerAttack4>();
+	animId			= ID::P_ANIM_ATTACK4;
+	collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
+	frontSpeed		= 2000.0f;
+	hitDamage		= 30.0f;
+	nextAttackID	= StateID::PLAYER_JUST_AVOID_ATTACK3_S;
 }
 
 PlayerAttack4::~PlayerAttack4()

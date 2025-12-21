@@ -6,11 +6,11 @@
 
 ShockWave::ShockWave()
 {
-	effect = FindGameObject<EffectManager>();
-	collider = nullptr;
-	waveSpeed = 0.0f;
-	debugId = 24;
-	tag = Function::GetClassNameC<ShockWave>();
+	effect		= FindGameObject<EffectManager>();
+	collider	= nullptr;
+	waveSpeed	= 0.0f;
+	debugId		= 24;
+	tag			= Function::GetClassNameC<ShockWave>();
 }
 
 ShockWave::~ShockWave()
@@ -31,11 +31,11 @@ void ShockWave::CreateWave(CollsionInformation::Tag _tag, Transform _transform, 
 {
 	
 	CollsionInfo info;
-	info.parentTransfrom = GetBaseObject()->GetTransform();
-	info.shape = CollsionInformation::DONUT;
-	info.oneColl = true;
-	info.tag = _tag;
-	collider = obj->Component()->AddComponent<DountCollider>();
+	info.parentTransfrom	= GetBaseObject()->GetTransform();
+	info.shape				= CollsionInformation::DONUT;
+	info.oneColl			= true;
+	info.tag				= _tag;
+	collider				= obj->Component()->AddComponent<DountCollider>();
 	collider->DountSet(info, _transform, _startOutRange);
-	waveSpeed = _speed;
+	waveSpeed				= _speed;
 }

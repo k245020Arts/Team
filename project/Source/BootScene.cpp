@@ -9,12 +9,12 @@
 
 BootScene::BootScene()
 {
-	InputManager* input = new InputManager(true,true,false);
+	InputManager* input			= new InputManager(true,true,false);
 	Load::Init();
 	ID::Init();
 	Debug::InitDebug(input);
 	Random::Init();
-	SoundManager*sound =  new SoundManager();
+	SoundManager*sound			=  new SoundManager();
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();
 }

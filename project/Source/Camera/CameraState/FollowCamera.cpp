@@ -13,9 +13,8 @@
 
 FollowCamera::FollowCamera()
 {
-	enemyShake = false;
-	string = Function::GetClassNameC<FollowCamera>();
-	//id = ID::C_FOLLOW;
+	enemyShake	= false;
+	string		= Function::GetClassNameC<FollowCamera>();
 	backCounter = 0.0f;
 }
 
@@ -29,15 +28,16 @@ void FollowCamera::Update()
 	Camera* c = GetBase<Camera>();
 	//‘¼‚Ìˆ—‚©‚ç‹A‚Á‚Ä‚«‚½‚Æ‚«‚É‚·‚®‚ÉƒJƒƒ‰‚ÌˆÊ’u‚ª–ß‚ç‚È‚¢‚æ‚¤‚É•âŠ®‚ðŠ|‚¯‚Ä‚¢‚é
 	if (backCounter >= 0.0f) {
-		float t = 1.0f - backCounter / TIMER_MAX;
-		VECTOR3 easedT = Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
-		c->target = Easing::EaseOut(currentTarget,c->cameraComponent.target.transform->position,t);
-		c->currentDistance = easedT;
+
+		float t				= 1.0f - backCounter / TIMER_MAX;
+		VECTOR3 easedT		= Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
+		c->target			= Easing::EaseOut(currentTarget,c->cameraComponent.target.transform->position,t);
+		c->currentDistance	= easedT;
 		backCounter -= Time::DeltaTimeRate();
 	}
 	else {
-		c->currentDistance = c->defalutDistance;
-		c->target = c->cameraComponent.target.transform->position;
+		c->currentDistance	= c->defalutDistance;
+		c->target			= c->cameraComponent.target.transform->position;
 	}
 	//’Ç]ˆ—
 	c->cameraComponent.camera->Follow();
@@ -63,11 +63,11 @@ void FollowCamera::Draw()
 void FollowCamera::Start()
 {
 	Camera* c = GetBase<Camera>();
-	p = c->cameraComponent.player.obj->Component()->GetComponent<Player>();
+	player											= c->cameraComponent.player.obj->Component()->GetComponent<Player>();
 
-	backCounter = TIMER_MAX;
-	currentTarget = c->target;
-	c->cameraComponent.cameraTransform->rotation.x = 30.0f * DegToRad;
+	backCounter										= TIMER_MAX;
+	currentTarget									= c->target;
+	c->cameraComponent.cameraTransform->rotation.x	= 30.0f * DegToRad;
 }
 
 void FollowCamera::Finish()

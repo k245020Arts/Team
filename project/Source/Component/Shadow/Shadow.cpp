@@ -9,9 +9,9 @@
 
 Shadow::Shadow()
 {
-	model = -1;
-	debugId = 24;
-	tag = Function::GetClassNameC<Shadow>();
+	model		= -1;
+	debugId		= 24;
+	tag			= Function::GetClassNameC<Shadow>();
 }
 
 Shadow::~Shadow()

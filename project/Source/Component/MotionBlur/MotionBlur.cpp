@@ -6,10 +6,10 @@
 
 MotionBlur::MotionBlur()
 {
-	debugId = 8;
-	tag = Function::GetClassNameC<MotionBlur>();
-	model = -1;
-	anim = nullptr;
+	debugId	= 8;
+	tag		= Function::GetClassNameC<MotionBlur>();
+	model	= -1;
+	anim	= nullptr;
 }
 
 MotionBlur::~MotionBlur()
@@ -51,22 +51,23 @@ void MotionBlur::Draw()
 
 void MotionBlur::Start(int _model)
 {
-	model = _model;
-	anim = obj->Component()->GetComponent<Animator>();
+	model	= _model;
+	anim	= obj->Component()->GetComponent<Animator>();
 }
 
 void MotionBlur::MosionStart(float _time, float _alpha,ID::IDType _id, int _modelFrame)
 {
 	BlurInfo b;
-	b.alpha = _alpha;
-	b.time = _time;
-	b.maxTime = _time;
-	b.baseModel = MV1DuplicateModel(model);
-	b.animFrame = anim->GetCurrentFrame();
-	b.transform = *obj->GetTransform();
-	b.transform.rotation.y += 180.0f * DegToRad;
-	b.matrix = b.transform.GetMatrix();
-	b.attackID = MV1AttachAnim(b.baseModel, 0, Load::GetHandle(_id));
+	b.alpha					= _alpha;
+	b.time					= _time;
+	b.maxTime				= _time;
+	b.baseModel				= MV1DuplicateModel(model);
+	b.animFrame				= anim->GetCurrentFrame();
+	b.transform				= *obj->GetTransform();
+	b.transform.rotation.y	+= 180.0f * DegToRad;
+	b.matrix				= b.transform.GetMatrix();
+	b.attackID				= MV1AttachAnim(b.baseModel, 0, Load::GetHandle(_id));
+
 	MV1SetAttachAnimTime(b.baseModel, b.attackID, b.animFrame);
 	MATRIX identity = MGetIdent();
 	MV1SetFrameUserLocalMatrix(b.baseModel, _modelFrame, identity);

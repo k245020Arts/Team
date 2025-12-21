@@ -2,11 +2,11 @@
 
 TitleTransitor::TitleTransitor()
 {
-	tileSize = 50;
-	gravity = 0.2f;
+	tileSize	= 50;
+	gravity		= 0.2f;
 	gravityTime = 0.15f;
-	erase = false;
-	useGravity = false;
+	erase		= false;
+	useGravity	= false;
 	tile.clear();
 
 }
@@ -117,9 +117,9 @@ void TitleTransitor::StartTile(std::string _sceneName, float _time, bool _useGra
 	Transitor::StartTransitor(_sceneName, _time);
 	SetTile();
 	erase = 0.0f;
-	useGravity = _useGravity;
+	useGravity	= _useGravity;
 	if (useGravity) {
 		timeMax += gravityTime;
-		time = timeMax;
+		time	= timeMax;
 	}
 }

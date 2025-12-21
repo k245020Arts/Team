@@ -11,17 +11,17 @@
 BossSpecialSmallAttack1::BossSpecialSmallAttack1()
 {
 	//id = ID::B_S_ATTACK1_SMALL;
-	string = Function::GetClassNameC<BossSpecialSmallAttack1>();
-	animId = ID::B_S_ATTACK1_SMALL;
+	string					= Function::GetClassNameC<BossSpecialSmallAttack1>();
+	animId					= ID::B_S_ATTACK1_SMALL;
 
-	collTrans = Transform(VECTOR3(0, -50, 0), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
-	damage.damagePattern = BossAttackBase::BACK;
-	damage.hitDamage = 50.0f;
+	collTrans				= Transform(VECTOR3(0, -50, 0), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
+	damage.damagePattern	= BossAttackBase::BACK;
+	damage.hitDamage		= 50.0f;
 
-	subSpeed = 0.0f;
-	attackStart = 0.0f;
-	firstCount = false;
-	effect = false;
+	subSpeed				= 0.0f;
+	attackStart				= 0.0f;
+	firstCount				= false;
+	effect					= false;
 
 }
 
@@ -40,6 +40,7 @@ void BossSpecialSmallAttack1::Update()
 	}
 	else {
 		if (firstCount) {
+			//飛ぶ前のしゃがみからとびに移る。
 			firstCount = false;
 			b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 3000, 0), false);
 			subSpeed = 0;
@@ -57,11 +58,13 @@ void BossSpecialSmallAttack1::Update()
 		if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 40) {
 			if (effect) {
 				effect = false;
-				BaseObject* obj1 = b->enemyBaseComponent.effect->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
-				BaseObject* obj2 = b->enemyBaseComponent.effect->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_GROUND, 1.0f);
-				ShockWave* w = obj1->Component()->AddComponent<ShockWave>();
+				//エフェクトと衝撃波の生成
+				BaseObject* obj1	= b->enemyBaseComponent.effect->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
+				BaseObject* obj2	= b->enemyBaseComponent.effect->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_GROUND, 1.0f);
+				ShockWave* w		= obj1->Component()->AddComponent<ShockWave>();
 				b->enemyBaseComponent.effect->ParentTransformRemove(obj1);
 				b->enemyBaseComponent.effect->ParentTransformRemove(obj2);
+
 				w->CreateWave(CollsionInformation::B_E_ATTACK, Transform(VZero, VZero, VOne), 50.0f, 50.0f);
 				b->enemyBaseComponent.sound->PlaySe(Sound_ID::GROUND);
 			}
@@ -72,13 +75,15 @@ void BossSpecialSmallAttack1::Update()
 		}
 	}
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= b->enemyBaseComponent.anim->EventFinishTime(animId)) {
-		VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
-		VECTOR3 sub = pos - b->GetBaseObject()->GetTransform()->position;
+
+		VECTOR3 pos		= b->enemyBaseComponent.playerObj->GetTransform()->position;
+		VECTOR3 sub		= pos - b->GetBaseObject()->GetTransform()->position;
 		VECTOR3 ynotPos = sub * VECTOR3(1, 0, 1);
-		float size = ynotPos.Size();
-		VECTOR3 move = ynotPos.Normalize() * size;
-		move.y = b->enemyBaseComponent.physics->GetVelocity().y;
+		float size		= ynotPos.Size();
+		VECTOR3 move	= ynotPos.Normalize() * size;
+		move.y			= b->enemyBaseComponent.physics->GetVelocity().y;
 		b->enemyBaseComponent.physics->SetVelocity(move);
+
 		b->LookPlayer();
 	}
 	else {
@@ -99,10 +104,11 @@ void BossSpecialSmallAttack1::Start()
 	Boss* b = GetBase<Boss>();
 
 	b->enemyBaseComponent.anim->AnimEventReset();
-	firstColl = true;
+	firstColl	= true;
 	attackStart = 30.0f;
-	firstCount = true;
-	effect = true;
+	firstCount	= true;
+	effect		= true;
+	//ポンポン攻撃を繰り出したいので、最後の隙をなくすために最終フレームを変更
 	b->enemyBaseComponent.anim->SetMaxFrame(animId, 60.0f);
 
 	if (b->comboFirstAttack)

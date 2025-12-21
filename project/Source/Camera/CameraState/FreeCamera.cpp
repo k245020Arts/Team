@@ -5,10 +5,10 @@
 
 FreeCamera::FreeCamera()
 {
-	string = Function::GetClassNameC<FreeCamera>();
+	string			= Function::GetClassNameC<FreeCamera>();
 	//id = ID::C_FREE;
-	backCounter = 0.0f;
-	beforeTarget = 0.0f;
+	backCounter		= 0.0f;
+	beforeTarget	= 0.0f;
 }
 
 FreeCamera::~FreeCamera()
@@ -22,19 +22,19 @@ void FreeCamera::Update()
 	//ŠŠ‚ç‚©‚É‘¼‚Ìstate‚©‚çˆÚs‚µ‚½Žž‚ÉˆÚ“®‚·‚é‚æ‚¤‚É‚µ‚Ä‚¢‚éB
 	if (backCounter >= 0.0f) {
 		float t = 1.0f - backCounter / TIMER_MAX;
-		VECTOR3 easedT = Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
-		c->target = Easing::EaseOut(currentTarget, (VECTOR3)(c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0)), t);
-		c->currentDistance = easedT;
-		backCounter -= Time::DeltaTimeRate();
+		VECTOR3 easedT		= Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
+		c->target			= Easing::EaseOut(currentTarget, (VECTOR3)(c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0)), t);
+		c->currentDistance	= easedT;
+		backCounter			-= Time::DeltaTimeRate();
 	}
 	else {
-		c->currentDistance = c->defalutDistance;
-		VECTOR3 targetp = c->cameraComponent.player.transform->position;
+		c->currentDistance	= c->defalutDistance;
+		VECTOR3 targetp		= c->cameraComponent.player.transform->position;
 		
 		/*if (fabs(beforeTarget - c->cameraComponent.player.transform->position.y) <= 1.0f) {
 			targetp.y = beforeTarget;
 		}*/
-		c->target = targetp + VECTOR3(0,400,0);
+		c->target			= targetp + VECTOR3(0,400,0);
 		//beforeTarget = targetp.y;
 	}
 	if (c->direction == EnemyAttackChangeCameraDirection::NONE) {
@@ -61,9 +61,9 @@ void FreeCamera::Start()
 {
 	Camera* c = GetBase<Camera>();
 
-	backCounter = TIMER_MAX;
-	currentTarget = c->target;
-	beforeTarget = c->cameraComponent.player.transform->position.y;
+	backCounter		= TIMER_MAX;
+	currentTarget	= c->target;
+	beforeTarget	= c->cameraComponent.player.transform->position.y;
 }
 
 void FreeCamera::Finish()

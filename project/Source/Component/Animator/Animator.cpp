@@ -8,12 +8,15 @@
 Animator::Animator()
 {
     fileInfos.clear();
-    playSpeed = 1.0f;
-    blendTime = 0.0f;
-    blendTimeMax = 0.0f;
-    finished = true;
-    debugId = 0;
+    playSpeed       = 1.0f;
+    blendTime       = 0.0f;
+    blendTimeMax    = 0.0f;
+    finished        = true;
+    debugId         = 0;
     tag = Function::GetClassNameC<Animator>();
+    animEventCan    = false;
+    baseModel       = -1;
+    rootNum         = -1;
 }
 
 Animator::~Animator()
@@ -208,19 +211,19 @@ void Animator::Play(ID::IDType id, float margeTime)
     }
     if (current.attachID >= 0)
     {
-        before = current;
-        blendTimeMax = margeTime;
-        blendTime = 0.0f;
+        before          = current;
+        blendTimeMax    = margeTime;
+        blendTime       = 0.0f;
     }
     else
     {
-        blendTimeMax = 0.0f;
+        blendTimeMax    = 0.0f;
     }
-    current.fileID = str;
+    current.fileID      = str;
     if (fileInfos.count(str) > 0)
     {
-        current.attachID = MV1AttachAnim(baseModel, 0, fileInfos[str].hModel);
-        current.frame = 0.0f;
+        current.attachID    = MV1AttachAnim(baseModel, 0, fileInfos[str].hModel);
+        current.frame       = 0.0f;
         current.beforeFrame = 0.0f;
         finished = false;
         MV1SetAttachAnimTime(baseModel, current.attachID, 0.0f);

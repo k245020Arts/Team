@@ -28,14 +28,14 @@ void Debug::CreateMessageBox(const std::string& _error, const std::string& _titl
 
 void Debug::InitDebug(InputManager* _input)
 {
-	drawFps = 60.0f;
-	shaker = true;
+	drawFps				= 60.0f;
+	shaker				= true;
 
-	sphereColliderDraw = false;
-	aabbColliderDraw = false;
-	modelColliderDraw = false;
-	rayColliderDraw = false;
-	inputManager = _input;
+	sphereColliderDraw	= false;
+	aabbColliderDraw	= false;
+	modelColliderDraw	= false;
+	rayColliderDraw		= false;
+	inputManager		= _input;
 
 	logger.clear();
 

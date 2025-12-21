@@ -10,10 +10,10 @@
 
 BossRoar::BossRoar()
 {
-	animId = ID::B_ROAR;
+	animId	= ID::B_ROAR;
 	//id = ID::B_IDOL;
-	string = Function::GetClassNameC<BossRoar>();
-	first = false;
+	string	= Function::GetClassNameC<BossRoar>();
+	first	= false;
 }
 
 BossRoar::~BossRoar()
@@ -43,9 +43,9 @@ void BossRoar::Draw()
 
 void BossRoar::Start()
 {
-	Boss* b = GetBase<Boss>();
+	Boss* b	= GetBase<Boss>();
 	b->enemyBaseComponent.sound->PlaySe(Sound_ID::V_B_ROAR);
-	first = true;
+	first	= true;
 	EnemyStateBase::Start();
 	b->enemyBaseComponent.state->SetNoStateChange(true);
 }

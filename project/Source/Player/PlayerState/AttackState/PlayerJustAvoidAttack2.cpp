@@ -13,19 +13,19 @@
 
 PlayerJustAvoidAttack2::PlayerJustAvoidAttack2()
 {
-	string = Function::GetClassNameC<PlayerJustAvoidAttack2>();
+	string			= Function::GetClassNameC<PlayerJustAvoidAttack2>();
 	//id =  ID::P_ANIM_JUST_AVOID_ATTACK2;
-	animId = ID::P_ANIM_JUST_AVOID_ATTACK2;
-	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(300, 0, 0));
+	animId			= ID::P_ANIM_JUST_AVOID_ATTACK2;
+	collTrans		= Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(300, 0, 0));
 	//nextAttackID = ID::P_ANIM_ATTACK1;
-	nextAttackID = StateID::PLAYER_ATTACK1_S;
-	frontSpeed = 10000.0f;
-	hitDamage = 30.0f;
-	defalutTrail = false;
-	attack = false;
-	count = 0;
-	timer = 0.0f;
-	distSize = 0.0f;
+	nextAttackID	= StateID::PLAYER_ATTACK1_S;
+	frontSpeed		= 10000.0f;
+	hitDamage		= 30.0f;
+	defalutTrail	= false;
+	attack			= false;
+	count			= 0;
+	timer			= 0.0f;
+	distSize		= 0.0f;
 }
 
 PlayerJustAvoidAttack2::~PlayerJustAvoidAttack2()
@@ -51,14 +51,14 @@ void PlayerJustAvoidAttack2::Update()
 		if (p->playerCom.InputManager->KeyInputDown("attack")) {
 			nextAttack = true;
 		}
-		dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
-		distSize = dist.Size();
+		dist		= targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
+		distSize	= dist.Size();
 		if (distSize <= DISTANCE_MOVE && beforeAttack) {
 			p->playerCom.anim->SetPlaySpeed(0.8f);
 			p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(30000.0f, 30000.0f, 30000.0f));
 		}
 		else {
-			angle = atan2f(dist.x, dist.z);
+			angle	= atan2f(dist.x, dist.z);
 			p->playerCom.physics->AddVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle),false);
 		}
 		if (p->playerCom.anim->AnimEventCan()) {	
@@ -96,11 +96,11 @@ void PlayerJustAvoidAttack2::Draw()
 
 void PlayerJustAvoidAttack2::Start()
 {
-	Player* p = GetBase<Player>();
+	Player* p	= GetBase<Player>();
 	PlayerStateBase::Start();
 
-	nextAttack = false;
-	nextAvoid = false;
+	nextAttack	= false;
+	nextAvoid	= false;
 	p->playerCom.player->SetAvoidStart(false);
 	p->playerCom.anim->AnimEventReset();
 
@@ -111,18 +111,18 @@ void PlayerJustAvoidAttack2::Start()
 	else {
 		targetTrans = Transform();
 	}
-	rockOn = true;
+	rockOn		= true;
 
-	dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
+	dist		= targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
 
 	//Šp“xŒvZ
-	angle = atan2f(dist.x, dist.z);
-	easingCount = 0.0f;
-	beforeAngle = p->playerCom.player->GetPlayerTransform()->rotation.y;
-	firstColl = true;
-	distSize = dist.Size();
-	norm = dist.Normalize();
-	beforeAttack = true;
+	angle			= atan2f(dist.x, dist.z);
+	easingCount		= 0.0f;
+	beforeAngle		= p->playerCom.player->GetPlayerTransform()->rotation.y;
+	firstColl		= true;
+	distSize		= dist.Size();
+	norm			= dist.Normalize();
+	beforeAttack	= true;
 	runTimer = 0.0f;
 	if (dist.Size() >= 2500 && p->playerCom.hitObj != nullptr) {
 		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ğ‚¢‚ê‚é

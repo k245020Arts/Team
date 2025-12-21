@@ -13,15 +13,15 @@
 
 PlayerAttack1::PlayerAttack1()
 {
-	string = Function::GetClassNameC<PlayerAttack1>();
+	string			= Function::GetClassNameC<PlayerAttack1>();
 	//id = ID::P_ANIM_ATTACK1;
-	nextAttack = false;
-	animId = ID::P_ANIM_ATTACK1;
-	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
-	nextAttackID = StateID::PLAYER_ATTACK2_S;
-	frontSpeed = 3500.0f;
-	time = 0.0f;
-	hitDamage = 15.0f;
+	nextAttack		= false;
+	animId			= ID::P_ANIM_ATTACK1;
+	collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
+	nextAttackID	= StateID::PLAYER_ATTACK2_S;
+	frontSpeed		= 3500.0f;
+	time			= 0.0f;
+	hitDamage		= 15.0f;
 }
 
 PlayerAttack1::~PlayerAttack1()
@@ -62,14 +62,14 @@ void PlayerAttack1::Update()
 				p->playerCom.physics->SetVelocity(VZero);
 				if (nextAttack) {
 					//ŽŸ‚ÌUŒ‚‚És‚­‚Æ‚«‚ÌÝ’è
-					runTimer = 0.1f;
-					noStateChange = true;
+					runTimer		= 0.1f;
+					noStateChange	= true;
 					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
 				}
 				else {
 					//UŒ‚‚ªI‚í‚é‚Æ‚«‚ÌÝ’è
-					runTimer = 0.05f;
-					noStateChange = true;
+					runTimer		= 0.05f;
+					noStateChange	= true;
 					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
 				}
 			}

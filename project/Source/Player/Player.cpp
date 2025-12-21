@@ -62,29 +62,29 @@ namespace {
 
 Player::Player()
 {
-	playerCom.stateManager = nullptr;
-	avoidReady = false;
-	size = 0.00f;
-	avoidStart = false;
-	enemyHit = false;
-	justAvoid = false;
-	justAvoidCanCounter = 0.0f;
-	avoidCounter = 0;
-	noAvoidCounter = 0.0f;
-	playerTransform = nullptr;
-	debugId = 14;
-	tag = Function::GetClassNameC<Player>();
-	hp = MAX_HP;
-	maxHp = hp;
-	avoidReadyCounter = 0.0f;
-	justAvoidBlurImage = Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect",ID::JUST_AVOID_BLUR);
-	justFeedInTime = 0.0f;
-	justFeedOutTime = 0.0f;
-	bossThreat = false;
-	largeJustAvoid = false;
-	noDamage = false;
-	redCounter = 0.0f;
-	playerCom = PlayerInformation::CharaComponent();
+	playerCom.stateManager	= nullptr;
+	avoidReady				= false;
+	size					= 0.00f;
+	avoidStart				= false;
+	enemyHit				= false;
+	justAvoid				= false;
+	justAvoidCanCounter		= 0.0f;
+	avoidCounter			= 0;
+	noAvoidCounter			= 0.0f;
+	playerTransform			= nullptr;
+	debugId					= 14;
+	tag						= Function::GetClassNameC<Player>();
+	hp						= MAX_HP;
+	maxHp					= hp;
+	avoidReadyCounter		= 0.0f;
+	justAvoidBlurImage		= Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect",ID::JUST_AVOID_BLUR);
+	justFeedInTime			= 0.0f;
+	justFeedOutTime			= 0.0f;
+	bossThreat				= false;
+	largeJustAvoid			= false;
+	noDamage				= false;
+	redCounter				= 0.0f;
+	playerCom				= PlayerInformation::CharaComponent();
 }
 //
 //Object2D* guage = new Object2D();
@@ -101,7 +101,7 @@ Player::Player()
 Player::~Player()
 {
 	//delete playerCom.stateManager;
-	DeleteGraph(justAvoidBlurImage);
+	/*DeleteGraph(justAvoidBlurImage);*/
 	justAvoidBlurImage = -1;
 }
 
@@ -149,41 +149,6 @@ void Player::Draw()
 	playerCom.stateManager->Draw();
 	playerCom.renderer->Draw();
 
-	return;
-	if (!largeJustAvoid) {
-		return;
-	}
-#if 1
-	float alpha = 0.0f;
-	if (justFeedInTime > 0.0f) {
-		alpha = Easing::EasingFlow<float>(&justFeedInTime, JUST_FEED_IN_TIME, 150.0f, 0.0f, Easing::EaseIn<float>);
-	}
-	if (justFeedOutTime > 0.0f) {
-		alpha = Easing::EasingFlow<float>(&justFeedOutTime, JUST_FEED_OUT_TIME, 0.0f, 150.0f, Easing::EaseIn<float>);
-	}
-#else
-	float alpha = 0;
-	if (justFeedInTime > 0.0f) {
-		justFeedInTime = max(justFeedInTime - Time::DeltaTimeRate(), 0.0f);
-		float rate = justFeedInTime / JUST_FEED_IN_TIME;
-		alpha = Easing::EaseIn(150.0f, 0.0f, rate);
-	}
-	else if (justFeedOutTime > 0.0f) {
-		justFeedOutTime = max(justFeedOutTime - Time::DeltaTimeRate(), 0.0f);
-		float rate = justFeedOutTime / JUST_FEED_OUT_TIME;
-		alpha = Easing::EaseIn(0.0f, 150.0f, rate);
-	}
-
-#endif
-	
-	
-
-	SetDrawBright(40, 220, 255);
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
-	DrawGraph(0, 0, justAvoidBlurImage, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-	SetDrawBright(255, 255, 255);
-
 	//DrawLine3D(playerCom.camera->GetCameraTransform()->position, playerCom.camera->GetCameraTransform()->position + VECTOR3(0, 0, 1000) * obj->GetTransform()->GetRotationMatrix(), 0xffffff);
 
 }
@@ -192,68 +157,68 @@ void Player::Start(Object3D* _obj)
 {
 	//初期化の値を設定
 	//必要なコンポーネントを付けている。
-	obj = _obj;
-	playerCom.stateManager = obj->Component()->AddComponent<StateManager>();
+	obj						= _obj;
+	playerCom.stateManager	= obj->Component()->AddComponent<StateManager>();
 	
 
-	playerCom.player = this;
+	playerCom.player		= this;
 
-	ComponentManager* c = obj->Component();
+	ComponentManager* c		= obj->Component();
 	
-	playerCom.renderer = c->GetComponent<MeshRenderer>();
-	playerCom.physics = c->GetComponent<Physics>();
+	playerCom.renderer		= c->GetComponent<MeshRenderer>();
+	playerCom.physics		= c->GetComponent<Physics>();
 
-	playerCom.camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
+	playerCom.camera		= FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
 
 	//playerCom.InputManager = FindGameObject<ImputManager>();
-	playerCom.controller = FindGameObject<ControllerInputManager>();
-	playerCom.keyboard = FindGameObject<KeyboardInputManager>();
-	playerCom.InputManager = FindGameObject<InputManager>();
+	playerCom.controller	= FindGameObject<ControllerInputManager>();
+	playerCom.keyboard		= FindGameObject<KeyboardInputManager>();
+	playerCom.InputManager	= FindGameObject<InputManager>();
 
-	playerTransform = obj->GetTransform();
+	playerTransform			= obj->GetTransform();
 
-	playerCom.anim = obj->Component()->GetComponent<Animator>();
+	playerCom.anim			= obj->Component()->GetComponent<Animator>();
 	playerCom.anim->Play(ID::P_ANIM_RUN);
-	playerCom.color = obj->Component()->GetComponent<Color>();
+	playerCom.color			= obj->Component()->GetComponent<Color>();
 	//playerCom.targetObj = FindGameObjectWithTag<Object3D>("ENEMY");
-	playerCom.targetObj = nullptr;
-	playerCom.hitObj = nullptr;
-	playerCom.shaker = c->GetComponent<Shaker>();
+	playerCom.targetObj		= nullptr;
+	playerCom.hitObj		= nullptr;
+	playerCom.shaker		= c->GetComponent<Shaker>();
 
-	playerCom.effect = FindGameObject<EffectManager>();
-	playerCom.sound = FindGameObject<SoundManager>();
+	playerCom.effect		= FindGameObject<EffectManager>();
+	playerCom.sound			= FindGameObject<SoundManager>();
 
-	playerCom.weapon = FindGameObject<WeaponManager>();
-	playerCom.blur = obj->Component()->GetComponent<MotionBlur>();
+	playerCom.weapon		= FindGameObject<WeaponManager>();
+	playerCom.blur			= obj->Component()->GetComponent<MotionBlur>();
 
-	playerCom.gameManager = FindGameObject<GameManager>();
-	playerCom.enemyManager = FindGameObject<EnemyManager>();
+	playerCom.gameManager	= FindGameObject<GameManager>();
+	playerCom.enemyManager	= FindGameObject<EnemyManager>();
 	
-	avoidStart = false;
-	justAvoidCanCounter = 0.0f;
-	attackColl = nullptr;
-	collName = "p_attack";
+	avoidStart				= false;
+	justAvoidCanCounter		= 0.0f;
+	attackColl				= nullptr;
+	collName				= "p_attack";
 	//playerCom.physics->SetVelocity(VECTOR3(10.0f, 5.0f, 0.0f));
 
 	//physics->SetInterect(VECTOR3(5.0f, -1.0f, 0.0f),0.1);
 	using namespace ID;
 	//ステートのセット
-	playerCom.stateManager->CreateState<PlayerWait>("PlayerWait", StateID::PLAYER_WAIT_S);
-	playerCom.stateManager->CreateState<PlayerWalk>("PlayerWalk", StateID::PLAYER_WALK_S);
-	playerCom.stateManager->CreateState<PlayerAvoid>("PlayerAvoid", StateID::PLAYER_AVOID_S);
-	playerCom.stateManager->CreateState<PlayerJustAvoid>("PlayerJustAvoid", StateID::PLAYER_JUST_AVOID_S);
-	playerCom.stateManager->CreateState<PlayerAttack1>("PlayerAttack1", StateID::PLAYER_ATTACK1_S);
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack1>("PlayerJustAvoidAttack1", StateID::PLAYER_JUST_AVOID_ATTACK1_S);
-	playerCom.stateManager->CreateState<PlayerAttack2>("PlayerAttack2", StateID::PLAYER_ATTACK2_S);
+	playerCom.stateManager->CreateState<PlayerWait>				("PlayerWait", StateID::PLAYER_WAIT_S);
+	playerCom.stateManager->CreateState<PlayerWalk>				("PlayerWalk", StateID::PLAYER_WALK_S);
+	playerCom.stateManager->CreateState<PlayerAvoid>			("PlayerAvoid", StateID::PLAYER_AVOID_S);
+	playerCom.stateManager->CreateState<PlayerJustAvoid>		("PlayerJustAvoid", StateID::PLAYER_JUST_AVOID_S);
+	playerCom.stateManager->CreateState<PlayerAttack1>			("PlayerAttack1", StateID::PLAYER_ATTACK1_S);
+	playerCom.stateManager->CreateState<PlayerJustAvoidAttack1>	("PlayerJustAvoidAttack1", StateID::PLAYER_JUST_AVOID_ATTACK1_S);
+	playerCom.stateManager->CreateState<PlayerAttack2>			("PlayerAttack2", StateID::PLAYER_ATTACK2_S);
 	playerCom.stateManager->CreateState<PlayerJustAvoidAttack2>("PlayerJustAvoidAttack2", StateID::PLAYER_JUST_AVOID_ATTACK2_S);
-	playerCom.stateManager->CreateState<PlayerAttack3>("PlayerAttack3", StateID::PLAYER_ATTACK3_S);
+	playerCom.stateManager->CreateState<PlayerAttack3>			("PlayerAttack3", StateID::PLAYER_ATTACK3_S);
 	playerCom.stateManager->CreateState<PlayerJustAvoidAttack3>("PlayerJustAvoidAttack3", StateID::PLAYER_JUST_AVOID_ATTACK3_S);
-	playerCom.stateManager->CreateState<PlayerAttack4>("PlayerAttack4", StateID::PLAYER_ATTACK4_S);
+	playerCom.stateManager->CreateState<PlayerAttack4>			("PlayerAttack4", StateID::PLAYER_ATTACK4_S);
 	playerCom.stateManager->CreateState<PlayerJustAvoidAttack4>("PlayerJustAvoidAttack4", StateID::PLAYER_JUST_AVOID_ATTACK4_S);
 	playerCom.stateManager->CreateState<PlayerJustAvoidAttack5>("PlayerJustAvoidAttack5", StateID::PLAYER_JUST_AVOID_ATTACK5_S);
-	playerCom.stateManager->CreateState<PlayerDamage>("PlayerDamage", StateID::PLAYER_DAMAGE_S);
-	playerCom.stateManager->CreateState<PlayerBlowAway>("PlayerBlowAway", StateID::PLAYER_BLOW_AWAY_S);
-	playerCom.stateManager->CreateState<PlayerDie>("PlayerDie", StateID::PLAYER_DIE_S);
+	playerCom.stateManager->CreateState<PlayerDamage>			("PlayerDamage", StateID::PLAYER_DAMAGE_S);
+	playerCom.stateManager->CreateState<PlayerBlowAway>			("PlayerBlowAway", StateID::PLAYER_BLOW_AWAY_S);
+	playerCom.stateManager->CreateState<PlayerDie>				("PlayerDie", StateID::PLAYER_DIE_S);
 
 	playerCom.stateManager->NodeDrawReady();
 	playerCom.stateManager->SetComponent<Player>(this);
@@ -297,16 +262,16 @@ void Player::Move(float _speed, float _speedMax)
 		RotationChange(walkAngle,9.0f);
 
 		VECTOR3 dir = VZero;
-		dir.x = walkAngle.x * 1.0f * _speed;
-		dir.z = walkAngle.z * 1.0f * _speed;
-		dir.y *= 0.0f;
-		dir = dir * MGetRotY(playerCom.camera->GetCameraTransform()->rotation.y);
+		dir.x		= walkAngle.x * 1.0f * _speed;
+		dir.z		= walkAngle.z * 1.0f * _speed;
+		dir.y		*= 0.0f;
+		dir			= dir * MGetRotY(playerCom.camera->GetCameraTransform()->rotation.y);
 		playerCom.physics->AddVelocity(dir, false);
 		VECTOR3 moveVelo;
-		moveVelo = playerCom.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
+		moveVelo	= playerCom.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
 		
-		float max = _speedMax;
-		size = moveVelo.SquareSize();
+		float max	= _speedMax;
+		size		= moveVelo.SquareSize();
 		//最大速度までいったらスピードマックスに補正
 		if (moveVelo.SquareSize() >= max * max) {
 			moveVelo = moveVelo.Normalize() * _speedMax;
@@ -325,14 +290,14 @@ void Player::Move(float _speed, float _speedMax)
 void Player::RotationChange(VECTOR3 _angle,float _speed)
 {
 	VECTOR3 forward = VECTOR3(0, 0, 1) * MGetRotY(playerTransform->rotation.y);
-	VECTOR3 right = VECTOR3(1, 0, 0) * MGetRotY(playerTransform->rotation.y);
-	VECTOR3 target = _angle * MGetRotY(playerCom.camera->GetCameraTransform()->rotation.y);
+	VECTOR3 right	= VECTOR3(1, 0, 0) * MGetRotY(playerTransform->rotation.y);
+	VECTOR3 target	= _angle * MGetRotY(playerCom.camera->GetCameraTransform()->rotation.y);
 	float dot = VDot(target.Normalize(), forward.Normalize());	//コサインの値が正面ベクトルとカメラの角度を計算
 	//内積を使って補正
 	if (dot >= cosf(_speed * DegToRad)) {
 		float inRot = atan2f(target.x, target.z);
 		playerTransform->rotation.y = inRot;
-		avoidStart = true;
+		avoidStart					= true;
 	}
 	else{
 		playerTransform->rotation.y = (VDot(right,target) > 0) ? playerTransform->rotation.y + _speed * DegToRad :
@@ -349,13 +314,13 @@ void Player::RotationChange()
 void Player::Avoid(float _speed, float _speedMax, float cameraAngle, float _upSpeed)
 {
 	//回避の共通処理
-	VECTOR dir = VZero;
-	dir = VECTOR3(0.0f, 0.0f, _speed) * MGetRotY(playerTransform->rotation.y);
+	VECTOR dir	= VZero;
+	dir			= VECTOR3(0.0f, 0.0f, _speed) * MGetRotY(playerTransform->rotation.y);
 	/*dir.x = playerTransform->rotation.y * 1.0f * _speed;
 	dir.z = playerTransform->rotation.y * 1.0f * _speed;*/
-	dir.y *= 0.0f;
+	dir.y		*= 0.0f;
 	//dir = dir * MGetRotY(cameraAngle);
-	dir.y += _upSpeed;
+	dir.y		+= _upSpeed;
 	playerCom.physics->SetVelocity(dir);
 
 }
@@ -421,11 +386,11 @@ void Player::AvoidReady()
 	}*/
 	//回避のスタート処理
 	PlayerStickInput();
-	avoidReady = true;
+	avoidReady			= true;
 	justAvoidCanCounter = 0.15f;
 	avoidCounter--;
-	noAvoidCounter = 2.0f;
-	avoidReadyCounter = 0.00f;
+	noAvoidCounter		= 2.0f;
+	avoidReadyCounter	= 0.00f;
 }
 
 void Player::AvoidRotationChange()
@@ -433,16 +398,16 @@ void Player::AvoidRotationChange()
 	//回避するときにどれくらいの速度で回転させるかを示す処理
 	RotationChange(walkAngle,20.0f);
 	if (avoidReadyCounter >= 0.0f) {
-		avoidReadyCounter -= Time::DeltaTimeRate();
+		avoidReadyCounter	-= Time::DeltaTimeRate();
 	}
 	else {
 		justAvoidCanCounter -= Time::DeltaTimeRate();
 	}
 	if (avoidStart && justAvoidCanCounter <= 0.0f && avoidReadyCounter <= 0.0f) {
 		playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
-		avoidStart = false;
-		avoidReady = false;
-		justAvoid = false;
+		avoidStart	= false;
+		avoidReady	= false;
+		justAvoid	= false;
 		
 	}
 }
@@ -453,11 +418,11 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 		return true;
 	}
 	//敵の攻撃が当たった時の処理
-	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
-	Animator* enemyAnim = _obj->Component()->GetComponent<Animator>();
+	std::shared_ptr<StateBase> pB	= playerCom.stateManager->GetState<StateBase>();
+	Animator* enemyAnim				= _obj->Component()->GetComponent<Animator>();
 	std::shared_ptr<BossAttackBase> attack = _obj->Component()->GetComponent<StateManager>()->GetState<BossAttackBase>();
-	float startTime = enemyAnim->EventStartTime(_attackId);
-	bool damage = false;
+	float startTime					= enemyAnim->EventStartTime(_attackId);
+	bool damage						= false;
 	if (attack == nullptr)
 		return true;
 
@@ -469,15 +434,15 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 				return true;
 			}*/
 			playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
-			playerCom.hitObj = _obj;
+			playerCom.hitObj	= _obj;
 			playerCom.enemyManager->JustAvoidTargetChange(dynamic_cast<Object3D*>(_obj));
 			playerCom.camera->TargetSet(_obj);
 			Debug::DebugLog("JustAvoid");
-			avoidStart = false;
-			avoidReady = false;
+			avoidStart			= false;
+			avoidReady			= false;
 			justAvoidCanCounter = 0.0f;
-			justAvoid = true;
-			justFeedInTime = JUST_FEED_IN_TIME;
+			justAvoid			= true;
+			justFeedInTime		= JUST_FEED_IN_TIME;
 		}
 	}
 	else {
@@ -611,12 +576,12 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj)
 		
 		playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
 		Debug::DebugLog("JustAvoid");
-		avoidStart = false;
-		avoidReady = false;
+		avoidStart			= false;
+		avoidReady			= false;
 		justAvoidCanCounter = 0.0f;
-		justAvoid = true;
-		justFeedInTime = JUST_FEED_IN_TIME;
-		largeJustAvoid = true;
+		justAvoid			= true;
+		justFeedInTime		= JUST_FEED_IN_TIME;
+		largeJustAvoid		= true;
 	}
 	else {	
 		//出来なかったらダメージを食らう

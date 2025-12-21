@@ -14,21 +14,14 @@
 
 PlayerAvoid::PlayerAvoid()
 {
-	time = 0.0f;
-	string = string = Function::GetClassNameC<PlayerAvoid>();;
+	time		= 0.0f;
+	string		= string = Function::GetClassNameC<PlayerAvoid>();;
 	//id = ID::P_ANIM_AVOID;
 
-	animId = ID::P_ANIM_AVOID;
-	/*avoidShadowStart = false;*/
-	/*for (int i = 0; i < SHADOW_NUM_MAX; i++) {
-		hModel[i] = MV1DuplicateModel(Load::GetHandle(ID::P_MODEL));
-		anim[i] = new Animator();
-		anim[i]->AddFile(ID::IDType::P_ANIM_AVOID, "P_AVOID", false, 1.5f, 0.0f, 10.0f);
-		anim[i]->BaseModelSet(hModel[i]);
-	}*/
+	animId		= ID::P_ANIM_AVOID;
 	cameraAngle = 0.0f;
-	maxFrame = 0.0f;
-	animTime = 0.0f;
+	maxFrame	= 0.0f;
+	animTime	= 0.0f;
 
 }
 
@@ -69,9 +62,9 @@ void PlayerAvoid::Update()
 		else {
 			easeIng = Easing::Sin90Cube(9000.0f, 200.0f, time);
 		}
-		float animEasing = Easing::Sin90Cube(1.0f, 0.8f,time);
+		float animEasing	= Easing::Sin90Cube(1.0f, 0.8f,time);
 		
-		float ySpeed = Easing::SinCube(800.0f, 0.0f, time);
+		float ySpeed		= Easing::SinCube(800.0f, 0.0f, time);
 		p->playerCom.player->Avoid(easeIng, 6000.0f,cameraAngle,ySpeed);
 		p->playerCom.anim->SetPlaySpeed(animEasing);
 	}

@@ -9,8 +9,8 @@
 JustAvoidCamera::JustAvoidCamera()
 {
     Start();
-    string = Function::GetClassNameC<JustAvoidCamera>();
-    zoomDistance = VZero;
+    string          = Function::GetClassNameC<JustAvoidCamera>();
+    zoomDistance    = VZero;
    // id = ID::P_ANIM_JUST_AVOID;
 }
 
@@ -24,9 +24,9 @@ void JustAvoidCamera::Update()
     //ƒY[ƒ€ˆ—
     if (timer >= 0.0f) {
         float t = 1.0f - timer / MAX_TIMER;
-        VECTOR3 easedT = Easing::EaseOut(c->defalutDistance, zoomDistance, t);
+        VECTOR3 easedT   = Easing::EaseOut(c->defalutDistance, zoomDistance, t);
         c->currentDistance = easedT;
-        timer -= Time::DeltaTimeRate();
+        timer           -= Time::DeltaTimeRate();
     }
     else {
         c->currentDistance = zoomDistance;
@@ -52,13 +52,13 @@ void JustAvoidCamera::Draw()
 
 void JustAvoidCamera::Start()
 {
-    timer = MAX_TIMER;
-    changeTimer = CHANGE_STATE_TIMER;
+    timer           = MAX_TIMER;
+    changeTimer     = CHANGE_STATE_TIMER;
 
     defalutDistance = VECTOR3(0.0f, 0.0f, -1500.0f);
-    zoomDistance = VECTOR3(0.0f,0.0f, -1000.0f);
+    zoomDistance    = VECTOR3(0.0f,0.0f, -1000.0f);
     currentDistance = VECTOR3(0.0f, 0.0f, -1500.0f);
-    speed = 0.1f;
+    speed           = 0.1f;
 }
 
 void JustAvoidCamera::Finish()

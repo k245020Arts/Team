@@ -10,12 +10,19 @@
 #include "../Player/PlayerState/PlayerStateManager.h"
 #include "../Component/Object/Object3D.h"
 
+//#define NEW_STAGE
+
 StageManager::StageManager()
 {
 	//modelHandle = MV1LoadModel("data/model/stage10.mv1");
 	//CreateStage();
-	//Load::LoadModel(Load::MODEL_PATH +  "new_Stage6", ID::S_MODEL);
-	Load::LoadModel(Load::MODEL_PATH +  "stage_s", ID::S_MODEL);
+#ifdef NEW_STAGE
+	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL);
+#else
+	Load::LoadModel(Load::MODEL_PATH +  "new_Stage6", ID::S_MODEL);
+#endif // NEW_STAGE
+
+	
 	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL);
 	stage = nullptr;
 	modelHandle = -1;
@@ -39,8 +46,13 @@ void StageManager::CreateStage()
 {
 	
 	stage = new Object3D();
-	//stage->Init(VECTOR3(100, -50, 100), VZero, VECTOR3(10, 10, 10),"STAGE");
+#ifdef NEW_STAGE
 	stage->Init(VECTOR3(25000, -5000, 20000), VZero, VECTOR3(10, 10, 10), "STAGE");
+#else
+	stage->Init(VECTOR3(100, -50, 100), VZero, VECTOR3(10, 10, 10), "STAGE");
+#endif
+	
+	
 	MeshRenderer* mesh = stage->Component()->AddComponent<MeshRenderer>();
 	mesh->ModelHandle(Load::GetHandle(ID::S_MODEL));
 	Stage* stageComp = stage->Component()->AddComponent<Stage>();

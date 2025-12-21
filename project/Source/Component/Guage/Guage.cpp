@@ -6,22 +6,22 @@
 
 Guage::Guage()
 {
-	edge = nullptr;
-	guage = nullptr;
-	maxhp = 0.0f;
-	hp = nullptr;
-	debugId = 19;
-	tag = Function::GetClassNameC<Guage>();
-	displayHp = 0.0f;
-	changeColorCounter = 0.0f;
-	screenMode = false;
+	edge				= nullptr;
+	guage				= nullptr;
+	maxhp				= 0.0f;
+	hp					= nullptr;
+	debugId				= 19;
+	tag					= Function::GetClassNameC<Guage>();
+	displayHp			= 0.0f;
+	changeColorCounter	= 0.0f;
+	screenMode			= false;
 }
 
 Guage::~Guage()
 {
-	edge = nullptr;
-	guage = nullptr;
-	hp = nullptr;
+	edge		= nullptr;
+	guage		= nullptr;
+	hp			= nullptr;
 }
 
 void Guage::Update()
@@ -69,6 +69,6 @@ void Guage::EdgeDrawReady(int _image, MeshRenderer2D::GraphMode _mode, Transform
 
 void Guage::WorldToScreenMode(bool _mode, VECTOR3 _plusPos)
 {
-	screenMode = _mode;
-	plus = _plusPos;
+	screenMode	= _mode;
+	plus		= _plusPos;
 }

@@ -8,9 +8,9 @@
 BossRun::BossRun()
 {
 	//id = ID::B_RUN;
-	animId = ID::B_RUN;
-	string = Function::GetClassNameC<BossRun>();
-	bs = nullptr;
+	animId	= ID::B_RUN;
+	string	= Function::GetClassNameC<BossRun>();
+	bs		= nullptr;
 }
 
 BossRun::~BossRun()
@@ -37,15 +37,18 @@ void BossRun::Update()
 
 	////計算したものをボスのポジションに足す
 	//b->obj->GetTransform()->position += velocity;
+
 	float speed = 0.0f;
-	float max = 0.0f;
+	float max	= 0.0f;
+
+	//半分以下になったらスピードアップ
 	if (b->hpRate == Boss::FIVE || b->hpRate == Boss::THREE) {
 		speed = 2000.0f;
 		max = 2500.0f;
 	}
 	else {
-		speed = 1000.0f;
-		max = 1500.0f;
+		speed	= 1000.0f;
+		max		= 1500.0f;
 	}
 	b->MoveBoss(speed, max);
 

@@ -13,7 +13,7 @@ public:
 	void Finish()override;
 
 private:
-	Player* p;
+	Player* player;
 	bool enemyShake;
 	bool playerShake;
 	float backCounter;

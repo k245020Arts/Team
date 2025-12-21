@@ -3,7 +3,7 @@
 Anim2D::Anim2D()
 {
 	debugId = 20;
-	tag = Function::GetClassNameC<Anim2D>();
+	tag		= Function::GetClassNameC<Anim2D>();
 }
 
 Anim2D::~Anim2D()
@@ -20,7 +20,7 @@ void Anim2D::Update()
 
 void Anim2D::AnimSetting(float _speed, int num)
 {
-	animSpeed = _speed;
-	graphNum = num;
-	playing = true;
+	animSpeed	= _speed;
+	graphNum	= num;
+	playing		= true;
 }

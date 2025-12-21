@@ -7,14 +7,14 @@
 
 MeshRenderer2D::MeshRenderer2D()
 {
-	hImage = -1;
-	mode = DRAW_GRAPH;
-	debugId = 7;
-	tag = Function::GetClassNameC<MeshRenderer2D>();
+	hImage		= -1;
+	mode		= DRAW_GRAPH;
+	debugId		= 7;
+	tag			= Function::GetClassNameC<MeshRenderer2D>();
 	transform2D = nullptr;
-	anim2D = nullptr;
-	draw = true;
-	num = 0;
+	anim2D		= nullptr;
+	draw		= true;
+	num			= 0;
 }
 
 MeshRenderer2D::~MeshRenderer2D()

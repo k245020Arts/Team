@@ -13,11 +13,11 @@
 
 BossDie::BossDie()
 {
-	animId = ID::BOSS_DIE;
+	animId		= ID::BOSS_DIE;
 	//id = ID::BOSS_DIE;
-	string = Function::GetClassNameC<BossDie>();
-	one = true;
-	slowTime = 0.0f;
+	string		= Function::GetClassNameC<BossDie>();
+	one			= true;
+	slowTime	= 0.0f;
 }
 
 BossDie::~BossDie()
@@ -55,13 +55,14 @@ void BossDie::Draw()
 
 void BossDie::Start()
 {
-	Boss* b = GetBase<Boss>();
+	Boss* b		= GetBase<Boss>();
 	EnemyStateBase::Start();
 	Time::ChangeDeltaRate(0.1f);
-	slowTime = 0.5f;
+	slowTime	= 0.5f;
 	b->enemyBaseComponent.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	b->enemyBaseComponent.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
-	one = true;
+	one			= true;
+	//Ž€‚ñ‚¾‚Æ‚«‚É“–‚½‚è”»’è‚ðÁ‚µ‚½‚¢‚Ì‚Å“–‚½‚è”»’è‚ðÁ‚·B
 	obj->Component()->RemoveAllComponent<SphereCollider>();
 	obj->Component()->RemoveAllComponent<ModelCollider>();
 	b->enemyBaseComponent.physics->SetGravity(VZero);

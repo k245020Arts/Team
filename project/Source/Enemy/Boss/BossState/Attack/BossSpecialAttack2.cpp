@@ -117,6 +117,7 @@ void BossSpecialAttack2::Finish()
 	BossAttackBase::BossFinish();
 	if (b->maxAttack > 0) {
 		b->LookPlayer(1.0f);
+		//‘Oi
 		b->enemyBaseComponent.physics->SetVelocity(VECTOR3(0, 0, -1000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix());
 		
 	}

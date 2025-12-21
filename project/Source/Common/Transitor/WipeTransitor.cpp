@@ -3,7 +3,7 @@
 
 WipeTransitor::WipeTransitor()
 {
-	dir = UP;
+	dir			= UP;
 	hGradation = -1;
 }
 
@@ -92,48 +92,48 @@ void WipeTransitor::SetGradation()
 	std::array<VERTEX2D, 6> vertices;
 
 	// 左上の頂点の情報をセット( 1ポリゴン目の第1頂点 )
-	vertices[0].pos.x = 0;
-	vertices[0].pos.y = 0;
-	vertices[0].pos.z = 0.0f;
-	vertices[0].rhw = 1.0f;
-	vertices[0].dif = colors[0];
-	vertices[0].u = 0.0f;
-	vertices[0].v = 0.0f;
+	vertices[0].pos.x	= 0;
+	vertices[0].pos.y	= 0;
+	vertices[0].pos.z	= 0.0f;
+	vertices[0].rhw		= 1.0f;
+	vertices[0].dif		= colors[0];
+	vertices[0].u		= 0.0f;
+	vertices[0].v		= 0.0f;
 
 	// 右上の頂点の情報をセット( 1ポリゴン目の第2頂点 )
-	vertices[1].pos.x = static_cast<float>(size.x);
-	vertices[1].pos.y = 0;
-	vertices[1].pos.z = 0.0f;
-	vertices[1].rhw = 1.0f;
-	vertices[1].dif = colors[1];
-	vertices[1].u = 0.0f;
-	vertices[1].v = 0.0f;
+	vertices[1].pos.x	= static_cast<float>(size.x);
+	vertices[1].pos.y	= 0;
+	vertices[1].pos.z	= 0.0f;
+	vertices[1].rhw		= 1.0f;
+	vertices[1].dif		= colors[1];
+	vertices[1].u		= 0.0f;
+	vertices[1].v		= 0.0f;
 
 	// 左下の頂点の情報をセット( 1ポリゴン目の第3頂点 )
-	vertices[2].pos.x = 0;
-	vertices[2].pos.y = static_cast<float>(size.y);
-	vertices[2].pos.z = 0.0f;
-	vertices[2].rhw = 1.0f;
-	vertices[2].dif = colors[2];
-	vertices[2].u = 0.0f;
-	vertices[2].v = 0.0f;
+	vertices[2].pos.x	= 0;
+	vertices[2].pos.y	= static_cast<float>(size.y);
+	vertices[2].pos.z	= 0.0f;
+	vertices[2].rhw		= 1.0f;
+	vertices[2].dif		= colors[2];
+	vertices[2].u		= 0.0f;
+	vertices[2].v		= 0.0f;
 
 	// 右下の頂点の情報をセット( 2ポリゴン目の第1頂点 )
-	vertices[3].pos.x = static_cast<float>(size.x);
-	vertices[3].pos.y = static_cast<float>(size.y);
-	vertices[3].pos.z = 0.0f;
-	vertices[3].rhw = 1.0f;
-	vertices[3].dif = colors[3];
-	vertices[3].u = 0.0f;
-	vertices[3].v = 0.0f;
+	vertices[3].pos.x	= static_cast<float>(size.x);
+	vertices[3].pos.y	= static_cast<float>(size.y);
+	vertices[3].pos.z	= 0.0f;
+	vertices[3].rhw		= 1.0f;
+	vertices[3].dif		= colors[3];
+	vertices[3].u		= 0.0f;
+	vertices[3].v		= 0.0f;
 
 	// 2ポリゴン目の第2頂点は左下の頂点なのでコピー
-	vertices[4] = vertices[2];
+	vertices[4]			= vertices[2];
 
 	// 2ポリゴン目の第3頂点は右上の頂点なのでコピー
-	vertices[5] = vertices[1];
-	hGradation = MakeScreen(size.x, size.y, true);
-	int bkScrH = GetDrawScreen();
+	vertices[5]			= vertices[1];
+	hGradation			= MakeScreen(size.x, size.y, true);
+	int bkScrH			= GetDrawScreen();
 	//レンダ―ターゲットを変更し、グラデーションの描画
 	SetDrawScreen(hGradation);
 	DrawPolygon2D(vertices.data(), 2, DX_NONE_GRAPH, true);

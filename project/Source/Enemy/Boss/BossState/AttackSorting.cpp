@@ -5,7 +5,7 @@
 #include "../../../Common/Random.h"
 
 namespace {
-	const int ATTACK_KIND_MAX = 6;
+	const int ATTACK_KIND_MAX		= 6;
 	const int COMBO_ATTACK_KIND_MAX = 3;
 	enum COMBO_ATTACK
 	{
@@ -31,34 +31,37 @@ namespace {
 		{StateID::BOSS_NORMAL_ATTACK5_S},
 		{StateID::BOSS_NORMAL_ATTACK6_S},
 	};
+	//通常攻撃の重み
 	const std::vector<std::vector<double>> normalAttackParam{
-		{ 1.0,1.0,0.5,0.0,0.0,0.0,1.0,1.0,0.5 },
-		{ 1.0,1.0,1.0,0.0,0.0,0.0,1.0,1.0,1.0  },
-		{ 0.1,0.1,0.5,0.7,1.0,0.1,0.5,0.5,0.5  },
-		{ 0.05,0.05,1.0,0.5,0.9,0.1,0.5,0.5,0.5  },
+		{ 1.0,	1.0,	0.5,	0.0,	0.0,	0.0,	1.0,	1.0,	0.5 },
+		{ 1.0,	1.0,	1.0,	0.0,	0.0,	0.0,	1.0,	1.0,	1.0  },
+		{ 0.1,	0.1,	0.5,	0.7,	1.0,	0.1,	0.5,	0.5,	0.5  },
+		{ 0.05,	0.05,	1.0,	0.5,	0.9,	0.1,	0.5,	0.5,	0.5  },
 	};
+	//コンボ攻撃の重み
 	const std::vector<std::vector<double>> comboAttackParam{
-		{ 1.0,0.5,0.0,0.0},
-		{ 0.8,0.7,0.2,0.0},
-		{ 0.5,1.0,0.5,0.1},
-		{ 0.2,0.5,0.7,0.1},
+		{ 1.0,	0.5,	0.0,	0.0},
+		{ 0.8,	0.7,	0.2,	0.0},
+		{ 0.5,	1.0,	0.5,	0.1},
+		{ 0.2,	0.5,	0.7,	0.1},
 	};
+	//コンボ攻撃の順番
 	const std::vector<std::vector<StateID::State_ID>> comboOrder{
-		{StateID::BOSS_NORMAL_ATTACK1_S, StateID::BOSS_NORMAL_ATTACK2_S, StateID::BOSS_NORMAL_ATTACK3_S},
-		{StateID::BOSS_NORMAL_ATTACK4_S, StateID::BOSS_NORMAL_ATTACK5_S, StateID::BOSS_NORMAL_ATTACK6_S},
-		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_ATTACK1_S },
-		{StateID::BOSS_SPECIAL_ATTACK2_S, StateID::BOSS_SPECIAL_ATTACK2_S, StateID::BOSS_SPECIAL_ATTACK2_S,StateID::BOSS_SPECIAL_ATTACK2_S}
+		{StateID::BOSS_NORMAL_ATTACK1_S,		StateID::BOSS_NORMAL_ATTACK2_S,			StateID::BOSS_NORMAL_ATTACK3_S},
+		{StateID::BOSS_NORMAL_ATTACK4_S,		StateID::BOSS_NORMAL_ATTACK5_S,			StateID::BOSS_NORMAL_ATTACK6_S},
+		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	StateID::BOSS_SPECIAL_ATTACK1_S },
+		{StateID::BOSS_SPECIAL_ATTACK2_S,		StateID::BOSS_SPECIAL_ATTACK2_S,		StateID::BOSS_SPECIAL_ATTACK2_S,	StateID::BOSS_SPECIAL_ATTACK2_S}
 	};
 }
 
 AttackSorting::AttackSorting()
 {
-	coolTime = 0;
-	string = Function::GetClassNameC<AttackSorting>();
-	hp = Boss::MAX;
-	attackNum = 0;
-	jump = false;
-	kind = 0;
+	coolTime	= 0;
+	string		= Function::GetClassNameC<AttackSorting>();
+	hp			= Boss::MAX;
+	attackNum	= 0;
+	jump		= false;
+	kind		= 0;
 
 }
 
@@ -131,6 +134,7 @@ void AttackSorting::Start()
 	int maxAttack = b->bs->GetStatus().maxAttack;
 	int randam = GetRand(1);
 	hp = b->Hp();
+	//コンボ攻撃をするか決める
 	float comboAttackRate = 0.0f;
 	switch (hp)
 	{
@@ -147,6 +151,7 @@ void AttackSorting::Start()
 		comboAttackRate = 0.9f;
 		break;
 	}
+
 	bool combo = Random::GetBernoulli(comboAttackRate);
 	if (combo) {
 		std::vector<double> rand = comboAttackParam[hp];

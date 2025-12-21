@@ -17,28 +17,28 @@
 
 Camera::Camera()
 {
-	cameraComponent.target.transform = nullptr;
-	cameraComponent.player.transform = nullptr;
-	cameraComponent.cameraTransform = nullptr;
-	timeTest = 1.0f;
-	normalCamera = true;
-	targetChangeButton = 1;
-	reap = 0.0f;
-	reap = CameraInformation::DEFALUT_RAPE;
+	cameraComponent.target.transform	= nullptr;
+	cameraComponent.player.transform	= nullptr;
+	cameraComponent.cameraTransform		= nullptr;
+	timeTest							= 1.0f;
+	normalCamera						= true;
+	targetChangeButton					= 1;
+	reap								= 0.0f;
+	reap								= CameraInformation::DEFALUT_RAPE;
 
-	defalutDistance = VECTOR3(0.0f,0.0f, -1500.0f);
-	currentDistance = defalutDistance;
-	debugButton = 0;
-	debugId = 12;
-	tag = Function::GetClassNameC<Camera>();
-	fov = 60.0f * DegToRad;
+	defalutDistance						= VECTOR3(0.0f,0.0f, -1500.0f);
+	currentDistance						= defalutDistance;
+	debugButton							= 0;
+	debugId								= 12;
+	tag									= Function::GetClassNameC<Camera>();
+	fov									= 60.0f * DegToRad;
 
-	input = FindGameObject<InputManager>();
-	rockOn = false;
-	beforePos = 0.0f;
-	nearFog = 10000.0f;
-	farFog = 1800000.0f;
-	direction = EnemyAttackChangeCameraDirection::NONE;
+	input								= FindGameObject<InputManager>();
+	rockOn								= false;
+	beforePos							= 0.0f;
+	nearFog								= 10000.0f;
+	farFog								= 1800000.0f;
+	direction							= EnemyAttackChangeCameraDirection::NONE;
 }
 
 Camera::~Camera()
@@ -72,11 +72,13 @@ void Camera::Update()
 			rockOn = !rockOn;
 		}
 	}
+	//Dxlibのカメラの設定(SetDrawScreenを使うと初期化されるため毎フレーム呼ぶ)。
 	SetCameraNearFar(10.0f, 100000000.0f);
 	SetFogEnable(true);
 	SetFogStartEnd(nearFog, farFog);
 	SetFogColor(137, 189, 222);
 	SetupCamera_Perspective(fov);
+
 	if (debugButton == 2) {
 		Transform transform = *obj->GetTransform();
 		SetCameraPositionAndTarget_UpVecY(transform.position, VECTOR3(0, 0, 0));
@@ -109,9 +111,9 @@ void Camera::Start(BaseObject* _eObj)
 	SetupCamera_Perspective(DX_PI_F / 3.0f);
 	//cameraComponent.target = &target;
 	cameraComponent.control = FindGameObject<ControllerInputManager>();
-	cameraComponent.shaker = obj->Component()->AddComponent<Shaker>();
+	cameraComponent.shaker	= obj->Component()->AddComponent<Shaker>();
 	
-	cameraComponent.state = obj->Component()->GetComponent<StateManager>();
+	cameraComponent.state	= obj->Component()->GetComponent<StateManager>();
 }
 
 void Camera::ImguiDraw()
@@ -135,20 +137,20 @@ void Camera::ImguiDraw()
 
 void Camera::PlayerSet(BaseObject* _obj)
 {
-	cameraComponent.player.obj = _obj;
+	cameraComponent.player.obj			= _obj;
 	cameraComponent.camera = this;
-	cameraComponent.player.transform = _obj->GetTransform();
-	cameraComponent.cameraTransform =  new Transform(*cameraComponent.player.transform);
+	cameraComponent.player.transform	= _obj->GetTransform();
+	cameraComponent.cameraTransform		=  new Transform(*cameraComponent.player.transform);
 	cameraComponent.cameraTransform->rotation.x = 30.0f * DegToRad;
-	cameraComponent.player.shaker = _obj->Component()->GetComponent<Shaker>();
-	cameraComponent.enemyManager = FindGameObject<EnemyManager>();
+	cameraComponent.player.shaker		= _obj->Component()->GetComponent<Shaker>();
+	cameraComponent.enemyManager		= FindGameObject<EnemyManager>();
 
 	//stateを登録
-	cameraComponent.state->CreateState<FollowCamera>("_FollowCamera", StateID::FOLLOW_CAMERA_S);
-	cameraComponent.state->CreateState<JustAvoidCamera>("_JustAvoidCamera", StateID::JUST_AVOID_CAMERA_S);
-	cameraComponent.state->CreateState<JustAvoidAttackCamera>("_JustAvoidAttackCamera", StateID::JUST_AVOID_ATTACK_CAMERA_S);
+	cameraComponent.state->CreateState<FollowCamera>			("_FollowCamera", StateID::FOLLOW_CAMERA_S);
+	cameraComponent.state->CreateState<JustAvoidCamera>			("_JustAvoidCamera", StateID::JUST_AVOID_CAMERA_S);
+	cameraComponent.state->CreateState<JustAvoidAttackCamera>	("_JustAvoidAttackCamera", StateID::JUST_AVOID_ATTACK_CAMERA_S);
 	cameraComponent.state->CreateState<JustAvoidAttackHitCamera>("_JustAvoidAttackHitCamera", StateID::JUST_AVOID_ATTACK_HIT_CAMERA_S);
-	cameraComponent.state->CreateState<FreeCamera>("_FreeCamera", StateID::FREE_CAMERA_S);
+	cameraComponent.state->CreateState<FreeCamera>				("_FreeCamera", StateID::FREE_CAMERA_S);
 
 	cameraComponent.state->NodeDrawReady();
 	cameraComponent.target.shaker = _obj->Component()->GetComponent<Shaker>();
@@ -172,14 +174,14 @@ void Camera::CameraShakeStop()
 void Camera::TargetSet(BaseObject* _obj)
 {
 	if (_obj == nullptr) {
-		cameraComponent.target.obj = _obj;
-		rockOn = false;
+		cameraComponent.target.obj	= _obj;
+		rockOn						= false;
 		cameraComponent.state->NowChangeState(StateID::FREE_CAMERA_S);
 		return;
 	}
-	cameraComponent.target.obj = _obj;
+	cameraComponent.target.obj		= _obj;
 	cameraComponent.target.transform = cameraComponent.target.obj->GetTransform();
-	rockOn = true;
+	rockOn							= true;
 }
 
 void Camera::TargetEnemySet()
@@ -231,13 +233,13 @@ void Camera::CameraRotationSet()
 void Camera::Follow()
 {
 	//追従処理
-	VECTOR3 offset = currentDistance * cameraComponent.cameraTransform->GetRotationMatrix();
+	VECTOR3 offset								= currentDistance * cameraComponent.cameraTransform->GetRotationMatrix();
 	VECTOR3 desiredCamPos;
-	desiredCamPos = cameraComponent.player.transform->position + offset;
+	desiredCamPos								= cameraComponent.player.transform->position + offset;
 	//カメラのポジションをイージングの割合でセットしている
-	cameraComponent.cameraTransform->position = Easing::Lerp(cameraComponent.cameraTransform->position, desiredCamPos, reap);
+	cameraComponent.cameraTransform->position	= Easing::Lerp(cameraComponent.cameraTransform->position, desiredCamPos, reap);
 	//そのあとにカメラshakeをかける
-	cameraComponent.cameraTransform->position += cameraComponent.shaker->GetShakePower();
+	cameraComponent.cameraTransform->position	+= cameraComponent.shaker->GetShakePower();
 	
 	/*if (fabs(beforePos - cameraComponent.cameraTransform->position.y) <= 1.5f) {
 		cameraComponent.cameraTransform->position.y = beforePos;
@@ -248,62 +250,35 @@ void Camera::Follow()
 
 void Camera::CollsionPosHit(VECTOR3 norm, float size, VECTOR3 groundPos)
 {
-	hitPos = groundPos;
-	hitNormal = norm;
-	hitDist = size;
-	hit = true;
+	hitPos		= groundPos;
+	hitNormal	= norm;
+	hitDist		= size;
+	hit			= true;
 }
 
 void Camera::PushCamera(VECTOR3 norm, float size, VECTOR3 groundPos)
 {
-	//// カメラの現在位置
-	//VECTOR3 camPos = cameraComponent.cameraTransform->position;
+	float offset	= 5.0f; 
+	float newDist	= max(0, size - offset);
+	counter			= counter > 1.0f ? 1.0f : counter + Time::DeltaTimeRate() * 3.0f;
+	float rate		= counter / 1.0f;
+	hit				= true;
 
-	//// 最低でも保ちたい距離（プレイヤーとカメラの離隔距離）
-	//const float MIN_DIST = 150.0f;  // 好みで調整
-
-	//// 衝突点 → カメラの方向（角度が重要なので正規化する）
-	//VECTOR3 toCam = (camPos - norm);
-	//float dist = toCam.Size();
-
-	//// 遠いなら押し返す必要なし
-	//if (dist >= MIN_DIST)
-	//	return;
-
-	//toCam = toCam.Normalize();
-
-	//// 足りていない距離（押し返す量）
-	//float pushAmount =  dist;
-
-	//// 角度を維持したまま押し返す（法線ではなく toCam 方向！）
-	//VECTOR3 correctedPos = camPos + toCam * pushAmount;
-
-	//// ガタつかないように Lerp で補正
-	//cameraComponent.cameraTransform->position =
-	//	Easing::Lerp(camPos, correctedPos, 1.0f);
-
-	//currentDistance.z = (defalutDistance.z, 100.0f, 1.0f);
-	float offset = 5.0f; 
-	float newDist = max(0, size - offset);
-	counter = counter > 1.0f ? 1.0f : counter + Time::DeltaTimeRate() * 3.0f;
-	float rate = counter / 1.0f;
-	//currentDistance.z = Easing::Lerp(defalutDistance.z, 1000.0f, rate);
-	hit = true;
 	cameraComponent.cameraTransform->position = VECTOR3(cameraComponent.cameraTransform->position.x ,groundPos.y + 280.0f, cameraComponent.cameraTransform->position.z);
 }
 
 void Camera::AttackEnemyFovChange(Transform* _targetTransform)
 {
-	direction = cameraComponent.enemyManager->BossAttackCamera(this, *_targetTransform);
-	targetEnemyTransform = _targetTransform;
+	direction				= cameraComponent.enemyManager->BossAttackCamera(this, *_targetTransform);
+	targetEnemyTransform	= _targetTransform;
 }
 
 bool Camera::IsFovIn(const Transform& _targetTransform, float maxFov)
 {
 	VECTOR3 dir = target - cameraComponent.cameraTransform->position;
-	dir = dir.Normalize();
+	dir				= dir.Normalize();
 
-	VECTOR3 target = _targetTransform.position - cameraComponent.player.obj->GetTransform()->position;
+	VECTOR3 target	= _targetTransform.position - cameraComponent.player.obj->GetTransform()->position;
 	float dist = target.Size();
 	if (VDot(dir.Normalize(), target.Normalize()) < cosf(maxFov)) {
 		return false;

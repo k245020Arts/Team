@@ -9,9 +9,9 @@
 PlayerDamage::PlayerDamage()
 {
 
-	string = string = Function::GetClassNameC<PlayerDamage>();;
-	animId = ID::P_DAMAGE;
-	eRotation = VZero;
+	string		= string = Function::GetClassNameC<PlayerDamage>();;
+	animId		= ID::P_DAMAGE;
+	eRotation	= VZero;
 	//id = ID::P_DAMAGE;
 }
 
