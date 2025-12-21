@@ -42,7 +42,7 @@ void Standby::Update()
 		}
 		else
 		{
-			NormalMove();
+			//NormalMove();
 			if (vec.Size() <= range / 2)
 			{
 				pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
@@ -99,6 +99,8 @@ void Standby::Finish()
 	e->isAttack = false;
 	if (!e->isCooperateAtk)
 		e->NextId = StateID::T_ENEMY_STANDBY;
+
+	e->isCooperateAtk = false;
 }
 
 void Standby::NormalMove()

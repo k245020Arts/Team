@@ -8,6 +8,7 @@ Wave::Wave()
 	waveNow = 1;
 	battleCounter = 0;
 	spawn = SPAWN_MAX;
+	isCooperate = false;
 }
 
 Wave::~Wave()
@@ -17,7 +18,7 @@ Wave::~Wave()
 void Wave::Update()
 {
 	EnemySpawn();
-	
+	CooperateAttack();
 }
 
 void Wave::Draw()
@@ -26,13 +27,13 @@ void Wave::Draw()
 
 void Wave::EnemySpawn()
 {
-	if (spawn <= 5|| waveNow >= WAVE_MAX)
+	if (waveNow >= WAVE_MAX)
 		return;
 
 	//一個前のウェーブで敵を倒した速度によって敵の出す数を変えるためのカウンター
 	battleCounter += Time::DeltaTimeRate();
 
-	if (battleCounter >= INITIALSPAWN)
+	if (spawn >= 5 && battleCounter >= 10)
 	{
 		spawn--;
 		battleCounter = 0;
@@ -45,4 +46,13 @@ void Wave::EnemySpawn()
 		spawn = SPAWN_MAX;
 		waveNow++;
 	}
+}
+
+void Wave::CooperateAttack()
+{
+	if (waveNow != 2 || tEnemyManager->EnemyList().size() > 4 || isCooperate)
+		return;
+
+	tEnemyManager->Cooperate(StateID::COOPERATEATTACK1);
+	isCooperate = true;
 }

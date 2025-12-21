@@ -44,7 +44,7 @@ public:
 	float Speed() { return speed; }
 
 	void isStandbyF() { isStandby = false; }
-	void AttackON() { isAttack = true; }
+	void AttackON();
 	void AddAttackID(int index);
 
 	template<typename T>
@@ -84,4 +84,6 @@ private:
 	bool isStandby;
 
 	float speed;
+
+	VECTOR3 wayPoint;
 };

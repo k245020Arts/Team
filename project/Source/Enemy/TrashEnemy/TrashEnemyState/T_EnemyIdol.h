@@ -13,4 +13,6 @@ public:
 	void Start()override;
 	void Finish()override;
 private:
+	//プレイヤーの探知範囲を少しずつあげる
+	float detectionRange;
 };

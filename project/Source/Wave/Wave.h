@@ -11,13 +11,18 @@ public:
 	void Draw();
 private:
 	void EnemySpawn();
+	void CooperateAttack();
 	TrashEnemyManager* tEnemyManager;
-
-	const int SPAWN_MAX = 25;
-	const int INITIALSPAWN = 5;
+	//雑魚敵の最大スポーン数
+	const int SPAWN_MAX = 15;
+	//
+	const float INITIALSPAWN = 5;
+	//最大ウェーブ数
 	const int WAVE_MAX = 2;
 
 	int waveNow;
 	float battleCounter;
 	int spawn;
+
+	bool isCooperate;
 };

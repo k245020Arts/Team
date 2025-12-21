@@ -95,6 +95,8 @@ TrashEnemy::TrashEnemy()
 	isAttack = false;
 	isStandby = false;
 	isCooperateAtk = false;
+
+	wayPoint = VZero;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -310,7 +312,8 @@ void TrashEnemy::PlayerHit()
 
 void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 {
-	targetPos = _pos;
+	//targetPos = _pos;
+	wayPoint = _pos;
 
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 	speed = eStatus->GetStatus().cooperateSoeed;
@@ -321,6 +324,13 @@ void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 void TrashEnemy::ChangeState(StateID::State_ID _id)
 {
 	enemyBaseComponent.state->ChangeState(_id);
+}
+
+void TrashEnemy::AttackON()
+{
+	if (hp <= 0)
+		return;
+	isAttack = true;
 }
 
 void TrashEnemy::AddAttackID(int index)

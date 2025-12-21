@@ -37,6 +37,9 @@ TrashEnemyManager::TrashEnemyManager()
 	debugWaypoint = false;
 
 	searchCounter = 1.0f;
+	maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
+
+	cooperateCounter = 0;
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -49,15 +52,17 @@ void TrashEnemyManager::Update()
 		return;
 	Separation();
 	PlayerWayPoint();
-	//CloseWayPoint();
-	attackCounter++;
+
 	int enemiesMax = (int)enemies.size();
+
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
-		if (attackCounter >= 200 /*&& (*itr)->GetNumber()== attackCounter*/)
+		attackCounter++;
+		if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter /*&& (*itr)->GetNumber()== attackCounter*/)
 		{
 			(*itr)->AttackON();
 			attackCounter = 0;
+			maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
 			/*attackCounter++;
 			if (attackCounter >= enemiesMax)
 				attackCounter = 0;*/
@@ -68,14 +73,16 @@ void TrashEnemyManager::Update()
 		//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
 		if ((*itr)->GetStandby())
 			standbyCounter++;
+		if (standbyCounter >= 1)
+			cooperateCounter += Time::DeltaTimeRate();
 		//“G‘Sˆõ‚ª€”õŠ®—¹‚µ‚½‚çUŒ‚‚ÉˆÚ‚é
-		if ( standbyCounter == enemiesMax)
+		if (standbyCounter == enemiesMax|| cooperateCounter >= 3)
 		{
 			AllChangeState(StateID::T_ENEMY_RUN_S);
 			standbyCounter = 0;
 			break;
 		}
-		
+
 		//ŽG‹›“G‚ªŽ€‚ñ‚Å‚½‚çlist‚©‚çíœ‚·‚é
 		if (!(*itr)->GetActive())
 		{
@@ -149,8 +156,8 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		anim->BaseModelSet(handle, 1);
 		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
 		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
-		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 1.2f, 25.0f, 40.0f);
-		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 1.0f, 15.0f, 20.0f);
+		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 1.0f, 25.0f, 40.0f);
+		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 1.0f, 25.0f, 40.0f);
 		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
 		anim->AddFile(ID::E_DIE, "E_DEAD", false, 2.0f);
 		
@@ -166,7 +173,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
         enemies.emplace_back(t);
 
         // ˆÊ’u‚ðŒˆ‚ß‚é
-        const float R_MAX = 1000.0f;
+        const float R_MAX = 2000.0f;
         float rangeX = (float)GetRand(R_MAX * 2) - R_MAX;
 		float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
         VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
@@ -195,7 +202,7 @@ void TrashEnemyManager::ImguiDraw()
 	ImGui::Text("enemiesSize: %d", enemies.size());
 
 	if (ImGui::Button("enemySpwn"))
-		CreateEnemy(VZero, 4);
+		CreateEnemy(VZero, 1);
 	if (ImGui::Button("ack1"))
 		Cooperate(StateID::COOPERATEATTACK1);
 

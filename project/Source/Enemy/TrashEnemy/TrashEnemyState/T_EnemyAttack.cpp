@@ -21,14 +21,15 @@ void T_EnemyAttack::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->LookTarget();
-	counter++;
+	
 	if (!e->isCooperateAtk)
 	{
-		if (counter >= 5 && counter<=10)
+		counter++;
+		if (counter >= 5 && counter <= 10)
 		{
 			e->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 			e->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
-		}			
+		}
 	}
 
 	if (e->enemyBaseComponent.anim->IsFinish())
@@ -36,10 +37,8 @@ void T_EnemyAttack::Update()
 
 	AttackCollsion();
 	AttackSound();
-	if(counter<30)
-		AttackFlash(ID::E_MODEL, 35, "E_AttackV");
-	else
-		e->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	AttackFlash(ID::E_MODEL, 1, "E_AttackV");
+	e->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	Trail();
 }
 

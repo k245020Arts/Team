@@ -8,6 +8,7 @@ T_EnemyIdol::T_EnemyIdol()
 {
 	animId = ID::TE_IDOL;
 	string = Function::GetClassNameC<T_EnemyIdol>();
+	detectionRange = 0;
 }
 
 T_EnemyIdol::~T_EnemyIdol()
@@ -20,8 +21,8 @@ void T_EnemyIdol::Update()
 
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
 		//EnemyTransform->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
-
-	if (targetVec.Size() < e->eStatus->GetStatus().chaseRange)
+	detectionRange += Time::DeltaTimeRate() * 50;
+	if (targetVec.Size() < e->eStatus->GetStatus().chaseRange + detectionRange)
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 }
 
