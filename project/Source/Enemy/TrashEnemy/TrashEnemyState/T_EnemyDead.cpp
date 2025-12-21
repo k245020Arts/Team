@@ -36,7 +36,7 @@ void T_EnemyDead::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	EnemyStateBase::Start();
-	e->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	e->enemyBaseComponent.anim->SetPlaySpeed(0.8f);
 	obj->Component()->RemoveAllComponent<SphereCollider>();
 	obj->Component()->RemoveAllComponent<ModelCollider>();
 }

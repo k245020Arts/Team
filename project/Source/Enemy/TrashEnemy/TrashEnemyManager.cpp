@@ -22,6 +22,7 @@
 #include "../../Component/Collider/rayCollider.h"
 #include "../../Component/Collider/ModelCollider.h"
 #include "../../Common/Random.h"
+#include "../../Common/Debug/Debug.h"
 
 TrashEnemyManager::TrashEnemyManager()
 {
@@ -99,9 +100,8 @@ void TrashEnemyManager::Update()
 
 void TrashEnemyManager::Draw()
 {
-#ifdef _DEBUG
-	ImguiDraw();
-#endif
+	if(Debug::GetDebugMode())
+		ImguiDraw();
    
 	if (!debugWaypoint)
 		return;
