@@ -84,7 +84,7 @@ void Camera::Update()
 		SetCameraPositionAndTarget_UpVecY(transform.position, VECTOR3(0, 0, 0));
 	}
 	else if (rockOn) {
-		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);
+		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target + VECTOR3(0,300,0));
 	}
 	else if (!rockOn) {
 		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);

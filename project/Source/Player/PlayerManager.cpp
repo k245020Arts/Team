@@ -110,6 +110,18 @@ void PlayerManager::CreatePlayer()
 
 	player->Start(playerPointer);
 
+	Object3D* shadow = new Object3D();
+	shadow->Init(Transform(VECTOR3(0.0f, -100.0f, 0.0f), VZero, VECTOR3(playerPointer->GetTransform()->scale.x - 1.0f, 0.1f, playerPointer->GetTransform()->scale.z - 1.0f)), "PlayerShadow");
+	Shadow* s = shadow->Component()->AddComponent<Shadow>();
+	s->Start();
+
+	RayCollider* collider4 = shadow->Component()->AddComponent<RayCollider>();
+	info.shape = CollsionInformation::RAY;
+	info.tag = CollsionInformation::SHADOW;
+	collider4->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist(), 0), VZero, VECTOR3(1.0f, 1, 1)));
+
+	playerPointer->AddChild(shadow);
+
 	
 	Object2D* guage = new Object2D();
 	guage->Init(VECTOR2F(950.0f, 950.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.44f, 0.35f), "playerHp");
@@ -120,15 +132,5 @@ void PlayerManager::CreatePlayer()
 	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpEdge", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(915.0f,950.0f,0.0f),VZero,VECTOR3(1.3f,1.0f,0.0f)));
 	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 
-	Object3D* shadow = new Object3D();
-	shadow->Init(Transform(VECTOR3(0.0f, -100.0f, 0.0f), VZero, VECTOR3(playerPointer->GetTransform()->scale.x - 1.0f, 0.1f, playerPointer->GetTransform()->scale.z - 1.0f)), "PlayerShadow");
-	Shadow* s = shadow->Component()->AddComponent<Shadow>();
-	s->Start();
 	
-	RayCollider* collider4 = shadow->Component()->AddComponent<RayCollider>();
-	info.shape = CollsionInformation::RAY;
-	info.tag = CollsionInformation::SHADOW;
-	collider4->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist(), 0), VZero, VECTOR3(1.0f, 1, 1)));
-	
-	playerPointer->AddChild(shadow);
 }

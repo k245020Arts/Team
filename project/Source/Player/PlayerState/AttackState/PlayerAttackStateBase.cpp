@@ -8,6 +8,7 @@
 #include "../../../Component/Animator/Animator.h"
 #include "../../../Component/MotionBlur/MotionBlur.h"
 #include "../../../Enemy/EnemyManager.h"
+#include "../../../Camera/Camera.h"
 
 PlayerAttackStateBase::PlayerAttackStateBase()
 {
@@ -142,6 +143,10 @@ void PlayerAttackStateBase::Finish()
 {
 	Player* p = GetBase<Player>();
     p->DeleteCollision();
+	if (!nextAttack) {
+		p->playerCom.camera->CameraLeapSet(0.2f);
+		p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
+	}
 }
 
 bool PlayerAttackStateBase::IsAttack()

@@ -259,8 +259,8 @@ void Player::Move(float _speed, float _speedMax)
 	
 	std::shared_ptr<PlayerStateBase> pB = playerCom.stateManager->GetState<PlayerStateBase>();
 
-	/*StickDirections stick = playerCom.controller->GetStickKnocking(0.6f, 360).leftStick;
-	StickDirections nowStick = playerCom.controller->GetStickKnockingReverce(0.6f, 1).leftStick;
+	/*StickDirections stick = playerCom.controller->GetStickKnocking(0.6f, 60).leftStick;
+	StickDirections nowStick = playerCom.controller->GetStickKnocking(0.6f, 1).leftStick;
 	ImGui::Begin("stick");
 	ImGui::Text("past = %d : now = %d", stick, nowStick);
 	ImGui::End();*/
@@ -447,7 +447,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	BossAttackBase::DamagePattern param = attack->GetDamageParam();
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
-		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f || startTime >= 0.0f) {
+		if (enemyAnim->GetCurrentFrame() <= startTime + 3.0f || startTime >= 0.0f) {
 			/*if (!LargeJustAvoid(attack)) {
 				return true;
 			}*/
@@ -488,6 +488,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 			switch (param.damagePattern)
 			{
 			case BossAttackBase::NO_BACK:
+				playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 				break;
 			case BossAttackBase::BACK:
 				playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);

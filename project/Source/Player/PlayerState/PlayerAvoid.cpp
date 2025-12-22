@@ -60,7 +60,7 @@ void PlayerAvoid::Update()
 			easeIng = 1500.0f;
 		}
 		else {
-			easeIng = Easing::Sin90Cube(9000.0f, 200.0f, time);
+			easeIng = Easing::Sin90Cube(7000.0f, 200.0f, time);
 		}
 		float animEasing	= Easing::Sin90Cube(1.0f, 0.8f,time);
 		
@@ -100,7 +100,7 @@ void PlayerAvoid::Finish()
 	Player* p = GetBase<Player>();
 	StateChangeBase();
 	p->playerCom.player->PlayerStickInput();
-	p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
+	//p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.physics->SetGravity(VECTOR3(0.0f, -6000.0f, 0.0f));
 	p->playerCom.camera->CameraLeapSet(0.2f);
