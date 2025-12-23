@@ -16,7 +16,7 @@ PlayerAttack3::PlayerAttack3()
 	animId			= ID::P_ANIM_ATTACK3;
 	collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	nextAttackID	= StateID::PLAYER_ATTACK4_S; 
-	frontSpeed		= 4500.0f;
+	frontSpeed		= 7500.0f;
 	//frontSpeed = 0.0f;
 	hitDamage		= 15.0f;
 }
@@ -55,7 +55,7 @@ void PlayerAttack3::Update()
 			p->playerCom.anim->SetPlaySpeed(1.0f);
 			else {
 				//p->playerCom.physics->SetVelocity(VZero);
-				p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(5000.0f, 0.0f, 5000.0f));
+				p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(40000.0f, 0.0f, 40000.0f));
 				if (nextAttack) {
 					//Ÿ‚ÌUŒ‚‚És‚­‚Æ‚«‚Ìİ’è
 					runTimer		= 0.1f;

@@ -60,7 +60,7 @@ void Camera::Update()
 	//}
 	if (input->KeyInputDown("camera")) {
 		if (!rockOn) {
-			if (cameraComponent.enemyManager->PlayerDistance(this)) {
+			if (cameraComponent.enemyManager->PlayerDistance(this,true)) {
 				cameraComponent.state->NowChangeState(StateID::FOLLOW_CAMERA_S);
 				//rockOn = !rockOn;
 			}
@@ -101,7 +101,7 @@ void Camera::Draw()
 		
 	}
 	
-	
+	cameraComponent.enemyManager->DebugDrawCamera(this);
 	//DrawSphere3D(target, 50, 1, 0x999999, 0x999999, true);
 }
 

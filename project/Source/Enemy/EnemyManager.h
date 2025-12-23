@@ -18,6 +18,8 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	void DebugDrawCamera(Camera* camera);
+
 	std::list<BaseObject*> GetEnemy();
 	std::list<BaseObject*>::iterator GetItr();
 
@@ -31,7 +33,7 @@ public:
 
 	void RemoveList(EnemyBase* _enemy, BaseObject* _obj);
 
-	bool PlayerDistance(Camera* camera);
+	bool PlayerDistance(Camera* camera,bool _right);
 	bool TargetCancel(Camera* camera);
 	void JustAvoidTargetChange(BaseObject* _obj);
 

@@ -121,6 +121,7 @@ void TrashEnemy::Update()
 
 void TrashEnemy::Draw()
 {
+	EnemyBase::Draw();
 }
 
 void TrashEnemy::Start(Object3D* _obj)

@@ -49,8 +49,13 @@ void FollowCamera::Update()
 
 	//ƒJƒƒ‰‚Ì‰ñ“]
 	c->cameraComponent.camera->CameraRotationSet();
-	if (c->cameraComponent.control->GetStickKnockingPut(0.5f).rightStick == S_LEFT || c->cameraComponent.control->GetStickKnockingPut(0.5f).rightStick == S_RIGHT) {
-		c->cameraComponent.enemyManager->PlayerDistance(c->cameraComponent.camera);
+	StickDirections stickDir = c->cameraComponent.control->GetStickKnockingPut(0.5f).rightStick;
+	if (stickDir == S_RIGHT) {
+		c->cameraComponent.enemyManager->PlayerDistance(c->cameraComponent.camera,true);
+		Start();
+	}
+	else if (stickDir == S_LEFT) {
+		c->cameraComponent.enemyManager->PlayerDistance(c->cameraComponent.camera,false);
 		Start();
 	}
 }

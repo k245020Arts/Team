@@ -20,6 +20,23 @@
 #include "../Component/Guage/Guage.h"
 #include "../Component/Collider/RayCollider.h"
 #include "../Component/Shadow/Shadow.h"
+#include "../Player/PlayerState/PlayerWait.h"
+#include "../Player/PlayerState/playerWalk.h"
+#include "../Player/PlayerState/AttackState/playerAttack1.h"
+#include "../Player/PlayerState/AttackState/playerAttack2.h"
+#include "../Player/PlayerState/playerDamage.h"
+#include "../Player/PlayerState/playerjustAvoid.h"
+#include "../Player/PlayerState/PlayerBlowAway.h"
+#include "../Player/PlayerState/PlayerTurn.h"
+#include "../Player/PlayerState/AttackState/playerJustAvoidAttack1.h"
+#include "../Player/PlayerState/AttackState/playerJustAvoidAttack2.h"
+#include "../Player/PlayerState/AttackState/playerAttack3.h"
+#include "../Player/PlayerState/AttackState/playerAttack4.h"
+#include "../Player/PlayerState/AttackState/playerJustAvoidAttack3.h"
+#include "../Player/PlayerState/AttackState/playerJustAvoidAttack4.h"
+#include "../Player/PlayerState/AttackState/playerJustAvoidAttack5.h"
+#include "../Player/PlayerState/PlayerAvoid.h"
+#include "../Player/PlayerState/PlayerDie.h"
 
 PlayerManager::PlayerManager()
 {
@@ -80,6 +97,26 @@ void PlayerManager::CreatePlayer()
 	me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Player4", ID::P_MODEL));
 	me2->RotationMesh(0, 180.0f * DegToRad);
 
+	StateManager* stateManager = playerPointer->Component()->AddComponent<StateManager>();
+
+	stateManager->CreateState<PlayerWait>("PlayerWait", StateID::PLAYER_WAIT_S);
+	stateManager->CreateState<PlayerWalk>("PlayerWalk", StateID::PLAYER_WALK_S);
+	stateManager->CreateState<PlayerAvoid>("PlayerAvoid", StateID::PLAYER_AVOID_S);
+	stateManager->CreateState<PlayerJustAvoid>("PlayerJustAvoid", StateID::PLAYER_JUST_AVOID_S);
+	stateManager->CreateState<PlayerAttack1>("PlayerAttack1", StateID::PLAYER_ATTACK1_S);
+	stateManager->CreateState<PlayerJustAvoidAttack1>("PlayerJustAvoidAttack1", StateID::PLAYER_JUST_AVOID_ATTACK1_S);
+	stateManager->CreateState<PlayerAttack2>("PlayerAttack2", StateID::PLAYER_ATTACK2_S);
+	stateManager->CreateState<PlayerJustAvoidAttack2>("PlayerJustAvoidAttack2", StateID::PLAYER_JUST_AVOID_ATTACK2_S);
+	stateManager->CreateState<PlayerAttack3>("PlayerAttack3", StateID::PLAYER_ATTACK3_S);
+	stateManager->CreateState<PlayerJustAvoidAttack3>("PlayerJustAvoidAttack3", StateID::PLAYER_JUST_AVOID_ATTACK3_S);
+	stateManager->CreateState<PlayerAttack4>("PlayerAttack4", StateID::PLAYER_ATTACK4_S);
+	stateManager->CreateState<PlayerJustAvoidAttack4>("PlayerJustAvoidAttack4", StateID::PLAYER_JUST_AVOID_ATTACK4_S);
+	stateManager->CreateState<PlayerJustAvoidAttack5>("PlayerJustAvoidAttack5", StateID::PLAYER_JUST_AVOID_ATTACK5_S);
+	stateManager->CreateState<PlayerDamage>("PlayerDamage", StateID::PLAYER_DAMAGE_S);
+	stateManager->CreateState<PlayerBlowAway>("PlayerBlowAway", StateID::PLAYER_BLOW_AWAY_S);
+	stateManager->CreateState<PlayerDie>("PlayerDie", StateID::PLAYER_DIE_S);
+	stateManager->CreateState<PlayerTurn>("PlayerTurn", StateID::PLAYER_TURN_S);
+
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),"mixamorig:Hips");
 	anim->AddFile(ID::IDType::P_ANIM_IDOL,					"P_IDOL_M3", true, 1.0f);
@@ -89,11 +126,11 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_DAMAGE,						"P_DAMAGE_M_1", false, 2.0f,0.0f,10.0f);
 	anim->AddFile(ID::IDType::P_FALL,						"P_FALL_M_1", true, 1.0f,0.0f,10.0f);
 	anim->AddFile(ID::IDType::P_GETUP,						"P_GETUP_M_1", false, 1.0f,0.0f,10.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK1,				"P_ATTACK01_M_1", false, 2.3f,20.0f,35.0f);
+	anim->AddFile(ID::IDType::P_ANIM_ATTACK1,				"P_ATTACK01_M_1", false, 2.3f,19.0f,27.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1,	"P_ATTACK11", false, 9.0f,7.0f,25.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK2,				"P_ATTACK02_M_1", false, 2.1f, 10.0f, 30.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK2,	"P_ATTACK11_M_1", false, 0.7f, 4.0f, 21.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK3,				"P_ATTACK03_M_1", false, 2.1f, 15.0f, 25.0f);
+	anim->AddFile(ID::IDType::P_ANIM_ATTACK3,				"P_ATTACK03_M_1", false, 2.1f, 14.0f, 19.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK3,	"P_ATTACK05_M_1", false, 1.5f, 23.0f, 30.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK4,				"P_ATTACK04_M_1", false, 3.1f, 30.0f, 42.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK4,	"P_ATTACK46", false, 2.0f, 9.0f, 12.0f);

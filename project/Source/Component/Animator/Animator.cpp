@@ -64,6 +64,10 @@ void Animator::Update()
     MATRIX matrix = MGetIdent();
     MATRIX beforeMatrix = MGetIdent();
 
+    /*if (obj->GetTag() == "PLAYER") {
+        int a = 0;
+    }*/
+
     VECTOR3 beforePos = currentPosition;
     if (current.attachID >= 0)
     { // current

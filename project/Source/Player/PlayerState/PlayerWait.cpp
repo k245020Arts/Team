@@ -41,7 +41,7 @@ void PlayerWait::Start()
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
-	blendSpeed = 0.4f;
+	blendSpeed = 0.3f;
 }
 
 void PlayerWait::Finish()

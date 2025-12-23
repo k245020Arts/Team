@@ -63,6 +63,12 @@ void Physics::Update()
 	currentTransform->position += velocity * dt;
 }
 
+void Physics::Draw()
+{
+	VECTOR3 pos = obj->GetTransform()->position;
+	DrawLine3D(pos, pos + (velocity * obj->GetObjectTimeRate()), 0xff0000);
+}
+
 void Physics::Start(VECTOR3 _gravityAmout, VECTOR3 _fir)
 {
 	currentTransform = obj->GetTransform();

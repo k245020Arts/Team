@@ -12,7 +12,8 @@ class Physics : public Component
 public:
 	Physics();
 	~Physics();
-	void Update();
+	void Update()override;
+	void Draw()override;
 	void Start(VECTOR3 _gravityAmout,VECTOR3 _fir);
 
 	//ˆÚ“®‚ð‚·‚évelocity‚É’l‚ð‚¢‚ê‚é

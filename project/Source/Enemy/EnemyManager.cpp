@@ -45,6 +45,109 @@ void EnemyManager::Draw()
 {
 }
 
+void EnemyManager::DebugDrawCamera(Camera* camera)
+{
+	VECTOR3 tarPos;
+	VECTOR3 fowardPos;
+	//これまでターゲットに入ってなかったらプレイヤーの位置を参照
+	tarPos = player->GetTransform()->position;
+	fowardPos = player->GetTransform()->Forward();
+
+	VECTOR3 camPos = camera->GetCameraTransform()->position;
+	VECTOR3 camFront = camera->GetCameraTransform()->Forward();
+
+	camPos.y = 0;
+
+	auto itrs = chara.begin();
+	for (; itrs != chara.end(); itrs++) {
+		if ((*itrs)->GetLastTarget()) {
+			//itrs; //最後にロックオンされていた敵のイテレーター
+			break;
+		}
+	}
+	
+	
+	if (itrs == chara.end()) {
+		tarPos = player->GetTransform()->position;
+		fowardPos = player->GetTransform()->Forward();
+	}
+	else {
+		tarPos = (*itrs)->GetBaseObject()->GetTransform()->position;
+		fowardPos = (*itrs)->GetBaseObject()->GetTransform()->Forward();
+
+		/*tarPos = player->GetTransform()->position;
+		fowardPos = player->GetTransform()->Forward();*/
+	}
+
+
+	VECTOR3 targetEnemyPos = tarPos;
+
+	VECTOR3 targetFrontPos = fowardPos;
+	VECTOR3 targetDir;
+	targetDir = targetFrontPos * MGetRotY(-90.0f * DegToRad);
+
+	//一番近い敵を検出
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		//if ((*itr)->GetLastTarget()) {
+		//	//lastItr = itr; //前にロックオンされていた敵のイテレーター
+		//	continue;
+		//}
+		VECTOR3 enemyPos = (*itr)->GetBaseObject()->GetTransform()->position;
+
+		VECTOR3 enemyFrontPos = enemyPos * (*itr)->GetBaseObject()->GetTransform()->Forward();
+
+		VECTOR3 enemyTarget = enemyPos - targetEnemyPos;
+
+		DrawLine3D(enemyPos, targetEnemyPos, 0xffffff);;
+
+		//Enemy側から見た右はプレイヤーに対してだと左側になるのでEnemyの左側を判定する
+		//VECTOR3 enemyRight = enemyPos * VECTOR3(1, 0, 0);
+
+		targetDir.y = 0;
+		enemyTarget.y = 0;
+		targetDir.z = 0.0f;
+
+		float camDot = VDot(targetDir, enemyTarget);
+		//右側にいたら0以上になるのでその時だけ通るようにする。
+		if (camDot < 0.0f * DegToRad) {
+			continue;
+		}
+		VECTOR3 target = camPos - enemyPos;
+		//より右側に近い敵を判定するために内積を取る。
+		target.y = 0.0f;
+		camFront.y = 0.0f;
+		/*camPos.y = 0;
+		camFront.y = 0;
+
+		DrawLine3D(camPos, camFront * 5000.0f, 0xf000ff);*/
+		float dot = VDot(target.Normalize(), camFront.Normalize());
+		DrawLine3D(targetEnemyPos, enemyPos, 0xfff00f);;
+		float dist = target.Size();
+
+		//距離が一定以上あったら無視
+		/*if (dist >= 100000) {
+			continue;
+		}*/
+		
+		/*distance = dist;
+		if (dot > dotMax) {
+			dotMax = dot;
+			keepItr = itr;
+		}*/
+
+		//VECTOR3 target = (*itr)->GetBaseObject()->GetTransform()->position - player->GetTransform()->position;
+		//float dist = target.Size();
+
+		//if (VDot(dir.Normalize(), target.Normalize()) < cosf(90.0f * DegToRad)) {
+		//	continue;
+		//}
+		//if (distance > dist) {
+		//	distance = dist;  //距離を入れる
+		//	keepItr = itr; //このイテレーターがロックオンされるイテレーター
+		//}
+	}
+}
+
 std::list<BaseObject*> EnemyManager::GetEnemy()
 {
 	return enemy;
@@ -235,30 +338,102 @@ void EnemyManager::RemoveList(EnemyBase* _enemy, BaseObject* _obj)
 	
 }
 
-bool EnemyManager::PlayerDistance(Camera* camera)
+bool EnemyManager::PlayerDistance(Camera* camera,bool _right)
 {
 	float distance = 1000000;
 	VECTOR3 dir = camera->GetTarget() - camera->GetCameraTransform()->position;
+	VECTOR3 camPos = camera->GetCameraTransform()->position;
+	VECTOR3 camFront = camera->GetCameraTransform()->Forward();
 	dir = dir.Normalize();
 	auto keepItr = chara.begin();
 	auto lastItr = chara.begin();
+	float dotMax = 2.0f;
+	auto itrs = chara.begin();
+	for (; itrs != chara.end(); itrs++) {
+		if ((*itrs)->GetLastTarget()) {
+			lastItr = itrs; //最後にロックオンされていた敵のイテレーター
+			break;
+		}
+	}
+	VECTOR3 tarPos;
+	VECTOR3 fowardPos;
+	//これまでターゲットに入ってなかったらプレイヤーの位置を参照
+	if (itrs == chara.end()) {
+		tarPos = player->GetTransform()->position;
+		fowardPos = player->GetTransform()->Forward();
+	}
+	else {
+		tarPos = (*lastItr)->GetBaseObject()->GetTransform()->position;
+		fowardPos = (*lastItr)->GetBaseObject()->GetTransform()->Forward();
 
+		/*tarPos = player->GetTransform()->position;
+		fowardPos = player->GetTransform()->Forward();*/
+	}
+	VECTOR3 targetEnemyPos = tarPos;
+
+	VECTOR3 targetFrontPos = fowardPos;
+	VECTOR3 targetDir;
+	if (_right) {
+		targetDir = targetFrontPos * MGetRotY(90.0f * DegToRad);
+	}
+	else {
+		targetDir = targetFrontPos * MGetRotY(-90.0f * DegToRad);
+	}
+	
 	//一番近い敵を検出
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
 		if ((*itr)->GetLastTarget()) {
-			lastItr = itr; //最後にロックオンされていた敵のイテレーター
+			//lastItr = itr; //前にロックオンされていた敵のイテレーター
 			continue;
 		}
-		VECTOR3 target = (*itr)->GetBaseObject()->GetTransform()->position - player->GetTransform()->position;
+		VECTOR3 enemyPos = (*itr)->GetBaseObject()->GetTransform()->position;
+		
+		VECTOR3 enemyFrontPos = enemyPos * (*itr)->GetBaseObject()->GetTransform()->Forward();
+
+		VECTOR3 enemyTarget = enemyPos - targetEnemyPos;
+
+		//Enemy側から見た右はプレイヤーに対してだと左側になるのでEnemyの左側を判定する
+		//VECTOR3 enemyRight = enemyPos * VECTOR3(1, 0, 0);
+
+		targetDir.y = 0;
+		enemyTarget.y = 0;
+		targetDir.z = 0.0f;
+
+		float camDot = VDot(targetDir, enemyTarget);
+		//右側にいたら0以上になるのでその時だけ通るようにする。
+		if (camDot < 0.0f * DegToRad) {
+			continue;
+		}
+		VECTOR3 target = camPos - enemyPos;
+		//より右側に近い敵を判定するために内積を取る。
+		target.y = 0.0f;
+		camFront.y = 0.0f;
+
+		//DOTO 右ベクトル的に一番短い敵のポジションを判定
+		float sideDist = (VDot(targetDir.Normalize(), target.Normalize()));
+
 		float dist = target.Size();
 
-		if (VDot(dir.Normalize(), target.Normalize()) < cosf(90.0f * DegToRad)) {
+		//距離が一定以上あったら無視
+		if (dist >= 100000) {
 			continue;
 		}
-		if (distance > dist) {
-			distance = dist;  //距離を入れる
-			keepItr = itr; //このイテレーターがロックオンされるイテレーター
+		distance = dist;
+		if (sideDist < dotMax) {
+			dotMax = sideDist;
+			keepItr = itr;
 		}
+		
+		//VECTOR3 target = (*itr)->GetBaseObject()->GetTransform()->position - player->GetTransform()->position;
+		//float dist = target.Size();
+
+		//if (VDot(dir.Normalize(), target.Normalize()) < cosf(90.0f * DegToRad)) {
+		//	continue;
+		//}
+		//if (distance > dist) {
+		//	distance = dist;  //距離を入れる
+		//	keepItr = itr; //このイテレーターがロックオンされるイテレーター
+		//}
 	}
 
 	//一定距離離れているとターゲットに入れない
