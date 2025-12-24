@@ -28,10 +28,10 @@ SwordEffect::~SwordEffect()
 void SwordEffect::Update()
 {
 	for (auto e = num.begin(); e != num.end();) {
-		if (e->feedInTime > 0.0f) {
+		/*if (e->feedInTime > 0.0f) {
 			e++;
 			continue;
-		}
+		}*/
 		e->time -= Time::DeltaTimeRate();
 		if (e->time <= 0.0f) {
 			e->feedOutTime -= Time::DeltaTimeRate();
@@ -88,7 +88,7 @@ void SwordEffect::Draw()
 
 	SetUseZBuffer3D(FALSE);
 	SetUseLighting(FALSE);
-	SetDrawBlendMode(DX_BLENDMODE_ADD, 255);
+	SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
 
 	int indexSize = static_cast<int>(indexes.size());
 	int vertexSize = static_cast<int>(vertexes.size());
@@ -169,7 +169,7 @@ void SwordEffect::MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos
 	//spcColor.a = (BYTE)num[i].rgb.a;
 	
 	//フェードインとフェードアウト
-	if (num[i].feedInTime > 0.0f) {
+	/*if (num[i].feedInTime > 0.0f) {
 		num[i].feedInTime -= Time::DeltaTimeRate();
 		if (num[i].feedInTime <= 0.0f) {
 			num[i].feedInTime = 0.0f;
@@ -183,7 +183,7 @@ void SwordEffect::MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos
 	}
 	else {
 		spcColor.a = (BYTE)num[i].maxAlpha;
-	}
+	}*/
 
 	VERTEX3D v;
 	v.norm = VECTOR3(0, 1, 0);

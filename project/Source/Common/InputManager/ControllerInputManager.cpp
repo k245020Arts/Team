@@ -370,8 +370,8 @@ StickFloat ControllerInputManager::GetStickRot(int _backFrame)
 	StickFloat result{ 0 };
 	StickInput stick = GetStickInput(_backFrame);
 
-	result.leftStick = atan2f((float)inputNow.ThumbLY, (float)inputNow.ThumbLX);
-	result.rightStick = atan2f((float)inputNow.ThumbRY, (float)inputNow.ThumbRX);
+	result.leftStick = atan2f((float)stick.leftStick.y, (float)stick.leftStick.x);
+	result.rightStick = atan2f((float)stick.rightStick.y, (float)stick.rightStick.x);
 
 	return result;
 }

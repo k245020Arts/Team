@@ -19,6 +19,7 @@ PlayerTurn::~PlayerTurn()
 void PlayerTurn::Update()
 {
 	Player* p = GetBase<Player>();
+	
 	if (p->playerCom.anim->IsFinish()) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 	}
@@ -33,6 +34,7 @@ void PlayerTurn::Start()
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
+	
 	//blendSpeed = 0.4f;
 }
 
@@ -42,4 +44,5 @@ void PlayerTurn::Finish()
 	PlayerStateBase::Start();
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	//blendSpeed = 0.4f;
+	p->RotationChange(p->GetWalkAngle(), 180.0f);
 }

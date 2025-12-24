@@ -131,7 +131,7 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK2,				"P_ATTACK02_M_1", false, 2.1f, 10.0f, 30.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK2,	"P_ATTACK11_M_1", false, 0.7f, 4.0f, 21.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK3,				"P_ATTACK03_M_1", false, 2.1f, 14.0f, 19.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK3,	"P_ATTACK05_M_1", false, 1.5f, 23.0f, 30.0f);
+	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK3,	"P_ATTACK05_M_1", false, 1.5f, 10.0f, 20.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK4,				"P_ATTACK04_M_1", false, 3.1f, 30.0f, 42.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK4,	"P_ATTACK46", false, 2.0f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_DIE,						"P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
@@ -161,13 +161,11 @@ void PlayerManager::CreatePlayer()
 
 	
 	Object2D* guage = new Object2D();
-	guage->Init(VECTOR2F(950.0f, 950.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.44f, 0.35f), "playerHp");
-
+	guage->Init(VECTOR2F(915.0f, 950.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "playerHp");
 	playerPointer->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
-	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpEdge", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(915.0f,950.0f,0.0f),VZero,VECTOR3(1.3f,1.0f,0.0f)));
-	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_GreenBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_Frame", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(915.0f,950.0f,0.0f),VZero,VECTOR3(1.0f,1.0f,0.0f)));
 
-	
 }

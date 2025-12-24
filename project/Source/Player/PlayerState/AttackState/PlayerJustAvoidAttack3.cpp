@@ -104,8 +104,8 @@ void PlayerJustAvoidAttack3::Update()
 			nextAttack = true;
 		}
 		timer -= Time::DeltaTimeRate();
-		if (p->playerCom.physics->GetGravity().y <= -20000.0f) {
-			p->playerCom.anim->SetPlaySpeed(2.0f);
+		if (p->playerCom.physics->GetGravity().y <= -30000.0f) {
+			
 		}
 		else {
 			p->playerCom.physics->AddGravity(VECTOR3(0, -1500, 0));
@@ -116,6 +116,7 @@ void PlayerJustAvoidAttack3::Update()
 		if (p->playerCom.anim->AnimEventCan()) {
 			if (beforeAttack) {
 				AttackMoveStart();
+				p->playerCom.anim->SetPlaySpeed(2.0f);
 			}
 			beforeAttack = false;
 			//p->playerCom.physics->SetVelocity(VZero);
@@ -123,8 +124,8 @@ void PlayerJustAvoidAttack3::Update()
 		}
 		else {
 			if (!beforeAttack) {
-				p->playerCom.anim->SetFrame(p->playerCom.anim->EventStartTime(animId));
-				firstColl = true;
+				//p->playerCom.anim->SetFrame(p->playerCom.anim->EventStartTime(animId));
+				//firstColl = true;
 			}
 			/*if (p->playerCom.physics->GetGround()) {
 				if (beforeAttack) {
@@ -162,7 +163,7 @@ void PlayerJustAvoidAttack3::Start()
 	/*if (distSize <= ATTACK_MOVE_DIST) {
 		p->playerCom.physics->SetVelocity(norm * distSize * 2.0f);
 	}*/
-	p->playerCom.anim->SetPlaySpeed(0.1f);
+	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.physics->AddGravity(VECTOR3(0, 0, 0));
 	p->playerCom.physics->SetGravity(VZero);
 	//timer = 2.0f;

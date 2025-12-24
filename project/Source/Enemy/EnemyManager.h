@@ -33,7 +33,8 @@ public:
 
 	void RemoveList(EnemyBase* _enemy, BaseObject* _obj);
 
-	bool PlayerDistance(Camera* camera,bool _right);
+	bool PlayerDistance(Camera* camera, bool _right);
+	bool PlayerDistance(Camera* camera,bool _right,bool _debugMode);
 	bool TargetCancel(Camera* camera);
 	void JustAvoidTargetChange(BaseObject* _obj);
 

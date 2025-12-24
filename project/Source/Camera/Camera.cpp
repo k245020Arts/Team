@@ -100,8 +100,13 @@ void Camera::Draw()
 	else {
 		
 	}
+	if (CheckHitKey(KEY_INPUT_Q)) {
+		cameraComponent.enemyManager->PlayerDistance(this, false, true);
+	}
+	else {
+		cameraComponent.enemyManager->PlayerDistance(this, true, true);
+	}
 	
-	cameraComponent.enemyManager->DebugDrawCamera(this);
 	//DrawSphere3D(target, 50, 1, 0x999999, 0x999999, true);
 }
 
