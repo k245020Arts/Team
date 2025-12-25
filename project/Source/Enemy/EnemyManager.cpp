@@ -244,12 +244,17 @@ void EnemyManager::RemoveList(EnemyBase* _enemy, BaseObject* _obj)
 	
 }
 
-bool EnemyManager::PlayerDistance(Camera* camera,bool _right)
+bool EnemyManager::ChangeCameraRockOn(Camera* camera,bool _right)
 {
-	return PlayerDistance(camera, _right, false);
+	return ChangeCameraRockOn(camera, _right, true,false);
 }
 
-bool EnemyManager::PlayerDistance(Camera* camera, bool _right, bool _debugMode)
+bool EnemyManager::ChangeCameraRockOn(Camera* camera, bool _right,bool _min)
+{
+	return ChangeCameraRockOn(camera, _right, _min, false);
+}
+
+bool EnemyManager::ChangeCameraRockOn(Camera* camera, bool _right, bool _min, bool _debugMode)
 {
 	const float CAM_LONG_DISTANCE = 100000.0f;
 	float distance = 1000000;
@@ -259,9 +264,17 @@ bool EnemyManager::PlayerDistance(Camera* camera, bool _right, bool _debugMode)
 	dir = dir.Normalize();
 	auto keepItr = chara.end();
 	auto lastItr = chara.end();
+	float invertMinMax = 0.0f;
+	if (_min) {
+		invertMinMax = 1000.0f;;
+	}
+	else {
+		invertMinMax = -1000.0f;;
+	}
 	float dist2DMax = 10000.0f;
 	auto itrs = chara.begin();
-	float scoreMin = 1000.0f;
+	
+	float dotMax = 0.0f;
 	for (; itrs != chara.end(); itrs++) {
 		if ((*itrs)->GetLastTarget()) {
 			lastItr = itrs; //最後にロックオンされていた敵のイテレーター
@@ -275,7 +288,7 @@ bool EnemyManager::PlayerDistance(Camera* camera, bool _right, bool _debugMode)
 	if (itrs == chara.end()) {
 		tarPos = player->GetTransform()->position;
 		fowardPos = player->GetTransform()->Forward();
-		
+
 	}
 	else {
 		tarPos = (*lastItr)->GetBaseObject()->GetTransform()->position;
@@ -290,12 +303,12 @@ bool EnemyManager::PlayerDistance(Camera* camera, bool _right, bool _debugMode)
 	lastPos2D = ConvWorldPosToScreenPos(targetEnemyPos);
 	VECTOR3 camDir;
 	if (_right) {
-		camDir = targetFrontPos* MGetRotY(90.0f * DegToRad);
+		camDir = targetFrontPos * MGetRotY(90.0f * DegToRad);
 	}
 	else {
 		camDir = targetFrontPos * MGetRotY(-90.0f * DegToRad);
 	}
-	
+
 	int num = 0;
 	if (!_debugMode) {
 		int b = 0;
@@ -303,7 +316,7 @@ bool EnemyManager::PlayerDistance(Camera* camera, bool _right, bool _debugMode)
 	//一番近い敵を検出
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
 		if ((*itr)->GetLastTarget()) {
-			//lastItr = itr; //前にロックオンされていた敵のイテレーター
+			lastItr = itr; //前にロックオンされていた敵のイテレーター
 			num++;
 			continue;
 		}
@@ -316,7 +329,7 @@ bool EnemyManager::PlayerDistance(Camera* camera, bool _right, bool _debugMode)
 
 		VECTOR3 enemyTarget = enemyPos - camPos;
 
-		DrawLine3D(camPos, enemyPos, 0xffffff);
+		//DrawLine3D(camPos, enemyPos, 0xffffff);
 
 		//Enemy側から見た右はプレイヤーに対してだと左側になるのでEnemyの左側を判定する
 		//VECTOR3 enemyRight = enemyPos * VECTOR3(1, 0, 0);
@@ -364,9 +377,9 @@ bool EnemyManager::PlayerDistance(Camera* camera, bool _right, bool _debugMode)
 			keepItr = itr;
 		}
 
-#elseifdef DOT_MODE
-		float dotMax = 0.0f;
-		VECTOR3 dotEnemyPos = enemyPos - camPos;
+		#elseifdef DOT_MODE
+
+			VECTOR3 dotEnemyPos = enemyPos - camPos;
 		dotEnemyPos.y = 0.0f;
 		camFront.y = 0;
 		DrawLine3D(camPos, enemyPos, 0xff000f);
@@ -383,15 +396,15 @@ bool EnemyManager::PlayerDistance(Camera* camera, bool _right, bool _debugMode)
 			keepItr = itr;
 		}
 #else
-		
+
 		float score = 0.0f;
 
-		
+
 
 		VECTOR3 dotEnemyPos = enemyPos - camPos;
 		dotEnemyPos.y = 0.0f;
 		camFront.y = 0;
-		DrawLine3D(camPos, enemyPos, 0xff000f);
+		//DrawLine3D(camPos, enemyPos, 0xff000f);
 
 		float frontDot = VDot(camFront.Normalize(), dotEnemyPos.Normalize());
 		float frontScore = (1.0f - frontDot) * 1.0f;
@@ -406,10 +419,19 @@ bool EnemyManager::PlayerDistance(Camera* camera, bool _right, bool _debugMode)
 
 		score = frontScore + sideScore + distScore;
 
-		if (score < scoreMin) {
-			scoreMin = score;
-			keepItr = itr;
+		if (_min) {
+			if (score < invertMinMax) {
+				invertMinMax = score;
+				keepItr = itr;
+			}
 		}
+		else {
+			if (score > invertMinMax) {
+				invertMinMax = score;
+				keepItr = itr;
+			}
+		}
+		
 		//VECTOR3 pos2D = ConvWorldPosToScreenPos(enemyPos);
 		//DrawFormatString(pos2D.x, pos2D.y,0xffffff,"front: %.2f  side: %.2f  dist: %.2f  total: %.2f",frontScore, sideScore, distScore, score);
 #endif 
@@ -423,19 +445,14 @@ bool EnemyManager::PlayerDistance(Camera* camera, bool _right, bool _debugMode)
 		if (lastItr != chara.end()) {
 			(*lastItr)->LastTargetOut();
 		}
-		(*keepItr)->LastTargetIn();
-
-		player->Component()->GetComponent<Player>()->TargetObjSet((*keepItr)->GetBaseObject());
-		camera->TargetSet((*keepItr)->GetBaseObject());
-		cameraTargetObj = (*keepItr)->GetBaseObject();
+		SetCameraRockOnObject((*keepItr), camera);
 		return true;
 	}
-	if (lastItr != chara.end()) {
-		(*lastItr)->LastTargetOut();
-	}
-	cameraTargetObj = nullptr;
-	player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);
-	return false;
+	//右にいる敵がいなかったら、左にいる一番評価値が低い敵にロックオンを起動させる。
+	bool next = (_right) ? false : true;
+	bool rockOn = ChangeCameraRockOn(camera, next, false, false);
+	my_assert(rockOn, "ロックオンの変更が失敗しました。");
+	return true;
 }
 
 bool EnemyManager::TargetCancel(Camera* camera)
@@ -465,6 +482,21 @@ void EnemyManager::JustAvoidTargetChange(BaseObject* _obj)
 			continue;
 		}
 	}
+}
+
+EnemyBase* EnemyManager::PlayerNearEnemy()
+{
+	float minDist = 100000.0f;
+	EnemyBase* nearEnemy = nullptr;
+	for (auto itrs = chara.begin(); itrs != chara.end(); itrs++) {
+		VECTOR3 dir = (*itrs)->GetBaseObject()->GetTransform()->position - player->GetTransform()->position;
+		float dist = dir.Size();
+		if (dist <= minDist) {
+			minDist = dist;
+			nearEnemy = (*itrs);
+		}
+	}
+	return nearEnemy;
 }
 
 void EnemyManager::NearEnemyAlpha(VECTOR3 camPos)
@@ -497,6 +529,20 @@ Transform EnemyManager::NearEnemyPos(const VECTOR3& _pos)
 		}
 	}
 	return nearTransform;
+}
+
+void EnemyManager::SetCameraRockOnObject(EnemyBase* _enemy, Camera* _camera)
+{
+	_enemy->LastTargetIn();
+	player->Component()->GetComponent<Player>()->TargetObjSet(_enemy->GetBaseObject());
+	_camera->TargetSet(_enemy->GetBaseObject());
+	cameraTargetObj = _enemy->GetBaseObject();
+}
+
+void EnemyManager::CameraRockOnStart(Camera* _camera)
+{
+	EnemyBase* chara = PlayerNearEnemy();
+	SetCameraRockOnObject(chara, _camera);
 }
 
 EnemyAttackChangeCameraDirection EnemyManager::BossAttackCamera(Camera* camera, const Transform& _targetTransform)

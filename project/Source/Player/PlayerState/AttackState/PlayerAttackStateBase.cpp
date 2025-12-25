@@ -51,6 +51,8 @@ void PlayerAttackStateBase::Update()
 		p->playerCom.player->DrawTrail();
 		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
 	}
+	
+	//p->RotationChange(p->GetWalkAngle(), 5.0f);
 	//p->playerCom.player->DrawTrail();
 	//ŒãŒ„‚Ìİ’è
 	if (nextAvoid) {
@@ -99,6 +101,7 @@ void PlayerAttackStateBase::EnemyRotation()
 void PlayerAttackStateBase::Start()
 {
 	Player* p			= GetBase<Player>();
+	//p->PlayerStickInput();
 	nextAttack			= false;
 	nextAvoid			= false;
 	p->playerCom.player->SetAvoidStart(false);

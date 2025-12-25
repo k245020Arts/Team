@@ -33,13 +33,19 @@ public:
 
 	void RemoveList(EnemyBase* _enemy, BaseObject* _obj);
 
-	bool PlayerDistance(Camera* camera, bool _right);
-	bool PlayerDistance(Camera* camera,bool _right,bool _debugMode);
+	bool ChangeCameraRockOn(Camera* camera, bool _right);
+	bool ChangeCameraRockOn(Camera* camera, bool _right, bool _min);
+	bool ChangeCameraRockOn(Camera* camera,bool _right, bool _min,bool _debugMode);
 	bool TargetCancel(Camera* camera);
 	void JustAvoidTargetChange(BaseObject* _obj);
 
+	EnemyBase* PlayerNearEnemy();
+
 	void NearEnemyAlpha(VECTOR3 camPos);
 	Transform NearEnemyPos(const VECTOR3& _pos);
+
+	void SetCameraRockOnObject(EnemyBase* _enemy, Camera* _camera);
+	void CameraRockOnStart(Camera* _camera);
 
 	EnemyAttackChangeCameraDirection BossAttackCamera(Camera* camera,const Transform& _targetTransform);
 

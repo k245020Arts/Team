@@ -87,6 +87,7 @@ Player::Player()
 	noDamage				= false;
 	redCounter				= 0.0f;
 	playerCom				= PlayerInformation::CharaComponent();
+	turn					= false;
 }
 //
 //Object2D* guage = new Object2D();
@@ -245,9 +246,6 @@ void Player::Move(float _speed, float _speedMax)
 
 	StickDirections stick = playerCom.controller->GetStickKnockingReverce(0.6f, 8).leftStick;
 	StickDirections nowStick = playerCom.controller->GetStickKnocking(0.6f, 1).leftStick;
-	ImGui::Begin("stick");
-	ImGui::Text("past = %d : now = %d", stick, nowStick);
-	ImGui::End();
 	
 	//スティックの傾きの量が少なかったら移動しない
 	if ((fabs(walkAngle.x) >= 0.3f || fabs(walkAngle.z) >= 0.3f) && hp > 0.0f) {
@@ -265,6 +263,7 @@ void Player::Move(float _speed, float _speedMax)
 		
 		float max	= _speedMax;
 		size		= moveVelo.SquareSize();
+
 		//最大速度までいったらスピードマックスに補正
 		if (moveVelo.SquareSize() >= max * max) {
 			moveVelo = moveVelo.Normalize() * _speedMax;

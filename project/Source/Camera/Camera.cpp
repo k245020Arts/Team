@@ -60,17 +60,16 @@ void Camera::Update()
 	//}
 	if (input->KeyInputDown("camera")) {
 		if (!rockOn) {
-			if (cameraComponent.enemyManager->PlayerDistance(this,true)) {
-				cameraComponent.state->NowChangeState(StateID::FOLLOW_CAMERA_S);
-				//rockOn = !rockOn;
-			}
-			
+			cameraComponent.enemyManager->CameraRockOnStart(this);
+			cameraComponent.state->NowChangeState(StateID::FOLLOW_CAMERA_S);
+			rockOn = true;
 		}
 		else {
-			
+			cameraComponent.enemyManager->TargetCancel(this);
 			cameraComponent.state->NowChangeState(StateID::FREE_CAMERA_S);
-			rockOn = !rockOn;
+			rockOn = false;
 		}
+		
 	}
 	//Dxlibのカメラの設定(SetDrawScreenを使うと初期化されるため毎フレーム呼ぶ)。
 	SetCameraNearFar(10.0f, 100000000.0f);
@@ -101,10 +100,10 @@ void Camera::Draw()
 		
 	}
 	if (CheckHitKey(KEY_INPUT_Q)) {
-		cameraComponent.enemyManager->PlayerDistance(this, false, true);
+		cameraComponent.enemyManager->ChangeCameraRockOn(this, false, false,true);
 	}
 	else {
-		cameraComponent.enemyManager->PlayerDistance(this, true, true);
+		cameraComponent.enemyManager->ChangeCameraRockOn(this, true, false,true);
 	}
 	
 	//DrawSphere3D(target, 50, 1, 0x999999, 0x999999, true);

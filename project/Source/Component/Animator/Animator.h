@@ -107,6 +107,10 @@ public:
 	int GetBaseModel();
 	int GetCurrentAttackID();
 
+	bool BlendFinish();
+
+	void RotationChangeAnimator();
+
 	void ImguiDraw()override;
 
 private:
@@ -130,7 +134,14 @@ private:
 		float frame;
 		float beforeFrame;
 		int boneIndex;
-		PlayInfo() : fileID("NONE"), attachID(-1), frame(0.0f),beforeFrame(0.0f), boneIndex(-1) {}
+		bool rotationChange;
+
+		bool rotationChangeStarted;
+		float rotationAnimBaseYaw;	 // アニメ開始時のアニメ側の向き（ワールド基準）
+		float rotationLocalBaseYaw;  // アニメ開始時のオブジェクトのローカル回転（rad）
+
+		PlayInfo() : fileID("NONE"), attachID(-1), frame(0.0f),beforeFrame(0.0f), boneIndex(-1),rotationChange(false),
+		rotationChangeStarted(false),rotationAnimBaseYaw(0.0f) , rotationLocalBaseYaw(0.0f){}
 	};
 	PlayInfo current; // 今のアニメ
 	PlayInfo before; // 前のアニメ

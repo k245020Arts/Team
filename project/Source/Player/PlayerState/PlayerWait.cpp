@@ -39,9 +39,16 @@ void PlayerWait::Draw()
 void PlayerWait::Start()
 {
 	Player* p = GetBase<Player>();
+	if (p->turn) {
+		blendSpeed = 0.3f;
+	}
+	else {
+		blendSpeed = 0.3f;
+	}
+	
 	PlayerStateBase::Start();
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
-	blendSpeed = 0.3f;
+	
 }
 
 void PlayerWait::Finish()

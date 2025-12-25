@@ -51,11 +51,11 @@ void FollowCamera::Update()
 	c->cameraComponent.camera->CameraRotationSet();
 	StickDirections stickDir = c->cameraComponent.control->GetStickKnockingPut(0.5f).rightStick;
 	if (stickDir == S_RIGHT) {
-		c->cameraComponent.enemyManager->PlayerDistance(c->cameraComponent.camera,true);
+		c->cameraComponent.enemyManager->ChangeCameraRockOn(c->cameraComponent.camera,true);
 		Start();
 	}
 	else if (stickDir == S_LEFT) {
-		c->cameraComponent.enemyManager->PlayerDistance(c->cameraComponent.camera,false);
+		c->cameraComponent.enemyManager->ChangeCameraRockOn(c->cameraComponent.camera,false);
 		Start();
 	}
 }

@@ -135,7 +135,7 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK4,				"P_ATTACK04_M_1", false, 3.1f, 30.0f, 42.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK4,	"P_ATTACK46", false, 2.0f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_DIE,						"P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
-	anim->AddFile(ID::IDType::P_TURN_ANIM,					"P_TURN", false, 1.5f, 9.0f, 12.0f);
+	anim->AddFile(ID::IDType::P_TURN_ANIM,					"P_TURN1", false, 1.3f, 10.0f, 21.0f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);
 	
 	MotionBlur* blur = playerPointer->Component()->AddComponent<MotionBlur>();
