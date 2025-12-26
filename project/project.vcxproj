@@ -93,13 +93,13 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib_VC;C:\yaml-cpp-master\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib_VC;$(ProjectDir)./</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib_VC;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\yaml-cpp-master\build\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>yaml-cppd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib_VC;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)./</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -128,17 +128,17 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib_VC;C:\yaml-cpp-master\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib_VC;$(ProjectDir)./</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib_VC;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\yaml-cpp-master\build\Release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib_VC;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)./</AdditionalLibraryDirectories>
       <OutputFile>SKY WARS.exe</OutputFile>
-      <AdditionalDependencies>yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -192,6 +192,7 @@
     <ClInclude Include="Source\Common\InputManager\InputManager.h" />
     <ClInclude Include="Source\Common\InputManager\KeyboardInputManager.h" />
     <ClInclude Include="Source\Common\InputManager\MouseInputManager.h" />
+    <ClInclude Include="Source\Common\JsonReader.h" />
     <ClInclude Include="Source\Common\LoadManager.h" />
     <ClInclude Include="Source\Common\MethodExec.h" />
     <ClInclude Include="Source\Common\MyAssert\MyAssert.h" />
@@ -206,7 +207,7 @@
     <ClInclude Include="Source\Common\Transitor\Transitor.h" />
     <ClInclude Include="Source\Common\Transitor\TransitorManager.h" />
     <ClInclude Include="Source\Common\Transitor\WipeTransitor.h" />
-    <ClInclude Include="Source\Common\YAMLReader.h" />
+    <ClInclude Include="Source\Common\UTFConverter.h" />
     <ClInclude Include="Source\Component\Animator\Anim2D.h" />
     <ClInclude Include="Source\Component\Animator\Animator.h" />
     <ClInclude Include="Source\Component\Collider\AABBCollider.h" />
@@ -363,6 +364,7 @@
     <ClCompile Include="Source\Common\InputManager\InputManager.cpp" />
     <ClCompile Include="Source\Common\InputManager\KeyboardInputManager.cpp" />
     <ClCompile Include="Source\Common\InputManager\MouseInputManager.cpp" />
+    <ClCompile Include="Source\Common\JsonReader.cpp" />
     <ClCompile Include="Source\Common\LoadManager.cpp" />
     <ClCompile Include="Source\Common\MyAssert\MyAssert.cpp" />
     <ClCompile Include="Source\Common\Random.cpp" />
