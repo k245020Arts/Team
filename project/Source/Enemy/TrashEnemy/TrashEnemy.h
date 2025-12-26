@@ -44,8 +44,10 @@ public:
 	float Speed() { return speed; }
 
 	void isStandbyF() { isStandby = false; }
-	void AttackON();
+	//void AttackON();
 	void AddAttackID(int index);
+	bool IsAttack() { return isAttack; }
+	void AttackON() { isAttack = true; }
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)
@@ -82,6 +84,8 @@ private:
 	bool isCooperateAtk;
 	//˜AŒgUŒ‚‚Ì€”õ‚ª‚Å‚«‚Ä‚é‚©
 	bool isStandby;
+	////UŒ‚‚Å‚«‚é‚©‚Ç‚¤‚©
+	//bool isAttack;
 
 	float speed;
 

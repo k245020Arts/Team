@@ -58,18 +58,19 @@ void TrashEnemyManager::Update()
 
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
+		//’ÊíUŒ‚
 		attackCounter++;
-		if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter /*&& (*itr)->GetNumber()== attackCounter*/)
+		if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)
 		{
-			(*itr)->AttackON();
-			attackCounter = 0;
-			maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
-			/*attackCounter++;
-			if (attackCounter >= enemiesMax)
-				attackCounter = 0;*/
+			if ((*itr)->IsAttack())
+			{
+				(*itr)->AttackON();
+				attackCounter = 0;
+				maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
+			}
 		}
-		if ((*itr)->GetNumber() > enemiesMax)
-			(*itr)->AddAttackID(-1);
+		else
+			(*itr)->AttackON();
 
 		//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
 		if ((*itr)->GetStandby())

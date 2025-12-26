@@ -95,6 +95,7 @@ TrashEnemy::TrashEnemy()
 	isAttack = false;
 	isStandby = false;
 	isCooperateAtk = false;
+	isAttack = true;
 
 	wayPoint = VZero;
 }
@@ -324,13 +325,6 @@ void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 void TrashEnemy::ChangeState(StateID::State_ID _id)
 {
 	enemyBaseComponent.state->ChangeState(_id);
-}
-
-void TrashEnemy::AttackON()
-{
-	if (hp <= 0)
-		return;
-	isAttack = true;
 }
 
 void TrashEnemy::AddAttackID(int index)
