@@ -116,7 +116,15 @@ void PlayScene::Update()
 	if (CheckHitKey(KEY_INPUT_ESCAPE)) {
 		SceneManager::Exit();
 	}
-	
+
+	if (input->KeyInputDown("changeMode")) {
+		if (mode == NORMAL) {
+			mode = CAMERA_EDITOR;
+		}
+		else {
+			mode = NORMAL;
+		}
+	}
 }
 
 void PlayScene::Draw()

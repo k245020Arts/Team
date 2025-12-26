@@ -14,6 +14,8 @@
 #include "../Common/InputManager/InputManager.h"
 #include "../Camera/CameraState/FreeCamera.h"
 #include "../Enemy/EnemyManager.h"
+#include "../Component/Hierarchy/Hierarchy.h"
+#include "CameraEditorGui.h"
 
 Camera::Camera()
 {
@@ -73,23 +75,7 @@ void Camera::Update()
 		}
 		
 	}
-	//Dxlibのカメラの設定(SetDrawScreenを使うと初期化されるため毎フレーム呼ぶ)。
-	SetCameraNearFar(10.0f, 100000000.0f);
-	SetFogEnable(true);
-	SetFogStartEnd(nearFog, farFog);
-	SetFogColor(137, 189, 222);
-	SetupCamera_Perspective(fov);
-
-	if (debugButton == 2) {
-		Transform transform = *obj->GetTransform();
-		SetCameraPositionAndTarget_UpVecY(transform.position, VECTOR3(0, 0, 0));
-	}
-	else if (rockOn) {
-		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target + VECTOR3(0,300,0));
-	}
-	else if (!rockOn) {
-		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);
-	}
+	
 }
 
 void Camera::Draw()
@@ -107,6 +93,24 @@ void Camera::Draw()
 	else {
 		cameraComponent.enemyManager->ChangeCameraRockOn(this, true, true,true);
 	}
+
+	//Dxlibのカメラの設定(SetDrawScreenを使うと初期化されるため毎フレーム呼ぶ)。
+	SetCameraNearFar(10.0f, 100000000.0f);
+	SetFogEnable(true);
+	SetFogStartEnd(nearFog, farFog);
+	SetFogColor(137, 189, 222);
+	SetupCamera_Perspective(fov);
+
+	if (debugButton == 2) {
+		Transform transform = *obj->GetTransform();
+		SetCameraPositionAndTarget_UpVecY(transform.position, VECTOR3(0, 0, 0));
+	}
+	else if (rockOn) {
+		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target + VECTOR3(0, 300, 0));
+	}
+	else if (!rockOn) {
+		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);
+	}
 	
 	//DrawSphere3D(target, 50, 1, 0x999999, 0x999999, true);
 }
@@ -120,6 +124,8 @@ void Camera::Start(BaseObject* _eObj)
 	cameraComponent.shaker	= obj->Component()->AddComponent<Shaker>();
 	
 	cameraComponent.state	= obj->Component()->GetComponent<StateManager>();
+
+	editor = new CameraEditorGui(this);
 }
 
 void Camera::ImguiDraw()
@@ -163,6 +169,7 @@ void Camera::PlayerSet(BaseObject* _obj)
 
 	cameraComponent.state->SetComponent<Camera>(this);
 	cameraComponent.state->StartState(StateID::FREE_CAMERA_S);
+	FindGameObject<Hierachy>()->SetCameraEditor(this);
 	//CameraRotationSet();
 }
 
@@ -338,4 +345,9 @@ bool Camera::CameraRotationMove()
 		cancel = true;
 	}
 	return cancel;
+}
+
+void Camera::CameraEditor()
+{
+	editor->EditorWindow();
 }

@@ -476,6 +476,9 @@
     <ClCompile Include="Source\Common\JsonReader.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera\CameraEditorGui.cpp">
+      <Filter>PlayScene\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1007,6 +1010,9 @@
     </ClInclude>
     <ClInclude Include="Source\Common\UTFConverter.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CameraEditorGui.h">
+      <Filter>PlayScene\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

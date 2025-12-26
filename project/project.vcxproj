@@ -167,6 +167,7 @@
     <ClInclude Include="Library\SceneManager.h" />
     <ClInclude Include="Library\Time.h" />
     <ClInclude Include="Source\Camera\Camera.h" />
+    <ClInclude Include="Source\Camera\CameraEditorGui.h" />
     <ClInclude Include="Source\Camera\CameraInformation.h" />
     <ClInclude Include="Source\Camera\CameraManager.h" />
     <ClInclude Include="Source\Camera\CameraState\CameraStateBase.h" />
@@ -342,6 +343,7 @@
     <ClCompile Include="Library\Time.cpp" />
     <ClCompile Include="Source\BootScene.cpp" />
     <ClCompile Include="Source\Camera\Camera.cpp" />
+    <ClCompile Include="Source\Camera\CameraEditorGui.cpp" />
     <ClCompile Include="Source\Camera\CameraManager.cpp" />
     <ClCompile Include="Source\Camera\CameraState\CameraStateBase.cpp" />
     <ClCompile Include="Source\Camera\CameraState\CameraStateManager.cpp" />

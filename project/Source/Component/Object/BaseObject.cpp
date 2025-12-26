@@ -7,6 +7,7 @@
 #include "../../Common/Transitor/TransitorManager.h"
 #include "../../../Library/MemoryCount.h"
 #include "../../Common/Debug/Debug.h"
+#include "../../PlayScene.h"
 
 int BaseObject::idPlus = 0;
 
@@ -40,6 +41,10 @@ void BaseObject::Update()
 	/*if (!transitor->IsTransitor()) {
 		return;
 	}*/
+	PlayScene* playscene = GetScene<PlayScene>();
+	if (playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
+		return;
+	}
 	//コンポーネントで回している
 	componentManager->Update();
 	//子供のオブジェクトをまわす

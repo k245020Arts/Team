@@ -522,6 +522,9 @@ void EnemyManager::NearEnemyAlpha(VECTOR3 camPos)
 
 Transform EnemyManager::NearEnemyPos(const VECTOR3& _pos)
 {
+	if (chara.size() == 0) {
+		return Transform();
+	}
 	float nearDist = 10000.0f;
 	Transform nearTransform = *(*chara.begin())->GetBaseObject()->GetTransform();
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {

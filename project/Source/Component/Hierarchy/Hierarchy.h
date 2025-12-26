@@ -7,6 +7,7 @@ class Object3D;
 class InputManager;
 class FadeTransitor;
 class StateManager;
+class Camera;
 
 //デバックウィンドウを出すときに使うクラス。
 
@@ -41,7 +42,7 @@ public:
 	/// </summary>
 	void AllDeleteList();
 
-	
+	void SetCameraEditor(Camera* _camera);
 
 private:
 	//Transform* transform;
@@ -54,4 +55,5 @@ private:
 	FadeTransitor* fade;
 	int selectId;
 	BaseObject* selectObj;
+	Camera* camera;
 };

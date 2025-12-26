@@ -10,6 +10,8 @@
 
 #include "../../../ImGui/imgui_node_editor.h"
 #include "../../Common/Transitor/FadeTransitor.h"
+#include "../../PlayScene.h"
+#include "../../Camera/Camera.h"
 
 //namespace ed = ax::NodeEditor;
 //static ed::EditorContext* g_Context = nullptr;
@@ -88,6 +90,10 @@ void Hierachy::Update()
 		ImGui::End();
 		//二つ目のウィンドウを表示
 		InspectorDraw();
+	}
+	PlayScene* playscene = GetScene<PlayScene>();
+	if (playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
+		camera->CameraEditor();
 	}
 #endif // _DEBUG
 }
@@ -182,4 +188,9 @@ void Hierachy::RemoveHierachy(BaseObject* _obj)
 void Hierachy::AllDeleteList()
 {
 	list.clear();
+}
+
+void Hierachy::SetCameraEditor(Camera* _camera)
+{
+	camera = _camera;
 }

@@ -7,6 +7,7 @@
 
 class ControllerInputManager;
 class InputManager;
+class CameraEditorGui;
 
 class Camera : public Component
 {
@@ -17,6 +18,7 @@ public:
 	friend class JustAvoidAttackHitCamera;
 	friend class CameraStateBase;
 	friend class FreeCamera;
+	friend class CameraEditorGui;
 	
 	Camera();
 	~Camera();
@@ -55,6 +57,8 @@ public:
 
 	bool CameraRotationMove();
 
+	void CameraEditor();
+
 private:
 
 	float timeTest;
@@ -86,4 +90,6 @@ private:
 	float moveTimer;
 	const float MOVE_TIMER_MAX = 0.4f;
 	float angleMaxSpeed;
+
+	CameraEditorGui* editor;
 };
