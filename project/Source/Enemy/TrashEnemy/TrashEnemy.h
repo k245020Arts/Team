@@ -44,8 +44,11 @@ public:
 	float Speed() { return speed; }
 
 	void isStandbyF() { isStandby = false; }
-	void AttackON();
-	void AddAttackID(int index);
+	bool IsAttack() { return isAttack; }
+	//攻撃命令
+	void AttackCommand();
+	//攻撃クールタイムリセット
+	void AttackCoolTimeReset() { isAttack = true; }
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)
@@ -82,7 +85,7 @@ private:
 	bool isCooperateAtk;
 	//連携攻撃の準備ができてるか
 	bool isStandby;
-
+	
 	float speed;
 
 	VECTOR3 wayPoint;

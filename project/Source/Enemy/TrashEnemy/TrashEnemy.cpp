@@ -327,16 +327,9 @@ void TrashEnemy::ChangeState(StateID::State_ID _id)
 	enemyBaseComponent.state->ChangeState(_id);
 }
 
-void TrashEnemy::AttackON()
+void TrashEnemy::AttackCommand()
 {
-	if (hp <= 0)
-		return;
-	isAttack = true;
-}
-
-void TrashEnemy::AddAttackID(int index)
-{
-	number += index;
+	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
 }
 
 void TrashEnemy::Move(float _speed, float _max)

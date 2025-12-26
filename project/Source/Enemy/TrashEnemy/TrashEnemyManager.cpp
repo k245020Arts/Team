@@ -55,21 +55,22 @@ void TrashEnemyManager::Update()
 	PlayerWayPoint();
 
 	int enemiesMax = (int)enemies.size();
+	//’ÊíUŒ‚
+	attackCounter += Time::DeltaTimeRate();
 
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
-		attackCounter++;
-		if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter /*&& (*itr)->GetNumber()== attackCounter*/)
+		if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)
 		{
-			(*itr)->AttackON();
-			attackCounter = 0;
-			maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
-			/*attackCounter++;
-			if (attackCounter >= enemiesMax)
-				attackCounter = 0;*/
+			if ((*itr)->IsAttack())
+			{
+				(*itr)->AttackCommand();
+				attackCounter = 0;
+				maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
+			}
 		}
-		if ((*itr)->GetNumber() > enemiesMax)
-			(*itr)->AddAttackID(-1);
+		else if (attackCounter >= ATK_COUNTER_MAX)
+			(*itr)->AttackCoolTimeReset();
 
 		//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
 		if ((*itr)->GetStandby())
