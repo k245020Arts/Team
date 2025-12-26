@@ -5,7 +5,7 @@
 #include "../Debug/Debug.h"
 
 namespace {
-	std::unordered_map<int, std::string> stateId;
+	std::unordered_map<StateID::State_ID, std::string> stateId;
 }
 
 void StateID::DeleteStateID()
@@ -19,7 +19,7 @@ std::string StateID::GetID(State_ID _type)
 	if (type < 0 && type >= (int)STATE_MAX) {
 		Debug::CreateMessageBox("StateHandleMiss", "miss");
 	}
-	return stateId[type];
+	return stateId[_type];
 }
 
 void StateID::SetID(std::string _state, State_ID _type)
@@ -28,5 +28,15 @@ void StateID::SetID(std::string _state, State_ID _type)
 	if (type < 0 && type >= (int)STATE_MAX) {
 		Debug::CreateMessageBox("StateSetMiss", "miss");
 	}
-	stateId[type] = _state;
+	stateId[_type] = _state;
+}
+
+StateID::State_ID StateID::StringToID(std::string _str)
+{
+	for (const auto& pair : stateId) {
+		if (pair.second == _str) {
+			return pair.first; // ’l‚ªŒ©‚Â‚©‚Á‚½‚çƒL[‚ğ•Ô‚·
+		}
+	}
+	return StateID::STATE_MAX;
 }

@@ -100,4 +100,5 @@ namespace ID {
 	std::string GetID(IDType _type);
 	void SetID(std::string _model, IDType _type);
 
+	IDType StringToID(std::string _str);
 }

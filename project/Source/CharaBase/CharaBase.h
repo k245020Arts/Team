@@ -3,6 +3,7 @@
 #include "../Component/Collider/ColliderBase.h"
 #include "../Component/ComponentManager.h"
 #include "../Component/Transform/Transform.h"
+#include "../Common/JsonReader.h"
 
 class SphereCollider;
 

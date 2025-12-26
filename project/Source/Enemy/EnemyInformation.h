@@ -69,13 +69,13 @@ namespace EnemyInformation {
 	};
 
 	struct EnemyReaction {
-		ID::IDType attackID;
+		StateID::State_ID attackID;
 
 		EnemyDamage::EnemyDamageInfo dInfo;
 		EnemyBlowAway::EnemyBlowAwayInfo bInfo;
 
 		enum class Type { Normal, BlowAway, LoopCombo } attackType;
-		ID::IDType changeStateID;
+		StateID::State_ID changeStateID;
 
 		int vibrationPower;
 		int vibrationType;

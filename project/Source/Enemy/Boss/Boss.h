@@ -2,6 +2,7 @@
 #include "../EnemyBase.h"
 #include "../../Component/Object/Object3D.h"
 #include "BossInformation.h"
+#include "../EnemyInformation.h"
 
 class Player;
 class CharaWeapon;
@@ -42,6 +43,8 @@ public:
 	~Boss();
 	void Update()override;
 	void Draw()override;
+
+	EnemyInformation::EnemyReaction JsonRead(const JSON& j);
 
 	void Start(Object3D* _obj);
 

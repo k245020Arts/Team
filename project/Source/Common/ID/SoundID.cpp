@@ -5,7 +5,7 @@
 
 namespace {
 
-	std::unordered_map<int, std::string> soundId;
+	std::unordered_map<Sound_ID::SOUND_ID, std::string> soundId;
 }
 
 void Sound_ID::DeleteSoundID()
@@ -19,7 +19,7 @@ std::string Sound_ID::GetSoundID(SOUND_ID _type)
 	if (type < 0 && type >= (int)SOUND_MAX) {
 		Debug::CreateMessageBox("soundHandleMiss", "miss");
 	}
-	return soundId[type];
+	return soundId[_type];
 }
 
 void Sound_ID::SetSoundId(std::string _sound, SOUND_ID _type)
@@ -28,5 +28,17 @@ void Sound_ID::SetSoundId(std::string _sound, SOUND_ID _type)
 	if (type < 0 && type >= (int)SOUND_MAX) {
 		Debug::CreateMessageBox("soundHandleSetMiss", "miss");
 	}
-	soundId[type] = _sound;
+	soundId[_type] = _sound;
 }
+
+
+Sound_ID::SOUND_ID Sound_ID::StringToID(std::string _str)
+{
+	for (const auto& pair : soundId) {
+		if (pair.second == _str) {
+			return pair.first; // ’l‚ªŒ©‚Â‚©‚Á‚½‚çƒL[‚ğ•Ô‚·
+		}
+	}
+	return Sound_ID::SOUND_MAX;
+}
+

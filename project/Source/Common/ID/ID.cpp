@@ -4,7 +4,7 @@
 #include "../Debug/Debug.h"
 
 namespace {
-	std::unordered_map<int,std::string> modelId;
+	std::unordered_map<ID::IDType,std::string> modelId;
 
 	/*std::string InitID[ID::ID_MAX] = {
 		"enemy",
@@ -100,7 +100,7 @@ std::string ID::GetID(IDType _type)
 	if (type < 0 && type >= (int)ID_MAX) {
 		Debug::CreateMessageBox("modelHandleMiss", "miss");
 	}
-	return modelId[type];
+	return modelId[_type];
 }
 
 void ID::SetID(std::string _model, IDType _type)
@@ -109,5 +109,17 @@ void ID::SetID(std::string _model, IDType _type)
 	if (type < 0 && type >= (int)ID_MAX) {
 		Debug::CreateMessageBox("modelHandleSetMiss", "miss");
 	}
-	modelId[type] = _model;
+	modelId[_type] = _model;
 }
+
+ID::IDType ID::StringToID(std::string _str)
+{
+	for (const auto& pair : modelId) {
+		if (pair.second == _str) {
+			return pair.first; // ílÇ™å©Ç¬Ç©Ç¡ÇΩÇÁÉLÅ[Çï‘Ç∑
+		}
+	}
+	return ID::ID_MAX;
+}
+
+

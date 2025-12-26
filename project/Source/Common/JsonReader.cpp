@@ -1,20 +1,31 @@
 #include "JsonReader.h"
 #include <fstream>
+#include "MyAssert/MyAssert.h"
+
+namespace {
+    std::string error = "no_errer";
+}
 
 bool JsonReader::Load(const std::string& filename)
 {
-    std::ifstream ifs(filename);//読み込み用のファイルストリーム
-
+    std::ifstream ifs(filename);
     if (!ifs.is_open()) {
-        return false; // ファイルが開けない
+        error = "ファイルが開けません。ファイル名 : " + filename;
+        my_error_assert(error);
+        return false;
     }
+
     try {
-        ifs >> data;// ファイルが開けたらdataいれる
+        JSON temp;
+        ifs >> temp;     // 成功したら
+        data = temp;     // ここで初めて反映
     }
-    catch (const JSON::parse_error&) {
-        data.clear();
-        return false; // JSONパース失敗
+    catch (const JSON::parse_error& e) {
+        error = std::string("パースが失敗しました。ファイル名 : : ") + e.what();
+        my_error_assert(error);
+        return false;
     }
+    error.clear();
     return true;
 }
 
@@ -27,4 +38,3 @@ bool JsonReader::Save(const std::string& filename, JSON& newData) const
     ofs << newData.dump(2); // インデント2で整形
     return static_cast<bool>(ofs);
 }
-

@@ -63,4 +63,6 @@ namespace Sound_ID {
 	std::string GetSoundID(SOUND_ID _type);
 
 	void SetSoundId(std::string	_sound, SOUND_ID _type);
+
+	SOUND_ID StringToID(std::string _str);
 }

@@ -28,4 +28,6 @@ namespace Effect_ID {
 	std::string GetEffectID(EFFECT_ID _type);
 
 	void SetEffectID(std::string _effect, EFFECT_ID _type);
+
+	EFFECT_ID StringToID(std::string _str);
 }
