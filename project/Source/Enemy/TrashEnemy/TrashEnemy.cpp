@@ -95,7 +95,6 @@ TrashEnemy::TrashEnemy()
 	isAttack = false;
 	isStandby = false;
 	isCooperateAtk = false;
-	isAttack = true;
 
 	wayPoint = VZero;
 }
@@ -328,9 +327,9 @@ void TrashEnemy::ChangeState(StateID::State_ID _id)
 	enemyBaseComponent.state->ChangeState(_id);
 }
 
-void TrashEnemy::AddAttackID(int index)
+void TrashEnemy::AttackCommand()
 {
-	number += index;
+	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
 }
 
 void TrashEnemy::Move(float _speed, float _max)

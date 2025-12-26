@@ -36,8 +36,8 @@ public:
 private:
 	std::list<TrashEnemy*> enemies;
 	const int ENEMIESMAX = 30;
-	const int ATK_COUNTER_MIN = 60;
-	const int ATK_COUNTER_MAX = 600;
+	const int ATK_COUNTER_MIN = 3;
+	const int ATK_COUNTER_MAX = 5;
 	//連携攻撃時の決めたポジションを保管する変数
 	//std::list<VECTOR3> savePos;
 	struct WayPoint
@@ -73,7 +73,7 @@ private:
 
 	bool comboRequest;
 	//int counter;
-	int attackCounter;
+	float attackCounter;
 	int maxAttackCounter;
 	int standbyCounter;
 

@@ -50,8 +50,8 @@ void Standby::Update()
 			}
 		}
 
-		if (e->isAttack)
-			e->ChangeState(e->NextId);
+		/*if (e->isAttack)
+			e->ChangeState(e->NextId);*/
 	}
 	else
 	{
@@ -75,7 +75,7 @@ void Standby::Start()
 	TrashEnemy* e = GetBase<TrashEnemy>();	
 
 	range = e->eStatus->GetStatus().atkRang;
-
+	
 	if (e->isCooperateAtk) 
 		e->NextId = StateID::COOPERATEATTACK1; 
 	else 
@@ -85,7 +85,6 @@ void Standby::Start()
 
 	e->targetPos = pPos;
 	aiMove = 0;
-	e->isAttack = false;
 
 	randomSpeed = (float)Random::GetReal();
 	EnemyStateBase::Start();

@@ -38,7 +38,10 @@ void T_EnemyRun::Update()
 	//static const float  RANG = 1200.0f;
 
 	if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)
+	{
 		e->enemyBaseComponent.state->ChangeState(e->NextId);
+		e->isAttack = true;
+	}
 }
 
 void T_EnemyRun::Start()
