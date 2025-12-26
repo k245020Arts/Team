@@ -87,6 +87,7 @@ Player::Player()
 	noDamage				= false;
 	redCounter				= 0.0f;
 	playerCom				= PlayerInformation::CharaComponent();
+	turn					= false;
 }
 //
 //Object2D* guage = new Object2D();
@@ -160,7 +161,7 @@ void Player::Start(Object3D* _obj)
 	//初期化の値を設定
 	//必要なコンポーネントを付けている。
 	obj						= _obj;
-	playerCom.stateManager	= obj->Component()->AddComponent<StateManager>();
+	playerCom.stateManager	= obj->Component()->GetComponent<StateManager>();
 	
 
 	playerCom.player		= this;
@@ -205,23 +206,7 @@ void Player::Start(Object3D* _obj)
 	//physics->SetInterect(VECTOR3(5.0f, -1.0f, 0.0f),0.1);
 	using namespace ID;
 	//ステートのセット
-	playerCom.stateManager->CreateState<PlayerWait>				("PlayerWait", StateID::PLAYER_WAIT_S);
-	playerCom.stateManager->CreateState<PlayerWalk>				("PlayerWalk", StateID::PLAYER_WALK_S);
-	playerCom.stateManager->CreateState<PlayerAvoid>			("PlayerAvoid", StateID::PLAYER_AVOID_S);
-	playerCom.stateManager->CreateState<PlayerJustAvoid>		("PlayerJustAvoid", StateID::PLAYER_JUST_AVOID_S);
-	playerCom.stateManager->CreateState<PlayerAttack1>			("PlayerAttack1", StateID::PLAYER_ATTACK1_S);
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack1>	("PlayerJustAvoidAttack1", StateID::PLAYER_JUST_AVOID_ATTACK1_S);
-	playerCom.stateManager->CreateState<PlayerAttack2>			("PlayerAttack2", StateID::PLAYER_ATTACK2_S);
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack2>("PlayerJustAvoidAttack2", StateID::PLAYER_JUST_AVOID_ATTACK2_S);
-	playerCom.stateManager->CreateState<PlayerAttack3>			("PlayerAttack3", StateID::PLAYER_ATTACK3_S);
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack3>("PlayerJustAvoidAttack3", StateID::PLAYER_JUST_AVOID_ATTACK3_S);
-	playerCom.stateManager->CreateState<PlayerAttack4>			("PlayerAttack4", StateID::PLAYER_ATTACK4_S);
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack4>("PlayerJustAvoidAttack4", StateID::PLAYER_JUST_AVOID_ATTACK4_S);
-	playerCom.stateManager->CreateState<PlayerJustAvoidAttack5>("PlayerJustAvoidAttack5", StateID::PLAYER_JUST_AVOID_ATTACK5_S);
-	playerCom.stateManager->CreateState<PlayerDamage>			("PlayerDamage", StateID::PLAYER_DAMAGE_S);
-	playerCom.stateManager->CreateState<PlayerBlowAway>			("PlayerBlowAway", StateID::PLAYER_BLOW_AWAY_S);
-	playerCom.stateManager->CreateState<PlayerDie>				("PlayerDie", StateID::PLAYER_DIE_S);
-	playerCom.stateManager->CreateState<PlayerTurn>				("PlayerTurn", StateID::PLAYER_TURN_S);
+	
 
 	playerCom.stateManager->NodeDrawReady();
 	playerCom.stateManager->SetComponent<Player>(this);
@@ -259,11 +244,8 @@ void Player::Move(float _speed, float _speedMax)
 	
 	std::shared_ptr<PlayerStateBase> pB = playerCom.stateManager->GetState<PlayerStateBase>();
 
-	/*StickDirections stick = playerCom.controller->GetStickKnocking(0.6f, 360).leftStick;
-	StickDirections nowStick = playerCom.controller->GetStickKnockingReverce(0.6f, 1).leftStick;
-	ImGui::Begin("stick");
-	ImGui::Text("past = %d : now = %d", stick, nowStick);
-	ImGui::End();*/
+	StickDirections stick = playerCom.controller->GetStickKnockingReverce(0.6f, 8).leftStick;
+	StickDirections nowStick = playerCom.controller->GetStickKnocking(0.6f, 1).leftStick;
 	
 	//スティックの傾きの量が少なかったら移動しない
 	if ((fabs(walkAngle.x) >= 0.3f || fabs(walkAngle.z) >= 0.3f) && hp > 0.0f) {
@@ -281,6 +263,7 @@ void Player::Move(float _speed, float _speedMax)
 		
 		float max	= _speedMax;
 		size		= moveVelo.SquareSize();
+
 		//最大速度までいったらスピードマックスに補正
 		if (moveVelo.SquareSize() >= max * max) {
 			moveVelo = moveVelo.Normalize() * _speedMax;
@@ -292,12 +275,12 @@ void Player::Move(float _speed, float _speedMax)
 		playerCom.anim->SetPlaySpeed(walkAngle.Size());
 
 		
-		/*if (nowStick == S_NO_DIRECTION || stick == S_NO_DIRECTION) {
+		if (nowStick == S_NO_DIRECTION || stick == S_NO_DIRECTION) {
 			return;
 		}
 		if (nowStick == stick) {
 			playerCom.stateManager->ChangeState(StateID::PLAYER_TURN_S);
-		}*/
+		}
 	}
 	else {
 		playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
@@ -447,7 +430,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	BossAttackBase::DamagePattern param = attack->GetDamageParam();
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
-		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f || startTime >= 0.0f) {
+		if (enemyAnim->GetCurrentFrame() <= startTime + 3.0f || startTime >= 0.0f) {
 			/*if (!LargeJustAvoid(attack)) {
 				return true;
 			}*/
@@ -488,6 +471,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 			switch (param.damagePattern)
 			{
 			case BossAttackBase::NO_BACK:
+				playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 				break;
 			case BossAttackBase::BACK:
 				playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);

@@ -40,6 +40,7 @@ void PlayerDamage::Start()
 	//p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 3000) * MGetRotY(eRotation.y));
 	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 5000) * MGetRotY(-eRotation.y));
 	p->playerCom.shaker->ShakeStart(VECTOR3(10, 10, 10), Shaker::HORIZONAL_SHAKE, false, 0.2f);
+	blendSpeed = 0.3f;
 }
 
 void PlayerDamage::Finish()

@@ -96,6 +96,13 @@ void Transform::ImguiDraw()
 	ImGui::Separator();
 	ImGui::DragFloat3("scale", &scale.x, 1.0f, 1.0f, 10.0f);
 	ImGui::Separator();
+
+	if (ImGui::Button("posCopy")) {
+		char buf[90];
+		sprintfDx(buf,"VECTOR3(%.2f,%.2f,%.2f)", position.x, position.y, position.z);
+		std::string copyData = buf;
+		SetClipboardText(copyData.c_str());
+	}
 }
 
 

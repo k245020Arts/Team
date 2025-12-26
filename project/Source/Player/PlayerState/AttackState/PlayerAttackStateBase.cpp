@@ -8,6 +8,7 @@
 #include "../../../Component/Animator/Animator.h"
 #include "../../../Component/MotionBlur/MotionBlur.h"
 #include "../../../Enemy/EnemyManager.h"
+#include "../../../Camera/Camera.h"
 
 PlayerAttackStateBase::PlayerAttackStateBase()
 {
@@ -50,6 +51,8 @@ void PlayerAttackStateBase::Update()
 		p->playerCom.player->DrawTrail();
 		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
 	}
+	
+	//p->RotationChange(p->GetWalkAngle(), 5.0f);
 	//p->playerCom.player->DrawTrail();
 	//å„åÑÇÃê›íË
 	if (nextAvoid) {
@@ -98,6 +101,7 @@ void PlayerAttackStateBase::EnemyRotation()
 void PlayerAttackStateBase::Start()
 {
 	Player* p			= GetBase<Player>();
+	//p->PlayerStickInput();
 	nextAttack			= false;
 	nextAvoid			= false;
 	p->playerCom.player->SetAvoidStart(false);
@@ -142,6 +146,10 @@ void PlayerAttackStateBase::Finish()
 {
 	Player* p = GetBase<Player>();
     p->DeleteCollision();
+	if (!nextAttack) {
+		p->playerCom.camera->CameraLeapSet(0.2f);
+		p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
+	}
 }
 
 bool PlayerAttackStateBase::IsAttack()

@@ -36,9 +36,18 @@ void PlayerWalk::Draw()
 void PlayerWalk::Start()
 {
 	Player* p = GetBase<Player>();
+	if (p->turn) {
+		blendSpeed = 0.3f;
+		p->turn = false;
+	}
+	else {
+		blendSpeed = 0.2f;
+	}
+	
 	PlayerStateBase::Start();
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
-	blendSpeed = 0.2f;
+	
+	
 }
 
 void PlayerWalk::Finish()

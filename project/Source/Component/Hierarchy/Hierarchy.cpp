@@ -165,6 +165,8 @@ void Hierachy::TransformDraw(BaseObject* _obj)
 	std::string rName = smallName + "_rotation";
 	std::string sName = smallName + "_scale";
 	
+	
+
 }
 
 void Hierachy::RemoveHierachy(BaseObject* _obj)
