@@ -111,9 +111,13 @@ void PlayerAttackStateBase::Start()
 	}
 	else {
 		Transform nearEnemyPos = p->playerCom.enemyManager->NearEnemyPos(p->playerTransform->position);
-		targetTrans		= nearEnemyPos;
+		targetTrans				= nearEnemyPos;
 		//targetTrans.position = VECTOR3(0, 0, 1) * p->playerTransform->rotation;
 	}
+	if (!p->playerCom.enemyManager->CameraInEnemy()) {
+		p->playerCom.camera->AttackEnemyFovChange(&targetTrans,1000.0f);
+	}
+	
 	
 	//ìGÇ∆ÉvÉåÉCÉÑÅ[ÇÃãóó£ÇÇ∆ÇÈ
 	dist				= targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
@@ -121,15 +125,16 @@ void PlayerAttackStateBase::Start()
 	VECTOR3 frontVector = VECTOR3(0.0f, 0.0f, 1.0f) * MGetRotY(p->playerTransform->rotation.y);
 	rockOn = false;
 	beforeAngle			= p->playerCom.player->GetPlayerTransform()->rotation.y;
-	if (VDot(dist, frontVector) >= 60.0f * DegToRad) {
-		//äpìxåvéZ
-		angle			= atan2f(dist.x, dist.z);
-		rockOn			= true;
-	}
-	else {
-		angle			= beforeAngle;
-	}
-
+	//if (VDot(dist, frontVector) >= 60.0f * DegToRad) {
+	//	//äpìxåvéZ
+	//	angle			= atan2f(dist.x, dist.z);
+	//	rockOn			= true;
+	//}
+	//else {
+	//	angle			= beforeAngle;
+	//}
+	angle = atan2f(dist.x, dist.z);
+	rockOn			= true;
 	
 	easingCount			= 0.0f;
 	firstColl			= true;

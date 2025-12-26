@@ -65,7 +65,7 @@ void BossNormalAttack3::Start()
 
 	//b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionMaxSpeed);
 	damage.motionSpeed		= damage.motionMaxSpeed;
-	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform);
+	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform,1000.0f);
 
 	b->threat				= false;
 }

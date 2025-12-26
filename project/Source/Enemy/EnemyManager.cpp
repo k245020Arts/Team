@@ -256,6 +256,9 @@ bool EnemyManager::ChangeCameraRockOn(Camera* camera, bool _right,bool _min)
 
 bool EnemyManager::ChangeCameraRockOn(Camera* camera, bool _right, bool _min, bool _debugMode)
 {
+	if (chara.size() <= 1) {
+		return false;
+	}
 	const float CAM_LONG_DISTANCE = 100000.0f;
 	float distance = 1000000;
 	VECTOR3 dir = camera->GetTarget() - camera->GetCameraTransform()->position;
@@ -571,6 +574,17 @@ EnemyAttackChangeCameraDirection EnemyManager::BossAttackCamera(Camera* camera, 
 		
 		return EnemyAttackChangeCameraDirection::LEFT;
 	}
+}
+
+bool EnemyManager::CameraInEnemy()
+{
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		VECTOR3 pos = (*itr)->GetBaseObject()->GetTransform()->position;
+		if (!CheckCameraViewClip(pos)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 

@@ -45,6 +45,7 @@ void StateManager::Draw()
 void StateManager::StartState(StateID::State_ID _id)
 {
 	std::string id = StateID::GetID(_id);
+	//Debug::DebugOutPutPrintf("idNumber : %d : idString : %s", _id, id.c_str());
 	state = stateInfo[id];
 	state->Start();
 }

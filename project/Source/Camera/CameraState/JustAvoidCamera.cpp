@@ -37,7 +37,13 @@ void JustAvoidCamera::Update()
     changeTimer -= Time::DeltaTimeRate();
 
     if (changeTimer <= 0.0f) {
-        c->cameraComponent.state->ChangeState(StateID::FOLLOW_CAMERA_S);
+        if (c->cameraComponent.target.obj != nullptr) {
+            c->cameraComponent.state->ChangeState(StateID::FOLLOW_CAMERA_S);
+        }
+        else {
+            c->cameraComponent.state->ChangeState(StateID::FREE_CAMERA_S);
+        }
+       
     }
 
     c->target = c->target;

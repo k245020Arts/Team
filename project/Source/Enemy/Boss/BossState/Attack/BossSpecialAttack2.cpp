@@ -106,7 +106,7 @@ void BossSpecialAttack2::Start()
 		AttackStart();
 	}
 	
-	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform);
+	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform, 1000.0f);
 
 }
 

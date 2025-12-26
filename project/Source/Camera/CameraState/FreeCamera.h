@@ -16,6 +16,8 @@ public:
 	void EnemyChangeDir();
 	void StickMove();
 
+	float AnglePI(float _current, float _target);
+
 private:
 	float backCounter;
 

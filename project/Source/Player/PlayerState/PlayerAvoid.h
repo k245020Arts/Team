@@ -24,5 +24,5 @@ private:
 	float cameraAngle;
 	float maxFrame;
 	float animTime;
-
+	Transform enemyTransform;
 };

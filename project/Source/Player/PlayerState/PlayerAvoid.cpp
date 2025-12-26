@@ -11,6 +11,7 @@
 #include "../../Common/Function.h"
 #include "../../Common/Sound/SoundManager.h"
 #include "../../Component/MotionBlur/MotionBlur.h"
+#include "../../Enemy/EnemyManager.h"
 
 PlayerAvoid::PlayerAvoid()
 {
@@ -22,7 +23,7 @@ PlayerAvoid::PlayerAvoid()
 	cameraAngle = 0.0f;
 	maxFrame	= 0.0f;
 	animTime	= 0.0f;
-
+	enemyTransform = Transform();
 }
 
 PlayerAvoid::~PlayerAvoid()
@@ -104,7 +105,11 @@ void PlayerAvoid::Finish()
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.physics->SetGravity(VECTOR3(0.0f, -6000.0f, 0.0f));
 	p->playerCom.camera->CameraLeapSet(0.2f);
-
+	if (!p->playerCom.enemyManager->CameraInEnemy()) {
+		Transform nearEnemyPos = p->playerCom.enemyManager->NearEnemyPos(p->playerTransform->position);
+		enemyTransform = nearEnemyPos;
+		p->playerCom.camera->AttackEnemyFovChange(&enemyTransform, 300.0f);
+	}
 }
 
 void PlayerAvoid::StateChangeBase()

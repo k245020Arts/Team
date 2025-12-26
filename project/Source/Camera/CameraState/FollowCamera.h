@@ -12,6 +12,8 @@ public:
 	void Start()override;
 	void Finish()override;
 
+	VECTOR3 SetTarget();
+
 private:
 	Player* player;
 	bool enemyShake;

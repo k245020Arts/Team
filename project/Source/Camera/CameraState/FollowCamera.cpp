@@ -31,13 +31,14 @@ void FollowCamera::Update()
 
 		float t				= 1.0f - backCounter / TIMER_MAX;
 		VECTOR3 easedT		= Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
-		c->target			= Easing::EaseOut(currentTarget,c->cameraComponent.target.transform->position,t);
+		VECTOR3 target		= SetTarget();
+		c->target			= Easing::EaseOut(currentTarget,target,t);
 		c->currentDistance	= easedT;
 		backCounter -= Time::DeltaTimeRate();
 	}
 	else {
 		c->currentDistance	= c->defalutDistance;
-		c->target			= c->cameraComponent.target.transform->position;
+		c->target			= SetTarget();
 	}
 	//’Ç]ˆ—
 	c->cameraComponent.camera->Follow();
@@ -78,4 +79,16 @@ void FollowCamera::Start()
 void FollowCamera::Finish()
 {
 	
+}
+
+VECTOR3 FollowCamera::SetTarget()
+{
+	Camera* c = GetBase<Camera>();
+
+	VECTOR3 enemyPos = c->cameraComponent.target.transform->position;
+	VECTOR3 playerPos = c->cameraComponent.player.transform->position + (c->cameraComponent.player.transform->Forward() * 30.0f);
+	//player‚Æenemy‚ÌŠÔ‚Ì“_‚ğ’‹“_‚É‚·‚é.
+	VECTOR3 target = (enemyPos + playerPos) / 2.0f;
+
+	return target;
 }

@@ -39,6 +39,8 @@ Camera::Camera()
 	nearFog								= 10000.0f;
 	farFog								= 1800000.0f;
 	direction							= EnemyAttackChangeCameraDirection::NONE;
+	moveTimer							= 0.0f;
+	angleMaxSpeed						= 0.0f;
 }
 
 Camera::~Camera()
@@ -100,10 +102,10 @@ void Camera::Draw()
 		
 	}
 	if (CheckHitKey(KEY_INPUT_Q)) {
-		cameraComponent.enemyManager->ChangeCameraRockOn(this, false, false,true);
+		cameraComponent.enemyManager->ChangeCameraRockOn(this, false, true,true);
 	}
 	else {
-		cameraComponent.enemyManager->ChangeCameraRockOn(this, true, false,true);
+		cameraComponent.enemyManager->ChangeCameraRockOn(this, true, true,true);
 	}
 	
 	//DrawSphere3D(target, 50, 1, 0x999999, 0x999999, true);
@@ -141,13 +143,13 @@ void Camera::ImguiDraw()
 
 void Camera::PlayerSet(BaseObject* _obj)
 {
-	cameraComponent.player.obj			= _obj;
+	cameraComponent.player.obj					= _obj;
 	cameraComponent.camera = this;
-	cameraComponent.player.transform	= _obj->GetTransform();
-	cameraComponent.cameraTransform		=  new Transform(*cameraComponent.player.transform);
+	cameraComponent.player.transform			= _obj->GetTransform();
+	cameraComponent.cameraTransform				=  new Transform(*cameraComponent.player.transform);
 	cameraComponent.cameraTransform->rotation.x = 30.0f * DegToRad;
-	cameraComponent.player.shaker		= _obj->Component()->GetComponent<Shaker>();
-	cameraComponent.enemyManager		= FindGameObject<EnemyManager>();
+	cameraComponent.player.shaker				= _obj->Component()->GetComponent<Shaker>();
+	cameraComponent.enemyManager				= FindGameObject<EnemyManager>();
 
 	//stateを登録
 	cameraComponent.state->CreateState<FollowCamera>			("_FollowCamera", StateID::FOLLOW_CAMERA_S);
@@ -180,12 +182,12 @@ void Camera::TargetSet(BaseObject* _obj)
 	if (_obj == nullptr) {
 		cameraComponent.target.obj	= _obj;
 		rockOn						= false;
-		cameraComponent.state->NowChangeState(StateID::FREE_CAMERA_S);
+		cameraComponent.state->ChangeState(StateID::FREE_CAMERA_S);
 		return;
 	}
-	cameraComponent.target.obj		= _obj;
-	cameraComponent.target.transform = cameraComponent.target.obj->GetTransform();
-	rockOn							= true;
+	cameraComponent.target.obj			= _obj;
+	cameraComponent.target.transform	= cameraComponent.target.obj->GetTransform();
+	rockOn								= true;
 }
 
 void Camera::TargetEnemySet()
@@ -271,10 +273,17 @@ void Camera::PushCamera(VECTOR3 norm, float size, VECTOR3 groundPos)
 	cameraComponent.cameraTransform->position = VECTOR3(cameraComponent.cameraTransform->position.x ,groundPos.y + 280.0f, cameraComponent.cameraTransform->position.z);
 }
 
-void Camera::AttackEnemyFovChange(Transform* _targetTransform)
+void Camera::AttackEnemyFovChange(Transform* _targetTransform,float _maxspeed)
 {
-	direction				= cameraComponent.enemyManager->BossAttackCamera(this, *_targetTransform);
+	std::shared_ptr<StateBase> freeCamera = cameraComponent.state->GetCurrentState();
+	if (moveTimer > 0.0f || freeCamera->GetID() != StateID::FREE_CAMERA_S || CameraRotationMove()) {
+		return;
+	}
+	//direction				= cameraComponent.enemyManager->BossAttackCamera(this, *_targetTransform);
+	direction				= EnemyAttackChangeCameraDirection::RIGHT;
 	targetEnemyTransform	= _targetTransform;
+	moveTimer				= MOVE_TIMER_MAX;
+	angleMaxSpeed			= _maxspeed;
 }
 
 bool Camera::IsFovIn(const Transform& _targetTransform, float maxFov)
@@ -290,4 +299,43 @@ bool Camera::IsFovIn(const Transform& _targetTransform, float maxFov)
 	else {
 		return true;
 	}
+
+}
+
+void Camera::RotationChange(const Transform& _targetTransform, float _speed)
+{
+	VECTOR3 forward = VECTOR3(0, 0, 1) * MGetRotY(cameraComponent.cameraTransform->rotation.y);
+	VECTOR3 right = VECTOR3(1, 0, 0) * MGetRotY(cameraComponent.cameraTransform->rotation.y);
+	VECTOR3 toTarget = cameraComponent.cameraTransform->position - _targetTransform.position;
+	VECTOR3 target = toTarget * MGetRotY(cameraComponent.cameraTransform->rotation.y);
+	float dot = VDot(toTarget.Normalize(), forward.Normalize());	//コサインの値が正面ベクトルとカメラの角度を計算
+	//内積を使って補正
+	if (dot >= cosf(_speed * DegToRad)) {
+		float inRot = atan2f(toTarget.x, toTarget.z);
+		cameraComponent.cameraTransform->rotation.y = inRot;
+	}
+	else {
+		cameraComponent.cameraTransform->rotation.y = (VDot(right, toTarget) > 0) ? cameraComponent.cameraTransform->rotation.y + _speed * DegToRad :
+			cameraComponent.cameraTransform->rotation.y - _speed * DegToRad;
+	}
+}
+
+bool Camera::CameraRotationMove()
+{
+	bool cancel = false;
+	if (cameraComponent.control->GetStickInput().rightStick.x >= 0.3f || CheckHitKey(KEY_INPUT_RIGHT)) {
+		cancel = true;
+	}
+	if (cameraComponent.control->GetStickInput().rightStick.x <= -0.3f || CheckHitKey(KEY_INPUT_LEFT)) {
+		cancel = true;
+	}
+
+	if (cameraComponent.control->GetStickInput().rightStick.y >= 0.3f || CheckHitKey(KEY_INPUT_UP)) {
+		cancel = true;
+	}
+
+	if (cameraComponent.control->GetStickInput().rightStick.y <= -0.3f || CheckHitKey(KEY_INPUT_DOWN)) {
+		cancel = true;
+	}
+	return cancel;
 }

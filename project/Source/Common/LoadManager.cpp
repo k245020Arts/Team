@@ -236,7 +236,7 @@ void Load::AllDelete()
 		default:
 			my_error_assert("リソースデータ削除ミス");
 		}
-		Debug::DebugOutPutPrintf("%s : Deleteしました。", f.first.c_str());
+		//Debug::DebugOutPutPrintf("%s : Deleteしました。", f.first.c_str());
 
 	}
 	fileLoad.clear();

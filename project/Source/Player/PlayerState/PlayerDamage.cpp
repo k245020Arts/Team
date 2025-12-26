@@ -5,6 +5,9 @@
 #include "../../Component/Physics/Physics.h"
 #include "../../Component/Shaker/Shaker.h"
 #include "../player.h"
+#include "../../Enemy/EnemyManager.h"
+#include "../../Camera/Camera.h"
+#include "../../Component/Transform/Transform.h"
 
 PlayerDamage::PlayerDamage()
 {
@@ -41,6 +44,18 @@ void PlayerDamage::Start()
 	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 5000) * MGetRotY(-eRotation.y));
 	p->playerCom.shaker->ShakeStart(VECTOR3(10, 10, 10), Shaker::HORIZONAL_SHAKE, false, 0.2f);
 	blendSpeed = 0.3f;
+	VECTOR3 cameraPos = p->playerCom.camera->GetCameraTransform()->position;
+	VECTOR3 cameraFowardPos = cameraPos + p->playerCom.camera->GetCameraTransform()->Forward() * 1200.0f;
+	VECTOR3 toEnemy = p->playerCom.hitObj->GetTransform()->position - cameraFowardPos;
+	float dot = VDot(p->playerCom.camera->GetCameraTransform()->Forward(), toEnemy.Normalize());
+
+	//プレイヤーの真後ろではなく少し斜め前の敵にもカメラの角度を合わせる。
+	if (dot < 0.2f) {
+		p->playerCom.camera->AttackEnemyFovChange(p->playerCom.hitObj->GetTransform(), 500.0f);
+	}
+	if (!p->playerCom.enemyManager->CameraInEnemy()) {
+		
+	}
 }
 
 void PlayerDamage::Finish()

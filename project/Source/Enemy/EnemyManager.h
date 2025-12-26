@@ -48,6 +48,11 @@ public:
 	void CameraRockOnStart(Camera* _camera);
 
 	EnemyAttackChangeCameraDirection BossAttackCamera(Camera* camera,const Transform& _targetTransform);
+	/// <summary>
+	/// Enemy‚·‚×‚Ä‚ªƒJƒƒ‰‚ª“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ’²‚×‚é
+	/// </summary>
+	/// <returns></returns>
+	bool CameraInEnemy();
 
 private:
 	
