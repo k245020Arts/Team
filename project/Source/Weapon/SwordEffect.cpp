@@ -199,12 +199,14 @@ void SwordEffect::MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos
 
 		// rootの補間をしてpush_back
 		v.pos = rPar1 * t3 + rPar2 * t2 + rV0 * t + rPos[1];
-		v.u = 0.0f; v.v = (v2 - v1) * t + v1;
+		v.u = 0.0f; 
+		v.v = (v2 - v1) * t + v1;
 		vs.push_back(v);
 
 		// tipの補間をしてpush_back
 		v.pos = tPar1 * t3 + tPar2 * t2 + tV0 * t + tPos[1];
-		v.u = 1.0f; v.v = (v2 - v1) * t + v1;
+		v.u = 1.0f; 
+		v.v = (v2 - v1) * t + v1;
 		vs.push_back(v);
 	}
 }
