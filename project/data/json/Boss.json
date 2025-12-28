@@ -142,5 +142,21 @@
     "useSlashEffect": true,
     "vibrationPower": 100,
     "vibrationType": 60
+  },
+  {
+    "attackID": "PlayerSpecialAttack",
+    "attackType": 2,
+    "changeStateID": "BossDamage",
+    "hit": true,
+    "hitEffectID": "hitEffect",
+    "hitEffectScaleRate": 0.10000000149011612,
+    "hitEffectTime": 0.1,
+    "loopInterval": 0.0,
+    "loopMax": -1,
+    "slashAngleRad": 40.0,
+    "slashEffectID": "hitSlash",
+    "useSlashEffect": true,
+    "vibrationPower": 10,
+    "vibrationType": 10
   }
 ]

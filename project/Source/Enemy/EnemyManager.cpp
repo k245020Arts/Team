@@ -590,6 +590,13 @@ bool EnemyManager::CameraInEnemy()
 	return false;
 }
 
+void EnemyManager::CanPlayerSpecialHit()
+{
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		(*itr)->SpecialAttackHit();
+	}
+}
+
 
 	/*for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {
 		CharaBase* e;

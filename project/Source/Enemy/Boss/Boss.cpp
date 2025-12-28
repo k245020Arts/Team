@@ -423,7 +423,6 @@ void Boss::PlayerHit()
 	float angleRan = 0.0f;
 	bool lastAttack = false;
 	bool lastBeforeAttack = false;
-
 	auto bossParam = enemyTable.find(attackID);
 	if (bossParam != enemyTable.end()) {
 		const auto& e = bossParam->second;
@@ -486,6 +485,16 @@ void Boss::PlayerHit()
 			if (maxAttack < 0) {
 				enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
 			}
+			break;
+		case EnemyInformation::EnemyReaction::Type::Special:
+			if (!specialAttackHit) {
+				return;
+			}
+			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
+			enemyBaseComponent.state->ChangeState(bossParam->second.changeStateID);
+			specialAttackHit = false;
 			break;
 		default:
 			break;

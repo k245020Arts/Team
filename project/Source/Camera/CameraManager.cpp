@@ -31,7 +31,7 @@ void CameraManager::Draw()
 void CameraManager::CreateCamera()
 {
 	mainCamera = new Object3D();
-	mainCamera->Init(VECTOR3(0,0,-1500), VZero, VECTOR3(1, 1, 1), "CAMERA_OBJ");
+	mainCamera->Init(VECTOR3(0,3000,-6000), VZero, VECTOR3(1, 1, 1), "CAMERA_OBJ");
 
 	mainCamera->Component()->AddComponent<StateManager>();
 

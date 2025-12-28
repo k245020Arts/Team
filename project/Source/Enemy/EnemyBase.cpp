@@ -20,6 +20,7 @@ EnemyBase::EnemyBase()
 	upPos = VECTOR3(0, 600, 0);
 	cursolImage = -1;
 	damageFlash = 0.0f;
+	specialAttackHit = false;
 
 }
 

@@ -34,6 +34,7 @@
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack3.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack4.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack5.h"
+#include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 #include "../Common/LoadManager.h"
 #include "../Enemy/TrashEnemy/Enemy.h"
 #include "../Enemy/TrashEnemy/EnemyState/EnemyStateManager.h"
@@ -64,30 +65,30 @@ namespace {
 
 Player::Player()
 {
-	playerCom.stateManager	= nullptr;
-	avoidReady				= false;
-	size					= 0.00f;
-	avoidStart				= false;
-	enemyHit				= false;
-	justAvoid				= false;
-	justAvoidCanCounter		= 0.0f;
-	avoidCounter			= 0;
-	noAvoidCounter			= 0.0f;
-	playerTransform			= nullptr;
-	debugId					= 14;
-	tag						= Function::GetClassNameC<Player>();
-	hp						= MAX_HP;
-	maxHp					= hp;
-	avoidReadyCounter		= 0.0f;
-	justAvoidBlurImage		= Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect",ID::JUST_AVOID_BLUR);
-	justFeedInTime			= 0.0f;
-	justFeedOutTime			= 0.0f;
-	bossThreat				= false;
-	largeJustAvoid			= false;
-	noDamage				= false;
-	redCounter				= 0.0f;
-	playerCom				= PlayerInformation::CharaComponent();
-	turn					= false;
+	playerCom.stateManager = nullptr;
+	avoidReady = false;
+	size = 0.00f;
+	avoidStart = false;
+	enemyHit = false;
+	justAvoid = false;
+	justAvoidCanCounter = 0.0f;
+	avoidCounter = 0;
+	noAvoidCounter = 0.0f;
+	playerTransform = nullptr;
+	debugId = 14;
+	tag = Function::GetClassNameC<Player>();
+	hp = MAX_HP;
+	maxHp = hp;
+	avoidReadyCounter = 0.0f;
+	justAvoidBlurImage = Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::JUST_AVOID_BLUR);
+	justFeedInTime = 0.0f;
+	justFeedOutTime = 0.0f;
+	bossThreat = false;
+	largeJustAvoid = false;
+	noDamage = false;
+	redCounter = 0.0f;
+	playerCom = PlayerInformation::CharaComponent();
+	turn = false;
 }
 //
 //Object2D* guage = new Object2D();
@@ -125,6 +126,10 @@ void Player::Update()
 		if (!playerCom.stateManager->GetState<PlayerAttackStateBase>()->IsAttack()) {
 			DeleteCollision();
 		}
+	}
+
+	if (playerCom.keyboard->GetIsKeyboardPut(KEY_INPUT_2)){
+		playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
 	}
 	
 	//éÄñSèåè

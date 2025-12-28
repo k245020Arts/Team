@@ -54,6 +54,8 @@ public:
 	/// <returns></returns>
 	bool CameraInEnemy();
 
+	void CanPlayerSpecialHit();
+
 private:
 	
 	std::list<BaseObject*> enemy;

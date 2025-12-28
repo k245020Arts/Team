@@ -26,7 +26,7 @@ void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& 
 		/*Debug::DebugLog("EnemyAttackHit");*/
 		PlayerDamageEvent(_coll1, _coll2);
 	}
-	if (tag1 == ENEMY && tag2 == P_ATTACK) {
+	if (tag1 == ENEMY && (tag2 == P_ATTACK || tag2 == P_SPECIAL_ATTACK)) {
 		/*Debug::DebugLog("PlayerAttackHit");*/
 		EnemyDamageEvent(_coll1, _coll2);
 	}
@@ -38,7 +38,7 @@ void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& 
 		/*Debug::DebugLog("EnemyAttackHit");*/
 		PlayerDamageBossEffectEvent(_coll1, _coll2);
 	}
-	if (tag1 == BOSS && tag2 == P_ATTACK) {
+	if (tag1 == BOSS && (tag2 == P_ATTACK || tag2 == P_SPECIAL_ATTACK)) {
 		/*Debug::DebugLog("PlayerAttackHit");*/
 		BossDamageEvent(_coll1, _coll2);
 	}

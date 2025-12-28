@@ -74,7 +74,7 @@ namespace EnemyInformation {
 		EnemyDamage::EnemyDamageInfo dInfo;
 		EnemyBlowAway::EnemyBlowAwayInfo bInfo;
 
-		enum class Type { Normal, BlowAway, LoopCombo } attackType;
+		enum class Type { Normal, BlowAway, LoopCombo,Special } attackType;
 		StateID::State_ID changeStateID;
 
 		int vibrationPower;

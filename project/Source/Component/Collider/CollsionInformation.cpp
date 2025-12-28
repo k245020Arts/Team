@@ -33,6 +33,8 @@ void CollsionInformation::InitSetPair()
     SetPair(FLOOR, E_FLOOR);
     SetPair(FLOOR, C_FLOOR);
     SetPair(FLOOR, B_FLOOR);
+    SetPair(P_SPECIAL_ATTACK, BOSS);
+    SetPair(P_SPECIAL_ATTACK, ENEMY);
 }
 
 bool CollsionInformation::IsCollPair(Tag tag1, Tag tag2)

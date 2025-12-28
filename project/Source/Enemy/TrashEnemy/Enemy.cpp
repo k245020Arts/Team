@@ -74,6 +74,11 @@ namespace {
 			EnemyInformation::EnemyReaction::Type::BlowAway, StateID::B_THREAT_S, 100, 60,
 			Effect_ID::SPECIAL_HIT_EFFECT, 5.0f, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 0.0f, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
+
+		{  StateID::PLAYER_SPECIAL_ATTACK_S, { StateID::PLAYER_SPECIAL_ATTACK_S, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.15f,0.8f),
+		EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Special, StateID::B_THREAT_S, 10, 10,
+		Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
+		true, 40.0f, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 	};
 }
 
@@ -422,7 +427,11 @@ void Enemy::PlayerHit()
 				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				enemyBaseComponent.playerObj->Component()->GetComponent<Shaker>()->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.05f);
 			}
-
+			break;
+		case EnemyInformation::EnemyReaction::Type::Special:
+			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			break;
 		default:
 			break;

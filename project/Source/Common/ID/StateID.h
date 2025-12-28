@@ -22,6 +22,7 @@ namespace StateID{
         PLAYER_BLOW_AWAY_S,
         PLAYER_DIE_S,
         PLAYER_TURN_S,
+        PLAYER_SPECIAL_ATTACK_S,
 
         BOSS_IDOL_S,
         BOSS_RUN_S,

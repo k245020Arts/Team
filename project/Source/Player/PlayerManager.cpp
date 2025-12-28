@@ -37,6 +37,7 @@
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack5.h"
 #include "../Player/PlayerState/PlayerAvoid.h"
 #include "../Player/PlayerState/PlayerDie.h"
+#include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 
 PlayerManager::PlayerManager()
 {
@@ -116,6 +117,7 @@ void PlayerManager::CreatePlayer()
 	stateManager->CreateState<PlayerBlowAway>("PlayerBlowAway", StateID::PLAYER_BLOW_AWAY_S);
 	stateManager->CreateState<PlayerDie>("PlayerDie", StateID::PLAYER_DIE_S);
 	stateManager->CreateState<PlayerTurn>("PlayerTurn", StateID::PLAYER_TURN_S);
+	stateManager->CreateState<PlayerSpecialAttack>("PlayerSpecialAttack", StateID::PLAYER_SPECIAL_ATTACK_S);
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),"mixamorig:Hips");

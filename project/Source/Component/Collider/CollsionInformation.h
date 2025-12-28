@@ -34,6 +34,7 @@ namespace CollsionInformation {
 		C_FLOOR,
 		SHADOW,
 		B_E_ATTACK,
+		P_SPECIAL_ATTACK,
 
 		TAG_MAX,
 	};

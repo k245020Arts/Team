@@ -28,7 +28,8 @@ public:
 	void EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info);
 	bool GetHit() { return hit; }
 	void SetAlpha(int _alpha) { alpha = _alpha; }
-	
+
+	void SpecialAttackHit() { specialAttackHit = true; }
 
 protected:
 
@@ -46,4 +47,6 @@ protected:
 	int cursolImage;
 
 	VECTOR3 upPos;
+
+	bool specialAttackHit;
 };
