@@ -297,6 +297,7 @@
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack3.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack4.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack5.h" />
+    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerAvoid.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerBlowAway.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerDamage.h" />
@@ -461,6 +462,7 @@
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack3.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack4.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack5.cpp" />
+    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerAvoid.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerBlowAway.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerDamage.cpp" />

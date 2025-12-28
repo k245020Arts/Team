@@ -38,8 +38,10 @@ void CharaWeapon::Update()
 void CharaWeapon::Draw()
 {
 	if (parent) {
+		//VECTOR3 framePos = MV1GetFramePosition(modelHandle,frame);
 		matrix = MV1GetFrameLocalWorldMatrix(modelHandle, frame);//くっつけたいモデルのマトリックスをとる。
 		MATRIX matri = MGetRotElem(matrix);
+		//MATRIX mGetScale = MGetScale(VECTOR3(10.0f, 10.0f, 10.0f));
 		MV1SetMatrix(weaponHandle, matrix); //そのマトリックスを剣のモデルにセットしてあげる
 		MV1DrawModel(weaponHandle);
 	}
