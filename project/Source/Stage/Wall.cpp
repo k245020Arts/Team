@@ -36,17 +36,17 @@ void Wall::Update()
 		//z方向に壁のpositionがある場合にはこちら
 		distance = transform->position.z - pTransform->position.z;
 	}
-	if (fabs(distance) < 1600) {
+	if (fabs(distance) < 4000) {
 		
 		if (!effect->IsPlayIng(Effect_ID::EFFECT_WALL)) {
 			//エフェクトが再生されていないときに再生
-			effect->CreateEffekseer(Transform(VZero, VZero, VOne * 39.0f), nullptr, Effect_ID::EFFECT_WALL, 1.0f);
+			effect->CreateEffekseer(Transform(VZero, VZero, VOne * 41.0f), nullptr, Effect_ID::EFFECT_WALL, 1.0f);
 		}
 		else {
 			//距離が離れれば離れるほど半透明度をあげる。
 			Color::Rgb rgb;
 			float disRate;
-			disRate = distance / 1500.0f;
+			disRate = distance / 4000.0f;
 			rgb = Color::Rgb(255.0f, 255.0f, 255.0f, Easing::Lerp(255.0f, 0.0f, disRate));
 			effect->SetColor(Effect_ID::EFFECT_WALL, rgb);
 		}

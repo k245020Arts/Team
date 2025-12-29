@@ -70,4 +70,11 @@ void PlayerStateBase::DefalutWalk()
 	if (p->playerCom.InputManager->KeyInputDown("attack")) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_ATTACK1_S);
 	}
+	if (p->playerCom.InputManager->KeyInputDown("SpecialAttack")) {
+		if (p->CanSpecialAttack()) {
+			p->playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
+			p->specialAttackBar = 0.0f;
+		}
+		
+	}
 }

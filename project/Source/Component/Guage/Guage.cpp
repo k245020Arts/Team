@@ -8,20 +8,21 @@ Guage::Guage()
 {
 	edge				= nullptr;
 	guage				= nullptr;
-	maxhp				= 0.0f;
-	hp					= nullptr;
+	barValueMax			= 0.0f;
+	barValue			= nullptr;
 	debugId				= 19;
 	tag					= Function::GetClassNameC<Guage>();
 	displayHp			= 0.0f;
 	changeColorCounter	= 0.0f;
 	screenMode			= false;
+	addMode				= false;
 }
 
 Guage::~Guage()
 {
 	edge		= nullptr;
 	guage		= nullptr;
-	hp			= nullptr;
+	barValue	= nullptr;
 }
 
 void Guage::Update()
@@ -43,16 +44,23 @@ void Guage::Update()
 	if (guage != nullptr) {
 
 		float speed = 3.0f;
-		displayHp += (*hp - displayHp) * speed * Time::DeltaTimeRate();
+		displayHp += (*barValue - displayHp) * speed * Time::DeltaTimeRate();
 
-		displayHp =  std::clamp(displayHp, 0.0f, maxhp);
+		displayHp =  std::clamp(displayHp, 0.0f, barValueMax);
 
 		// Š„‡‚©‚ç•`‰æˆÊ’u‚ð’²®
-		float amount = displayHp / maxhp;
+		float amount = displayHp / barValueMax;
 
 		//float amout = *hp / maxhp;
 
 		guage->SetDrawImageSize(VECTOR2I(static_cast<int>((amount) * guage->GetImageSize().x), guage->GetImageSize().y));
+
+		if (chara->CanSpecialAttack()) {
+			guage->SetAddMode(true);
+		}
+		else {
+			guage->SetAddMode(false);
+		}
 	}
 }
 

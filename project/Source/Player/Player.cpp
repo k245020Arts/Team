@@ -89,6 +89,10 @@ Player::Player()
 	redCounter = 0.0f;
 	playerCom = PlayerInformation::CharaComponent();
 	turn = false;
+	specialAttackCenterPos = VZero;
+	specialAttackStartPos = VZero;
+	specialAttackBar = 0.0f;
+	specialAttackBarMax = 100.0f;
 }
 //
 //Object2D* guage = new Object2D();
@@ -130,6 +134,9 @@ void Player::Update()
 
 	if (playerCom.keyboard->GetIsKeyboardPut(KEY_INPUT_2)){
 		playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
+	}
+	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_4)) {
+		SpecialVarAdd(20.0f);
 	}
 	
 	//Ž€–SðŒ
@@ -449,6 +456,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 			justAvoidCanCounter = 0.0f;
 			justAvoid			= true;
 			justFeedInTime		= JUST_FEED_IN_TIME;
+			SpecialVarAdd(10.0f);
 		}
 	}
 	else {
@@ -528,6 +536,7 @@ void Player::PlayerAttackHit()
 		playerCom.shaker->ShakeStart(e.shakePower, e.shakePattern, e.shakerLoop, e.shakeTime);
 		playerCom.camera->CameraShake(e.cameraShakePower, e.shakePattern, false, e.cameraShakeTime);
 		playerCom.sound->RandamSe(e.soundName, e.soundKind);
+		SpecialVarAdd(1.0f);
 	}
 }
 
@@ -618,4 +627,10 @@ bool Player::LargeJustAvoid(std::shared_ptr<BossAttackBase> _attack)
 		largeJustAvoid = false;
 	}
 	return largeJustAvoid;
+}
+
+void Player::SpecialVarAdd(float _add)
+{
+	float add = specialAttackBar + _add;
+	specialAttackBar = std::clamp(add, 0.0f, specialAttackBarMax);
 }

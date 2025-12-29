@@ -12,6 +12,7 @@
 #include "../../../Common/Sound/SoundManager.h"
 #include "../../../Component/Collider/SphereCollider.h"
 #include "../../../Enemy/EnemyManager.h"
+#include "../../../Camera/Camera.h"
 
 PlayerSpecialAttack::PlayerSpecialAttack()
 {
@@ -23,9 +24,8 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(radius, 0, 0));
 	//frontSpeed = 1000.0f;
 	hitDamage = 5.0f;
-	startPos = VZero;
 	
-	centerPos = VZero;
+
 	moveNum = 0;
 }
 
@@ -36,21 +36,22 @@ PlayerSpecialAttack::~PlayerSpecialAttack()
 void PlayerSpecialAttack::Update()
 {
 	Player* p = GetBase<Player>();
-	p->playerCom.player->DrawTrail(VECTOR3(0, 0, -100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
+	p->playerCom.player->DrawTrail(VECTOR3(0, 0, 100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
 	if (p->playerCom.keyboard->GetIsKeyboardPut(KEY_INPUT_3)) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 	}
-	float  distance =  VECTOR3(centerPos - p->playerTransform->position).Size();
-
+	float  distance =  VECTOR3(p->specialAttackCenterPos - p->playerTransform->position).Size();
+	VECTOR3 forward = p->playerTransform->Forward() * MGetRotY(p->playerTransform->rotation.y);
+	p->playerCom.physics->AddVelocity(forward * 10000.0f,true);
 	if (distance > radius) {
 		if (moveNum > 0) {
-			float angle = 36.0f * DegToRad;
+			float angle = 72.0f * DegToRad;
 			p->playerTransform->rotation.y += angle;
 			MoveStart(angle * DegToRad);
 			moveNum--;
 		}
 		else {
-			p->playerTransform->position = startPos;
+			p->playerTransform->position = p->specialAttackStartPos;
 			p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 			p->playerCom.physics->SetVelocity(VZero);
 		}
@@ -60,7 +61,7 @@ void PlayerSpecialAttack::Update()
 
 void PlayerSpecialAttack::Draw()
 {
-	//DrawSphere3D(centerPos, radius, 1, 0xffffff, 0xffffff, true);
+	//DrawSphere3D(p->specialAttackCenterPos, radius, 1, 0xffffff, 0xffffff, true);
 }
 
 void PlayerSpecialAttack::Start()
@@ -69,17 +70,19 @@ void PlayerSpecialAttack::Start()
 	PlayerAttackStateBase::Start();
 	firstColl = true;
 	//AttackCollsion();
-	startPos = p->playerTransform->position;
+	p->specialAttackStartPos = p->playerTransform->position;
 	VECTOR3 forward = p->playerTransform->Forward();
-	centerPos = startPos + forward * radius;
+	p->specialAttackCenterPos = p->specialAttackStartPos + forward * radius;
 	MoveStart(0.0f);
-	moveNum = 36;
+	moveNum = 18;
+	p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
 }
 
 void PlayerSpecialAttack::Finish()
 {
 	Player* p = GetBase<Player>();
 	ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
+	p->playerCom.camera->ChangeStateCamera(StateID::FREE_CAMERA_S);
 }
 
 void PlayerSpecialAttack::MoveStart(float _angle)
@@ -89,7 +92,7 @@ void PlayerSpecialAttack::MoveStart(float _angle)
 	AddCollsion();
 	p->playerCom.sound->RandamSe("swordWind", 5);
 	
-	p->playerTransform->position = centerPos + VECTOR3(0.0f,0.0f,radius) * MGetRotY(p->playerTransform->rotation.y);
+	p->playerTransform->position = p->specialAttackCenterPos + VECTOR3(0.0f,0.0f,radius) * MGetRotY(p->playerTransform->rotation.y);
 	VECTOR3 forward = p->playerTransform->Forward() * MGetRotY(p->playerTransform->rotation.y);
 	p->playerCom.physics->SetVelocity(forward * 30000.0f);
 }
@@ -104,7 +107,7 @@ void PlayerSpecialAttack::AddCollsion()
 	info.oneColl = false;
 	info.tag = CollsionInformation::Tag::P_SPECIAL_ATTACK;
 	info.size = 1.0f;
-	collider->CollsionAdd(info, Transform(centerPos, VZero, VECTOR3(radius, 0, 0)),"special");
+	collider->CollsionAdd(info, Transform(p->specialAttackCenterPos, VZero, VECTOR3(radius, 0, 0)),"special");
 	p->playerCom.enemyManager->CanPlayerSpecialHit();
 }
 

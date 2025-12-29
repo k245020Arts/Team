@@ -16,6 +16,7 @@
 #include "../Enemy/EnemyManager.h"
 #include "../Component/Hierarchy/Hierarchy.h"
 #include "CameraEditorGui.h"
+#include "CameraState/PlayerSpecialAttackCamera.h"
 
 Camera::Camera()
 {
@@ -43,6 +44,15 @@ Camera::Camera()
 	direction							= EnemyAttackChangeCameraDirection::NONE;
 	moveTimer							= 0.0f;
 	angleMaxSpeed						= 0.0f;
+	control								= nullptr;
+	counter								= 0.0f;
+	editor								= nullptr;
+	hit									= false;
+	hitDist								= 0.0f;
+	moveAmout							= 0.0f;
+	rockOn								= false;
+	targetEnemyTransform				= nullptr;
+
 }
 
 Camera::~Camera()
@@ -158,11 +168,12 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.enemyManager				= FindGameObject<EnemyManager>();
 
 	//state‚ð“o˜^
-	cameraComponent.state->CreateState<FollowCamera>			("_FollowCamera", StateID::FOLLOW_CAMERA_S);
-	cameraComponent.state->CreateState<JustAvoidCamera>			("_JustAvoidCamera", StateID::JUST_AVOID_CAMERA_S);
-	cameraComponent.state->CreateState<JustAvoidAttackCamera>	("_JustAvoidAttackCamera", StateID::JUST_AVOID_ATTACK_CAMERA_S);
-	cameraComponent.state->CreateState<JustAvoidAttackHitCamera>("_JustAvoidAttackHitCamera", StateID::JUST_AVOID_ATTACK_HIT_CAMERA_S);
-	cameraComponent.state->CreateState<FreeCamera>				("_FreeCamera", StateID::FREE_CAMERA_S);
+	cameraComponent.state->CreateState<FollowCamera>				("_FollowCamera", StateID::FOLLOW_CAMERA_S);
+	cameraComponent.state->CreateState<JustAvoidCamera>				("_JustAvoidCamera", StateID::JUST_AVOID_CAMERA_S);
+	cameraComponent.state->CreateState<JustAvoidAttackCamera>		("_JustAvoidAttackCamera", StateID::JUST_AVOID_ATTACK_CAMERA_S);
+	cameraComponent.state->CreateState<JustAvoidAttackHitCamera>	("_JustAvoidAttackHitCamera", StateID::JUST_AVOID_ATTACK_HIT_CAMERA_S);
+	cameraComponent.state->CreateState<FreeCamera>					("_FreeCamera", StateID::FREE_CAMERA_S);
+	cameraComponent.state->CreateState<PlayerSpecialAttackCamera>	("_PlayerSpecialAttackCamera", StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
 
 	cameraComponent.state->NodeDrawReady();
 	cameraComponent.target.shaker = _obj->Component()->GetComponent<Shaker>();

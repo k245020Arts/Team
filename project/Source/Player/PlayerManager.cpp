@@ -167,7 +167,15 @@ void PlayerManager::CreatePlayer()
 	playerPointer->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
-	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_GreenBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_GreenBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Guage::BAR_MODE::HP);
 	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_Frame", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(915.0f,950.0f,0.0f),VZero,VECTOR3(1.0f,1.0f,0.0f)));
+
+	Object2D* SpecialGuage = new Object2D();
+	SpecialGuage->Init(VECTOR2F(915.0f, 1050.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "playerSpecialGuage");
+	playerPointer->AddChild(SpecialGuage);
+
+	Guage* specialG = SpecialGuage->Component()->AddComponent<Guage>();
+	specialG->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_YellowBack", ID::P_SPECIAL_ATTACK_BAR), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::SPECIAL_ATTACK);
+	specialG->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_Frame", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 1050.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
 
 }

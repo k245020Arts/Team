@@ -27,6 +27,7 @@ InputManager::InputManager(bool _useController, bool _useKeyboard, bool _useMous
 	CreateInputData(KeyConfigData("debugChange", KEY_INPUT_Z, NOT_INPUT, MouseInputManager::RIGHT_CLICK));
 	CreateInputData(KeyConfigData("camera", KEY_INPUT_SPACE, XINPUT_BUTTON_RIGHT_THUMB, MouseInputManager::RIGHT_CLICK));
 	CreateInputData(KeyConfigData("changeMode", KEY_INPUT_TAB, -1, MouseInputManager::MOUSE_NONE));
+	CreateInputData(KeyConfigData("SpecialAttack", KEY_INPUT_Q, XINPUT_BUTTON_X, MouseInputManager::MOUSE_NONE));
 
 }
 

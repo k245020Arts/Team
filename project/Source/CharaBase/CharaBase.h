@@ -58,6 +58,20 @@ public:
 	/// </summary>
 	virtual void DeleteCollision();
 
+	/// <summary>
+	/// hpの取得、Guageと結びつかせたいのでポインタ渡しにして毎フレームゲットしなくてもいいようにしている
+	/// </summary>
+	/// <returns></returns>
+	float* GetSpecialAttackGuage() { return &specialAttackBar; }
+
+	/// <summary>
+	/// 最大hpの取得
+	/// </summary>
+	/// <returns></returns>
+	const float GetMaxSpecialAttackGuage() { return specialAttackBarMax; }
+
+	bool CanSpecialAttack() { return (specialAttackBar >= specialAttackBarMax); }
+
 protected:
 	ColliderBase* attackColl;
 
@@ -68,4 +82,7 @@ protected:
 	float maxHp;
 
 	bool lastTarget;
+
+	float specialAttackBar;
+	float specialAttackBarMax;
 };

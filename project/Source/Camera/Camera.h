@@ -19,6 +19,7 @@ public:
 	friend class CameraStateBase;
 	friend class FreeCamera;
 	friend class CameraEditorGui;
+	friend class PlayerSpecialAttackCamera;
 	
 	Camera();
 	~Camera();

@@ -81,16 +81,16 @@ void StageManager::CreateWall()
 		switch (i)
 		{
 		case 0:
-			transform = Transform(VECTOR3(10000, 100, 100), VZero, VOne* VECTOR3(4.0f, 50, 100.0f));
+			transform = Transform(VECTOR3(13000, 100, 100), VZero, VOne* VECTOR3(28.0f, 50, 100.0f));
 			break;
 		case 1:
-			transform = Transform(VECTOR3(-10000, 100, 100), VZero, VOne * VECTOR3(4.0f, 50, 100.0f));
+			transform = Transform(VECTOR3(-13000, 100, 100), VZero, VOne * VECTOR3(28.0f, 50, 100.0f));
 			break;
 		case 2:
-			transform = Transform(VECTOR3(0, 100, -10000), VZero, VOne * VECTOR3(100.0f, 50, 4.0f));
+			transform = Transform(VECTOR3(0, 100, -13000), VZero, VOne * VECTOR3(100.0f, 50, 28.0f));
 			break;
 		case 3:
-			transform = Transform(VECTOR3(0, 100, 10000), VZero, VOne * VECTOR3(100.0f, 50, 4.0f));
+			transform = Transform(VECTOR3(0, 100, 13000), VZero, VOne * VECTOR3(100.0f, 50, 28.0f));
 			break;
 		//case 4:
 			//transform = Transform(VECTOR3(0, -100, 0), VZero, VOne * VECTOR3(100.0f, 1, 100.0f));

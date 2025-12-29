@@ -15,6 +15,7 @@ MeshRenderer2D::MeshRenderer2D()
 	anim2D		= nullptr;
 	draw		= true;
 	num			= 0;
+	addMode		= false;
 }
 
 MeshRenderer2D::~MeshRenderer2D()
@@ -52,23 +53,11 @@ void MeshRenderer2D::Draw()
 		DrawRectRotaGraphFast3F(transform.position.x, transform.position.y, static_cast<int>(de * num), 0, imageSize.x / graphNum, imageSize.y, imageSize.x / graphNum * 0.5f, imageSize.y * 0.5f, transform.scale.x, transform.scale.y, transform.rotation.y, hImage, TRUE);
 	}
 	else {
-		switch (mode)
-		{
-		case MeshRenderer2D::DRAW_GRAPH:
-			DrawGraph((int)transform.position.x, (int)transform.position.y, hImage, true);
-			break;
-		case MeshRenderer2D::DRAW_RECT_GRAPH:
-			DrawRectGraph((int)transform.position.x, (int)transform.position.y, startPos.x, startPos.y, imageSize.x, imageSize.y, hImage, true);
-			break;
-		case MeshRenderer2D::DRAW_RECT_ROTA_GRAPH:
-			DrawRectRotaGraph((int)transform.position.x, (int)transform.position.y, startPos.x, startPos.y, imageSize.x, imageSize.y, 1.0, 0.0, hImage, true);
-			break;
-		case MeshRenderer2D::DRAW_NUM:
-			DrawNum();
-			break;
-		case MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F:
-			DrawRectRotaGraphFast3F(transform.position.x, transform.position.y, startPos.x, startPos.y, drawImageSize.x, drawImageSize.y, imageSize.x * 0.5f, imageSize.y * 0.5f, transform.scale.x, transform.scale.y, transform.rotation.y, hImage, TRUE);
-			break;
+		if (addMode) {
+			AddDraw(transform);
+		}
+		else {
+			NormalDraw(transform);
 		}
 	}
 	
@@ -143,6 +132,42 @@ void MeshRenderer2D::SetPosition(VECTOR3 _position)
 	else {
 		transform2D->position = _position;
 	}
+}
+
+void MeshRenderer2D::NormalDraw(const Transform& transform)
+{
+	switch (mode)
+	{
+	case MeshRenderer2D::DRAW_GRAPH:
+		DrawGraph((int)transform.position.x, (int)transform.position.y, hImage, true);
+		break;
+	case MeshRenderer2D::DRAW_RECT_GRAPH:
+		DrawRectGraph((int)transform.position.x, (int)transform.position.y, startPos.x, startPos.y, imageSize.x, imageSize.y, hImage, true);
+		break;
+	case MeshRenderer2D::DRAW_RECT_ROTA_GRAPH:
+		DrawRectRotaGraph((int)transform.position.x, (int)transform.position.y, startPos.x, startPos.y, imageSize.x, imageSize.y, 1.0, 0.0, hImage, true);
+		break;
+	case MeshRenderer2D::DRAW_NUM:
+		DrawNum();
+		break;
+	case MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F:
+		DrawRectRotaGraphFast3F(transform.position.x, transform.position.y, startPos.x, startPos.y, drawImageSize.x, drawImageSize.y, imageSize.x * 0.5f, imageSize.y * 0.5f, transform.scale.x, transform.scale.y, transform.rotation.y, hImage, TRUE);
+		break;
+	}
+}
+
+void MeshRenderer2D::AddDraw(const Transform& transform)
+{
+	/*Transform copy = transform;
+	copy.scale = VZero;
+	const int LOOP_MAX = 4;
+	for (int i = 1; i < LOOP_MAX + 1; i++) {
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 65);
+		copy.scale = transform.scale / i;
+		NormalDraw(copy);
+	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);*/
+	NormalDraw(transform);
 }
 
 void MeshRenderer2D::DrawNum()

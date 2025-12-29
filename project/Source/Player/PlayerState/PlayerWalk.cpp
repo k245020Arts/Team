@@ -12,6 +12,7 @@ PlayerWalk::PlayerWalk()
 	string = string = Function::GetClassNameC<PlayerWalk>();;
 	animId = ID::P_ANIM_RUN;;
 	//id = ID::P_ANIM_RUN;
+	avoidStart = false;
 }
 
 PlayerWalk::~PlayerWalk()

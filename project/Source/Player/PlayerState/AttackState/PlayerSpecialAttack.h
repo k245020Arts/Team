@@ -20,8 +20,7 @@ public:
 
 private:
 
-	VECTOR3 startPos;
 	float radius;
-	VECTOR3 centerPos;
+	
 	int moveNum;
 };

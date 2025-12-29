@@ -47,6 +47,7 @@ namespace StateID{
         JUST_AVOID_ATTACK_CAMERA_S,
         JUST_AVOID_ATTACK_HIT_CAMERA_S,
         FREE_CAMERA_S,
+        PLAYER_SPECIAL_ATTACK_CAMERA_S,
 
         T_ENEMY_IDOL_S,
         T_ENEMY_RUN_S,

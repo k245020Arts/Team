@@ -51,6 +51,11 @@ public:
 
 	void SetPosition(VECTOR3 _position);
 
+	void SetAddMode(bool _mode) { addMode = _mode;}
+
+	void NormalDraw(const Transform& transform);
+	void AddDraw(const Transform& transform);
+
 private:
 	int hImage;
 	GraphMode mode;
@@ -65,4 +70,6 @@ private:
 	bool draw;
 
 	void DrawNum();
+
+	bool addMode;
 };

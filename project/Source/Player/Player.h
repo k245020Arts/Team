@@ -136,6 +136,13 @@ public:
 
 	bool LargeJustAvoid(std::shared_ptr<BossAttackBase> _attack);
 
+	VECTOR3 GetSpecialAttackCenterPos() { return specialAttackCenterPos; }
+	VECTOR3 GetSpecialAttackStartPos() { return specialAttackStartPos; }
+
+	void SpecialVarAdd(float _add);
+
+	
+
 private:
 	PlayerInformation::CharaComponent playerCom;
 	float size;
@@ -162,4 +169,8 @@ private:
 	bool bossThreat;
 	bool noDamage;
 	bool turn;
+	VECTOR3 specialAttackCenterPos;
+	VECTOR3 specialAttackStartPos;
+
+	
 };

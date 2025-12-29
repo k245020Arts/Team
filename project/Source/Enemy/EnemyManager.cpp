@@ -89,7 +89,7 @@ void EnemyManager::PlayerObjPointer()
 		(*itr)->AddChild(guage);
 
 		Guage* g = guage->Component()->AddComponent<Guage>();
-		g->GuageDrawReady<Enemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+		g->GuageDrawReady<Enemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
 	}
 	
 	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());
@@ -179,7 +179,7 @@ void EnemyManager::CreateBoss()
 	boss->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
-	g->GuageDrawReady<Boss>(Load::LoadImageGraph(Load::IMAGE_PATH + "Boss_HpBar_RedBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+	g->GuageDrawReady<Boss>(Load::LoadImageGraph(Load::IMAGE_PATH + "Boss_HpBar_RedBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
 	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "Boss_HpBar_Frame", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 70.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
 	
 	

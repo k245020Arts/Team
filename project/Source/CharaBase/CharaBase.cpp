@@ -8,6 +8,8 @@ CharaBase::CharaBase()
 	maxHp = 0;
 	attackColl = nullptr;
 	hp = 0;
+	specialAttackBar = 0.0f;
+	specialAttackBarMax = 0.0f;
 }
 
 CharaBase::~CharaBase()

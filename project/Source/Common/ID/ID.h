@@ -89,6 +89,7 @@ namespace ID {
 		CURSOL,
 		BOSS_DAMAGE,
 		P_TURN_ANIM,
+		P_SPECIAL_ATTACK_BAR,
 
 		ID_MAX,
 	};
