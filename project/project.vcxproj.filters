@@ -482,6 +482,9 @@
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.cpp">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.cpp">
+      <Filter>PlayScene\Camera\CameraState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1019,6 +1022,9 @@
     </ClInclude>
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.h">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h">
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
