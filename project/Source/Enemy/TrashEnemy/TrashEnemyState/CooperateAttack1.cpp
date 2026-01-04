@@ -30,7 +30,7 @@ void CooperateAttack1::Finish()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->speed=e->eStatus->GetStatus().runSpeed;
-	e->targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	e->isCooperateAtk = false;
+	e->isMovingToPlayer = false;
 	e->DeleteCollision();
 }

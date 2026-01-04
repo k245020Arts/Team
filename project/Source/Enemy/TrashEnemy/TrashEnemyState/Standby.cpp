@@ -49,6 +49,9 @@ void Standby::Update()
 				counter = 0;
 			}
 		}
+
+		if (vec.Size() >= e->eStatus->GetStatus().chaseRange)
+			e->ChangeState(StateID::T_ENEMY_RUN_S);
 	}
 	else
 	{
@@ -58,9 +61,6 @@ void Standby::Update()
 		else
 			e->isStandby = false;
 	}
-
-	if (vec.Size() >= e->eStatus->GetStatus().chaseRange)
-		e->ChangeState(StateID::T_ENEMY_RUN_S);
 }
 
 void Standby::Draw()
@@ -73,10 +73,10 @@ void Standby::Start()
 
 	range = e->eStatus->GetStatus().atkRang;
 	
-	/*if (e->isCooperateAtk) 
-		e->nextId = StateID::COOPERATEATTACK1; 
+	if (e->isCooperateAtk)
+		e->isMovingToPlayer = true;
 	else 
-		e->nextId = StateID::T_ENEMY_ATTACK_S;*/
+		int a = 0;
 
 	pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 

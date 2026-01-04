@@ -60,7 +60,7 @@ void TrashEnemyManager::Update()
 
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
-		if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)
+		if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter && !(*itr)->IsCooperateAtk())
 		{
 			if ((*itr)->IsAttack())
 			{
@@ -77,11 +77,12 @@ void TrashEnemyManager::Update()
 			standbyCounter++;
 		if (standbyCounter >= 1)
 			cooperateCounter += Time::DeltaTimeRate();
-		//敵全員が準備完了したら攻撃に移る
-		if (standbyCounter == enemiesMax|| cooperateCounter >= 3)
+		//敵全員が準備完了するか時間経過で攻撃に移る
+		if (standbyCounter == enemiesMax|| cooperateCounter >= 2)
 		{
 			AllChangeState(StateID::T_ENEMY_RUN_S);
 			standbyCounter = 0;
+			cooperateCounter = 0;
 			break;
 		}
 
@@ -228,10 +229,8 @@ void TrashEnemyManager::ImguiDraw()
 
 void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 {
-	//const float RANGE = 2000.0f; // プレイヤー中心の半径
 	const float BIAS_FOV = -180 * DegToRad; // プレイヤーの向きへ寄せる幅（0で無効）
 
-	//VECTOR3 playerPos = player->GetTransform()->position;
 	float playerRot = camera->GetCameraTransform()->rotation.y;
 
 	int count = enemies.size();
@@ -244,7 +243,10 @@ void TrashEnemyManager::AllChangeState(StateID::State_ID _id)
 {
 	for (auto& itr : enemies)
 	{
-		itr->ChangeState(_id);
+		if (itr->IsMovingToPlayer())
+			itr->ChangeState(_id);
+		else
+			itr->CooperateAtkFinish();
 	}
 }
 
@@ -372,8 +374,6 @@ void TrashEnemyManager::Separation()
 			{
 				itr1->AddPos(vec.Normalize());
 				itr2->AddPos(vec2.Normalize());
-				/*itr1->AddPos(VNorm(pos1 - pos2));
-				itr2->AddPos(VNorm(pos2 - pos1));*/
 			}
 		}
 	}

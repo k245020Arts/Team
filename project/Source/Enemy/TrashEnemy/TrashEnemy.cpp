@@ -103,6 +103,8 @@ TrashEnemy::TrashEnemy()
 	isCooperateAtk = false;
 
 	wayPoint = VZero;
+
+	isMovingToPlayer = false;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -325,7 +327,6 @@ void TrashEnemy::PlayerHit()
 
 void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 {
-	//targetPos = _pos;
 	wayPoint = _pos;
 
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
@@ -342,6 +343,13 @@ void TrashEnemy::ChangeState(StateID::State_ID _id)
 void TrashEnemy::AttackCommand()
 {
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
+}
+
+void TrashEnemy::CooperateAtkFinish()
+{
+	isCooperateAtk = false;
+	isMovingToPlayer = false;
+	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
 }
 
 void TrashEnemy::Move(float _speed, float _max)

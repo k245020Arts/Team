@@ -23,7 +23,6 @@ void T_EnemyRun::Update()
 		targetPosition = e->enemyBaseComponent.playerObj->GetTransform()->position;
 
 	rotation = e->obj->GetTransform()->rotation;
-	//e->LookTarget();
 	Look();
 
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
@@ -39,7 +38,10 @@ void T_EnemyRun::Update()
 
 	if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)
 	{
-		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+		if (!e->IsMovingToPlayer())
+			e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+		else
+			e->enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK1);
 		e->isAttack = true;
 	}
 }

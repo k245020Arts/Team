@@ -50,6 +50,11 @@ public:
 	//攻撃クールタイムリセット
 	void AttackCoolTimeReset() { isAttack = true; }
 
+	bool IsCooperateAtk() { return isCooperateAtk; }
+	bool IsMovingToPlayer() { return isMovingToPlayer; }
+
+	void CooperateAtkFinish();
+
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)
 	{
@@ -83,6 +88,8 @@ private:
 	bool isAttack;
 	//連携攻撃かどうか
 	bool isCooperateAtk;
+	//プレイヤーのほうに向かうかどうか
+	bool isMovingToPlayer;
 	//連携攻撃の準備ができてるか
 	bool isStandby;
 	
