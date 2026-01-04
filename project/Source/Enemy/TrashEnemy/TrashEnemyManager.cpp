@@ -231,21 +231,13 @@ void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 	//const float RANGE = 2000.0f; // プレイヤー中心の半径
 	const float BIAS_FOV = -180 * DegToRad; // プレイヤーの向きへ寄せる幅（0で無効）
 
-	VECTOR3 playerPos = player->GetTransform()->position;
+	//VECTOR3 playerPos = player->GetTransform()->position;
 	float playerRot = camera->GetCameraTransform()->rotation.y;
 
 	int count = enemies.size();
 	int index = 0;
 
 	CloseWayPoint();
-
-	//for (auto& e : enemies)
-	//{
-	//	//敵にセット
-	//	//e->SetTargetPos(CloseWeyPoint(e->GetPos()), StateID::T_ENEMY_RUN_S);
-
-	//	index++;
-	//}
 }
 
 void TrashEnemyManager::AllChangeState(StateID::State_ID _id)
@@ -321,7 +313,6 @@ void TrashEnemyManager::PlayerWayPoint()
 
 void TrashEnemyManager::CloseWayPoint()
 {
-	//camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
 	VECTOR3 position = camera->GetCameraTransform()->position;
 	position.y = 0;
 	//正面べく
@@ -332,6 +323,7 @@ void TrashEnemyManager::CloseWayPoint()
 	{
 		for (auto& itr : wayPoint)
 		{
+			//使っていいウェイポイントを一回だけ探す
 			if (counter == 0)
 			{
 				VECTOR3 vec = itr.position - position;
@@ -342,6 +334,7 @@ void TrashEnemyManager::CloseWayPoint()
 				else
 					itr.active = false;
 			}
+			//一番近いウェイポイントを探す
 			if (itr.active)
 			{
 				VECTOR3 a = itr.position - enemy->GetPos();

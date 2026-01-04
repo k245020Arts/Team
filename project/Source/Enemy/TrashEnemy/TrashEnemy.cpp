@@ -159,8 +159,6 @@ void TrashEnemy::Start(Object3D* _obj)
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
-	NextId = StateID::T_ENEMY_STANDBY;
-
 	// スタートステートも StateID 化
 	enemyBaseComponent.state->StartState(StateID::T_ENEMY_IDOL_S);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
@@ -332,7 +330,7 @@ void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
 
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 	speed = eStatus->GetStatus().cooperateSoeed;
-	NextId = StateID::T_ENEMY_STANDBY;
+	
 	isCooperateAtk = true;
 }
 

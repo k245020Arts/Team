@@ -49,9 +49,6 @@ void Standby::Update()
 				counter = 0;
 			}
 		}
-
-		/*if (e->isAttack)
-			e->ChangeState(e->NextId);*/
 	}
 	else
 	{
@@ -76,10 +73,10 @@ void Standby::Start()
 
 	range = e->eStatus->GetStatus().atkRang;
 	
-	if (e->isCooperateAtk) 
-		e->NextId = StateID::COOPERATEATTACK1; 
+	/*if (e->isCooperateAtk) 
+		e->nextId = StateID::COOPERATEATTACK1; 
 	else 
-		e->NextId = StateID::T_ENEMY_ATTACK_S;
+		e->nextId = StateID::T_ENEMY_ATTACK_S;*/
 
 	pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 
@@ -96,8 +93,8 @@ void Standby::Finish()
 	counter = 0;
 	e->isStandby = false;
 	e->isAttack = false;
-	if (!e->isCooperateAtk)
-		e->NextId = StateID::T_ENEMY_STANDBY;
+	/*if (!e->isCooperateAtk)
+		e->nextId = StateID::T_ENEMY_STANDBY;*/
 
 	e->isCooperateAtk = false;
 }

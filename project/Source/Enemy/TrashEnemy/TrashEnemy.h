@@ -70,7 +70,7 @@ private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
 
-	StateID::State_ID NextId;
+	//StateID::State_ID nextId;
 
 	int number;
 
@@ -81,7 +81,7 @@ private:
 	VECTOR3 targetPos;
 	//’ÊíUŒ‚‚ğ‚µ‚Ä‚à‚æ‚¢‚©
 	bool isAttack;
-	//˜AŒgUŒ‚‚ğ‚·‚é‚©‚µ‚È‚¢‚©
+	//˜AŒgUŒ‚‚©‚Ç‚¤‚©
 	bool isCooperateAtk;
 	//˜AŒgUŒ‚‚Ì€”õ‚ª‚Å‚«‚Ä‚é‚©
 	bool isStandby;

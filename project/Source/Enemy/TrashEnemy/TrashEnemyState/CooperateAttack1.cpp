@@ -29,7 +29,6 @@ void CooperateAttack1::Start()
 void CooperateAttack1::Finish()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	e->NextId = StateID::T_ENEMY_STANDBY;
 	e->speed=e->eStatus->GetStatus().runSpeed;
 	e->targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	e->isCooperateAtk = false;
