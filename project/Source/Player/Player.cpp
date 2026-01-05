@@ -138,6 +138,9 @@ void Player::Update()
 	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_4)) {
 		SpecialVarAdd(20.0f);
 	}
+	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_6)) {
+		playerCom.camera->CutSceneChangeState("test.json");
+	}
 	
 	//€–SğŒ
 	if (hp <= 0.0f && (playerCom.stateManager->GetState<StateBase>()->GetID() == StateID::PLAYER_WAIT_S)) {

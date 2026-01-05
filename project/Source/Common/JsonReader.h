@@ -5,7 +5,6 @@
 
 using JSON = nlohmann::json;
 
-
 class JsonReader
 {
 public:

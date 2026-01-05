@@ -11,12 +11,14 @@
 #include "../Camera/CameraState/JustAvoidCamera.h"
 #include "../Camera/CameraState/JustAvoidAttackCamera.h"
 #include "../Camera/CameraState/JustAvoidAttackHitCamera.h"
+#include "../Camera/CameraState/CutSceneCamera.h"
 #include "../Common/InputManager/InputManager.h"
 #include "../Camera/CameraState/FreeCamera.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Component/Hierarchy/Hierarchy.h"
 #include "CameraEditorGui.h"
 #include "CameraState/PlayerSpecialAttackCamera.h"
+
 
 Camera::Camera()
 {
@@ -174,6 +176,7 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.state->CreateState<JustAvoidAttackHitCamera>	("_JustAvoidAttackHitCamera", StateID::JUST_AVOID_ATTACK_HIT_CAMERA_S);
 	cameraComponent.state->CreateState<FreeCamera>					("_FreeCamera", StateID::FREE_CAMERA_S);
 	cameraComponent.state->CreateState<PlayerSpecialAttackCamera>	("_PlayerSpecialAttackCamera", StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
+	cameraComponent.state->CreateState<CutSceneCamera>				("_CutSceneCamera", StateID::CUT_SCENE_CAMERA_S);
 
 	cameraComponent.state->NodeDrawReady();
 	cameraComponent.target.shaker = _obj->Component()->GetComponent<Shaker>();
@@ -361,4 +364,20 @@ bool Camera::CameraRotationMove()
 void Camera::CameraEditor()
 {
 	editor->EditorWindow();
+}
+
+void Camera::CutSceneChangeState(std::string _name)
+{
+	JsonReader json;
+	std::string name = "data/json/" + _name;
+	json.Load(name);
+
+	cutSceneData.clear();
+	for (auto& j : json.Data()["cutScenes"]) {
+		CutSceneSpece::CutScene cut;
+		j.get_to(cut);
+		cutSceneData.push_back(cut);
+	}
+
+	cameraComponent.state->ChangeState(StateID::CUT_SCENE_CAMERA_S);
 }

@@ -4,6 +4,89 @@
 #include "cameraInformation.h"
 #include "../Common/ID/StateID.h"
 #include "../Component/Transform/Quaternion.h"
+#include "../Common/JsonReader.h"
+
+static const std::string PLAYER_POS_NAME = "Player";
+static const std::string ENEMY_POS_NAME = "Enemy";
+static const std::string WORLD_POS_NAME = "World";
+
+namespace CutSceneSpece {
+
+	enum class EaseType {
+		Linear,
+		In,
+		Out,
+		InOut
+	};
+
+	struct CutSceneCameraPos {
+		VECTOR3 startPos;
+		VECTOR3 endPos;
+		VECTOR3 target;
+	};
+
+	struct CutScene {
+		float duration;
+		EaseType ease;
+		CutSceneCameraPos camera;
+		std::string followPosName;
+		std::string followPosTarget;
+	};
+
+	// CutSceneCamera Å® JSON
+	inline void to_json(nlohmann::json& j, const CutSceneCameraPos& c) {
+		j = {
+			{"startPos", c.startPos},
+			{"endPos",   c.endPos},
+			{"target",   c.target}
+		};
+	}
+
+	inline void from_json(const nlohmann::json& j, CutSceneCameraPos& c) {
+		j.at("startPos").get_to(c.startPos);
+		j.at("endPos").get_to(c.endPos);
+		j.at("target").get_to(c.target);
+	}
+
+	// EaseType Çï∂éöóÒÇ…ïœä∑
+	inline std::string EaseTypeToString(EaseType e) {
+		switch (e) {
+		case EaseType::Linear: return "Linear";
+		case EaseType::In:     return "In";
+		case EaseType::Out:    return "Out";
+		case EaseType::InOut:  return "InOut";
+		}
+		return "Linear";
+	}
+
+	inline EaseType StringToEaseType(const std::string& s) {
+		if (s == "Linear") return EaseType::Linear;
+		if (s == "In")     return EaseType::In;
+		if (s == "Out")    return EaseType::Out;
+		if (s == "InOut")  return EaseType::InOut;
+		return EaseType::Linear;
+	}
+
+	// CutScene Å® JSON
+	inline void to_json(nlohmann::json& j, const CutScene& c) {
+		j = {
+			{"duration", c.duration},
+			{"ease", EaseTypeToString(c.ease)},
+			{"camera", c.camera},
+			{"followPos", c.followPosName},
+			{"followTarget", c.followPosTarget},
+		};
+	}
+
+	inline void from_json(const nlohmann::json& j, CutScene& c) {
+		j.at("duration").get_to(c.duration);
+		c.ease = StringToEaseType(j.at("ease").get<std::string>());
+		j.at("camera").get_to(c.camera);
+		j.at("followPos").get_to(c.followPosName);
+		j.at("followTarget").get_to(c.followPosTarget);
+	}
+}
+
 
 class ControllerInputManager;
 class InputManager;
@@ -20,6 +103,7 @@ public:
 	friend class FreeCamera;
 	friend class CameraEditorGui;
 	friend class PlayerSpecialAttackCamera;
+	friend class CutSceneCamera;
 	
 	Camera();
 	~Camera();
@@ -60,6 +144,8 @@ public:
 
 	void CameraEditor();
 
+	void CutSceneChangeState(std::string _name);
+
 private:
 
 	float timeTest;
@@ -93,4 +179,5 @@ private:
 	float angleMaxSpeed;
 
 	CameraEditorGui* editor;
+	std::vector<CutSceneSpece::CutScene> cutSceneData;
 };

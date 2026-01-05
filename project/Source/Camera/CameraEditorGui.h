@@ -15,16 +15,11 @@ private:
 	std::string fileName;
 	VECTOR3 basePosition;
 	VECTOR3 offset;
-	std::string posName;
-	std::string targetName;
+	VECTOR3 baseTarget;
 	int cutNum;
 	std::string cutSceneName;
 
-	const std::string PLAYER_POS_NAME = "PlayerPos";
-	const std::string ENEMY_POS_NAME = "EnemyPos";
-	const std::string WORLD_POS_NAME = "WorldPos";
+	CutSceneSpece::CutScene cutScene;
 
-	const std::string PLAYER_TARGET_NAME = "PlayerTarget";
-	const std::string ENEMY_TARGET_NAME = "EnemyTarget";
-	const std::string WORLD_TARGET_NAME = "WorldTARGET";
+	
 };

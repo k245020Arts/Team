@@ -2,7 +2,7 @@
 #include <DxLib.h>
 #include <math.h>
 #include "MemoryCount.h"
-
+#include "../nlohmann/json.hpp"
 
 namespace DxLib {
 	// 弧度法とラジアンの変換用定数（これを掛ける）
@@ -170,8 +170,23 @@ namespace DxLib {
 				z * other.x + x * other.z,
 				x * other.y + y * other.x);
 		}
+		
+		
 	};
 
+	inline void to_json(nlohmann::json& j, const VECTOR3& v) {
+		j = nlohmann::json {
+			{"x", v.x},
+			{"y", v.y},
+			{"z", v.z}
+		};
+	}
+
+	inline void from_json(const nlohmann::json& j, VECTOR3& v) {
+		j.at("x").get_to(v.x);
+		j.at("y").get_to(v.y);
+		j.at("z").get_to(v.z);
+	}
 
 	// ２次元ベクトルクラス
 	template<typename T>

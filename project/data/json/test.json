@@ -1,0 +1,73 @@
+{
+  "cutScenes": {
+    "cutScene0": {
+      "camera": {
+        "endPos": {
+          "x": -1000.0,
+          "y": 0.0,
+          "z": 1000.0
+        },
+        "startPos": {
+          "x": 1000.0,
+          "y": 0.0,
+          "z": 1000.0
+        },
+        "target": {
+          "x": 0.0,
+          "y": 400.0,
+          "z": 0.0
+        }
+      },
+      "duration": 1.0,
+      "ease": "Linear",
+      "followPos": "Player",
+      "followTarget": "Player"
+    },
+    "cutScene1": {
+      "camera": {
+        "endPos": {
+          "x": -1000.0,
+          "y": 0.0,
+          "z": -1000.0
+        },
+        "startPos": {
+          "x": 1000.0,
+          "y": 0.0,
+          "z": 1000.0
+        },
+        "target": {
+          "x": 0.0,
+          "y": 400.0,
+          "z": 0.0
+        }
+      },
+      "duration": 1.0,
+      "ease": "Linear",
+      "followPos": "Player",
+      "followTarget": "Player"
+    },
+    "cutScene2": {
+      "camera": {
+        "endPos": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -1000.0
+        },
+        "startPos": {
+          "x": 1000.0,
+          "y": 0.0,
+          "z": 1000.0
+        },
+        "target": {
+          "x": 0.0,
+          "y": 400.0,
+          "z": 0.0
+        }
+      },
+      "duration": 1.0,
+      "ease": "Linear",
+      "followPos": "Player",
+      "followTarget": "Player"
+    }
+  }
+}
