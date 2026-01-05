@@ -31,7 +31,23 @@ void CutSceneCamera::Update()
     // ƒJƒƒ‰À•W‚ð•âŠÔ
     Transform* posTransfrom = PlayerEnemyWorldToPos(cut.followPosName);
     VECTOR3 endPos = cut.camera.endPos * posTransfrom->GetRotationMatrix();
-    VECTOR3 movePos = Easing::EaseIn(endPos, firstPos, t);
+    VECTOR3 movePos = VZero; 
+
+    switch (cut.ease)
+    {
+    case CutSceneSpece::EaseType::Linear:
+        movePos = Easing::Lerp(endPos, firstPos, t);
+        break;
+    case CutSceneSpece::EaseType::In:
+        movePos = Easing::EaseIn(endPos, firstPos, t);
+        break;
+    case CutSceneSpece::EaseType::Out:
+        movePos = Easing::EaseOut(endPos, firstPos, t);
+        break;
+    case CutSceneSpece::EaseType::InOut:
+        movePos = Easing::EaseInOut(endPos, firstPos, t);
+        break;
+    }
     
     camera->cameraComponent.cameraTransform->position = posTransfrom->position + movePos;
     Transform* targetTransfrom = PlayerEnemyWorldToPos(cut.followPosTarget);

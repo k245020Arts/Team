@@ -16,6 +16,8 @@ public:
 
 	void DataSave();
 
+	void LoadCutScene();
+
 private:
 	Camera* camera;
 	std::string fileName;
@@ -28,4 +30,8 @@ private:
 	CutSceneSpece::CutScene cutScene;
 
 	char cutSceneFileName[128];
+
+	int  currentLoadedCut;
+	bool isLoaded;
+	std::string lastFileName;
 };

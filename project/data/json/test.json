@@ -19,7 +19,7 @@
         }
       },
       "duration": 1.0,
-      "ease": "Linear",
+      "ease": "InOut",
       "followPos": "Player",
       "followTarget": "Player"
     },
@@ -42,7 +42,7 @@
         }
       },
       "duration": 1.0,
-      "ease": "Linear",
+      "ease": "Out",
       "followPos": "Player",
       "followTarget": "Player"
     },
@@ -65,7 +65,7 @@
         }
       },
       "duration": 1.0,
-      "ease": "Linear",
+      "ease": "InOut",
       "followPos": "Player",
       "followTarget": "Player"
     }

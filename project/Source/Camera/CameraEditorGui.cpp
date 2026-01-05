@@ -14,11 +14,14 @@ CameraEditorGui::CameraEditorGui(Camera* _camera)
 	basePosition = VZero;
 	offset = VZero;
 	cutNum = 0;
+    currentLoadedCut = -1;
+    isLoaded = false;
 }
 
 CameraEditorGui::~CameraEditorGui()
 {
 }
+
 
 void CameraEditorGui::EditorWindow()
 {
@@ -37,7 +40,17 @@ void CameraEditorGui::EditorWindow()
 
     bool usingCutScene = IsUsingCutScene(cutNum, root);
 
-    ImGui::DragInt("Cut Number", &cutNum, 1, 0, 20);
+    if (ImGui::DragInt("Cut Number", &cutNum, 1, 0, 20))
+    {
+        LoadCutScene();
+    }
+
+    // ファイル名変更チェック
+    if (lastFileName != cutSceneFileName)
+    {
+        lastFileName = cutSceneFileName;
+        LoadCutScene();
+    }
     ImGui::SameLine();
 
     if (usingCutScene) {
@@ -133,6 +146,23 @@ void CameraEditorGui::EditorWindow()
         ImGui::TreePop();
     }
 
+    if (ImGui::TreeNode("Easing")) {
+        const char* easingItems[] = {
+                        "Linear",
+                        "EaseIn",
+                        "EaseOut",
+                        "EaseInOut"
+        };
+
+        int easing = static_cast<int>(cutScene.ease);
+
+        ImGui::Combo("Easing", &easing, easingItems, IM_ARRAYSIZE(easingItems));
+
+        cutScene.ease = static_cast<CutSceneSpece::EaseType>(easing);
+
+        ImGui::TreePop();
+    }
+
     // =============================
     // Runtime Preview Update
     // =============================
@@ -159,7 +189,7 @@ void CameraEditorGui::EditorWindow()
     ImGui::SameLine();
 
     if (ImGui::Button("Preview")) {
-        std::string file = cutSceneFileName + std::string(".json");
+        std::string file = cutSceneFileName;
         camera->CutSceneChangeState(file);
     }
 
@@ -182,7 +212,7 @@ void CameraEditorGui::SavePopUp(bool _using)
 {
 	if (ImGui::BeginPopupModal("Save Confirm", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		ImGui::Text("CutScene %d をセーブしますか？", cutNum);
+		ImGui::Text("CutScene %d save？", cutNum);
 		
 		if (_using) {
 			ImGui::Spacing();
@@ -224,4 +254,34 @@ void CameraEditorGui::DataSave()
 	root["cutScenes"][key] = cutScene;
 
 	json.Save(filePath, root);
+}
+
+void CameraEditorGui::LoadCutScene()
+{
+    std::string filePath = "data/json/" + std::string(cutSceneFileName) + ".json";
+
+    JsonReader json;
+    json.Load(filePath);
+
+    nlohmann::json& root = json.Data();
+
+    if (!root.contains("cutScenes"))
+    {
+        isLoaded = false;
+        return;
+    }
+
+    std::string key = "cutScene" + std::to_string(cutNum);
+
+    if (!root["cutScenes"].contains(key))
+    {
+        isLoaded = false;
+        return;
+    }
+
+    // === JSON → CutScene 構造体 ===
+    cutScene = root["cutScenes"][key].get<CutSceneSpece::CutScene>();
+
+    currentLoadedCut = cutNum;
+    isLoaded = true;
 }
