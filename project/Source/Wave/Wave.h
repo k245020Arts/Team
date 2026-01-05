@@ -10,6 +10,8 @@ public:
 	void Update();
 	void Draw();
 
+	void FirstRespown();
+
 private:
 	void EnemySpawn();
 	void CooperateAttack();
@@ -29,4 +31,5 @@ private:
 	bool isCooperate;
 
 	bool bossCreate;
+	bool first;
 };

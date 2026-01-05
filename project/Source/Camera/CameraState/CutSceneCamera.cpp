@@ -9,6 +9,7 @@
 CutSceneCamera::CutSceneCamera()
 {
     string = Function::GetClassNameC<CutSceneCamera>();
+    cutSceneIndex = 0;
 }
 
 CutSceneCamera::~CutSceneCamera()
@@ -28,9 +29,13 @@ void CutSceneCamera::Update()
     t = std::clamp(t, 0.0f, 1.0f);
 
     // カメラ座標を補間
-    VECTOR3 movePos = Easing::EaseIn(firstPos, cut.camera.endPos, t);
-    camera->cameraComponent.cameraTransform->position = movePos + PlayerEnemyWorldToPos(cut.followPosName);
-    camera->target = PlayerEnemyWorldToPos(cut.followPosTarget) + cut.camera.target;
+    Transform* posTransfrom = PlayerEnemyWorldToPos(cut.followPosName);
+    VECTOR3 endPos = cut.camera.endPos * posTransfrom->GetRotationMatrix();
+    VECTOR3 movePos = Easing::EaseIn(endPos, firstPos, t);
+    
+    camera->cameraComponent.cameraTransform->position = posTransfrom->position + movePos;
+    Transform* targetTransfrom = PlayerEnemyWorldToPos(cut.followPosTarget);
+    camera->target = targetTransfrom->position + cut.camera.target;
 
     camera->CameraRotationSet();
         
@@ -39,10 +44,11 @@ void CutSceneCamera::Update()
         cutSceneIndex++;
         if (cutSceneIndex >= camera->cutSceneData.size()) {
             camera->cameraComponent.state->ChangeState(StateID::FREE_CAMERA_S);
+            cutSceneIndex = 0;
         }
         else {
             time = camera->cutSceneData[cutSceneIndex].duration; // 次のカットへ
-            firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos;
+            firstPos = camera->cutSceneData[cutSceneIndex - 1].camera.endPos;
         }
     }
 }
@@ -59,22 +65,35 @@ void CutSceneCamera::Start()
     cutSceneIndex = 0;
     time = camera->cutSceneData[cutSceneIndex].duration;
     firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos;
+    camera->isCutScene = true;
 }
 
 void CutSceneCamera::Finish()
 {
+    Camera* camera = GetBase<Camera>();
+    camera->isCutScene = false;
 }
 
-VECTOR3 CutSceneCamera::PlayerEnemyWorldToPos(std::string _name)
+Transform* CutSceneCamera::PlayerEnemyWorldToPos(std::string _name)
 {
     Camera* camera = GetBase<Camera>();
     if (_name == PLAYER_POS_NAME) {
-        return camera->cameraComponent.player.transform->position;
+        return camera->cameraComponent.player.transform;
     }
     else if (_name == ENEMY_POS_NAME) {
-        return camera->cameraComponent.target.transform->position;
+        return camera->cameraComponent.target.transform;
     }
     else {
-        return 0.f;
+        return nullptr;
     }
+}
+
+void CutSceneCamera::StateImguiDraw()
+{
+    Camera* camera = GetBase<Camera>();
+    CutSceneSpece::CutScene& cut = camera->cutSceneData[cutSceneIndex];
+    ImGui::Text("index", cutSceneIndex);
+    ImGui::DragFloat3("startPos",&cut.camera.startPos.x,1.0f,1000.0f,100000.0f);
+    ImGui::DragFloat3("EndPos",&cut.camera.endPos.x,1.0f,1000.0f,100000.0f);
+       
 }

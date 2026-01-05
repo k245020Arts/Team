@@ -5,6 +5,8 @@
 #include "../Component/ComponentManager.h"
 #include "../Common/LoadManager.h"
 #include "../Common/Sound/SoundManager.h"
+#include "../Camera/Camera.h"
+#include "../Wave/Wave.h"
 
 namespace {
 	const int GAME_STATE_MAX = 4;
@@ -27,6 +29,7 @@ GameManager::GameManager()
 	loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
 	resultCounter = 3.0f;
 	sound = FindGameObject<SoundManager>();
+	nowState = "BEFORE";
 }
 
 GameManager::~GameManager()
@@ -67,6 +70,7 @@ void GameManager::ChangeState(std::string _name)
 				stateDraw = MEBDraw(&GameManager::LoseDraw);
 				break;
 			}
+			nowState = stateName[i];
 		}
 	}
 }
@@ -78,14 +82,31 @@ void GameManager::CreateNum()
 	obj->SetDrawOrder(-500);
 
 	MeshRenderer2D* mesh =  obj->Component()->AddComponent<MeshRenderer2D>();
-	mesh->TextureHandle(Load::LoadImageGraph(Load::IMAGE_PATH + "Number_01", ID::START_NUM), MeshRenderer2D::DRAW_NUM);
+	//mesh->TextureHandle(Load::LoadImageGraph(Load::IMAGE_PATH + "Number_01", ID::START_NUM), MeshRenderer2D::DRAW_NUM);
+}
+
+std::string GameManager::GetStateName()
+{
+	return nowState;
+}
+
+void GameManager::SetPointer()
+{
+	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
 }
 
 MEB GameManager::BeforeUpdate()
 {
-	startCount -= Time::DeltaTime();
-	obj->Component()->GetComponent<MeshRenderer2D>()->SetNum((int)startCount);
-	return (startCount > 0.0f) ? &GameManager::BeforeUpdate : &GameManager::PlayUpdate;
+	//startCount -= Time::DeltaTime();
+	//obj->Component()->GetComponent<MeshRenderer2D>()->SetNum((int)startCount);
+	bool isCutScene = (camera->IsCutScene());
+	if (isCutScene) {
+		return &GameManager::BeforeUpdate;
+	}
+	else {
+		FindGameObject<Wave>()->FirstRespown();
+		return &GameManager::PlayUpdate;
+	}
 }
 
 MEB GameManager::BeforeDraw()

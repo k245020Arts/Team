@@ -13,7 +13,9 @@ public:
 	void Start()override;
 	void Finish()override;
 
-	VECTOR3 PlayerEnemyWorldToPos(std::string _name);
+	Transform* PlayerEnemyWorldToPos(std::string _name);
+
+	void StateImguiDraw()override;
 
 private:
 	float time;

@@ -10,6 +10,12 @@ public:
 
 	void EditorWindow();
 
+	bool IsUsingCutScene(int cutNum, const nlohmann::json& root);
+
+	void SavePopUp(bool _using);
+
+	void DataSave();
+
 private:
 	Camera* camera;
 	std::string fileName;
@@ -21,5 +27,5 @@ private:
 
 	CutSceneSpece::CutScene cutScene;
 
-	
+	char cutSceneFileName[128];
 };

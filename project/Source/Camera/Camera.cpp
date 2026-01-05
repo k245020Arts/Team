@@ -54,6 +54,7 @@ Camera::Camera()
 	moveAmout							= 0.0f;
 	rockOn								= false;
 	targetEnemyTransform				= nullptr;
+	
 
 }
 
@@ -87,7 +88,6 @@ void Camera::Update()
 		}
 		
 	}
-	
 }
 
 void Camera::Draw()
@@ -184,6 +184,7 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.state->SetComponent<Camera>(this);
 	cameraComponent.state->StartState(StateID::FREE_CAMERA_S);
 	FindGameObject<Hierachy>()->SetCameraEditor(this);
+	CutSceneChangeState("PlayingBefore");
 	//CameraRotationSet();
 }
 
@@ -369,7 +370,7 @@ void Camera::CameraEditor()
 void Camera::CutSceneChangeState(std::string _name)
 {
 	JsonReader json;
-	std::string name = "data/json/" + _name;
+	std::string name = "data/json/" + _name + ".json";
 	json.Load(name);
 
 	cutSceneData.clear();
@@ -380,4 +381,5 @@ void Camera::CutSceneChangeState(std::string _name)
 	}
 
 	cameraComponent.state->ChangeState(StateID::CUT_SCENE_CAMERA_S);
+	isCutScene = true;
 }

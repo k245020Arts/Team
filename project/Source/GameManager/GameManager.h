@@ -6,6 +6,7 @@
 typedef MethodExec<class GameManager> MEB;
 typedef MethodExec<class GameManager> MEBDraw;
 class SoundManager;
+class Camera;
 
 class GameManager : public GameObject
 {
@@ -27,6 +28,10 @@ public:
 	MEB::MethodPtr GetGameState() { return state.GetMethodFunc(); }
 
 	void CreateNum();
+
+	std::string GetStateName();
+
+	void SetPointer();
 
 private:
 	
@@ -52,4 +57,7 @@ private:
 	int loseImage;
 	float resultCounter;
 	SoundManager* sound;
+
+	std::string nowState;
+	Camera* camera;
 };

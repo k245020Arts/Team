@@ -80,7 +80,7 @@ PlayScene::PlayScene()
 	hierachy->SetDrawOrder(-100000);
 	sky->CreateSky();
 	gameManager->CreateNum();
-	
+	gameManager->SetPointer();
 
 	//YamlReader ya;
 	//std::vector<P> pl;
@@ -110,13 +110,7 @@ void PlayScene::Update()
 	//{
 		//FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
 	//}
-	if (CheckHitKey(KEY_INPUT_T)) {
-		FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
-	}
-	if (CheckHitKey(KEY_INPUT_ESCAPE)) {
-		SceneManager::Exit();
-	}
-
+	
 	if (input->KeyInputDown("changeMode")) {
 		if (mode == NORMAL) {
 			mode = CAMERA_EDITOR;
@@ -125,6 +119,18 @@ void PlayScene::Update()
 			mode = NORMAL;
 		}
 	}
+
+	if (mode == CAMERA_EDITOR) {
+		return;
+	}
+
+	if (CheckHitKey(KEY_INPUT_T)) {
+		FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
+	}
+	if (CheckHitKey(KEY_INPUT_ESCAPE)) {
+		SceneManager::Exit();
+	}
+
 }
 
 void PlayScene::Draw()

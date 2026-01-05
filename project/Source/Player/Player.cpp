@@ -139,7 +139,7 @@ void Player::Update()
 		SpecialVarAdd(20.0f);
 	}
 	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_6)) {
-		playerCom.camera->CutSceneChangeState("test.json");
+		playerCom.camera->CutSceneChangeState("test");
 	}
 	
 	//€–SğŒ

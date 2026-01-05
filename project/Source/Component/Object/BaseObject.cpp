@@ -42,8 +42,10 @@ void BaseObject::Update()
 		return;
 	}*/
 	PlayScene* playscene = GetScene<PlayScene>();
-	if (playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
-		return;
+	if (GetTag() != "CAMERA_OBJ") {
+		if (playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
+			return;
+		}
 	}
 	//コンポーネントで回している
 	componentManager->Update();

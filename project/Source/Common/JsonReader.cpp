@@ -11,7 +11,7 @@ bool JsonReader::Load(const std::string& filename)
     std::ifstream ifs(filename);
     if (!ifs.is_open()) {
         error = "ファイルが開けません。ファイル名 : " + filename;
-        my_error_assert(error);
+        //my_error_assert(error);
         return false;
     }
 

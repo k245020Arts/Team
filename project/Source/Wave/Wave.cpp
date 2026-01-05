@@ -5,12 +5,13 @@
 Wave::Wave()
 {
 	tEnemyManager = new TrashEnemyManager;
-	tEnemyManager->CreateEnemy(VZero, INITIALSPAWN);
+	
 	waveNow = 1;
 	battleCounter = 0;
 	spawn = SPAWN_MAX;
 	isCooperate = false;
 	bossCreate = true;
+	first = false;
 }
 
 Wave::~Wave()
@@ -19,6 +20,9 @@ Wave::~Wave()
 
 void Wave::Update()
 {
+	if (!first) {
+		return;
+	}
 	EnemySpawn();
 	CooperateAttack();
 	if (waveNow == 3) {
@@ -31,6 +35,12 @@ void Wave::Update()
 
 void Wave::Draw()
 {
+}
+
+void Wave::FirstRespown()
+{
+	tEnemyManager->CreateEnemy(VZero, INITIALSPAWN);
+	first = true;
 }
 
 void Wave::EnemySpawn()

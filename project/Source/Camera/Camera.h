@@ -146,6 +146,8 @@ public:
 
 	void CutSceneChangeState(std::string _name);
 
+	bool IsCutScene() { return isCutScene; }
+
 private:
 
 	float timeTest;
@@ -180,4 +182,5 @@ private:
 
 	CameraEditorGui* editor;
 	std::vector<CutSceneSpece::CutScene> cutSceneData;
+	bool isCutScene;
 };
