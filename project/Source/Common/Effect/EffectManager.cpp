@@ -30,6 +30,8 @@ EffectManager::EffectManager()
 	Load::LoadEffect("bossGround",			Effect_ID::BOSS_GROUND,			30.0f);
 	Load::LoadEffect("bossRoor",			Effect_ID::BOSS_ROAR,			10.0f);
 	Load::LoadEffect("bossRoor",			Effect_ID::BOSS_ROAR,			10.0f);
+	Load::LoadEffect("PlayerSpecialSlash",	Effect_ID::PLAYER_SPECIAL_SLASH,50.0f);
+	Load::LoadEffect("PlayerSpecialPlace",	Effect_ID::PLAYER_SPECIAL_PLACE,50.0f);
 	//Effekseer_SetGraphicsDeviceDXLib();
 	SetDrawOrder(-10000);
 }
