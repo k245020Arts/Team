@@ -11,6 +11,7 @@ class T_EnemyStatus;
 class TrashEnemy : public EnemyBase
 {
 public:
+	//ステート関連
 	friend class T_EnemyIdol;
 	friend class T_EnemyRun;
 	friend class T_EnemyAttack;
@@ -25,35 +26,43 @@ public:
 	void Draw()override;
 
 	void Start(Object3D* _obj);
-
-	void CreateTrashEnemy(VECTOR3 _pos,int _number);
-	bool GetActive() { return active; }
+	//敵の生成
+	void CreateTrashEnemy(VECTOR3 _pos);
 
 	void Trail();
 
 	void PlayerHit()override;
 
-	//targetPosを変える関数
-	void SetTargetPos(VECTOR3 _pos, StateID::State_ID _id);
+	//ウェイポイントを取得して連携攻撃に切り替わる関数
+	void GetWayPoint(VECTOR3 _pos, StateID::State_ID _id);
 	//敵のステートを変える関数
 	void ChangeState(StateID::State_ID _id);
-	VECTOR3 GetPos() { return obj->GetTransform()->position; }
-
-	bool GetStandby() { return isStandby; }
-	int GetNumber() { return number; }
-	float Speed() { return speed; }
-
 	void isStandbyF() { isStandby = false; }
-	bool IsAttack() { return isAttack; }
+
 	//攻撃命令
 	void AttackCommand();
 	//攻撃クールタイムリセット
 	void AttackCoolTimeReset() { isAttack = true; }
-
-	bool IsCooperateAtk() { return isCooperateAtk; }
-	bool IsMovingToPlayer() { return isMovingToPlayer; }
-
 	void CooperateAtkFinish();
+
+	//ゲッター
+	VECTOR3 GetPos() { return obj->GetTransform()->position; }
+	float Speed() { return speed; }
+	//通常攻撃をしてもよいか
+	bool IsAttack() { return isAttack; }
+	//連携攻撃かどうか
+	bool IsCooperateAtk() { return isCooperateAtk; }
+	//プレイヤーのほうに向かうかどうか
+	bool IsMovingToPlayer() { return isMovingToPlayer; }
+	//連携攻撃の準備ができてるか
+	bool GetStandby() { return isStandby; }
+	//生きてるかどうか
+	bool GetActive() { return active; }
+
+	//セッター
+	//加速移動
+	void Move(float _speed, float _max);
+	void AddPos(VECTOR3 _pos);
 
 	template<typename T>
 	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)
@@ -67,17 +76,9 @@ public:
 		};
 		return static_cast<T*>(attackColl);
 	}
-
-	void Move(float _speed, float _max);
-
-	void AddPos(VECTOR3 _pos);
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
-
-	//StateID::State_ID nextId;
-
-	int number;
 
 	//targetPosに入ってる方向に向く
 	void LookTarget();

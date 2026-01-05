@@ -183,7 +183,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
         VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
 		//ポジションをセット
-		t->CreateTrashEnemy(pos/*CloseWeyPoint(VZero)*/, i);
+		t->CreateTrashEnemy(_pos + pos);
 		//hp表示
 		Object2D* guage = new Object2D();
 
@@ -345,7 +345,7 @@ void TrashEnemyManager::CloseWayPoint()
 			}
 		}
 		counter = 1;
-		enemy->SetTargetPos(savePos, StateID::T_ENEMY_RUN_S);
+		enemy->GetWayPoint(savePos, StateID::T_ENEMY_RUN_S);
 	}
 }
 
