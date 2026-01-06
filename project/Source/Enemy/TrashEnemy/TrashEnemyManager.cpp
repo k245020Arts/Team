@@ -339,14 +339,14 @@ void TrashEnemyManager::CloseWayPoint()
 			//一番近いウェイポイントを探す
 			if (itr.active)
 			{
-				VECTOR3 a = itr.position - enemy->GetPos();
-				if (savePos.Size() > a.Size())
-					savePos = a;
+				VECTOR3 vec = itr.position - enemy->GetPos();
+				if (savePos.Size() > vec.Size())
+					savePos = vec;
 			}
 		}
-		counter = 1;
 		enemy->GetWayPoint(savePos, StateID::T_ENEMY_RUN_S);
 	}
+	counter = 1;
 }
 
 void TrashEnemyManager::Separation()

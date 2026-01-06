@@ -280,6 +280,7 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.h" />
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyJump .h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStatus.h" />
     <ClInclude Include="Source\GameManager\GameManager.h" />
@@ -449,6 +450,7 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.cpp" />
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyJump .cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.cpp" />
     <ClCompile Include="Source\GameManager\GameManager.cpp" />
     <ClCompile Include="Source\Light\Light.cpp" />

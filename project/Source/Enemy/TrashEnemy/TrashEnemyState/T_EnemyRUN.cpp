@@ -33,7 +33,7 @@ void T_EnemyRun::Update()
 	e->GetEnemyObj()->GetTransform()->position.x += e->eStatus->GetStatus().runSpeed * cosf(ROTY);
 	e->GetEnemyObj()->GetTransform()->position.z += e->eStatus->GetStatus().runSpeed * sinf(ROTY);
 
-	VECTOR3 targetVec = e->obj->GetTransform()->position - targetPosition;/*e->enemyBaseComponent.playerObj->GetTransform()->position;*/
+	VECTOR3 targetVec = targetPosition - e->obj->GetTransform()->position;/*e->enemyBaseComponent.playerObj->GetTransform()->position;*/
 	//static const float  RANG = 1200.0f;
 
 	if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)

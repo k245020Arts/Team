@@ -52,7 +52,7 @@ public:
 	bool IsAttack() { return isAttack; }
 	//連携攻撃かどうか
 	bool IsCooperateAtk() { return isCooperateAtk; }
-	//プレイヤーのほうに向かうかどうか
+	//連携攻撃でプレイヤーのほうに向かうかどうか
 	bool IsMovingToPlayer() { return isMovingToPlayer; }
 	//連携攻撃の準備ができてるか
 	bool GetStandby() { return isStandby; }

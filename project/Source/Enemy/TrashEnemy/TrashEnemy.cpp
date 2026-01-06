@@ -326,6 +326,9 @@ void TrashEnemy::PlayerHit()
 
 void TrashEnemy::GetWayPoint(VECTOR3 _pos, StateID::State_ID _id)
 {
+	if (_pos.Size() >= eStatus->GetStatus().chaseRange)
+		return;
+
 	wayPoint = _pos;
 
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);

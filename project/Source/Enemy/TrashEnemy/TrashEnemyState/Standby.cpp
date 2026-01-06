@@ -55,7 +55,11 @@ void Standby::Update()
 	}
 	else
 	{
+		if (counter == 0)
+			e->GetEnemyObj()->GetTransform()->position = e->wayPoint;
+
 		counter++;
+		
 		if (counter == 20)
 			e->isStandby = true;
 		else
