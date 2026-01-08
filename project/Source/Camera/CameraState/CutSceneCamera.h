@@ -21,4 +21,7 @@ private:
 	float time;
 	int cutSceneIndex;
 	VECTOR3 firstPos;
+	bool first;
+	VECTOR3 keepPos;
+	VECTOR3 keepTarget;
 };

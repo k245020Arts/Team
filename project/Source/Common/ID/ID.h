@@ -90,6 +90,7 @@ namespace ID {
 		BOSS_DAMAGE,
 		P_TURN_ANIM,
 		P_SPECIAL_ATTACK_BAR,
+		P_SPECIAL_ATTACK_ANIM,
 
 		ID_MAX,
 	};

@@ -402,8 +402,6 @@ bool EnemyManager::ChangeCameraRockOn(Camera* camera, bool _right, bool _min, bo
 
 		float score = 0.0f;
 
-
-
 		VECTOR3 dotEnemyPos = enemyPos - camPos;
 		dotEnemyPos.y = 0.0f;
 		camFront.y = 0;

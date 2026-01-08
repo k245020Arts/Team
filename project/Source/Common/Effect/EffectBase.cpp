@@ -8,6 +8,7 @@ EffectBase::EffectBase()
 	speed	= 1.0f;
 	debugId = 22;
 	tag		= Function::GetClassNameC<EffectBase>();
+	
 }
 
 EffectBase::~EffectBase()

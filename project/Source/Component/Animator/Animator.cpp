@@ -181,67 +181,6 @@ void Animator::Update()
        matrix = MAdd(beforeMatrix, MAdd(matrix, beforeMatrix * MGetScale(VOne * -1.0f)) * MGetScale(VOne* rate));
    }
    obj;
-   // 合成後の matrix が得られている前提
-   if (current.rotationChange) {
-       // 初回フラグ未設定なら基準を取得する
-       if (!current.rotationChangeStarted) {
-           // アニメの向きを取得（matrix は既に計算済み）
-           VECTOR3 animForward = VECTOR3(0.0f, 0.0f, 1.0f) * animMatrix;
-           VECTOR3 forwardXZ = VGet(animForward.x, 0.0f, animForward.z);
-           if (forwardXZ.x != 0.0f || forwardXZ.z != 0.0f) {
-               forwardXZ = forwardXZ.Normalize();
-               current.rotationAnimBaseYaw = atan2f(forwardXZ.x, forwardXZ.z);
-           }
-           else {
-               current.rotationAnimBaseYaw = 0.0f;
-           }
-
-           // オブジェクトの現在ローカル角度を基準にする（親考慮は別途）
-           Transform* tr = obj->GetTransform();
-           current.rotationLocalBaseYaw = tr->rotation.y;
-
-           current.rotationChangeStarted = true;
-       }
-
-       // 現在フレームのアニメ向き
-       VECTOR3 animForwardNow = VECTOR3(0.0f, 0.0f, 1.0f) * animMatrix;
-       VECTOR3 forwardXZNow = VGet(animForwardNow.x, 0.0f, animForwardNow.z);
-
-       if (forwardXZNow.x != 0.0f || forwardXZNow.z != 0.0f) {
-           forwardXZNow = forwardXZNow.Normalize();
-           float animYawNow = atan2f(forwardXZNow.x, forwardXZNow.z);
-
-           // 差分（アニメ現在 - アニメ開始）
-           float diff = NormalizeAngle(animYawNow - current.rotationAnimBaseYaw);
-
-           // パラメータ（必要に応じて fileInfos フラグ化して制御）
-           const float influence = 1.0f;        // 0..1: アニメ差分の影響度
-           const float maxTurnSpeed = 1000.0f;     // rad/s：最大回転速度
-           float dtRate = obj->GetObjectTimeRate();
-           float maxDelta = maxTurnSpeed * dtRate;
-
-           float want = diff * influence;
-           float apply = std::clamp(want, -maxDelta, maxDelta);
-
-           // 基準ローカル角度に差分を加算してローカル回転に適用
-           //Transform* tr = obj->GetTransform();
-           obj->GetTransform()->rotation.y = NormalizeAngle(current.rotationLocalBaseYaw + apply);
-
-           // ログ出力（デバッグウィンドウに表示）
-           {
-               char buf[256];
-               buf[128] = 'a';
-               /*sprintfDx(buf, "Animator:Set rotation.y = %.3f (deg %.1f)\n", tr->rotation.y, tr->rotation.y * 180.0f / DX_PI_F);
-               OutputDebugStringA(buf);*/
-           }
-       }
-   }
-   else {
-       // rotationChange == false の場合は初期フラグをリセットしておく
-       if (current.rotationChangeStarted) {
-           current.rotationChangeStarted = false;
-       }
-   }
 
    // 最後に行列セット（1回だけ）
    MV1SetFrameUserLocalMatrix(baseModel, rootNum, matrix);
@@ -300,7 +239,6 @@ void Animator::Play(ID::IDType id, float margeTime)
         blendTimeMax    = 0.0f;
     }
     current.fileID      = str;
-    current.rotationChange = false;
     if (fileInfos.count(str) > 0)
     {
         current.attachID    = MV1AttachAnim(baseModel, 0, fileInfos[str].hModel);
@@ -399,11 +337,6 @@ int Animator::GetCurrentAttackID()
 bool Animator::BlendFinish()
 {
     return blendTime >= blendTimeMax;
-}
-
-void Animator::RotationChangeAnimator()
-{
-    current.rotationChange = true;
 }
 
 void Animator::ImguiDraw()

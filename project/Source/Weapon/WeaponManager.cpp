@@ -27,7 +27,7 @@ void WeaponManager::Draw()
 }
 
 void WeaponManager::CreatePlayerWeapon()
-{ 
+{
 	pObj =  new Object3D();
 	pObj->Init((VECTOR3)MV1GetFramePosition(Load::GetHandle(ID::P_MODEL), 73), VZero, VECTOR3(30, 30, 30), "PLAYER_WEAPON");
 

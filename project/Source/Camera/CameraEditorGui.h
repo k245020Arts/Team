@@ -34,4 +34,5 @@ private:
 	int  currentLoadedCut;
 	bool isLoaded;
 	std::string lastFileName;
+	
 };

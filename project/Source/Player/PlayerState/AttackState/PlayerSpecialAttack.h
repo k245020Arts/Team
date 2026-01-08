@@ -4,6 +4,14 @@
 class PlayerSpecialAttack : public PlayerAttackStateBase
 {
 public:
+	enum PLAYER_SPECIAL_ATTACK_STATE
+	{
+		NO_ATTACK = -1,
+		BEFORE,
+		GROUND_ATTACK,
+		CHARGE,
+		FINAL_ATTACK,
+	};
 	PlayerSpecialAttack();
 	~PlayerSpecialAttack();
 
@@ -18,9 +26,18 @@ public:
 
 	void StateImguiDraw()override;
 
+	void BeforeUpdate();
+	void GroundUpdate();
+	void ChargeUpdate();
+	void FinalAttackUpdate();
+
 private:
 
 	float radius;
 	
 	int moveNum;
+
+	PLAYER_SPECIAL_ATTACK_STATE state;
+	float chargeCounter;
+	float waitCounter;
 };

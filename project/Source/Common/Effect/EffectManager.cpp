@@ -84,6 +84,7 @@ BaseObject* EffectManager::CreateEffekseer(Transform _transform, BaseObject* _pa
 	EffectBase* base =  obj->Component()->AddComponent<EffectBase>();
 	base->EffectInit(_transform,_parent,_id,_time,effect3D);
 	effect.emplace_back(obj);
+	obj->SetDrawOrder(10);
 	
 	return obj;
 }

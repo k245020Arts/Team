@@ -39,7 +39,6 @@ void PlayerTurn::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
-	p->playerCom.anim->RotationChangeAnimator();
 	p->playerCom.physics->SetFirction(VZero);
 	p->playerCom.physics->SetGravity(VZero);
 	p->turn = true;

@@ -145,7 +145,7 @@
   },
   {
     "attackID": "PlayerSpecialAttack",
-    "attackType": 2,
+    "attackType": 3,
     "changeStateID": "BossDamage",
     "hit": true,
     "hitEffectID": "hitEffect",

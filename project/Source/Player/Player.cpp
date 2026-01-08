@@ -290,12 +290,12 @@ void Player::Move(float _speed, float _speedMax)
 		playerCom.anim->SetPlaySpeed(walkAngle.Size());
 
 		
-		if (nowStick == S_NO_DIRECTION || stick == S_NO_DIRECTION) {
+		/*if (nowStick == S_NO_DIRECTION || stick == S_NO_DIRECTION) {
 			return;
 		}
 		if (nowStick == stick) {
 			playerCom.stateManager->ChangeState(StateID::PLAYER_TURN_S);
-		}
+		}*/
 	}
 	else {
 		playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
