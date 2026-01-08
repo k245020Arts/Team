@@ -5,6 +5,7 @@
 #include "../../../Common/InputManager/ControllerInputManager.h"
 #include "../../player.h"
 #include "../../../Common/function.h"
+#include "../../../Component/MotionBlur/MotionBlur.h"
 #include "../../../Component/Shaker/Shaker.h"
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Component/Color/Color.h"
@@ -81,8 +82,8 @@ void PlayerSpecialAttack::Start()
 	MoveStart(0.0f);
 	moveNum = 18;
 	p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
-	p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 2.0f);
-	p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_SLASH, 2.0f);
+	p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 1.8f);
+	p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_SLASH, 1.8f);
 
 	state = GROUND_ATTACK;
 
@@ -153,6 +154,7 @@ void PlayerSpecialAttack::GroundUpdate()
 	float  distance = VECTOR3(p->specialAttackCenterPos - p->playerTransform->position).Size();
 	VECTOR3 forward = p->playerTransform->Forward() * MGetRotY(p->playerTransform->rotation.y);
 	p->playerCom.physics->AddVelocity(forward * 1000000.0f, true);
+	p->playerCom.blur->MosionStart(0.5f, 0.000001f, animId, 0);
 	if (distance > radius + 200.0f) {
 		if (moveNum > 0) {
 			float angle = 36.0f * DegToRad;
