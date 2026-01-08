@@ -40,4 +40,5 @@ private:
 	PLAYER_SPECIAL_ATTACK_STATE state;
 	float chargeCounter;
 	float waitCounter;
+	VECTOR3 defalutRotation;
 };

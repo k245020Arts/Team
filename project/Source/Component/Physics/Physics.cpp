@@ -37,6 +37,9 @@ void Physics::Update()
 	if (!transitor->IsTransitor()) {
 		return;
 	}
+	if (obj->GetTag() == "PLAYER") {
+		int a = 0;
+	}
 	*lastTransform = *currentTransform;
 
 	float dt = obj->GetObjectTimeRate();

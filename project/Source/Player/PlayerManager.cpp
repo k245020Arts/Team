@@ -67,18 +67,18 @@ void PlayerManager::CreatePlayer()
 	//playerPointer->Init(VECTOR3(300, 100, 1500), VZero, VECTOR3(3.0f, 3.0f,3.0f), "PLAYER");
 	playerPointer->Init(VECTOR3(300,300, -2000), VZero, VECTOR3(3.0f ,3.0f,3.0f), "PLAYER");
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
-	ColliderBase* collider = playerPointer->Component()->AddComponent<SphereCollider>();
+	/*ColliderBase* collider = playerPointer->Component()->AddComponent<SphereCollider>();*/
 	CollsionInfo info;
 	info.parentTransfrom	= playerPointer->GetTransform();
 	info.shape				= CollsionInformation::SPHERE;
 	info.oneColl			= false;
 	info.tag				= CollsionInformation::Tag::PLAYER;
 	info.size				= 1.0f;
-	collider->CollsionAdd(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(150.0f, 0, 0)));
+	/*collider->CollsionAdd(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(150.0f, 0, 0)),"playerColl");*/
 
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	ColliderBase* collider2 = playerPointer->Component()->AddComponent<SphereCollider>();
-	collider2->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(200.0f, 0, 0)));
+	collider2->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(200.0f, 0, 0)),"playerColl");
 	RayCollider* collider3	= playerPointer->Component()->AddComponent<RayCollider>();
 	info.shape				= CollsionInformation::RAY;
 	info.tag				= CollsionInformation::P_FLOOR;

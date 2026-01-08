@@ -1026,10 +1026,10 @@
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.h">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h">
+    <ClInclude Include="Source\Camera\CameraState\CutSceneCamera.h">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera\CameraState\CutSceneCamera.h">
+    <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
   </ItemGroup>

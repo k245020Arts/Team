@@ -130,7 +130,7 @@ void EnemyManager::CreateBoss()
 
 	ModelCollider* collider4 = boss->Component()->AddComponent<ModelCollider>();
 	info.shape = CollsionInformation::MODEL;
-	info.tag = CollsionInformation::BOSS;
+	info.tag = CollsionInformation::BOSS_PUSH;
 	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), Load::LoadModel(Load::MODEL_PATH + "wall", ID::BOSS_PUSH));
 
 

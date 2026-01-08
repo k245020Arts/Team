@@ -65,7 +65,7 @@ void PlayerSpecialAttack::Update()
 void PlayerSpecialAttack::Draw()
 {
 	Player* p = GetBase<Player>();
-	//DrawSphere3D(p->specialAttackCenterPos, radius, 1, 0xffffff, 0xffffff, true);
+	//DrawSphere3D(p->specialAttackCenterPos, 10, 1, 0xffffff, 0xffffff, true);
 }
 
 void PlayerSpecialAttack::Start()
@@ -73,6 +73,7 @@ void PlayerSpecialAttack::Start()
 	Player* p = GetBase<Player>();
 	PlayerAttackStateBase::Start();
 	firstColl = true;
+	defalutRotation = p->playerTransform->rotation;
 	//AttackCollsion();
 	p->specialAttackStartPos = p->playerTransform->position;
 	VECTOR3 forward = p->playerTransform->Forward();
@@ -87,7 +88,7 @@ void PlayerSpecialAttack::Start()
 
 	waitCounter = -1.0f;
 	chargeCounter = -1.0f;
-	
+	p->noDamage = true;
 
 }
 
@@ -99,6 +100,9 @@ void PlayerSpecialAttack::Finish()
 	p->playerCom.effect->StopEffekseer(Effect_ID::PLAYER_SPECIAL_PLACE);
 	p->playerCom.effect->StopEffekseer(Effect_ID::PLAYER_SPECIAL_SLASH);
 	state = NO_ATTACK;
+	p->playerCom.anim->SetPlaySpeed(1.0f);
+	p->noDamage = false;
+	p->obj->Component()->GetComponent<SphereCollider>()->CollsionRespown();
 }
 
 void PlayerSpecialAttack::MoveStart(float _angle)
@@ -161,7 +165,7 @@ void PlayerSpecialAttack::GroundUpdate()
 			//p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 			ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
 			float angle = 36.0f * DegToRad;
-			p->playerTransform->rotation.y += angle;
+			p->playerTransform->rotation = defalutRotation;
 			p->playerCom.physics->SetVelocity(VZero);
 			state = CHARGE;
 			chargeCounter = 1.5f;
@@ -172,16 +176,19 @@ void PlayerSpecialAttack::GroundUpdate()
 			p->playerCom.anim->SetPlaySpeed(0.0f);
 			p->playerCom.shaker->ShakeStart(VOne * 5.0f, Shaker::MIX_SHAKE, false, -1);
 			p->playerCom.camera->CutSceneChangeState("playerSpecialCut");
+			p->obj->Component()->GetComponent<SphereCollider>()->CollsionFinish();
 		}
 	}
 }
 
 void PlayerSpecialAttack::ChargeUpdate()
 {
+	Player* p = GetBase<Player>();
 	chargeCounter -= Time::DeltaTimeRate();
+	Debug::DebugOutPutPrintf("charge : velocity.x = %.1f : velocity.y = %.1f : velocity.z = %.1f", p->playerCom.physics->GetVelocity().x, p->playerCom.physics->GetVelocity().y, p->playerCom.physics->GetVelocity().z);
+	Debug::DebugOutPutPrintf("charge : position.x = %.1f : position.y = %.1f : position.z = %.1f", p->playerCom.player->playerTransform->position.x, p->playerCom.player->playerTransform->position.y, p->playerCom.player->playerTransform->position.z);
+	p->playerCom.physics->SetVelocity(VZero);
 	if (chargeCounter <= 0.0f) {
-		Player* p = GetBase<Player>();
-		
 		MoveStart(0.0f);
 		chargeCounter = 0.0f;
 		state = FINAL_ATTACK;
@@ -193,6 +200,7 @@ void PlayerSpecialAttack::ChargeUpdate()
 void PlayerSpecialAttack::FinalAttackUpdate()
 {
 	Player* p = GetBase<Player>();
+	
 	if (waitCounter >= 0.0f) {
 		waitCounter -= Time::DeltaTimeRate();
 		if (!p->playerCom.camera->IsCutScene()) {

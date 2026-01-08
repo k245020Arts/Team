@@ -5,6 +5,7 @@
 #include "../../Component/Shaker/Shaker.h"
 #include "cameraStateManager.h"
 #include "../camera.h"
+#include "../CameraEditorGui.h"
 
 CutSceneCamera::CutSceneCamera()
 {
@@ -73,7 +74,7 @@ void CutSceneCamera::Update()
             keepTarget = targetTransfrom->position;
         }
         else {
-            camera->target = keepTarget + cut.camera.target;
+            camera->target = keepTarget + (cut.camera.target * targetTransfrom->GetRotationMatrix());
             //keepTarget = targetTransfrom->position;
         }
     }
