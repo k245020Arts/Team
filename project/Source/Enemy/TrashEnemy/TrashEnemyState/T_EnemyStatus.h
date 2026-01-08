@@ -14,6 +14,7 @@ private:
 		const float range = 1400.0f;			//idel‚Ærun‚ÌØ‚è‘Ö‚í‚è
 		const float atkRang = 600.0f;			//run‚ÆUŒ‚‚ÌØ‚è‘Ö‚í‚è
 		const float chaseRange = 2000.0f;		//ƒvƒŒƒCƒ„[‚Æ—£‚ê‚½‚Æ‚«‚ÉØ‚è‘Ö‚í‚é
+		const float cooperateRange = 200.0f;
 	};
 	Status status;
 

@@ -25,7 +25,6 @@ MeshRenderer::~MeshRenderer()
 			MV1DeleteModel(hModel);
 		}
 	}
-	
 }
 
 void MeshRenderer::Update()

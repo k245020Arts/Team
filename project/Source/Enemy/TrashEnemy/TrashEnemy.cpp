@@ -120,8 +120,8 @@ void TrashEnemy::Update()
 	if (hp <= 0)
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 
-	if (!isCooperateAtk)
-		targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
+	/*if (!isCooperateAtk)
+		targetPos = enemyBaseComponent.playerObj->GetTransform()->position;*/
 
 	if (CheckHitKey(KEY_INPUT_9))
 		hp -= maxHp;
@@ -332,7 +332,6 @@ void TrashEnemy::GetWayPoint(VECTOR3 _pos, StateID::State_ID _id)
 	wayPoint = _pos;
 
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
-	speed = eStatus->GetStatus().cooperateSoeed;
 	
 	isCooperateAtk = true;
 }
@@ -351,7 +350,7 @@ void TrashEnemy::CooperateAtkFinish()
 {
 	isCooperateAtk = false;
 	isMovingToPlayer = false;
-	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_IDOL_S);
 }
 
 void TrashEnemy::Move(float _speed, float _max)

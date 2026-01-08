@@ -55,9 +55,6 @@ void Standby::Update()
 	}
 	else
 	{
-		if (counter == 0)
-			e->GetEnemyObj()->GetTransform()->position = e->wayPoint;
-
 		counter++;
 		
 		if (counter == 20)
@@ -97,10 +94,6 @@ void Standby::Finish()
 	counter = 0;
 	e->isStandby = false;
 	e->isAttack = false;
-	/*if (!e->isCooperateAtk)
-		e->nextId = StateID::T_ENEMY_STANDBY;*/
-
-	e->isCooperateAtk = false;
 }
 
 void Standby::NormalMove()

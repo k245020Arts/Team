@@ -52,7 +52,7 @@ void TrashEnemyManager::Update()
 	if (enemies.empty())
 		return;
 	Separation();
-	PlayerWayPoint();
+	//PlayerWayPoint();
 
 	int enemiesMax = (int)enemies.size();
 	//通常攻撃
@@ -223,19 +223,18 @@ void TrashEnemyManager::ImguiDraw()
 		else
 			debugWaypoint = true;
 	}
+	for (auto& way : wayPoint)
+	{
+		if (!way.active)
+			continue;
+		
+	}
 
     ImGui::End();
 }
 
 void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 {
-	const float BIAS_FOV = -180 * DegToRad; // プレイヤーの向きへ寄せる幅（0で無効）
-
-	float playerRot = camera->GetCameraTransform()->rotation.y;
-
-	int count = enemies.size();
-	int index = 0;
-
 	CloseWayPoint();
 }
 
@@ -298,9 +297,9 @@ void TrashEnemyManager::WayPointOffset()
 
 void TrashEnemyManager::PlayerWayPoint()
 {
-	searchCounter += Time::DeltaTimeRate();
+	/*searchCounter += Time::DeltaTimeRate();
 	if (searchCounter < 1)
-		return;
+		return;*/
 
 	searchCounter = 0;
 	wayPoint.clear();
@@ -315,6 +314,7 @@ void TrashEnemyManager::PlayerWayPoint()
 
 void TrashEnemyManager::CloseWayPoint()
 {
+	PlayerWayPoint();
 	VECTOR3 position = camera->GetCameraTransform()->position;
 	position.y = 0;
 	//正面べく
@@ -341,7 +341,7 @@ void TrashEnemyManager::CloseWayPoint()
 			{
 				VECTOR3 vec = itr.position - enemy->GetPos();
 				if (savePos.Size() > vec.Size())
-					savePos = vec;
+					savePos = itr.position/*vec*/;
 			}
 		}
 		enemy->GetWayPoint(savePos, StateID::T_ENEMY_RUN_S);

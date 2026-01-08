@@ -485,9 +485,6 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyJump .cpp">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1028,9 +1025,6 @@
     </ClInclude>
     <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h">
       <Filter>PlayScene\Camera\CameraState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyJump .h">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

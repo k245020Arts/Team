@@ -17,6 +17,7 @@ public:
 	friend class T_EnemyAttack;
 	friend class T_EnemyDead;
 	friend class Standby;
+	friend class T_EnemyJump;
 	friend class CooperateAttack1;
 
 	TrashEnemy();
@@ -37,7 +38,7 @@ public:
 	void GetWayPoint(VECTOR3 _pos, StateID::State_ID _id);
 	//“G‚ÌƒXƒe[ƒg‚ğ•Ï‚¦‚éŠÖ”
 	void ChangeState(StateID::State_ID _id);
-	void isStandbyF() { isStandby = false; }
+	//void isStandbyF() { isStandby = false; }
 
 	//UŒ‚–½—ß
 	void AttackCommand();
@@ -87,7 +88,8 @@ private:
 	VECTOR3 targetPos;
 	//’ÊíUŒ‚‚ğ‚µ‚Ä‚à‚æ‚¢‚©
 	bool isAttack;
-	//˜AŒgUŒ‚‚©‚Ç‚¤‚©
+
+	//˜AŒgUŒ‚’†
 	bool isCooperateAtk;
 	//ƒvƒŒƒCƒ„[‚Ì‚Ù‚¤‚ÉŒü‚©‚¤‚©‚Ç‚¤‚©
 	bool isMovingToPlayer;
