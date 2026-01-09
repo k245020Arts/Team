@@ -149,8 +149,8 @@ void Player::Update()
 	}
 
 	if (obj->GetTransform()->position.y <= -10000.0f) {
-		playerCom.stateManager->NowChangeState(StateID::BOSS_DIE_S);
-		playerCom.stateManager->SetNoStateChange(true);
+		/*playerCom.stateManager->NowChangeState(StateID::BOSS_DIE_S);
+		playerCom.stateManager->SetNoStateChange(true);*/
 	}
 	if (redCounter > 0.0f) {
 		redCounter -= Time::DeltaTimeRate();

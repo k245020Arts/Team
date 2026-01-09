@@ -65,7 +65,7 @@ void PlayerManager::CreatePlayer()
 	playerPointer = new Object3D();
 	playerPointer->SetDrawOrder(-5);
 	//playerPointer->Init(VECTOR3(300, 100, 1500), VZero, VECTOR3(3.0f, 3.0f,3.0f), "PLAYER");
-	playerPointer->Init(VECTOR3(300,300, -2000), VZero, VECTOR3(3.0f ,3.0f,3.0f), "PLAYER");
+	playerPointer->Init(VECTOR3(300,200, -2000), VZero, VECTOR3(3.0f ,3.0f,3.0f), "PLAYER");
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	/*ColliderBase* collider = playerPointer->Component()->AddComponent<SphereCollider>();*/
 	CollsionInfo info;
