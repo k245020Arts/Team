@@ -85,9 +85,19 @@ void CameraEditorGui::EditorWindow()
             cutScene.followPosName = PLAYER_POS_NAME;
         }
         ImGui::SameLine();
+        if (ImGui::Button("FirstPosPlayer")) {
+            basePosition = camera->cameraComponent.player.transform->position;
+            cutScene.followPosName = PLAYER_FIRST_POS_NAME;
+        }
+        ImGui::SameLine();
         if (ImGui::Button("Enemy")) {
             basePosition = camera->cameraComponent.target.transform->position;
             cutScene.followPosName = ENEMY_POS_NAME;
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("FirstPosEnemy")) {
+            basePosition = camera->cameraComponent.target.transform->position;
+            cutScene.followPosName = ENEMY_FIRST_POS_NAME;
         }
         ImGui::SameLine();
         if (ImGui::Button("World")) {
@@ -111,9 +121,19 @@ void CameraEditorGui::EditorWindow()
             cutScene.followPosTarget = PLAYER_POS_NAME;
         }
         ImGui::SameLine();
+        if (ImGui::Button("PlayerOffsetTarget")) {
+            baseTarget = camera->cameraComponent.player.transform->position;
+            cutScene.followPosName = PLAYER_FIRST_POS_NAME;
+        }
+        ImGui::SameLine();
         if (ImGui::Button("Enemy")) {
             baseTarget = camera->cameraComponent.target.transform->position;
             cutScene.followPosTarget = ENEMY_POS_NAME;
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("EnemyOffsetTarget")) {
+            baseTarget = camera->cameraComponent.target.transform->position;
+            cutScene.followPosName = ENEMY_FIRST_POS_NAME;
         }
         ImGui::SameLine();
         if (ImGui::Button("World")) {

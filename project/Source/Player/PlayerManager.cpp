@@ -67,18 +67,18 @@ void PlayerManager::CreatePlayer()
 	//playerPointer->Init(VECTOR3(300, 100, 1500), VZero, VECTOR3(3.0f, 3.0f,3.0f), "PLAYER");
 	playerPointer->Init(VECTOR3(300,300, -2000), VZero, VECTOR3(3.0f ,3.0f,3.0f), "PLAYER");
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
-	ColliderBase* collider = playerPointer->Component()->AddComponent<SphereCollider>();
+	/*ColliderBase* collider = playerPointer->Component()->AddComponent<SphereCollider>();*/
 	CollsionInfo info;
 	info.parentTransfrom	= playerPointer->GetTransform();
 	info.shape				= CollsionInformation::SPHERE;
 	info.oneColl			= false;
 	info.tag				= CollsionInformation::Tag::PLAYER;
 	info.size				= 1.0f;
-	collider->CollsionAdd(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(150.0f, 0, 0)));
+	/*collider->CollsionAdd(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(150.0f, 0, 0)),"playerColl");*/
 
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	ColliderBase* collider2 = playerPointer->Component()->AddComponent<SphereCollider>();
-	collider2->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(200.0f, 0, 0)));
+	collider2->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(200.0f, 0, 0)),"playerColl");
 	RayCollider* collider3	= playerPointer->Component()->AddComponent<RayCollider>();
 	info.shape				= CollsionInformation::RAY;
 	info.tag				= CollsionInformation::P_FLOOR;
@@ -138,6 +138,7 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK4,	"P_ATTACK46", false, 2.0f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_DIE,						"P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_TURN_ANIM,					"P_TURN1", false, 1.3f, 10.0f, 21.0f);
+	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM,		"P_SPECIAL_ATTACK", false, 1.2f, 7.0f, 39.0f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);
 	
 	MotionBlur* blur = playerPointer->Component()->AddComponent<MotionBlur>();

@@ -19,6 +19,7 @@ void CollsionInformation::InitSetPair()
 {
     SetPair(PLAYER, ENEMY);
     SetPair(PLAYER, BOSS);
+    SetPair(PLAYER, BOSS_PUSH);
     SetPair(FLOOR, SHADOW);
     SetPair(PLAYER, B_E_ATTACK);
     SetPair(PLAYER, E_ATTACK);

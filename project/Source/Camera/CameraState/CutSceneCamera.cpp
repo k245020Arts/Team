@@ -5,11 +5,14 @@
 #include "../../Component/Shaker/Shaker.h"
 #include "cameraStateManager.h"
 #include "../camera.h"
+#include "../CameraEditorGui.h"
 
 CutSceneCamera::CutSceneCamera()
 {
     string = Function::GetClassNameC<CutSceneCamera>();
     cutSceneIndex = 0;
+    first = false;
+    firstPos = VZero;
 }
 
 CutSceneCamera::~CutSceneCamera()
@@ -30,7 +33,11 @@ void CutSceneCamera::Update()
 
     // カメラ座標を補間
     Transform* posTransfrom = PlayerEnemyWorldToPos(cut.followPosName);
-    VECTOR3 endPos = cut.camera.endPos * posTransfrom->GetRotationMatrix();
+    VECTOR3 endPos = cut.camera.endPos;
+    if (posTransfrom != nullptr) {
+        endPos = cut.camera.endPos * posTransfrom->GetRotationMatrix();
+    }
+   
     VECTOR3 movePos = VZero; 
 
     switch (cut.ease)
@@ -49,12 +56,36 @@ void CutSceneCamera::Update()
         break;
     }
     
-    camera->cameraComponent.cameraTransform->position = posTransfrom->position + movePos;
+    if (first || cut.followPosName == PLAYER_POS_NAME || cut.followPosName == ENEMY_POS_NAME) {
+        if (posTransfrom != nullptr) {
+            camera->cameraComponent.cameraTransform->position = posTransfrom->position + movePos;
+            keepPos = posTransfrom->position;
+        }
+    }
+    else {
+        camera->cameraComponent.cameraTransform->position = keepPos + movePos;
+    }
+    
     Transform* targetTransfrom = PlayerEnemyWorldToPos(cut.followPosTarget);
-    camera->target = targetTransfrom->position + cut.camera.target;
+    
+    if (cut.followPosName == PLAYER_FIRST_POS_NAME || cut.followPosName == ENEMY_FIRST_POS_NAME) {
+        if (first) {
+            camera->target = targetTransfrom->position + (cut.camera.target * targetTransfrom->GetRotationMatrix());
+            keepTarget = targetTransfrom->position;
+        }
+        else {
+            camera->target = keepTarget + (cut.camera.target * targetTransfrom->GetRotationMatrix());
+            //keepTarget = targetTransfrom->position;
+        }
+    }
+    else {
+        camera->target = targetTransfrom->position + cut.camera.target;
+        //keepTarget = targetTransfrom->position;
+    }
+   
 
     camera->CameraRotationSet();
-        
+    
     // カット終了時の処理
     if (t <= 0.0f) {
         cutSceneIndex++;
@@ -64,9 +95,11 @@ void CutSceneCamera::Update()
         }
         else {
             time = camera->cutSceneData[cutSceneIndex].duration; // 次のカットへ
-            firstPos = camera->cutSceneData[cutSceneIndex - 1].camera.endPos;
+            firstPos = endPos;
+            first = true;
         }
     }
+    first = false;
 }
 
 void CutSceneCamera::Draw()
@@ -80,6 +113,7 @@ void CutSceneCamera::Start()
 
     cutSceneIndex = 0;
     time = camera->cutSceneData[cutSceneIndex].duration;
+    first = true;
     firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos;
     camera->isCutScene = true;
 }
@@ -93,10 +127,10 @@ void CutSceneCamera::Finish()
 Transform* CutSceneCamera::PlayerEnemyWorldToPos(std::string _name)
 {
     Camera* camera = GetBase<Camera>();
-    if (_name == PLAYER_POS_NAME) {
+    if (_name == PLAYER_POS_NAME || _name == PLAYER_FIRST_POS_NAME) {
         return camera->cameraComponent.player.transform;
     }
-    else if (_name == ENEMY_POS_NAME) {
+    else if (_name == ENEMY_POS_NAME || _name == ENEMY_FIRST_POS_NAME) {
         return camera->cameraComponent.target.transform;
     }
     else {

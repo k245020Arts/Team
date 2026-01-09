@@ -130,7 +130,7 @@ void EnemyManager::CreateBoss()
 
 	ModelCollider* collider4 = boss->Component()->AddComponent<ModelCollider>();
 	info.shape = CollsionInformation::MODEL;
-	info.tag = CollsionInformation::BOSS;
+	info.tag = CollsionInformation::BOSS_PUSH;
 	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), Load::LoadModel(Load::MODEL_PATH + "wall", ID::BOSS_PUSH));
 
 
@@ -401,8 +401,6 @@ bool EnemyManager::ChangeCameraRockOn(Camera* camera, bool _right, bool _min, bo
 #else
 
 		float score = 0.0f;
-
-
 
 		VECTOR3 dotEnemyPos = enemyPos - camPos;
 		dotEnemyPos.y = 0.0f;

@@ -6,9 +6,11 @@
 #include "../Component/Transform/Quaternion.h"
 #include "../Common/JsonReader.h"
 
-static const std::string PLAYER_POS_NAME = "Player";
-static const std::string ENEMY_POS_NAME = "Enemy";
-static const std::string WORLD_POS_NAME = "World";
+static const std::string PLAYER_POS_NAME		= "Player";
+static const std::string PLAYER_FIRST_POS_NAME	= "First_Player";
+static const std::string ENEMY_POS_NAME			= "Enemy";
+static const std::string ENEMY_FIRST_POS_NAME	= "First_Enemy";
+static const std::string WORLD_POS_NAME			= "World";
 
 namespace CutSceneSpece {
 
