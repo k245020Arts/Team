@@ -21,11 +21,12 @@ void T_EnemyDead::Update()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
 	counter += Time::DeltaTimeRate(); //フレーム時間
-	
+	if (counter <= 0.3)
+		return;
 	float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
-	e->GetEnemyObj()->GetTransform()->position.x -= 80 * counter * cosf(rotY - 0.5f * DX_PI_F);
+	e->GetEnemyObj()->GetTransform()->position.x -= 10 / counter * cosf(rotY - 0.5f * DX_PI_F);
 	//e->GetEnemyObj()->GetTransform()->position.y += 5.0f;
-	e->GetEnemyObj()->GetTransform()->position.z -= 80 * counter * sinf(rotY - 0.5f * DX_PI_F);
+	e->GetEnemyObj()->GetTransform()->position.z -= 10 / counter * sinf(rotY - 0.5f * DX_PI_F);
 
 	float a = -1000.0f;  //落下の強さ（重力）
 	float h = 0.8f;		 //最高点までの時間

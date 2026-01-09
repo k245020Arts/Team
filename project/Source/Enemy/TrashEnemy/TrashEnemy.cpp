@@ -103,6 +103,8 @@ TrashEnemy::TrashEnemy()
 	isCooperateAtk = false;
 
 	wayPoint = VZero;
+
+	isMovingToPlayer = false;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -118,8 +120,8 @@ void TrashEnemy::Update()
 	if (hp <= 0)
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 
-	if (!isCooperateAtk)
-		targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
+	/*if (!isCooperateAtk)
+		targetPos = enemyBaseComponent.playerObj->GetTransform()->position;*/
 
 	if (CheckHitKey(KEY_INPUT_9))
 		hp -= maxHp;
@@ -159,8 +161,6 @@ void TrashEnemy::Start(Object3D* _obj)
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
-	NextId = StateID::T_ENEMY_STANDBY;
-
 	// スタートステートも StateID 化
 	enemyBaseComponent.state->StartState(StateID::T_ENEMY_IDOL_S);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
@@ -172,10 +172,9 @@ void TrashEnemy::Start(Object3D* _obj)
 	active = true;
 }
 
-void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int _number)
+void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos)
 {
 	obj->GetTransform()->position = _pos;
-	number = _number;
 	targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
 }
 
@@ -325,14 +324,15 @@ void TrashEnemy::PlayerHit()
 	damageFlash = 0.5f;
 }
 
-void TrashEnemy::SetTargetPos(VECTOR3 _pos, StateID::State_ID _id)
+void TrashEnemy::GetWayPoint(VECTOR3 _pos, StateID::State_ID _id)
 {
-	//targetPos = _pos;
+	if (_pos.Size() >= eStatus->GetStatus().chaseRange)
+		return;
+
 	wayPoint = _pos;
 
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
-	speed = eStatus->GetStatus().cooperateSoeed;
-	NextId = StateID::T_ENEMY_STANDBY;
+	
 	isCooperateAtk = true;
 }
 
@@ -344,6 +344,13 @@ void TrashEnemy::ChangeState(StateID::State_ID _id)
 void TrashEnemy::AttackCommand()
 {
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
+}
+
+void TrashEnemy::CooperateAtkFinish()
+{
+	isCooperateAtk = false;
+	isMovingToPlayer = false;
+	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_IDOL_S);
 }
 
 void TrashEnemy::Move(float _speed, float _max)
@@ -367,22 +374,6 @@ void TrashEnemy::Move(float _speed, float _max)
 		moveVelo.y = enemyBaseComponent.physics->GetVelocity().y;
 		enemyBaseComponent.physics->SetVelocity(moveVelo);
 	}
-
-	//VECTOR3 dir = VZero;
-	//dir.y *= 0.0f;
-	////b->bossTransform->GetRotationMatrix();
-	//dir = GetBaseObject()->GetTransform()->Forward() * -_speed;
-	//enemyBaseComponent.physics->AddVelocity(dir, false);
-	//VECTOR3 moveVelo;
-	//moveVelo = enemyBaseComponent.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
-
-	//float max = _max;
-	////最大速度までいったらスピードマックスに補正
-	//if (moveVelo.SquareSize() >= max * max) {
-	//	moveVelo = moveVelo.Normalize() * max;
-	//	moveVelo.y = enemyBaseComponent.physics->GetVelocity().y;
-	//	enemyBaseComponent.physics->SetVelocity(moveVelo);
-	//}
 }
 
 void TrashEnemy::AddPos(VECTOR3 _pos)

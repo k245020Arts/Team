@@ -64,6 +64,5 @@ void T_EnemyAttack::Finish()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->isAttack = false;
-	e->NextId = StateID::T_ENEMY_STANDBY;
 	e->DeleteCollision();
 }

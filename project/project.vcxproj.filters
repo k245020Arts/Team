@@ -455,9 +455,6 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.cpp">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
@@ -485,8 +482,8 @@
     <ClCompile Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.cpp">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Camera\CameraState\CutSceneCamera.cpp">
-      <Filter>PlayScene\Camera\CameraState</Filter>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1027,9 +1024,6 @@
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h">
-      <Filter>PlayScene\Camera\CameraState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Camera\CameraState\CutSceneCamera.h">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
   </ItemGroup>

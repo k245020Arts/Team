@@ -38,8 +38,7 @@ private:
 	const int ENEMIESMAX = 30;
 	const int ATK_COUNTER_MIN = 3;
 	const int ATK_COUNTER_MAX = 5;
-	//連携攻撃時の決めたポジションを保管する変数
-	//std::list<VECTOR3> savePos;
+	
 	struct WayPoint
 	{
 		VECTOR3 position;
@@ -62,8 +61,10 @@ private:
 
 	Object3D* player;
 	Camera* camera;
-
-	//void SavePos();
+	//雑魚敵の通常攻撃の処理
+	void NormalAttackMove(TrashEnemy* _enemy);
+	//連携攻撃の処理
+	void CooperateAttackMove(TrashEnemy* _enemy);
 	//ウェイポイントを最初に作る
 	void WayPointOffset();
 	//プレイヤーの周りにポイントを作る

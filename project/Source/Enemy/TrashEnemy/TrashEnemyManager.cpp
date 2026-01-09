@@ -52,38 +52,15 @@ void TrashEnemyManager::Update()
 	if (enemies.empty())
 		return;
 	Separation();
-	PlayerWayPoint();
 
-	int enemiesMax = (int)enemies.size();
-	//通常攻撃
+	//通常攻撃のカウンター
 	attackCounter += Time::DeltaTimeRate();
 
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
-		if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)
-		{
-			if ((*itr)->IsAttack())
-			{
-				(*itr)->AttackCommand();
-				attackCounter = 0;
-				maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
-			}
-		}
-		else if (attackCounter >= ATK_COUNTER_MAX)
-			(*itr)->AttackCoolTimeReset();
-
-		//連携攻撃のときにその敵が準備完了したかどうか
-		if ((*itr)->GetStandby())
-			standbyCounter++;
-		if (standbyCounter >= 1)
-			cooperateCounter += Time::DeltaTimeRate();
-		//敵全員が準備完了したら攻撃に移る
-		if (standbyCounter == enemiesMax|| cooperateCounter >= 3)
-		{
-			AllChangeState(StateID::T_ENEMY_RUN_S);
-			standbyCounter = 0;
-			break;
-		}
+		NormalAttackMove((*itr));
+	
+		CooperateAttackMove((*itr));
 
 		//雑魚敵が死んでたらlistから削除する
 		if (!(*itr)->GetActive())
@@ -95,8 +72,6 @@ void TrashEnemyManager::Update()
 		else
 			++itr;
 	}
-
-	//CloseWeyPoint(VECTOR3(0, 0, 0));
 }
 
 void TrashEnemyManager::Draw()
@@ -182,7 +157,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
         VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
 		//ポジションをセット
-		t->CreateTrashEnemy(pos/*CloseWeyPoint(VZero)*/, i);
+		t->CreateTrashEnemy(_pos + pos);
 		//hp表示
 		Object2D* guage = new Object2D();
 
@@ -222,65 +197,69 @@ void TrashEnemyManager::ImguiDraw()
 		else
 			debugWaypoint = true;
 	}
+	for (auto& way : wayPoint)
+	{
+		if (!way.active)
+			continue;
+		
+	}
 
     ImGui::End();
 }
 
 void TrashEnemyManager::Cooperate(StateID::State_ID _id)
 {
-	//const float RANGE = 2000.0f; // プレイヤー中心の半径
-	const float BIAS_FOV = -180 * DegToRad; // プレイヤーの向きへ寄せる幅（0で無効）
-
-	VECTOR3 playerPos = player->GetTransform()->position;
-	float playerRot = camera->GetCameraTransform()->rotation.y;
-
-	int count = enemies.size();
-	int index = 0;
-
 	CloseWayPoint();
-
-	//for (auto& e : enemies)
-	//{
-	//	//敵にセット
-	//	//e->SetTargetPos(CloseWeyPoint(e->GetPos()), StateID::T_ENEMY_RUN_S);
-
-	//	index++;
-	//}
 }
 
 void TrashEnemyManager::AllChangeState(StateID::State_ID _id)
 {
 	for (auto& itr : enemies)
 	{
-		itr->ChangeState(_id);
+		if (itr->IsMovingToPlayer())
+			itr->ChangeState(_id);
+		else
+			itr->CooperateAtkFinish();
 	}
 }
 
-//void TrashEnemyManager::SavePos()
-//{
-//	int enemiesMax = enemies.size();
-//	VECTOR3 playerPos = player->GetTransform()->position;
-//	float playerRot = camera->GetCameraTransform()->rotation.y;
-//	for (int i = 0; i < enemiesMax; i++)
-//	{
-//		const float RANGE = 1200.0f;			// プレイヤー中心の半径
-//		const float BIAS_FOV = -180 * DegToRad; // プレイヤーの向きへ寄せる幅（0で無効）
-//
-//		//均等に割って円形に配置
-//		float angle = (2.0f * DX_PI_F) * (float)i / (float)enemiesMax;
-//		//円形の基本方向
-//		//VECTOR3 dir = VECTOR3(cosf(angle), 0, sinf(angle));
-//		//プレイヤーの向きを基準に回転させる
-//		float finalAngle = angle + playerRot;
-//		//回転を反映した方向
-//		VECTOR3 rotatedDir = VECTOR3(cosf(finalAngle), 0, sinf(finalAngle));
-//		//プレイヤーからの絶対座標
-//		VECTOR3 target = playerPos + rotatedDir * RANGE;
-//		//target.y = 0;
-//
-//		//savePos.emplace_back(target);
-//	}
-//}
+void TrashEnemyManager::NormalAttackMove(TrashEnemy* _enemy)
+{
+	if (_enemy->IsCooperateAtk())
+		return;
+	if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)
+	{
+		if (_enemy->IsAttack())
+		{
+			_enemy->AttackCommand();
+			attackCounter = 0;
+			maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
+		}
+	}
+	else if (attackCounter >= ATK_COUNTER_MAX)
+		_enemy->AttackCoolTimeReset();
+}
+
+void TrashEnemyManager::CooperateAttackMove(TrashEnemy* _enemy)
+{
+	if (!_enemy->IsCooperateAtk())
+		return;
+	int enemiesMax = (int)enemies.size();
+
+	//連携攻撃のときにその敵が準備完了したかどうか
+	if (_enemy->GetStandby())
+		standbyCounter++;
+	if (standbyCounter >= 1)
+		cooperateCounter += Time::DeltaTimeRate();
+	//敵全員が準備完了するか時間経過で攻撃に移る
+	if (standbyCounter == enemiesMax || cooperateCounter >= 2)
+	{
+		AllChangeState(StateID::T_ENEMY_RUN_S);
+		standbyCounter = 0;
+		cooperateCounter = 0;
+		//break;
+	}
+}
 
 void TrashEnemyManager::WayPointOffset()
 {
@@ -304,9 +283,9 @@ void TrashEnemyManager::WayPointOffset()
 
 void TrashEnemyManager::PlayerWayPoint()
 {
-	searchCounter += Time::DeltaTimeRate();
+	/*searchCounter += Time::DeltaTimeRate();
 	if (searchCounter < 1)
-		return;
+		return;*/
 
 	searchCounter = 0;
 	wayPoint.clear();
@@ -321,7 +300,7 @@ void TrashEnemyManager::PlayerWayPoint()
 
 void TrashEnemyManager::CloseWayPoint()
 {
-	//camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
+	PlayerWayPoint();
 	VECTOR3 position = camera->GetCameraTransform()->position;
 	position.y = 0;
 	//正面べく
@@ -332,6 +311,7 @@ void TrashEnemyManager::CloseWayPoint()
 	{
 		for (auto& itr : wayPoint)
 		{
+			//使っていいウェイポイントを一回だけ探す
 			if (counter == 0)
 			{
 				VECTOR3 vec = itr.position - position;
@@ -342,16 +322,17 @@ void TrashEnemyManager::CloseWayPoint()
 				else
 					itr.active = false;
 			}
+			//一番近いウェイポイントを探す
 			if (itr.active)
 			{
-				VECTOR3 a = itr.position - enemy->GetPos();
-				if (savePos.Size() > a.Size())
-					savePos = a;
+				VECTOR3 vec = itr.position - enemy->GetPos();
+				if (savePos.Size() > vec.Size())
+					savePos = itr.position/*vec*/;
 			}
 		}
-		counter = 1;
-		enemy->SetTargetPos(savePos, StateID::T_ENEMY_RUN_S);
+		enemy->GetWayPoint(savePos, StateID::T_ENEMY_RUN_S);
 	}
+	counter = 1;
 }
 
 void TrashEnemyManager::Separation()
@@ -379,8 +360,6 @@ void TrashEnemyManager::Separation()
 			{
 				itr1->AddPos(vec.Normalize());
 				itr2->AddPos(vec2.Normalize());
-				/*itr1->AddPos(VNorm(pos1 - pos2));
-				itr2->AddPos(VNorm(pos2 - pos1));*/
 			}
 		}
 	}
