@@ -61,8 +61,10 @@ private:
 
 	Object3D* player;
 	Camera* camera;
-
-	//void SavePos();
+	//雑魚敵の通常攻撃の処理
+	void NormalAttackMove(TrashEnemy* _enemy);
+	//連携攻撃の処理
+	void CooperateAttackMove(TrashEnemy* _enemy);
 	//ウェイポイントを最初に作る
 	void WayPointOffset();
 	//プレイヤーの周りにポイントを作る

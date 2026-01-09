@@ -33,16 +33,14 @@ void T_EnemyRun::Update()
 	e->GetEnemyObj()->GetTransform()->position.x += e->eStatus->GetStatus().runSpeed * cosf(ROTY);
 	e->GetEnemyObj()->GetTransform()->position.z += e->eStatus->GetStatus().runSpeed * sinf(ROTY);
 
-	VECTOR3 targetVec = targetPos - e->obj->GetTransform()->position;/*e->enemyBaseComponent.playerObj->GetTransform()->position;*/
-	//static const float  RANG = 1200.0f;
-
+	VECTOR3 targetVec = targetPos - e->obj->GetTransform()->position;
+	
 	if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)
 	{
 		if (!e->IsMovingToPlayer())
 			e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
-		else //if(targetVec.Size() <= e->eStatus->GetStatus().cooperateRange)
+		else 
 			e->enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK1);
-		//e->isAttack = true;
 	}
 }
 

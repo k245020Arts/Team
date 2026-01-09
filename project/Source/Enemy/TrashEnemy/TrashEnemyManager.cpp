@@ -52,39 +52,15 @@ void TrashEnemyManager::Update()
 	if (enemies.empty())
 		return;
 	Separation();
-	//PlayerWayPoint();
 
-	int enemiesMax = (int)enemies.size();
-	//’ÊíUŒ‚
+	//’ÊíUŒ‚‚ÌƒJƒEƒ“ƒ^[
 	attackCounter += Time::DeltaTimeRate();
 
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
-		if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter && !(*itr)->IsCooperateAtk())
-		{
-			if ((*itr)->IsAttack())
-			{
-				(*itr)->AttackCommand();
-				attackCounter = 0;
-				maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
-			}
-		}
-		else if (attackCounter >= ATK_COUNTER_MAX)
-			(*itr)->AttackCoolTimeReset();
-
-		//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
-		if ((*itr)->GetStandby())
-			standbyCounter++;
-		if (standbyCounter >= 1)
-			cooperateCounter += Time::DeltaTimeRate();
-		//“G‘Sˆõ‚ª€”õŠ®—¹‚·‚é‚©ŽžŠÔŒo‰ß‚ÅUŒ‚‚ÉˆÚ‚é
-		if (standbyCounter == enemiesMax|| cooperateCounter >= 2)
-		{
-			AllChangeState(StateID::T_ENEMY_RUN_S);
-			standbyCounter = 0;
-			cooperateCounter = 0;
-			break;
-		}
+		NormalAttackMove((*itr));
+	
+		CooperateAttackMove((*itr));
 
 		//ŽG‹›“G‚ªŽ€‚ñ‚Å‚½‚çlist‚©‚çíœ‚·‚é
 		if (!(*itr)->GetActive())
@@ -96,8 +72,6 @@ void TrashEnemyManager::Update()
 		else
 			++itr;
 	}
-
-	//CloseWeyPoint(VECTOR3(0, 0, 0));
 }
 
 void TrashEnemyManager::Draw()
@@ -249,31 +223,43 @@ void TrashEnemyManager::AllChangeState(StateID::State_ID _id)
 	}
 }
 
-//void TrashEnemyManager::SavePos()
-//{
-//	int enemiesMax = enemies.size();
-//	VECTOR3 playerPos = player->GetTransform()->position;
-//	float playerRot = camera->GetCameraTransform()->rotation.y;
-//	for (int i = 0; i < enemiesMax; i++)
-//	{
-//		const float RANGE = 1200.0f;			// ƒvƒŒƒCƒ„[’†S‚Ì”¼Œa
-//		const float BIAS_FOV = -180 * DegToRad; // ƒvƒŒƒCƒ„[‚ÌŒü‚«‚ÖŠñ‚¹‚é•i0‚Å–³Œøj
-//
-//		//‹Ï“™‚ÉŠ„‚Á‚Ä‰~Œ`‚É”z’u
-//		float angle = (2.0f * DX_PI_F) * (float)i / (float)enemiesMax;
-//		//‰~Œ`‚ÌŠî–{•ûŒü
-//		//VECTOR3 dir = VECTOR3(cosf(angle), 0, sinf(angle));
-//		//ƒvƒŒƒCƒ„[‚ÌŒü‚«‚ðŠî€‚É‰ñ“]‚³‚¹‚é
-//		float finalAngle = angle + playerRot;
-//		//‰ñ“]‚ð”½‰f‚µ‚½•ûŒü
-//		VECTOR3 rotatedDir = VECTOR3(cosf(finalAngle), 0, sinf(finalAngle));
-//		//ƒvƒŒƒCƒ„[‚©‚ç‚Ìâ‘ÎÀ•W
-//		VECTOR3 target = playerPos + rotatedDir * RANGE;
-//		//target.y = 0;
-//
-//		//savePos.emplace_back(target);
-//	}
-//}
+void TrashEnemyManager::NormalAttackMove(TrashEnemy* _enemy)
+{
+	if (_enemy->IsCooperateAtk())
+		return;
+	if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)
+	{
+		if (_enemy->IsAttack())
+		{
+			_enemy->AttackCommand();
+			attackCounter = 0;
+			maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
+		}
+	}
+	else if (attackCounter >= ATK_COUNTER_MAX)
+		_enemy->AttackCoolTimeReset();
+}
+
+void TrashEnemyManager::CooperateAttackMove(TrashEnemy* _enemy)
+{
+	if (!_enemy->IsCooperateAtk())
+		return;
+	int enemiesMax = (int)enemies.size();
+
+	//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
+	if (_enemy->GetStandby())
+		standbyCounter++;
+	if (standbyCounter >= 1)
+		cooperateCounter += Time::DeltaTimeRate();
+	//“G‘Sˆõ‚ª€”õŠ®—¹‚·‚é‚©ŽžŠÔŒo‰ß‚ÅUŒ‚‚ÉˆÚ‚é
+	if (standbyCounter == enemiesMax || cooperateCounter >= 2)
+	{
+		AllChangeState(StateID::T_ENEMY_RUN_S);
+		standbyCounter = 0;
+		cooperateCounter = 0;
+		//break;
+	}
+}
 
 void TrashEnemyManager::WayPointOffset()
 {
