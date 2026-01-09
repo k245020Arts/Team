@@ -62,8 +62,8 @@ void EnemyBase::Update()
 			hit = false;
 		}
 	}
-	const Color::Rgb r = enemyBaseComponent.color->GetRgb();
-	enemyBaseComponent.color->setRGB(Color::Rgb(r.r, r.g, r.b, (float)alpha));
+	/*const Color::Rgb r = enemyBaseComponent.color->GetRgb();
+	enemyBaseComponent.color->setRGB(Color::Rgb(r.r, r.g, r.b, (float)alpha));*/
 }
 
 void EnemyBase::Draw()
