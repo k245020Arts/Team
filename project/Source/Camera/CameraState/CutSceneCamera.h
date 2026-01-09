@@ -17,6 +17,8 @@ public:
 
 	void StateImguiDraw()override;
 
+	VECTOR3 CatmullRom(float _rate, VECTOR3 _pb, VECTOR3 _p0, VECTOR3 _p1, VECTOR3 _p2);
+
 private:
 	float time;
 	int cutSceneIndex;

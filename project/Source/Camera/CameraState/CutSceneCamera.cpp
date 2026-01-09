@@ -7,6 +7,8 @@
 #include "../camera.h"
 #include "../CameraEditorGui.h"
 
+//#define CUTNUMROM
+
 CutSceneCamera::CutSceneCamera()
 {
     string = Function::GetClassNameC<CutSceneCamera>();
@@ -37,8 +39,42 @@ void CutSceneCamera::Update()
     if (posTransfrom != nullptr) {
         endPos = cut.camera.endPos * posTransfrom->GetRotationMatrix();
     }
-   
-    VECTOR3 movePos = VZero; 
+#ifdef CUTNUMROM
+    VECTOR3 movePos = VZero;
+
+    VECTOR3 dir = (endPos - firstPos);
+    dir = dir.Normalize();
+    float size = dir.Size();
+    VECTOR3 up = VECTOR3(0, 1, 0);
+    VECTOR3 side = dir.Cross(up);
+    side = side.Normalize();
+
+    float curveSize = size * 0.3f;
+
+    VECTOR3 pb = firstPos - dir * size * 0.2f + side * curveSize;
+    VECTOR3 p0 = firstPos;
+    VECTOR3 p1 = endPos;
+    VECTOR3 p2 = endPos + dir * size * 0.2f + side * curveSize;
+
+    movePos = CatmullRom(t, pb, p0, p1, p2);
+
+    /*switch (cut.ease)
+    {
+    case CutSceneSpece::EaseType::Linear:
+        movePos = Easing::Lerp(endPos, firstPos, t);
+        break;
+    case CutSceneSpece::EaseType::In:
+        movePos = Easing::EaseIn(endPos, firstPos, t);
+        break;
+    case CutSceneSpece::EaseType::Out:
+        movePos = Easing::EaseOut(endPos, firstPos, t);
+        break;
+    case CutSceneSpece::EaseType::InOut:
+        movePos = Easing::EaseInOut(endPos, firstPos, t);
+        break;
+    }*/
+#else 
+    VECTOR3 movePos = VZero;
 
     switch (cut.ease)
     {
@@ -55,6 +91,10 @@ void CutSceneCamera::Update()
         movePos = Easing::EaseInOut(endPos, firstPos, t);
         break;
     }
+#endif
+
+
+   
     
     if (first || cut.followPosName == PLAYER_POS_NAME || cut.followPosName == ENEMY_POS_NAME) {
         if (posTransfrom != nullptr) {
@@ -146,4 +186,18 @@ void CutSceneCamera::StateImguiDraw()
     ImGui::DragFloat3("startPos",&cut.camera.startPos.x,1.0f,1000.0f,100000.0f);
     ImGui::DragFloat3("EndPos",&cut.camera.endPos.x,1.0f,1000.0f,100000.0f);
        
+}
+
+
+VECTOR3 CutSceneCamera::CatmullRom(float _rate, VECTOR3 _pb, VECTOR3 _p0, VECTOR3 _p1, VECTOR3 _p2)
+{
+    float t3 = _rate * _rate * _rate; //3èÊ
+    float t2 = _rate * _rate;//2èÊ
+    float t1 = _rate;//1èÊ
+    VECTOR3 rV0 = (_p1 - _pb) / 2.0f; //p0ÇÃåXÇ´
+    VECTOR3 rV1 = (_p2 - _p0) / 2.0f; //p1ÇÃåXÇ´
+    VECTOR3 a = _p0 * 2 - _p1 * 2 + rV0 + rV1;
+    VECTOR3 b = _p0 * -3 + _p1 * 3 - rV0 * 2 - rV1;
+
+    return a * t3 + b * t2 + rV0 * _rate + _p0;//éOéüã»ê¸ÇÃéÆ
 }

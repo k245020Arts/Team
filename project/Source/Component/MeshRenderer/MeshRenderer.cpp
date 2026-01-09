@@ -29,7 +29,7 @@ MeshRenderer::~MeshRenderer()
 
 void MeshRenderer::Update()
 {
-
+	
 }
 
 void MeshRenderer::Draw()
