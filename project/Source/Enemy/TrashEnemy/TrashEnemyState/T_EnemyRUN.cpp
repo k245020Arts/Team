@@ -9,7 +9,7 @@ T_EnemyRun::T_EnemyRun()
 	animId = ID::TE_RUN;
 	string = Function::GetClassNameC<T_EnemyRun>();
 
-	targetPosition = VZero;
+	targetPos = VZero;
 }
 
 T_EnemyRun::~T_EnemyRun()
@@ -20,10 +20,9 @@ void T_EnemyRun::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	if (!e->isCooperateAtk)
-		targetPosition = e->enemyBaseComponent.playerObj->GetTransform()->position;
+		targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 
 	rotation = e->obj->GetTransform()->rotation;
-	//e->LookTarget();
 	Look();
 
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
@@ -34,13 +33,14 @@ void T_EnemyRun::Update()
 	e->GetEnemyObj()->GetTransform()->position.x += e->eStatus->GetStatus().runSpeed * cosf(ROTY);
 	e->GetEnemyObj()->GetTransform()->position.z += e->eStatus->GetStatus().runSpeed * sinf(ROTY);
 
-	VECTOR3 targetVec = e->obj->GetTransform()->position - targetPosition;/*e->enemyBaseComponent.playerObj->GetTransform()->position;*/
-	//static const float  RANG = 1200.0f;
-
+	VECTOR3 targetVec = targetPos - e->obj->GetTransform()->position;
+	
 	if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)
 	{
-		e->enemyBaseComponent.state->ChangeState(e->NextId);
-		e->isAttack = true;
+		if (!e->IsMovingToPlayer())
+			e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+		else 
+			e->enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK1);
 	}
 }
 
@@ -49,9 +49,9 @@ void T_EnemyRun::Start()
 	EnemyStateBase::Start();
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	if (!e->isCooperateAtk)
-		targetPosition = e->enemyBaseComponent.playerObj->GetTransform()->position;
+		targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	else
-		targetPosition = e->wayPoint;
+		targetPos = e->wayPoint;
 }
 
 void T_EnemyRun::Finish()
@@ -60,7 +60,7 @@ void T_EnemyRun::Finish()
 
 void T_EnemyRun::Look()
 {
-	VECTOR3 distance = targetPosition - obj->GetTransform()->position;
+	VECTOR3 distance = targetPos - obj->GetTransform()->position;
 	//Œü‚­‚×‚«Šp“x
 	float direction = -atan2f(distance.z, distance.x) - 0.5f * DX_PI_F;
 	//‚»‚ÌŠp“x‚Æ‚Ç‚ê‚¾‚¯·‚ª‚ ‚é‚©

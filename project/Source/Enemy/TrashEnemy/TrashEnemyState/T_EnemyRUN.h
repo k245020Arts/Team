@@ -16,5 +16,5 @@ private:
 	void Move(float _speed, float _max);
 	VECTOR3 rotation;
 	VECTOR3 velocity;
-	VECTOR3 targetPosition;
+	VECTOR3 targetPos;
 };
