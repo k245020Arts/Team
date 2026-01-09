@@ -22,5 +22,6 @@ private:
 	/// <returns></returns>
 	float Orbit(float pos, float a, float h, float k);
 
+	const float SPEED = 20.0f;
 	float counter;
 };

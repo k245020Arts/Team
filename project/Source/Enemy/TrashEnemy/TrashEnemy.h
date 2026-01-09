@@ -86,6 +86,7 @@ private:
 	bool active;
 	//‚Ç‚±‚ÉŒü‚­‚©
 	VECTOR3 targetPos;
+
 	//’ÊíUŒ‚‚ğ‚µ‚Ä‚à‚æ‚¢‚©
 	bool isAttack;
 

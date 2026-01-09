@@ -60,6 +60,8 @@ private:
 	std::vector<WayPoint> wayPoint;
 
 	Object3D* player;
+	//std::list<Object3D*> stage;
+	Object3D* stage[4];
 	Camera* camera;
 	//雑魚敵の通常攻撃の処理
 	void NormalAttackMove(TrashEnemy* _enemy);
@@ -71,6 +73,8 @@ private:
 	void PlayerWayPoint();
 	//一番近いウェイポイントを計算する
 	void CloseWayPoint();
+	//壁の外にあるウェイポイントを探す
+	bool StageWall(VECTOR3 _pos);
 
 	bool comboRequest;
 	//int counter;

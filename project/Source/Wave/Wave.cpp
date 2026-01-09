@@ -39,7 +39,7 @@ void Wave::Draw()
 
 void Wave::FirstRespown()
 {
-	tEnemyManager->CreateEnemy(VZero, INITIALSPAWN);
+	tEnemyManager->CreateEnemy(SPWNPOS, INITIALSPAWN);
 	first = true;
 }
 
@@ -60,7 +60,7 @@ void Wave::EnemySpawn()
 	if (tEnemyManager->EnemyList().size() <= 0)
 	{
 		if (waveNow < WAVE_MAX) {
-			tEnemyManager->CreateEnemy(VZero, spawn);
+			tEnemyManager->CreateEnemy(SPWNPOS, spawn);
 		}
 		
 		battleCounter = 0;
