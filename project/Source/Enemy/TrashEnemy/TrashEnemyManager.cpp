@@ -28,7 +28,11 @@ TrashEnemyManager::TrashEnemyManager()
 {
 	player = FindGameObjectWithTag<Object3D>("PLAYER");
 	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
-
+	for (int i = 0; i < 4; i++)
+	{
+		stage[i] = FindGameObjectWithTag<Object3D>("WALL" + std::to_string(i));
+	}
+	
 	WayPointOffset();
 
 	comboRequest = false;
@@ -317,8 +321,14 @@ void TrashEnemyManager::CloseWayPoint()
 				VECTOR3 vec = itr.position - position;
 				//“àÏ
 				float dotProduct = VDot(frontVec, vec.Normalize());
+				//•Ç‚ÌŠO‚¾‚Á‚½‚çfalse
+				//if (StageWall(itr.position))
+				//	itr.active = false;
+				////ƒJƒƒ‰‚ÉŽÊ‚Á‚Ä‚é‚©
+				//else 
 				if (dotProduct > cosf(45 * DegToRad))
 					itr.active = true;
+				//ƒJƒƒ‰‚ÉŽÊ‚Á‚Ä‚È‚©‚Á‚½‚ç
 				else
 					itr.active = false;
 			}
@@ -331,8 +341,27 @@ void TrashEnemyManager::CloseWayPoint()
 			}
 		}
 		enemy->GetWayPoint(savePos, StateID::T_ENEMY_RUN_S);
+		counter = 1;
 	}
-	counter = 1;
+	//counter = 1;
+}
+
+bool TrashEnemyManager::StageWall(VECTOR3 _pos)
+{
+	float size = 13000.0f;
+	/*for (auto* itr : stage)*/
+	//{
+		if (/*itr->GetTransform()->position.x*/ size < _pos.x)
+			return true;
+		else if (/*itr->GetTransform()->position.x*/ -size > _pos.x)
+			return true;
+		else if (/*itr->GetTransform()->position.z*/ size < _pos.z)
+			return true;
+		else if (/*itr->GetTransform()->position.z*/ -size > _pos.z)
+			return true;
+		else
+			return false;
+	//}
 }
 
 void TrashEnemyManager::Separation()

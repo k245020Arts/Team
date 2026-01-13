@@ -42,7 +42,7 @@ void Standby::Update()
 		}
 		else
 		{
-			//NormalMove();
+			NormalMove();
 			if (vec.Size() <= range / 2)
 			{
 				pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;

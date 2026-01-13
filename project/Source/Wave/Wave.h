@@ -22,7 +22,7 @@ private:
 	const float INITIALSPAWN = 5;
 	//最大ウェーブ数
 	const int WAVE_MAX = 2;
-
+	const VECTOR3 SPWNPOS = VECTOR3(0, 0, 2500);
 	int waveNow;
 
 	float battleCounter;
