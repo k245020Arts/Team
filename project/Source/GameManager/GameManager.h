@@ -33,6 +33,10 @@ public:
 
 	void SetPointer();
 
+	bool GetChangeState() { return changeState; }
+
+	int GetStateNumber();
+
 private:
 	
 	MEB state;
@@ -60,4 +64,5 @@ private:
 
 	std::string nowState;
 	Camera* camera;
+	bool changeState;
 };

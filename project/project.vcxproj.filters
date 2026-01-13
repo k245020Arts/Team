@@ -488,6 +488,12 @@
     <ClCompile Include="Source\Camera\CameraState\CutSceneCamera.cpp">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Player\PlayerState\PlayerWin.cpp">
+      <Filter>PlayScene\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player\PlayerState\PlayerBefore.cpp">
+      <Filter>PlayScene\Player\PlayerState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1031,6 +1037,12 @@
     </ClInclude>
     <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h">
       <Filter>PlayScene\Camera\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\PlayerState\PlayerWin.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\PlayerState\PlayerBefore.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

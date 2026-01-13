@@ -73,19 +73,14 @@ void PlayerSpecialAttack::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerAttackStateBase::Start();
+	p->playerCom.anim->Play(ID::P_SPECIAL_ATTACK_BEFORE_ANIM);
 	firstColl = true;
 	defalutRotation = p->playerTransform->rotation;
+	p->playerCom.camera->CutSceneChangeState("playerSpecialAttackBefore");
 	//AttackCollsion();
-	p->specialAttackStartPos = p->playerTransform->position;
-	VECTOR3 forward = p->playerTransform->Forward();
-	p->specialAttackCenterPos = p->specialAttackStartPos + forward * radius;
-	MoveStart(0.0f);
-	moveNum = 18;
-	p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
-	p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 1.8f);
-	p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_SLASH, 1.8f);
+	
 
-	state = GROUND_ATTACK;
+	state = BEFORE;
 
 	waitCounter = -1.0f;
 	chargeCounter = -1.0f;
@@ -141,7 +136,18 @@ void PlayerSpecialAttack::StateImguiDraw()
 
 void PlayerSpecialAttack::BeforeUpdate()
 {
-
+	Player* p = GetBase<Player>();
+	if (!p->playerCom.camera->IsCutScene()) {
+		state = GROUND_ATTACK;
+		p->specialAttackStartPos = p->playerTransform->position;
+		VECTOR3 forward = p->playerTransform->Forward();
+		p->specialAttackCenterPos = p->specialAttackStartPos + forward * radius;
+		MoveStart(0.0f);
+		moveNum = 18;
+		p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
+		p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 1.8f);
+		p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_SLASH, 1.8f);
+	}
 }
 
 void PlayerSpecialAttack::GroundUpdate()

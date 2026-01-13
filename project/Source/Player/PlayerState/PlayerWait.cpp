@@ -21,9 +21,6 @@ PlayerWait::~PlayerWait()
 void PlayerWait::Update()
 {
 	Player* p = GetBase<Player>();
-	if (p->playerCom.gameManager->GetGameState() == &GameManager::BeforeUpdate) {
-		return;
-	}
 	if (CheckHitKey(KEY_INPUT_0)) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 	}

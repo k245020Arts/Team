@@ -38,6 +38,9 @@
 #include "../Player/PlayerState/PlayerAvoid.h"
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
+#include "../GameManager/GameManager.h"
+#include "PlayerState/PlayerWin.h"
+#include "PlayerState/PlayerBefore.h"
 
 PlayerManager::PlayerManager()
 {
@@ -52,7 +55,12 @@ PlayerManager::~PlayerManager()
 
 void PlayerManager::Update()
 {
-	
+	if (gameManager == nullptr) {
+		gameManager = FindGameObject<GameManager>();
+	}
+	if (gameManager->GetChangeState()) {
+		GameSceneChangeState();
+	}
 }
 
 void PlayerManager::Draw()
@@ -98,7 +106,7 @@ void PlayerManager::CreatePlayer()
 	me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Player4", ID::P_MODEL));
 	me2->RotationMesh(0, 180.0f * DegToRad);
 
-	StateManager* stateManager = playerPointer->Component()->AddComponent<StateManager>();
+	stateManager = playerPointer->Component()->AddComponent<StateManager>();
 
 	stateManager->CreateState<PlayerWait>("PlayerWait", StateID::PLAYER_WAIT_S);
 	stateManager->CreateState<PlayerWalk>("PlayerWalk", StateID::PLAYER_WALK_S);
@@ -118,9 +126,11 @@ void PlayerManager::CreatePlayer()
 	stateManager->CreateState<PlayerDie>("PlayerDie", StateID::PLAYER_DIE_S);
 	stateManager->CreateState<PlayerTurn>("PlayerTurn", StateID::PLAYER_TURN_S);
 	stateManager->CreateState<PlayerSpecialAttack>("PlayerSpecialAttack", StateID::PLAYER_SPECIAL_ATTACK_S);
+	stateManager->CreateState<PlayerWin>("PlayerWin", StateID::PLAYER_WIN_STATE_S);
+	stateManager->CreateState<PlayerBefore>("PlayerBefore", StateID::PLAYER_BEFORE_S);
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
-	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),"mixamorig:Hips");
+	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),		"mixamorig:Hips");
 	anim->AddFile(ID::IDType::P_ANIM_IDOL,					"P_IDOL_M3", true, 1.0f);
 	anim->AddFile(ID::IDType::P_ANIM_RUN,					"P_RUN_M_1", true, 1.5f);
 	anim->AddFile(ID::IDType::P_ANIM_AVOID,					"P_AVOID_M_1", false, 2.0f,0.0f,5.0f);
@@ -139,6 +149,9 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_DIE,						"P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_TURN_ANIM,					"P_TURN1", false, 1.3f, 10.0f, 21.0f);
 	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM,		"P_SPECIAL_ATTACK", false, 1.2f, 7.0f, 39.0f);
+	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM,	"P_SPECIAL_ATTACK_BEFORE", false, 1.2f, 7.0f, 39.0f);
+
+	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);
 	
 	MotionBlur* blur = playerPointer->Component()->AddComponent<MotionBlur>();
@@ -179,4 +192,25 @@ void PlayerManager::CreatePlayer()
 	specialG->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_YellowBack", ID::P_SPECIAL_ATTACK_BAR), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::SPECIAL_ATTACK);
 	specialG->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_Frame", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 1050.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
 
+}
+
+void PlayerManager::GameSceneChangeState()
+{
+	switch (gameManager->GetStateNumber())
+	{
+	case 0:
+		stateManager->ChangeState(StateID::PLAYER_BEFORE_S);
+		break;
+	case 1:
+		stateManager->ChangeState(StateID::PLAYER_WAIT_S);
+		break;
+	case 2:
+		stateManager->ChangeState(StateID::PLAYER_WIN_STATE_S);
+		stateManager->SetNoStateChange(true);
+		break;
+	case 3:
+		/*stateManager->NowChangeState(StateID::PLAYER_DIE_S);
+		stateManager->SetNoStateChange(true);*/
+		break;
+	}
 }

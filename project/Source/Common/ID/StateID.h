@@ -23,6 +23,8 @@ namespace StateID{
         PLAYER_DIE_S,
         PLAYER_TURN_S,
         PLAYER_SPECIAL_ATTACK_S,
+        PLAYER_WIN_STATE_S,
+        PLAYER_BEFORE_S,
 
         BOSS_IDOL_S,
         BOSS_RUN_S,

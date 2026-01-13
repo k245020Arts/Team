@@ -1,6 +1,7 @@
 #include "CameraEditorGui.h"
 #include "../../ImGui/imgui.h"
 #include "../Common/JsonReader.h"
+#include "../Enemy/EnemyManager.h"
 
 CameraEditorGui::CameraEditorGui() : CameraEditorGui(nullptr)
 {
@@ -61,6 +62,10 @@ void CameraEditorGui::EditorWindow()
     }
 
     ImGui::Separator();
+
+    if (ImGui::Button("targetSet")) {
+        camera->cameraComponent.enemyManager->CameraRockOnStart(camera);
+    }
 
     // =============================
     // Camera Transform

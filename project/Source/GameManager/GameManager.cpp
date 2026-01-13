@@ -30,6 +30,7 @@ GameManager::GameManager()
 	resultCounter = 3.0f;
 	sound = FindGameObject<SoundManager>();
 	nowState = "BEFORE";
+	changeState = true;
 }
 
 GameManager::~GameManager()
@@ -39,6 +40,7 @@ GameManager::~GameManager()
 
 void GameManager::Update()
 {
+	changeState = false;
 	state = state.Act(this);
 }
 
@@ -71,6 +73,7 @@ void GameManager::ChangeState(std::string _name)
 				break;
 			}
 			nowState = stateName[i];
+			changeState = true;
 		}
 	}
 }
@@ -95,6 +98,25 @@ void GameManager::SetPointer()
 	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
 }
 
+int GameManager::GetStateNumber()
+{
+	int num = 0;
+	if (nowState == "BEFORE") {
+		num = 0;
+	}
+	else if (nowState == "PLAY") {
+		num = 1;
+	}
+	else if(nowState == "WIN"){
+		
+		num = 2;
+	}
+	else {
+		num = 3;
+	}
+	return num;
+}
+
 MEB GameManager::BeforeUpdate()
 {
 	//startCount -= Time::DeltaTime();
@@ -105,6 +127,7 @@ MEB GameManager::BeforeUpdate()
 	}
 	else {
 		FindGameObject<Wave>()->FirstRespown();
+		ChangeState("PLAY");
 		return &GameManager::PlayUpdate;
 	}
 }
