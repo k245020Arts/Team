@@ -5,6 +5,7 @@
 #include "../player.h"
 #include "../../Common/Sound/SoundManager.h"
 #include "../../Component/Collider/SphereCollider.h"
+#include "../../Enemy/EnemyManager.h"
 
 PlayerDie::PlayerDie()
 {
@@ -23,10 +24,13 @@ void PlayerDie::Update()
 	Player* p = GetBase<Player>();
 	if (p->playerCom.anim->IsFinish()) {
 		p->playerCom.gameManager->ChangeState("LOSE");
+		
 		if (one) {
 			p->playerCom.sound->StopBGM(Sound_ID::PLAY_BGM);
 			p->playerCom.sound->PlaySe(Sound_ID::LOSE);
 			one = false;
+			p->playerCom.enemyManager->CameraRockOnStart(p->playerCom.camera);
+			//p->playerCom.camera->CutSceneChangeState("BossWin");
 		}
 	
 		

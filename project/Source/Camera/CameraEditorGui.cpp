@@ -159,6 +159,17 @@ void CameraEditorGui::EditorWindow()
         if (ImGui::Button("Set Start")) {
             cutScene.camera.startPos = offset;
         }
+        if(ImGui::Button("Player")) {
+            cutScene.firstPosBaseName = PLAYER_FIRST_POS_NAME;
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Enemy")) {
+            cutScene.firstPosBaseName = ENEMY_FIRST_POS_NAME;
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("World")) {
+            cutScene.firstPosBaseName = WORLD_POS_NAME;
+        }
 
         ImGui::DragFloat3("End Pos", &cutScene.camera.endPos.x, 1.0f);
         ImGui::SameLine();

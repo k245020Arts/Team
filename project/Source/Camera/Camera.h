@@ -88,7 +88,7 @@ namespace CutSceneSpece {
 		j.at("camera").get_to(c.camera);
 		j.at("followPos").get_to(c.followPosName);
 		j.at("followTarget").get_to(c.followPosTarget);
-		//j.at("firstPosBaseName").get_to(c.firstPosBaseName);
+		j.at("firstPosBaseName").get_to(c.firstPosBaseName);
 	}
 }
 

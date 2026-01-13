@@ -13,6 +13,8 @@
 #include "../../../Camera/Camera.h"
 #include "../TrashEnemy.h"
 
+//#define PATTERN1
+
 EnemyStateBase::EnemyStateBase()
 {
 	firstColl = false;
@@ -39,7 +41,14 @@ void EnemyStateBase::Update()
 	if (animSlowCounter > 0.0f) {
 		animSlowCounter -= Time::DeltaTimeRate();
 		if (animSlowCounter < 0.0f) {
+#ifdef PATTERN1
 			e->enemyBaseComponent.anim->SetPlaySpeed(keepAnimSpeed + 0.3f);
+#else
+			e->enemyBaseComponent.anim->SetPlaySpeed(keepAnimSpeed - 0.7f);
+			/*if (!e->enemyBaseComponent.anim->AnimEventCan()) {
+				e->enemyBaseComponent.anim->SetPlaySpeed(keepAnimSpeed + 0.3f);
+			}*/
+#endif
 		}
 	}
 }

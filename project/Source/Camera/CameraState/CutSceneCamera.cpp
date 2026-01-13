@@ -154,7 +154,14 @@ void CutSceneCamera::Start()
     cutSceneIndex = 0;
     time = camera->cutSceneData[cutSceneIndex].duration;
     first = true;
-    firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos;
+    Transform* startTransform = PlayerEnemyWorldToPos(camera->cutSceneData[cutSceneIndex].firstPosBaseName);
+    if (startTransform != nullptr) {
+        firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos * startTransform->GetRotationMatrix();
+    }
+    else {
+        firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos;
+    }
+  
     camera->isCutScene = true;
 }
 

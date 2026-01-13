@@ -146,7 +146,7 @@ MEB GameManager::PlayUpdate()
 
 MEB GameManager::PlayDraw()
 {
-	DrawFormatString(1000, 500, 0xffffff, "%d", (int)startCount);
+	//DrawFormatString(1000, 500, 0xffffff, "%d", (int)startCount);
 	return &GameManager::PlayDraw;
 }
 
