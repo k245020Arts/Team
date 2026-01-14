@@ -13,7 +13,7 @@
 #include "../../../Camera/Camera.h"
 #include "../TrashEnemy.h"
 
-//#define PATTERN1
+#define PATTERN1
 
 EnemyStateBase::EnemyStateBase()
 {

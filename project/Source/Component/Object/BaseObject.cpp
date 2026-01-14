@@ -22,6 +22,7 @@ BaseObject::BaseObject()
 	id = idPlus++;
 	parent = nullptr;
 	transformParent = true;
+	sleep = false;
 }
 
 BaseObject::~BaseObject()
@@ -41,6 +42,9 @@ void BaseObject::Update()
 	/*if (!transitor->IsTransitor()) {
 		return;
 	}*/
+	if (sleep) {
+		return;
+	}
 	PlayScene* playscene = GetScene<PlayScene>();
 	if (GetTag() != "CAMERA_OBJ") {
 		if (playscene->GetMode() == PlayScene::CAMERA_EDITOR) {

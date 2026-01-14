@@ -64,6 +64,12 @@ public:
 	void SetBaseTimeSpeed(float _speed) { baseTimeSpeed = _speed; }
 	float GetBaseTimeSpeed(float _speed) { return baseTimeSpeed; }
 
+	/// <summary>
+	/// true‚É‚·‚é‚ÆUpdate‚ª~‚Ü‚éfalse‚É‚·‚é‚Æ’Êí’Ê‚è‚É“®‚­
+	/// </summary>
+	/// <param name="_sleep"></param>
+	void SetSleep(bool _sleep) { sleep = _sleep; }
+
 protected:
 	ComponentManager* componentManager;
 	float objectTimeRate;
@@ -77,4 +83,6 @@ protected:
 	std::list<BaseObject*> children;
 	bool transformParent;
 	float baseTimeSpeed;
+
+	bool sleep;
 };

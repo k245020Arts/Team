@@ -367,7 +367,7 @@ void Camera::CameraEditor()
 	editor->EditorWindow();
 }
 
-void Camera::CutSceneChangeState(std::string _name)
+void Camera::CutSceneChangeState(std::string _name, int _space)
 {
 	JsonReader json;
 	std::string name = "data/json/" + _name + ".json";
@@ -382,4 +382,25 @@ void Camera::CutSceneChangeState(std::string _name)
 
 	cameraComponent.state->ChangeState(StateID::CUT_SCENE_CAMERA_S);
 	isCutScene = true;
+
+	cutStopChara = _space;
+	SleepTargetSet(cutStopChara,true);
+}
+
+void Camera::SleepTargetSet(int _stop, bool _sleep)
+{
+	if (_stop == CutSceneSpece::NONE) {
+		return;
+	}
+	if (_stop & CutSceneSpece::PLAYER) {
+		cameraComponent.player.obj->SetSleep(_sleep);
+	}
+	if (_stop & CutSceneSpece::ALL_ENEMY) {
+		cameraComponent.enemyManager->SleepAllEnemy(_sleep);
+	}
+}
+
+void Camera::CutSceneChangeState(std::string _name)
+{
+	CutSceneChangeState(_name, CutSceneSpece::NONE);
 }

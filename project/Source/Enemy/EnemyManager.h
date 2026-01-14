@@ -56,6 +56,8 @@ public:
 
 	void CanPlayerSpecialHit();
 
+	void SleepAllEnemy(bool _sleep);
+
 private:
 	
 	std::list<BaseObject*> enemy;

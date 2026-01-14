@@ -76,9 +76,8 @@ void PlayerSpecialAttack::Start()
 	p->playerCom.anim->Play(ID::P_SPECIAL_ATTACK_BEFORE_ANIM);
 	firstColl = true;
 	defalutRotation = p->playerTransform->rotation;
-	p->playerCom.camera->CutSceneChangeState("playerSpecialAttackBefore");
+	p->playerCom.camera->CutSceneChangeState("playerSpecialAttackBefore", CutSceneSpece::ALL_ENEMY);
 	//AttackCollsion();
-	
 
 	state = BEFORE;
 

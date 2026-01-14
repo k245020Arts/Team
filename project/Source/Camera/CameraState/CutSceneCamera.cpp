@@ -169,6 +169,8 @@ void CutSceneCamera::Finish()
 {
     Camera* camera = GetBase<Camera>();
     camera->isCutScene = false;
+    camera->SleepTargetSet(camera->cutStopChara, false);
+    camera->cutStopChara = CutSceneSpece::NONE;
 }
 
 Transform* CutSceneCamera::PlayerEnemyWorldToPos(std::string _name)

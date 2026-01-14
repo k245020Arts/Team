@@ -21,6 +21,15 @@ namespace CutSceneSpece {
 		InOut
 	};
 
+	enum CutStopChara
+	{
+		NONE = -1,
+		PLAYER = 1 << 0,
+		ALL_ENEMY = 1 << 1,
+		ENEMY = 1 << 2,
+		BOSS = 1 << 3,
+	};
+
 	struct CutSceneCameraPos {
 		VECTOR3 startPos;
 		VECTOR3 endPos;
@@ -149,9 +158,20 @@ public:
 
 	void CameraEditor();
 
+	/// <summary>
+	/// CutSceneを開始するための関数
+	/// ストップするため
+	/// </summary>
+	/// <param name="_name">ファイル名</param>
+	/// <param name="_space">cutScene中に止めるべき対象</param>
 	void CutSceneChangeState(std::string _name);
+	
+	void CutSceneChangeState(std::string _name, int _stop);
+	
 
 	bool IsCutScene() { return isCutScene; }
+
+	void SleepTargetSet(int _stop,bool _sleep);
 
 private:
 
@@ -188,4 +208,6 @@ private:
 	CameraEditorGui* editor;
 	std::vector<CutSceneSpece::CutScene> cutSceneData;
 	bool isCutScene;
+	
+	int cutStopChara;
 };

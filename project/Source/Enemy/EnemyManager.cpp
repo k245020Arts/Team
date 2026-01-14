@@ -595,6 +595,13 @@ void EnemyManager::CanPlayerSpecialHit()
 	}
 }
 
+void EnemyManager::SleepAllEnemy(bool _sleep)
+{
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		(*itr)->GetBaseObject()->SetSleep(_sleep);
+	}
+}
+
 
 	/*for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {
 		CharaBase* e;
