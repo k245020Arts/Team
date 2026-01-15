@@ -41,4 +41,5 @@ private:
 	float chargeCounter;
 	float waitCounter;
 	VECTOR3 defalutRotation;
+	VECTOR3 keepPos;
 };

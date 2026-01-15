@@ -3,6 +3,8 @@
 
 class Object3D;
 
+static const VECTOR3 CUT_SCENE_POS = VECTOR3(1000000.0f, 0.0f, 1000000.0f);
+
 class SkyManager : public GameObject
 {
 public:
@@ -15,4 +17,5 @@ public:
 
 private:
 	Object3D* sky;
+	Object3D* sky2;
 };

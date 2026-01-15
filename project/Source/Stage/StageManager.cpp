@@ -9,6 +9,7 @@
 #include "../Player/Player.h"
 #include "../Player/PlayerState/PlayerStateManager.h"
 #include "../Component/Object/Object3D.h"
+#include "SkyManager.h"
 
 //#define NEW_STAGE
 
@@ -77,7 +78,7 @@ void StageManager::CreateWall()
 	//見えない壁のセット
 	//ステージの範囲
 	for (int i = 0; i < 4; i++) {
-		Transform transform;
+		Transform transform = Transform();
 		switch (i)
 		{
 		case 0:
@@ -127,20 +128,42 @@ void StageManager::CreateWall()
 
 void StageManager::CreateFloor()
 {
-	Transform transform;
-	transform = Transform(VECTOR3(0, -1000, 0), VZero, VOne * VECTOR3(500.0f, 10.0f, 500.0f));
+	//ToDO なぜかfor文で回さないと貫通してしまうのでfor文を使わなくてもいいようにする。
+	for (int i = 0; i < 4; i++) {
+		Transform transform;
+		transform = Transform(VECTOR3(0, -1000, 0), VZero, VOne * VECTOR3(500.0f, 10.0f, 500.0f));
 
-	Object3D* obj = new Object3D();
-	obj->Init(transform, "FLOOR");
+		Object3D* obj = new Object3D();
+		obj->Init(transform, "FLOOR");
+		/*MeshRenderer* mesh = obj->Component()->AddComponent<MeshRenderer>();
+		mesh->ModelHandle(Load::GetHandle(ID::WALL));
+		mesh->DrawLocalPosition();*/
+		ModelCollider* c = obj->Component()->AddComponent<ModelCollider>();
+		CollsionInfo info;
+		info.oneColl = false;
+		info.parentTransfrom = obj->GetTransform();
+		info.shape = CollsionInformation::MODEL;
+		info.tag = CollsionInformation::FLOOR;
+		c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(Load::GetHandle(ID::WALL)));
+		stage->AddChild(obj, false);
+	}
+	
+
+	Transform transform2;
+	transform2 = Transform(CUT_SCENE_POS + VECTOR3(0, -1000, 0), VZero, VOne * VECTOR3(500.0f, 10.0f, 500.0f));
+
+	Object3D* obj2 = new Object3D();
+	obj2->Init(transform2, "FLOOR2");
 	/*MeshRenderer* mesh = obj->Component()->AddComponent<MeshRenderer>();
 	mesh->ModelHandle(Load::GetHandle(ID::WALL));
 	mesh->DrawLocalPosition();*/
-	ModelCollider* c = obj->Component()->AddComponent<ModelCollider>();
-	CollsionInfo info;
-	info.oneColl = false;
-	info.parentTransfrom = obj->GetTransform();
-	info.shape = CollsionInformation::MODEL;
-	info.tag = CollsionInformation::FLOOR;
-	c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(Load::GetHandle(ID::WALL)));
-	stage->AddChild(obj, false);
+	CollsionInfo info2;
+	info2.oneColl = false;
+	info2.parentTransfrom = obj2->GetTransform();
+	info2.shape = CollsionInformation::MODEL;
+	info2.tag = CollsionInformation::FLOOR;
+
+	ModelCollider* c2 = obj2->Component()->AddComponent<ModelCollider>();
+	c2->ModelColliderSet(info2, Transform(VZero, VZero, VOne), MV1DuplicateModel(Load::GetHandle(ID::WALL)));
+	stage->AddChild(obj2, false);
 }

@@ -148,8 +148,9 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK4,	"P_ATTACK46", false, 2.0f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_DIE,						"P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_TURN_ANIM,					"P_TURN1", false, 1.3f, 10.0f, 21.0f);
-	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM,		"P_SPECIAL_ATTACK", false, 1.2f, 7.0f, 39.0f);
+	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM,		"P_SPECIAL_ATTACK_2", false, 1.0f, 7.0f, 39.0f);
 	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM,	"P_SPECIAL_ATTACK_BEFORE", false, 1.2f, 7.0f, 39.0f);
+	anim->AddFile(ID::IDType::P_WIN,						"P_WIN", false, 1.2f, 7.0f, 39.0f);
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);
@@ -205,7 +206,7 @@ void PlayerManager::GameSceneChangeState()
 		stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 		break;
 	case 2:
-		stateManager->ChangeState(StateID::PLAYER_WIN_STATE_S);
+		stateManager->NowChangeState(StateID::PLAYER_WIN_STATE_S);
 		stateManager->SetNoStateChange(true);
 		break;
 	case 3:

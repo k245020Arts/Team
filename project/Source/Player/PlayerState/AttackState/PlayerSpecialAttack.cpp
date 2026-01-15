@@ -14,6 +14,7 @@
 #include "../../../Component/Collider/SphereCollider.h"
 #include "../../../Enemy/EnemyManager.h"
 #include "../../../Camera/Camera.h"
+#include "../../../Stage/SkyManager.h"
 
 PlayerSpecialAttack::PlayerSpecialAttack()
 {
@@ -32,6 +33,8 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 
 	waitCounter = -1.0f;
 	chargeCounter = -1.0f;
+
+	keepPos = VZero;
 }
 
 PlayerSpecialAttack::~PlayerSpecialAttack()
@@ -80,10 +83,15 @@ void PlayerSpecialAttack::Start()
 	//AttackCollsion();
 
 	state = BEFORE;
+	p->playerCom.anim->SetPlaySpeed(1.0f);
 
 	waitCounter = -1.0f;
 	chargeCounter = -1.0f;
 	p->noDamage = true;
+
+	keepPos = p->playerTransform->position;
+
+	p->playerTransform->position = CUT_SCENE_POS;
 
 }
 
@@ -108,6 +116,8 @@ void PlayerSpecialAttack::MoveStart(float _angle)
 	p->playerCom.sound->RandamSe("swordWind", 5);
 	
 	p->playerTransform->position = p->specialAttackCenterPos + VECTOR3(0.0f,0.0f,radius) * MGetRotY(p->playerTransform->rotation.y);
+	
+
 	float dist = VECTOR3(p->specialAttackCenterPos - p->playerTransform->position).Size();
 	p->playerCom.physics->SetVelocity(VZero);
 	//VECTOR3 forward = p->playerTransform->Forward() * MGetRotY(p->playerTransform->rotation.y);
@@ -138,6 +148,7 @@ void PlayerSpecialAttack::BeforeUpdate()
 	Player* p = GetBase<Player>();
 	if (!p->playerCom.camera->IsCutScene()) {
 		state = GROUND_ATTACK;
+		p->playerTransform->position = keepPos;
 		p->specialAttackStartPos = p->playerTransform->position;
 		VECTOR3 forward = p->playerTransform->Forward();
 		p->specialAttackCenterPos = p->specialAttackStartPos + forward * radius;
@@ -178,9 +189,6 @@ void PlayerSpecialAttack::GroundUpdate()
 			chargeCounter = 1.5f;
 			AddCollsion();
 			p->playerCom.anim->Play(animId);
-			p->playerCom.anim->SetFrame(2.0f);
-			p->playerCom.anim->SetMaxFrame(animId, 29.5f);
-			p->playerCom.anim->SetPlaySpeed(0.0f);
 			p->playerCom.shaker->ShakeStart(VOne * 5.0f, Shaker::MIX_SHAKE, false, -1);
 			p->playerCom.camera->CutSceneChangeState("playerSpecialCut");
 			p->obj->Component()->GetComponent<SphereCollider>()->CollsionFinish();
@@ -199,7 +207,7 @@ void PlayerSpecialAttack::ChargeUpdate()
 		MoveStart(0.0f);
 		chargeCounter = 0.0f;
 		state = FINAL_ATTACK;
-		p->playerCom.anim->SetPlaySpeed(3.0f);
+		//p->playerCom.anim->SetPlaySpeed(3.0f);
 		p->playerCom.shaker->ShakeFinish();
 	}
 }
@@ -222,7 +230,9 @@ void PlayerSpecialAttack::FinalAttackUpdate()
 	if (distance > radius) {
 		//ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
 		//p->playerTransform->position = forward * (radius);
-		waitCounter = 1.0f;
+		waitCounter = 10.0f;
 		p->playerCom.physics->SetVelocity(VZero);
+		p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos + VECTOR3(0.0f,150.0f,0.0f), VECTOR3(0.0f, 0.0f, 180.0f * DegToRad), VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_FINAL, 1.5f);
+		//p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_SPECIAL_FINAL, 1.0f);
 	}
 }

@@ -157,8 +157,8 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 	if (result.HitFlag != 0) {
 		VECTOR3 push = startPos - result.HitPosition;
 
-		if (col2->GetCollTag() == CollsionInformation::C_FLOOR) {
-			Debug::DebugLogPrintf(Debug::printfString("hit = %d", ++plus));
+		if (col2->GetCollTag() == CollsionInformation::P_FLOOR) {
+			Debug::DebugLogPrintf(Debug::printfString("hit = %.3f", p->GetVelocity()));
 		}
 
 		// Y•ûŒü‚Ì‚Ý‰Ÿ‚µ•Ô‚µ
@@ -167,14 +167,14 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 		if (col2->GetCollTag() == CollsionInformation::SHADOW) {
 			col2->GetBaseObject()->Component()->GetComponent<Shadow>()->ChangeScale(push,result.HitPosition);
 		}
-		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 2.0f * Time::DeltaTimeRate());
+		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 50.0f * Time::DeltaTimeRate());
 
 		if (p != nullptr) {
 			p->SetGround(resolver.IsGrounded(0.7f));
 		}
 	}
 	else {
-		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 2.0f * Time::DeltaTimeRate());
+		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 50.0f * Time::DeltaTimeRate());
 
 		if (p != nullptr) {
 			p->SetGround(resolver.IsGrounded(0.7f));

@@ -65,4 +65,5 @@ private:
 	std::string nowState;
 	Camera* camera;
 	bool changeState;
+	std::string beforeState;
 };
