@@ -4,12 +4,15 @@
 #include "../../../State/StateManager.h"
 #include "../../../Component/Collider/ModelCollider.h"
 #include "../../../Component/Collider/SphereCollider.h"
+#include "../../../Common/Easing.h"
+#include "../../../Component/Color/Color.h"
 
 T_EnemyDead::T_EnemyDead()
 {
 	animId = ID::E_DIE;
 	string = Function::GetClassNameC<T_EnemyDead>();
 	counter = 0;
+	fadeCounter = FADE_SPEED;
 }
 
 T_EnemyDead::~T_EnemyDead()
@@ -37,8 +40,17 @@ void T_EnemyDead::Update()
 		offsetY = 0;
 	e->GetEnemyObj()->GetTransform()->position.y = offsetY;
 
-	if (e->enemyBaseComponent.anim->IsFinish()&& offsetY <= 0)
-		e->active = false;
+	if (e->enemyBaseComponent.anim->IsFinish() && offsetY <= 0)
+	{
+		fadeCounter -= Time::DeltaTimeRate();
+		float reet = fadeCounter / FADE_SPEED;
+		float alph = Easing::EaseIn(0.0f, 255.0f, reet);
+
+		float color = 255.0f;
+		e->enemyBaseComponent.color->setRGB(Color::Rgb(255, 255, 255, alph));
+		if (fadeCounter <= 0)
+			e->active = false;
+	}
 }
 
 void T_EnemyDead::Draw()

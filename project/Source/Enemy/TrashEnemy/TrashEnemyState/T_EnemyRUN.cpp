@@ -56,6 +56,9 @@ void T_EnemyRun::Start()
 
 void T_EnemyRun::Finish()
 {
+	TrashEnemy* e = GetBase<TrashEnemy>();
+	if (!e->isCooperateAtk)
+		e->isAttack = true;
 }
 
 void T_EnemyRun::Look()

@@ -23,5 +23,8 @@ private:
 	float Orbit(float pos, float a, float h, float k);
 
 	const float SPEED = 20.0f;
+	const float FADE_SPEED = 1.5f;
 	float counter;
+
+	float fadeCounter;
 };

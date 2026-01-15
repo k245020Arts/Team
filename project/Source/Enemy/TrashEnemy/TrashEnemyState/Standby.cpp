@@ -42,7 +42,7 @@ void Standby::Update()
 		}
 		else
 		{
-			NormalMove();
+			//NormalMove();
 			if (vec.Size() <= range / 2)
 			{
 				pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
@@ -76,8 +76,7 @@ void Standby::Start()
 	
 	if (e->isCooperateAtk)
 		e->isMovingToPlayer = true;
-	else 
-		int a = 0;
+		/*e->isAttack = true;*/
 
 	pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 
