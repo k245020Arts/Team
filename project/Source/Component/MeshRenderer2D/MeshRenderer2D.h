@@ -17,6 +17,7 @@ public:
 		DRAW_RECT_ROTA_GRAPH,
 		DRAW_NUM,
 		DRAW_RECT_ROTA_GRAPH_FAST_3F,
+		DRAW_BILLBOARD,
 	};
 
 	MeshRenderer2D();
