@@ -79,7 +79,7 @@ void PlayerSpecialAttack::Start()
 	p->playerCom.anim->Play(ID::P_SPECIAL_ATTACK_BEFORE_ANIM);
 	firstColl = true;
 	defalutRotation = p->playerTransform->rotation;
-	p->playerCom.camera->CutSceneChangeState("playerSpecialAttackBefore", CutSceneSpece::ALL_ENEMY);
+	//p->playerCom.camera->CutSceneChangeState("playerSpecialAttackBefore", CutSceneSpece::ALL_ENEMY);
 	//AttackCollsion();
 
 	state = BEFORE;
@@ -88,6 +88,8 @@ void PlayerSpecialAttack::Start()
 	waitCounter = -1.0f;
 	chargeCounter = -1.0f;
 	p->noDamage = true;
+
+	p->playerTransform->rotation.z += 90.0f * DegToRad;
 
 	keepPos = p->playerTransform->position;
 
@@ -115,11 +117,14 @@ void PlayerSpecialAttack::MoveStart(float _angle)
 	AddCollsion();
 	p->playerCom.sound->RandamSe("swordWind", 5);
 	
-	p->playerTransform->position = p->specialAttackCenterPos + VECTOR3(0.0f,0.0f,radius) * MGetRotY(p->playerTransform->rotation.y);
-	
+	//p->playerTransform->position = p->specialAttackCenterPos + VECTOR3(0.0f,0.0f,radius) * MGetRotY(p->playerTransform->rotation.y);
 
 	float dist = VECTOR3(p->specialAttackCenterPos - p->playerTransform->position).Size();
 	p->playerCom.physics->SetVelocity(VZero);
+
+	/*VECTOR3 forward = p->playerTransform->Forward() * MGetRotY(p->playerTransform->rotation.y);
+	p->playerCom.physics->AddVelocity(forward * 50000.0f, true);*/
+
 	//VECTOR3 forward = p->playerTransform->Forward() * MGetRotY(p->playerTransform->rotation.y);
 	//p->playerCom.physics->SetVelocity(forward * 30000.0f);
 }
@@ -155,25 +160,96 @@ void PlayerSpecialAttack::BeforeUpdate()
 		MoveStart(0.0f);
 		moveNum = 18;
 		p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
-		p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 1.8f);
-		p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_SLASH, 1.8f);
+		//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 1.8f);
+		//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_SLASH, 1.8f);
 	}
 }
-
+#define MODE_1
 void PlayerSpecialAttack::GroundUpdate()
 {
+#ifdef MODE_1
+	Player* p = GetBase<Player>();
+
+	p->playerCom.player->DrawTrail(VECTOR3(0, 0, 100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
+	// 中心からプレイヤーへのベクトル
+	VECTOR3 toPlayer = p->playerTransform->position - p->specialAttackCenterPos;
+	toPlayer.y = 0.0f;
+	float dist = toPlayer.Size();
+
+	// 半径より外に出たら方向補正
+	if (dist > radius)
+	{
+		// 半径に吸い付くベクトル
+		VECTOR3 minasDir = toPlayer * -1.0f;
+		VECTOR3 pullDir = minasDir.Normalize();
+		p->playerCom.physics->AddVelocity(pullDir * 5000.0f, true);
+
+		// 円周方向ベクトル
+		VECTOR3 tangent(-toPlayer.z, 0.0f, toPlayer.x);
+
+		// 補間で方向を変える（smooth turn）
+		dir += (tangent - dir) * 0.7f;
+		dir = dir.Normalize();
+
+		// 移動速度セット
+		p->playerCom.physics->SetVelocity(dir * 3000.0f);
+
+		// moveNum を消費
+		moveNum--;
+		if (moveNum <= 0)
+		{
+			// moveNum が0になったら次フェーズ
+			p->playerTransform->position = p->specialAttackStartPos;
+			//p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
+			ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
+			float angle = 36.0f * DegToRad;
+			p->playerTransform->rotation = defalutRotation;
+			p->playerCom.physics->SetVelocity(VZero);
+			state = CHARGE;
+			chargeCounter = 1.5f;
+			AddCollsion();
+			p->playerCom.anim->Play(animId);
+			p->playerCom.shaker->ShakeStart(VOne * 5.0f, Shaker::MIX_SHAKE, false, -1);
+			p->playerCom.camera->CutSceneChangeState("playerSpecialCut");
+			p->obj->Component()->GetComponent<SphereCollider>()->CollsionFinish();
+			return;
+		}
+	}
+	else
+	{
+		// 半径内なら円周方向にそのまま移動
+		VECTOR3 tangent(-toPlayer.z, 0.0f, toPlayer.x);
+		dir += (tangent - dir) * 0.3f; // 内側は少しゆっくり曲がる
+		dir = dir.Normalize();
+		p->playerCom.physics->SetVelocity(dir * 3000.0f);
+	}
+
+	// 描画用角度
+	float yaw = atan2(dir.z, dir.x);
+	p->playerTransform->rotation.y = yaw;
+
+#else
 	Player* p = GetBase<Player>();
 	p->playerCom.player->DrawTrail(VECTOR3(0, 0, 100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
 	if (p->playerCom.keyboard->GetIsKeyboardPut(KEY_INPUT_3)) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 	}
+
 	float  distance = VECTOR3(p->specialAttackCenterPos - p->playerTransform->position).Size();
 	VECTOR3 forward = p->playerTransform->Forward() * MGetRotY(p->playerTransform->rotation.y);
-	p->playerCom.physics->AddVelocity(forward * 1000000.0f, true);
+	p->playerCom.physics->AddVelocity(forward * 500000.0f, true);
 	p->playerCom.blur->MosionStart(0.5f, 0.000001f, animId, 0);
 	if (distance > radius + 200.0f) {
 		if (moveNum > 0) {
-			float angle = 36.0f * DegToRad;
+			float angle = 0.0f;
+			if (moveNum % 2 == 0) {
+				angle = 45.0f * DegToRad;
+			}
+			else {
+				angle = -90.0f * DegToRad;
+			}
+			VECTOR3 norm = forward * radius;
+			p->playerTransform->position = norm;
 			p->playerTransform->rotation.y += angle;
 			MoveStart(angle * DegToRad);
 			moveNum--;
@@ -194,6 +270,7 @@ void PlayerSpecialAttack::GroundUpdate()
 			p->obj->Component()->GetComponent<SphereCollider>()->CollsionFinish();
 		}
 	}
+#endif // DEBUG
 }
 
 void PlayerSpecialAttack::ChargeUpdate()
@@ -204,6 +281,7 @@ void PlayerSpecialAttack::ChargeUpdate()
 	Debug::DebugOutPutPrintf("charge : position.x = %.1f : position.y = %.1f : position.z = %.1f", p->playerCom.player->playerTransform->position.x, p->playerCom.player->playerTransform->position.y, p->playerCom.player->playerTransform->position.z);
 	p->playerCom.physics->SetVelocity(VZero);
 	if (chargeCounter <= 0.0f) {
+		p->playerTransform->position = p->specialAttackCenterPos + VECTOR3(0.0f, 0.0f, radius) * MGetRotY(p->playerTransform->rotation.y);
 		MoveStart(0.0f);
 		chargeCounter = 0.0f;
 		state = FINAL_ATTACK;
