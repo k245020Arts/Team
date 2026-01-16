@@ -102,6 +102,8 @@ TrashEnemy::TrashEnemy()
 	isStandby = false;
 	isCooperateAtk = false;
 
+	isEnemyFollow = false;
+
 	wayPoint = VZero;
 
 	isMovingToPlayer = false;
@@ -175,7 +177,7 @@ void TrashEnemy::Start(Object3D* _obj)
 void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 {
 	obj->GetTransform()->position = _pos;
-	targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
+	number = kinds;
 
 	const float MAX = 1.5f;
 	const float MIN = 0.8f;
