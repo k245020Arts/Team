@@ -96,6 +96,13 @@ void TrashEnemyManager::Draw()
 
 void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 {
+	//同じ種類の敵を何体出すか
+	int kindsCounter = enemySpawnCounter / 3;
+	//何種類目の敵か
+	int numCounter = 0;
+	//その種類の敵が何体スポーンしたか
+	int spawnCounter = 0;
+
     for (int i = 0; i < enemySpawnCounter; i++)
     {
 		if (enemies.size() >= ENEMIESMAX)
@@ -160,8 +167,16 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
         float rangeX = (float)GetRand(R_MAX * 2) - R_MAX;
 		float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
         VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
+
+		//敵の種類の数ができるだけ均等にするための処理
+		if (spawnCounter >= kindsCounter)
+		{
+			numCounter++;
+			spawnCounter = 0;
+		}
 		//ポジションをセット
-		t->CreateTrashEnemy(_pos + pos);
+		t->CreateTrashEnemy(_pos + pos, numCounter);
+		spawnCounter++;
 		//hp表示
 		Object2D* guage = new Object2D();
 

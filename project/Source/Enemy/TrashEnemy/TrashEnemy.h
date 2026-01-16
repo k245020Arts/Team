@@ -27,8 +27,12 @@ public:
 	void Draw()override;
 
 	void Start(Object3D* _obj);
-	//敵の生成
-	void CreateTrashEnemy(VECTOR3 _pos);
+	/// <summary>
+	/// 敵の生成
+	/// </summary>
+	/// <param name="_pos">ポジションの指定</param>
+	/// <param name="kinds">敵の強さの種類(０なら軽い,1ならデフォルト,それ以外は重い敵)</param>
+	void CreateTrashEnemy(VECTOR3 _pos,int kinds);
 
 	void Trail();
 
