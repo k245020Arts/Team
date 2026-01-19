@@ -114,7 +114,7 @@ void Boss::Update()
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
 	}
 
-	if (CheckHitKey(KEY_INPUT_2)) {
+	if (CheckHitKey(KEY_INPUT_3)) {
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK2_S);
 	}
 
@@ -424,6 +424,7 @@ void Boss::PlayerHit()
 	bool lastAttack = false;
 	bool lastBeforeAttack = false;
 	auto bossParam = enemyTable.find(attackID);
+	float angleRand = Random::GetFloat(0.0f, 360.0f);
 	if (bossParam != enemyTable.end()) {
 		const auto& e = bossParam->second;
 		switch (e.attackType)
@@ -432,6 +433,7 @@ void Boss::PlayerHit()
 			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne *e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
+			hit = true;
 			break;
 		case EnemyInformation::EnemyReaction::Type::BlowAway:
 
@@ -485,13 +487,15 @@ void Boss::PlayerHit()
 			if (maxAttack < 0) {
 				enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
 			}
+			hit = true;
 			break;
 		case EnemyInformation::EnemyReaction::Type::Special:
 			if (!specialAttackHit) {
 				return;
 			}
+			
 			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
-			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
+			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), angleRand * DegToRad, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			enemyBaseComponent.state->ChangeState(bossParam->second.changeStateID);
 			specialAttackHit = false;
@@ -501,7 +505,6 @@ void Boss::PlayerHit()
 		}
 	}
 	EnemyDamageMove(dInfo);
-	hit = true;
 	hp -= damage;
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();

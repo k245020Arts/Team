@@ -21,7 +21,12 @@ void SphereCollider::Update()
 void SphereCollider::Draw()
 {
 	if (Debug::SphereColliderDraw()) {
-		DrawSphere3D(collTransform->WorldTransform().position, collTransform->scale.x, 10, 0xff0000, 0xff0000, false);
+		if (finish) {
+			DrawSphere3D(collTransform->WorldTransform().position, collTransform->scale.x, 10, 0xffff00, 0xff0000, false);
+		}
+		else {
+			DrawSphere3D(collTransform->WorldTransform().position, collTransform->scale.x, 10, 0xff0000, 0xff0000, false);
+		}
 	}
 }
 

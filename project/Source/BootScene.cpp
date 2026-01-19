@@ -12,6 +12,7 @@ BootScene::BootScene()
 	InputManager* input			= new InputManager(true,true,false);
 	Load::Init();
 	ID::Init();
+	Sound_ID::InitID();
 	Debug::InitDebug(input);
 	Random::Init();
 	SoundManager*sound			=  new SoundManager();

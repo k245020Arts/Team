@@ -12,6 +12,7 @@ public:
 		CHARGE,
 		FINAL_ATTACK,
 	};
+
 	PlayerSpecialAttack();
 	~PlayerSpecialAttack();
 
@@ -19,6 +20,8 @@ public:
 	void Draw()override;
 	void Start()override;
 	void Finish()override;
+
+	void SpecialRotationChange();
 
 	void MoveStart(float _angle);
 
@@ -41,4 +44,21 @@ private:
 	float chargeCounter;
 	float waitCounter;
 	VECTOR3 defalutRotation;
+	VECTOR3 keepPos;
+	VECTOR3 dir;
+	float specialAngle;
+
+	float currentAngle;
+	float angleMin;
+	float angleMax;
+	float randAngle;
+
+	VECTOR3 lineStart;
+	VECTOR3 lineEnd;
+
+	float moveT;
+	float moveSpeed; 
+	bool centerTo;
+
+	int boxHandle;
 };

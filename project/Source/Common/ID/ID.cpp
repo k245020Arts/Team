@@ -4,7 +4,7 @@
 #include "../Debug/Debug.h"
 
 namespace {
-	std::unordered_map<ID::IDType,std::string> modelId;
+	std::unordered_map<ID::IDType,std::string>* modelId;
 
 	/*std::string InitID[ID::ID_MAX] = {
 		"enemy",
@@ -87,11 +87,13 @@ void ID::Init() {
 	/*for (int i = 0; i < ID_MAX; i++) {
 		modelId[i] = InitID[i];
 	}*/
+	modelId = new std::unordered_map<ID::IDType, std::string>;
 }
 
 void ID::DeleteID()
 {
-	modelId.clear();
+	modelId->clear();
+	delete modelId;
 }
 
 std::string ID::GetID(IDType _type)
@@ -100,7 +102,7 @@ std::string ID::GetID(IDType _type)
 	if (type < 0 && type >= (int)ID_MAX) {
 		Debug::CreateMessageBox("modelHandleMiss", "miss");
 	}
-	return modelId[_type];
+	return (*modelId)[_type];
 }
 
 void ID::SetID(std::string _model, IDType _type)
@@ -109,12 +111,12 @@ void ID::SetID(std::string _model, IDType _type)
 	if (type < 0 && type >= (int)ID_MAX) {
 		Debug::CreateMessageBox("modelHandleSetMiss", "miss");
 	}
-	modelId[_type] = _model;
+	(*modelId)[_type] = _model;
 }
 
 ID::IDType ID::StringToID(std::string _str)
 {
-	for (const auto& pair : modelId) {
+	for (const auto& pair : *modelId) {
 		if (pair.second == _str) {
 			return pair.first; // ílÇ™å©Ç¬Ç©Ç¡ÇΩÇÁÉLÅ[Çï‘Ç∑
 		}

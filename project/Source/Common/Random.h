@@ -15,6 +15,7 @@ namespace Random {
 
 	// 一様整数...乱数を生成...minからmaxの範囲で値をランダムに返す
     int GetInt(int min, int max); 
+    float GetFloat(float min, float max);
 
     // 重み付き選択...各要素の重みを指定し、確率に応じてインデックスを返す。
     int GetWeightedIndex(const std::vector<double>& weights);

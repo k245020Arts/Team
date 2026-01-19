@@ -39,6 +39,9 @@ void Physics::Update()
 	}
 	if (obj->GetTag() == "PLAYER") {
 		int a = 0;
+		if (velocity.Size() != 0.0f) {
+			int c = 0;
+		}
 	}
 	*lastTransform = *currentTransform;
 

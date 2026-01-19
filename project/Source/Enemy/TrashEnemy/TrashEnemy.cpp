@@ -278,6 +278,7 @@ void TrashEnemy::PlayerHit()
 			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
+			hit = true;
 			break;
 		case EnemyInformation::EnemyReaction::Type::BlowAway:
 
@@ -334,6 +335,7 @@ void TrashEnemy::PlayerHit()
 				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				enemyBaseComponent.playerObj->Component()->GetComponent<Shaker>()->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.05f);
 			}
+			hit = true;
 			break;
 		case EnemyInformation::EnemyReaction::Type::Special:
 			if (!specialAttackHit) {
@@ -349,7 +351,7 @@ void TrashEnemy::PlayerHit()
 		}
 	}
 	EnemyDamageMove(dInfo);
-	hit = true;
+	
 	hp -= damage;
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();

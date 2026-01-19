@@ -3,7 +3,7 @@
 PlayerWin::PlayerWin()
 {
 	string = string = Function::GetClassNameC<PlayerWin>();;
-	animId = ID::P_ANIM_IDOL;;
+	animId = ID::P_WIN;;
 	//id = ID::P_ANIM_RUN;
 }
 
