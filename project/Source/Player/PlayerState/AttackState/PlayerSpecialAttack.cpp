@@ -15,6 +15,8 @@
 #include "../../../Enemy/EnemyManager.h"
 #include "../../../Camera/Camera.h"
 #include "../../../Stage/SkyManager.h"
+#include "../../../Common/Easing.h"
+#include "../../../Common/Random.h"
 
 PlayerSpecialAttack::PlayerSpecialAttack()
 {
@@ -36,6 +38,17 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 
 	keepPos = VZero;
 	specialAngle = 0.0f;
+	angle = 0.0f;
+	currentAngle = 0.0f;
+	angleMin = 20.0f * DegToRad;
+	angleMax = 60.0f * DegToRad;
+	lineStart = VZero;
+	lineEnd = VZero;
+
+	moveT = 0.0f;
+	moveSpeed = 15.0f;
+	centerTo = false;
+	randAngle = 0.0f;
 }
 
 PlayerSpecialAttack::~PlayerSpecialAttack()
@@ -94,8 +107,18 @@ void PlayerSpecialAttack::Start()
 
 	keepPos = p->playerTransform->position;
 
-	p->playerTransform->position = CUT_SCENE_POS;
+	//p->playerTransform->position = CUT_SCENE_POS;
 	specialAngle = 0.0f;
+	angle = 0.0f;
+	currentAngle = 0.0f;
+
+	VECTOR3 dir = VECTOR3(cosf(currentAngle),0.0f,sinf(currentAngle));
+
+	lineStart = p->specialAttackCenterPos + dir * radius;
+	lineEnd = p->specialAttackCenterPos - dir * radius;
+
+	moveT = 0.0f;
+	centerTo = true;
 }
 
 void PlayerSpecialAttack::Finish()
@@ -109,6 +132,24 @@ void PlayerSpecialAttack::Finish()
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->noDamage = false;
 	p->obj->Component()->GetComponent<SphereCollider>()->CollsionRespown();
+}
+
+void PlayerSpecialAttack::SpecialRotationChange()
+{
+	/*Player* p = GetBase<Player>();
+	if (goingToCenter)
+	{
+		dashDir =(p->specialAttackCenterPos - p->playerTransform->position);
+		dashDir = dashDir.Normalize();
+	}
+	else
+	{
+		currentAngle += angleStep;
+
+		VECTOR3 dir(cosf(currentAngle),0.0f,sinf(currentAngle));
+
+		dashDir = dir.Normalize();
+	}*/
 }
 
 void PlayerSpecialAttack::MoveStart(float _angle)
@@ -154,12 +195,12 @@ void PlayerSpecialAttack::BeforeUpdate()
 	Player* p = GetBase<Player>();
 	if (!p->playerCom.camera->IsCutScene()) {
 		state = GROUND_ATTACK;
-		p->playerTransform->position = keepPos;
+		//p->playerTransform->position = keepPos;
 		p->specialAttackStartPos = p->playerTransform->position;
 		VECTOR3 forward = p->playerTransform->Forward();
 		p->specialAttackCenterPos = p->specialAttackStartPos + forward * radius;
 		MoveStart(0.0f);
-		moveNum = 18;
+		moveNum = 20;
 		p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
 		//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 1.8f);
 		//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_SLASH, 1.8f);
@@ -170,25 +211,54 @@ void PlayerSpecialAttack::GroundUpdate()
 {
 #ifdef MODE_1
 	Player* p = GetBase<Player>();
+	float dt = Time::DeltaTimeRate();
 
-	specialAngle += 1000.0f * DegToRad * Time::DeltaTimeRate();
+	// トレイル（見た目）
+	p->playerCom.player->DrawTrail(VECTOR3(0, 0, 100),VECTOR3(0, 0, -350),250.0f, 235.0f,0.0f, 150.0f,28, 0.4f);
 
-	// 中心から円運動
-	VECTOR3 offset;
-	offset.x = cosf(specialAngle) * radius;
-	offset.z = sinf(specialAngle) * radius;
-	offset.y = 0.0f;
+	// -----------------------------
+	// 直線移動（中心貫通）
+	// -----------------------------
+	moveT += moveSpeed * dt;
 
-	p->playerTransform->position = p->specialAttackCenterPos + offset;
+	// 線形補間で位置を決定
+	p->playerTransform->position =
+		Easing::EaseInOut(lineStart, lineEnd, moveT);
 
-	// 向きは進行方向に合わせる（重要）
-	float yaw = atan2f(offset.z, offset.x) + DX_PI_F / 2.0f;
+	// 向き（直線方向）
+	VECTOR3 dir = lineEnd - lineStart;
+	dir = dir.Normalize();
+	float yaw = atan2f(dir.z, dir.x);
 	p->playerTransform->rotation.y = yaw;
 
-	// トレイルや演出
-	p->playerCom.player->DrawTrail(VECTOR3(0, 0, 100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
+	if (moveT >= 1.0f)
+	{
+		centerTo = !centerTo;
+		if (centerTo) {
+			// 次の角度へ切り替え
+			currentAngle += randAngle;
 
-	moveNum--;
+			VECTOR3 outward(cosf(currentAngle), 0.0f, sinf(currentAngle));
+			lineStart = p->specialAttackCenterPos + outward * radius;
+			lineEnd = p->specialAttackCenterPos - outward * radius;
+		}
+		else {
+			// 次の角度へ切り替え
+			randAngle = Random::GetFloat(angleMin, angleMax);
+			float nextAngle = currentAngle + randAngle;
+
+			VECTOR3 outward(cosf(nextAngle), 0.0f, sinf(nextAngle));
+			lineStart = lineEnd;
+			lineEnd = p->specialAttackCenterPos + outward * radius;
+		}
+		moveNum--;
+		moveT = 0.0f;
+		ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
+		AddCollsion();
+		p->playerCom.sound->RandamSe("swordWind", 5);
+	}
+
+	
 	if (moveNum <= 0)
 	{
 		// 次フェーズへ
@@ -205,11 +275,6 @@ void PlayerSpecialAttack::GroundUpdate()
 		p->playerCom.shaker->ShakeStart(VOne * 5.0f, Shaker::MIX_SHAKE, false, -1);
 		p->playerCom.camera->CutSceneChangeState("playerSpecialCut");
 		p->obj->Component()->GetComponent<SphereCollider>()->CollsionFinish();
-	}
-	else {
-		// 描画用角度
-		yaw = atan2(dir.z, dir.x);
-		p->playerTransform->rotation.y = yaw;
 	}
 
 	
