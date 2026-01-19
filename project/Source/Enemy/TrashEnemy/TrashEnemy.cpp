@@ -94,13 +94,15 @@ TrashEnemy::TrashEnemy()
 	tag = Function::GetClassNameC<TrashEnemy>();
 	eStatus = new T_EnemyStatus;
 
-	hp = eStatus->GetStatus().maxHp;
-	maxHp = hp;
+	/*hp = eStatus->GetStatus().maxHp;
+	maxHp = hp;*/
 
-	speed = eStatus->GetStatus().runSpeed;
+	//speed = eStatus->GetStatus().runSpeed;
 	isAttack = false;
 	isStandby = false;
 	isCooperateAtk = false;
+
+	isEnemyFollow = false;
 
 	wayPoint = VZero;
 
@@ -172,10 +174,34 @@ void TrashEnemy::Start(Object3D* _obj)
 	active = true;
 }
 
-void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos)
+void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 {
 	obj->GetTransform()->position = _pos;
-	targetPos = enemyBaseComponent.playerObj->GetTransform()->position;
+	number = kinds;
+
+	const float MAX = 1.5f;
+	const float MIN = 0.8f;
+
+	switch (kinds)
+	{
+	case 0://‚·‚Î‚µ‚Á‚±‚¢“G
+		hp = eStatus->GetStatus().maxHp * MIN;
+		maxHp = hp;
+		speed = eStatus->GetStatus().runSpeed * MAX;
+		GetEnemyObj()->GetTransform()->scale = GetEnemyObj()->GetTransform()->scale * MIN;
+		break;
+	case 1:
+		hp = eStatus->GetStatus().maxHp;
+		maxHp = hp;
+		speed = eStatus->GetStatus().runSpeed;
+		break;
+	default://d‚¢“G
+		hp = eStatus->GetStatus().maxHp * MAX;
+		maxHp = hp;
+		speed = eStatus->GetStatus().runSpeed * MIN;
+		GetEnemyObj()->GetTransform()->scale = GetEnemyObj()->GetTransform()->scale * MAX;
+		break;
+	}
 }
 
 void TrashEnemy::LookTarget()

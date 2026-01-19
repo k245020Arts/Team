@@ -17,13 +17,7 @@ T_EnemyIdol::~T_EnemyIdol()
 
 void T_EnemyIdol::Update()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
-
-	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
-		//EnemyTransform->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
-	detectionRange += Time::DeltaTimeRate() * 50;
-	if (targetVec.Size() < e->eStatus->GetStatus().chaseRange + detectionRange)
-		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
+	NormalMove();
 }
 
 void T_EnemyIdol::Draw()
@@ -37,4 +31,21 @@ void T_EnemyIdol::Start()
 
 void T_EnemyIdol::Finish()
 {
+}
+
+void T_EnemyIdol::NormalMove()
+{
+	TrashEnemy* e = GetBase<TrashEnemy>();
+
+	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
+	detectionRange += Time::DeltaTimeRate() * 50;
+	if (targetVec.Size() < e->eStatus->GetStatus().chaseRange + detectionRange)
+		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
+}
+
+void T_EnemyIdol::EnemyFollow()
+{
+	TrashEnemy* e = GetBase<TrashEnemy>();
+
+	
 }

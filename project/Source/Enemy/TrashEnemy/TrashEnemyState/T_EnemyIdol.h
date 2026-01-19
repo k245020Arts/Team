@@ -13,6 +13,8 @@ public:
 	void Start()override;
 	void Finish()override;
 private:
+	void NormalMove();
+	void EnemyFollow();
 	//プレイヤーの探知範囲を少しずつあげる
 	float detectionRange;
 };
