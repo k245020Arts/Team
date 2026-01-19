@@ -38,14 +38,7 @@ void T_EnemyIdol::NormalMove()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
-	detectionRange += Time::DeltaTimeRate() * 50;
+	detectionRange += Time::DeltaTimeRate() * RANGESPEED;
 	if (targetVec.Size() < e->eStatus->GetStatus().chaseRange + detectionRange)
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
-}
-
-void T_EnemyIdol::EnemyFollow()
-{
-	TrashEnemy* e = GetBase<TrashEnemy>();
-
-	
 }

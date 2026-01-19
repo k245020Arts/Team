@@ -107,6 +107,8 @@ TrashEnemy::TrashEnemy()
 	wayPoint = VZero;
 
 	isMovingToPlayer = false;
+
+	slowCounter = 0;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -117,6 +119,7 @@ TrashEnemy::~TrashEnemy()
 
 void TrashEnemy::Update()
 {
+	slowCounter += Time::DeltaTimeRate();
 	EnemyBase::Update();
 
 	if (hp <= 0)
@@ -224,6 +227,12 @@ void TrashEnemy::LookTarget()
 		obj->GetTransform()->rotation.y -= LOOK_SPEED;
 	else
 		obj->GetTransform()->rotation.y = direction;
+}
+
+bool TrashEnemy::IsPlayerSpecialMove()
+{
+	/*if()
+	return false;*/
 }
 
 void TrashEnemy::Trail()

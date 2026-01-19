@@ -14,7 +14,8 @@ public:
 	void Finish()override;
 private:
 	void NormalMove();
-	void EnemyFollow();
+
+	const float RANGESPEED = 60.0f;
 	//プレイヤーの探知範囲を少しずつあげる
 	float detectionRange;
 };
