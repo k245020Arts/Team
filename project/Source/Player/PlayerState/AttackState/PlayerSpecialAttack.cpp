@@ -35,6 +35,7 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	chargeCounter = -1.0f;
 
 	keepPos = VZero;
+	specialAngle = 0.0f;
 }
 
 PlayerSpecialAttack::~PlayerSpecialAttack()
@@ -94,7 +95,7 @@ void PlayerSpecialAttack::Start()
 	keepPos = p->playerTransform->position;
 
 	p->playerTransform->position = CUT_SCENE_POS;
-
+	specialAngle = 0.0f;
 }
 
 void PlayerSpecialAttack::Finish()
@@ -117,7 +118,7 @@ void PlayerSpecialAttack::MoveStart(float _angle)
 	AddCollsion();
 	p->playerCom.sound->RandamSe("swordWind", 5);
 	
-	//p->playerTransform->position = p->specialAttackCenterPos + VECTOR3(0.0f,0.0f,radius) * MGetRotY(p->playerTransform->rotation.y);
+	p->playerTransform->position = p->specialAttackCenterPos + VECTOR3(0.0f,0.0f,radius) * MGetRotY(p->playerTransform->rotation.y);
 
 	float dist = VECTOR3(p->specialAttackCenterPos - p->playerTransform->position).Size();
 	p->playerCom.physics->SetVelocity(VZero);
@@ -170,63 +171,48 @@ void PlayerSpecialAttack::GroundUpdate()
 #ifdef MODE_1
 	Player* p = GetBase<Player>();
 
-	p->playerCom.player->DrawTrail(VECTOR3(0, 0, 100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
-	// 中心からプレイヤーへのベクトル
-	VECTOR3 toPlayer = p->playerTransform->position - p->specialAttackCenterPos;
-	toPlayer.y = 0.0f;
-	float dist = toPlayer.Size();
+	specialAngle += 1000.0f * DegToRad * Time::DeltaTimeRate();
 
-	// 半径より外に出たら方向補正
-	if (dist > radius)
-	{
-		// 半径に吸い付くベクトル
-		VECTOR3 minasDir = toPlayer * -1.0f;
-		VECTOR3 pullDir = minasDir.Normalize();
-		p->playerCom.physics->AddVelocity(pullDir * 5000.0f, true);
+	// 中心から円運動
+	VECTOR3 offset;
+	offset.x = cosf(specialAngle) * radius;
+	offset.z = sinf(specialAngle) * radius;
+	offset.y = 0.0f;
 
-		// 円周方向ベクトル
-		VECTOR3 tangent(-toPlayer.z, 0.0f, toPlayer.x);
+	p->playerTransform->position = p->specialAttackCenterPos + offset;
 
-		// 補間で方向を変える（smooth turn）
-		dir += (tangent - dir) * 0.7f;
-		dir = dir.Normalize();
-
-		// 移動速度セット
-		p->playerCom.physics->SetVelocity(dir * 3000.0f);
-
-		// moveNum を消費
-		moveNum--;
-		if (moveNum <= 0)
-		{
-			// moveNum が0になったら次フェーズ
-			p->playerTransform->position = p->specialAttackStartPos;
-			//p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
-			ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
-			float angle = 36.0f * DegToRad;
-			p->playerTransform->rotation = defalutRotation;
-			p->playerCom.physics->SetVelocity(VZero);
-			state = CHARGE;
-			chargeCounter = 1.5f;
-			AddCollsion();
-			p->playerCom.anim->Play(animId);
-			p->playerCom.shaker->ShakeStart(VOne * 5.0f, Shaker::MIX_SHAKE, false, -1);
-			p->playerCom.camera->CutSceneChangeState("playerSpecialCut");
-			p->obj->Component()->GetComponent<SphereCollider>()->CollsionFinish();
-			return;
-		}
-	}
-	else
-	{
-		// 半径内なら円周方向にそのまま移動
-		VECTOR3 tangent(-toPlayer.z, 0.0f, toPlayer.x);
-		dir += (tangent - dir) * 0.3f; // 内側は少しゆっくり曲がる
-		dir = dir.Normalize();
-		p->playerCom.physics->SetVelocity(dir * 3000.0f);
-	}
-
-	// 描画用角度
-	float yaw = atan2(dir.z, dir.x);
+	// 向きは進行方向に合わせる（重要）
+	float yaw = atan2f(offset.z, offset.x) + DX_PI_F / 2.0f;
 	p->playerTransform->rotation.y = yaw;
+
+	// トレイルや演出
+	p->playerCom.player->DrawTrail(VECTOR3(0, 0, 100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
+
+	moveNum--;
+	if (moveNum <= 0)
+	{
+		// 次フェーズへ
+		p->playerTransform->position = p->specialAttackStartPos;
+		//p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
+		ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
+		float angle = 36.0f * DegToRad;
+		p->playerTransform->rotation = defalutRotation;
+		p->playerCom.physics->SetVelocity(VZero);
+		state = CHARGE;
+		chargeCounter = 1.5f;
+		AddCollsion();
+		p->playerCom.anim->Play(animId);
+		p->playerCom.shaker->ShakeStart(VOne * 5.0f, Shaker::MIX_SHAKE, false, -1);
+		p->playerCom.camera->CutSceneChangeState("playerSpecialCut");
+		p->obj->Component()->GetComponent<SphereCollider>()->CollsionFinish();
+	}
+	else {
+		// 描画用角度
+		yaw = atan2(dir.z, dir.x);
+		p->playerTransform->rotation.y = yaw;
+	}
+
+	
 
 #else
 	Player* p = GetBase<Player>();
@@ -237,21 +223,22 @@ void PlayerSpecialAttack::GroundUpdate()
 
 	float  distance = VECTOR3(p->specialAttackCenterPos - p->playerTransform->position).Size();
 	VECTOR3 forward = p->playerTransform->Forward() * MGetRotY(p->playerTransform->rotation.y);
-	p->playerCom.physics->AddVelocity(forward * 500000.0f, true);
+	p->playerCom.physics->AddVelocity(forward * 50000.0f, true);
 	p->playerCom.blur->MosionStart(0.5f, 0.000001f, animId, 0);
 	if (distance > radius + 200.0f) {
 		if (moveNum > 0) {
 			float angle = 0.0f;
-			if (moveNum % 2 == 0) {
+			//if (moveNum % 2 == 0) {
 				angle = 45.0f * DegToRad;
-			}
-			else {
-				angle = -90.0f * DegToRad;
-			}
+			//}
+			//else {
+				//angle = -90.0f * DegToRad;
+			//}
 			VECTOR3 norm = forward * radius;
-			p->playerTransform->position = norm;
-			p->playerTransform->rotation.y += angle;
+			//p->playerTransform->position = norm;
 			MoveStart(angle * DegToRad);
+			p->playerTransform->rotation.y += angle;
+			
 			moveNum--;
 		}
 		else {

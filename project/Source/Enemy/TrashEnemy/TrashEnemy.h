@@ -102,6 +102,9 @@ private:
 	bool isStandby;
 	
 	float speed;
-
+	//‹­‚ß‚Ì–¡•û‚É‚Â‚¢‚Ä‚¢‚­‚©
+	bool isEnemyFollow;
 	VECTOR3 wayPoint;
+
+	int number;
 };

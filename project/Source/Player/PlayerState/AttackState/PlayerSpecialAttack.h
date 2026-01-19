@@ -43,4 +43,5 @@ private:
 	VECTOR3 defalutRotation;
 	VECTOR3 keepPos;
 	VECTOR3 dir;
+	float specialAngle;
 };
