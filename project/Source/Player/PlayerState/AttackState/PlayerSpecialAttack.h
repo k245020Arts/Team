@@ -34,6 +34,10 @@ public:
 	void ChargeUpdate();
 	void FinalAttackUpdate();
 
+	PLAYER_SPECIAL_ATTACK_STATE GetSpecialAttackState() { return state; }
+
+
+
 private:
 
 	float radius;
@@ -61,4 +65,13 @@ private:
 	bool centerTo;
 
 	int boxHandle;
+	int playerHandle;
+
+	bool zoom;
+	float zoomCounter;
+	float zoomCounterBase;
+	float zoomRate;
+	float zoomSize;
+
+	float beforeWaitCounter;
 };

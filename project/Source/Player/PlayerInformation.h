@@ -3,6 +3,7 @@
 #include "../Component/Shaker/Shaker.h"
 
 class MeshRenderer;
+class MeshRenderer2D;
 class Physics;
 class StateManager;
 class Camera;
@@ -20,6 +21,7 @@ class WeaponManager;
 class MotionBlur;
 class GameManager;
 class EnemyManager;
+class Anim2D;
 
 namespace PlayerInformation {
 
@@ -51,6 +53,8 @@ namespace PlayerInformation {
 			gameManager = nullptr;
 			enemyManager = nullptr;
 			hitObj = nullptr;
+			meshRenderer2D = nullptr;
+			anim2D = nullptr;
 		}
 		StateManager* stateManager;
 		MeshRenderer* renderer;
@@ -71,6 +75,8 @@ namespace PlayerInformation {
 		MotionBlur* blur;
 		GameManager* gameManager;
 		EnemyManager* enemyManager;
+		MeshRenderer2D* meshRenderer2D;
+		Anim2D* anim2D;
 	};
 
 	static const VECTOR3 BASE_INTERIA = VECTOR3(7500.0f, -7500.0f, 7500.0f);

@@ -2,6 +2,8 @@
 #include "../State/StateManager.h"
 #include "../Player/PlayerState/PlayerStateManager.h"
 #include "../Component/MeshRenderer/MeshRenderer.h"
+#include "../Component/MeshRenderer2D/MeshRenderer2D.h"
+#include "../Component/Animator/Anim2D.h"
 #include "../Component/Physics/Physics.h"
 #include "../Camera/Camera.h"
 #include "../Common/InputManager/InputManager.h"
@@ -184,6 +186,7 @@ void Player::Start(Object3D* _obj)
 	ComponentManager* c		= obj->Component();
 	
 	playerCom.renderer		= c->GetComponent<MeshRenderer>();
+	playerCom.meshRenderer2D= c->GetComponent<MeshRenderer2D>();
 	playerCom.physics		= c->GetComponent<Physics>();
 
 	playerCom.camera		= FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
@@ -196,6 +199,7 @@ void Player::Start(Object3D* _obj)
 	playerTransform			= obj->GetTransform();
 
 	playerCom.anim			= obj->Component()->GetComponent<Animator>();
+	playerCom.anim2D		= obj->Component()->GetComponent<Anim2D>();
 	playerCom.anim->Play(ID::P_ANIM_RUN);
 	playerCom.color			= obj->Component()->GetComponent<Color>();
 	//playerCom.targetObj = FindGameObjectWithTag<Object3D>("ENEMY");

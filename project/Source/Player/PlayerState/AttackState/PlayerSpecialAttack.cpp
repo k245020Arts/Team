@@ -17,6 +17,9 @@
 #include "../../../Stage/SkyManager.h"
 #include "../../../Common/Easing.h"
 #include "../../../Common/Random.h"
+#include "../../../Screen.h"
+#include "../../../Component/MeshRenderer2D/MeshRenderer2D.h"
+#include "../../../Component/Animator/Anim2D.h"
 
 PlayerSpecialAttack::PlayerSpecialAttack()
 {
@@ -49,10 +52,21 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	moveSpeed = 15.0f;
 	centerTo = false;
 	randAngle = 0.0f;
+	playerHandle = LoadGraph("data/image/SpecialCutScene2.png");
+	boxHandle = LoadGraph("data/image/visionEffect.png");
+
+	zoomCounterBase = 1.0f;
+
+	zoomCounter = zoomCounterBase;
+	zoom = true;
+	zoomRate = 0.0f;
+	zoomSize = 0.0f;
 }
 
 PlayerSpecialAttack::~PlayerSpecialAttack()
 {
+	DeleteGraph(playerHandle);
+	DeleteGraph(boxHandle);
 }
 
 void PlayerSpecialAttack::Update()
@@ -84,13 +98,33 @@ void PlayerSpecialAttack::Draw()
 {
 	Player* p = GetBase<Player>();
 	//DrawSphere3D(p->specialAttackCenterPos, 10, 1, 0xffffff, 0xffffff, true);
+	float alpha = p->playerCom.meshRenderer2D->GetAlpha();
+	float add = alpha;
+	if (add >= 60) {
+		add = 60.0f;
+	}
+
+	/*SetDrawBlendMode(DX_BLENDMODE_ADD, add);
+	SetDrawBright(200, 130, 0);
+	double rate = 7.0;
+	for (int i = 0; i < 8; i++) {
+		rate += 0.15f;
+		DrawRotaGraph((int)Screen::WIDTH / 2, (int)Screen::HEIGHT / 2, rate, 0.0, boxHandle, true);
+	}
+	SetDrawBright(255, 255, 255);*/
+	
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	//DrawRotaGraph(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, zoomRate, 0.0f * DegToRad, playerHandle, true);
+	DrawRectRotaGraph((int)Screen::WIDTH / 2, (int)Screen::HEIGHT / 2, 0, (int)zoomSize, (int)Screen::WIDTH, (int)(200.0f - zoomSize), (double)zoomRate, 0.0 * DegToRad, playerHandle, true);
+	
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void PlayerSpecialAttack::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerAttackStateBase::Start();
-	p->playerCom.anim->Play(ID::P_SPECIAL_ATTACK_BEFORE_ANIM);
+	//p->playerCom.anim->Play(ID::P_SPECIAL_ATTACK_BEFORE_ANIM);
 	firstColl = true;
 	defalutRotation = p->playerTransform->rotation;
 	//p->playerCom.camera->CutSceneChangeState("playerSpecialAttackBefore", CutSceneSpece::ALL_ENEMY);
@@ -103,7 +137,26 @@ void PlayerSpecialAttack::Start()
 	chargeCounter = -1.0f;
 	p->noDamage = true;
 
-	p->playerTransform->rotation.z += 90.0f * DegToRad;
+	int makeHandle = MakeScreen(Screen::WIDTH, 200, TRUE);
+
+	/*SetDrawScreen(makeHandle);
+
+	DrawBoxAA(0, 0, Screen::WIDTH, 200, 0xffffff, true);
+
+	SetDrawScreen(DX_SCREEN_BACK);
+
+	boxHandle = MakeScreen(Screen::WIDTH, Screen::HEIGHT, TRUE);
+
+	SetDrawScreen(boxHandle);
+
+	DrawRectRotaGraph(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0, 0, Screen::WIDTH, Screen::HEIGHT, 1.5f, 30.0f * DegToRad, makeHandle, true);
+
+	SetDrawScreen(DX_SCREEN_BACK);
+
+	DeleteGraph(makeHandle);*/
+
+	p->playerCom.meshRenderer2D->FeedInDraw(0.5f);
+	
 
 	keepPos = p->playerTransform->position;
 
@@ -119,6 +172,15 @@ void PlayerSpecialAttack::Start()
 
 	moveT = 0.0f;
 	centerTo = true;
+
+	zoomCounterBase = 1.0f;
+	p->playerCom.anim2D->AnimPlay();
+	p->playerCom.anim2D->AnimReset();
+	zoomCounter = zoomCounterBase;
+	zoom = true;
+	zoomRate = 1.0f;
+	zoomSize = 0.0f;
+	p->playerCom.camera->SleepTargetSet(CutSceneSpece::ALL_ENEMY, true);
 }
 
 void PlayerSpecialAttack::Finish()
@@ -193,18 +255,38 @@ void PlayerSpecialAttack::StateImguiDraw()
 void PlayerSpecialAttack::BeforeUpdate()
 {
 	Player* p = GetBase<Player>();
-	if (!p->playerCom.camera->IsCutScene()) {
-		state = GROUND_ATTACK;
-		//p->playerTransform->position = keepPos;
-		p->specialAttackStartPos = p->playerTransform->position;
-		VECTOR3 forward = p->playerTransform->Forward();
-		p->specialAttackCenterPos = p->specialAttackStartPos + forward * radius;
-		MoveStart(0.0f);
-		moveNum = 20;
-		p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
-		//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 1.8f);
-		//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_SLASH, 1.8f);
+	float alpha = p->playerCom.meshRenderer2D->GetAlpha();
+	if (alpha >= 255.0f) {
+		if (zoom) {
+			zoomRate = Easing::EasingFlow<float>(&zoomCounter, zoomCounterBase, 2.0f, 1.0f, Easing::EaseIn<float>);
+			zoomSize = Easing::EasingFlow<float>(&zoomCounter, zoomCounterBase, 120.0f, 0, Easing::EaseIn<float>);
+			if (zoomCounter <= 0.0f) {
+				beforeWaitCounter = 1.0f;
+				zoom = false;
+				p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f - 200.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VOne * 0.5f), nullptr, Effect_ID::PLAYER_FLASH, 1.0f, false);
+				p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_FLASH, 2.0f);
+			}
+		}
+		if (beforeWaitCounter > 0.0f) {
+			beforeWaitCounter -= Time::DeltaTimeRate();
+			if (beforeWaitCounter <= 0.0f) {
+				state = GROUND_ATTACK;
+				//p->playerTransform->position = keepPos;
+				p->specialAttackStartPos = p->playerTransform->position;
+				VECTOR3 forward = p->playerTransform->Forward();
+				p->specialAttackCenterPos = p->specialAttackStartPos + forward * radius;
+				MoveStart(0.0f);
+				moveNum = 20;
+				p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
+				p->playerTransform->rotation.z += 90.0f * DegToRad;
+				p->playerCom.meshRenderer2D->FeedOutDraw(0.5f);
+				p->playerCom.camera->SleepTargetSet(CutSceneSpece::ALL_ENEMY, false);
+				//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 1.8f);
+			//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_SLASH, 1.8f);
+			}
+		}
 	}
+	
 }
 #define MODE_1
 void PlayerSpecialAttack::GroundUpdate()

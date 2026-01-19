@@ -135,7 +135,8 @@ namespace Easing {
     template<typename T>
     T EasingFlow(float* _counter, float _maxTime, T min, T max, std::function<T(T, T, float)> _func) {
         if (*_counter <= 0.0f) {
-            return T();
+            float rate = *_counter / _maxTime;
+            return _func(min, max, rate);
         }
         *_counter = max(*_counter - Time::DeltaTimeRate(), 0.0f);
         float rate = *_counter / _maxTime;
