@@ -17,9 +17,9 @@ private:
 	void CooperateAttack();
 	TrashEnemyManager* tEnemyManager;
 	//雑魚敵の最大スポーン数
-	const int SPAWN_MAX = 15;
-	//
-	const float INITIALSPAWN = 5;
+	const int SPAWN_MAX = 20;
+	//最初のスポーン数
+	const float INITIALSPAWN = 8;
 	//最大ウェーブ数
 	const int WAVE_MAX = 2;
 	const VECTOR3 SPWNPOS = VECTOR3(0, 0, 2500);
