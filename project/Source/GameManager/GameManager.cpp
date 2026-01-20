@@ -29,6 +29,7 @@ GameManager::GameManager()
 	loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
 	resultCounter = 3.0f;
 	sound = FindGameObject<SoundManager>();
+	beforeState = "";
 	nowState = "BEFORE";
 	changeState = true;
 }
@@ -40,7 +41,15 @@ GameManager::~GameManager()
 
 void GameManager::Update()
 {
-	changeState = false;
+	if (changeState) {
+		changeState = false;
+	}
+	else {
+		if (nowState != beforeState) {
+			beforeState = nowState;
+			changeState = true;
+		}
+	}
 	state = state.Act(this);
 }
 
@@ -73,7 +82,7 @@ void GameManager::ChangeState(std::string _name)
 				break;
 			}
 			nowState = stateName[i];
-			changeState = true;
+			//changeState = true;
 		}
 	}
 }

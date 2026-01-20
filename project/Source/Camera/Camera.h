@@ -210,4 +210,5 @@ private:
 	bool isCutScene;
 	
 	int cutStopChara;
+	VECTOR3 diffTarget;
 };

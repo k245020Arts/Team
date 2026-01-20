@@ -87,6 +87,7 @@ private:
 
 	//targetPos‚É“ü‚Á‚Ä‚é•ûŒü‚ÉŒü‚­
 	void LookTarget();
+	bool IsPlayerSpecialMove();
 	bool active;
 	//‚Ç‚±‚ÉŒü‚­‚©
 	VECTOR3 targetPos;
@@ -102,9 +103,12 @@ private:
 	bool isStandby;
 	
 	float speed;
+
 	//‹­‚ß‚Ì–¡•û‚É‚Â‚¢‚Ä‚¢‚­‚©
 	bool isEnemyFollow;
 	VECTOR3 wayPoint;
-
+	//©•ª‚Ì“G‚Ìí—Ş
 	int number;
+	//•KE‹Z‚ğH‚ç‚Á‚½‚Æ‚«‚É“G‚ğƒXƒ[‚É‚·‚é
+	float slowCounter;
 };

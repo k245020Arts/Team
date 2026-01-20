@@ -62,7 +62,8 @@ void Wave::EnemySpawn()
 		if (waveNow < WAVE_MAX) {
 			tEnemyManager->CreateEnemy(SPWNPOS, spawn);
 		}
-		
+
+		isCooperate = false;
 		battleCounter = 0;
 		spawn = SPAWN_MAX;
 		waveNow++;
@@ -71,7 +72,7 @@ void Wave::EnemySpawn()
 
 void Wave::CooperateAttack()
 {
-	if (waveNow != 2 || tEnemyManager->EnemyList().size() > 4 || isCooperate)
+	if (/*waveNow != 2 ||*/ tEnemyManager->EnemyList().size() > 4 || isCooperate)
 		return;
 
 	tEnemyManager->Cooperate(StateID::COOPERATEATTACK1);

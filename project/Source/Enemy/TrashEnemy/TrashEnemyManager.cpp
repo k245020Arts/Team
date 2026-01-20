@@ -358,7 +358,6 @@ void TrashEnemyManager::CloseWayPoint()
 		enemy->GetWayPoint(savePos, StateID::T_ENEMY_RUN_S);
 		counter = 1;
 	}
-	//counter = 1;
 }
 
 bool TrashEnemyManager::StageWall(VECTOR3 _pos)

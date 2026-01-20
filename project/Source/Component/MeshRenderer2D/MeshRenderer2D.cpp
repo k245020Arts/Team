@@ -4,18 +4,23 @@
 #include "../../../ImGui/imgui.h"
 #include "../Animator/Anim2D.h"
 #include "../ComponentManager.h"
+#include "../../Common/Easing.h"
 
 MeshRenderer2D::MeshRenderer2D()
 {
-	hImage		= -1;
-	mode		= DRAW_GRAPH;
-	debugId		= 7;
-	tag			= Function::GetClassNameC<MeshRenderer2D>();
-	transform2D = nullptr;
-	anim2D		= nullptr;
-	draw		= true;
-	num			= 0;
-	addMode		= false;
+	hImage				= -1;
+	mode				= DRAW_GRAPH;
+	debugId				= 7;
+	tag					= Function::GetClassNameC<MeshRenderer2D>();
+	transform2D			= nullptr;
+	anim2D				= nullptr;
+	draw				= true;
+	num					= 0;
+	addMode				= false;
+	feedIn				= false;
+	feedOut				= false;
+	feedInOutTimer		= 0.0f;
+	feedInOutTimerBase	= 0.0f;
 }
 
 MeshRenderer2D::~MeshRenderer2D()
@@ -32,12 +37,28 @@ MeshRenderer2D::~MeshRenderer2D()
 
 void MeshRenderer2D::Update()
 {
+	if (feedIn) {
+		alpha = Easing::EasingFlow<float>(&feedInOutTimer, feedInOutTimerBase, 255.0f, 0.0f, Easing::EaseIn<float>);
+		if (feedInOutTimer <= 0.0f) {
+			feedIn = false;
+		}
+	}
+	else if (feedOut) {
+		alpha = Easing::EasingFlow<float>(&feedInOutTimer, feedInOutTimerBase, 0.0f, 255.0f, Easing::EaseIn<float>);
+		if (feedInOutTimer <= 0.0f) {
+			feedOut = false;
+			draw = false;
+		}
+	}
 }
 
 void MeshRenderer2D::Draw()
 {
 	if (hImage == -1 || !draw) {
 		return;
+	}
+	if (feedIn || feedOut) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	}
 	Transform transform;
 	if (transform2D == nullptr) {
@@ -49,8 +70,15 @@ void MeshRenderer2D::Draw()
 	if (anim2D != nullptr) {
 		int graphNum = anim2D->GetGraphNum();
 		int num = (int)anim2D->GetAnimCounter() % graphNum;
-		float de = imageSize.x / (float)graphNum;
-		DrawRectRotaGraphFast3F(transform.position.x, transform.position.y, static_cast<int>(de * num), 0, imageSize.x / graphNum, imageSize.y, imageSize.x / graphNum * 0.5f, imageSize.y * 0.5f, transform.scale.x, transform.scale.y, transform.rotation.y, hImage, TRUE);
+		if (xAnim) {
+			float de = imageSize.x / (float)graphNum;
+			DrawRectRotaGraphFast3F(transform.position.x, transform.position.y, static_cast<int>(de * num), 0, imageSize.x / graphNum, imageSize.y, imageSize.x / graphNum * 0.5f, imageSize.y * 0.5f, transform.scale.x, transform.scale.y, transform.rotation.y, hImage, TRUE);
+		}
+		else {
+			float de = imageSize.y / (float)graphNum;
+			DrawRectRotaGraphFast3F(transform.position.x, transform.position.y, 0, static_cast<int>(de * num), imageSize.x, imageSize.y / graphNum, imageSize.x * 0.5f, imageSize.y / graphNum * 0.5f, transform.scale.x, transform.scale.y, transform.rotation.y, hImage, TRUE);
+		}
+		
 	}
 	else {
 		if (addMode) {
@@ -60,7 +88,9 @@ void MeshRenderer2D::Draw()
 			NormalDraw(transform);
 		}
 	}
-	
+	if (feedIn || feedOut) {
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 }
 
 void MeshRenderer2D::TextureHandle(int _image, GraphMode _mode)
@@ -114,9 +144,15 @@ void MeshRenderer2D::SetStartPos(VECTOR2I _pos)
 	startPos = _pos;
 }
 
-void MeshRenderer2D::AnimStart(float _speed, int _num)
+void MeshRenderer2D::AnimStart(float _speed, int _num, bool _animX)
 {
 	anim2D = obj->Component()->GetComponent<Anim2D>();
+	xAnim = _animX;
+}
+
+void MeshRenderer2D::AnimStart(float _speed, int _num)
+{
+	AnimStart(_speed, _num, true);
 }
 
 void MeshRenderer2D::SetDrawImageSize(VECTOR2I _pos)
@@ -171,6 +207,21 @@ void MeshRenderer2D::AddDraw(const Transform& transform)
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);*/
 	NormalDraw(transform);
+}
+
+void MeshRenderer2D::FeedInDraw(float _timer)
+{
+	draw = true;
+	feedIn = true;
+	feedInOutTimer = _timer;
+	feedInOutTimerBase = feedInOutTimer;
+}
+
+void MeshRenderer2D::FeedOutDraw(float _timer)
+{
+	feedOut = true;
+	feedInOutTimer = _timer;
+	feedInOutTimerBase = feedInOutTimer;
 }
 
 void MeshRenderer2D::DrawNum()

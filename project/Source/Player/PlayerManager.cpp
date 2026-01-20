@@ -41,6 +41,8 @@
 #include "../GameManager/GameManager.h"
 #include "PlayerState/PlayerWin.h"
 #include "PlayerState/PlayerBefore.h"
+#include "../Component/Animator/Anim2D.h"7
+#include "../Screen.h"
 
 PlayerManager::PlayerManager()
 {
@@ -73,7 +75,7 @@ void PlayerManager::CreatePlayer()
 	playerPointer = new Object3D();
 	playerPointer->SetDrawOrder(-5);
 	//playerPointer->Init(VECTOR3(300, 100, 1500), VZero, VECTOR3(3.0f, 3.0f,3.0f), "PLAYER");
-	playerPointer->Init(VECTOR3(300,200, -2000), VZero, VECTOR3(3.0f ,3.0f,3.0f), "PLAYER");
+	playerPointer->Init(VECTOR3(300,0, -2000), VZero, VECTOR3(3.0f ,3.0f,3.0f), "PLAYER");
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	/*ColliderBase* collider = playerPointer->Component()->AddComponent<SphereCollider>();*/
 	CollsionInfo info;
@@ -95,6 +97,18 @@ void PlayerManager::CreatePlayer()
 	Shaker* shaker		= playerPointer->Component()->AddComponent<Shaker>();
 	
 	MeshRenderer* me2	= playerPointer->Component()->AddComponent<MeshRenderer>();
+
+	MeshRenderer2D* me2D = playerPointer->Component()->AddComponent<MeshRenderer2D>();
+	me2D->SetDraw(false);
+	me2D->SetTransform(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VECTOR3(192.0f, 0.7f,0)));
+	//me2D->SetTransform(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VECTOR3(0.1f,1,0) * 10.0f));
+
+	me2D->TextureHandle(Load::LoadImageGraph(Load::IMAGE_PATH + "speicialAttackBackSide", ID::PLAYER_SPECIAL_ATTACK_BACK), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+
+	Anim2D* anim2D = playerPointer->Component()->AddComponent<Anim2D>();
+	anim2D->AnimSetting(400.0f, 192);
+
+	me2D->AnimStart(1.0f,10,true);
 	
 	Physics* physics	= playerPointer->Component()->AddComponent<Physics>();
 	Player* player		= playerPointer->Component()->AddComponent<Player>();
@@ -148,8 +162,9 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK4,	"P_ATTACK46", false, 2.0f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_DIE,						"P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_TURN_ANIM,					"P_TURN1", false, 1.3f, 10.0f, 21.0f);
-	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM,		"P_SPECIAL_ATTACK", false, 1.2f, 7.0f, 39.0f);
+	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM,		"P_SPECIAL_ATTACK_2", false, 1.0f, 7.0f, 39.0f);
 	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM,	"P_SPECIAL_ATTACK_BEFORE", false, 1.2f, 7.0f, 39.0f);
+	anim->AddFile(ID::IDType::P_WIN,						"P_WIN", false, 1.2f, 7.0f, 39.0f);
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);
@@ -205,7 +220,7 @@ void PlayerManager::GameSceneChangeState()
 		stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 		break;
 	case 2:
-		stateManager->ChangeState(StateID::PLAYER_WIN_STATE_S);
+		stateManager->NowChangeState(StateID::PLAYER_WIN_STATE_S);
 		stateManager->SetNoStateChange(true);
 		break;
 	case 3:

@@ -23,6 +23,12 @@ int Random::GetInt(int min, int max)
     return dist(engine_);
 }
 
+float Random::GetFloat(float min, float max)
+{
+    std::uniform_int_distribution<int> dist(min, max);
+    return dist(engine_);
+}
+
 int Random::GetWeightedIndex(const std::vector<double>& weights)
 {
     std::discrete_distribution<int> dist(weights.begin(), weights.end());

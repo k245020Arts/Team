@@ -54,7 +54,7 @@ Camera::Camera()
 	moveAmout							= 0.0f;
 	rockOn								= false;
 	targetEnemyTransform				= nullptr;
-	
+	diffTarget							= VZero;
 
 }
 
@@ -115,7 +115,7 @@ void Camera::Draw()
 
 	if (debugButton == 2) {
 		Transform transform = *obj->GetTransform();
-		SetCameraPositionAndTarget_UpVecY(transform.position, VECTOR3(0, 0, 0));
+		SetCameraPositionAndTarget_UpVecY(transform.position, diffTarget);
 	}
 	else if (rockOn) {
 		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target + VECTOR3(0, 300, 0));
@@ -146,6 +146,7 @@ void Camera::ImguiDraw()
 	ImGui::RadioButton("normalCamera",&debugButton ,0);
 	ImGui::RadioButton("FreeCamera", &debugButton, 1);
 	ImGui::RadioButton("DiffTarget", &debugButton, 2);
+	ImGui::DragFloat3("deffTarget", &diffTarget.x, 1.0f, -100000.0f, 10000.0f);
 	ImGui::DragFloat3("cameraPosition", &cameraComponent.cameraTransform->position.x,1.0f, 0.0f, 5000.0f);
 	ImGui::DragFloat3("cameraRotation", &cameraComponent.cameraTransform->rotation.x,1.0f, 0.0f, 5000.0f);
 	ImGui::DragFloat3("target", &target.x,1.0f, 0.0f, 5000.0f);

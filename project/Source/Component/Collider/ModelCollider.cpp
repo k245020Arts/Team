@@ -16,6 +16,7 @@ ModelCollider::~ModelCollider()
 
 void ModelCollider::Update()
 {
+	Transform trans = collTransform->WorldTransform();
 	MV1SetMatrix(modelHandle, collTransform->WorldTransform().GetMatrix());
 
 	int a = MV1RefreshCollInfo(modelHandle, -1);

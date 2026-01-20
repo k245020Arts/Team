@@ -34,6 +34,7 @@ public:
 
 	void SetStartPos(VECTOR2I _pos);
 
+	void AnimStart(float _speed,int _num,bool _animX);
 	void AnimStart(float _speed,int _num);
 	/// <summary>
 	/// ‰æ‘œ‚Ì‘å‚«‚³‚ðŽæ“¾
@@ -57,6 +58,11 @@ public:
 	void NormalDraw(const Transform& transform);
 	void AddDraw(const Transform& transform);
 
+	void FeedInDraw(float _timer);
+	void FeedOutDraw(float _timer);
+
+	float GetAlpha() { return alpha; }
+
 private:
 	int hImage;
 	GraphMode mode;
@@ -73,4 +79,12 @@ private:
 	void DrawNum();
 
 	bool addMode;
+	bool xAnim;
+
+	float alpha;
+	bool feedIn;
+	bool feedOut;
+
+	float feedInOutTimer;
+	float feedInOutTimerBase;
 };
