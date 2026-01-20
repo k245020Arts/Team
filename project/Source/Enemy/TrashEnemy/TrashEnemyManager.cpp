@@ -246,6 +246,7 @@ void TrashEnemyManager::NormalAttackMove(TrashEnemy* _enemy)
 {
 	if (_enemy->IsCooperateAtk())
 		return;
+
 	if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)
 	{
 		if (_enemy->IsAttack())

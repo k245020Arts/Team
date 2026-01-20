@@ -3,6 +3,7 @@
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
 #include "T_EnemyStatus.h"
+#include "../../../Player/Player.h"
 
 T_EnemyAttack::T_EnemyAttack()
 {
@@ -22,16 +23,15 @@ void T_EnemyAttack::Update()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->LookTarget();
 	
-	if (!e->isCooperateAtk)
-	{
-		counter++;
-		if (counter >= 5 && counter <= 10)
-		{
-			e->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
-			e->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
-		}
-	}
+	if (e->isCooperateAtk)
+		return;
 
+	counter++;
+	if (counter >= 5 && counter <= 10)
+	{
+		e->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
+		e->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
+	}
 	if (e->enemyBaseComponent.anim->IsFinish())
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
 
