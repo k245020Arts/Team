@@ -216,17 +216,18 @@ void SoundManager::Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj, f
 	float size = dist.Size();
 
 	float vol = 0;
-	if (_maxVolSize >= size) {
+	if (_maxVolSize <= size) {
 		vol = 0;
 	}
-	else if (_minVolSize <= size) {
+	else if (_minVolSize >= size) {
 		vol = sound[Sound_ID::GetSoundID(_id)]->GetVolumn();
 	}
 	else {
-		float rate = (size - _minVolSize) / (_maxVolSize - _minVolSize);
+		float rate = (size - _maxVolSize) / (_minVolSize - _maxVolSize);
 		vol = Easing::Lerp(0.0f, sound[Sound_ID::GetSoundID(_id)]->GetVolumn(),rate);
 	}
 	sound[Sound_ID::GetSoundID(_id)]->ChangeVolumeSound(vol);
+
 }
 
 void SoundManager::Base3DSoundObject(BaseObject* _base)

@@ -100,10 +100,10 @@ void PlayerManager::CreatePlayer()
 
 	MeshRenderer2D* me2D = playerPointer->Component()->AddComponent<MeshRenderer2D>();
 	me2D->SetDraw(false);
-	me2D->SetTransform(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VECTOR3(192.0f, 0.7f,0)));
+	me2D->SetTransform(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VECTOR3(192.0f, 1.0f,0)));
 	//me2D->SetTransform(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VECTOR3(0.1f,1,0) * 10.0f));
 
-	me2D->TextureHandle(Load::LoadImageGraph(Load::IMAGE_PATH + "speicialAttackBackSide", ID::PLAYER_SPECIAL_ATTACK_BACK), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+	me2D->TextureHandle(Load::LoadImageGraph(Load::IMAGE_PATH + "speicialAttackBackSide4", ID::PLAYER_SPECIAL_ATTACK_BACK), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 
 	Anim2D* anim2D = playerPointer->Component()->AddComponent<Anim2D>();
 	anim2D->AnimSetting(400.0f, 192);
