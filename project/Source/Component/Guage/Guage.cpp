@@ -38,8 +38,11 @@ void Guage::Update()
 
 		VECTOR3 screenPos = VECTOR3(0,0,0);
 		screenPos = ConvWorldPosToScreenPos(headPos);
-		obj->GetTransform()->position = headPos;
-		edge->SetPosition(headPos);
+		/*obj->GetTransform()->position = headPos;
+		edge->SetPosition(headPos);*/
+
+		obj->GetTransform()->position = screenPos;
+		edge->SetPosition(obj->GetTransform()->position);
 	}
 	if (guage != nullptr) {
 
