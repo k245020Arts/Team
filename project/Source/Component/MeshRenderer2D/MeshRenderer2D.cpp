@@ -29,10 +29,10 @@ MeshRenderer2D::~MeshRenderer2D()
 		delete transform2D;
 		transform2D = nullptr;
 	}
-	if (anim2D != nullptr) {
+	/*if (anim2D != nullptr) {
 		delete anim2D;
 		anim2D = nullptr;
-	}
+	}*/
 }
 
 void MeshRenderer2D::Update()

@@ -112,6 +112,12 @@ void PlayerJustAvoid::Update()
 		
 		if (num % 30 == 0) {
 			p->playerCom.blur->MosionStart(0.3f, 0.04f, animId, 1);
+			
+			volume -= 40.0f;
+			if (volume <= 120.0f) {
+				p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
+				p->playerCom.sound->ChangeSound(Sound_ID::JUST_AVOID_SUCCESS, volume);
+			}
 		}
 		num++;
 	}
@@ -142,6 +148,8 @@ void PlayerJustAvoid::Start()
 
 	//音を鳴らす
 	p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
+	volume = 200;
+	p->playerCom.sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
 	p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
 
 	//エフェクトの再生

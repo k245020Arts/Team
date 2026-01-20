@@ -100,6 +100,11 @@ void SoundManager::PlaySceneLoad()
 
 	SoundLoad(Sound_ID::SOUND_ID::GROUND, "Ground", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::V_B_ROAR, "B_ROAR", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_V, "PlayerSpecialAttackV", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::CUTIN_START, "CutInStart", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_ATTACK_V1, "PlayerSpecialAttackAttackV1", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_ATTACK_V2, "PlayerSpecialAttackAttackV2", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_FINAL_ATTACKV, "PlayerSpecialFinalAttackV", ".wav", 255);
 	
 }
 
@@ -186,4 +191,14 @@ void SoundManager::SetFeedInOutList(Sound* sound)
 		}
 	}
 	feedInOutList.push_back(sound);
+}
+
+void SoundManager::ChangeSound(Sound_ID::SOUND_ID _id, float _change)
+{
+	sound[Sound_ID::GetSoundID(_id)]->ChangeVolumeSound(_change);
+}
+
+void SoundManager::BaseVolumeChange(Sound_ID::SOUND_ID _id)
+{
+	sound[Sound_ID::GetSoundID(_id)]->BaseChangeVolumeSound();
 }

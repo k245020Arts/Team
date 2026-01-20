@@ -233,6 +233,7 @@ bool TrashEnemy::IsPlayerSpecialMove()
 {
 	/*if()
 	return false;*/
+	return false;
 }
 
 void TrashEnemy::Trail()

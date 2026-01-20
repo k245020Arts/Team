@@ -56,6 +56,8 @@ public:
 	void FeedInOut(Sound_ID::SOUND_ID _id, float _time);
 
 	void SetFeedInOutList(Sound* sound);
+	void ChangeSound(Sound_ID::SOUND_ID _id,float _change);
+	void BaseVolumeChange(Sound_ID::SOUND_ID _id);
 
 private:
 	

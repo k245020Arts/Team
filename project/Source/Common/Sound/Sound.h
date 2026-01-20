@@ -24,7 +24,8 @@ public:
 	void BGMFeedOut(float time);
 
 	bool IsActive() { return active; }
-
+	void ChangeVolumeSound(float _volume);
+	void BaseChangeVolumeSound();
 
 private:
 
