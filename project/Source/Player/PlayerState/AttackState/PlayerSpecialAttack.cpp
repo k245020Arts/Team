@@ -181,6 +181,8 @@ void PlayerSpecialAttack::Start()
 	zoomRate = 1.0f;
 	zoomSize = 0.0f;
 	p->playerCom.camera->SleepTargetSet(CutSceneSpece::ALL_ENEMY, true);
+	p->playerCom.sound->PlaySe(Sound_ID::CUTIN_START);
+	p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_V);
 }
 
 void PlayerSpecialAttack::Finish()
@@ -265,6 +267,7 @@ void PlayerSpecialAttack::BeforeUpdate()
 				zoom = false;
 				p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f - 200.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VOne * 0.5f), nullptr, Effect_ID::PLAYER_FLASH, 1.0f, false);
 				p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_FLASH, 2.0f);
+				
 			}
 		}
 		if (beforeWaitCounter > 0.0f) {
@@ -338,6 +341,7 @@ void PlayerSpecialAttack::GroundUpdate()
 		ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
 		AddCollsion();
 		p->playerCom.sound->RandamSe("swordWind", 5);
+		p->playerCom.sound->RandamSe("PlayerSpecialAttackAttackV", 2);
 	}
 
 	
@@ -421,6 +425,7 @@ void PlayerSpecialAttack::ChargeUpdate()
 		state = FINAL_ATTACK;
 		//p->playerCom.anim->SetPlaySpeed(3.0f);
 		p->playerCom.shaker->ShakeFinish();
+		p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_FINAL_ATTACKV);
 	}
 }
 

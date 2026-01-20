@@ -84,3 +84,13 @@ void Sound::BGMFeedOut(float time)
 	timeMax		= time;
 	active		= true;
 }
+
+void Sound::ChangeVolumeSound(float _volume)
+{
+	ChangeVolumeSoundMem(_volume, soundHandle);
+}
+
+void Sound::BaseChangeVolumeSound()
+{
+	ChangeVolumeSound(volume);
+}

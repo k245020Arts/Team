@@ -30,4 +30,5 @@ private:
 
 	BlurScreen* blurScreen;
 	float startTimer;
+	float volume;
 };
