@@ -27,6 +27,7 @@ private:
 	float angle;
 	float range;
 	float randomSpeed;
+	float redefinitionCounter;
 	bool isBach;
 	//次のポジションを再定義する
 	bool isRedefinition;
