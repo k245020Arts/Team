@@ -12,6 +12,9 @@ Standby::Standby()
 	counter = 0;
 
 	randomSpeed = 0;
+
+	newPos = VZero;
+	isRedefinition = false;
 }
 
 Standby::~Standby()
@@ -42,7 +45,7 @@ void Standby::Update()
 		}
 		else
 		{
-			//NormalMove();
+			NormalMove();
 			if (vec.Size() <= range / 2)
 			{
 				pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
@@ -110,17 +113,27 @@ void Standby::NormalMove()
 void Standby::RotateMove(int rotDir)
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-
+	
 	// ‰~‰^“®‚Ì‚½‚ß‚ÌŠp“x‚ði‚ß‚é
-	angle += 0.5f * randomSpeed * DegToRad * rotDir;
+	//angle += 0.5f * randomSpeed * DegToRad * rotDir;
 
 	// ƒvƒŒƒCƒ„[’†S‚Ì‰~Žüã‚ÌˆÊ’u‚ðŒvŽZ
-	VECTOR3 newPos;
-	newPos.x = pPos.x + cosf(angle) * range;
-	newPos.z = pPos.z + sinf(angle) * range;
+	//VECTOR3 newPos;
+	//newPos.x = pPos.x + cosf(angle) * range;
+	//newPos.z = pPos.z + sinf(angle) * range;
+
+	VECTOR3 enemyPos = e->GetPos();
+	if (isRedefinition)
+	{
+		float _range = 100 * Random::GetReal() - 100 * Random::GetReal();
+		newPos = enemyPos + VECTOR3(_range, 0, _range);
+		isRedefinition = false;
+	}
+	else if (newPos.Size() <= e->eStatus->GetStatus().atkRang)
+		isRedefinition = true;
 
 	// ˆÚ“®
-	e->GetEnemyObj()->GetTransform()->position = newPos;
+	e->GetEnemyObj()->GetTransform()->position += 5 * newPos.Normalize();
 }
 
 float Standby::CalculateAngle()
