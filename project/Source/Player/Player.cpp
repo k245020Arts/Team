@@ -232,6 +232,8 @@ void Player::Start(Object3D* _obj)
 
 	playerCom.stateManager->StartState(StateID::PLAYER_WAIT_S);
 	redCounter = 0.0f;
+	//3DSoundのベースはプレイヤーに持たせる。
+	playerCom.sound->Base3DSoundObject(obj);
 }
 
 void Player::Move(float _speed, float _speedMax)

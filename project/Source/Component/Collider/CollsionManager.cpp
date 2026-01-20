@@ -216,7 +216,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 	}
 
 	// ‰ðŒˆ
-	resolver.Apply(col1->GetObj()->GetTransform(), phy,true,30.0f);
+	resolver.Apply(col1->GetObj()->GetTransform(), phy,true,20.0f);
 
 
 	MV1CollResultPolyDimTerminate(result);

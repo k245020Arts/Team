@@ -27,6 +27,8 @@ public:
 	void ChangeVolumeSound(float _volume);
 	void BaseChangeVolumeSound();
 
+	const float GetVolumn() { return volume; }
+
 private:
 
 	int soundHandle;

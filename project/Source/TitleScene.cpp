@@ -34,6 +34,7 @@ TitleScene::~TitleScene()
 	//DeleteGraph(hImage);
 	Load::AllDelete();
 	//FindGameObject<SoundManager>()->AllDeleteSound();
+
 }
 
 void TitleScene::Update()
