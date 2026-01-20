@@ -15,24 +15,25 @@ namespace {
 
 EffectManager::EffectManager()
 {
-	Load::LoadEffect("enemyChrage3",		Effect_ID::ENEMY_FLASH,			50.0f);
-	Load::LoadEffect("hitEffect",			Effect_ID::HIT_EFFECT,			50.0f);
-	Load::LoadEffect("specialHit",			Effect_ID::SPECIAL_HIT_EFFECT,	50.0f);
-	Load::LoadEffect("justAvoidEffect",		Effect_ID::JUST_AVOID_EFFECT,	50.0f);
-	Load::LoadEffect("playerFlash",			Effect_ID::PLAYER_FLASH,		50.0f);
-	Load::LoadEffect("aura",				Effect_ID::PLAYER_AURA,			50.0f);
-	Load::LoadEffect("playerHit",			Effect_ID::PLAYER_HIT,			50.0f);
-	Load::LoadEffect("playerAttackEffect",	Effect_ID::PLAYER_ATTACK,		50.0f);
-	Load::LoadEffect("hitSlash",			Effect_ID::PLAYER_SLASH_ATTACK, 30.0f);
-	Load::LoadEffect("enemyAttackCicle",	Effect_ID::ENEMY_ATTACK_CICLE,	50.0f);
-	Load::LoadEffect("AlphaCutoff",			Effect_ID::EFFECT_WALL,			50.0f);
-	Load::LoadEffect("bossWave1",			Effect_ID::BOSS_WAVE,			50.0f);
-	Load::LoadEffect("bossGround",			Effect_ID::BOSS_GROUND,			30.0f);
-	Load::LoadEffect("bossRoor",			Effect_ID::BOSS_ROAR,			10.0f);
-	Load::LoadEffect("bossRoor",			Effect_ID::BOSS_ROAR,			10.0f);
-	Load::LoadEffect("PlayerSpecialSlash",	Effect_ID::PLAYER_SPECIAL_SLASH,50.0f);
-	Load::LoadEffect("PlayerSpecialPlace",	Effect_ID::PLAYER_SPECIAL_PLACE,50.0f);
-	Load::LoadEffect("SpecialFinalAttack",	Effect_ID::PLAYER_SPECIAL_FINAL,50.0f);
+	Load::LoadEffect("enemyChrage3",				Effect_ID::ENEMY_FLASH,			50.0f);
+	Load::LoadEffect("hitEffect",					Effect_ID::HIT_EFFECT,			50.0f);
+	Load::LoadEffect("specialHit",					Effect_ID::SPECIAL_HIT_EFFECT,	50.0f);
+	Load::LoadEffect("justAvoidEffect",				Effect_ID::JUST_AVOID_EFFECT,	50.0f);
+	Load::LoadEffect("playerFlash",					Effect_ID::PLAYER_FLASH,		50.0f);
+	Load::LoadEffect("aura",						Effect_ID::PLAYER_AURA,			50.0f);
+	Load::LoadEffect("playerHit",					Effect_ID::PLAYER_HIT,			50.0f);
+	Load::LoadEffect("playerAttackEffect",			Effect_ID::PLAYER_ATTACK,		50.0f);
+	Load::LoadEffect("hitSlash",					Effect_ID::PLAYER_SLASH_ATTACK, 30.0f);
+	Load::LoadEffect("enemyAttackCicle",			Effect_ID::ENEMY_ATTACK_CICLE,	50.0f);
+	Load::LoadEffect("AlphaCutoff",					Effect_ID::EFFECT_WALL,			50.0f);
+	Load::LoadEffect("bossWave1",					Effect_ID::BOSS_WAVE,			50.0f);
+	Load::LoadEffect("bossGround",					Effect_ID::BOSS_GROUND,			30.0f);
+	Load::LoadEffect("bossRoor",					Effect_ID::BOSS_ROAR,			10.0f);
+	Load::LoadEffect("bossRoor",					Effect_ID::BOSS_ROAR,			10.0f);
+	Load::LoadEffect("PlayerSpecialSlash",			Effect_ID::PLAYER_SPECIAL_SLASH,50.0f);
+	Load::LoadEffect("PlayerSpecialPlace",			Effect_ID::PLAYER_SPECIAL_PLACE,50.0f);
+	Load::LoadEffect("SpecialFinalAttack",			Effect_ID::PLAYER_SPECIAL_FINAL,50.0f);
+	Load::LoadEffect("PlayerSpecialAttackFlash",	Effect_ID::PLAYER_SPECIAL_FLASH,50.0f);
 	//Effekseer_SetGraphicsDeviceDXLib();
 	SetDrawOrder(-10000);
 }

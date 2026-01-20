@@ -265,8 +265,8 @@ void PlayerSpecialAttack::BeforeUpdate()
 			if (zoomCounter <= 0.0f) {
 				beforeWaitCounter = 1.0f;
 				zoom = false;
-				p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f - 200.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VOne * 0.5f), nullptr, Effect_ID::PLAYER_FLASH, 1.0f, false);
-				p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_FLASH, 2.0f);
+				p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f - 200.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VOne), nullptr, Effect_ID::PLAYER_SPECIAL_FLASH, 1.0f, false);
+				p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_SPECIAL_FLASH, 2.0f);
 				
 			}
 		}
@@ -298,12 +298,8 @@ void PlayerSpecialAttack::GroundUpdate()
 	Player* p = GetBase<Player>();
 	float dt = Time::DeltaTimeRate();
 
-	// トレイル（見た目）
 	p->playerCom.player->DrawTrail(VECTOR3(0, 0, 100),VECTOR3(0, 0, -350),250.0f, 235.0f,0.0f, 150.0f,28, 0.4f);
 
-	// -----------------------------
-	// 直線移動（中心貫通）
-	// -----------------------------
 	moveT += moveSpeed * dt;
 
 	// 線形補間で位置を決定

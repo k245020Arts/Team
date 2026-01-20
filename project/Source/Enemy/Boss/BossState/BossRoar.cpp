@@ -44,7 +44,7 @@ void BossRoar::Draw()
 void BossRoar::Start()
 {
 	Boss* b	= GetBase<Boss>();
-	b->enemyBaseComponent.sound->PlaySe(Sound_ID::V_B_ROAR);
+	b->enemyBaseComponent.sound->Play3DSound(Sound_ID::V_B_ROAR,b->obj,1000.0f,8000.0f);
 	first	= true;
 	EnemyStateBase::Start();
 	b->enemyBaseComponent.state->SetNoStateChange(true);

@@ -4,6 +4,7 @@
 #include "../ID/SoundID.h"
 
 class Sound;
+class BaseObject;
 
 class SoundManager : public GameObject
 {
@@ -59,9 +60,13 @@ public:
 	void ChangeSound(Sound_ID::SOUND_ID _id,float _change);
 	void BaseVolumeChange(Sound_ID::SOUND_ID _id);
 
+	void Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj,float _maxVolSize,float _minVolSize);
+	void Base3DSoundObject(BaseObject* _base);
+
 private:
 	
 	std::unordered_map<std::string,Sound*> sound;
 
 	std::list<Sound*> feedInOutList;
+	BaseObject* Base3DSoundObj;
 };

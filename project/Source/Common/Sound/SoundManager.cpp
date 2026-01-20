@@ -2,10 +2,14 @@
 #include "Sound.h"
 #include "../LoadManager.h"
 #include "../Debug/Debug.h"
+#include "../../Component/Object/BaseObject.h"
+#include "../../Component/Transform/Transform.h"
+#include "../Easing.h"
 
 SoundManager::SoundManager()
 {
 	DontDestroyOnSceneChange(true);
+	Base3DSoundObj = nullptr;
 }
 
 SoundManager::~SoundManager()
@@ -145,6 +149,7 @@ void SoundManager::AllDeleteSound()
 		delete s.second;
 	}
 	sound.clear();
+	Base3DSoundObj = nullptr;
 }
 
 void SoundManager::RandamSe(std::string _name, int num)
@@ -201,4 +206,30 @@ void SoundManager::ChangeSound(Sound_ID::SOUND_ID _id, float _change)
 void SoundManager::BaseVolumeChange(Sound_ID::SOUND_ID _id)
 {
 	sound[Sound_ID::GetSoundID(_id)]->BaseChangeVolumeSound();
+}
+
+void SoundManager::Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj, float _maxVolSize, float _minVolSize)
+{
+	Transform*  targetTransform = _targetObj->GetTransform();
+	Transform* base3DTransfom = Base3DSoundObj->GetTransform();
+	VECTOR3 dist = targetTransform->position - base3DTransfom->position;
+	float size = dist.Size();
+
+	float vol = 0;
+	if (_maxVolSize >= size) {
+		vol = 0;
+	}
+	else if (_minVolSize <= size) {
+		vol = sound[Sound_ID::GetSoundID(_id)]->GetVolumn();
+	}
+	else {
+		float rate = (size - _minVolSize) / (_maxVolSize - _minVolSize);
+		vol = Easing::Lerp(0.0f, sound[Sound_ID::GetSoundID(_id)]->GetVolumn(),rate);
+	}
+	sound[Sound_ID::GetSoundID(_id)]->ChangeVolumeSound(vol);
+}
+
+void SoundManager::Base3DSoundObject(BaseObject* _base)
+{
+	Base3DSoundObj = _base;
 }
