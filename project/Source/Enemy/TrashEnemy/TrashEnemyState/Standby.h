@@ -26,4 +26,5 @@ private:
 	float range;
 	float randomSpeed;
 	bool isBach;
+
 };
