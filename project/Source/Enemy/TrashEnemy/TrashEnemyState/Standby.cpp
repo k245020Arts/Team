@@ -12,6 +12,8 @@ Standby::Standby()
 	counter = 0;
 
 	randomSpeed = 0;
+
+	redefinitionCounter = 0;
 }
 
 Standby::~Standby()
@@ -30,6 +32,7 @@ void Standby::Update()
 		{
 			if (vec.Size() <= range)
 			{
+				isRedefinition = true;
 				float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
 
 				e->GetEnemyObj()->GetTransform()->position.x -= range / BACKSPEED * cosf(rotY - 0.5f * DX_PI_F);
@@ -42,7 +45,7 @@ void Standby::Update()
 		}
 		else
 		{
-			//NormalMove();
+			NormalMove();
 			if (vec.Size() <= range / 2)
 			{
 				pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
@@ -93,6 +96,7 @@ void Standby::Finish()
 	counter = 0;
 	e->isStandby = false;
 	e->isAttack = false;
+	isRedefinition = true;
 }
 
 void Standby::NormalMove()
@@ -111,15 +115,35 @@ void Standby::RotateMove(int rotDir)
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
 	// ‰~‰^“®‚Ì‚½‚ß‚ÌŠp“x‚ði‚ß‚é
-	angle += 0.5f * randomSpeed * DegToRad * rotDir;
+	//angle += 0.5f * randomSpeed * DegToRad * rotDir;
 
 	// ƒvƒŒƒCƒ„[’†S‚Ì‰~Žüã‚ÌˆÊ’u‚ðŒvŽZ
-	VECTOR3 newPos;
-	newPos.x = pPos.x + cosf(angle) * range;
-	newPos.z = pPos.z + sinf(angle) * range;
+	//VECTOR3 newPos;
+	//newPos.x = pPos.x + cosf(angle) * range;
+	//newPos.z = pPos.z + sinf(angle) * range;
+
+	VECTOR3 enemyPos = e->GetPos();
+	float MAX = 50;
+	if (isRedefinition)
+	{
+		float _rangeX = MAX * Random::GetReal() - MAX * Random::GetReal();
+		float _rangeZ = MAX * Random::GetReal() - MAX * Random::GetReal();
+		newPos = /*enemyPos +*/ VECTOR3(_rangeX, 0, _rangeZ);
+		isRedefinition = false;
+	}
+	else if (newPos.Size() <= e->eStatus->GetStatus().atkRang)
+	{
+		redefinitionCounter += Time::DeltaTimeRate();
+
+		if (redefinitionCounter >= 5)
+		{
+			isRedefinition = true;
+			redefinitionCounter = 0;
+		}
+	}
 
 	// ˆÚ“®
-	e->GetEnemyObj()->GetTransform()->position = newPos;
+	e->GetEnemyObj()->GetTransform()->position += 10 * newPos.Normalize();
 }
 
 float Standby::CalculateAngle()

@@ -20,6 +20,8 @@
 #include "../../Weapon/SwordEffect.h"
 #include "../../Weapon/CharaWeapon.h"
 #include "../../Common/LoadManager.h"
+#include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
+//#include
 
 #include "TrashEnemyState/T_EnemyStatus.h"
 #include "TrashEnemyState/T_EnemyIdol.h"
@@ -174,6 +176,8 @@ void TrashEnemy::Start(Object3D* _obj)
 	chara->ObjectPointer(_obj, 10, ID::E_MODEL, -1);
 	chara->SetImage(Load::GetHandle(ID::SWORD_EFFECT_B));
 
+	//playerSp = enemyBaseComponent.playerObj->Component()->GetComponent<PlayerSpecialAttack>();
+
 	active = true;
 }
 
@@ -182,7 +186,7 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 	obj->GetTransform()->position = _pos;
 	number = kinds;
 
-	const float MAX = 1.5f;
+	const float MAX = 1.2f;
 	const float MIN = 0.8f;
 
 	switch (kinds)
@@ -231,9 +235,10 @@ void TrashEnemy::LookTarget()
 
 bool TrashEnemy::IsPlayerSpecialMove()
 {
-	/*if()
-	return false;*/
-	return false;
+	if (pState->GetState<PlayerSpecialAttack>() == nullptr)
+		return false;
+	else
+		return true;
 }
 
 void TrashEnemy::Trail()

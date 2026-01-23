@@ -19,11 +19,16 @@ private:
 
 	VECTOR3 vec;
 	VECTOR3 pPos;
+	//どこに移動するかわかる
+	VECTOR3 newPos;
 
 	int aiMove;
 	int counter;
 	float angle;
 	float range;
 	float randomSpeed;
+	float redefinitionCounter;
 	bool isBach;
+	//次のポジションを再定義する
+	bool isRedefinition;
 };

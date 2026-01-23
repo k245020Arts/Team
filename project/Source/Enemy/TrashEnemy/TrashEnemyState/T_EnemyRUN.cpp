@@ -19,6 +19,10 @@ T_EnemyRun::~T_EnemyRun()
 void T_EnemyRun::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
+
+	if (e->IsPlayerSpecialMove())
+		return; 
+
 	if (!e->isCooperateAtk)
 		targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 
