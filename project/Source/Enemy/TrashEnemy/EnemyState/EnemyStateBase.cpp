@@ -141,7 +141,7 @@ void EnemyStateBase::AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std
 		sound = false;
 		keepAnimSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
 		e->enemyBaseComponent.anim->SetPlaySpeed(0.1f);
-		animSlowCounter = 0.2f;
+		animSlowCounter = 0.3f;
 		
 	}
 }
