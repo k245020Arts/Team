@@ -50,7 +50,7 @@ void StageManager::CreateStage()
 #ifdef NEW_STAGE
 	stage->Init(VECTOR3(25000, -4000, 20000), VZero, VECTOR3(10, 10, 10), "STAGE");
 #else
-	stage->Init(VECTOR3(100, -50, 100), VZero, VECTOR3(10, 10, 10), "STAGE");
+	stage->Init(VECTOR3(100, 0, 100), VZero, VECTOR3(10, 10, 10), "STAGE");
 #endif
 	
 	
