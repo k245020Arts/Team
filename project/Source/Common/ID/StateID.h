@@ -58,6 +58,7 @@ namespace StateID{
         T_ENEMY_DEAD,
         COOPERATEATTACK1,
         T_ENEMY_STANDBY,
+        T_ENEMY_DAMAGE,
 
         STATE_MAX,
     };

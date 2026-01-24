@@ -19,6 +19,7 @@ public:
 	friend class Standby;
 	friend class T_EnemyJump;
 	friend class CooperateAttack1;
+	friend class T_EnemyDamage;
 
 	TrashEnemy();
 	~TrashEnemy();

@@ -165,6 +165,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<T_EnemyDead>("_T_EnemyDead", StateID::T_ENEMY_DEAD);
 	enemyBaseComponent.state->CreateState<CooperateAttack1>("_CooperateAttack1", StateID::COOPERATEATTACK1);
 	enemyBaseComponent.state->CreateState<Standby>("_Standby", StateID::T_ENEMY_STANDBY);
+	enemyBaseComponent.state->CreateState<EnemyDamage>("_T_EnemyDamage", StateID::T_ENEMY_DAMAGE);
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
