@@ -22,7 +22,7 @@ public:
 private:
 	int model;
 	VECTOR3 baseScale;
-	const float MAX_DIST = 5000.0f;
+	const float MAX_DIST = 4500.0f;
 	VECTOR3 groundPos;
 	VECTOR3 dist;
 	BaseObject* obj;

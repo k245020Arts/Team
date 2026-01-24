@@ -35,7 +35,7 @@ void Shadow::Start()
     MeshRenderer* mesh = GetBaseObject()->Component()->AddComponent<MeshRenderer>();  
     mesh->ModelHandle(model);  
     mesh->DrawLocalPosition();  
-    baseScale = obj->GetTransform()->scale;  
+    baseScale = obj->GetTransform()->scale;
 }
 
 void Shadow::ChangeScale(VECTOR3 _dist, VECTOR3 _groundPos)
@@ -48,6 +48,6 @@ void Shadow::ChangeScale(VECTOR3 _dist, VECTOR3 _groundPos)
 	float s = Easing::EaseOut(base, 0.2f, d / MAX_DIST);
 	obj->GetTransform()->scale.x = s;
 	obj->GetTransform()->scale.z = s;
-	groundPos = _groundPos;
+	groundPos = _groundPos + VECTOR3(0,50,0);
 	dist = _dist;
 }

@@ -145,7 +145,7 @@ void PlayerManager::CreatePlayer()
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),		"mixamorig:Hips");
-	anim->AddFile(ID::IDType::P_ANIM_IDOL,					"P_IDOL_M3", true, 1.0f);
+	anim->AddFile(ID::IDType::P_ANIM_IDOL,					"P_IDOL1", true, 1.0f);
 	anim->AddFile(ID::IDType::P_ANIM_RUN,					"P_RUN_M_1", true, 1.5f);
 	anim->AddFile(ID::IDType::P_ANIM_AVOID,					"P_AVOID_M_1", false, 2.0f,0.0f,5.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID,			"P_JUST_AVOID_M_1", false, 1.5f,10.0f,25.0f);
