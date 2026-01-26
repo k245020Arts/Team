@@ -239,7 +239,12 @@ bool TrashEnemy::IsPlayerSpecialMove()
 	if (pState->GetState<PlayerSpecialAttack>() == nullptr)
 		return false;
 	else
-		return true;
+	{
+		//if (pState->GetState<PlayerSpecialAttack>()->GetSpecialAttackState() == PLAYER_SPECIAL_ATTACK_STATE::FINAL_ATTACK)
+			return true;
+		/*else
+			return false;*/
+	}		
 }
 
 void TrashEnemy::Trail()
