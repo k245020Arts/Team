@@ -49,6 +49,7 @@ public:
 	void AttackCommand();
 	//攻撃クールタイムリセット
 	void AttackCoolTimeReset() { isAttack = true; }
+	//
 	void CooperateAtkFinish();
 
 	//ゲッター
