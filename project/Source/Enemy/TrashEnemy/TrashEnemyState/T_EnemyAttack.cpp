@@ -72,8 +72,6 @@ void T_EnemyAttack::Start()
 	e->isAttack = false;
 	mMaxFrame = e->enemyBaseComponent.anim->GetMaxFrame();
 	isDecel = true;
-	//e->enemyBaseComponent.anim->SetPlaySpeed(10.0f);
-	//keepAnimSpeed
 }
 
 void T_EnemyAttack::Finish()

@@ -111,6 +111,8 @@ TrashEnemy::TrashEnemy()
 	isMovingToPlayer = false;
 
 	slowCounter = 0;
+
+	mStopCounter = 0;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -240,10 +242,17 @@ bool TrashEnemy::IsPlayerSpecialMove()
 		return false;
 	else
 	{
-		//if (pState->GetState<PlayerSpecialAttack>()->GetSpecialAttackState() == PLAYER_SPECIAL_ATTACK_STATE::FINAL_ATTACK)
+		if (pState->GetState<PlayerSpecialAttack>()->GetAttackDamage())
+		{
+			mStopCounter += Time::DeltaTimeRate();
+			if (mStopCounter >= 0.2f)
+				return false;
+		}
+		else
+		{
+			mStopCounter = 0;
 			return true;
-		/*else
-			return false;*/
+		}
 	}		
 }
 

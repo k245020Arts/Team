@@ -113,4 +113,6 @@ private:
 	int number;
 	//必殺技を食らったときに敵をスローにする
 	float slowCounter;
+	//モーションが止まる速度
+	float mStopCounter;
 };

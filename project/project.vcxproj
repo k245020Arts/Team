@@ -277,6 +277,7 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemy.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyManager.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.h" />
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.h" />
@@ -450,6 +451,7 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemy.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyManager.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.cpp" />
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.cpp" />
