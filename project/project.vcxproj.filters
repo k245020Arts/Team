@@ -497,6 +497,9 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Component\UI\ButtonUI.cpp">
+      <Filter>Component\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1050,6 +1053,9 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\UI\ButtonUI.h">
+      <Filter>Component\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1237,6 +1243,9 @@
     </Filter>
     <Filter Include="PlayScene\Wave">
       <UniqueIdentifier>{7749ddb7-107e-4428-ab1e-f47b1def556e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\UI">
+      <UniqueIdentifier>{deb44ab0-f131-45fe-ab87-d5304a501f18}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
