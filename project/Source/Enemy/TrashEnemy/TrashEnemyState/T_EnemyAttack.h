@@ -19,4 +19,8 @@ protected:
 	void AttackInformation(TrashEnemy* _e);
 private:
 	float counter;
+	float mSpeed;
+	float mMaxFrame;
+	//Œ¸‘¬’†‚©Šm”F
+	bool isDecel;
 };
