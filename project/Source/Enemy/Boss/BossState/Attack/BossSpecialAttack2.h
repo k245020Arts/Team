@@ -13,6 +13,8 @@ public:
 	void Start()override;
 	void Finish()override;
 
+	void BossDushSound();
+
 private:
 	float attackCount;
 	VECTOR3 rotation;
@@ -22,4 +24,8 @@ private:
 	float turningTime;
 
 	void AttackStart();
+
+	bool sound;
+	bool firstOnes;
+	bool secondOnes;
 };

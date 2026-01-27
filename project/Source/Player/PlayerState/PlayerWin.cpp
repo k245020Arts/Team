@@ -1,4 +1,6 @@
 #include "PlayerWin.h"
+#include "../Player.h"
+#include "../../Component/Animator/Animator.h"
 
 PlayerWin::PlayerWin()
 {
@@ -13,6 +15,10 @@ PlayerWin::~PlayerWin()
 
 void PlayerWin::Update()
 {
+	Player* player = GetBase<Player>();
+	if (player->playerCom.anim->IsFinish()) {
+		player->playerCom.anim->Play(ID::PLAYER_WIN_IDOL);
+	}
 }
 
 void PlayerWin::Draw()

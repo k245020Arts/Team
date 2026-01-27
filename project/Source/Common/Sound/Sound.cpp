@@ -3,6 +3,11 @@
 #include "../../../Library/Time.h"
 #include "../Easing.h"
 
+namespace {
+	static const int ParamMAX = 22050;
+	float param[ParamMAX];
+}
+
 Sound::Sound()
 {
 	feedInTime		= 0.0f;
@@ -93,4 +98,11 @@ void Sound::ChangeVolumeSound(float _volume)
 void Sound::BaseChangeVolumeSound()
 {
 	ChangeVolumeSound(volume);
+}
+
+void Sound::PlayRamdomChangeFrequencySe(int _ramdom, int _baseFrequ)
+{
+	int ramdom = GetRand(_ramdom) + _baseFrequ;
+	SetFrequencySoundMem(ramdom, soundHandle);
+	PlaySoundMem(soundHandle, DX_PLAYTYPE_BACK);
 }

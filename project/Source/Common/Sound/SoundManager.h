@@ -59,9 +59,23 @@ public:
 	void SetFeedInOutList(Sound* sound);
 	void ChangeSound(Sound_ID::SOUND_ID _id,float _change);
 	void BaseVolumeChange(Sound_ID::SOUND_ID _id);
-
+	/// <summary>
+	/// 3Dサウンドを使いたいときはこの関数を使う
+	/// </summary>
+	/// <param name="_id">サウンドID</param>
+	/// <param name="_targetObj">ここから音が始まるもととなるObject</param>
+	/// <param name="_maxVolSize">音が聞こえる最大の距離、これより離れると音はならない</param>
+	/// <param name="_minVolSize">音の最大音量の距離、これより近づいても最大の音量で流れる。</param>
 	void Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj,float _maxVolSize,float _minVolSize);
 	void Base3DSoundObject(BaseObject* _base);
+
+	/// <summary>
+	/// 周波数をランダムで変更させて音を流したいときに使用する関数
+	/// </summary>
+	/// <param name="_id">sound_id</param>
+	/// <param name="_ramdom">どれくらいの振幅か</param>
+	/// <param name="_baseFrequ">元となる周波数</param>
+	void PlayRamdomChangeFrequencySe(Sound_ID::SOUND_ID _id,int _ramdom,int _baseFrequ);
 
 private:
 	

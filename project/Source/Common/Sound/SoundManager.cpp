@@ -110,6 +110,12 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_ATTACK_V2, "PlayerSpecialAttackAttackV2", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_FINAL_ATTACKV, "PlayerSpecialFinalAttackV", ".wav", 255);
 	
+	SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK1, "p_walk1", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::BOSS_WALK, "AS_373275_ドスッ_重めの足音", ".wav", 200);
+	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK2, "p_walk2", ".wav", 255);
+	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK3, "p_walk3", ".wav", 255);
+	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK4, "p_walk4", ".wav", 255);
+	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK5, "p_walk5", ".wav", 255);
 }
 
 void SoundManager::TitleSceneLoad()
@@ -233,4 +239,9 @@ void SoundManager::Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj, f
 void SoundManager::Base3DSoundObject(BaseObject* _base)
 {
 	Base3DSoundObj = _base;
+}
+
+void SoundManager::PlayRamdomChangeFrequencySe(Sound_ID::SOUND_ID _id, int _ramdom, int _baseFrequ)
+{
+	sound[Sound_ID::GetSoundID(_id)]->PlayRamdomChangeFrequencySe(_ramdom,_baseFrequ);
 }

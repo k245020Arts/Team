@@ -407,18 +407,23 @@ bool EnemyManager::ChangeCameraRockOn(Camera* camera, bool _right, bool _min, bo
 		camFront.y = 0;
 		//DrawLine3D(camPos, enemyPos, 0xff000f);
 
-		//カメラの前にいるかどうかの判定
+		//正面角度の反映
 		float frontDot = VDot(camFront.Normalize(), dotEnemyPos.Normalize());
+		//正面角度のスコアの計算
 		float frontScore = (1.0f - frontDot) * 1.0f;
 
 		//どれだけ横側にいるかどうかの判定
 		//右に傾けると右側により右側にいるかどうか
-		float dist = VECTOR3(camPos - targetEnemyPos).Size();
-
+		//左に傾けるとより左側にいるかどうか
+		
+		//左右角度の反映
 		float sideDot = VDot(camDir.Normalize(), dotEnemyPos.Normalize());
+		//左右方向のスコアの計算
 		float sideScore = sideDot * 0.5f;
 
 		//距離の遠さの反映
+		float dist = VECTOR3(camPos - targetEnemyPos).Size();
+		//距離のスコアの計算
 		float distScore = (dist / CAM_LONG_DISTANCE) * 0.3f;
 
 		score = frontScore + sideScore + distScore;

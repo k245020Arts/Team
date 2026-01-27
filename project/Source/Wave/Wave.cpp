@@ -39,7 +39,7 @@ void Wave::Draw()
 
 void Wave::FirstRespown()
 {
-	tEnemyManager->CreateEnemy(SPWNPOS, INITIALSPAWN);
+	tEnemyManager->CreateEnemy(SPWNPOS, 5.0f);
 	first = true;
 }
 

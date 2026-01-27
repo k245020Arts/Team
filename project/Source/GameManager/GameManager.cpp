@@ -7,6 +7,8 @@
 #include "../Common/Sound/SoundManager.h"
 #include "../Camera/Camera.h"
 #include "../Wave/Wave.h"
+#include "../../ImGui/imgui.h"
+#include "../Common/Debug/Debug.h"
 
 namespace {
 	const int GAME_STATE_MAX = 4;
@@ -51,6 +53,24 @@ void GameManager::Update()
 		}
 	}
 	state = state.Act(this);
+
+	if (Debug::GetDebugMode()) {
+		ImGui::Begin("gameState");
+		if (ImGui::Button("before")) {
+			ChangeState("BEFORE");
+		}
+		if (ImGui::Button("play")) {
+			ChangeState("PLAY");
+		}
+		if (ImGui::Button("win")) {
+			ChangeState("WIN");
+		}
+		if (ImGui::Button("lose")) {
+			ChangeState("LOSE");
+		}
+		ImGui::End();
+	}
+	
 }
 
 void GameManager::Draw()
