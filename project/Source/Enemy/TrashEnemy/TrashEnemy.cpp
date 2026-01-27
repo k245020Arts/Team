@@ -391,7 +391,6 @@ void TrashEnemy::ChangeState(StateID::State_ID _id)
 
 void TrashEnemy::AttackCommand()
 {
-
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
 }
 
