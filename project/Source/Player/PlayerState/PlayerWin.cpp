@@ -18,11 +18,19 @@ void PlayerWin::Update()
 	Player* player = GetBase<Player>();
 	if (player->playerCom.anim->IsFinish()) {
 		player->playerCom.anim->Play(ID::PLAYER_WIN_IDOL);
+		player->playerCom.anim->SetPlaySpeed(1.0f);
+	}
+	if (player->playerCom.anim->AnimEventCan()) {
+		player->playerCom.anim->SetPlaySpeed(0.7f);
+	}
+	else {
+		player->playerCom.anim->SetPlaySpeed(1.0f);
 	}
 }
 
 void PlayerWin::Draw()
 {
+
 }
 
 void PlayerWin::Start()

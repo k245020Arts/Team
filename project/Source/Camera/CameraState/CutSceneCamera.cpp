@@ -15,6 +15,7 @@ CutSceneCamera::CutSceneCamera()
     cutSceneIndex = 0;
     first = false;
     firstPos = VZero;
+    time = 0.0f;
 }
 
 CutSceneCamera::~CutSceneCamera()
