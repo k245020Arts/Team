@@ -434,6 +434,9 @@
     <ClCompile Include="Source\Component\Shadow\Shadow.cpp">
       <Filter>Component\Shadow</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Common\ID\StateID.cpp">
       <Filter>Common\ID</Filter>
     </ClCompile>
@@ -450,6 +453,9 @@
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.cpp">
@@ -491,14 +497,11 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.cpp">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Attack</Filter>
+    <ClCompile Include="Source\Component\UI\ButtonUI.cpp">
+      <Filter>Component\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.cpp">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.cpp">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Attack</Filter>
+    <ClCompile Include="Source\Component\UI\UIManager\UIManager.cpp">
+      <Filter>Component\UI\UIManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -978,6 +981,9 @@
     <ClInclude Include="Source\Component\Shadow\Shadow.h">
       <Filter>Component\Shadow</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Common\ID\StateID.h">
       <Filter>Common\ID</Filter>
     </ClInclude>
@@ -997,6 +1003,9 @@
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStatus.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.h">
@@ -1047,14 +1056,11 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.h">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Attack</Filter>
+    <ClInclude Include="Source\Component\UI\ButtonUI.h">
+      <Filter>Component\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.h">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Attack</Filter>
+    <ClInclude Include="Source\Component\UI\UIManager\UIManager.h">
+      <Filter>Component\UI\UIManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1244,8 +1250,11 @@
     <Filter Include="PlayScene\Wave">
       <UniqueIdentifier>{7749ddb7-107e-4428-ab1e-f47b1def556e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayScene\Enemy\TrashEnemy\TrashEnemyState\Attack">
-      <UniqueIdentifier>{114cd060-f0df-42bf-9c19-aa3ccd283cb0}</UniqueIdentifier>
+    <Filter Include="Component\UI">
+      <UniqueIdentifier>{deb44ab0-f131-45fe-ab87-d5304a501f18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\UI\UIManager">
+      <UniqueIdentifier>{0fb36ed2-e7d9-445a-847e-3c9af93ba5a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
