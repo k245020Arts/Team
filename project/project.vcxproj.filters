@@ -500,6 +500,9 @@
     <ClCompile Include="Source\Component\UI\ButtonUI.cpp">
       <Filter>Component\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Component\UI\UIManager\UIManager.cpp">
+      <Filter>Component\UI\UIManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1056,6 +1059,9 @@
     <ClInclude Include="Source\Component\UI\ButtonUI.h">
       <Filter>Component\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\UI\UIManager\UIManager.h">
+      <Filter>Component\UI\UIManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1246,6 +1252,9 @@
     </Filter>
     <Filter Include="Component\UI">
       <UniqueIdentifier>{deb44ab0-f131-45fe-ab87-d5304a501f18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\UI\UIManager">
+      <UniqueIdentifier>{0fb36ed2-e7d9-445a-847e-3c9af93ba5a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

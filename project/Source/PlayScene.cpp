@@ -30,6 +30,7 @@
 #include "../Source/GameManager/GameManager.h"
 #include "../Source/Common/InputManager/inputManager.h"
 #include "../Source/Wave/Wave.h"
+#include "Component/UI/UIManager/UIManager.h"
 
 int PlayScene::count = 0;
 
@@ -65,7 +66,7 @@ PlayScene::PlayScene()
 	SkyManager* sky = new SkyManager();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	GameManager* gameManager = new GameManager();
-
+	UIManager* uiManager = new UIManager();
 	
 	stageManager->CreateStage();
 	//enemy->CreateEnemy();
@@ -95,6 +96,7 @@ PlayScene::PlayScene()
 	//m->TextureHandle(LoadGraph("data/texture/101backGround.png"),MeshRenderer2D::DRAW_RECT_ROTA_GRAPH,VECTOR3(500,500,500),VZero,VZero);
 
 	Wave* wave = new Wave;
+	uiManager->ButtonUISet();
 }
 
 PlayScene::~PlayScene()
