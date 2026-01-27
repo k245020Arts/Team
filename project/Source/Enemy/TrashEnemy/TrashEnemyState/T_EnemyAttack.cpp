@@ -32,14 +32,10 @@ void T_EnemyAttack::Update()
 		e->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 		e->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 	}
-	if (e->enemyBaseComponent.anim->IsFinish())
-		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+	/*if (e->enemyBaseComponent.anim->IsFinish())
+		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);*/
 
-	AttackCollsion();
-	AttackSound();
-	AttackFlash(ID::E_MODEL, 35, "E_AttackV");
-	e->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	Trail();
+	AttackInformation(e);
 }
 
 void T_EnemyAttack::Draw()
@@ -65,4 +61,16 @@ void T_EnemyAttack::Finish()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->isAttack = false;
 	e->DeleteCollision();
+}
+
+void T_EnemyAttack::AttackInformation(TrashEnemy* _e)
+{
+	if (_e->enemyBaseComponent.anim->IsFinish())
+		_e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+
+	AttackCollsion();
+	AttackSound();
+	AttackFlash(ID::E_MODEL, 35, "E_AttackV");
+	_e->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	Trail();
 }

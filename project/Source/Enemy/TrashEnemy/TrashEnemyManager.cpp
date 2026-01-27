@@ -274,7 +274,7 @@ void TrashEnemyManager::CooperateAttackMove(TrashEnemy* _enemy)
 	if (standbyCounter >= 1)
 		cooperateCounter += Time::DeltaTimeRate();
 	//敵全員が準備完了するか時間経過で攻撃に移る
-	if (standbyCounter == enemiesMax || cooperateCounter >= 2)
+	if (standbyCounter == enemiesMax || cooperateCounter >= 3)
 	{
 		AllChangeState(StateID::T_ENEMY_RUN_S);
 		standbyCounter = 0;
@@ -339,16 +339,14 @@ void TrashEnemyManager::CloseWayPoint()
 				VECTOR3 vec = itr.position - position;
 				//内積
 				float dotProduct = VDot(frontVec, vec.Normalize());
-				//壁の外だったらfalse
-				//if (StageWall(itr.position))
-				//	itr.active = false;
-				////カメラに写ってるか
-				//else 
+				//カメラに写ってるか
 				if (dotProduct > cosf(45 * DegToRad))
 					itr.active = true;
 				//カメラに写ってなかったら
 				else
 					itr.active = false;
+
+				/*counter = 1;*/
 			}
 			//一番近いウェイポイントを探す
 			if (itr.active)

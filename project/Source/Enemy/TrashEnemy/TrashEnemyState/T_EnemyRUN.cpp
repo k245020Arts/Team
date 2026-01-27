@@ -23,7 +23,7 @@ void T_EnemyRun::Update()
 	if (e->IsPlayerSpecialMove())
 		return; 
 
-	if (!e->isCooperateAtk)
+	if (!e->isCooperateAtk || e->isMovingToPlayer)
 		targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 
 	rotation = e->obj->GetTransform()->rotation;
@@ -52,7 +52,7 @@ void T_EnemyRun::Start()
 {
 	EnemyStateBase::Start();
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	if (!e->isCooperateAtk)
+	if (!e->isCooperateAtk|| e->isMovingToPlayer)
 		targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	else
 		targetPos = e->wayPoint;

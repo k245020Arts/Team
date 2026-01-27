@@ -18,6 +18,13 @@ CooperateAttack1::~CooperateAttack1()
 {
 }
 
+void CooperateAttack1::Update()
+{
+	TrashEnemy* e = GetBase<TrashEnemy>();
+
+	AttackInformation(e);
+}
+
 void CooperateAttack1::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
@@ -30,7 +37,6 @@ void CooperateAttack1::Finish()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->speed=e->eStatus->GetStatus().runSpeed;
-	e->isCooperateAtk = false;
-	e->isMovingToPlayer = false;
+	e->CooperateAtkFinish();
 	e->DeleteCollision();
 }

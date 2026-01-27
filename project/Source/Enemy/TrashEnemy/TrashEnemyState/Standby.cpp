@@ -58,10 +58,13 @@ void Standby::Update()
 	}
 	else
 	{
-		counter++;
-		
-		if (counter == 20)
+		if (counter <= 1)
+			counter += Time::DeltaTimeRate();
+		else if (counter != 2)
+		{
 			e->isStandby = true;
+			counter = 2;
+		}
 		else
 			e->isStandby = false;
 	}

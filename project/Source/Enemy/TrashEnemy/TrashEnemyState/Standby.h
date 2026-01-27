@@ -23,7 +23,7 @@ private:
 	VECTOR3 newPos;
 
 	int aiMove;
-	int counter;
+	float counter;
 	float angle;
 	float range;
 	float randomSpeed;

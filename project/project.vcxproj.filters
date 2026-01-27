@@ -494,6 +494,9 @@
     <ClCompile Include="Source\Player\PlayerState\PlayerBefore.cpp">
       <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1043,6 +1046,9 @@
     </ClInclude>
     <ClInclude Include="Source\Player\PlayerState\PlayerBefore.h">
       <Filter>PlayScene\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
