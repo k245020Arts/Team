@@ -242,6 +242,7 @@
     <ClInclude Include="Source\Component\Transform\Quaternion.h" />
     <ClInclude Include="Source\Component\Transform\Transform.h" />
     <ClInclude Include="Source\Component\UI\ButtonUI.h" />
+    <ClInclude Include="Source\Component\UI\EnemyDamageUI.h" />
     <ClInclude Include="Source\Component\UI\UIManager\UIManager.h" />
     <ClInclude Include="Source\Enemy\Boss\Boss.h" />
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />
@@ -421,6 +422,7 @@
     <ClCompile Include="Source\Component\Shaker\Shaker.cpp" />
     <ClCompile Include="Source\Component\Transform\Transform.cpp" />
     <ClCompile Include="Source\Component\UI\ButtonUI.cpp" />
+    <ClCompile Include="Source\Component\UI\EnemyDamageUI.cpp" />
     <ClCompile Include="Source\Component\UI\UIManager\UIManager.cpp" />
     <ClCompile Include="Source\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp" />

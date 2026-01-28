@@ -22,6 +22,7 @@ class MotionBlur;
 class GameManager;
 class EnemyManager;
 class Anim2D;
+class ButtonUI;
 
 namespace PlayerInformation {
 
@@ -77,6 +78,8 @@ namespace PlayerInformation {
 		EnemyManager* enemyManager;
 		MeshRenderer2D* meshRenderer2D;
 		Anim2D* anim2D;
+		ButtonUI* specialAttackButton;
+
 	};
 
 	static const VECTOR3 BASE_INTERIA = VECTOR3(7500.0f, -7500.0f, 7500.0f);

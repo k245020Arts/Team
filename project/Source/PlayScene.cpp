@@ -67,6 +67,8 @@ PlayScene::PlayScene()
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	GameManager* gameManager = new GameManager();
 	UIManager* uiManager = new UIManager();
+
+	uiManager->ButtonUISet();
 	
 	stageManager->CreateStage();
 	//enemy->CreateEnemy();
@@ -96,7 +98,7 @@ PlayScene::PlayScene()
 	//m->TextureHandle(LoadGraph("data/texture/101backGround.png"),MeshRenderer2D::DRAW_RECT_ROTA_GRAPH,VECTOR3(500,500,500),VZero,VZero);
 
 	Wave* wave = new Wave;
-	uiManager->ButtonUISet();
+	
 }
 
 PlayScene::~PlayScene()

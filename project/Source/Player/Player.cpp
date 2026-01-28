@@ -47,7 +47,7 @@
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/Boss/BossState/Attack/BossAttackBase.h"
 #include "../Common/Easing.h"
-
+#include "../Component/UI/ButtonUI.h"
 
 namespace {
 
@@ -67,34 +67,34 @@ namespace {
 
 Player::Player()
 {
-	playerCom.stateManager = nullptr;
-	avoidReady = false;
-	size = 0.00f;
-	avoidStart = false;
-	enemyHit = false;
-	justAvoid = false;
-	justAvoidCanCounter = 0.0f;
-	avoidCounter = 0;
-	noAvoidCounter = 0.0f;
-	playerTransform = nullptr;
-	debugId = 14;
-	tag = Function::GetClassNameC<Player>();
-	hp = MAX_HP;
-	maxHp = hp;
-	avoidReadyCounter = 0.0f;
-	justAvoidBlurImage = Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::JUST_AVOID_BLUR);
-	justFeedInTime = 0.0f;
-	justFeedOutTime = 0.0f;
-	bossThreat = false;
-	largeJustAvoid = false;
-	noDamage = false;
-	redCounter = 0.0f;
-	playerCom = PlayerInformation::CharaComponent();
-	turn = false;
-	specialAttackCenterPos = VZero;
-	specialAttackStartPos = VZero;
-	specialAttackBar = 0.0f;
-	specialAttackBarMax = 100.0f;
+	playerCom.stateManager		= nullptr;
+	avoidReady					= false;
+	size						= 0.00f;
+	avoidStart					= false;
+	enemyHit					= false;
+	justAvoid					= false;
+	justAvoidCanCounter			= 0.0f;
+	avoidCounter				= 0;
+	noAvoidCounter				= 0.0f;
+	playerTransform				= nullptr;
+	debugId						= 14;
+	tag							= Function::GetClassNameC<Player>();
+	hp							= MAX_HP;
+	maxHp						= hp;
+	avoidReadyCounter			= 0.0f;
+	justAvoidBlurImage			= Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::JUST_AVOID_BLUR);
+	justFeedInTime				= 0.0f;
+	justFeedOutTime				= 0.0f;
+	bossThreat					= false;
+	largeJustAvoid				= false;
+	noDamage					= false;
+	redCounter					= 0.0f;
+	playerCom					= PlayerInformation::CharaComponent();
+	turn						= false;
+	specialAttackCenterPos		= VZero;
+	specialAttackStartPos		= VZero;
+	specialAttackBar			= 0.0f;
+	specialAttackBarMax			= 100.0f;
 }
 //
 //Object2D* guage = new Object2D();
@@ -146,6 +146,17 @@ void Player::Update()
 	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_8)) {
 		noDamage = false;
 	}
+
+	//ïKéEãZÇ™î≠ìÆÇ≈Ç´ÇÍÇŒUIÇïsìßñæìxÇè„Ç∞ÇÈÅB
+	if (CanSpecialAttack()) {
+		playerCom.specialAttackButton->ButtonActiveStart();
+		playerCom.specialAttackButton->ColorGradeMode();
+	}
+	else {
+		//ïKéEãZÇ™î≠ìÆÇ≈Ç´Ç»ÇØÇÍÇŒUIÇÃïsìßñæìxÇâ∫Ç∞ÇÈ
+		playerCom.specialAttackButton->ButtonActiveFinish();
+		playerCom.specialAttackButton->ColorGradeModeFinish();
+	}
 	
 	//éÄñSèåè
 	if (hp <= 0.0f && (playerCom.stateManager->GetState<StateBase>()->GetID() == StateID::PLAYER_WAIT_S)) {
@@ -153,10 +164,6 @@ void Player::Update()
 		playerCom.stateManager->SetNoStateChange(true);
 	}
 
-	if (obj->GetTransform()->position.y <= -10000.0f) {
-		/*playerCom.stateManager->NowChangeState(StateID::BOSS_DIE_S);
-		playerCom.stateManager->SetNoStateChange(true);*/
-	}
 	if (redCounter > 0.0f) {
 		redCounter -= Time::DeltaTimeRate();
 		if (redCounter <= 0.0f) {
@@ -218,6 +225,8 @@ void Player::Start(Object3D* _obj)
 
 	playerCom.gameManager	= FindGameObject<GameManager>();
 	playerCom.enemyManager	= FindGameObject<EnemyManager>();
+
+	playerCom.specialAttackButton = FindGameObjectWithTag<Object2D>("XButton")->Component()->GetComponent<ButtonUI>();
 	
 	avoidStart				= false;
 	justAvoidCanCounter		= 0.0f;

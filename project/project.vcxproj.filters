@@ -503,6 +503,10 @@
     <ClCompile Include="Source\Component\UI\UIManager\UIManager.cpp">
       <Filter>Component\UI\UIManager</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.cpp" />
+    <ClCompile Include="Source\Component\UI\EnemyDamageUI.cpp">
+      <Filter>Component\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1061,6 +1065,10 @@
     </ClInclude>
     <ClInclude Include="Source\Component\UI\UIManager\UIManager.h">
       <Filter>Component\UI\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h" />
+    <ClInclude Include="Source\Component\UI\EnemyDamageUI.h">
+      <Filter>Component\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
