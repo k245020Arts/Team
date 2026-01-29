@@ -1,6 +1,8 @@
 #pragma once
 #include "../EnemyState/EnemyStateBase.h"
 
+class TrashEnemy;
+
 class T_EnemyDamage :public EnemyStateBase
 {
 public:
@@ -13,6 +15,8 @@ public:
 	void Finish()override;
 protected:
 	float counter;
+	//‚«”ò‚Ô‚Æ‚«‚Ìˆ—
+	void KnockbackMove(TrashEnemy* _e, float a, float h, float k);
 	/// <summary>
 	/// ‚«”ò‚Ñ‚Ì‹O“¹
 	/// </summary>
