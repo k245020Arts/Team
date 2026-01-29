@@ -40,6 +40,7 @@
 #include "../Boss/BossState/BossDamage.h"
 #include "../TrashEnemy/TrashEnemyManager.h"//
 #include "../../Common/Random.h"
+#include "../../Component/UI/EnemyDamageUI.h"
 
 namespace {
 	std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable;
@@ -425,6 +426,7 @@ void Boss::PlayerHit()
 	bool lastBeforeAttack = false;
 	auto bossParam = enemyTable.find(attackID);
 	float angleRand = Random::GetFloat(0.0f, 360.0f);
+	Object2D* damageNum = nullptr;
 	if (bossParam != enemyTable.end()) {
 		const auto& e = bossParam->second;
 		switch (e.attackType)
@@ -504,6 +506,9 @@ void Boss::PlayerHit()
 			break;
 		}
 	}
+	damageNum = new Object2D();
+	damageNum->Init(Transform(VZero, VZero, VOne), "damageNum");
+	damageNum->Component()->AddComponent<EnemyDamageUI>()->SetInformation(VECTOR3(GetRand(400) - 200, 1000 + GetRand(400) - 200, GetRand(400) - 200), damage + GetRand(15) + 100.0f, VECTOR3(0, -0.4f, 0), 0.5f, LoadGraph("data/image/Number_01.png"), bossTransform, VECTOR2I(81, 90));
 	EnemyDamageMove(dInfo);
 	hp -= damage;
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。

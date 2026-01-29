@@ -25,7 +25,7 @@ void UIManager::ButtonUISet()
 	Object2D* abutton = new Object2D();
 	abutton->Init(Transform(VECTOR3(1650, 1000, 0), VZero, VOne), "AButton");
 	ButtonUI* a = abutton->Component()->AddComponent<ButtonUI>();
-	a->Start(ButtonUI::A_BUTTON, LoadGraph("data/image/Mark_Avoid.png"));
+	a->Start(ButtonUI::A_BUTTON, LoadGraph("data/image/Mark_Avoid2.png"));
 	abutton->SetDrawOrder(-1000);
 
 	Object2D* bbutton = new Object2D();
