@@ -11,7 +11,7 @@
 #include "../Component/Object/Object3D.h"
 #include "SkyManager.h"
 
-//#define NEW_STAGE
+#define NEW_STAGE
 
 StageManager::StageManager()
 {

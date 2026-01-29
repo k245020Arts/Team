@@ -42,7 +42,7 @@ Camera::Camera()
 	rockOn								= false;
 	beforePos							= 0.0f;
 	nearFog								= 10000.0f;
-	farFog								= 1800000.0f;
+	farFog								= 2300000.0f;
 	direction							= EnemyAttackChangeCameraDirection::NONE;
 	moveTimer							= 0.0f;
 	angleMaxSpeed						= 0.0f;
@@ -107,7 +107,7 @@ void Camera::Draw()
 	}
 
 	//Dxlibのカメラの設定(SetDrawScreenを使うと初期化されるため毎フレーム呼ぶ)。
-	SetCameraNearFar(10.0f, 100000000.0f);
+	SetCameraNearFar(10.0f, 5000000.0f);
 	SetFogEnable(true);
 	SetFogStartEnd(nearFog, farFog);
 	SetFogColor(137, 189, 222);
