@@ -31,25 +31,19 @@ void T_EnemyDead::Update()
 	else
 		e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
-	counter += Time::DeltaTimeRate(); //フレーム時間
-	if (counter <= 0.3)
-		return;
-
-	float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
-	e->GetEnemyObj()->GetTransform()->position.x -= SPEED / counter * cosf(rotY - 0.5f * DX_PI_F);
-	e->GetEnemyObj()->GetTransform()->position.z -= SPEED / counter * sinf(rotY - 0.5f * DX_PI_F);
-
 	float a = -1000.0f;  //落下の強さ（重力）
 	float h = 1.0f;		 //最高点までの時間
 	float k = 600.0f;    //吹き飛びの高さ
 
-	float offsetY = Orbit(a, h, k);
+	KnockbackMove(e, 0.2f, a, h, k);
+
+	/*float offsetY = Orbit(a, h, k);
 
 	if (offsetY <= 0)
 		offsetY = 0;
-	e->GetEnemyObj()->GetTransform()->position.y = offsetY;
+	e->GetEnemyObj()->GetTransform()->position.y = offsetY;*/
 
-	if (e->enemyBaseComponent.anim->IsFinish() && offsetY <= 0)
+	if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
 	{
 		fadeCounter -= Time::DeltaTimeRate();
 		float reet = fadeCounter / FADE_SPEED;

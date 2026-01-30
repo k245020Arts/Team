@@ -247,6 +247,8 @@ bool TrashEnemy::IsPlayerSpecialMove()
 			mStopCounter += Time::DeltaTimeRate();
 			if (mStopCounter >= 0.2f)
 				return false;
+			else
+				return true;
 		}
 		else
 		{

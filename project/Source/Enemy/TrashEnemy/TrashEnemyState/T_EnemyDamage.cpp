@@ -31,9 +31,12 @@ void T_EnemyDamage::Update()
 	e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
 	float a = -2000.0f;  //落下の強さ（重力）
-	float h = 1.0f;		 //最高点までの時間
-	float k = 700.0f;    //吹き飛びの高さ
-	KnockbackMove(e, a, h, k);
+	float h = 0.5f;		 //最高点までの時間
+	float k = 800.0f;    //吹き飛びの高さ
+	KnockbackMove(e, 100.0f, a, h, k);
+
+	if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
+		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
 }
 
 void T_EnemyDamage::Draw()
@@ -55,18 +58,15 @@ void T_EnemyDamage::Finish()
 
 }
 
-void T_EnemyDamage::KnockbackMove(TrashEnemy* _e, float a, float h, float k)
+void T_EnemyDamage::KnockbackMove(TrashEnemy* _e, float _speed,float a, float h, float k)
 {
 	counter += Time::DeltaTimeRate();
 	
 	float offsetY = Orbit(a, h, k);
 
 	if (offsetY <= 0)
-	{
 		offsetY = 0;
-		if (_e->enemyBaseComponent.anim->IsFinish())
-			_e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
-	}
+
 	//正面べく
 	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(_e->enemyBaseComponent.playerObj->GetTransform()->rotation.y);
 	//プレイヤーとのベクトル
@@ -75,10 +75,19 @@ void T_EnemyDamage::KnockbackMove(TrashEnemy* _e, float a, float h, float k)
 	VECTOR3 rightVec = VECTOR3(frontVec.z, 0.0f, -frontVec.x);
 	// 左右判定
 	float side = VDot(rightVec, vec);
-	//内積
-	float dotProduct = VDot(frontVec, vec);
-	//ポジションに足す
-	_e->GetEnemyObj()->GetTransform()->position -= rightVec * side * 0.02f;
+	////内積
+	//float dotProduct = VDot(frontVec, vec);
+
+	//段々減速させるため
+	float speed = _speed;
+	if (speed >= 0)
+		speed -= Time::DeltaTimeRate() * 5.0f/** 0.5f*/;
+	else
+		speed = 0;
+	//0以上なら右側、0以上なら左側（三項演算子）
+	float dir = (side >= 0) ? 1.0f : -1.0f;
+	//ポジションに適応する
+	_e->GetEnemyObj()->GetTransform()->position -= rightVec * dir * speed;;
 
 	_e->GetEnemyObj()->GetTransform()->position.y = offsetY;
 }
