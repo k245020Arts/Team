@@ -45,7 +45,7 @@ void TitleScene::Update()
 			firstCounter = 0.0f;
 		}
 		float rate = firstCounter / 1.0f;
-		exrate = Easing::EaseInExpo(0.0f, 1.0f, 1.0f - rate);
+		exrate = Easing::EaseIn(0.0f, 0.8f, 0.8f - rate);
 	}
 	else {
 		if (input->KeyInputDown("SceneChange")) {
@@ -60,7 +60,7 @@ void TitleScene::Update()
 				FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
 			}
 			float rate = pushCounter / 0.5f;
-			exrate = Easing::Sin90Cube(0.5f, 1.0f, 1.0f - rate);
+			exrate = Easing::Sin90Cube(0.5f, 0.8f, 0.8f - rate);
 		}
 		else {
 			float rate = 0.0f;
@@ -82,7 +82,7 @@ void TitleScene::Update()
 				
 			}
 			
-			exrate = Easing::EaseIn(0.6f, 1.0f, rate);
+			exrate = Easing::EaseIn(0.4f, 0.5f, rate);
 		}
 		
 	}
@@ -97,7 +97,7 @@ void TitleScene::Draw()
 {
 	DrawGraph(0, 0, hImage, true);
 	DrawGraph(750, 100, titleImage, true);
-	DrawRotaGraph(1000, 800, (double)exrate,0.0,keyImage, true);
+	DrawRotaGraph(1000, 900, (double)exrate,0.0,keyImage, true);
 
 	/*DrawBox(0, 0, 1920, 1080, 0x111111, true);
 	extern const char* Version();*/

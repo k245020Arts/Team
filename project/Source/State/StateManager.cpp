@@ -18,10 +18,10 @@ StateManager::StateManager()
 
 StateManager::~StateManager()
 {
-	for (auto& t : stateInfo) {
-		//t.second.reset();
-		//t.second = nullptr;
-	}
+	//for (auto& t : stateInfo) {
+	//	//t.second.reset();
+	//	//t.second = nullptr;
+	//}
 	state = nullptr;
 	stateInfo.clear();
 	ed::DestroyEditor(nodeWindow);

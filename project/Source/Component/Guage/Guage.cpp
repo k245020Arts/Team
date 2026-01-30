@@ -42,6 +42,14 @@ void Guage::Update()
 		edge->SetPosition(headPos);*/
 
 		obj->GetTransform()->position = screenPos;
+		if (screenPos.z > 1.0f){
+			edge->SetDraw(false);
+			guage->SetDraw(false);
+		}
+		else {
+			edge->SetDraw(true);
+			guage->SetDraw(true);
+		}
 		edge->SetPosition(obj->GetTransform()->position);
 	}
 	if (guage != nullptr) {
