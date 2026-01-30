@@ -7,7 +7,7 @@
 
 #define _CRTDBG_MAP_ALLOC
 #ifdef _CRTDBG_MAP_ALLOC
-#include "MemoryCount.h"
+#include "../Source/Common/Memory/MemoryCount.h"
 #include <crtdbg.h>
 #include <cstdlib>
 #ifdef _DEBUG

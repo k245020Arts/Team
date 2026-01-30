@@ -5,7 +5,7 @@
 #include "../Weapon/WeaponManager.h"
 #include "../Component/Physics/Physics.h"
 #include "../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
-#include "../../Library/MemoryCount.h"
+#include "../Common/Memory/MemoryCount.h"
 #include "EnemyManager.h"
 #include "../Common/LoadManager.h"
 

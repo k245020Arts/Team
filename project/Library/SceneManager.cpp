@@ -2,7 +2,7 @@
 #include "SceneBase.h"
 #include "../Source/SceneFactory.h"
 #include <DxLib.h>
-#include "MemoryCount.h"
+#include "../Source/Common/Memory/MemoryCount.h"
 #include "../Source/Common/Debug/Debug.h"
 #include "../Source/Common/LoadManager.h"
 #include "../Source/Common/ID/EffectID.h"

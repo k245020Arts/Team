@@ -5,7 +5,7 @@
 #include "../Color/Color.h"
 #include "../Hierarchy/Hierarchy.h"
 #include "../../Common/Transitor/TransitorManager.h"
-#include "../../../Library/MemoryCount.h"
+#include "../../Common/Memory/MemoryCount.h"
 #include "../../Common/Debug/Debug.h"
 
 Object3D::Object3D()
