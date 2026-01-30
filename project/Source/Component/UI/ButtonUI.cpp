@@ -45,9 +45,9 @@ void ButtonUI::Update()
 		push = false;
 	}
 	if (gradeMode) {
-		r += Time::DeltaTimeRate() * 100.0f;
-		g += Time::DeltaTimeRate() * 150.0f;
-		b += Time::DeltaTimeRate() * 200.0f;
+		r += Time::DeltaTimeRate() * 255.0f;
+		g += Time::DeltaTimeRate() * 255.0f;
+		b += Time::DeltaTimeRate() * 255.0f;
 		if (r >= 255) {
 			r = 0;
 		}
@@ -74,10 +74,13 @@ void ButtonUI::Draw()
 		SetDrawBlendMode(DX_BLENDMODE_ADD, 60);
 		float add = transform->scale.x / 8;
 		for (int i = 0; i < 8; i++) {
-			DrawRotaGraph((int)transform->position.x, (int)transform->position.y, (double)add * i, 0.0, buttonImage, true);
+			DrawRotaGraph((int)transform->position.x, (int)transform->position.y, (double)add * i, 0.0, backImage, true);	
 		}
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		DrawRotaGraph((int)transform->position.x, (int)transform->position.y, transform->scale.x, 0.0, buttonImage, true);
 	}
 	else {
+		DrawRotaGraph((int)transform->position.x, (int)transform->position.y, (double)transform->scale.x, 0.0, backImage, true);
 		DrawRotaGraph((int)transform->position.x, (int)transform->position.y, (double)transform->scale.x, 0.0, buttonImage, true);
 	}
 
@@ -92,4 +95,5 @@ void ButtonUI::Start(ButtonType _buttonType, int _handle)
 	control = FindGameObject<ControllerInputManager>();
 	obj->GetTransform()->scale = 0.8f;
 	buttonActive = true;
+	backImage = LoadGraph("data/image/UICicle.png");
 }

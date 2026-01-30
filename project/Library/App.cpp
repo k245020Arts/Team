@@ -3,6 +3,7 @@
 #include "ObjectManager.h"
 #include "Time.h"
 #include <DxLib.h>
+#include "../Source/Common/LoadManager.h"
 
 void AppInit()
 {
@@ -29,6 +30,7 @@ void AppRelease()
 	Time::Release();
 	SceneManager::Release();
 	ObjectManager::Release();
+	Load::AllDelete();
 }
 
 bool AppIsExit()

@@ -41,7 +41,7 @@ void SceneManager::Update()
 			ObjectManager::DeleteAllGameObject();
 			delete m_currentScene;
 			m_currentScene = nullptr;
-			
+			Load::AllDelete();
 		}
 		m_currentScene = m_factory->Create(*m_nextName); // Ÿ‚ÌƒV[ƒ“‚ğì¬
 		*m_currentName = *m_nextName;
@@ -63,7 +63,6 @@ void SceneManager::Draw()
 
 void SceneManager::Release()
 {
-	Load::AllDelete();
 	if (m_currentScene != nullptr)
 	{
 		delete m_currentScene;

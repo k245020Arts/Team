@@ -103,7 +103,7 @@ PlayScene::PlayScene()
 
 PlayScene::~PlayScene()
 {
-	Load::AllDelete();
+	//Load::AllDelete();
 	//int i = Load::GetCounter();
 	Debug::ClearLogger();
 }

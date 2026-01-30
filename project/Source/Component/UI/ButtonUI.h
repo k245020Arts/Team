@@ -40,4 +40,5 @@ private:
 	bool buttonActive;
 	bool gradeMode;
 	float r, g, b;
+	int backImage;
 };

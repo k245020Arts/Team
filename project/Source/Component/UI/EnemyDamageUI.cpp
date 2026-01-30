@@ -28,6 +28,8 @@ EnemyDamageUI::EnemyDamageUI()
 
 	worldTransform = nullptr;
 	worldOffset = VZero;
+
+	obj->SetDrawOrder(-1000);
 }
 
 EnemyDamageUI::~EnemyDamageUI()
