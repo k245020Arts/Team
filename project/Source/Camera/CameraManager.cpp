@@ -91,7 +91,7 @@ void CameraManager::TitleCameraCreate()
 
 	mainCamera->Component()->AddComponent<Physics>()->Start(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(0.0f, 0.0f, 0.0f));
 
-	mainCamera->SetDrawOrder(-1);
+	mainCamera->SetDrawOrder(-6);
 
 
 }

@@ -25,7 +25,14 @@ Wall::~Wall()
 void Wall::Update()
 {
 	if (pTransform == nullptr) {
-		pTransform = FindGameObjectWithTag<Object3D>("PLAYER")->GetTransform();
+		Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
+		if (obj != nullptr) {
+			pTransform = obj->GetTransform();
+		}
+		else {
+			return;
+		}
+		
 	}
 	float distance;
 	//X•ûŒü‚É•Ç•Ç‚Ìposition‚ª‚ ‚éê‡ã‚Ìif•¶‚Ì’†

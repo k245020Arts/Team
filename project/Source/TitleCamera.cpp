@@ -20,6 +20,17 @@ TitleCamera::TitleCamera()
 	tag = Function::GetClassNameC<TitleCamera>();
 
 	fov = 60.0f * DegToRad;
+
+	debugButton = 0;
+	cameraComponent.cameraTransform = nullptr;
+
+	cameraNear = 10.0f;
+	cameraFar = 5000000.0f;
+
+	diffTarget = VZero;
+	target = VZero;
+	cameraComponent.cameraTransform = nullptr;
+	rockOn = false;
 }
 
 TitleCamera::~TitleCamera()
@@ -34,12 +45,7 @@ void TitleCamera::Update()
 	CameraRotationSet();
 	Follow();
 	
-}
-
-void TitleCamera::Draw()
-{
-
-	SetCameraNearFar(10.0f, 5000000.0f);
+	SetCameraNearFar(cameraNear, cameraFar);
 	/*SetFogEnable(true);
 	SetFogStartEnd(nearFog, farFog);
 	SetFogColor(137, 189, 222);*/
@@ -47,13 +53,32 @@ void TitleCamera::Draw()
 
 	if (debugButton == 1) {
 		Transform transform = *obj->GetTransform();
-		VECTOR3 forward = VGet(0, 0, 1); // 仮でもいい
-		SetCameraPositionAndTarget_UpVecY(transform.position, transform.position + forward * 1000.0f);
+		SetCameraPositionAndTarget_UpVecY(transform.position, diffTarget);
+	}
+	else if (rockOn) {
+		SetCameraPositionAndTarget_UpVecY(
+			cameraComponent.cameraTransform->position,
+			target + VECTOR3(0, 300, 0)
+		);
 	}
 	else {
-		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);
+		SetCameraPositionAndTarget_UpVecY(
+			cameraComponent.cameraTransform->position,
+			target
+		);
 	}
 
+
+}
+
+void TitleCamera::Draw()
+{
+	if (cameraComponent.cameraTransform == nullptr) {
+		return;
+	}
+	
+
+	
 
 }
 
@@ -64,26 +89,42 @@ void TitleCamera::ImguiDraw()
 	//DebugCameraの時は通常のTransformの使用
 	ImGui::RadioButton("normalCamera", &debugButton, 0);
 	ImGui::RadioButton("DebugCamera", &debugButton, 1);
-	ImGui::DragFloat3("cameraPosition", &cameraComponent.cameraTransform->position.x, 1.0f, 0.0f, 5000.0f);
-	ImGui::DragFloat3("cameraRotation", &cameraComponent.cameraTransform->rotation.x, 1.0f, 0.0f, 5000.0f);
+	if (cameraComponent.cameraTransform != nullptr) {
+		ImGui::DragFloat3("cameraPosition", &cameraComponent.cameraTransform->position.x, 1.0f, 0.0f, 5000.0f);
+		ImGui::DragFloat3("cameraRotation", &cameraComponent.cameraTransform->rotation.x, 1.0f, 0.0f, 5000.0f);
+	}
+	
 	ImGui::DragFloat3("target", &target.x, 1.0f, 0.0f, 5000.0f);
 	ImGui::DragFloat3("DebugTarget", &diffTarget.x, 1.0f, -100000.0f, 10000.0f);
+	ImGui::DragFloat("CameraNear", &cameraNear, 1.0f, 0.0f, 5000.0f);
+	ImGui::DragFloat("CameraFar", &cameraFar, 1.0f, -100000.0f, 10000.0f);
 }
 
 void TitleCamera::Start(BaseObject* _eObj)
 {
+	SetCameraNearFar(cameraNear, cameraFar);
+	SetupCamera_Perspective(fov);
+	SetCameraPositionAndTarget_UpVecY(VECTOR3(0, 0, -1500), VZero);
 }
 
 void TitleCamera::PlayerSet(BaseObject* _pObj)
 {
-	cameraComponent.player.obj = _pObj;
-	cameraComponent.player.transform = _pObj->GetTransform();
-	//playerに追従させたいのでカメラのトランスフォームはプレイヤーを軸にする。
-	cameraComponent.cameraTransform = new Transform(*cameraComponent.player.transform);
-	cameraComponent.cameraTransform->rotation.x = 30.0f * DegToRad;
-	cameraComponent.player.shaker = _pObj->Component()->GetComponent<Shaker>();
+	if (_pObj != nullptr) {
+		cameraComponent.player.obj = _pObj;
+		cameraComponent.player.transform = _pObj->GetTransform();
 
-	cameraComponent.target.shaker = _pObj->Component()->GetComponent<Shaker>();
+		cameraComponent.player.shaker = _pObj->Component()->GetComponent<Shaker>();
+
+		cameraComponent.target.shaker = _pObj->Component()->GetComponent<Shaker>();
+		//playerに追従させたいのでカメラのトランスフォームはプレイヤーを軸にする。
+		cameraComponent.cameraTransform = new Transform(*cameraComponent.player.transform);
+		cameraComponent.cameraTransform->rotation.x = 30.0f * DegToRad;
+	}
+	
+	
+	
+	
+	
 
 	cameraComponent.shaker = obj->Component()->AddComponent<Shaker>();
 

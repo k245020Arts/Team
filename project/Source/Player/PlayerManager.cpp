@@ -239,7 +239,7 @@ void PlayerManager::CreateTitlePlayer()
 	playerPointer->SetDrawOrder(-5);
 	
 	//‰ŠúˆÊ’u
-	playerPointer->Init(VECTOR3(300, 0, -2000), VZero, VECTOR3(3.0f, 3.0f, 3.0f), "PLAYER");
+	playerPointer->Init(VECTOR3(300,800, -2000), VZero, VECTOR3(3.0f, 3.0f, 3.0f), "PLAYER");
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	/*ColliderBase* collider = playerPointer->Component()->AddComponent<SphereCollider>();*/
 	CollsionInfo info;
@@ -277,7 +277,7 @@ void PlayerManager::CreateTitlePlayer()
 	Physics* physics = playerPointer->Component()->AddComponent<Physics>();
 	TitlePlayer* player = playerPointer->Component()->AddComponent<TitlePlayer>();
 
-	physics->Start(PlayerInformation::BASE_GRAVITY, PlayerInformation::BASE_INTERIA);
+	physics->Start(PlayerInformation::BASE_GRAVITY + VECTOR3(0,4900,0), PlayerInformation::BASE_INTERIA);
 	/*Camera* camera = playerPointer->Component()->AddComponent<Camera>();
 	camera->Start(FindGameObject<EnemyManager>()->GetEnemy());*/
 	//me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "exo_red", ID::P_MODEL));

@@ -328,6 +328,7 @@
     <ClInclude Include="Source\State\StateBase.h" />
     <ClInclude Include="Source\State\StateManager.h" />
     <ClInclude Include="Source\TitleCamera.h" />
+    <ClInclude Include="Source\TitleControl.h" />
     <ClInclude Include="Source\TitlePlayer.h" />
     <ClInclude Include="Source\TitlePlayerIdol.h" />
     <ClInclude Include="Source\TitleScene.h" />
@@ -504,6 +505,7 @@
     <ClCompile Include="Source\Stage\Wall.cpp" />
     <ClCompile Include="Source\State\StateManager.cpp" />
     <ClCompile Include="Source\TitleCamera.cpp" />
+    <ClCompile Include="Source\TitleControl.cpp" />
     <ClCompile Include="Source\TitlePlayer.cpp" />
     <ClCompile Include="Source\TitlePlayerIdol.cpp" />
     <ClCompile Include="Source\TitleScene.cpp" />

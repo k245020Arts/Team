@@ -18,6 +18,7 @@ BootScene::BootScene()
 	SoundManager*sound			=  new SoundManager();
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();
+	one = 0;
 }
 
 BootScene::~BootScene()
@@ -26,7 +27,10 @@ BootScene::~BootScene()
 
 void BootScene::Update()
 {
-	SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
+	if (one++ >= 1) {
+		SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
+	}
+	
 }
 
 void BootScene::Draw()

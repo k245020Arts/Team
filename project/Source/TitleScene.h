@@ -1,9 +1,6 @@
 #pragma once
 #include "../Library/SceneBase.h"
 
-class InputManager;
-class SoundManager;
-
 /// <summary>
 /// タイトルシーン
 /// 
@@ -17,13 +14,5 @@ public:
 	void Update() override;
 	void Draw() override;
 private:
-	int hImage;
-	InputManager* input;
-	int keyImage;
-	int titleImage;
-	SoundManager* sound;
-	float firstCounter;
-	float exrate;
-	float pushCounter;
-	float moveButton;
+	
 };

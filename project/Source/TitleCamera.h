@@ -24,4 +24,7 @@ public:
 
 private:
 	TitleScene* title;
+	float cameraNear;
+	float cameraFar;
+	bool rockOn;
 };

@@ -14,4 +14,6 @@ public:
 	~BootScene();
 	void Update() override;
 	void Draw() override;
+private: 
+	int one;
 };

@@ -519,6 +519,9 @@
     <ClCompile Include="Source\TitlePlayerIdol.cpp">
       <Filter>TitleScene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TitleControl.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1092,6 +1095,9 @@
       <Filter>PlayScene\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Source\TitlePlayerIdol.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitleControl.h">
       <Filter>TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
