@@ -30,7 +30,7 @@ void PlayerDie::Update()
 			p->playerCom.sound->PlaySe(Sound_ID::LOSE);
 			one = false;
 			p->playerCom.enemyManager->CameraRockOnStart(p->playerCom.camera);
-			//p->playerCom.camera->CutSceneChangeState("BossWin");
+			p->playerCom.camera->CutSceneChangeState("PlayerDie");
 		}
 	
 		

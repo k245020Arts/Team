@@ -141,7 +141,8 @@ void Player::Update()
 		SpecialVarAdd(20.0f);
 	}
 	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_6)) {
-		playerCom.camera->CutSceneChangeState("test");
+		//playerCom.camera->CutSceneChangeState("test");
+		hp -= 5.0f;
 	}
 	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_8)) {
 		noDamage = false;
