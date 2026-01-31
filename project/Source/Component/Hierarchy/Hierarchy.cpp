@@ -92,7 +92,7 @@ void Hierachy::Update()
 		InspectorDraw();
 	}
 	PlayScene* playscene = GetScene<PlayScene>();
-	if (playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
+	if (playscene != nullptr && playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
 		camera->CameraEditor();
 	}
 #endif // _DEBUG

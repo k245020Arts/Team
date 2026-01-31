@@ -507,6 +507,18 @@
     <ClCompile Include="Source\Common\Memory\MemoryCount.cpp">
       <Filter>Common\Memory</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TitleCamera.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TitlePlayer.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera\CameraBase.cpp">
+      <Filter>PlayScene\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TitlePlayerIdol.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1069,6 +1081,18 @@
     </ClInclude>
     <ClInclude Include="Source\Common\Memory\MemoryCount.h">
       <Filter>Common\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitleCamera.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitlePlayer.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CameraBase.h">
+      <Filter>PlayScene\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitlePlayerIdol.h">
+      <Filter>TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

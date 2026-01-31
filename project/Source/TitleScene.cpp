@@ -10,6 +10,24 @@
 #include "../Source/Common/LoadManager.h"
 #include "../Source/Common/Sound/SoundManager.h"
 #include "../Source/Common/Easing.h"
+#include "../Source/Component/Object/Object3D.h"
+#include "../Source/Component/ComponentManager.h"
+#include "../Source/Component/MeshRenderer/MeshRenderer.h"
+#include "../Source/Component/Transform/Transform.h"
+#include "../Source/Component/MeshRenderer2D/MeshRenderer2D.h"
+#include "../Source/Player/Player.h"
+#include "../Source/Component/Physics/Physics.h"
+#include "../Source/Camera/Camera.h"
+#include "../Source/Component/Hierarchy/Hierarchy.h"
+#include "../Source/Stage/StageManager.h"
+#include "../Source/Player/PlayerManager.h"
+#include "../Source/Enemy/EnemyManager.h"
+#include "../Source/Component/Collider/CollsionManager.h"
+#include "../Source/Weapon/WeaponManager.h"
+#include "../Source/Light/Light.h"
+#include "../Source/Camera/CameraManager.h"
+#include "../Source/Common/Effect/EffectManager.h"
+#include "../Source/Stage/SkyManager.h"
 
 TitleScene::TitleScene()
 {
@@ -27,14 +45,41 @@ TitleScene::TitleScene()
 	exrate = 0.0f;
 	moveButton = 0.0f;
 	moveButton = 1.0f;
+
+	//Hierachy* hierachy = new Hierachy();
+	//new EffectManager();
+	//
+	//StageManager* stageManager = new StageManager();
+	//
+	//PlayerManager* player = new PlayerManager();
+
+	//WeaponManager* weapon = new WeaponManager();
+
+	//CollsionManager* collManager = new CollsionManager();
+
+	//Light* light = new Light();
+
+	//CameraManager* cameraManager = new CameraManager();
+	//SkyManager* sky = new SkyManager();
+
+	//stageManager->CreateStage();
+	////enemy->CreateEnemy();
+	//cameraManager->TitleCameraCreate();
+	//player->CreateTitlePlayer();
+	////enemy->PlayerObjPointer();
+	//cameraManager->TitleParentObj("PLAYER");
+	//weapon->CreatePlayerWeapon();
+	//collManager->SetDrawOrder(-90000);
+	//hierachy->SetDrawOrder(-100000);
+	//sky->CreateSky();
 }
 
 TitleScene::~TitleScene()
 {
 	//DeleteGraph(hImage);
-	Load::AllDelete();
+	//Load::AllDelete();
 	//FindGameObject<SoundManager>()->AllDeleteSound();
-
+	Debug::ClearLogger();
 }
 
 void TitleScene::Update()

@@ -28,8 +28,6 @@ EnemyDamageUI::EnemyDamageUI()
 
 	worldTransform = nullptr;
 	worldOffset = VZero;
-
-	obj->SetDrawOrder(-1000);
 }
 
 EnemyDamageUI::~EnemyDamageUI()
@@ -156,4 +154,5 @@ void EnemyDamageUI::SetInformation(VECTOR3 _offset, int _damageNum, VECTOR3 _mov
 	feedOut = false;
 	feedInOutTime = 0.2f;
 	feedInOutTimeMax = feedInOutTime;
+	obj->SetDrawOrder(-1000);
 }

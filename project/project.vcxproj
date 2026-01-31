@@ -166,6 +166,7 @@
     <ClInclude Include="Library\SceneManager.h" />
     <ClInclude Include="Library\Time.h" />
     <ClInclude Include="Source\Camera\Camera.h" />
+    <ClInclude Include="Source\Camera\CameraBase.h" />
     <ClInclude Include="Source\Camera\CameraEditorGui.h" />
     <ClInclude Include="Source\Camera\CameraInformation.h" />
     <ClInclude Include="Source\Camera\CameraManager.h" />
@@ -326,6 +327,9 @@
     <ClInclude Include="Source\Stage\Wall.h" />
     <ClInclude Include="Source\State\StateBase.h" />
     <ClInclude Include="Source\State\StateManager.h" />
+    <ClInclude Include="Source\TitleCamera.h" />
+    <ClInclude Include="Source\TitlePlayer.h" />
+    <ClInclude Include="Source\TitlePlayerIdol.h" />
     <ClInclude Include="Source\TitleScene.h" />
     <ClInclude Include="Source\Wave\Wave.h" />
     <ClInclude Include="Source\Weapon\CharaWeapon.h" />
@@ -352,6 +356,7 @@
     <ClCompile Include="Library\Time.cpp" />
     <ClCompile Include="Source\BootScene.cpp" />
     <ClCompile Include="Source\Camera\Camera.cpp" />
+    <ClCompile Include="Source\Camera\CameraBase.cpp" />
     <ClCompile Include="Source\Camera\CameraEditorGui.cpp" />
     <ClCompile Include="Source\Camera\CameraManager.cpp" />
     <ClCompile Include="Source\Camera\CameraState\CameraStateBase.cpp" />
@@ -498,6 +503,9 @@
     <ClCompile Include="Source\Stage\StageManager.cpp" />
     <ClCompile Include="Source\Stage\Wall.cpp" />
     <ClCompile Include="Source\State\StateManager.cpp" />
+    <ClCompile Include="Source\TitleCamera.cpp" />
+    <ClCompile Include="Source\TitlePlayer.cpp" />
+    <ClCompile Include="Source\TitlePlayerIdol.cpp" />
     <ClCompile Include="Source\TitleScene.cpp" />
     <ClCompile Include="Source\Wave\Wave.cpp" />
     <ClCompile Include="Source\Weapon\CharaWeapon.cpp" />
