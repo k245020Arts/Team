@@ -336,6 +336,7 @@
     <ClInclude Include="Source\Weapon\CharaWeapon.h" />
     <ClInclude Include="Source\Weapon\SwordEffect.h" />
     <ClInclude Include="Source\Weapon\WeaponManager.h" />
+    <ClInclude Include="Source\TitlePlayerMove.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\crude_json.cpp" />
@@ -508,6 +509,7 @@
     <ClCompile Include="Source\TitleControl.cpp" />
     <ClCompile Include="Source\TitlePlayer.cpp" />
     <ClCompile Include="Source\TitlePlayerIdol.cpp" />
+    <ClCompile Include="Source\TitlePlayerMove.cpp" />
     <ClCompile Include="Source\TitleScene.cpp" />
     <ClCompile Include="Source\Wave\Wave.cpp" />
     <ClCompile Include="Source\Weapon\CharaWeapon.cpp" />

@@ -27,4 +27,7 @@ private:
 	float cameraNear;
 	float cameraFar;
 	bool rockOn;
+
+	void Update_Debug();
+	void Update_Normal();
 };

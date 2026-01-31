@@ -23,9 +23,6 @@ TitleScene::TitleScene()
 {
 	//hImage = LoadGraph("data/image/SlashLocus.png");
 
-	TitleControl* titleControl = new TitleControl();
-	
-
 	Hierachy* hierachy = new Hierachy();
 	new EffectManager();
 	
@@ -52,6 +49,8 @@ TitleScene::TitleScene()
 	collManager->SetDrawOrder(-90000);
 	hierachy->SetDrawOrder(-100000);
 	sky->CreateSky();
+
+	TitleControl* titleControl = new TitleControl();
 }
 
 TitleScene::~TitleScene()

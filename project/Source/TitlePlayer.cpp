@@ -26,6 +26,7 @@
 #include "Common/Easing.h"
 #include "TitleScene.h"
 #include "TitlePlayerIdol.h"
+#include "TitlePlayerMove.h"
 
 TitlePlayer::TitlePlayer()
 {
@@ -39,7 +40,8 @@ TitlePlayer::~TitlePlayer()
 
 void TitlePlayer::Update()
 {
-	//Move(1500.0f, 3000.0f);
+	obj->GetTransform()->position = VZero;
+	obj->GetTransform()->position.y = 30;
 }
 
 void TitlePlayer::Draw()
@@ -54,12 +56,15 @@ void TitlePlayer::Start(Object3D* _obj) {
 	playerCom.stateManager = obj->Component()->GetComponent<StateManager>();
 
 	playerCom.stateManager->CreateState<TitlePlayerIdol>("_TitleIdol", StateID::PLAYER_WAIT_S);
+	playerCom.stateManager->CreateState<TitlePlayerMove>("_TitleMove", StateID::PLAYER_AVOID_S);
+	//playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
 
 	ComponentManager* c = obj->Component();
 
 	playerCom.renderer = c->GetComponent<MeshRenderer>();
 	playerCom.meshRenderer2D = c->GetComponent<MeshRenderer2D>();
 	playerCom.physics = c->GetComponent<Physics>();
+	playerCom.physics->SetGravity(VZero);
 
     camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<TitleCamera>();
 
@@ -113,80 +118,6 @@ void TitlePlayer::Start(Object3D* _obj) {
 	//タイトルシーンの情報はここからとれる。（ボタンを押したときなどの）
 	title = GetScene<TitleScene>();
 }
-
-void TitlePlayer::Move(float _speed, float _speedMax)
-{
-	//if (CheckHitKey(KEY_INPUT_RIGHT)) {
-	//	//VECTOR3 power = com.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
-	//	//if (power.Size() <= 1.0f) {
-	//	playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
-	//	//}
-
-	//}
-	//PlayerStickInput();
-	if (CheckHitKey(KEY_INPUT_A)) {
-		//VECTOR3 power = com.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
-		//if (power.Size() >= -1.0f) {
-		walkAngle.x = -1.0f;
-		//}
-	}
-	else if (CheckHitKey(KEY_INPUT_W)) {
-		walkAngle.z = 1.0f;
-	}
-	else if (CheckHitKey(KEY_INPUT_S)) {
-		walkAngle.z = -1.0f;
-	}
-	else if (CheckHitKey(KEY_INPUT_D)) {
-		walkAngle.x = 1.0f;
-	}
-
-
-	std::shared_ptr<PlayerStateBase> pB = playerCom.stateManager->GetState<PlayerStateBase>();
-
-	StickDirections stick = playerCom.controller->GetStickKnockingReverce(0.6f, 8).leftStick;
-	StickDirections nowStick = playerCom.controller->GetStickKnocking(0.6f, 1).leftStick;
-
-	//スティックの傾きの量が少なかったら移動しない
-	if ((fabs(walkAngle.x) >= 0.3f || fabs(walkAngle.z) >= 0.3f) && hp > 0.0f) {
-		//回転処理
-		RotationChange(walkAngle, 12.0f);
-
-		VECTOR3 dir = VZero;
-		dir.x = walkAngle.x * 1.0f * _speed;
-		dir.z = walkAngle.z * 1.0f * _speed;
-		dir.y *= 0.0f;
-		dir = dir * MGetRotY(playerCom.camera->GetCameraTransform()->rotation.y);
-		playerCom.physics->AddVelocity(dir, false);
-		VECTOR3 moveVelo;
-		moveVelo = playerCom.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
-
-		float max = _speedMax;
-		//size = moveVelo.SquareSize();
-
-		//最大速度までいったらスピードマックスに補正
-		if (moveVelo.SquareSize() >= max * max) {
-			moveVelo = moveVelo.Normalize() * _speedMax;
-			moveVelo.y = playerCom.physics->GetVelocity().y;
-			playerCom.physics->SetVelocity(moveVelo);
-		}
-		//playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
-		//アニメーションのスピードを傾き方で測定
-		playerCom.anim->SetPlaySpeed(walkAngle.Size());
-
-
-		/*if (nowStick == S_NO_DIRECTION || stick == S_NO_DIRECTION) {
-			return;
-		}
-		if (nowStick == stick) {
-			playerCom.stateManager->ChangeState(StateID::PLAYER_TURN_S);
-		}*/
-	}
-	else {
-		//playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
-	}
-
-}
-
 
 void TitlePlayer::RotationChange(VECTOR3 _angle, float _speed)
 {

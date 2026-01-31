@@ -1,4 +1,7 @@
 #include "TitleControl.h"
+#include "TitlePlayer.h"
+
+#include "../Source/Component/Object/Object3D.h"
 #include "../Source/Common/Transitor/FadeTransitor.h"
 #include "../Source/Common/Transitor/PushTransitor.h"
 #include "../Source/Common/Transitor/WipeTransitor.h"
@@ -27,6 +30,9 @@ TitleControl::TitleControl()
 	moveButton = 0.0f;
 	moveButton = 1.0f;
 
+	Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
+	player = obj->Component()->GetComponent<TitlePlayer>();
+
 	SetDrawOrder(-100);
 }
 
@@ -37,16 +43,20 @@ TitleControl::~TitleControl()
 
 void TitleControl::Update()
 {
-	if (firstCounter > 0.0f) {
+	if (firstCounter > 0.0f) 
+	{
 		firstCounter -= Time::DeltaTimeRate();
-		if (firstCounter <= 0.0f) {
+		if (firstCounter <= 0.0f) 
+		{
 			firstCounter = 0.0f;
 		}
 		float rate = firstCounter / 1.0f;
 		exrate = Easing::EaseIn(0.0f, 0.8f, 0.8f - rate);
 	}
-	else {
-		if (input->KeyInputDown("SceneChange")) {
+	else 
+	{
+		if (input->KeyInputDown("SceneChange")) 
+		{
 			sound->PlaySe(Sound_ID::PUSH);
 
 			pushCounter = 0.5f;

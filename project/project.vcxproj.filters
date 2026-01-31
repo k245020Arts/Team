@@ -522,6 +522,9 @@
     <ClCompile Include="Source\TitleControl.cpp">
       <Filter>TitleScene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TitlePlayerMove.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1098,6 +1101,9 @@
       <Filter>TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="Source\TitleControl.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitlePlayerMove.h">
       <Filter>TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
