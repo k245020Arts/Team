@@ -7,6 +7,7 @@
 #include "../Source/Common/Transitor/TransitorManager.h"
 #include "../Source/Common/Transitor/FadeTransitor.h"
 #include "Common/Random.h"
+#include "../Source/Common/Fead/Fead.h"
 
 BootScene::BootScene()
 {
@@ -19,7 +20,11 @@ BootScene::BootScene()
 	SoundManager*sound			=  new SoundManager();
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();
-	one = 0;
+	new Fead();
+
+	Load::SetAsync(false);
+	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL, true);
+	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL, true);
 }
 
 BootScene::~BootScene()
@@ -28,10 +33,9 @@ BootScene::~BootScene()
 
 void BootScene::Update()
 {
-	if (one++ >= 1) {
-		FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
-		SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
-	}
+	
+	FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
+	SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
 	
 }
 
