@@ -14,6 +14,7 @@ class TitlePlayer: public CharaBase
 public:
 
 	friend class TitlePlayerIdol;
+	friend class TitlePlayerMove;
 
 	TitlePlayer();
 	~TitlePlayer();

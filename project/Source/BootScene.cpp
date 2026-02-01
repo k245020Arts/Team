@@ -5,7 +5,7 @@
 #include "../Source/Common/Sound/SoundManager.h"
 #include "../Source/Common/Debug/Debug.h"
 #include "../Source/Common/Transitor/TransitorManager.h"
-#include "../Source/Common/Fead/Fead.h"
+#include "../Source/Common/Transitor/FadeTransitor.h"
 #include "Common/Random.h"
 
 BootScene::BootScene()
@@ -19,12 +19,7 @@ BootScene::BootScene()
 	SoundManager*sound			=  new SoundManager();
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();
-	new Fead();
 	one = 0;
-
-	Load::SetAsync(false);
-	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL, true);
-	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL, true);
 }
 
 BootScene::~BootScene()
@@ -33,14 +28,13 @@ BootScene::~BootScene()
 
 void BootScene::Update()
 {
-	//if (!Load::IsLoading()) {
-		//Load::SetAsync(false);
+	if (one++ >= 1) {
+		FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
 		SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
-	//}
+	}
 	
 }
 
 void BootScene::Draw()
 {
-	DrawFormatString(1800, 800, 0xffffff, "ロード中……");
 }

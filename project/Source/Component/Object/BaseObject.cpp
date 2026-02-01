@@ -49,6 +49,7 @@ void BaseObject::Update()
 		int a = 0;
 	}
 	PlayScene* playscene = GetScene<PlayScene>();
+
 	if (GetTag() != "CAMERA_OBJ") {
 		if (playscene != nullptr && playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
 			return;

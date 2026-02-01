@@ -18,13 +18,15 @@
 #include "../Source/Common/Effect/EffectManager.h"
 #include "../Source/Stage/SkyManager.h"
 #include "TitleControl.h"
+#include "Common/BlurScreen.h"
 
 TitleScene::TitleScene()
 {
 	//hImage = LoadGraph("data/image/SlashLocus.png");
 
-	TitleControl* titleControl = new TitleControl();
-	
+
+
+	BlurScreen* blur = new BlurScreen();
 
 	Hierachy* hierachy = new Hierachy();
 	new EffectManager();
@@ -52,6 +54,8 @@ TitleScene::TitleScene()
 	collManager->SetDrawOrder(-90000);
 	hierachy->SetDrawOrder(-100000);
 	sky->CreateSky();
+
+	TitleControl* titleControl = new TitleControl();
 }
 
 TitleScene::~TitleScene()

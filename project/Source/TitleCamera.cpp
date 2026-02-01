@@ -13,7 +13,7 @@ TitleCamera::TitleCamera()
 	reap = 0.0f;
 	reap = CameraInformation::DEFALUT_RAPE;
 
-	defalutDistance = VECTOR3(0.0f, 0.0f, -1500.0f);
+	defalutDistance = VECTOR3(0.0f, 0.0f, -800.0f);
 	currentDistance = defalutDistance;
 	
 	debugId = 33;
@@ -31,6 +31,7 @@ TitleCamera::TitleCamera()
 	target = VZero;
 	cameraComponent.cameraTransform = nullptr;
 	rockOn = false;
+	counter = 0;
 }
 
 TitleCamera::~TitleCamera()
@@ -51,34 +52,28 @@ void TitleCamera::Update()
 	SetFogColor(137, 189, 222);*/
 	SetupCamera_Perspective(fov);
 
-	if (debugButton == 1) {
-		Transform transform = *obj->GetTransform();
-		SetCameraPositionAndTarget_UpVecY(transform.position, diffTarget);
-	}
-	else if (rockOn) {
-		SetCameraPositionAndTarget_UpVecY(
-			cameraComponent.cameraTransform->position,
-			target + VECTOR3(0, 300, 0)
-		);
-	}
-	else {
-		SetCameraPositionAndTarget_UpVecY(
-			cameraComponent.cameraTransform->position,
-			target
-		);
-	}
-
-
+	debugButton == 1 ? Update_Debug() : Update_Normal();
 }
+
+void TitleCamera::Update_Debug()
+{
+	Transform transform = *obj->GetTransform();
+	//SetCameraPositionAndTarget_UpVecY(transform.position, diffTarget);
+}
+
+void TitleCamera::Update_Normal()
+{
+	VECTOR3 transform = cameraComponent.cameraTransform->position;
+	transform.x = 420;
+	transform.y -= 300;
+	transform.z = 550;
+
+	SetCameraPositionAndTarget_UpVecY(transform, target + VECTOR3(0, 300, 0));
+}
+
 
 void TitleCamera::Draw()
 {
-	if (cameraComponent.cameraTransform == nullptr) {
-		return;
-	}
-	
-
-	
 
 }
 
@@ -99,6 +94,10 @@ void TitleCamera::ImguiDraw()
 	ImGui::DragFloat("CameraNear", &cameraNear, 1.0f, 0.0f, 5000.0f);
 	ImGui::DragFloat("CameraFar", &cameraFar, 1.0f, -100000.0f, 10000.0f);
 }
+
+//--------------------
+//Å@Ç±Ç±Ç©ÇÁêÊÇÕ...
+//--------------------
 
 void TitleCamera::Start(BaseObject* _eObj)
 {

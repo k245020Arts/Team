@@ -5,6 +5,7 @@
 class InputManager;
 class SoundManager;
 
+class TitlePlayer;
 
 class TitleControl : public GameObject
 {
@@ -25,4 +26,6 @@ private:
 	float exrate;
 	float pushCounter;
 	float moveButton;
+
+	TitlePlayer* player;
 };

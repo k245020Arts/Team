@@ -4,7 +4,7 @@
 TitlePlayerIdol::TitlePlayerIdol()
 {
 	animId = ID::PLAYER_WIN_IDOL;
-	string = string = Function::GetClassNameC<TitlePlayerIdol>();;
+	string = Function::GetClassNameC<TitlePlayerIdol>();;
 }
 
 TitlePlayerIdol::~TitlePlayerIdol()
