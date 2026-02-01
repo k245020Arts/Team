@@ -18,4 +18,8 @@ public:
 private:
 
 	Fead* fead;
+	bool feedInFinish;
+	bool roar;
+	bool first;
+
 };

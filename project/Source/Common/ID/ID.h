@@ -95,6 +95,7 @@ namespace ID {
 		P_WIN,
 		PLAYER_SPECIAL_ATTACK_BACK,
 		PLAYER_WIN_IDOL,
+		B_ROAR_2,
 
 		ID_MAX,
 	};

@@ -49,7 +49,6 @@ private:
         CutPositionInformation enemy;
     };
     
-    int cutSceneIndex;
     float time;
     bool  first;
 

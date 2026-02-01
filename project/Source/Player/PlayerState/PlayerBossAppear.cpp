@@ -9,6 +9,7 @@
 #include "../../Common/Sound/SoundManager.h"
 #include "../../Camera/Camera.h"
 #include "../../Common//Fead/Fead.h"
+#include  "../../Enemy/EnemyManager.h"
 
 PlayerBossAppear::PlayerBossAppear()
 {
@@ -23,9 +24,13 @@ PlayerBossAppear::~PlayerBossAppear()
 
 void PlayerBossAppear::Update()
 {
+	Player* p = GetBase<Player>();
 	if (!feadOut && !fead->IsFead()) {
 		fead->FeadOut(1.0f, 0x000000, Easing::EaseIn<int>);
 		feadOut = true;
+		p->playerCom.camera->CutSceneChangeState("BossAppear");
+		p->playerCom.enemyManager->CameraRockOnStart(p->playerCom.camera);
+		obj->GetTransform()->position = VECTOR3(300, 0, -2000);
 	}
 }
 

@@ -55,7 +55,7 @@ Camera::Camera()
 	rockOn								= false;
 	targetEnemyTransform				= nullptr;
 	diffTarget							= VZero;
-
+	cutSceneIndex						= 0;
 }
 
 Camera::~Camera()
@@ -119,7 +119,7 @@ void Camera::Draw()
 		SetCameraPositionAndTarget_UpVecY(transform.position, diffTarget);
 	}
 	else if (rockOn) {
-		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target + VECTOR3(0, 300, 0));
+		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);
 	}
 	else if (!rockOn) {
 		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);

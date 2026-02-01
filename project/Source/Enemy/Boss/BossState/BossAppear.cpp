@@ -7,6 +7,7 @@
 #include "../../../Camera/Camera.h"
 #include "../../../GameManager/GameManager.h"
 #include "../../../Common/Fead/Fead.h"
+#include "../../../Common/Effect/EffectManager.h"
 
 BossAppear::BossAppear()
 {
@@ -14,6 +15,7 @@ BossAppear::BossAppear()
 	//id = ID::B_IDOL;
 	string = Function::GetClassNameC<BossAppear>();
 	fead = FindGameObject<Fead>();
+	feedInFinish = false;
 }
 
 BossAppear::~BossAppear()
@@ -23,14 +25,44 @@ BossAppear::~BossAppear()
 void BossAppear::Update()
 {
 	Boss* b = GetBase<Boss>();
-	if (fead->GetFeadState() == Fead::FEAD_OUT) {
-		if (!fead->IsFead()) {
+	if (b->enemyBaseComponent.camera->GetCutNum() == 3) {
+		if (!feedInFinish) {
 			b->enemyBaseComponent.physics->GetBaseObject()->SetObjectTimeRate(1.0f);
+			feedInFinish = true;
+		}
+		
+	}
+	if (b->enemyBaseComponent.camera->GetCutNum() == 5) {
+		if (!roar) {
+			b->enemyBaseComponent.anim->Play(ID::B_ROAR, 0.2f);
+			roar = true;
+		}
+		
+	}
+	if (roar) {
+		if (b->enemyBaseComponent.anim->AnimEventCan()) {
+			if (first) {
+				//b->trashEnemy->CreateEnemy(VZero, 4);
+				first = false;
+				b->enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(0.0f, 100.0f, 0.0f), VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_ROAR, 2.0f);
+			}
+
+		}
+		if (b->enemyBaseComponent.anim->IsFinish()) {
+			b->enemyBaseComponent.gameManager->ChangeState("PLAY");
 		}
 	}
-	b->enemyBaseComponent.physics->AddGravity(VECTOR3(0, -10.0f, 0));
-	if (b->enemyBaseComponent.physics->GetGround()) {
-		b->enemyBaseComponent.gameManager->ChangeState("PLAY");
+
+	if (feedInFinish) {
+		b->enemyBaseComponent.physics->AddGravity(VECTOR3(0, -10.0f, 0));
+		if (b->enemyBaseComponent.physics->GetGround()) {
+			//b->enemyBaseComponent.gameManager->ChangeState("PLAY");
+			b->enemyBaseComponent.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::HEIGHT_SHAKE, false, 1.0f);
+			feedInFinish = false;
+		}
+		if (!b->enemyBaseComponent.camera->IsCutScene()) {
+		
+		}
 	}
 }
 
@@ -42,8 +74,11 @@ void BossAppear::Start()
 {
 	Boss* b = GetBase<Boss>();
 	EnemyStateBase::Start();
-	obj->GetTransform()->position = VECTOR3(0, 10000, 0);
+	obj->GetTransform()->position = VECTOR3(0, 10000, 2000);
 	b->enemyBaseComponent.physics->GetBaseObject()->SetObjectTimeRate(0.0f);
+	feedInFinish = false;
+	roar = false;
+	first = true;
 }
 
 void BossAppear::Finish()

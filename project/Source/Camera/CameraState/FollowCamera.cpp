@@ -16,6 +16,7 @@ FollowCamera::FollowCamera()
 	enemyShake	= false;
 	string		= Function::GetClassNameC<FollowCamera>();
 	backCounter = 0.0f;
+	addPos		= VZero;
 }
 
 FollowCamera::~FollowCamera()
@@ -32,13 +33,16 @@ void FollowCamera::Update()
 		float t				= 1.0f - backCounter / TIMER_MAX;
 		VECTOR3 easedT		= Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
 		VECTOR3 target		= SetTarget();
-		c->target			= Easing::EaseOut(currentTarget,target,t);
+		addPos = Easing::EaseOut(VECTOR3(VZero), VECTOR3(0, 300, 0), t);
+		c->target			= Easing::EaseOut(currentTarget,target,t) + addPos;
 		c->currentDistance	= easedT;
-		backCounter -= Time::DeltaTimeRate();
+		backCounter			-= Time::DeltaTimeRate();
+		
 	}
 	else {
 		c->currentDistance	= c->defalutDistance;
-		c->target			= SetTarget();
+		addPos = VECTOR3(0, 300, 0);
+		c->target			= SetTarget() + addPos;
 	}
 	//’Ç]ˆ—
 	c->cameraComponent.camera->Follow();
@@ -74,6 +78,7 @@ void FollowCamera::Start()
 	backCounter										= TIMER_MAX;
 	currentTarget									= c->target;
 	c->cameraComponent.cameraTransform->rotation.x	= 30.0f * DegToRad;
+	addPos											= VZero;
 }
 
 void FollowCamera::Finish()

@@ -168,9 +168,12 @@ public:
 
 	void SleepTargetSet(int _stop,bool _sleep);
 
+	int GetCutNum() { return cutSceneIndex; }
+
 private:
 
 	float timeTest;
+	int cutSceneIndex;
 	bool normalCamera;
 	int targetChangeButton;
 	ControllerInputManager* control;
