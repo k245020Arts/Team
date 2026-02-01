@@ -525,6 +525,15 @@
     <ClCompile Include="Source\TitlePlayerMove.cpp">
       <Filter>TitleScene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Common\Fead\Fead.cpp">
+      <Filter>Common\Fead</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player\PlayerState\PlayerBossAppear.cpp">
+      <Filter>PlayScene\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossAppear.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1106,6 +1115,15 @@
     <ClInclude Include="Source\TitlePlayerMove.h">
       <Filter>TitleScene</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Common\Fead\Fead.h">
+      <Filter>Common\Fead</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\PlayerState\PlayerBossAppear.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossAppear.h">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1302,6 +1320,9 @@
     </Filter>
     <Filter Include="Common\Memory">
       <UniqueIdentifier>{a4fca67c-9e82-4b7a-b528-f487954f3a4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Fead">
+      <UniqueIdentifier>{e9433428-080b-400a-8d9e-62d766c3b662}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
