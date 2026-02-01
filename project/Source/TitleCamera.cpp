@@ -31,6 +31,7 @@ TitleCamera::TitleCamera()
 	target = VZero;
 	cameraComponent.cameraTransform = nullptr;
 	rockOn = false;
+	counter = 0;
 }
 
 TitleCamera::~TitleCamera()

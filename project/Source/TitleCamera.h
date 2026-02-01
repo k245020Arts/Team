@@ -28,6 +28,8 @@ private:
 	float cameraFar;
 	bool rockOn;
 
+	int counter;
+
 	void Update_Debug();
 	void Update_Normal();
 };

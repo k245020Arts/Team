@@ -5,6 +5,7 @@
 #include "../Source/Common/Sound/SoundManager.h"
 #include "../Source/Common/Debug/Debug.h"
 #include "../Source/Common/Transitor/TransitorManager.h"
+#include "../Source/Common/Transitor/FadeTransitor.h"
 #include "Common/Random.h"
 
 BootScene::BootScene()
@@ -28,6 +29,7 @@ BootScene::~BootScene()
 void BootScene::Update()
 {
 	if (one++ >= 1) {
+		FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
 		SceneManager::ChangeScene("TITLE"); // ‹N“®‚ªI‚í‚Á‚½‚çTitle‚ğ•\¦
 	}
 	
