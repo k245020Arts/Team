@@ -23,6 +23,7 @@ TitleControl::TitleControl()
 	keyImage = Load::LoadImageGraph(Load::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
 	sound = FindGameObject<SoundManager>();
 	sound->TitleSceneLoad();
+	sound->PlaySceneLoad(); // 
 	sound->PlayBGM(Sound_ID::TITLE_BGM, true, true);
 	firstCounter = 1.0f;
 	pushCounter = 0.0f;

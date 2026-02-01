@@ -18,10 +18,15 @@
 #include "../Source/Common/Effect/EffectManager.h"
 #include "../Source/Stage/SkyManager.h"
 #include "TitleControl.h"
+#include "Common/BlurScreen.h"
 
 TitleScene::TitleScene()
 {
 	//hImage = LoadGraph("data/image/SlashLocus.png");
+
+
+
+	BlurScreen* blur = new BlurScreen();
 
 	Hierachy* hierachy = new Hierachy();
 	new EffectManager();

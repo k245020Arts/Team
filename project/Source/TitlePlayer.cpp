@@ -27,6 +27,7 @@
 #include "TitleScene.h"
 #include "TitlePlayerIdol.h"
 #include "TitlePlayerMove.h"
+#include "Common/InputManager/InputManager.h"
 
 TitlePlayer::TitlePlayer()
 {
@@ -68,10 +69,9 @@ void TitlePlayer::Start(Object3D* _obj) {
 
     camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<TitleCamera>();
 
-	//playerCom.InputManager = FindGameObject<ImputManager>();
+	playerCom.InputManager = FindGameObject<InputManager>();
 	playerCom.controller = FindGameObject<ControllerInputManager>();
 	playerCom.keyboard = FindGameObject<KeyboardInputManager>();
-	/*playerCom.InputManager = FindGameObject<InputManager>();*/
 
 	playerTransform = obj->GetTransform();
 
