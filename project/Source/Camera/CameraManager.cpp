@@ -99,5 +99,6 @@ void CameraManager::TitleCameraCreate()
 void CameraManager::TitleParentObj(std::string _str)
 {
 	Object3D* obj = FindGameObjectWithTag<Object3D>(_str);
+	
 	mainCamera->Component()->GetComponent<TitleCamera>()->PlayerSet(obj);
 }

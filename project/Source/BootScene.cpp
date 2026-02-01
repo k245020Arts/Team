@@ -19,6 +19,10 @@ BootScene::BootScene()
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();
 	one = 0;
+
+	Load::SetAsync(true);
+	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL, true);
+	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL, true);
 }
 
 BootScene::~BootScene()
@@ -27,7 +31,8 @@ BootScene::~BootScene()
 
 void BootScene::Update()
 {
-	if (one++ >= 1) {
+	if (!Load::IsLoading()) {
+		Load::SetAsync(false);
 		SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
 	}
 	
@@ -35,4 +40,5 @@ void BootScene::Update()
 
 void BootScene::Draw()
 {
+	DrawFormatString(1800, 800, 0xffffff, "ロード中……");
 }

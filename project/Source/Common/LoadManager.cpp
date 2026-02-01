@@ -50,6 +50,7 @@ namespace {
 	};
 
 	std::unordered_map <std::string, LoadData> fileLoad;
+	std::unordered_map <std::string, LoadData> commonFileLoad;
 	//std::array <std::string, (int)Type::EFFECT + 1> path;
 
 	void ShowLoadError(const std::string& type, const std::string& name) {
@@ -74,210 +75,257 @@ void Load::Init()
 	fileLoad.clear();
 }
 
-int Load::LoadModel(std::string path,ID::IDType id)
-{
-	std::string name = path;
-	//LoadData data = fileLoad[name];
-	if (fileLoad[name].handle == -1) {
-		//拡張子はこっちで指定する分楽にできるようにする
-		ID::SetID(path, id);
-		path += ".mv1";
-		fileLoad[name].handle = MV1LoadModel(path.c_str());
-		fileLoad[name].type = Type::MODEL;
-	}
-	if (fileLoad[name].handle == -1) {
-		ShowLoadError("Model", name);
-		return -1;
-		
-	}
-	Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
-	return fileLoad[name].handle;
+// 共通データと通常データを管理するLoadクラスの例
+
+int Load::LoadModel(std::string path, ID::IDType id) {
+    return LoadModel(path, id, false);
 }
 
-int Load::LoadSound(std::string path,std::string exten, Sound_ID::SOUND_ID id)
-{
-	std::string name = path;
-	//LoadData data = fileLoad[name];
-	std::string loadName = Load::SOUND_PATH + path;
-	if (fileLoad[name].handle == -1) {
-		//soundだけは拡張子が様々なので引数で指定
-		loadName += exten;
-		fileLoad[name].handle = LoadSoundMem(loadName.c_str());
-		fileLoad[name].type = Type::SOUND;
-		Sound_ID::SetSoundId(path, id);
-	}
-	if (fileLoad[name].handle == -1) {
-		ShowLoadError("Sound", name);
-		return -1;
-	}
-	/*else {
-		fileLoad[name] = data;
-	}*/
-	Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
-	return fileLoad[name].handle;
+int Load::LoadModel(std::string path, ID::IDType id, bool _common) {
+    std::string name = path;
+    auto& targetLoad = _common ? commonFileLoad : fileLoad;
+
+    if (targetLoad[name].handle == -1) {
+        ID::SetID(path, id);
+        path += ".mv1";
+        targetLoad[name].handle = MV1LoadModel(path.c_str());
+        targetLoad[name].type = Type::MODEL;
+    }
+
+    if (targetLoad[name].handle == -1) {
+        ShowLoadError("Model", name);
+        return -1;
+    }
+
+    Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+    return targetLoad[name].handle;
 }
 
-int Load::LoadEffect(std::string path, Effect_ID::EFFECT_ID id,float size)
-{
-	//std::string name = ID::GetEffectID(id);
-	std::string name = path;
-	//LoadData data = fileLoad[name];
-	std::string loadName = Load::EFFECT_PATH + path;
-	if (fileLoad[name].handle == -1) {
-		//拡張子はこっちで指定する分楽にできるようにする
-		loadName += ".efkefc";
-		fileLoad[name].handle = LoadEffekseerEffect(loadName.c_str(),size);
-		fileLoad[name].type = Type::EFFECT;
-		Effect_ID::SetEffectID(path, id);
-	}
-	if (fileLoad[name].handle == -1) {
-		ShowLoadError("Effect", name);
-		return -1;
-	}
-	/*else {
-		fileLoad[name] = data;
-	}*/
-	Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
-	return fileLoad[name].handle;
+int Load::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id) {
+    // 通常版は _common = false
+    return LoadSound(path, exten, id, false);
 }
 
-int Load::LoadImageGraph(std::string path, ID::IDType id)
-{
-	std::string name = path;
-	//LoadData data = fileLoad[name];
-	if (fileLoad[name].handle == -1) {
-		//拡張子はこっちで指定する分楽にできるようにする
-		ID::SetID(path, id);
-		path += ".png";
-		fileLoad[name].handle = LoadGraph(path.c_str());
-		fileLoad[name].type = Type::IMAGE;
-	}
-	if (fileLoad[name].handle == -1) {
-		ShowLoadError("Image", name);
-		return -1;
-	}
-	/*else {
-		fileLoad[name] = data;
-	}*/
-	Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
-	return fileLoad[name].handle;
+int Load::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id, bool _common) {
+    std::string name = path;
+    auto& targetLoad = _common ? commonFileLoad : fileLoad;
+
+    if (targetLoad[name].handle == -1) {
+        std::string loadName = Load::SOUND_PATH + path + exten;
+        targetLoad[name].handle = LoadSoundMem(loadName.c_str());
+        targetLoad[name].type = Type::SOUND;
+        Sound_ID::SetSoundId(path, id);
+    }
+
+    if (targetLoad[name].handle == -1) {
+        ShowLoadError("Sound", name);
+        return -1;
+    }
+
+    Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+    return targetLoad[name].handle;
 }
 
-int Load::LoadAnim(std::string path, ID::IDType id)
-{
-	std::string name = path;
-	//LoadData data = fileLoad[name];
-	if (fileLoad[name].handle == -1) {
-		//拡張子はこっちで指定する分楽にできるようにする
-		ID::SetID(path, id);
-		path += ".mv1";
-		fileLoad[name].handle = MV1LoadModel(path.c_str());
-		fileLoad[name].type = Type::ANIM;
-	}
-	if (fileLoad[name].handle == -1) {
-		ShowLoadError("Anim", name);
-		return -1;
-	}
-	/*else {
-		fileLoad[name] = data;
-	}*/
-	Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
-	return fileLoad[name].handle;
+int Load::LoadEffect(std::string path, Effect_ID::EFFECT_ID id, float size) {
+    return LoadEffect(path, id, size, false);
 }
 
-void Load::DeleteData(ID::IDType id)
-{
-	//指定したIDのリソースを削除する
-	std::string name = ID::GetID(id);
-	auto itr = fileLoad.find(name);
-	if (itr == fileLoad.end()) {
-		Debug::CreateMessageBox("データが存在しない", "削除ミス");
-	}
-	else {
-		switch (itr->second.type)
-		{
-		case Type::MODEL:
-		case Type::ANIM:
-			MV1DeleteModel(itr->second.handle);
-			break;
-		case Type::SOUND:
-			DeleteSoundMem(itr->second.handle);
-			break;
-		case Type::EFFECT:
-			DeleteEffekseerEffect(itr->second.handle);
-			break;
-		case Type::IMAGE:
-			DeleteGraph(itr->second.handle);
-			break;
-		}
-		fileLoad.erase(name);
-	}
+
+int Load::LoadEffect(std::string path, Effect_ID::EFFECT_ID id, float size, bool _common) {
+    std::string name = path;
+    auto& targetLoad = _common ? commonFileLoad : fileLoad;
+
+    if (targetLoad[name].handle == -1) {
+        std::string loadName = Load::EFFECT_PATH + path + ".efkefc";
+        targetLoad[name].handle = LoadEffekseerEffect(loadName.c_str(), size);
+        targetLoad[name].type = Type::EFFECT;
+        Effect_ID::SetEffectID(path, id);
+    }
+
+    if (targetLoad[name].handle == -1) {
+        ShowLoadError("Effect", name);
+        return -1;
+    }
+
+    Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+    return targetLoad[name].handle;
 }
 
-void Load::AllDelete()
-{
-	//すべてのリソースデータを削除する
-	for (auto f:fileLoad) {
-		switch (f.second.type)
-		{
-		case Type::MODEL:
-		case Type::ANIM:
-			MV1DeleteModel(f.second.handle);
-			break;
-		case Type::SOUND:
-			DeleteSoundMem(f.second.handle);
-			break;
-		case Type::EFFECT:
-			DeleteEffekseerEffect(f.second.handle);
-			break;
-		case Type::IMAGE:
-			DeleteGraph(f.second.handle);
-			break;
-		default:
-			my_error_assert("リソースデータ削除ミス");
-		}
-		//Debug::DebugOutPutPrintf("%s : Deleteしました。", f.first.c_str());
-
-	}
-	fileLoad.clear();
+int Load::LoadImageGraph(std::string path, ID::IDType id) {
+    return LoadImageGraph(path, id, false);
 }
 
-int Load::GetHandle(ID::IDType id)
-{
+int Load::LoadImageGraph(std::string path, ID::IDType id, bool _common) {
+    std::string name = path;
+    auto& targetLoad = _common ? commonFileLoad : fileLoad;
 
-	auto it = fileLoad.find(ID::GetID(id));
-	if (fileLoad.end() == it) {
-		std::string str = std::to_string((int)id);
-		Debug::DebugLog("そのIDはありません" + str);
-		return -1;
-	}
-	else {
-		return it->second.handle;
-	}
+    if (targetLoad[name].handle == -1) {
+        ID::SetID(path, id);
+        std::string fullPath = path + ".png";
+        targetLoad[name].handle = LoadGraph(fullPath.c_str());
+        targetLoad[name].type = Type::IMAGE;
+    }
+
+    if (targetLoad[name].handle == -1) {
+        ShowLoadError("Image", name);
+        return -1;
+    }
+
+    Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+    return targetLoad[name].handle;
 }
 
-int Load::GetSoundHandle(Sound_ID::SOUND_ID id)
-{
-	auto it = fileLoad.find(Sound_ID::GetSoundID(id));
-	if (fileLoad.end() == it) {
-		std::string str = std::to_string((int)id);
-		Debug::DebugLog("そのサウンドデータはありません" + str);
-		return -1;
-	}
-	else {
-		return it->second.handle;
-	}
+int Load::LoadAnim(std::string path, ID::IDType id) {
+    return LoadAnim(path, id, false);
 }
 
-int Load::GetEffectHandle(Effect_ID::EFFECT_ID id)
+int Load::LoadAnim(std::string path, ID::IDType id, bool _common) {
+    std::string name = path;
+    auto& targetLoad = _common ? commonFileLoad : fileLoad;
+
+    if (targetLoad[name].handle == -1) {
+        ID::SetID(path, id);
+        path += ".mv1";
+        targetLoad[name].handle = MV1LoadModel(path.c_str());
+        targetLoad[name].type = Type::ANIM;
+    }
+
+    if (targetLoad[name].handle == -1) {
+        ShowLoadError("Anim", name);
+        return -1;
+    }
+
+    Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+    return targetLoad[name].handle;
+}
+
+// 共通と通常の両方から検索するGetHandle
+int Load::GetHandle(ID::IDType id) {
+    std::string name = ID::GetID(id);
+
+    auto it = fileLoad.find(name);
+    if (it != fileLoad.end()) return it->second.handle;
+
+    it = commonFileLoad.find(name);
+    if (it != commonFileLoad.end()) return it->second.handle;
+
+    Debug::DebugLog("そのIDはありません: " + std::to_string((int)id));
+    return -1;
+}
+
+int Load::GetSoundHandle(Sound_ID::SOUND_ID id) {
+    std::string name = Sound_ID::GetSoundID(id);
+
+    auto it = fileLoad.find(name);
+    if (it != fileLoad.end()) return it->second.handle;
+
+    it = commonFileLoad.find(name);
+    if (it != commonFileLoad.end()) return it->second.handle;
+
+    Debug::DebugLog("そのサウンドデータはありません: " + std::to_string((int)id));
+    return -1;
+}
+
+int Load::GetEffectHandle(Effect_ID::EFFECT_ID id) {
+    std::string name = Effect_ID::GetEffectID(id);
+
+    auto it = fileLoad.find(name);
+    if (it != fileLoad.end()) return it->second.handle;
+
+    it = commonFileLoad.find(name);
+    if (it != commonFileLoad.end()) return it->second.handle;
+
+    Debug::DebugLog("そのエフェクトデータはありません: " + std::to_string((int)id));
+    return -1;
+}
+
+// DeleteDataで_commonフラグ対応
+void Load::DeleteData(ID::IDType id, bool _common) {
+    std::string name = ID::GetID(id);
+    auto& targetLoad = _common ? commonFileLoad : fileLoad;
+
+    auto itr = targetLoad.find(name);
+    if (itr == targetLoad.end()) {
+        Debug::CreateMessageBox("データが存在しない", "削除ミス");
+        return;
+    }
+
+    switch (itr->second.type)
+    {
+    case Type::MODEL:
+    case Type::ANIM:
+        MV1DeleteModel(itr->second.handle);
+        break;
+    case Type::SOUND:
+        DeleteSoundMem(itr->second.handle);
+        break;
+    case Type::EFFECT:
+        DeleteEffekseerEffect(itr->second.handle);
+        break;
+    case Type::IMAGE:
+        DeleteGraph(itr->second.handle);
+        break;
+    }
+    targetLoad.erase(itr);
+}
+
+// fileLoadのみ全削除
+void Load::FileLoadClear() {
+    for (auto& f : fileLoad) {
+        switch (f.second.type)
+        {
+        case Type::MODEL:
+        case Type::ANIM:
+            MV1DeleteModel(f.second.handle);
+            break;
+        case Type::SOUND:
+            DeleteSoundMem(f.second.handle);
+            break;
+        case Type::EFFECT:
+            DeleteEffekseerEffect(f.second.handle);
+            break;
+        case Type::IMAGE:
+            DeleteGraph(f.second.handle);
+            break;
+        default:
+            my_error_assert("リソースデータ削除ミス");
+        }
+    }
+    fileLoad.clear();
+}
+
+// 共通も含めて全削除
+void Load::AllDelete() {
+    FileLoadClear();
+    for (auto& f : commonFileLoad) {
+        switch (f.second.type)
+        {
+        case Type::MODEL:
+        case Type::ANIM:
+            MV1DeleteModel(f.second.handle);
+            break;
+        case Type::SOUND:
+            DeleteSoundMem(f.second.handle);
+            break;
+        case Type::EFFECT:
+            DeleteEffekseerEffect(f.second.handle);
+            break;
+        case Type::IMAGE:
+            DeleteGraph(f.second.handle);
+            break;
+        default:
+            my_error_assert("リソースデータ削除ミス");
+        }
+    }
+    commonFileLoad.clear();    
+}
+
+void Load::SetAsync(bool _async)
 {
-	auto it = fileLoad.find(Effect_ID::GetEffectID(id));
-	if (fileLoad.end() == it) {
-		std::string str = std::to_string((int)id);
-		Debug::DebugLog("そのエフェクトデータはありません" + str);
-		return -1;
-	}
-	else {
-		return it->second.handle;
-	}
+	SetUseASyncLoadFlag(_async);
+}
+
+bool Load::IsLoading()
+{
+	return (GetASyncLoadNum() > 0);
 }

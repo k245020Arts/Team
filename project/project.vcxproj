@@ -186,6 +186,7 @@
     <ClInclude Include="Source\Common\Easing.h" />
     <ClInclude Include="Source\Common\Effect\EffectBase.h" />
     <ClInclude Include="Source\Common\Effect\EffectManager.h" />
+    <ClInclude Include="Source\Common\Fead\Fead.h" />
     <ClInclude Include="Source\Common\Function.h" />
     <ClInclude Include="Source\Common\ID\EffectID.h" />
     <ClInclude Include="Source\Common\ID\ID.h" />
@@ -375,6 +376,7 @@
     <ClCompile Include="Source\Common\Debug\Debug.cpp" />
     <ClCompile Include="Source\Common\Effect\EffectBase.cpp" />
     <ClCompile Include="Source\Common\Effect\EffectManager.cpp" />
+    <ClCompile Include="Source\Common\Fead\Fead.cpp" />
     <ClCompile Include="Source\Common\ID\EffectID.cpp" />
     <ClCompile Include="Source\Common\ID\ID.cpp" />
     <ClCompile Include="Source\Common\ID\SoundID.cpp" />

@@ -18,13 +18,13 @@ StageManager::StageManager()
 	//modelHandle = MV1LoadModel("data/model/stage10.mv1");
 	//CreateStage();
 #ifdef NEW_STAGE
-	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL);
+	
 #else
 	Load::LoadModel(Load::MODEL_PATH +  "new_Stage6", ID::S_MODEL);
 #endif // NEW_STAGE
 
 	
-	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL);
+	
 	stage = nullptr;
 	modelHandle = -1;
 }
