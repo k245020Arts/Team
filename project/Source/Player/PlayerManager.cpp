@@ -44,6 +44,7 @@
 #include "../Component/Animator/Anim2D.h"7
 #include "../Screen.h"
 #include "../TitlePlayer.h"
+#include "../Player/PlayerState/PlayerBossAppear.h"
 
 PlayerManager::PlayerManager()
 {
@@ -144,6 +145,7 @@ void PlayerManager::CreatePlayer()
 	stateManager->CreateState<PlayerSpecialAttack>("PlayerSpecialAttack", StateID::PLAYER_SPECIAL_ATTACK_S);
 	stateManager->CreateState<PlayerWin>("_PlayerWin", StateID::PLAYER_WIN_STATE_S);
 	stateManager->CreateState<PlayerBefore>("_PlayerBefore", StateID::PLAYER_BEFORE_S);
+	stateManager->CreateState<PlayerBossAppear>("_PlayerBossAppear", StateID::PLAYER_BOSS_APPEAR_S);
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),		"mixamorig:Hips");
@@ -223,10 +225,14 @@ void PlayerManager::GameSceneChangeState()
 		stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 		break;
 	case 2:
-		stateManager->NowChangeState(StateID::PLAYER_WIN_STATE_S);
-		stateManager->SetNoStateChange(true);
+		stateManager->ChangeState(StateID::PLAYER_BOSS_APPEAR_S);
 		break;
 	case 3:
+		stateManager->NowChangeState(StateID::PLAYER_WIN_STATE_S);
+		stateManager->SetNoStateChange(true);
+		
+		break;
+	case 4:
 		/*stateManager->NowChangeState(StateID::PLAYER_DIE_S);
 		stateManager->SetNoStateChange(true);*/
 		break;

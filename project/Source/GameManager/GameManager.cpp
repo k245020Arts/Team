@@ -11,11 +11,12 @@
 #include "../Common/Debug/Debug.h"
 
 namespace {
-	const int GAME_STATE_MAX = 4;
+	const int GAME_STATE_MAX = 5;
 
 	const std::string stateName[GAME_STATE_MAX]{
 		{"BEFORE"},
 		{"PLAY"},
+		{"BOSS_PLAY_BEFORE"},
 		{"WIN"},
 		{"LOSE"},
 	};
@@ -93,14 +94,20 @@ void GameManager::ChangeState(std::string _name)
 				stateDraw = MEBDraw(&GameManager::PlayDraw);
 				break;
 			case 2:
-				state = MEB(&GameManager::WinUpdate);
-				stateDraw = MEBDraw(&GameManager::WinDraw);
+				state = MEB(&GameManager::BossPlayBeforeUpdate);
+				stateDraw = MEBDraw(&GameManager::BossPlayBeforeDraw);
 				break;
 			case 3:
+				state = MEB(&GameManager::WinUpdate);
+				stateDraw = MEBDraw(&GameManager::WinDraw);
+				
+				break;
+			case 4:
 				state = MEB(&GameManager::LoseUpdate);
 				stateDraw = MEBDraw(&GameManager::LoseDraw);
 				break;
 			}
+			
 			nowState = stateName[i];
 			//changeState = true;
 		}
@@ -136,12 +143,15 @@ int GameManager::GetStateNumber()
 	else if (nowState == "PLAY") {
 		num = 1;
 	}
-	else if(nowState == "WIN"){
+	else if(nowState == "BOSS_PLAY_BEFORE"){
 		
 		num = 2;
 	}
-	else {
+	else if (nowState == "WIN") {
 		num = 3;
+	}
+	else {
+		num = 4;
 	}
 	return num;
 }
@@ -177,6 +187,16 @@ MEB GameManager::PlayDraw()
 {
 	//DrawFormatString(1000, 500, 0xffffff, "%d", (int)startCount);
 	return &GameManager::PlayDraw;
+}
+
+MEB GameManager::BossPlayBeforeUpdate()
+{
+	return  &GameManager::BossPlayBeforeUpdate;
+}
+
+MEB GameManager::BossPlayBeforeDraw()
+{
+	return &GameManager::BossPlayBeforeDraw;
 }
 
 MEB GameManager::WinUpdate()

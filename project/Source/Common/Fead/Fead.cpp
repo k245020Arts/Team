@@ -8,6 +8,9 @@ Fead::Fead()
 
 	color = 0;;
 	alpha = 0;;
+
+	DontDestroyOnSceneChange();
+	SetDrawOrder(-10000);
 }
 
 Fead::~Fead()
@@ -21,7 +24,8 @@ void Fead::Update()
 
 void Fead::Draw()
 {
-	if (feedTime < 0.0f) {
+	if (feedTime <= 0.0f) {
+		feadIn = NONE;
 		return;
 	}
 	feedTime -= Time::DeltaTimeRate();
@@ -36,7 +40,7 @@ void Fead::Draw()
 	else {
 		rate = 1 - (feedTime / feedCountMax);
 	}
-	alpha = easingFunc(0, 255, rate);
+	alpha = easingFunc(255, 0, rate);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	DrawBoxAA(0, 0, Screen::WIDTH, Screen::HEIGHT, color, true);
@@ -53,7 +57,7 @@ void Fead::FeadIn(float _time, int _color, std::function<int(int, int, float)> _
 	alpha = 255;
 	color = _color;
 	easingFunc = _func;
-	feadIn = true;
+	feadIn = FEAD_IN;
 }
 
 void Fead::FeadOut(float _time, int _color, std::function<int(int, int, float)> _func)
@@ -66,5 +70,5 @@ void Fead::FeadOut(float _time, int _color, std::function<int(int, int, float)> 
 	alpha = 255;
 	color = _color;
 	easingFunc = _func;
-	feadIn = false;
+	feadIn = FEAD_OUT;
 }

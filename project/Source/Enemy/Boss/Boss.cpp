@@ -38,6 +38,7 @@
 #include "../Boss/BossState/BossRoar.h"
 #include "../Boss/BossState/BossThreat.h"
 #include "../Boss/BossState/BossDamage.h"
+#include "../Boss/BossState/BossAppear.h"
 #include "../TrashEnemy/TrashEnemyManager.h"//
 #include "../../Common/Random.h"
 #include "../../Component/UI/EnemyDamageUI.h"
@@ -239,11 +240,12 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossRoar>("BossRoar", StateID::B_ROAR_S);
 	enemyBaseComponent.state->CreateState<BossThreat>("BossThreat", StateID::B_THREAT_S);
 	enemyBaseComponent.state->CreateState<BossDamage>("BossDamage", StateID::BOSS_DAMAGE_S);
+	enemyBaseComponent.state->CreateState<BossAppear>("BossAppear", StateID::BOSS_APPEAR_S);
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
 	// 初期ステート
-	enemyBaseComponent.state->StartState(StateID::BOSS_IDOL_S);
+	enemyBaseComponent.state->StartState(StateID::BOSS_APPEAR_S);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::B_MODEL, -1);

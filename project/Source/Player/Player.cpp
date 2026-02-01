@@ -29,6 +29,7 @@
 #include "../Player/PlayerState/playerjustAvoid.h"
 #include "../Player/PlayerState/PlayerBlowAway.h"
 #include "../Player/PlayerState/PlayerTurn.h"
+#include "../Player/PlayerState/PlayerBossAppear.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack1.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack2.h"
 #include "../Player/PlayerState/AttackState/playerAttack3.h"

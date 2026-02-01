@@ -9,6 +9,7 @@ class Camera;
 class EnemyBase;
 class Transform;
 class Boss;
+class GameManager;
 
 class EnemyManager : public GameObject
 {
@@ -58,6 +59,8 @@ public:
 
 	void SleepAllEnemy(bool _sleep);
 
+	void GameSceneChangeState();
+
 private:
 	
 	std::list<BaseObject*> enemy;
@@ -65,4 +68,5 @@ private:
 	std::list<EnemyBase*> chara;
 	BaseObject* cameraTargetObj;
 	//std::list<Boss> bossList;
+	GameManager* gameManager;
 };

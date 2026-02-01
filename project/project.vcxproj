@@ -259,6 +259,7 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack1.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialSmallAttack1.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossAppear.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossCoolTime.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossDamage.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossDie.h" />
@@ -310,6 +311,7 @@
     <ClInclude Include="Source\Player\PlayerState\PlayerAvoid.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerBefore.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerBlowAway.h" />
+    <ClInclude Include="Source\Player\PlayerState\PlayerBossAppear.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerDamage.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerDie.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerjustAvoid.h" />
@@ -444,6 +446,7 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack1.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialSmallAttack1.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossAppear.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossCoolTime.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossDamage.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossDie.cpp" />
@@ -490,6 +493,7 @@
     <ClCompile Include="Source\Player\PlayerState\PlayerAvoid.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerBefore.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerBlowAway.cpp" />
+    <ClCompile Include="Source\Player\PlayerState\PlayerBossAppear.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerDamage.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerDie.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerjustAvoid.cpp" />

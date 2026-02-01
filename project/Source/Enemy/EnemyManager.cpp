@@ -19,7 +19,8 @@
 #include "../Component/Collider/ModelCollider.h"
 #include "../Component/Shadow/Shadow.h"
 #include "../Common/Easing.h"
-
+#include "../GameManager/GameManager.h"
+#include "../State/StateManager.h"
 //#define VERSION2D
 //#define DOT_MODE
 
@@ -30,7 +31,7 @@ EnemyManager::EnemyManager()
 	player = nullptr;
 	SetDrawOrder(-10);
 	cameraTargetObj = nullptr;
-
+	
 }
 
 EnemyManager::~EnemyManager()
@@ -41,7 +42,13 @@ EnemyManager::~EnemyManager()
 
 void EnemyManager::Update()
 {
-	
+	if (gameManager == nullptr) {
+		gameManager = FindGameObject<GameManager>();
+	}
+
+	if (gameManager != nullptr && gameManager->GetChangeState()) {
+		GameSceneChangeState();
+	}
 }
 
 void EnemyManager::Draw()
@@ -611,6 +618,42 @@ void EnemyManager::SleepAllEnemy(bool _sleep)
 		(*itr)->GetBaseObject()->SetSleep(_sleep);
 	}
 }
+
+void EnemyManager::GameSceneChangeState()
+{
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		BaseObject* obj = (*itr)->GetBaseObject();
+		if (obj != nullptr && obj->GetTag() == "Boss") {
+			StateManager* stateManager = obj->Component()->GetComponent<StateManager>();
+			switch (gameManager->GetStateNumber())
+			{
+			case 0:
+				/*stateManager->ChangeState(StateID::PLAYER_BEFORE_S);*/
+				break;
+			case 1:
+				stateManager->ChangeState(StateID::BOSS_IDOL_S);
+				break;
+			case 2:
+				
+				//stateManager->ChangeState(StateID::BOSS_APPEAR_S);
+				/*stateManager->SetNoStateChange(true);*/
+				/*stateManager->ChangeState(StateID::);*/
+				break;
+			case 3:
+				/*stateManager->NowChangeState(StateID::PLAYER_DIE_S);
+				stateManager->SetNoStateChange(true);*/
+				break;
+			case 4:
+
+				break;
+			}
+			return;
+		}
+	}
+	
+}
+
+
 
 
 	/*for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {

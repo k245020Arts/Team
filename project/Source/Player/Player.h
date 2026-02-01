@@ -33,6 +33,7 @@ public:
 	friend class PlayerTurn;
 	friend class PlayerWin;
 	friend class PlayerSpecialAttack;
+	friend class PlayerBossAppear;
 
 	Player();
 	~Player();

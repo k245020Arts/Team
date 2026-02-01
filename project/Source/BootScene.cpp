@@ -5,6 +5,7 @@
 #include "../Source/Common/Sound/SoundManager.h"
 #include "../Source/Common/Debug/Debug.h"
 #include "../Source/Common/Transitor/TransitorManager.h"
+#include "../Source/Common/Fead/Fead.h"
 #include "Common/Random.h"
 
 BootScene::BootScene()
@@ -18,9 +19,10 @@ BootScene::BootScene()
 	SoundManager*sound			=  new SoundManager();
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();
+	new Fead();
 	one = 0;
 
-	Load::SetAsync(true);
+	Load::SetAsync(false);
 	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL, true);
 	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL, true);
 }
@@ -31,10 +33,10 @@ BootScene::~BootScene()
 
 void BootScene::Update()
 {
-	if (!Load::IsLoading()) {
-		Load::SetAsync(false);
+	//if (!Load::IsLoading()) {
+		//Load::SetAsync(false);
 		SceneManager::ChangeScene("TITLE"); // ãNìÆÇ™èIÇÌÇ¡ÇΩÇÁTitleÇï\é¶
-	}
+	//}
 	
 }
 

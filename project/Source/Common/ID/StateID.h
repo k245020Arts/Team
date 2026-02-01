@@ -25,6 +25,7 @@ namespace StateID{
         PLAYER_SPECIAL_ATTACK_S,
         PLAYER_WIN_STATE_S,
         PLAYER_BEFORE_S,
+        PLAYER_BOSS_APPEAR_S,
 
         BOSS_IDOL_S,
         BOSS_RUN_S,
@@ -43,6 +44,7 @@ namespace StateID{
         B_ROAR_S,
         B_THREAT_S,
         BOSS_DAMAGE_S,
+        BOSS_APPEAR_S,
 
         FOLLOW_CAMERA_S,
         JUST_AVOID_CAMERA_S,
@@ -59,6 +61,8 @@ namespace StateID{
         COOPERATEATTACK1,
         T_ENEMY_STANDBY,
         T_ENEMY_DAMAGE,
+
+
 
         STATE_MAX,
     };
