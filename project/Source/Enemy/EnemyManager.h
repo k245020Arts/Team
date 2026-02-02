@@ -29,7 +29,11 @@ public:
 
 	void CreateBoss();
 	void FindPlayer();
-
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="_enemy"> </param>
+	/// <param name="_obj"></param>
 	void AddList(EnemyBase* _enemy, BaseObject* _obj);
 
 	void RemoveList(EnemyBase* _enemy, BaseObject* _obj);
