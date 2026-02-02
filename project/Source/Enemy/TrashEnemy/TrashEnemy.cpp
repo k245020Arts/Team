@@ -99,7 +99,9 @@ TrashEnemy::TrashEnemy()
 	/*hp = eStatus->GetStatus().maxHp;
 	maxHp = hp;*/
 
-	//speed = eStatus->GetStatus().runSpeed;
+	speed = 0;
+	defense = 0;
+
 	isAttack = false;
 	isStandby = false;
 	isCooperateAtk = false;
@@ -198,17 +200,20 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 		hp = eStatus->GetStatus().maxHp * MIN;
 		maxHp = hp;
 		speed = eStatus->GetStatus().runSpeed * MAX;
+		defense = eStatus->GetStatus().defense * MIN;
 		GetEnemyObj()->GetTransform()->scale = GetEnemyObj()->GetTransform()->scale * MIN;
 		break;
 	case 1:
 		hp = eStatus->GetStatus().maxHp;
 		maxHp = hp;
 		speed = eStatus->GetStatus().runSpeed;
+		defense = eStatus->GetStatus().defense;
 		break;
 	default://重い敵
 		hp = eStatus->GetStatus().maxHp * MAX;
 		maxHp = hp;
 		speed = eStatus->GetStatus().runSpeed * MIN;
+		defense = eStatus->GetStatus().defense * MAX;
 		GetEnemyObj()->GetTransform()->scale = GetEnemyObj()->GetTransform()->scale * MAX;
 		break;
 	}
@@ -258,6 +263,11 @@ bool TrashEnemy::IsPlayerSpecialMove()
 	}		
 }
 
+float TrashEnemy::DamageCalculation(float _damage)
+{
+	return _damage + (_damage * 2) / (defense / 4);
+}
+
 void TrashEnemy::Trail()
 {
 	chara->CreateSwordEffect(VECTOR3(70, 0, -50), VECTOR3(120, 0, 50), 200.0f, 10.0f, 00.0f, 155.0f, 28, 0.5f);
@@ -269,7 +279,7 @@ void TrashEnemy::PlayerHit()
 		return;
 
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
-	float damage = 0;;
+	float damage = 0;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr)
 		damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
 	else
@@ -357,7 +367,7 @@ void TrashEnemy::PlayerHit()
 			}
 			hit = true;
 			break;
-		case EnemyInformation::EnemyReaction::Type::Special:
+		case EnemyInformation::EnemyReaction::Type::Special://必殺技
 			if (!specialAttackHit) 
 				return;
 			
@@ -367,14 +377,19 @@ void TrashEnemy::PlayerHit()
 			specialAttackHit = false;
 
 			enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DAMAGE);
+			damage = damage * 2;
 			break;
 		default:
 			break;
 		}
 	}
 	EnemyDamageMove(dInfo);
-	
-	hp -= damage;
+	//連携攻撃のときは耐性を付与
+	if (isCooperateAtk)
+		damage = damage / 2;
+
+	hp -= DamageCalculation(damage);
+
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();
 	std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();

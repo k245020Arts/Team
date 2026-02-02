@@ -27,6 +27,12 @@ protected:
 	//吹き飛びの軌道
 	float Orbit(float a, float h, float k);
 	float motionSpeed;
+	//情報を一回だけ取得する
+	bool isGetInformation;
+	//右ベクトル
+	VECTOR3 rightVec;
+	//左右判定
+	float side;
 private:
 	
 };

@@ -32,10 +32,10 @@ void T_EnemyDead::Update()
 		e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
 	float a = -1000.0f;  //落下の強さ（重力）
-	float h = 1.0f;		 //最高点までの時間
+	float h = 0.5f;		 //最高点までの時間
 	float k = 600.0f;    //吹き飛びの高さ
 
-	KnockbackMove(e, 0.2f, a, h, k);
+	KnockbackMove(e, 30.0f, a, h, k);
 
 	/*float offsetY = Orbit(a, h, k);
 

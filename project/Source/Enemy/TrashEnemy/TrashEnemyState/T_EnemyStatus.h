@@ -8,6 +8,7 @@ private:
 		const float normalAttack1 = 20.0f;	//攻撃１のダメージ数値
 		
 		const float maxHp = 150;				//最大HP
+		const float defense = 50;
 		const float coolTime = 30.0f;			//一段目の攻撃までの時間
 		const float runSpeed = 50.0f;			//移動速度
 		const float cooperateSoeed = 300.0f;	//連携攻撃時のrunスピード
