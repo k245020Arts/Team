@@ -21,9 +21,6 @@ public:
 
 	void DebugDrawCamera(Camera* camera);
 
-	std::list<BaseObject*> GetEnemy();
-	std::list<BaseObject*>::iterator GetItr();
-
 	void CreateEnemy();
 	void PlayerObjPointer();
 

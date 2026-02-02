@@ -303,6 +303,10 @@ void CutSceneCamera::Update()
 
     CutSceneSpece::CutScene& cut = camera->cutSceneData[camera->cutSceneIndex];
 
+    // ===== ‘ÎÛØ‚è‘Ö‚¦”»’è =====
+    bool isTransition = (cut.followPosName != beforePosName);
+    bool isTargetTransition = (cut.followPosTarget != beforeTargetName);
+
     // ŽžŠÔ•âŠÔ
     time -= Time::DeltaTimeRate();
     float t = std::clamp(time / cut.duration, 0.0f, 1.0f);
@@ -370,8 +374,7 @@ void CutSceneCamera::Update()
 
     VECTOR3 movePos = VZero;
 
-    // ===== ‘ÎÛØ‚è‘Ö‚¦”»’è =====
-    bool isTransition = (cut.followPosName != beforePosName);
+   
 
     if (!isTransition && first)
     {
@@ -495,7 +498,7 @@ void CutSceneCamera::Update()
     VECTOR3 endTarget = targetBasePos + cut.camera.target * targetBaseRot;
     VECTOR3 moveTarget = VZero;
 
-    bool isTargetTransition = (cut.followPosTarget != beforeTargetName);
+  
 
     if (!isTransition && first)
     {
@@ -553,38 +556,38 @@ void CutSceneCamera::Update()
     }
 
     camera->target = moveTarget;
-    camera->CameraRotationSet();
+    //camera->CameraRotationSet();
 
-    //VECTOR3 pos = camera->cameraComponent.cameraTransform->position;
-    //VECTOR3 tgt = camera->target;
+    VECTOR3 pos = camera->cameraComponent.cameraTransform->position;
+    VECTOR3 tgt = camera->target;
 
-    //VECTOR3 forward = VNorm(tgt - pos);
-    //VECTOR3 up = VGet(0, 1, 0);
+    VECTOR3 forward = VNorm(tgt - pos);
+    VECTOR3 up = VGet(0, 1, 0);
 
-    //// forward ‚Æ up ‚ª•½s‚É‹ß‚¢ê‡‚Ì•ÛŒ¯
-    //if (fabsf(VDot(forward, up)) > 0.99f)
-    //{
-    //    up = VGet(0, 0, 1);
-    //}
+    // forward ‚Æ up ‚ª•½s‚É‹ß‚¢ê‡‚Ì•ÛŒ¯
+    if (fabsf(VDot(forward, up)) > 0.99f)
+    {
+        up = VGet(0, 0, 1);
+    }
 
-    //VECTOR3 right = VNorm(VCross(up, forward));
-    //up = VCross(forward, right);
+    VECTOR3 right = VNorm(VCross(up, forward));
+    up = VCross(forward, right);
 
-    //MATRIX rot = MGetIdent();
+    MATRIX rot = MGetIdent();
 
-    //rot.m[0][0] = right.x;
-    //rot.m[0][1] = right.y;
-    //rot.m[0][2] = right.z;
+    rot.m[0][0] = right.x;
+    rot.m[0][1] = right.y;
+    rot.m[0][2] = right.z;
 
-    //rot.m[1][0] = up.x;
-    //rot.m[1][1] = up.y;
-    //rot.m[1][2] = up.z;
+    rot.m[1][0] = up.x;
+    rot.m[1][1] = up.y;
+    rot.m[1][2] = up.z;
 
-    //rot.m[2][0] = forward.x;
-    //rot.m[2][1] = forward.y;
-    //rot.m[2][2] = forward.z;
+    rot.m[2][0] = forward.x;
+    rot.m[2][1] = forward.y;
+    rot.m[2][2] = forward.z;
 
-    //camera->cameraComponent.cameraTransform->SetRotationMatrix(rot);
+    camera->cameraComponent.cameraTransform->SetRotationMatrix(rot);
 
     if (t <= 0.0f)
     {

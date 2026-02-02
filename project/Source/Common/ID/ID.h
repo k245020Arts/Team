@@ -98,6 +98,12 @@ namespace ID {
 		B_ROAR_2,
 		B_APPEAR_FALL,
 		B_APPEAR_LAND,
+		A_BUTTON,
+		B_BUTTON,
+		X_BUTTON,
+		Y_BUTTON,
+		DAMAGE_UI_BUTTON,
+		P_LEG_UP,
 
 		ID_MAX,
 	};

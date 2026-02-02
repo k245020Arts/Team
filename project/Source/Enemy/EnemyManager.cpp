@@ -60,17 +60,6 @@ void EnemyManager::DebugDrawCamera(Camera* camera)
 	
 }
 
-std::list<BaseObject*> EnemyManager::GetEnemy()
-{
-	return enemy;
-}
-
-std::list<BaseObject*>::iterator EnemyManager::GetItr()
-{
-	auto e = enemy.begin();
-	return e;
-}
-
 void EnemyManager::CreateEnemy()
 {
 	
@@ -178,7 +167,6 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_APPEAR_FALL, "B_APPEAR_FALL", true, 1.0f, 10.0f, 70.0f);
 	anim->AddFile(ID::B_APPEAR_LAND, "B_APPEAR_LAND", false, 1.5f, 10.0f, 70.0f);
 	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
-
 
 	b->Start(boss);
 

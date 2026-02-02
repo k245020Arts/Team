@@ -32,6 +32,7 @@ void BossAppear::Update()
 		if (!feedInFinish) {
 			b->enemyBaseComponent.physics->GetBaseObject()->SetObjectTimeRate(1.0f);
 			feedInFinish = true;
+			b->enemyBaseComponent.sound->PlaySe(Sound_ID::BOSS_JUMP_WIND);
 		}
 		
 	}
@@ -48,12 +49,13 @@ void BossAppear::Update()
 				//b->trashEnemy->CreateEnemy(VZero, 4);
 				first = false;
 				b->enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(0.0f, 100.0f, 0.0f), VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_ROAR, 2.0f);
+				b->enemyBaseComponent.sound->PlaySe(Sound_ID::BOSS_ROAR_VOICE);
 			}
 
 		}
 		if (b->enemyBaseComponent.anim->IsFinish()) {
 			b->enemyBaseComponent.gameManager->ChangeState("PLAY");
-			b->enemyBaseComponent.sound->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
+			b->enemyBaseComponent.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 		}
 	}
 
@@ -64,6 +66,7 @@ void BossAppear::Update()
 			b->enemyBaseComponent.anim->Play(ID::B_APPEAR_LAND);
 			b->enemyBaseComponent.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::MIX_SHAKE, false, 1.0f);
 			feedInFinish = false;
+			b->enemyBaseComponent.sound->PlaySe(Sound_ID::ENEMY_FALL);
 		}
 		if (!b->enemyBaseComponent.camera->IsCutScene()) {
 			
@@ -85,7 +88,7 @@ void BossAppear::Start()
 	roar = false;
 	first = true;
 	uiManager->SetUIDraw(false);
-	b->enemyBaseComponent.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
+	b->enemyBaseComponent.sound->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
 }
 
 void BossAppear::Finish()

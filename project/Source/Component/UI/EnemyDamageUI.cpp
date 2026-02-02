@@ -32,7 +32,7 @@ EnemyDamageUI::EnemyDamageUI()
 
 EnemyDamageUI::~EnemyDamageUI()
 {
-	DeleteGraph(numImage);
+	//DeleteGraph(numImage);
 }
 
 void EnemyDamageUI::Update()

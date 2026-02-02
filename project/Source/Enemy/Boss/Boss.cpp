@@ -510,7 +510,7 @@ void Boss::PlayerHit()
 	}
 	damageNum = new Object2D();
 	damageNum->Init(Transform(VZero, VZero, VOne), "damageNum");
-	damageNum->Component()->AddComponent<EnemyDamageUI>()->SetInformation(VECTOR3(GetRand(400) - 200, 800 + GetRand(400) - 200, GetRand(400) - 200), damage + GetRand(15) + 100.0f, VECTOR3(0, -0.4f, 0), 0.5f, LoadGraph("data/image/Number_01.png"), bossTransform, VECTOR2I(81, 90));
+	damageNum->Component()->AddComponent<EnemyDamageUI>()->SetInformation(VECTOR3(GetRand(400) - 200, 800 + GetRand(400) - 200, GetRand(400) - 200), damage + GetRand(15) + 100.0f, VECTOR3(0, -0.4f, 0), 0.5f, Load::GetHandle(ID::DAMAGE_UI_BUTTON), bossTransform, VECTOR2I(81, 90));
 	EnemyDamageMove(dInfo);
 	hp -= damage;
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。

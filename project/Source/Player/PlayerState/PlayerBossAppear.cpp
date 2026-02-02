@@ -31,6 +31,13 @@ void PlayerBossAppear::Update()
 		p->playerCom.camera->CutSceneChangeState("BossAppear",true);
 		p->playerCom.enemyManager->CameraRockOnStart(p->playerCom.camera);
 		obj->GetTransform()->position = VECTOR3(300, 0, -2000);
+		obj->GetTransform()->rotation = VZero;
+	}
+	if (p->playerCom.camera->GetCutNum() == 2) {
+		p->playerCom.anim->Play(ID::P_LEG_UP);
+	}
+	else {
+		p->playerCom.anim->Play(ID::P_ANIM_IDOL);
 	}
 }
 

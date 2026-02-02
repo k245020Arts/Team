@@ -66,6 +66,8 @@ namespace Sound_ID {
 		PLAYER_WALK4,
 		PLAYER_WALK5,
 		BOSS_WALK,
+		BOSS_ROAR_VOICE,
+		BOSS_JUMP_WIND,
 
 		SOUND_MAX
 	};
