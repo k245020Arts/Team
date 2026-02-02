@@ -1,9 +1,10 @@
 #pragma once
 #include "../Component.h"
+#include "UIBase.h"
 
 class MeshRenderer2D;
 
-class EnemyDamageUI :  public Component
+class EnemyDamageUI :  public UIBase
 {
 public:
 	EnemyDamageUI();

@@ -1,11 +1,12 @@
 #pragma once
 #include "../Component.h"
+#include "UIBase.h"
 
 class InputManager;
 class ControllerInputManager;
 class Color;
 
-class ButtonUI : public Component
+class ButtonUI : public UIBase
 {
 public:
 	enum ButtonType

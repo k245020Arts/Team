@@ -1,0 +1,67 @@
+#include "CutSceneBox.h"
+#include "../Screen.h"
+
+CutSceneBox::CutSceneBox()
+{
+	SetDrawOrder(-100000);
+}
+
+CutSceneBox::~CutSceneBox()
+{
+}
+
+void CutSceneBox::Update()
+{
+}
+
+void CutSceneBox::Draw()
+{
+	if (boxPosY < 0) {
+		return;
+	}
+	feedTime -= Time::DeltaTimeRate();
+	if (feedTime <= 0.0f) {
+		feedTime = 0.0f;
+	}
+	float rate = 0.0f;
+
+	if (feadIn) {
+		rate = feedTime / feedCountMax;
+	}
+	else {
+		rate = 1 - (feedTime / feedCountMax);
+	}
+	boxPosY = easingFunc(BOX_SIZE, 0, rate);
+
+	/*SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);*/
+	DrawBoxAA(0, 0, Screen::WIDTH, boxPosY, 0x000000, true);
+	DrawBoxAA(0, Screen::HEIGHT - boxPosY, Screen::WIDTH, Screen::HEIGHT, 0x000000, true);
+	/*SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);*/
+}
+
+void CutSceneBox::StartBox(float _time, int _color, std::function<int(int, int, float)> _func)
+{
+	if (IsFead()) {
+		return;
+	}
+	feedCountMax = _time;
+	feedTime = _time;
+	alpha = 255;
+	//color = _color;
+	easingFunc = _func;
+	feadIn = true;
+	boxPosY = 1;
+}
+
+void CutSceneBox::FinishBox(float _time, int _color, std::function<int(int, int, float)> _func)
+{
+	if (IsFead()) {
+		return;
+	}
+	feedCountMax = _time;
+	feedTime = _time;
+	alpha = 255;
+	//color = _color;
+	easingFunc = _func;
+	feadIn = false;
+}

@@ -267,6 +267,8 @@
 #include "cameraStateManager.h"
 #include "../camera.h"
 #include "../CameraEditorGui.h"
+#include "../CutSceneBox.h"
+#include "../../Component/UI/UIManager/UIManager.h"
 
 CutSceneCamera::CutSceneCamera()
 {
@@ -652,6 +654,10 @@ void CutSceneCamera::Finish()
     Camera* camera = GetBase<Camera>();
     camera->isCutScene = false;
     camera->cutSceneIndex = -1;
+    if (camera->cutSceneBoxDraw) {
+        camera->cutSceneBox->FinishBox(1.0f, 0x00000, Easing::EaseInOut<int>);
+        camera->uiManager->SetUIDraw(true);
+    }
 }
 
 Transform* CutSceneCamera::PlayerEnemyWorldToPos(std::string _name)

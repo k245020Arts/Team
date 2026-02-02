@@ -20,6 +20,7 @@ public:
 	virtual void Draw(){}
 	//コンポーネントを始めた時に設定する。
 	virtual void Start(){}
+	virtual void Awake(){}
 	//親のオブジェクトをここで持たせている。内部的にやっているので呼び出す必要性なし)
 	virtual void Init(BaseObject* _ob) { obj = _ob; }
 	//アクティブ状態を記録しておく（アクティブじゃなかったら削除)

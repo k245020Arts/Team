@@ -6,10 +6,12 @@
 
 UIManager::UIManager()
 {
+	SetDrawOrder(-20000);
 }
 
 UIManager::~UIManager()
 {
+	uiObjects.clear();
 }
 
 void UIManager::Update()
@@ -18,6 +20,14 @@ void UIManager::Update()
 
 void UIManager::Draw()
 {
+	if (!draw) {
+		return;
+	}
+	for (auto itr = uiObjects.begin(); itr != uiObjects.end(); itr++) {
+		(*itr)->SetDraw(true);
+		(*itr)->Draw();
+		(*itr)->SetDraw(false);
+	}
 }
 
 void UIManager::ButtonUISet()
@@ -39,4 +49,19 @@ void UIManager::ButtonUISet()
 	ButtonUI* c = xbutton->Component()->AddComponent<ButtonUI>();
 	c->Start(ButtonUI::X_BUTTON, LoadGraph("data/image/Mark_Special.png"));
 	xbutton->SetDrawOrder(-1000);
+}
+
+void UIManager::UIPush(BaseObject* _base)
+{
+	uiObjects.emplace_back(_base);
+}
+
+void UIManager::UIDelete(BaseObject* _base)
+{
+	for (auto itr = uiObjects.begin(); itr != uiObjects.end(); itr++) {
+		if (*itr == _base) {
+			uiObjects.erase(itr);
+			return;
+		}
+	}
 }

@@ -18,7 +18,8 @@
 #include "../Component/Hierarchy/Hierarchy.h"
 #include "CameraEditorGui.h"
 #include "CameraState/PlayerSpecialAttackCamera.h"
-
+#include "CutSceneBox.h"
+#include "../Component/UI/UIManager/UIManager.h"
 
 Camera::Camera()
 {
@@ -56,6 +57,9 @@ Camera::Camera()
 	targetEnemyTransform				= nullptr;
 	diffTarget							= VZero;
 	cutSceneIndex						= 0;
+	cutSceneBox							= new CutSceneBox();
+	cutSceneBoxDraw						= false;
+	uiManager							= FindGameObject<UIManager>();
 }
 
 Camera::~Camera()
@@ -186,7 +190,7 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.state->SetComponent<Camera>(this);
 	cameraComponent.state->StartState(StateID::FREE_CAMERA_S);
 	FindGameObject<Hierachy>()->SetCameraEditor(this);
-	CutSceneChangeState("PlayingBefore");
+	CutSceneChangeState("PlayingBefore",true);
 	//CameraRotationSet();
 }
 
@@ -310,7 +314,12 @@ void Camera::CameraEditor()
 	editor->EditorWindow();
 }
 
-void Camera::CutSceneChangeState(std::string _name, int _space)
+void Camera::CutSceneChangeState(std::string _name, bool _cutScene)
+{
+	CutSceneChangeState(_name, _cutScene,CutSceneSpece::NONE);
+}
+
+void Camera::CutSceneChangeState(std::string _name, bool _cutScene, int _stop)
 {
 	JsonReader json;
 	std::string name = "data/json/" + _name + ".json";
@@ -326,8 +335,13 @@ void Camera::CutSceneChangeState(std::string _name, int _space)
 	cameraComponent.state->ChangeState(StateID::CUT_SCENE_CAMERA_S);
 	isCutScene = true;
 
-	cutStopChara = _space;
-	SleepTargetSet(cutStopChara,true);
+	cutStopChara = _stop;
+	SleepTargetSet(cutStopChara, true);
+	if (_cutScene) {
+		cutSceneBox->StartBox(1.0f, 0x00000, Easing::EaseInOut<int>);
+		uiManager->SetUIDraw(false);
+	}
+	cutSceneBoxDraw = _cutScene;
 }
 
 void Camera::SleepTargetSet(int _stop, bool _sleep)
@@ -341,9 +355,4 @@ void Camera::SleepTargetSet(int _stop, bool _sleep)
 	if (_stop & CutSceneSpece::ALL_ENEMY) {
 		cameraComponent.enemyManager->SleepAllEnemy(_sleep);
 	}
-}
-
-void Camera::CutSceneChangeState(std::string _name)
-{
-	CutSceneChangeState(_name, CutSceneSpece::NONE);
 }

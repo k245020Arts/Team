@@ -106,6 +106,8 @@ namespace CutSceneSpece {
 class ControllerInputManager;
 class InputManager;
 class CameraEditorGui;
+class CutSceneBox;
+class UIManager;
 
 class Camera : public CameraBase
 {
@@ -126,7 +128,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void Start(BaseObject* _eObj)override;
+	void Start(BaseObject* _eObj);
 	void ImguiDraw()override;
 	void PlayerSet(BaseObject* _obj)override;
 
@@ -159,9 +161,9 @@ public:
 	/// </summary>
 	/// <param name="_name">ÉtÉ@ÉCÉãñº</param>
 	/// <param name="_space">cutSceneíÜÇ…é~ÇﬂÇÈÇ◊Ç´ëŒè€</param>
-	void CutSceneChangeState(std::string _name);
+	void CutSceneChangeState(std::string _name,bool _cutScene);
 	
-	void CutSceneChangeState(std::string _name, int _stop);
+	void CutSceneChangeState(std::string _name, bool _cutScene, int _stop);
 	
 
 	bool IsCutScene() { return isCutScene; }
@@ -199,4 +201,7 @@ private:
 	bool isCutScene;
 	
 	int cutStopChara;
+	CutSceneBox* cutSceneBox;
+	bool cutSceneBoxDraw;
+	UIManager* uiManager;
 };

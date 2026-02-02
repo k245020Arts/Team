@@ -214,7 +214,7 @@ void CameraEditorGui::EditorWindow()
 
     if (ImGui::Button("Preview")) {
         std::string file = cutSceneFileName;
-        camera->CutSceneChangeState(file);
+        camera->CutSceneChangeState(file,false);
     }
 
     SavePopUp(usingCutScene);

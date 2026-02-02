@@ -32,7 +32,7 @@ void BossDie::Update()
 		if (one) {
 			b->enemyBaseComponent.sound->StopBGM(Sound_ID::PLAY_BGM);
 			b->enemyBaseComponent.sound->PlaySe(Sound_ID::WIN);
-			b->enemyBaseComponent.camera->CutSceneChangeState("PlayerWin");
+			b->enemyBaseComponent.camera->CutSceneChangeState("PlayerWin",true);
 			one = false;
 		}
 	

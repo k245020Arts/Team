@@ -179,6 +179,7 @@
     <ClInclude Include="Source\Camera\CameraState\JustAvoidAttackHitCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\JustAvoidCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h" />
+    <ClInclude Include="Source\Camera\CutSceneBox.h" />
     <ClInclude Include="Source\CharaBase\CharaBase.h" />
     <ClInclude Include="Source\Common\BlurScreen.h" />
     <ClInclude Include="Source\Common\CsvReader.h" />
@@ -245,6 +246,7 @@
     <ClInclude Include="Source\Component\Transform\Transform.h" />
     <ClInclude Include="Source\Component\UI\ButtonUI.h" />
     <ClInclude Include="Source\Component\UI\EnemyDamageUI.h" />
+    <ClInclude Include="Source\Component\UI\UIBase.h" />
     <ClInclude Include="Source\Component\UI\UIManager\UIManager.h" />
     <ClInclude Include="Source\Enemy\Boss\Boss.h" />
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />
@@ -373,6 +375,7 @@
     <ClCompile Include="Source\Camera\CameraState\JustAvoidAttackHitCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\JustAvoidCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.cpp" />
+    <ClCompile Include="Source\Camera\CutSceneBox.cpp" />
     <ClCompile Include="Source\CharaBase\CharaBase.cpp" />
     <ClCompile Include="Source\Common\BlurScreen.cpp" />
     <ClCompile Include="Source\Common\CsvReader.cpp" />
@@ -434,6 +437,7 @@
     <ClCompile Include="Source\Component\Transform\Transform.cpp" />
     <ClCompile Include="Source\Component\UI\ButtonUI.cpp" />
     <ClCompile Include="Source\Component\UI\EnemyDamageUI.cpp" />
+    <ClCompile Include="Source\Component\UI\UIBase.cpp" />
     <ClCompile Include="Source\Component\UI\UIManager\UIManager.cpp" />
     <ClCompile Include="Source\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp" />

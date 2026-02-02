@@ -8,6 +8,8 @@
 #include "../../../GameManager/GameManager.h"
 #include "../../../Common/Fead/Fead.h"
 #include "../../../Common/Effect/EffectManager.h"
+#include "../../../Common/Sound/SoundManager.h"
+#include "../../../Component/UI/UIManager/UIManager.h"
 
 BossAppear::BossAppear()
 {
@@ -16,6 +18,7 @@ BossAppear::BossAppear()
 	string = Function::GetClassNameC<BossAppear>();
 	fead = FindGameObject<Fead>();
 	feedInFinish = false;
+	uiManager = FindGameObject<UIManager>();
 }
 
 BossAppear::~BossAppear()
@@ -50,6 +53,7 @@ void BossAppear::Update()
 		}
 		if (b->enemyBaseComponent.anim->IsFinish()) {
 			b->enemyBaseComponent.gameManager->ChangeState("PLAY");
+			b->enemyBaseComponent.sound->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
 		}
 	}
 
@@ -79,6 +83,8 @@ void BossAppear::Start()
 	feedInFinish = false;
 	roar = false;
 	first = true;
+	uiManager->SetUIDraw(false);
+	b->enemyBaseComponent.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 }
 
 void BossAppear::Finish()

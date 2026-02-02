@@ -23,6 +23,7 @@ BaseObject::BaseObject()
 	parent = nullptr;
 	transformParent = true;
 	sleep = false;
+	draw = true;
 }
 
 BaseObject::~BaseObject()
@@ -67,7 +68,9 @@ void BaseObject::Update()
 void BaseObject::Draw()
 {
 	//•`‰æ
-	componentManager->Draw();
+	if (draw) {
+		componentManager->Draw();
+	}
 	for (BaseObject* child : children) {
 		child->Draw();
 	}

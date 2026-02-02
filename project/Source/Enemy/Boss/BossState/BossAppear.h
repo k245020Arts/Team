@@ -2,6 +2,7 @@
 #include "../../TrashEnemy/EnemyState/EnemyStateBase.h"
 
 class Fead;
+class UIManager;
 
 class BossAppear : public EnemyStateBase
 {
@@ -21,5 +22,5 @@ private:
 	bool feedInFinish;
 	bool roar;
 	bool first;
-
+	UIManager* uiManager;
 };

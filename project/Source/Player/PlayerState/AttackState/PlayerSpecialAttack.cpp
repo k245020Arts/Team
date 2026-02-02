@@ -356,7 +356,7 @@ void PlayerSpecialAttack::GroundUpdate()
 		AddCollsion();
 		p->playerCom.anim->Play(animId);
 		p->playerCom.shaker->ShakeStart(VOne * 5.0f, Shaker::MIX_SHAKE, false, -1);
-		p->playerCom.camera->CutSceneChangeState("playerSpecialCut");
+		p->playerCom.camera->CutSceneChangeState("playerSpecialCut",false);
 		p->obj->Component()->GetComponent<SphereCollider>()->CollsionFinish();
 		//ToDO 必殺技のチャージのエフェクトの実装
 		//p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(-100, 100, 100), VZero, VOne * 0.5f), p->obj, Effect_ID::PLAYER_SPECIAL_CHARGE, 2.0f);

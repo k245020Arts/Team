@@ -534,6 +534,12 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossAppear.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera\CutSceneBox.cpp">
+      <Filter>PlayScene\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\UI\UIBase.cpp">
+      <Filter>Component\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1123,6 +1129,12 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossState\BossAppear.h">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CutSceneBox.h">
+      <Filter>PlayScene\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\UI\UIBase.h">
+      <Filter>Component\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

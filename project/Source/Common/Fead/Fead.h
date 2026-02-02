@@ -37,4 +37,5 @@ private:
 	int alpha;
 	std::function<int(int, int, float)> easingFunc;
 	FeadState feadIn;
+
 };

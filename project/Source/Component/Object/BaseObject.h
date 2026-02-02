@@ -70,6 +70,8 @@ public:
 	/// <param name="_sleep"></param>
 	void SetSleep(bool _sleep) { sleep = _sleep; }
 
+	void SetDraw(bool _draw) { draw = _draw; }
+
 protected:
 	ComponentManager* componentManager;
 	float objectTimeRate;
@@ -85,4 +87,5 @@ protected:
 	float baseTimeSpeed;
 
 	bool sleep;
+	bool draw;
 };

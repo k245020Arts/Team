@@ -3,8 +3,9 @@
 #include "../ComponentManager.h"
 #include "../../CharaBase/CharaBase.h"
 #include "../MeshRenderer2D/MeshRenderer2D.h"
+#include "../UI/UIBase.h"
 
-class Guage : public Component
+class Guage : public UIBase
 {
 public:
 
