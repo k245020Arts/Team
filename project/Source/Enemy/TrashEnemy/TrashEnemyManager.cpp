@@ -146,7 +146,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		anim->BaseModelSet(handle, 1);
 		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
 		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
-		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 1.0f, 25.0f, 40.0f);
+		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 1.0f, 30.0f, 40.0f);
 		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 1.0f, 25.0f, 40.0f);
 		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
 		anim->AddFile(ID::E_DIE, "E_DEAD", false, 2.0f);

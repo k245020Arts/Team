@@ -90,6 +90,9 @@ private:
 	//targetPos‚É“ü‚Á‚Ä‚é•ûŒü‚ÉŒü‚­
 	void LookTarget();
 	bool IsPlayerSpecialMove();
+	//ŒvZ®
+	float DamageCalculation(float _damage);
+
 	bool active;
 	//‚Ç‚±‚ÉŒü‚­‚©
 	VECTOR3 targetPos;
@@ -104,7 +107,10 @@ private:
 	//˜AŒgUŒ‚‚Ì€”õ‚ª‚Å‚«‚Ä‚é‚©
 	bool isStandby;
 	
+	//ˆÚ“®‘¬“x
 	float speed;
+	//–hŒä—Í
+	float defense;
 
 	//‹­‚ß‚Ì–¡•û‚É‚Â‚¢‚Ä‚¢‚­‚©
 	bool isEnemyFollow;
