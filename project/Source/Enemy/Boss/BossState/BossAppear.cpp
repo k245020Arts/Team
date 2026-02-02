@@ -13,7 +13,7 @@
 
 BossAppear::BossAppear()
 {
-	animId = ID::B_S_ATTACK1;
+	animId = ID::B_APPEAR_FALL;
 	//id = ID::B_IDOL;
 	string = Function::GetClassNameC<BossAppear>();
 	fead = FindGameObject<Fead>();
@@ -58,14 +58,15 @@ void BossAppear::Update()
 	}
 
 	if (feedInFinish) {
-		b->enemyBaseComponent.physics->AddGravity(VECTOR3(0, -10.0f, 0));
+		b->enemyBaseComponent.physics->AddGravity(VECTOR3(0, -80.0f, 0));
 		if (b->enemyBaseComponent.physics->GetGround()) {
 			//b->enemyBaseComponent.gameManager->ChangeState("PLAY");
-			b->enemyBaseComponent.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::HEIGHT_SHAKE, false, 1.0f);
+			b->enemyBaseComponent.anim->Play(ID::B_APPEAR_LAND);
+			b->enemyBaseComponent.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::MIX_SHAKE, false, 1.0f);
 			feedInFinish = false;
 		}
 		if (!b->enemyBaseComponent.camera->IsCutScene()) {
-		
+			
 		}
 	}
 }

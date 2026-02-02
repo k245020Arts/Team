@@ -430,7 +430,7 @@ void CutSceneCamera::Update()
     }
 
     camera->cameraComponent.cameraTransform->position = movePos;
-
+    camera->cameraComponent.cameraTransform->position += camera->cameraComponent.shaker->GetShakePower();
    
     // ターゲット
     Transform* targetBase = PlayerEnemyWorldToPos(cut.followPosTarget);
