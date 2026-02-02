@@ -12,6 +12,7 @@ UIManager::UIManager()
 	Load::LoadImageGraph(Load::IMAGE_PATH + "Mark_Normal", ID::B_BUTTON);
 	Load::LoadImageGraph(Load::IMAGE_PATH + "Mark_Special", ID::X_BUTTON);
 	Load::LoadImageGraph(Load::IMAGE_PATH + "Number_01", ID::DAMAGE_UI_BUTTON);
+	draw = true;
 }
 
 UIManager::~UIManager()
@@ -28,7 +29,9 @@ void UIManager::Draw()
 	if (!draw) {
 		return;
 	}
+	
 	for (auto itr = uiObjects.begin(); itr != uiObjects.end(); itr++) {
+		
 		(*itr)->SetDraw(true);
 		(*itr)->Draw();
 		(*itr)->SetDraw(false);

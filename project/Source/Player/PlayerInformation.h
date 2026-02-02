@@ -56,6 +56,7 @@ namespace PlayerInformation {
 			hitObj = nullptr;
 			meshRenderer2D = nullptr;
 			anim2D = nullptr;
+			specialAttackButton = nullptr;
 		}
 		StateManager* stateManager;
 		MeshRenderer* renderer;

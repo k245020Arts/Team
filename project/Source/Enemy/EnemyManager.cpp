@@ -31,7 +31,7 @@ EnemyManager::EnemyManager()
 	player = nullptr;
 	SetDrawOrder(-10);
 	cameraTargetObj = nullptr;
-	
+	gameManager = nullptr;
 }
 
 EnemyManager::~EnemyManager()

@@ -169,8 +169,8 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM,		"P_SPECIAL_ATTACK_2", false, 1.0f, 7.0f, 39.0f);
 	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM,	"P_SPECIAL_ATTACK_BEFORE", false, 1.2f, 7.0f, 39.0f);
 	anim->AddFile(ID::IDType::P_WIN,						"P_WIN", false, 1.0f, 30.0f, 45.0f);
-	anim->AddFile(ID::IDType::PLAYER_WIN_IDOL,				"P_WINIDOL", true, 1.0f, 0.0f, 100.0f);
-	anim->AddFile(ID::IDType::P_LEG_UP,						"P_LEG_UP", false, 1.0f, 0.0f, 100.0f);
+	anim->AddFile(ID::IDType::PLAYER_WIN_IDOL,				"P_WINIDOL", true, 1.0f, 0.0f, 50.0f);
+	anim->AddFile(ID::IDType::P_LEG_UP,						"P_LEG_UP", false, 1.0f, 0.0f, 50.0f);
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);

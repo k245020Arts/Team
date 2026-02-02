@@ -21,7 +21,7 @@ BootScene::BootScene()
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();
 	new Fead();
-	Load::SetAsync(false);
+	//Load::SetAsync(false);
 	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL, true);
 	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL, true);
 }

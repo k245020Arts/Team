@@ -7,7 +7,7 @@ class UIBase : public Component
 {
 public:
 	UIBase();
-	~UIBase();
+	virtual ~UIBase();
 
 	void Awake()override;
 

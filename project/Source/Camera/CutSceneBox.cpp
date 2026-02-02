@@ -4,6 +4,15 @@
 CutSceneBox::CutSceneBox()
 {
 	SetDrawOrder(-100000);
+
+	feedTime = -1.0f;
+	feedCountMax = -1.0f;
+
+	alpha = 0;
+	easingFunc = nullptr;
+
+	feadIn = false;
+	boxPosY = 0;
 }
 
 CutSceneBox::~CutSceneBox()
@@ -31,7 +40,10 @@ void CutSceneBox::Draw()
 	else {
 		rate = 1 - (feedTime / feedCountMax);
 	}
-	boxPosY = easingFunc(BOX_SIZE, 0, rate);
+	if (easingFunc != nullptr) {
+		boxPosY = easingFunc(BOX_SIZE, 0, rate);
+	}
+	
 
 	/*SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);*/
 	DrawBoxAA(0, 0, Screen::WIDTH, boxPosY, 0x000000, true);

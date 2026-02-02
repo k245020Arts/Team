@@ -3,6 +3,21 @@
 
 CameraBase::CameraBase()
 {
+	cameraComponent = CameraInformation::CameraComponent();;
+
+	reap = 0.1f;
+	defalutDistance = VZero;
+	currentDistance = VZero;
+
+	fov = 60.0f * DegToRad;
+		nearFog = 0.0f;;
+
+	farFog = 0.0f;
+
+	target = VZero;
+
+	diffTarget = VZero;
+	debugButton = 0;;
 }
 
 CameraBase::~CameraBase()

@@ -56,8 +56,8 @@ private:
 
     CutSceneObj target;
 
-    VECTOR3 CutSceneInfoSet(CutSceneObj& _info, Transform* _baseTransform,std::string& _name);
-    VECTOR3 GetEndTarget(const CutSceneObj& _info,const VECTOR3& _offset);
+    /*VECTOR3 CutSceneInfoSet(CutSceneObj& _info, Transform* _baseTransform,std::string& _name);
+    VECTOR3 GetEndTarget(const CutSceneObj& _info,const VECTOR3& _offset);*/
 
     std::string beforePosName;
     std::string beforeTargetName;

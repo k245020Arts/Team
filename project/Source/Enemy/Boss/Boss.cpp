@@ -124,7 +124,7 @@ void Boss::Update()
 		if (!roaf) {
 			enemyBaseComponent.state->ChangeState(StateID::B_ROAR_S);
 			roaf = true;
-			obj->SetBaseTimeSpeed(1.2f);
+			//obj->SetBaseTimeSpeed(1.2f);
 			obj->SetObjectTimeRate();
 		}
 		
@@ -503,6 +503,7 @@ void Boss::PlayerHit()
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			enemyBaseComponent.state->ChangeState(bossParam->second.changeStateID);
 			specialAttackHit = false;
+			hp -= 10.0f;
 			break;
 		default:
 			break;

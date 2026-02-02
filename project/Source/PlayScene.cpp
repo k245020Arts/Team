@@ -68,13 +68,16 @@ PlayScene::PlayScene()
 	GameManager* gameManager = new GameManager();
 	UIManager* uiManager = new UIManager();
 
+	
 	uiManager->ButtonUISet();
 	
 	stageManager->CreateStage();
 	//enemy->CreateEnemy();
+
 	cameraManager->CreateCamera();
 	player->CreatePlayer();
 	//enemy->PlayerObjPointer();
+	
 	cameraManager->ParentObj("PLAYER");
 	enemy->FindPlayer();
 	weapon->CreatePlayerWeapon();
