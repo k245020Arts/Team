@@ -13,6 +13,7 @@
 #include "../Source/Common/LoadManager.h"
 #include "../Source/Common/Sound/SoundManager.h"
 #include "../Source/Common/Easing.h"
+#include "State/StateManager.h"
 
 TitleControl::TitleControl()
 {
@@ -56,36 +57,51 @@ void TitleControl::Update()
 	}
 	else 
 	{
-		if (input->KeyInputDown("SceneChange")) 
+		// ƒ‚ƒfƒ‹‚ª•Ï‚í‚é‚Ü‚Å•Ï‚¦‚È‚¢
+		const float TIME_CHANGE = 0.75f; // ƒV[ƒ“‚ªØ‚è‘Ö‚í‚é‚Ü‚Å‚ÌŽžŠÔ(•b)
+		const float TIME_CAMERA = 0.32f; // ƒJƒƒ‰‚ª“ž’…‚·‚é‚Ü‚Å‚ÌŽžŠÔ(•b)
+
+		if (input->KeyInputDown("SceneChange")) // ‰Ÿ‚µ‚½‚ç
 		{
 			sound->PlaySe(Sound_ID::PUSH);
+			player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
 
-			pushCounter = 0.5f;
+			pushCounter = TIME_CHANGE;
 		}
-		if (pushCounter > 0.0f) {
+
+		if (pushCounter > 0.0f) // ‰Ÿ‚µ‚½‚ ‚Æ
+		{
 			pushCounter -= Time::DeltaTimeRate();
-			if (pushCounter <= 0.0f) {
+			if (pushCounter <= 0.0f) 
+			{
 				pushCounter = 0.0f;
+				Time::ChangeDeltaRate(1);
 				FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
 			}
 			float rate = pushCounter / 0.5f;
 			exrate = Easing::Sin90Cube(0.5f, 0.8f, 0.8f - rate);
+			progress = (TIME_CHANGE - pushCounter) / TIME_CAMERA;
 		}
-		else {
+		else 
+		{
 			float rate = 0.0f;
-			if (moveButton > 0.0f) {
+			if (moveButton > 0.0f) 
+			{
 				moveButton -= Time::DeltaTimeRate();
 				rate = moveButton / 1.0f;
-				if (moveButton <= 0.0f) {
+				if (moveButton <= 0.0f) 
+				{
 					moveButton = -1.0f;
 				}
 
 			}
-			else if (moveButton < 0.0f) {
+			else if (moveButton < 0.0f) 
+			{
 				moveButton += Time::DeltaTimeRate();
 				rate = moveButton / -1.0f;
 				rate = 1 - rate;
-				if (moveButton >= 0.0f) {
+				if (moveButton >= 0.0f) 
+				{
 					moveButton = 1.0f;
 				}
 

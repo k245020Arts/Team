@@ -63,13 +63,10 @@ TitleScene::~TitleScene()
 	//DeleteGraph(hImage);
 	//Load::AllDelete();
 	//FindGameObject<SoundManager>()->AllDeleteSound();
-	
 }
 
 void TitleScene::Update()
 {
-	
-	
 	if (CheckHitKey(KEY_INPUT_ESCAPE)) {
 		SceneManager::Exit();
 	}

@@ -12,7 +12,6 @@ public:
 	void Draw() override;
 	void Start() override;
 	void Finish()override;
-
 private:
-
+	VECTOR3 firstPos;
 };

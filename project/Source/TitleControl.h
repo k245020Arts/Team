@@ -16,6 +16,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	float progress;
 private:
 	int hImage;
 	InputManager* input;
