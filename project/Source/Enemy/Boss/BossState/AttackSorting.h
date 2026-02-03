@@ -16,9 +16,8 @@ public:
 private:
 	const float COOLTIME = 30.0f;
 
-	void RandomAttack();
-
 	void NormalAttackSelect();
+	int AttackPriority();
 
 	float coolTime;
 

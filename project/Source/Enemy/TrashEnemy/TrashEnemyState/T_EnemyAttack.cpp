@@ -66,7 +66,7 @@ void T_EnemyAttack::Start()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	EnemyStateBase::Start();
 	firstColl = true;
-	e->enemyBaseComponent.anim->SetFrame(5.0f);
+	//e->enemyBaseComponent.anim->SetFrame(5.0f);
 	damage.hitDamage = e->eStatus->GetStatus().normalAttack1;
 	counter = 0;
 	e->isAttack = false;

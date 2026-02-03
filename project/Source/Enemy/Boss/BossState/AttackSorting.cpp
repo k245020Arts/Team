@@ -7,7 +7,7 @@
 namespace {
 	const int ATTACK_KIND_MAX		= 6;
 	const int COMBO_ATTACK_KIND_MAX = 3;
-	enum COMBO_ATTACK
+	/*enum COMBO_ATTACK
 	{
 		NORMAL_COMBO1,
 		NORMAL_COMBO2,
@@ -19,7 +19,8 @@ namespace {
 		{NORMAL_COMBO2},
 		{JUMP_COMBO},
 		{RUN_COMBO},
-	};
+	};*/
+	//íPî≠çUåÇÇÃéÌóﬁ
 	std::vector<StateID::State_ID> attackKind{
 		{StateID::BOSS_NORMAL_ATTACK1_S},
 		{StateID::BOSS_NORMAL_ATTACK2_S},
@@ -73,6 +74,7 @@ AttackSorting::~AttackSorting()
 void AttackSorting::Update()
 {
 	Boss* b = GetBase<Boss>();
+
 	if (b->maxAttack != -1) {
 		b->enemyBaseComponent.state->ChangeState(comboOrder[kind][attackNum - b->maxAttack]);
 	}
@@ -139,16 +141,6 @@ void AttackSorting::Finish()
 
 }
 
-void AttackSorting::RandomAttack()
-{
-	Boss* b = GetBase<Boss>();
-	int random = GetRand(1);
-	if (random == 0)
-		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK1_S);
-	else if (random == 1)
-		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK2_S);
-}
-
 void AttackSorting::NormalAttackSelect()
 {
 	Boss* b = GetBase<Boss>();
@@ -188,4 +180,9 @@ void AttackSorting::NormalAttackSelect()
 	}
 	kind = Random::GetWeightedIndex(rand);
 	b->maxAttack = -1;
+}
+
+int AttackSorting::AttackPriority()
+{
+	return 0;
 }
