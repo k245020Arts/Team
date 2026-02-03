@@ -68,6 +68,7 @@ namespace Sound_ID {
 		BOSS_WALK,
 		BOSS_ROAR_VOICE,
 		BOSS_JUMP_WIND,
+		BOSS_BEFORE,
 
 		SOUND_MAX
 	};

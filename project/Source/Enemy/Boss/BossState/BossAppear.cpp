@@ -50,6 +50,7 @@ void BossAppear::Update()
 				first = false;
 				b->enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(0.0f, 100.0f, 0.0f), VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_ROAR, 2.0f);
 				b->enemyBaseComponent.sound->PlaySe(Sound_ID::BOSS_ROAR_VOICE);
+				b->enemyBaseComponent.sound->FeedInOut(Sound_ID::BOSS_BEFORE, 0.5f);
 			}
 
 		}
@@ -88,7 +89,9 @@ void BossAppear::Start()
 	roar = false;
 	first = true;
 	uiManager->SetUIDraw(false);
-	b->enemyBaseComponent.sound->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
+	b->enemyBaseComponent.sound->FeedInOut(Sound_ID::PLAY_BGM, 0.5f);
+	b->enemyBaseComponent.sound->PlayBGM(Sound_ID::BOSS_BEFORE,true,true);
+	b->enemyBaseComponent.sound->FeedInStart(Sound_ID::BOSS_BEFORE,0.5f);
 }
 
 void BossAppear::Finish()
