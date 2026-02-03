@@ -23,6 +23,8 @@ public:
 	void CreateEnemy(VECTOR3 _pos,float enemySpawnCounter);
 	//“G‚ÌƒŠƒXƒg‚Ìæ“¾
 	std::list<TrashEnemy*>& EnemyList(){ return enemies; }
+	//“G‚ª‰½l¶‚«‚Ä‚¢‚é‚©‚í‚©‚éŠÖ”
+	int GetActiveEnemy();
 
 	void ImguiDraw();
 

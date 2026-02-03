@@ -23,7 +23,8 @@ Standby::~Standby()
 void Standby::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	e->LookTarget();
+	pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
+	e->LookTarget(pPos);
 
 	vec = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
 	if (!e->isCooperateAtk)
@@ -82,11 +83,11 @@ void Standby::Start()
 	
 	if (e->isCooperateAtk)
 		e->isMovingToPlayer = true;
-		/*e->isAttack = true;*/
+	/*else
+		e->isAttack = true;*/
 
 	pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	e->targetPos = pPos;
 	aiMove = 0;
 
 	randomSpeed = (float)Random::GetReal();

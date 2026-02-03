@@ -27,7 +27,7 @@ T_EnemyAttack::~T_EnemyAttack()
 void T_EnemyAttack::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	e->LookTarget();
+	e->LookTarget(e->enemyBaseComponent.playerObj->GetTransform()->position);
 	
 	if (e->isCooperateAtk)
 		return;
@@ -39,15 +39,15 @@ void T_EnemyAttack::Update()
 		e->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 	}
 
-	const float M_FRAME_SPEED = mMaxFrame / 2 / 2;
+	const float M_FRAME_SPEED = mMaxFrame *0.5f;
 
 	if (mSpeed > 0 && isDecel)
 		mSpeed = Easing::EaseOut(mMaxFrame, 0.0f, M_FRAME_SPEED);
-	else
+	/*else
 	{
 		isDecel = false;
 		mSpeed = Easing::EaseIn(mSpeed, mMaxFrame, M_FRAME_SPEED);
-	}
+	}*/
 
 	e->enemyBaseComponent.anim->SetPlaySpeed(mSpeed);
 	
