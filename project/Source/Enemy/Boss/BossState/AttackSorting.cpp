@@ -32,6 +32,25 @@ namespace {
 		{StateID::BOSS_NORMAL_ATTACK5_S},
 		{StateID::BOSS_NORMAL_ATTACK6_S},
 	};
+	struct ActionParam
+	{
+		StateID::State_ID id;
+		int priority;	//プライオリティ
+		int weight;		//重さ
+	};
+	std::vector<ActionParam> actions =
+	{
+		{StateID::BOSS_NORMAL_ATTACK1_S,		60, 10},
+		{StateID::BOSS_NORMAL_ATTACK2_S,		60, 10},
+		{StateID::BOSS_NORMAL_ATTACK3_S,		60, 10},
+		{StateID::BOSS_NORMAL_ATTACK4_S,		60, 10},
+		{StateID::BOSS_NORMAL_ATTACK5_S,		60, 10},
+		{StateID::BOSS_NORMAL_ATTACK6_S,		60, 10},
+		{StateID::BOSS_SPECIAL_ATTACK1_S,		10, 20},
+		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	10, 20},
+		{StateID::BOSS_SPECIAL_ATTACK2_S,		10, 20},
+	};
+
 	//通常攻撃の重み
 	const std::vector<std::vector<double>> normalAttackParam{
 		{ 1.0,	1.0,	0.5,	0.0,	0.0,	0.0,	1.0,	1.0,	0.5 },
@@ -180,9 +199,4 @@ void AttackSorting::NormalAttackSelect()
 	}
 	kind = Random::GetWeightedIndex(rand);
 	b->maxAttack = -1;
-}
-
-int AttackSorting::AttackPriority()
-{
-	return 0;
 }

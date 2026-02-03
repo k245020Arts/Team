@@ -17,7 +17,8 @@ private:
 	const float COOLTIME = 30.0f;
 
 	void NormalAttackSelect();
-	int AttackPriority();
+	//int AttackPriority();
+	void BuildTable(int currentPriority);
 
 	float coolTime;
 
@@ -26,4 +27,13 @@ private:
 	bool jump;
 	int kind;
 	int attackNum;
+
+	struct ActionRange
+	{
+		int min;
+		int max;
+		StateID::State_ID id;
+		ActionRange();
+	};
+	std::vector<ActionRange> table;
 };
