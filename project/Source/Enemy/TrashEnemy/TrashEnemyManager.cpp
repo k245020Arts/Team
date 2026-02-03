@@ -198,9 +198,10 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 int TrashEnemyManager::GetActiveEnemy()
 {
 	int _counter = 0;
+	float* _hp = 0;
 	for (auto& itr : enemies)
 	{
-		if (itr->GetHp() > 0)//Activeでやると死んでるモーション挟んでる敵もカウントされるため
+		if (itr->GetHp() > _hp)//Activeでやると死んでるモーション挟んでる敵もカウントされるため
 			_counter++;
 	}
 
