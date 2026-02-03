@@ -52,7 +52,7 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	moveSpeed = 15.0f;
 	centerTo = false;
 	randAngle = 0.0f;
-	playerHandle = LoadGraph("data/image/SpecialCutScene2.png");
+	playerHandle = LoadGraph("data/image/Cutin.png");
 	boxHandle = LoadGraph("data/image/visionEffect.png");
 
 	zoomCounterBase = 1.0f;
@@ -115,7 +115,7 @@ void PlayerSpecialAttack::Draw()
 	
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	//DrawRotaGraph(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, zoomRate, 0.0f * DegToRad, playerHandle, true);
-	DrawRectRotaGraph((int)Screen::WIDTH / 2, (int)Screen::HEIGHT / 2, 0, (int)zoomSize, (int)Screen::WIDTH, (int)(200.0f - zoomSize), (double)zoomRate, 0.0 * DegToRad, playerHandle, true);
+	DrawRectRotaGraph((int)Screen::WIDTH / 2, (int)Screen::HEIGHT / 2, 0, (int)zoomSize / 2, (int)Screen::WIDTH, (int)(200.0f - zoomSize), (double)zoomRate, 0.0 * DegToRad, playerHandle, true);
 	
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
@@ -183,6 +183,7 @@ void PlayerSpecialAttack::Start()
 	p->playerCom.camera->SleepTargetSet(CutSceneSpece::ALL_ENEMY, true);
 	p->playerCom.sound->PlaySe(Sound_ID::CUTIN_START);
 	p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_V);
+	attackDamage = false;
 }
 
 void PlayerSpecialAttack::Finish()
@@ -265,7 +266,7 @@ void PlayerSpecialAttack::BeforeUpdate()
 			if (zoomCounter <= 0.0f) {
 				beforeWaitCounter = 1.0f;
 				zoom = false;
-				p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f - 200.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VOne), nullptr, Effect_ID::PLAYER_SPECIAL_FLASH, 1.0f, false);
+				p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f - 100.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VOne), nullptr, Effect_ID::PLAYER_SPECIAL_FLASH, 1.0f, false);
 				p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_SPECIAL_FLASH, 2.0f);
 				
 			}
@@ -355,8 +356,10 @@ void PlayerSpecialAttack::GroundUpdate()
 		AddCollsion();
 		p->playerCom.anim->Play(animId);
 		p->playerCom.shaker->ShakeStart(VOne * 5.0f, Shaker::MIX_SHAKE, false, -1);
-		p->playerCom.camera->CutSceneChangeState("playerSpecialCut");
+		p->playerCom.camera->CutSceneChangeState("playerSpecialCut",false);
 		p->obj->Component()->GetComponent<SphereCollider>()->CollsionFinish();
+		//ToDO 必殺技のチャージのエフェクトの実装
+		//p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(-100, 100, 100), VZero, VOne * 0.5f), p->obj, Effect_ID::PLAYER_SPECIAL_CHARGE, 2.0f);
 	}
 
 	
@@ -447,5 +450,6 @@ void PlayerSpecialAttack::FinalAttackUpdate()
 		p->playerCom.physics->SetVelocity(VZero);
 		p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos + VECTOR3(0.0f,150.0f,0.0f), VECTOR3(0.0f, 0.0f, 180.0f * DegToRad), VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_FINAL, 1.5f);
 		//p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_SPECIAL_FINAL, 1.0f);
+		attackDamage = true;
 	}
 }

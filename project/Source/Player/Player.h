@@ -31,7 +31,9 @@ public:
 	friend class PlayerAttackStateBase;
 	friend class PlayerStateBase;
 	friend class PlayerTurn;
+	friend class PlayerWin;
 	friend class PlayerSpecialAttack;
+	friend class PlayerBossAppear;
 
 	Player();
 	~Player();

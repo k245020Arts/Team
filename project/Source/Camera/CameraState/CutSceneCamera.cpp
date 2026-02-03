@@ -1,3 +1,264 @@
+//#include "CutSceneCamera.h"
+//#include "../../Common/Easing.h"
+//#include "../../Component/Transform/Transform.h"
+//#include "../cameraInformation.h"
+//#include "../../Component/Shaker/Shaker.h"
+//#include "cameraStateManager.h"
+//#include "../camera.h"
+//#include "../CameraEditorGui.h"
+//
+//CutSceneCamera::CutSceneCamera()
+//{
+//    cutSceneIndex = 0;
+//    time = 0.0f;
+//    first = false;
+//
+//    position = CutSceneObj();
+//    target = CutSceneObj();
+//
+//    firstPos = VZero;
+//    firstTarget = VZero;
+//
+//    beforePosName = "";
+//    beforeTargetName = "";
+//}
+//
+//CutSceneCamera::~CutSceneCamera()
+//{
+//}
+//
+//
+//void CutSceneCamera::Update()
+//{
+//    Camera* camera = GetBase<Camera>();
+//
+//    if (camera->cutSceneData.empty()) return;
+//
+//    CutSceneSpece::CutScene& cut = camera->cutSceneData[cutSceneIndex];
+//
+//    // 時間補間
+//    time -= Time::DeltaTimeRate();
+//    float t = std::clamp(time / cut.duration, 0.0f, 1.0f);
+//
+//    Transform* posBase = PlayerEnemyWorldToPos(cut.followPosName);
+//
+//    if (posBase != nullptr)
+//    {
+//        CutSceneInfoSet(position, posBase, beforePosName);
+//    }
+//
+//    VECTOR3 endPos = GetEndTarget(position, cut.camera.endPos);
+//
+//    VECTOR3 movePos = VZero;
+//    switch (cut.ease)
+//    {
+//    case CutSceneSpece::EaseType::Linear:
+//        movePos = Easing::Lerp(endPos, firstPos, t);
+//        break;
+//
+//    case CutSceneSpece::EaseType::In:
+//        movePos = Easing::EaseIn(endPos, firstPos, t);
+//        break;
+//
+//    case CutSceneSpece::EaseType::Out:
+//        movePos = Easing::EaseOut(endPos, firstPos, t);
+//        break;
+//
+//    case CutSceneSpece::EaseType::InOut:
+//        movePos = Easing::EaseInOut(endPos, firstPos, t);
+//        break;
+//    }
+//
+//    camera->cameraComponent.cameraTransform->position = movePos;
+//
+//
+//    // ターゲット
+//    Transform* targetBase = PlayerEnemyWorldToPos(cut.followPosTarget);
+//
+//    if (targetBase != nullptr)
+//    {
+//        CutSceneInfoSet(target, targetBase, beforeTargetName);
+//    }
+//
+//    VECTOR3 endTarget = GetEndTarget(target, cut.camera.target);
+//
+//    VECTOR3 moveTarget = VZero;
+//    switch (cut.ease)
+//    {
+//    case CutSceneSpece::EaseType::Linear:
+//        moveTarget = Easing::Lerp(endTarget, firstTarget, t);
+//        break;
+//
+//    case CutSceneSpece::EaseType::In:
+//        moveTarget = Easing::EaseIn(endTarget, firstTarget, t);
+//        break;
+//
+//    case CutSceneSpece::EaseType::Out:
+//        moveTarget = Easing::EaseOut(endTarget, firstTarget, t);
+//        break;
+//
+//    case CutSceneSpece::EaseType::InOut:
+//        moveTarget = Easing::EaseInOut(endTarget, firstTarget, t);
+//        break;
+//    }
+//
+//    camera->target = moveTarget;
+//    camera->CameraRotationSet();
+//
+//    if (t <= 0.0f)
+//    {
+//        cutSceneIndex++;
+//
+//        if (cutSceneIndex >= camera->cutSceneData.size())
+//        {
+//            camera->cameraComponent.state->ChangeState(StateID::FREE_CAMERA_S);
+//            cutSceneIndex = 0;
+//            return;
+//        }
+//
+//        time = camera->cutSceneData[cutSceneIndex].duration;
+//        first = true;
+//
+//        firstPos = camera->cameraComponent.cameraTransform->position;
+//        firstTarget = camera->target;
+//    }
+//}
+//
+//void CutSceneCamera::Draw()
+//{
+//}
+//
+//
+//void CutSceneCamera::Start()
+//{
+//    Camera* camera = GetBase<Camera>();
+//    if (camera->cutSceneData.empty()) return;
+//
+//    cutSceneIndex = 0;
+//    time = camera->cutSceneData[0].duration;
+//    first = true;
+//
+//    position.player.firstSet = false;
+//    position.enemy.firstSet = false;
+//    target.player.firstSet = false;
+//    target.enemy.firstSet = false;
+//
+//    camera->isCutScene = true;
+//
+//    beforePosName = "";
+//    beforeTargetName = "";
+//
+//    Transform* startTransform = PlayerEnemyWorldToPos(camera->cutSceneData[cutSceneIndex].firstPosBaseName);
+//    if (startTransform != nullptr) {
+//        firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos * startTransform->GetRotationMatrix() + startTransform->position;;
+//    }
+//    else {
+//        Transform* st = PlayerEnemyWorldToPos(camera->cutSceneData[cutSceneIndex].followPosName);
+//        if (st != nullptr) {
+//            firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos * st->GetRotationMatrix() + st->position;;
+//        }
+//        else {
+//            firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos;
+//        }
+//
+//    }
+//    firstTarget = camera->target;
+//}
+//
+//void CutSceneCamera::Finish()
+//{
+//    Camera* camera = GetBase<Camera>();
+//    camera->isCutScene = false;
+//}
+//
+//Transform* CutSceneCamera::PlayerEnemyWorldToPos(std::string _name)
+//{
+//    Camera* camera = GetBase<Camera>();
+//
+//    if (_name == PLAYER_POS_NAME || _name == PLAYER_FIRST_POS_NAME)
+//        return camera->cameraComponent.player.transform;
+//
+//    if (_name == ENEMY_POS_NAME || _name == ENEMY_FIRST_POS_NAME)
+//        return camera->cameraComponent.target.transform;
+//
+//    return nullptr;
+//}
+//
+//VECTOR3 CutSceneCamera::CutSceneInfoSet(CutSceneObj& _info, Transform* _baseTransform, std::string& _name)
+//{
+//    Camera* camera = GetBase<Camera>();
+//
+//    CutSceneSpece::CutScene& cut = camera->cutSceneData[cutSceneIndex];
+//    // 最初の位置の更新（前のターゲットと違う場合のみ）
+//    if (cut.followPosName != beforePosName)
+//    {
+//        if (cut.followPosName == PLAYER_POS_NAME || cut.followPosName == PLAYER_FIRST_POS_NAME)
+//        {
+//            _info.player.firstPos = _baseTransform->position;
+//            _info.player.FirstRot = _baseTransform->GetRotationMatrix();
+//        }
+//        else if (cut.followPosName == ENEMY_POS_NAME || cut.followPosName == ENEMY_FIRST_POS_NAME)
+//        {
+//            _info.enemy.firstPos = _baseTransform->position;
+//            _info.enemy.FirstRot = _baseTransform->GetRotationMatrix();
+//        }
+//
+//        _name = cut.followPosName; // 直前オブジェクト更新
+//    }
+//
+//    //最後の位置はは常に更新
+//    if (cut.followPosName == PLAYER_POS_NAME || cut.followPosName == PLAYER_FIRST_POS_NAME)
+//    {
+//        _info.player.lastPos = _baseTransform->position;
+//        _info.player.lastRot = _baseTransform->GetRotationMatrix();
+//    }
+//    else if (cut.followPosName == ENEMY_POS_NAME || cut.followPosName == ENEMY_FIRST_POS_NAME)
+//    {
+//        _info.enemy.lastPos = _baseTransform->position;
+//        _info.enemy.lastRot = _baseTransform->GetRotationMatrix();
+//    }
+//    return VECTOR3();
+//}
+//
+//VECTOR3 CutSceneCamera::GetEndTarget(const CutSceneObj& _info, const VECTOR3& _offset)
+//{
+//    Camera* camera = GetBase<Camera>();
+//
+//    CutSceneSpece::CutScene& cut = camera->cutSceneData[cutSceneIndex];
+//    // 基準決定
+//    VECTOR3 targetBasePos = VZero;
+//    MATRIX  targetBaseRot = MGetIdent();
+//
+//    if (cut.followPosTarget == PLAYER_FIRST_POS_NAME)
+//    {
+//        targetBasePos = _info.player.firstPos;
+//        targetBaseRot = _info.player.FirstRot;
+//    }
+//    else if (cut.followPosTarget == ENEMY_FIRST_POS_NAME)
+//    {
+//        targetBasePos = _info.enemy.firstPos;
+//        targetBaseRot = _info.enemy.FirstRot;
+//    }
+//    else if (cut.followPosTarget == PLAYER_POS_NAME)
+//    {
+//        targetBasePos = _info.player.lastPos;
+//        targetBaseRot = _info.player.lastRot;
+//    }
+//    else if (cut.followPosTarget == ENEMY_POS_NAME)
+//    {
+//        targetBasePos = _info.enemy.lastPos;
+//        targetBaseRot = _info.enemy.lastRot;
+//    }
+//
+//    VECTOR3 endTarget = targetBasePos + _offset * targetBaseRot;
+//    return endTarget;
+//}
+//
+//void CutSceneCamera::StateImguiDraw()
+//{
+//    ImGui::Text("CutScene Index : %d", cutSceneIndex);
+//}
+
 #include "CutSceneCamera.h"
 #include "../../Common/Easing.h"
 #include "../../Component/Transform/Transform.h"
@@ -6,207 +267,439 @@
 #include "cameraStateManager.h"
 #include "../camera.h"
 #include "../CameraEditorGui.h"
-
-//#define CUTNUMROM
+#include "../CutSceneBox.h"
+#include "../../Component/UI/UIManager/UIManager.h"
 
 CutSceneCamera::CutSceneCamera()
 {
-    string = Function::GetClassNameC<CutSceneCamera>();
-    cutSceneIndex = 0;
+    
+    time = 0.0f;
     first = false;
+
+    position = CutSceneObj();
+    target = CutSceneObj();
+
     firstPos = VZero;
+    firstTarget = VZero;
+
+    beforePosName = "";
+    beforeTargetName = "";
+
+    playerFirstCaptured = false;
+    enemyFirstCaptured = false;
+    playerFirstTargetCaptured = false;
+    enemyFirstTargetCaptured = false;
+
+    playerFirstPos = VZero;
+    playerFirstRot = MGetIdent();
+    enemyFirstPos = VZero;
+    enemyFirstRot = MGetIdent();
+
+    playerLastPos = VZero;
+    playerLastRot = MGetIdent();
+    enemyLastPos = VZero;
+    enemyLastRot = MGetIdent();
+
+   
+
+    playerFirstTargetPos = VZero;
+    playerFirstTargetRot = MGetIdent();
+    enemyFirstTargetPos = VZero;
+    enemyFirstTargetRot = MGetIdent();
+    playerLastTargetPos = VZero;
+    playerLastTargetRot = MGetIdent();
+    enemyLastTargetPos = VZero;
+    enemyLastTargetRot = MGetIdent();
+
 }
 
 CutSceneCamera::~CutSceneCamera()
 {
 }
 
+
 void CutSceneCamera::Update()
 {
     Camera* camera = GetBase<Camera>();
     if (camera->cutSceneData.empty()) return;
 
-    
-    CutSceneSpece::CutScene& cut = camera->cutSceneData[cutSceneIndex];
+    CutSceneSpece::CutScene& cut = camera->cutSceneData[camera->cutSceneIndex];
 
+    // ===== 対象切り替え判定 =====
+    bool isTransition = (cut.followPosName != beforePosName);
+    bool isTargetTransition = (cut.followPosTarget != beforeTargetName);
+
+    // 時間補間
     time -= Time::DeltaTimeRate();
-    float t = (time / cut.duration);
-    t = std::clamp(t, 0.0f, 1.0f);
+    float t = std::clamp(time / cut.duration, 0.0f, 1.0f);
 
-    // カメラ座標を補間
-    Transform* posTransfrom = PlayerEnemyWorldToPos(cut.followPosName);
-    VECTOR3 endPos = cut.camera.endPos;
-    if (posTransfrom != nullptr) {
-        endPos = cut.camera.endPos * posTransfrom->GetRotationMatrix();
+    Transform* posBase = PlayerEnemyWorldToPos(cut.followPosName);
+
+    if (posBase != nullptr)
+    {
+        // 最初の位置の更新（前のターゲットと違う場合のみ）
+        if (cut.followPosName != beforePosName)
+        {
+            if (cut.followPosName == PLAYER_POS_NAME || cut.followPosName == PLAYER_FIRST_POS_NAME)
+            {
+                playerFirstPos = posBase->position;
+                playerFirstRot = posBase->GetRotationMatrix();
+            }
+            else if (cut.followPosName == ENEMY_POS_NAME || cut.followPosName == ENEMY_FIRST_POS_NAME)
+            {
+                enemyFirstPos = posBase->position;
+                enemyFirstRot = posBase->GetRotationMatrix();
+            }
+
+            beforePosName = cut.followPosName; // 直前オブジェクト更新
+        }
+
+        //最後の位置はは常に更新
+        if (cut.followPosName == PLAYER_POS_NAME || cut.followPosName == PLAYER_FIRST_POS_NAME)
+        {
+            playerLastPos = posBase->position;
+            playerLastRot = posBase->GetRotationMatrix();
+        }
+        else if (cut.followPosName == ENEMY_POS_NAME || cut.followPosName == ENEMY_FIRST_POS_NAME)
+        {
+            enemyLastPos = posBase->position;
+            enemyLastRot = posBase->GetRotationMatrix();
+        }
     }
-#ifdef CUTNUMROM
+
+    // 基準決定
+    VECTOR3 basePos = VZero;
+    MATRIX  baseRot = MGetIdent();
+
+    if (cut.followPosName == PLAYER_FIRST_POS_NAME)
+    {
+        basePos = playerFirstPos;
+        baseRot = playerFirstRot;
+    }
+    else if (cut.followPosName == ENEMY_FIRST_POS_NAME)
+    {
+        basePos = enemyFirstPos;
+        baseRot = enemyFirstRot;
+    }
+    else if (cut.followPosName == PLAYER_POS_NAME)
+    {
+        basePos = playerLastPos;
+        baseRot = playerLastRot;
+    }
+    else if (cut.followPosName == ENEMY_POS_NAME)
+    {
+        basePos = enemyLastPos;
+        baseRot = enemyLastRot;
+    }
+
+    VECTOR3 endPos = basePos + cut.camera.endPos * baseRot;
+
     VECTOR3 movePos = VZero;
 
-    VECTOR3 dir = (endPos - firstPos);
-    dir = dir.Normalize();
-    float size = dir.Size();
-    VECTOR3 up = VECTOR3(0, 1, 0);
-    VECTOR3 side = dir.Cross(up);
-    side = side.Normalize();
-
-    float curveSize = size * 0.3f;
-
-    VECTOR3 pb = firstPos - dir * size * 0.2f + side * curveSize;
-    VECTOR3 p0 = firstPos;
-    VECTOR3 p1 = endPos;
-    VECTOR3 p2 = endPos + dir * size * 0.2f + side * curveSize;
-
-    movePos = CatmullRom(t, pb, p0, p1, p2);
-
-    /*switch (cut.ease)
-    {
-    case CutSceneSpece::EaseType::Linear:
-        movePos = Easing::Lerp(endPos, firstPos, t);
-        break;
-    case CutSceneSpece::EaseType::In:
-        movePos = Easing::EaseIn(endPos, firstPos, t);
-        break;
-    case CutSceneSpece::EaseType::Out:
-        movePos = Easing::EaseOut(endPos, firstPos, t);
-        break;
-    case CutSceneSpece::EaseType::InOut:
-        movePos = Easing::EaseInOut(endPos, firstPos, t);
-        break;
-    }*/
-#else 
-    VECTOR3 movePos = VZero;
-
-    switch (cut.ease)
-    {
-    case CutSceneSpece::EaseType::Linear:
-        movePos = Easing::Lerp(endPos, firstPos, t);
-        break;
-    case CutSceneSpece::EaseType::In:
-        movePos = Easing::EaseIn(endPos, firstPos, t);
-        break;
-    case CutSceneSpece::EaseType::Out:
-        movePos = Easing::EaseOut(endPos, firstPos, t);
-        break;
-    case CutSceneSpece::EaseType::InOut:
-        movePos = Easing::EaseInOut(endPos, firstPos, t);
-        break;
-    }
-#endif
-
-
-   
-    
-    if (first || cut.followPosName == PLAYER_POS_NAME || cut.followPosName == ENEMY_POS_NAME) {
-        if (posTransfrom != nullptr) {
-            camera->cameraComponent.cameraTransform->position = posTransfrom->position + movePos;
-            keepPos = posTransfrom->position;
-        }
-    }
-    else {
-        camera->cameraComponent.cameraTransform->position = keepPos + movePos;
-    }
-    
-    Transform* targetTransfrom = PlayerEnemyWorldToPos(cut.followPosTarget);
-    
-    if (cut.followPosName == PLAYER_FIRST_POS_NAME || cut.followPosName == ENEMY_FIRST_POS_NAME) {
-        if (first) {
-            camera->target = targetTransfrom->position + (cut.camera.target * targetTransfrom->GetRotationMatrix());
-            keepTarget = targetTransfrom->position;
-        }
-        else {
-            camera->target = keepTarget + (cut.camera.target * targetTransfrom->GetRotationMatrix());
-            //keepTarget = targetTransfrom->position;
-        }
-    }
-    else {
-        camera->target = targetTransfrom->position + cut.camera.target;
-        //keepTarget = targetTransfrom->position;
-    }
    
 
+    if (!isTransition && first)
+    {
+        // 追従開始時に一度だけ取る
+        firstPos = camera->cameraComponent.cameraTransform->position - basePos;
+        
+    }
+
+    if (isTransition)
+    {
+        // ===== 今まで通り：フル補間 =====
+        switch (cut.ease)
+        {
+        case CutSceneSpece::EaseType::Linear:
+            movePos = Easing::Lerp(endPos, firstPos, t);
+            break;
+        case CutSceneSpece::EaseType::In:
+            movePos = Easing::EaseIn(endPos, firstPos, t);
+            break;
+        case CutSceneSpece::EaseType::Out:
+            movePos = Easing::EaseOut(endPos, firstPos, t);
+            break;
+        case CutSceneSpece::EaseType::InOut:
+            movePos = Easing::EaseInOut(endPos, firstPos, t);
+            break;
+        }
+    }
+    else
+    {
+        // ===== 追従：offset のみ補間 =====
+        VECTOR3 currentPos =
+            camera->cameraComponent.cameraTransform->position;
+
+        VECTOR3 currentOffset = currentPos - basePos;
+        VECTOR3 targetOffset = cut.camera.endPos * baseRot;
+
+        VECTOR3 offset = VZero;
+
+        switch (cut.ease)
+        {
+        case CutSceneSpece::EaseType::Linear:
+            offset = Easing::Lerp(targetOffset, firstPos, t);
+            break;
+        case CutSceneSpece::EaseType::In:
+            offset = Easing::EaseIn(targetOffset, firstPos, t);
+            break;
+        case CutSceneSpece::EaseType::Out:
+            offset = Easing::EaseOut(targetOffset, firstPos, t);
+            break;
+        case CutSceneSpece::EaseType::InOut:
+            offset = Easing::EaseInOut(targetOffset, firstTarget, t);
+            break;
+        }
+
+        movePos = basePos + offset;
+    }
+
+    camera->cameraComponent.cameraTransform->position = movePos;
+    camera->cameraComponent.cameraTransform->position += camera->cameraComponent.shaker->GetShakePower();
+   
+    // ターゲット
+    Transform* targetBase = PlayerEnemyWorldToPos(cut.followPosTarget);
+
+    if (targetBase != nullptr)
+    {
+        // 最初の位置の更新（前のターゲットと違う場合のみ）
+        if (cut.followPosTarget != beforeTargetName)
+        {
+            if (cut.followPosTarget == PLAYER_POS_NAME || cut.followPosTarget == PLAYER_FIRST_POS_NAME)
+            {
+                playerFirstTargetPos = targetBase->position;
+                playerFirstTargetRot = targetBase->GetRotationMatrix();
+            }
+            else if (cut.followPosTarget == ENEMY_POS_NAME || cut.followPosTarget == ENEMY_FIRST_POS_NAME)
+            {
+                enemyFirstTargetPos = targetBase->position;
+                enemyFirstTargetRot = targetBase->GetRotationMatrix();
+            }
+
+            beforeTargetName = cut.followPosTarget; // 直前ターゲット更新
+        }
+
+        //最後の位置はは常に更新
+        if (cut.followPosTarget == PLAYER_POS_NAME || cut.followPosTarget == PLAYER_FIRST_POS_NAME)
+        {
+            playerLastTargetPos = targetBase->position;
+            playerLastTargetRot = targetBase->GetRotationMatrix();
+        }
+        else if (cut.followPosTarget == ENEMY_POS_NAME || cut.followPosTarget == ENEMY_FIRST_POS_NAME)
+        {
+            enemyLastTargetPos = targetBase->position;
+            enemyLastTargetRot = targetBase->GetRotationMatrix();
+        }
+    }
+
+    // 基準決定
+    VECTOR3 targetBasePos = VZero;
+    MATRIX  targetBaseRot = MGetIdent();
+
+    if (cut.followPosTarget == PLAYER_FIRST_POS_NAME)
+    {
+        targetBasePos = playerFirstTargetPos;
+        targetBaseRot = playerFirstTargetRot;
+    }
+    else if (cut.followPosTarget == ENEMY_FIRST_POS_NAME)
+    {
+        targetBasePos = enemyFirstTargetPos;
+        targetBaseRot = enemyFirstTargetRot;
+    }
+    else if (cut.followPosTarget == PLAYER_POS_NAME)
+    {
+        targetBasePos = playerLastTargetPos;
+        targetBaseRot = playerLastTargetRot;
+    }
+    else if (cut.followPosTarget == ENEMY_POS_NAME)
+    {
+        targetBasePos = enemyLastTargetPos;
+        targetBaseRot = enemyLastTargetRot;
+    }
+
+    VECTOR3 endTarget = targetBasePos + cut.camera.target * targetBaseRot;
+    VECTOR3 moveTarget = VZero;
+
+  
+
+    if (!isTransition && first)
+    {
+        // 追従開始時に一度だけ取る
+        firstTarget = camera->target - targetBasePos;
+        first = false;
+    }
+
+    if (isTargetTransition)
+    {
+        // ===== 今まで通り：フル補間 =====
+        switch (cut.ease)
+        {
+        case CutSceneSpece::EaseType::Linear:
+            moveTarget = Easing::Lerp(endTarget, firstTarget, t);
+            break;
+        case CutSceneSpece::EaseType::In:
+            moveTarget = Easing::EaseIn(endTarget, firstTarget, t);
+            break;
+        case CutSceneSpece::EaseType::Out:
+            moveTarget = Easing::EaseOut(endTarget, firstTarget, t);
+            break;
+        case CutSceneSpece::EaseType::InOut:
+            moveTarget = Easing::EaseInOut(endTarget, firstTarget, t);
+            break;
+        }
+    }
+    else
+    {
+        // ===== 追従：target offset のみ補間 =====
+        VECTOR3 currentTarget = camera->target;
+
+        VECTOR3 currentOffset = currentTarget - targetBasePos;
+        VECTOR3 targetOffset = cut.camera.target * targetBaseRot;
+
+        VECTOR3 offset = VZero;
+
+        switch (cut.ease)
+        {
+        case CutSceneSpece::EaseType::Linear:
+            offset = Easing::Lerp(targetOffset, firstTarget, t);
+            break;
+        case CutSceneSpece::EaseType::In:
+            offset = Easing::EaseIn(targetOffset, firstTarget, t);
+            break;
+        case CutSceneSpece::EaseType::Out:
+            offset = Easing::EaseOut(targetOffset, firstTarget, t);
+            break;
+        case CutSceneSpece::EaseType::InOut:
+            offset = Easing::EaseInOut(targetOffset, firstTarget, t);
+            break;
+        }
+
+        moveTarget = targetBasePos + offset;
+    }
+
+    camera->target = moveTarget;
     camera->CameraRotationSet();
-    
-    // カット終了時の処理
-    if (t <= 0.0f) {
-        cutSceneIndex++;
-        if (cutSceneIndex >= camera->cutSceneData.size()) {
+
+    //VECTOR3 pos = camera->cameraComponent.cameraTransform->position;
+    //VECTOR3 tgt = camera->target;
+
+    //VECTOR3 forward = VNorm(tgt - pos);
+    //VECTOR3 up = VGet(0, 1, 0);
+
+    //// forward と up が平行に近い場合の保険
+    //if (fabsf(VDot(forward, up)) > 0.99f)
+    //{
+    //    up = VGet(0, 0, 1);
+    //}
+
+    //VECTOR3 right = VNorm(VCross(up, forward));
+    //up = VCross(forward, right);
+
+    //MATRIX rot = MGetIdent();
+
+    //rot.m[0][0] = right.x;
+    //rot.m[0][1] = right.y;
+    //rot.m[0][2] = right.z;
+
+    //rot.m[1][0] = up.x;
+    //rot.m[1][1] = up.y;
+    //rot.m[1][2] = up.z;
+
+    //rot.m[2][0] = forward.x;
+    //rot.m[2][1] = forward.y;
+    //rot.m[2][2] = forward.z;
+
+    //camera->cameraComponent.cameraTransform->SetRotationMatrix(rot);
+
+    if (t <= 0.0f)
+    {
+        camera->cutSceneIndex++;
+
+        if (camera->cutSceneIndex >= camera->cutSceneData.size())
+        {
             camera->cameraComponent.state->ChangeState(StateID::FREE_CAMERA_S);
-            cutSceneIndex = 0;
+            camera->cutSceneIndex = -1;
+            return;
         }
-        else {
-            time = camera->cutSceneData[cutSceneIndex].duration; // 次のカットへ
-            firstPos = endPos;
-            first = true;
-        }
+
+        time = camera->cutSceneData[camera->cutSceneIndex].duration;
+        first = true;
+
+        firstPos = camera->cameraComponent.cameraTransform->position;
+        firstTarget = camera->target;
     }
-    first = false;
 }
 
 void CutSceneCamera::Draw()
 {
 }
 
+
 void CutSceneCamera::Start()
 {
     Camera* camera = GetBase<Camera>();
     if (camera->cutSceneData.empty()) return;
 
-    cutSceneIndex = 0;
-    time = camera->cutSceneData[cutSceneIndex].duration;
+    camera->cutSceneIndex = 0;
+    time = camera->cutSceneData[0].duration;
     first = true;
-    Transform* startTransform = PlayerEnemyWorldToPos(camera->cutSceneData[cutSceneIndex].firstPosBaseName);
-    if (startTransform != nullptr) {
-        firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos * startTransform->GetRotationMatrix();
-    }
-    else {
-        firstPos = camera->cutSceneData[cutSceneIndex].camera.startPos;
-    }
-  
+
+    position = CutSceneObj();
+    target = CutSceneObj();
+
+    playerFirstCaptured = false;
+    enemyFirstCaptured = false;
+    playerFirstTargetCaptured = false;
+    enemyFirstTargetCaptured = false;
+
     camera->isCutScene = true;
+
+    beforePosName = "";
+    beforeTargetName = "";
+
+    Transform* startTransform = PlayerEnemyWorldToPos(camera->cutSceneData[camera->cutSceneIndex].firstPosBaseName);
+    if (startTransform != nullptr) {
+        firstPos = camera->cutSceneData[camera->cutSceneIndex].camera.startPos * startTransform->GetRotationMatrix() + startTransform->position;;
+    }
+   else {
+        Transform* st = PlayerEnemyWorldToPos(camera->cutSceneData[camera->cutSceneIndex].followPosName);
+       if (st != nullptr) {
+            firstPos = camera->cutSceneData[camera->cutSceneIndex].camera.startPos * st->GetRotationMatrix() + st->position;;
+       }
+       else {
+           firstPos = camera->cutSceneData[camera->cutSceneIndex].camera.startPos;
+       }
+              
+    }
+    firstTarget = camera->target;
 }
 
 void CutSceneCamera::Finish()
 {
     Camera* camera = GetBase<Camera>();
     camera->isCutScene = false;
-    camera->SleepTargetSet(camera->cutStopChara, false);
-    camera->cutStopChara = CutSceneSpece::NONE;
+    camera->cutSceneIndex = -1;
+    if (camera->cutSceneBoxDraw) {
+        camera->cutSceneBox->FinishBox(1.0f, 0x00000, Easing::EaseInOut<int>);
+        camera->uiManager->SetUIDraw(true);
+    }
 }
 
 Transform* CutSceneCamera::PlayerEnemyWorldToPos(std::string _name)
 {
     Camera* camera = GetBase<Camera>();
-    if (_name == PLAYER_POS_NAME || _name == PLAYER_FIRST_POS_NAME) {
+
+    if (_name == PLAYER_POS_NAME || _name == PLAYER_FIRST_POS_NAME)
         return camera->cameraComponent.player.transform;
-    }
-    else if (_name == ENEMY_POS_NAME || _name == ENEMY_FIRST_POS_NAME) {
+
+    if (_name == ENEMY_POS_NAME || _name == ENEMY_FIRST_POS_NAME)
         return camera->cameraComponent.target.transform;
-    }
-    else {
-        return nullptr;
-    }
+
+    return nullptr;
 }
 
 void CutSceneCamera::StateImguiDraw()
 {
     Camera* camera = GetBase<Camera>();
-    CutSceneSpece::CutScene& cut = camera->cutSceneData[cutSceneIndex];
-    ImGui::Text("index", cutSceneIndex);
-    ImGui::DragFloat3("startPos",&cut.camera.startPos.x,1.0f,1000.0f,100000.0f);
-    ImGui::DragFloat3("EndPos",&cut.camera.endPos.x,1.0f,1000.0f,100000.0f);
-       
-}
-
-
-VECTOR3 CutSceneCamera::CatmullRom(float _rate, VECTOR3 _pb, VECTOR3 _p0, VECTOR3 _p1, VECTOR3 _p2)
-{
-    float t3 = _rate * _rate * _rate; //3乗
-    float t2 = _rate * _rate;//2乗
-    float t1 = _rate;//1乗
-    VECTOR3 rV0 = (_p1 - _pb) / 2.0f; //p0の傾き
-    VECTOR3 rV1 = (_p2 - _p0) / 2.0f; //p1の傾き
-    VECTOR3 a = _p0 * 2 - _p1 * 2 + rV0 + rV1;
-    VECTOR3 b = _p0 * -3 + _p1 * 3 - rV0 * 2 - rV1;
-
-    return a * t3 + b * t2 + rV0 * _rate + _p0;//三次曲線の式
+    ImGui::Text("CutScene Index : %d", camera->cutSceneIndex);
 }

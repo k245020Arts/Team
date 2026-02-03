@@ -9,6 +9,7 @@ class Camera;
 class EnemyBase;
 class Transform;
 class Boss;
+class GameManager;
 
 class EnemyManager : public GameObject
 {
@@ -20,15 +21,16 @@ public:
 
 	void DebugDrawCamera(Camera* camera);
 
-	std::list<BaseObject*> GetEnemy();
-	std::list<BaseObject*>::iterator GetItr();
-
 	void CreateEnemy();
 	void PlayerObjPointer();
 
 	void CreateBoss();
 	void FindPlayer();
-
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="_enemy"> </param>
+	/// <param name="_obj"></param>
 	void AddList(EnemyBase* _enemy, BaseObject* _obj);
 
 	void RemoveList(EnemyBase* _enemy, BaseObject* _obj);
@@ -58,6 +60,8 @@ public:
 
 	void SleepAllEnemy(bool _sleep);
 
+	void GameSceneChangeState();
+
 private:
 	
 	std::list<BaseObject*> enemy;
@@ -65,4 +69,5 @@ private:
 	std::list<EnemyBase*> chara;
 	BaseObject* cameraTargetObj;
 	//std::list<Boss> bossList;
+	GameManager* gameManager;
 };

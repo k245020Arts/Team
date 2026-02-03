@@ -36,7 +36,7 @@ public:
 
 	PLAYER_SPECIAL_ATTACK_STATE GetSpecialAttackState() { return state; }
 
-
+	bool GetAttackDamage() { return attackDamage; }
 
 private:
 
@@ -74,4 +74,5 @@ private:
 	float zoomSize;
 
 	float beforeWaitCounter;
+	bool attackDamage;
 };

@@ -6,6 +6,7 @@ class CooperateAttack1 :public T_EnemyAttack
 public:
 	CooperateAttack1();
 	~CooperateAttack1();
+	void Update()override;
 
 	void Start()override;
 	void Finish()override;

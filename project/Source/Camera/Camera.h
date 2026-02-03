@@ -5,6 +5,7 @@
 #include "../Common/ID/StateID.h"
 #include "../Component/Transform/Quaternion.h"
 #include "../Common/JsonReader.h"
+#include "../Camera/CameraBase.h"
 
 static const std::string PLAYER_POS_NAME		= "Player";
 static const std::string PLAYER_FIRST_POS_NAME	= "First_Player";
@@ -105,8 +106,10 @@ namespace CutSceneSpece {
 class ControllerInputManager;
 class InputManager;
 class CameraEditorGui;
+class CutSceneBox;
+class UIManager;
 
-class Camera : public Component
+class Camera : public CameraBase
 {
 public:
 	friend class FollowCamera;
@@ -127,11 +130,7 @@ public:
 
 	void Start(BaseObject* _eObj);
 	void ImguiDraw()override;
-	void PlayerSet(BaseObject* _obj);
-
-	Transform* GetCameraTransform() { return cameraComponent.cameraTransform; }
-	void CameraShake(VECTOR3 _power, Shaker::ShakePattern _pattern, bool _stop, float _second);
-	void CameraShakeStop();
+	void PlayerSet(BaseObject* _obj)override;
 
 	void TargetSet(BaseObject* _obj);
 
@@ -140,8 +139,6 @@ public:
 	void CameraLeapSet(float _rape);
 	void ChangeStateCamera(StateID::State_ID _id);
 
-	void CameraRotationSet();
-	void Follow();
 	VECTOR3 GetTarget() { return target; }
 
 	void CollsionPosHit(VECTOR3 norm, float size, VECTOR3 groundPos);
@@ -164,33 +161,27 @@ public:
 	/// </summary>
 	/// <param name="_name">ÉtÉ@ÉCÉãñº</param>
 	/// <param name="_space">cutSceneíÜÇ…é~ÇﬂÇÈÇ◊Ç´ëŒè€</param>
-	void CutSceneChangeState(std::string _name);
+	void CutSceneChangeState(std::string _name,bool _cutScene);
 	
-	void CutSceneChangeState(std::string _name, int _stop);
+	void CutSceneChangeState(std::string _name, bool _cutScene, int _stop);
 	
 
 	bool IsCutScene() { return isCutScene; }
 
 	void SleepTargetSet(int _stop,bool _sleep);
 
+	int GetCutNum() { return cutSceneIndex; }
+
 private:
 
 	float timeTest;
+	int cutSceneIndex;
 	bool normalCamera;
-	int debugButton;
 	int targetChangeButton;
-	VECTOR3 target;
-	float reap;
-	CameraInformation::CameraComponent cameraComponent;
-	VECTOR3 currentDistance;
-	VECTOR3 defalutDistance;
-	float fov;
 	ControllerInputManager* control;
 	InputManager* input;
 	bool rockOn;
 	float beforePos;
-	float nearFog;
-	float farFog;
 	float counter;
 	bool hit;
 	float rokPos;
@@ -210,5 +201,7 @@ private:
 	bool isCutScene;
 	
 	int cutStopChara;
-	VECTOR3 diffTarget;
+	CutSceneBox* cutSceneBox;
+	bool cutSceneBoxDraw;
+	UIManager* uiManager;
 };

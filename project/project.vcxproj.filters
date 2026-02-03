@@ -62,9 +62,6 @@
     <ClCompile Include="ImGui\imgui_node_editor.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Library\MemoryCount.cpp">
-      <Filter>Library</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Common\BlurScreen.cpp">
       <Filter>Common\BlurScreen</Filter>
     </ClCompile>
@@ -494,6 +491,55 @@
     <ClCompile Include="Source\Player\PlayerState\PlayerBefore.cpp">
       <Filter>PlayScene\Player\PlayerState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\UI\ButtonUI.cpp">
+      <Filter>Component\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\UI\UIManager\UIManager.cpp">
+      <Filter>Component\UI\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.cpp" />
+    <ClCompile Include="Source\Component\UI\EnemyDamageUI.cpp">
+      <Filter>Component\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\Memory\MemoryCount.cpp">
+      <Filter>Common\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TitleCamera.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TitlePlayer.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera\CameraBase.cpp">
+      <Filter>PlayScene\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TitlePlayerIdol.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TitleControl.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TitlePlayerMove.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\Fead\Fead.cpp">
+      <Filter>Common\Fead</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player\PlayerState\PlayerBossAppear.cpp">
+      <Filter>PlayScene\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossAppear.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera\CutSceneBox.cpp">
+      <Filter>PlayScene\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\UI\UIBase.cpp">
+      <Filter>Component\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -575,9 +621,6 @@
     </ClInclude>
     <ClInclude Include="ImGui\imgui_node_editor.h">
       <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Library\MemoryCount.h">
-      <Filter>Library</Filter>
     </ClInclude>
     <ClInclude Include="Source\Common\Debug\Debug.h">
       <Filter>Common\Debug</Filter>
@@ -1044,6 +1087,55 @@
     <ClInclude Include="Source\Player\PlayerState\PlayerBefore.h">
       <Filter>PlayScene\Player\PlayerState</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\UI\ButtonUI.h">
+      <Filter>Component\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\UI\UIManager\UIManager.h">
+      <Filter>Component\UI\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h" />
+    <ClInclude Include="Source\Component\UI\EnemyDamageUI.h">
+      <Filter>Component\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Common\Memory\MemoryCount.h">
+      <Filter>Common\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitleCamera.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitlePlayer.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CameraBase.h">
+      <Filter>PlayScene\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitlePlayerIdol.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitleControl.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitlePlayerMove.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Common\Fead\Fead.h">
+      <Filter>Common\Fead</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\PlayerState\PlayerBossAppear.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossAppear.h">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CutSceneBox.h">
+      <Filter>PlayScene\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\UI\UIBase.h">
+      <Filter>Component\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1231,6 +1323,18 @@
     </Filter>
     <Filter Include="PlayScene\Wave">
       <UniqueIdentifier>{7749ddb7-107e-4428-ab1e-f47b1def556e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\UI">
+      <UniqueIdentifier>{deb44ab0-f131-45fe-ab87-d5304a501f18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\UI\UIManager">
+      <UniqueIdentifier>{0fb36ed2-e7d9-445a-847e-3c9af93ba5a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Memory">
+      <UniqueIdentifier>{a4fca67c-9e82-4b7a-b528-f487954f3a4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Fead">
+      <UniqueIdentifier>{e9433428-080b-400a-8d9e-62d766c3b662}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

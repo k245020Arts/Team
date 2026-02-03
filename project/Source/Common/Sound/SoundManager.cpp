@@ -110,6 +110,14 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_ATTACK_V2, "PlayerSpecialAttackAttackV2", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_FINAL_ATTACKV, "PlayerSpecialFinalAttackV", ".wav", 255);
 	
+	SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK1, "p_walk1", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::BOSS_WALK, "AS_373275_ドスッ_重めの足音", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::BOSS_ROAR_VOICE, "B_ROAR_2", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::BOSS_JUMP_WIND, "BOSS_JUMP_WIND", ".wav", 200);
+	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK2, "p_walk2", ".wav", 255);
+	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK3, "p_walk3", ".wav", 255);
+	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK4, "p_walk4", ".wav", 255);
+	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK5, "p_walk5", ".wav", 255);
 }
 
 void SoundManager::TitleSceneLoad()
@@ -216,20 +224,26 @@ void SoundManager::Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj, f
 	float size = dist.Size();
 
 	float vol = 0;
-	if (_maxVolSize >= size) {
+	if (_maxVolSize <= size) {
 		vol = 0;
 	}
-	else if (_minVolSize <= size) {
+	else if (_minVolSize >= size) {
 		vol = sound[Sound_ID::GetSoundID(_id)]->GetVolumn();
 	}
 	else {
-		float rate = (size - _minVolSize) / (_maxVolSize - _minVolSize);
+		float rate = (size - _maxVolSize) / (_minVolSize - _maxVolSize);
 		vol = Easing::Lerp(0.0f, sound[Sound_ID::GetSoundID(_id)]->GetVolumn(),rate);
 	}
 	sound[Sound_ID::GetSoundID(_id)]->ChangeVolumeSound(vol);
+
 }
 
 void SoundManager::Base3DSoundObject(BaseObject* _base)
 {
 	Base3DSoundObj = _base;
+}
+
+void SoundManager::PlayRamdomChangeFrequencySe(Sound_ID::SOUND_ID _id, int _ramdom, int _baseFrequ)
+{
+	sound[Sound_ID::GetSoundID(_id)]->PlayRamdomChangeFrequencySe(_ramdom,_baseFrequ);
 }

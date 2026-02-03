@@ -18,7 +18,8 @@
 #include "../Component/Hierarchy/Hierarchy.h"
 #include "CameraEditorGui.h"
 #include "CameraState/PlayerSpecialAttackCamera.h"
-
+#include "CutSceneBox.h"
+#include "../Component/UI/UIManager/UIManager.h"
 
 Camera::Camera()
 {
@@ -42,7 +43,7 @@ Camera::Camera()
 	rockOn								= false;
 	beforePos							= 0.0f;
 	nearFog								= 10000.0f;
-	farFog								= 1800000.0f;
+	farFog								= 2300000.0f;
 	direction							= EnemyAttackChangeCameraDirection::NONE;
 	moveTimer							= 0.0f;
 	angleMaxSpeed						= 0.0f;
@@ -55,12 +56,16 @@ Camera::Camera()
 	rockOn								= false;
 	targetEnemyTransform				= nullptr;
 	diffTarget							= VZero;
-
+	cutSceneIndex						= 0;
+	cutSceneBox							= new CutSceneBox();
+	cutSceneBoxDraw						= false;
+	uiManager							= FindGameObject<UIManager>();
 }
 
 Camera::~Camera()
 {
 	SafeDelete<Transform>(cameraComponent.cameraTransform);
+	SafeDelete<CameraEditorGui>(editor);
 
 	//delete cameraComponent.state;
 }
@@ -107,7 +112,7 @@ void Camera::Draw()
 	}
 
 	//Dxlibのカメラの設定(SetDrawScreenを使うと初期化されるため毎フレーム呼ぶ)。
-	SetCameraNearFar(10.0f, 100000000.0f);
+	SetCameraNearFar(10.0f, 5000000.0f);
 	SetFogEnable(true);
 	SetFogStartEnd(nearFog, farFog);
 	SetFogColor(137, 189, 222);
@@ -118,7 +123,7 @@ void Camera::Draw()
 		SetCameraPositionAndTarget_UpVecY(transform.position, diffTarget);
 	}
 	else if (rockOn) {
-		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target + VECTOR3(0, 300, 0));
+		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);
 	}
 	else if (!rockOn) {
 		SetCameraPositionAndTarget_UpVecY(cameraComponent.cameraTransform->position, target);
@@ -185,19 +190,8 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.state->SetComponent<Camera>(this);
 	cameraComponent.state->StartState(StateID::FREE_CAMERA_S);
 	FindGameObject<Hierachy>()->SetCameraEditor(this);
-	CutSceneChangeState("PlayingBefore");
+	CutSceneChangeState("PlayingBefore",true);
 	//CameraRotationSet();
-}
-
-void Camera::CameraShake(VECTOR3 _power,Shaker::ShakePattern _pattern,bool _stop,float _second)
-{
-	//カメラを震わせるときはこれを使う
-	cameraComponent.shaker->ShakeStart(_power, _pattern, _stop, _second, cameraComponent.cameraTransform);
-}
-
-void Camera::CameraShakeStop()
-{
-	cameraComponent.shaker->ShakeFinish();
 }
 
 void Camera::TargetSet(BaseObject* _obj)
@@ -227,54 +221,6 @@ void Camera::CameraLeapSet(float _rape)
 void Camera::ChangeStateCamera(StateID::State_ID _id)
 {
 	cameraComponent.state->ChangeState(_id);
-}
-
-void Camera::CameraRotationSet()
-{
-	//敵に追従したカメラの角度のセットをしている関数
-	VECTOR3 dir;
-
-	dir = target - cameraComponent.cameraTransform->position;
-
-	dir = dir.Normalize();
-	float angle = atan2f(dir.x, dir.z);
-	cameraComponent.cameraTransform->rotation.y = angle;
-
-	// ======== 2. カメラの向くべき方向 ========
-	//VECTOR3 p = VECTOR3(0, 500, -1500);
-	//cameraComponent.cameraTransform->position = cameraComponent.player.transform->position + p;
-	//VECTOR3 dir = cameraComponent.target.transform->position - cameraComponent.cameraTransform->position;
-	//dir = dir.Normalize();
-	//VECTOR3 up = VGet(0, 1, 0);
-
-	//MATRIX lookM = MyLookAt(cameraComponent.cameraTransform->position, cameraComponent.cameraTransform->position + dir, up);
-
-	//Quaternion targetQ = MToQ(lookM);
-
-	//// ======== 3. 今の回転へ自然に補間 (SLERP) ========
-	//float t = 1.0f - std::pow(0.0001f, Time::DeltaTimeRate() * 6.0f);
-	//cameraQuaternion = QSlerp(cameraQuaternion, targetQ, t);
-
-	//// ======== 4. DxLibカメラに反映 ========
-	//target = cameraComponent.cameraTransform->position + QApply(cameraQuaternion, VGet(0, 0, 1));  // クォータニオン回転後の前方ベクトル
-}
-
-void Camera::Follow()
-{
-	//追従処理
-	VECTOR3 offset								= currentDistance * cameraComponent.cameraTransform->GetRotationMatrix();
-	VECTOR3 desiredCamPos;
-	desiredCamPos								= cameraComponent.player.transform->position + offset;
-	//カメラのポジションをイージングの割合でセットしている
-	cameraComponent.cameraTransform->position	= Easing::Lerp(cameraComponent.cameraTransform->position, desiredCamPos, reap);
-	//そのあとにカメラshakeをかける
-	cameraComponent.cameraTransform->position	+= cameraComponent.shaker->GetShakePower();
-	
-	/*if (fabs(beforePos - cameraComponent.cameraTransform->position.y) <= 1.5f) {
-		cameraComponent.cameraTransform->position.y = beforePos;
-	}
-
-	beforePos = cameraComponent.cameraTransform->position.y;*/
 }
 
 void Camera::CollsionPosHit(VECTOR3 norm, float size, VECTOR3 groundPos)
@@ -368,7 +314,12 @@ void Camera::CameraEditor()
 	editor->EditorWindow();
 }
 
-void Camera::CutSceneChangeState(std::string _name, int _space)
+void Camera::CutSceneChangeState(std::string _name, bool _cutScene)
+{
+	CutSceneChangeState(_name, _cutScene,CutSceneSpece::NONE);
+}
+
+void Camera::CutSceneChangeState(std::string _name, bool _cutScene, int _stop)
 {
 	JsonReader json;
 	std::string name = "data/json/" + _name + ".json";
@@ -384,8 +335,13 @@ void Camera::CutSceneChangeState(std::string _name, int _space)
 	cameraComponent.state->ChangeState(StateID::CUT_SCENE_CAMERA_S);
 	isCutScene = true;
 
-	cutStopChara = _space;
-	SleepTargetSet(cutStopChara,true);
+	cutStopChara = _stop;
+	SleepTargetSet(cutStopChara, true);
+	if (_cutScene) {
+		cutSceneBox->StartBox(1.0f, 0x00000, Easing::EaseInOut<int>);
+		uiManager->SetUIDraw(false);
+	}
+	cutSceneBoxDraw = _cutScene;
 }
 
 void Camera::SleepTargetSet(int _stop, bool _sleep)
@@ -399,9 +355,4 @@ void Camera::SleepTargetSet(int _stop, bool _sleep)
 	if (_stop & CutSceneSpece::ALL_ENEMY) {
 		cameraComponent.enemyManager->SleepAllEnemy(_sleep);
 	}
-}
-
-void Camera::CutSceneChangeState(std::string _name)
-{
-	CutSceneChangeState(_name, CutSceneSpece::NONE);
 }

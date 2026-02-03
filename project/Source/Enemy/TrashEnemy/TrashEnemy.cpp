@@ -20,6 +20,7 @@
 #include "../../Weapon/SwordEffect.h"
 #include "../../Weapon/CharaWeapon.h"
 #include "../../Common/LoadManager.h"
+#include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 
 #include "TrashEnemyState/T_EnemyStatus.h"
 #include "TrashEnemyState/T_EnemyIdol.h"
@@ -28,6 +29,7 @@
 #include "TrashEnemyState/T_EnemyDead.h"
 #include "TrashEnemyState/CooperateAttack1.h"
 #include "TrashEnemyState/Standby.h"
+#include "TrashEnemyState/T_EnemyDamage.h"
 
 namespace
 {
@@ -97,7 +99,9 @@ TrashEnemy::TrashEnemy()
 	/*hp = eStatus->GetStatus().maxHp;
 	maxHp = hp;*/
 
-	//speed = eStatus->GetStatus().runSpeed;
+	speed = 0;
+	defense = 0;
+
 	isAttack = false;
 	isStandby = false;
 	isCooperateAtk = false;
@@ -109,6 +113,8 @@ TrashEnemy::TrashEnemy()
 	isMovingToPlayer = false;
 
 	slowCounter = 0;
+
+	mStopCounter = 0;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -163,6 +169,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<T_EnemyDead>("_T_EnemyDead", StateID::T_ENEMY_DEAD);
 	enemyBaseComponent.state->CreateState<CooperateAttack1>("_CooperateAttack1", StateID::COOPERATEATTACK1);
 	enemyBaseComponent.state->CreateState<Standby>("_Standby", StateID::T_ENEMY_STANDBY);
+	enemyBaseComponent.state->CreateState<T_EnemyDamage>("_T_EnemyDamage", StateID::T_ENEMY_DAMAGE);
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
@@ -174,6 +181,8 @@ void TrashEnemy::Start(Object3D* _obj)
 	chara->ObjectPointer(_obj, 10, ID::E_MODEL, -1);
 	chara->SetImage(Load::GetHandle(ID::SWORD_EFFECT_B));
 
+	//playerSp = enemyBaseComponent.playerObj->Component()->GetComponent<PlayerSpecialAttack>();
+
 	active = true;
 }
 
@@ -182,7 +191,7 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 	obj->GetTransform()->position = _pos;
 	number = kinds;
 
-	const float MAX = 1.5f;
+	const float MAX = 1.2f;
 	const float MIN = 0.8f;
 
 	switch (kinds)
@@ -191,17 +200,20 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 		hp = eStatus->GetStatus().maxHp * MIN;
 		maxHp = hp;
 		speed = eStatus->GetStatus().runSpeed * MAX;
+		defense = eStatus->GetStatus().defense * MIN;
 		GetEnemyObj()->GetTransform()->scale = GetEnemyObj()->GetTransform()->scale * MIN;
 		break;
 	case 1:
 		hp = eStatus->GetStatus().maxHp;
 		maxHp = hp;
 		speed = eStatus->GetStatus().runSpeed;
+		defense = eStatus->GetStatus().defense;
 		break;
 	default://重い敵
 		hp = eStatus->GetStatus().maxHp * MAX;
 		maxHp = hp;
 		speed = eStatus->GetStatus().runSpeed * MIN;
+		defense = eStatus->GetStatus().defense * MAX;
 		GetEnemyObj()->GetTransform()->scale = GetEnemyObj()->GetTransform()->scale * MAX;
 		break;
 	}
@@ -231,9 +243,29 @@ void TrashEnemy::LookTarget()
 
 bool TrashEnemy::IsPlayerSpecialMove()
 {
-	/*if()
-	return false;*/
-	return false;
+	if (pState->GetState<PlayerSpecialAttack>() == nullptr)
+		return false;
+	else
+	{
+		if (pState->GetState<PlayerSpecialAttack>()->GetAttackDamage())
+		{
+			mStopCounter += Time::DeltaTimeRate();
+			if (mStopCounter >= 0.2f)
+				return false;
+			else
+				return true;
+		}
+		else
+		{
+			mStopCounter = 0;
+			return true;
+		}
+	}		
+}
+
+float TrashEnemy::DamageCalculation(float _damage)
+{
+	return _damage + (_damage * 2) / (defense / 4);
 }
 
 void TrashEnemy::Trail()
@@ -247,15 +279,12 @@ void TrashEnemy::PlayerHit()
 		return;
 
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
-	float damage = 0;;
+	float damage = 0;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr)
-	{
 		damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
-	}
 	else
-	{
 		loopNum = -1;
-	}
+
 	EnemyDamage::EnemyDamageInfo dInfo;
 	EnemyBlowAway::EnemyBlowAwayInfo bInfo;
 	float random[3] = {};
@@ -269,10 +298,10 @@ void TrashEnemy::PlayerHit()
 	bool lastAttack = false;
 	bool lastBeforeAttack = false;
 
-	auto bossParam = enemyTable.find(attackID);
-	if (bossParam != enemyTable.end())
+	auto param = enemyTable.find(attackID);
+	if (param != enemyTable.end())
 	{
-		const auto& e = bossParam->second;
+		const auto& e = param->second;
 		switch (e.attackType)
 		{
 		case EnemyInformation::EnemyReaction::Type::Normal:
@@ -338,22 +367,29 @@ void TrashEnemy::PlayerHit()
 			}
 			hit = true;
 			break;
-		case EnemyInformation::EnemyReaction::Type::Special:
-			if (!specialAttackHit) {
+		case EnemyInformation::EnemyReaction::Type::Special://必殺技
+			if (!specialAttackHit) 
 				return;
-			}
+			
 			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			specialAttackHit = false;
+
+			enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DAMAGE);
+			damage = damage * 2;
 			break;
 		default:
 			break;
 		}
 	}
 	EnemyDamageMove(dInfo);
-	
-	hp -= damage;
+	//連携攻撃のときは耐性を付与
+	if (isCooperateAtk)
+		damage = damage / 2;
+
+	hp -= DamageCalculation(damage);
+
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();
 	std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();
@@ -364,8 +400,8 @@ void TrashEnemy::PlayerHit()
 
 void TrashEnemy::GetWayPoint(VECTOR3 _pos, StateID::State_ID _id)
 {
-	if (_pos.Size() >= eStatus->GetStatus().chaseRange)
-		return;
+	/*if (_pos.Size() >= 2000)
+		return;*/
 
 	wayPoint = _pos;
 
@@ -381,7 +417,6 @@ void TrashEnemy::ChangeState(StateID::State_ID _id)
 
 void TrashEnemy::AttackCommand()
 {
-
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
 }
 
@@ -389,6 +424,8 @@ void TrashEnemy::CooperateAtkFinish()
 {
 	isCooperateAtk = false;
 	isMovingToPlayer = false;
+	isMovingToPlayer = false;
+	
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_IDOL_S);
 }
 

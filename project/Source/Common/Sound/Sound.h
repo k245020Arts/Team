@@ -29,6 +29,8 @@ public:
 
 	const float GetVolumn() { return volume; }
 
+	void PlayRamdomChangeFrequencySe(int _ramdom,int _baseFrequ);
+
 private:
 
 	int soundHandle;

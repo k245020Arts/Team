@@ -20,6 +20,7 @@ namespace Load {
 	/// <param name="id"></param>
 	/// <returns></returns>
 	int LoadModel(std::string path, ID::IDType id);
+	int LoadModel(std::string path, ID::IDType id, bool _common);
 	/// <summary>
 	/// サウンドのロードをする
 	/// </summary>
@@ -28,6 +29,7 @@ namespace Load {
 	/// <param name="id"></param>
 	/// <returns></returns>
 	int LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id);
+	int LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id, bool _common);
 	/// <summary>
 	/// エフェクトのロードをする
 	/// </summary>
@@ -36,6 +38,7 @@ namespace Load {
 	/// <param name="size"></param>
 	/// <returns></returns>
 	int LoadEffect(std::string path, Effect_ID::EFFECT_ID id, float size);
+	int LoadEffect(std::string path, Effect_ID::EFFECT_ID id, float size, bool _common);
 	/// <summary>
 	/// 画像データのロードをする
 	/// </summary>
@@ -43,6 +46,7 @@ namespace Load {
 	/// <param name="id"></param>
 	/// <returns></returns>
 	int LoadImageGraph(std::string path, ID::IDType id);
+	int LoadImageGraph(std::string path, ID::IDType id, bool _common);
 	/// <summary>
 	/// アニメーションデータのロードをする
 	/// </summary>
@@ -50,12 +54,13 @@ namespace Load {
 	/// <param name="id"></param>
 	/// <returns></returns>
 	int LoadAnim(std::string path, ID::IDType id);
+	int LoadAnim(std::string path, ID::IDType id, bool _common);
 
 	/// <summary>
 	/// 指定したデータの削除
 	/// </summary>
 	/// <param name="id"></param>
-	void DeleteData(ID::IDType id);
+	void DeleteData(ID::IDType id,bool _common);
 
 	/// <summary>
 	/// すべてのデータを削除
@@ -70,6 +75,10 @@ namespace Load {
 	int GetSoundHandle(Sound_ID::SOUND_ID id);
 
 	int GetEffectHandle(Effect_ID::EFFECT_ID id);
+	void SetAsync(bool _async);
+	bool IsLoading();
+
+	void FileLoadClear();
 	//int GetCounter();
 	//パスの定数
 	//パスを毎回書くのは手間なので定数にして行う

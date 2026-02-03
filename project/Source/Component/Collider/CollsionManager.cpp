@@ -158,7 +158,7 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 		VECTOR3 push = startPos - result.HitPosition;
 
 		if (col2->GetCollTag() == CollsionInformation::P_FLOOR) {
-			Debug::DebugLogPrintf(Debug::printfString("hit = %.3f", p->GetVelocity()));
+			//Debug::DebugLogPrintf(Debug::printfString("hit = %.3f", p->GetVelocity()));
 		}
 
 		// Y•ûŒü‚Ì‚Ý‰Ÿ‚µ•Ô‚µ

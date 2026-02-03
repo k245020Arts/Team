@@ -3,6 +3,7 @@
 #include "../../Component/Physics/Physics.h"
 #include "../../Component/Transform/Transform.h"
 #include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/Sound/SoundManager.h"
 #include "../player.h"
 #include "../../Component/Animator/Animator.h"
 
@@ -13,6 +14,9 @@ PlayerWalk::PlayerWalk()
 	animId = ID::P_ANIM_RUN;;
 	//id = ID::P_ANIM_RUN;
 	avoidStart = false;
+	sound = false;
+	firstOnes = false;
+	secondOnes = false;
 }
 
 PlayerWalk::~PlayerWalk()
@@ -27,6 +31,27 @@ void PlayerWalk::Update()
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 	}
 	DefalutWalk();
+
+	if (p->playerCom.anim->GetCurrentFrame() >= 5.0f && p->playerCom.anim->GetCurrentFrame() <= 6.0f) {
+		if (firstOnes) {
+			sound = true;
+		}
+		firstOnes = false;
+	} 
+	if (p->playerCom.anim->GetCurrentFrame() >= 17.0f && p->playerCom.anim->GetCurrentFrame() <= 18.0f) {
+		if (secondOnes) {
+			sound = true;
+		}
+		secondOnes = false;
+	}
+	if (sound) {
+		p->playerCom.sound->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_WALK1,10000,60000);
+		sound = false;
+	}
+	if (p->playerCom.anim->GetCurrentFrame() >= 19.0f) {
+		firstOnes = true;
+		secondOnes = true;
+	}
 }
 
 void PlayerWalk::Draw()
@@ -47,7 +72,7 @@ void PlayerWalk::Start()
 	
 	PlayerStateBase::Start();
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
-	
+
 	
 }
 

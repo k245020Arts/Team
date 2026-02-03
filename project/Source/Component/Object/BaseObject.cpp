@@ -5,7 +5,7 @@
 #include "../Color/Color.h"
 #include "../Hierarchy/Hierarchy.h"
 #include "../../Common/Transitor/TransitorManager.h"
-#include "../../../Library/MemoryCount.h"
+#include "../../Common/Memory/MemoryCount.h"
 #include "../../Common/Debug/Debug.h"
 #include "../../PlayScene.h"
 
@@ -23,6 +23,7 @@ BaseObject::BaseObject()
 	parent = nullptr;
 	transformParent = true;
 	sleep = false;
+	draw = true;
 }
 
 BaseObject::~BaseObject()
@@ -49,8 +50,9 @@ void BaseObject::Update()
 		int a = 0;
 	}
 	PlayScene* playscene = GetScene<PlayScene>();
+
 	if (GetTag() != "CAMERA_OBJ") {
-		if (playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
+		if (playscene != nullptr && playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
 			return;
 		}
 	}
@@ -66,7 +68,9 @@ void BaseObject::Update()
 void BaseObject::Draw()
 {
 	//•`‰æ
-	componentManager->Draw();
+	if (draw) {
+		componentManager->Draw();
+	}
 	for (BaseObject* child : children) {
 		child->Draw();
 	}

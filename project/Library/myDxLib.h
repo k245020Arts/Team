@@ -1,7 +1,7 @@
 #pragma once
 #include <DxLib.h>
 #include <math.h>
-#include "MemoryCount.h"
+#include "../Source/Common/Memory/MemoryCount.h"
 #include "../nlohmann/json.hpp"
 
 namespace DxLib {

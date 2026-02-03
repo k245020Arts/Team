@@ -16,6 +16,8 @@ public:
 
 	void GameSceneChangeState();
 
+	void CreateTitlePlayer();
+
 private:
 
 	Object3D* playerPointer;

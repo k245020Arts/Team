@@ -160,13 +160,13 @@
     <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="Library\App.h" />
     <ClInclude Include="Library\GameObject.h" />
-    <ClInclude Include="Library\MemoryCount.h" />
     <ClInclude Include="Library\myDxLib.h" />
     <ClInclude Include="Library\ObjectManager.h" />
     <ClInclude Include="Library\SceneBase.h" />
     <ClInclude Include="Library\SceneManager.h" />
     <ClInclude Include="Library\Time.h" />
     <ClInclude Include="Source\Camera\Camera.h" />
+    <ClInclude Include="Source\Camera\CameraBase.h" />
     <ClInclude Include="Source\Camera\CameraEditorGui.h" />
     <ClInclude Include="Source\Camera\CameraInformation.h" />
     <ClInclude Include="Source\Camera\CameraManager.h" />
@@ -179,6 +179,7 @@
     <ClInclude Include="Source\Camera\CameraState\JustAvoidAttackHitCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\JustAvoidCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h" />
+    <ClInclude Include="Source\Camera\CutSceneBox.h" />
     <ClInclude Include="Source\CharaBase\CharaBase.h" />
     <ClInclude Include="Source\Common\BlurScreen.h" />
     <ClInclude Include="Source\Common\CsvReader.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Source\Common\Easing.h" />
     <ClInclude Include="Source\Common\Effect\EffectBase.h" />
     <ClInclude Include="Source\Common\Effect\EffectManager.h" />
+    <ClInclude Include="Source\Common\Fead\Fead.h" />
     <ClInclude Include="Source\Common\Function.h" />
     <ClInclude Include="Source\Common\ID\EffectID.h" />
     <ClInclude Include="Source\Common\ID\ID.h" />
@@ -197,6 +199,7 @@
     <ClInclude Include="Source\Common\InputManager\MouseInputManager.h" />
     <ClInclude Include="Source\Common\JsonReader.h" />
     <ClInclude Include="Source\Common\LoadManager.h" />
+    <ClInclude Include="Source\Common\Memory\MemoryCount.h" />
     <ClInclude Include="Source\Common\MethodExec.h" />
     <ClInclude Include="Source\Common\MyAssert\MyAssert.h" />
     <ClInclude Include="Source\Common\Random.h" />
@@ -241,6 +244,10 @@
     <ClInclude Include="Source\Component\Shaker\Shaker.h" />
     <ClInclude Include="Source\Component\Transform\Quaternion.h" />
     <ClInclude Include="Source\Component\Transform\Transform.h" />
+    <ClInclude Include="Source\Component\UI\ButtonUI.h" />
+    <ClInclude Include="Source\Component\UI\EnemyDamageUI.h" />
+    <ClInclude Include="Source\Component\UI\UIBase.h" />
+    <ClInclude Include="Source\Component\UI\UIManager\UIManager.h" />
     <ClInclude Include="Source\Enemy\Boss\Boss.h" />
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\AttackSorting.h" />
@@ -254,6 +261,7 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack1.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialSmallAttack1.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossAppear.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossCoolTime.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossDamage.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossDie.h" />
@@ -277,12 +285,14 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemy.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyManager.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.h" />
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStatus.h" />
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.h" />
     <ClInclude Include="Source\GameManager\GameManager.h" />
     <ClInclude Include="Source\Light\Light.h" />
     <ClInclude Include="Source\BootScene.h" />
@@ -303,6 +313,7 @@
     <ClInclude Include="Source\Player\PlayerState\PlayerAvoid.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerBefore.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerBlowAway.h" />
+    <ClInclude Include="Source\Player\PlayerState\PlayerBossAppear.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerDamage.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerDie.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerjustAvoid.h" />
@@ -321,11 +332,16 @@
     <ClInclude Include="Source\Stage\Wall.h" />
     <ClInclude Include="Source\State\StateBase.h" />
     <ClInclude Include="Source\State\StateManager.h" />
+    <ClInclude Include="Source\TitleCamera.h" />
+    <ClInclude Include="Source\TitleControl.h" />
+    <ClInclude Include="Source\TitlePlayer.h" />
+    <ClInclude Include="Source\TitlePlayerIdol.h" />
     <ClInclude Include="Source\TitleScene.h" />
     <ClInclude Include="Source\Wave\Wave.h" />
     <ClInclude Include="Source\Weapon\CharaWeapon.h" />
     <ClInclude Include="Source\Weapon\SwordEffect.h" />
     <ClInclude Include="Source\Weapon\WeaponManager.h" />
+    <ClInclude Include="Source\TitlePlayerMove.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\crude_json.cpp" />
@@ -342,12 +358,12 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Library\App.cpp" />
     <ClCompile Include="Library\main.cpp" />
-    <ClCompile Include="Library\MemoryCount.cpp" />
     <ClCompile Include="Library\ObjectManager.cpp" />
     <ClCompile Include="Library\SceneManager.cpp" />
     <ClCompile Include="Library\Time.cpp" />
     <ClCompile Include="Source\BootScene.cpp" />
     <ClCompile Include="Source\Camera\Camera.cpp" />
+    <ClCompile Include="Source\Camera\CameraBase.cpp" />
     <ClCompile Include="Source\Camera\CameraEditorGui.cpp" />
     <ClCompile Include="Source\Camera\CameraManager.cpp" />
     <ClCompile Include="Source\Camera\CameraState\CameraStateBase.cpp" />
@@ -359,12 +375,14 @@
     <ClCompile Include="Source\Camera\CameraState\JustAvoidAttackHitCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\JustAvoidCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.cpp" />
+    <ClCompile Include="Source\Camera\CutSceneBox.cpp" />
     <ClCompile Include="Source\CharaBase\CharaBase.cpp" />
     <ClCompile Include="Source\Common\BlurScreen.cpp" />
     <ClCompile Include="Source\Common\CsvReader.cpp" />
     <ClCompile Include="Source\Common\Debug\Debug.cpp" />
     <ClCompile Include="Source\Common\Effect\EffectBase.cpp" />
     <ClCompile Include="Source\Common\Effect\EffectManager.cpp" />
+    <ClCompile Include="Source\Common\Fead\Fead.cpp" />
     <ClCompile Include="Source\Common\ID\EffectID.cpp" />
     <ClCompile Include="Source\Common\ID\ID.cpp" />
     <ClCompile Include="Source\Common\ID\SoundID.cpp" />
@@ -375,6 +393,7 @@
     <ClCompile Include="Source\Common\InputManager\MouseInputManager.cpp" />
     <ClCompile Include="Source\Common\JsonReader.cpp" />
     <ClCompile Include="Source\Common\LoadManager.cpp" />
+    <ClCompile Include="Source\Common\Memory\MemoryCount.cpp" />
     <ClCompile Include="Source\Common\MyAssert\MyAssert.cpp" />
     <ClCompile Include="Source\Common\Random.cpp" />
     <ClCompile Include="Source\Common\Sound\Sound.cpp" />
@@ -416,6 +435,10 @@
     <ClCompile Include="Source\Component\Shadow\Shadow.cpp" />
     <ClCompile Include="Source\Component\Shaker\Shaker.cpp" />
     <ClCompile Include="Source\Component\Transform\Transform.cpp" />
+    <ClCompile Include="Source\Component\UI\ButtonUI.cpp" />
+    <ClCompile Include="Source\Component\UI\EnemyDamageUI.cpp" />
+    <ClCompile Include="Source\Component\UI\UIBase.cpp" />
+    <ClCompile Include="Source\Component\UI\UIManager\UIManager.cpp" />
     <ClCompile Include="Source\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.cpp" />
@@ -428,6 +451,7 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack1.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialSmallAttack1.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossAppear.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossCoolTime.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossDamage.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossDie.cpp" />
@@ -449,8 +473,10 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemy.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyManager.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.cpp" />
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.cpp" />
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.cpp" />
@@ -472,6 +498,7 @@
     <ClCompile Include="Source\Player\PlayerState\PlayerAvoid.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerBefore.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerBlowAway.cpp" />
+    <ClCompile Include="Source\Player\PlayerState\PlayerBossAppear.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerDamage.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerDie.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerjustAvoid.cpp" />
@@ -488,6 +515,11 @@
     <ClCompile Include="Source\Stage\StageManager.cpp" />
     <ClCompile Include="Source\Stage\Wall.cpp" />
     <ClCompile Include="Source\State\StateManager.cpp" />
+    <ClCompile Include="Source\TitleCamera.cpp" />
+    <ClCompile Include="Source\TitleControl.cpp" />
+    <ClCompile Include="Source\TitlePlayer.cpp" />
+    <ClCompile Include="Source\TitlePlayerIdol.cpp" />
+    <ClCompile Include="Source\TitlePlayerMove.cpp" />
     <ClCompile Include="Source\TitleScene.cpp" />
     <ClCompile Include="Source\Wave\Wave.cpp" />
     <ClCompile Include="Source\Weapon\CharaWeapon.cpp" />

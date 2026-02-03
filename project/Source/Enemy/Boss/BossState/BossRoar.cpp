@@ -23,6 +23,7 @@ BossRoar::~BossRoar()
 void BossRoar::Update()
 {
 	Boss* b = GetBase<Boss>();
+	b->enemyBaseComponent.sound->Play3DSound(Sound_ID::V_B_ROAR, b->obj, 15000.0f, 1000.0f);
 	if (b->enemyBaseComponent.anim->AnimEventCan()) {
 		if (first) {
 			//b->trashEnemy->CreateEnemy(VZero, 4);
@@ -44,7 +45,7 @@ void BossRoar::Draw()
 void BossRoar::Start()
 {
 	Boss* b	= GetBase<Boss>();
-	b->enemyBaseComponent.sound->Play3DSound(Sound_ID::V_B_ROAR,b->obj,1000.0f,8000.0f);
+	b->enemyBaseComponent.sound->PlaySe(Sound_ID::V_B_ROAR);
 	first	= true;
 	EnemyStateBase::Start();
 	b->enemyBaseComponent.state->SetNoStateChange(true);

@@ -14,4 +14,7 @@ public:
 
 private:
 	bool avoidStart;
+	bool sound;
+	bool firstOnes;
+	bool secondOnes;
 };

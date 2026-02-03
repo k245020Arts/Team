@@ -2,7 +2,7 @@
 #include "SceneBase.h"
 #include "../Source/SceneFactory.h"
 #include <DxLib.h>
-#include "MemoryCount.h"
+#include "../Source/Common/Memory/MemoryCount.h"
 #include "../Source/Common/Debug/Debug.h"
 #include "../Source/Common/LoadManager.h"
 #include "../Source/Common/ID/EffectID.h"
@@ -41,7 +41,7 @@ void SceneManager::Update()
 			ObjectManager::DeleteAllGameObject();
 			delete m_currentScene;
 			m_currentScene = nullptr;
-			
+			Load::FileLoadClear();
 		}
 		m_currentScene = m_factory->Create(*m_nextName); // Ÿ‚ÌƒV[ƒ“‚ğì¬
 		*m_currentName = *m_nextName;
@@ -63,7 +63,6 @@ void SceneManager::Draw()
 
 void SceneManager::Release()
 {
-	Load::AllDelete();
 	if (m_currentScene != nullptr)
 	{
 		delete m_currentScene;

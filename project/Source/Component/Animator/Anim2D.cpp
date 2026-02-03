@@ -16,6 +16,11 @@ void Anim2D::Update()
 		return;
 	}
 	animCounter += Time::DeltaTime() * animSpeed;
+
+	//オーバーフロー対策
+	if (animCounter >= 100000000.0f) {
+		animCounter = 0.0f;
+	}
 }
 
 void Anim2D::AnimSetting(float _speed, int num)

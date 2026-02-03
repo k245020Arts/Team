@@ -19,6 +19,7 @@ public:
 	friend class Standby;
 	friend class T_EnemyJump;
 	friend class CooperateAttack1;
+	friend class T_EnemyDamage;
 
 	TrashEnemy();
 	~TrashEnemy();
@@ -48,6 +49,7 @@ public:
 	void AttackCommand();
 	//攻撃クールタイムリセット
 	void AttackCoolTimeReset() { isAttack = true; }
+	//
 	void CooperateAtkFinish();
 
 	//ゲッター
@@ -88,6 +90,9 @@ private:
 	//targetPosに入ってる方向に向く
 	void LookTarget();
 	bool IsPlayerSpecialMove();
+	//計算式
+	float DamageCalculation(float _damage);
+
 	bool active;
 	//どこに向くか
 	VECTOR3 targetPos;
@@ -102,7 +107,10 @@ private:
 	//連携攻撃の準備ができてるか
 	bool isStandby;
 	
+	//移動速度
 	float speed;
+	//防御力
+	float defense;
 
 	//強めの味方についていくか
 	bool isEnemyFollow;
@@ -111,4 +119,6 @@ private:
 	int number;
 	//必殺技を食らったときに敵をスローにする
 	float slowCounter;
+	//モーションが止まる速度
+	float mStopCounter;
 };

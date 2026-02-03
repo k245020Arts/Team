@@ -4,6 +4,7 @@
 #include "../../../../Component/Animator/Animator.h"
 #include "../../../../Component/Physics/Physics.h"
 #include "../../../../Camera/Camera.h"
+#include "../../../../Common/Sound/SoundManager.h"
 
 BossSpecialAttack2::BossSpecialAttack2()
 {
@@ -20,6 +21,10 @@ BossSpecialAttack2::BossSpecialAttack2()
 	look = false;
 
 	turningTime = 0.0f;
+
+	sound = false;
+	firstOnes = false;
+	secondOnes = false;
 }
 
 BossSpecialAttack2::~BossSpecialAttack2()
@@ -43,6 +48,7 @@ void BossSpecialAttack2::Update()
 		b->LookPlayer(0.09f);
 		return;
 	}
+	BossDushSound();
 	if (turningTime > 0.0f) {
 		turningTime -= obj->GetObjectTimeRate();
 		if (turningTime <= 0.0f) {
@@ -124,6 +130,33 @@ void BossSpecialAttack2::Finish()
 	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 }
 
+void BossSpecialAttack2::BossDushSound()
+{
+	Boss* b = GetBase<Boss>();
+	b->enemyBaseComponent.sound->Play3DSound(Sound_ID::BOSS_WALK, obj, 200000, 30000);
+	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 6.0f && b->enemyBaseComponent.anim->GetCurrentFrame() <= 7.0f) {
+		if (firstOnes) {
+			sound = true;
+		}
+		firstOnes = false;
+	}
+	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 16.0f && b->enemyBaseComponent.anim->GetCurrentFrame() <= 17.0f) {
+		if (secondOnes) {
+			sound = true;
+		}
+		secondOnes = false;
+	}
+	if (sound) {
+		b->enemyBaseComponent.sound->PlayRamdomChangeFrequencySe(Sound_ID::BOSS_WALK,30000,1000);
+		sound = false;
+		Debug::DebugLog("bossDushSound");
+	}
+	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 18.0f) {
+		firstOnes = true;
+		secondOnes = true;
+	}
+}
+
 void BossSpecialAttack2::AttackStart()
 {
 	Boss* b = GetBase<Boss>();
@@ -151,5 +184,6 @@ void BossSpecialAttack2::AttackStart()
 		attackCount = 1.0f;
 		b->enemyBaseComponent.anim->SetPlaySpeed(2.0f);
 	}
-	
+	firstOnes = true;
+	secondOnes = true;
 }

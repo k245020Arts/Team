@@ -67,9 +67,7 @@ void CameraEditorGui::EditorWindow()
         camera->cameraComponent.enemyManager->CameraRockOnStart(camera);
     }
 
-    // =============================
-    // Camera Transform
-    // =============================
+    
     if (ImGui::TreeNode("Camera Transform"))
     {
         ImGui::DragFloat3("Position", &camera->cameraComponent.cameraTransform->position.x, 1.0f);
@@ -77,9 +75,7 @@ void CameraEditorGui::EditorWindow()
         ImGui::TreePop();
     }
 
-    // =============================
-    // Follow Position
-    // =============================
+ 
     if (ImGui::TreeNode("Follow Position"))
     {
         ImGui::DragFloat3("Base Position", &basePosition.x, 1.0f);
@@ -113,9 +109,7 @@ void CameraEditorGui::EditorWindow()
         ImGui::TreePop();
     }
 
-    // =============================
-    // Target
-    // =============================
+   
     if (ImGui::TreeNode("Target"))
     {
         ImGui::DragFloat3("Base Target", &baseTarget.x, 1.0f);
@@ -149,9 +143,7 @@ void CameraEditorGui::EditorWindow()
         ImGui::TreePop();
     }
 
-    // =============================
-    // CutScene Params
-    // =============================
+   
     if (ImGui::TreeNode("CutScene Parameters"))
     {
         ImGui::DragFloat3("Start Pos", &cutScene.camera.startPos.x, 1.0f);
@@ -199,9 +191,7 @@ void CameraEditorGui::EditorWindow()
         ImGui::TreePop();
     }
 
-    // =============================
-    // Runtime Preview Update
-    // =============================
+
     if (!camera->IsCutScene())
     {
         camera->cameraComponent.cameraTransform->position = basePosition + offset;
@@ -210,9 +200,7 @@ void CameraEditorGui::EditorWindow()
 
     ImGui::Separator();
 
-    // =============================
-    // Save / Preview
-    // =============================
+  
     if (ImGui::Button("Save")) {
         if (usingCutScene) {
             ImGui::OpenPopup("Save Confirm");
@@ -226,7 +214,7 @@ void CameraEditorGui::EditorWindow()
 
     if (ImGui::Button("Preview")) {
         std::string file = cutSceneFileName;
-        camera->CutSceneChangeState(file);
+        camera->CutSceneChangeState(file,false);
     }
 
     SavePopUp(usingCutScene);

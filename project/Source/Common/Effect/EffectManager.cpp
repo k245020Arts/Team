@@ -34,6 +34,7 @@ EffectManager::EffectManager()
 	Load::LoadEffect("PlayerSpecialPlace",			Effect_ID::PLAYER_SPECIAL_PLACE,50.0f);
 	Load::LoadEffect("SpecialFinalAttack",			Effect_ID::PLAYER_SPECIAL_FINAL,50.0f);
 	Load::LoadEffect("PlayerSpecialAttackFlash",	Effect_ID::PLAYER_SPECIAL_FLASH,50.0f);
+	Load::LoadEffect("PlayerSpecialAttackCharge",	Effect_ID::PLAYER_SPECIAL_CHARGE,50.0f);
 	//Effekseer_SetGraphicsDeviceDXLib();
 	SetDrawOrder(-10000);
 }

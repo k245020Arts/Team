@@ -11,20 +11,20 @@
 #include "../Component/Object/Object3D.h"
 #include "SkyManager.h"
 
-//#define NEW_STAGE
+#define NEW_STAGE
 
 StageManager::StageManager()
 {
 	//modelHandle = MV1LoadModel("data/model/stage10.mv1");
 	//CreateStage();
 #ifdef NEW_STAGE
-	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL);
+	
 #else
 	Load::LoadModel(Load::MODEL_PATH +  "new_Stage6", ID::S_MODEL);
 #endif // NEW_STAGE
 
 	
-	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL);
+	
 	stage = nullptr;
 	modelHandle = -1;
 }
@@ -50,7 +50,7 @@ void StageManager::CreateStage()
 #ifdef NEW_STAGE
 	stage->Init(VECTOR3(25000, -4000, 20000), VZero, VECTOR3(10, 10, 10), "STAGE");
 #else
-	stage->Init(VECTOR3(100, -50, 100), VZero, VECTOR3(10, 10, 10), "STAGE");
+	stage->Init(VECTOR3(100, 0, 100), VZero, VECTOR3(10, 10, 10), "STAGE");
 #endif
 	
 	

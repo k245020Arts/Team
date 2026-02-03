@@ -64,6 +64,8 @@ public:
 
 	void RemoveChild(Transform* _child);
 
+	void SetRotationMatrix(MATRIX _matrix) { rotMatrix = _matrix; }
+
 private:
 
 	MATRIX rotMatrix;

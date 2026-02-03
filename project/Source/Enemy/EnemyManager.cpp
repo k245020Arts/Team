@@ -19,7 +19,8 @@
 #include "../Component/Collider/ModelCollider.h"
 #include "../Component/Shadow/Shadow.h"
 #include "../Common/Easing.h"
-
+#include "../GameManager/GameManager.h"
+#include "../State/StateManager.h"
 //#define VERSION2D
 //#define DOT_MODE
 
@@ -30,7 +31,7 @@ EnemyManager::EnemyManager()
 	player = nullptr;
 	SetDrawOrder(-10);
 	cameraTargetObj = nullptr;
-
+	gameManager = nullptr;
 }
 
 EnemyManager::~EnemyManager()
@@ -41,7 +42,13 @@ EnemyManager::~EnemyManager()
 
 void EnemyManager::Update()
 {
-	
+	if (gameManager == nullptr) {
+		gameManager = FindGameObject<GameManager>();
+	}
+
+	if (gameManager != nullptr && gameManager->GetChangeState()) {
+		GameSceneChangeState();
+	}
 }
 
 void EnemyManager::Draw()
@@ -51,17 +58,6 @@ void EnemyManager::Draw()
 void EnemyManager::DebugDrawCamera(Camera* camera)
 {
 	
-}
-
-std::list<BaseObject*> EnemyManager::GetEnemy()
-{
-	return enemy;
-}
-
-std::list<BaseObject*>::iterator EnemyManager::GetItr()
-{
-	auto e = enemy.begin();
-	return e;
 }
 
 void EnemyManager::CreateEnemy()
@@ -163,12 +159,14 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_S_ATTACK2_BEFORE, "B_SATTACK2_BEFORE", false, 1.0f, 0.0f, 100.0f);
 	anim->AddFile(ID::B_S_ATTACK1_SMALL, "B_SATTACK1_SAMLL", false, 1.3f, 40.0f, 55.0f);
 	anim->AddFile(ID::BOSS_DIE, "B_DIE", false, 1.2f);
-	anim->AddFile(ID::B_ROAR, "B_ROAR", false, 1.2f, 30.0f, 40.0f);
+	anim->AddFile(ID::B_ROAR, "B_ROAR", false, 1.0f, 30.0f, 40.0f);
+	anim->AddFile(ID::B_ROAR_2, "B_ROAR3", false, 1.0f, 20.0f, 40.0f);
 	anim->AddFile(ID::B_DUSH, "B_RUN", true, 1.2f, 30.0f, 40.0f);
 	anim->AddFile(ID::B_THREAT, "B_THREAT", false, 1.2f, 10.0f, 70.0f);
 	anim->AddFile(ID::BOSS_DAMAGE, "B_DAMAGE", false, 1.8f, 10.0f, 70.0f);
+	anim->AddFile(ID::B_APPEAR_FALL, "B_APPEAR_FALL", true, 1.0f, 10.0f, 70.0f);
+	anim->AddFile(ID::B_APPEAR_LAND, "B_APPEAR_LAND", false, 1.5f, 10.0f, 70.0f);
 	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
-
 
 	b->Start(boss);
 
@@ -407,19 +405,29 @@ bool EnemyManager::ChangeCameraRockOn(Camera* camera, bool _right, bool _min, bo
 		camFront.y = 0;
 		//DrawLine3D(camPos, enemyPos, 0xff000f);
 
+		//正面角度の反映
 		float frontDot = VDot(camFront.Normalize(), dotEnemyPos.Normalize());
+		//正面角度のスコアの計算
 		float frontScore = (1.0f - frontDot) * 1.0f;
 
-
-		float dist = VECTOR3(camPos - targetEnemyPos).Size();
-
+		//どれだけ横側にいるかどうかの判定
+		//右に傾けると右側により右側にいるかどうか
+		//左に傾けるとより左側にいるかどうか
+		
+		//左右角度の反映
 		float sideDot = VDot(camDir.Normalize(), dotEnemyPos.Normalize());
+		//左右方向のスコアの計算
 		float sideScore = sideDot * 0.5f;
 
+		//距離の遠さの反映
+		float dist = VECTOR3(camPos - targetEnemyPos).Size();
+		//距離のスコアの計算
 		float distScore = (dist / CAM_LONG_DISTANCE) * 0.3f;
 
 		score = frontScore + sideScore + distScore;
 
+		//評価値が低い場合と高い場合の2パターンがある。
+		//基本は評価値が低い場合で行う
 		if (_min) {
 			if (score < invertMinMax) {
 				invertMinMax = score;
@@ -601,6 +609,42 @@ void EnemyManager::SleepAllEnemy(bool _sleep)
 		(*itr)->GetBaseObject()->SetSleep(_sleep);
 	}
 }
+
+void EnemyManager::GameSceneChangeState()
+{
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		BaseObject* obj = (*itr)->GetBaseObject();
+		if (obj != nullptr && obj->GetTag() == "Boss") {
+			StateManager* stateManager = obj->Component()->GetComponent<StateManager>();
+			switch (gameManager->GetStateNumber())
+			{
+			case 0:
+				/*stateManager->ChangeState(StateID::PLAYER_BEFORE_S);*/
+				break;
+			case 1:
+				stateManager->ChangeState(StateID::BOSS_IDOL_S);
+				break;
+			case 2:
+				
+				//stateManager->ChangeState(StateID::BOSS_APPEAR_S);
+				/*stateManager->SetNoStateChange(true);*/
+				/*stateManager->ChangeState(StateID::);*/
+				break;
+			case 3:
+				/*stateManager->NowChangeState(StateID::PLAYER_DIE_S);
+				stateManager->SetNoStateChange(true);*/
+				break;
+			case 4:
+
+				break;
+			}
+			return;
+		}
+	}
+	
+}
+
+
 
 
 	/*for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {

@@ -38,7 +38,8 @@ void WeaponManager::CreatePlayerWeapon()
 	//CharaWeapon* weaponL = pW->Component()->AddComponent<CharaWeapon>();
 
 	//pWeapon->ObjectPointer(player,57,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword", ID::IDType::P_WEAPON));
-	pWeapon->ObjectPointer(player,73,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword1", ID::IDType::P_WEAPON));
+	pWeapon->ObjectPointer(player,73,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword6", ID::IDType::P_WEAPON));
+	//pWeapon->ObjectPointer(player,73,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "New_Sword", ID::IDType::P_WEAPON));
 	//pWeapon->ObjectPointer(player,73,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "New_Sword", ID::IDType::P_WEAPON));
 	pWeapon->SetImage(Load::GetHandle(ID::SWORD_EFFECT));
 	//pWeapon->CreateSwordEffect();

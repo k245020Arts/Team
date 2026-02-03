@@ -5,6 +5,10 @@
 class CharaWeapon;
 class BaseObject;
 
+//#define MY_SWORD
+
+#ifdef MY_SWORD
+
 class SwordEffect : public Component
 {
 public:
@@ -22,7 +26,7 @@ public:
 	/// <param name="_rgb">軌跡の色</param>
 	/// <param name="_boneIndex">骨</param>
 	/// <param name="_time">時間</param>
-	void CreateEffect(VECTOR3 _nearPos,VECTOR3 _farPos,Color::Rgb _rgb, int _boneIndex,float _time);
+	void CreateEffect(VECTOR3 _nearPos, VECTOR3 _farPos, Color::Rgb _rgb, int _boneIndex, float _time);
 	void SetImage(int _model);
 
 	VECTOR3 GetBezier(float t, VECTOR3 p0, VECTOR3 p1, VECTOR3 p2);
@@ -65,7 +69,7 @@ private:
 		float maxAlpha;
 	};
 
-	
+
 
 	int effectNum;
 	int indexNum;
@@ -77,6 +81,53 @@ private:
 
 	std::vector<Info> num;
 
-	void MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos[4], float v1, float v2,int i);
+	void MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos[4], float v1, float v2, int i);
 
 };
+
+#else
+
+class SwordEffect : public Component
+{
+public:
+	SwordEffect();
+	~SwordEffect();
+
+	void Update()override;
+	void Draw()override;
+	void ImguiDraw()override;
+
+	VERTEX3D MakeVertex(VECTOR3 _pos, float u, float v, Color::Rgb _rgb);
+
+	void SetImage(int _model);
+
+	void CreateEffect(VECTOR3 _topPos, VECTOR3 _bottomPos, Color::Rgb _rgb, int _boneIndex, float _time);
+
+private:
+	struct Points
+	{
+		VECTOR3 top, btm;
+		Color::Rgb rgb;
+
+		int bone;
+
+		CharaWeapon* weapon;
+		BaseObject* charaObj;
+	};
+
+	std::vector<Points> points; //リングバッファ
+	int writep; //読みの場所
+	int readp; //書く場所
+	int image;
+	int adj(int idx);
+	const Points& get(int idx);
+
+	float time;
+	float timeMax;
+
+	bool called;
+};
+
+
+#endif // MY_SWORD
+

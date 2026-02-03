@@ -146,7 +146,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		anim->BaseModelSet(handle, 1);
 		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
 		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
-		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 1.0f, 25.0f, 40.0f);
+		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 1.0f, 30.0f, 40.0f);
 		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 1.0f, 25.0f, 40.0f);
 		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
 		anim->AddFile(ID::E_DIE, "E_DEAD", false, 2.0f);
@@ -180,14 +180,16 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
 		//hp表示
 		Object2D* guage = new Object2D();
 
-		guage->Init(VECTOR2F(150, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.1f, 0.1f), "TrashEnemyHpGuage");
+		guage->Init(VECTOR2F(150, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.2f, 0.2f), "TrashEnemyHpGuage");
 
 		e->AddChild(guage);
 
 		Guage* g = guage->Component()->AddComponent<Guage>();
-		g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_BILLBOARD, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
-		g->GuageDrawReady<TrashEnemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_BILLBOARD,Guage::BAR_MODE::HP);
-		g->WorldToScreenMode(true, VECTOR3(0, 500, 0));
+		/*g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_BILLBOARD, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
+		g->GuageDrawReady<TrashEnemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_BILLBOARD,Guage::BAR_MODE::HP);*/
+		g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
+		g->GuageDrawReady<TrashEnemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
+		g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
     }
 
 	//Cooperate(StateID::COOPERATEATTACK1);
@@ -272,7 +274,7 @@ void TrashEnemyManager::CooperateAttackMove(TrashEnemy* _enemy)
 	if (standbyCounter >= 1)
 		cooperateCounter += Time::DeltaTimeRate();
 	//敵全員が準備完了するか時間経過で攻撃に移る
-	if (standbyCounter == enemiesMax || cooperateCounter >= 2)
+	if (standbyCounter == enemiesMax || cooperateCounter >= 3)
 	{
 		AllChangeState(StateID::T_ENEMY_RUN_S);
 		standbyCounter = 0;
@@ -337,16 +339,14 @@ void TrashEnemyManager::CloseWayPoint()
 				VECTOR3 vec = itr.position - position;
 				//内積
 				float dotProduct = VDot(frontVec, vec.Normalize());
-				//壁の外だったらfalse
-				//if (StageWall(itr.position))
-				//	itr.active = false;
-				////カメラに写ってるか
-				//else 
+				//カメラに写ってるか
 				if (dotProduct > cosf(45 * DegToRad))
 					itr.active = true;
 				//カメラに写ってなかったら
 				else
 					itr.active = false;
+
+				/*counter = 1;*/
 			}
 			//一番近いウェイポイントを探す
 			if (itr.active)

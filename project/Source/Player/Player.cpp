@@ -29,6 +29,7 @@
 #include "../Player/PlayerState/playerjustAvoid.h"
 #include "../Player/PlayerState/PlayerBlowAway.h"
 #include "../Player/PlayerState/PlayerTurn.h"
+#include "../Player/PlayerState/PlayerBossAppear.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack1.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack2.h"
 #include "../Player/PlayerState/AttackState/playerAttack3.h"
@@ -47,7 +48,7 @@
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/Boss/BossState/Attack/BossAttackBase.h"
 #include "../Common/Easing.h"
-
+#include "../Component/UI/ButtonUI.h"
 
 namespace {
 
@@ -67,34 +68,34 @@ namespace {
 
 Player::Player()
 {
-	playerCom.stateManager = nullptr;
-	avoidReady = false;
-	size = 0.00f;
-	avoidStart = false;
-	enemyHit = false;
-	justAvoid = false;
-	justAvoidCanCounter = 0.0f;
-	avoidCounter = 0;
-	noAvoidCounter = 0.0f;
-	playerTransform = nullptr;
-	debugId = 14;
-	tag = Function::GetClassNameC<Player>();
-	hp = MAX_HP;
-	maxHp = hp;
-	avoidReadyCounter = 0.0f;
-	justAvoidBlurImage = Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::JUST_AVOID_BLUR);
-	justFeedInTime = 0.0f;
-	justFeedOutTime = 0.0f;
-	bossThreat = false;
-	largeJustAvoid = false;
-	noDamage = false;
-	redCounter = 0.0f;
-	playerCom = PlayerInformation::CharaComponent();
-	turn = false;
-	specialAttackCenterPos = VZero;
-	specialAttackStartPos = VZero;
-	specialAttackBar = 0.0f;
-	specialAttackBarMax = 100.0f;
+	playerCom.stateManager		= nullptr;
+	avoidReady					= false;
+	size						= 0.00f;
+	avoidStart					= false;
+	enemyHit					= false;
+	justAvoid					= false;
+	justAvoidCanCounter			= 0.0f;
+	avoidCounter				= 0;
+	noAvoidCounter				= 0.0f;
+	playerTransform				= nullptr;
+	debugId						= 14;
+	tag							= Function::GetClassNameC<Player>();
+	hp							= MAX_HP;
+	maxHp						= hp;
+	avoidReadyCounter			= 0.0f;
+	justAvoidBlurImage			= Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::JUST_AVOID_BLUR);
+	justFeedInTime				= 0.0f;
+	justFeedOutTime				= 0.0f;
+	bossThreat					= false;
+	largeJustAvoid				= false;
+	noDamage					= false;
+	redCounter					= 0.0f;
+	playerCom					= PlayerInformation::CharaComponent();
+	turn						= false;
+	specialAttackCenterPos		= VZero;
+	specialAttackStartPos		= VZero;
+	specialAttackBar			= 0.0f;
+	specialAttackBarMax			= 100.0f;
 }
 //
 //Object2D* guage = new Object2D();
@@ -141,7 +142,22 @@ void Player::Update()
 		SpecialVarAdd(20.0f);
 	}
 	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_6)) {
-		hp -= 10.0f;
+		//playerCom.camera->CutSceneChangeState("test");
+		hp -= 5.0f;
+	}
+	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_8)) {
+		noDamage = false;
+	}
+
+	//必殺技が発動できればUIを不透明度を上げる。
+	if (CanSpecialAttack()) {
+		playerCom.specialAttackButton->ButtonActiveStart();
+		playerCom.specialAttackButton->ColorGradeMode();
+	}
+	else {
+		//必殺技が発動できなければUIの不透明度を下げる
+		playerCom.specialAttackButton->ButtonActiveFinish();
+		playerCom.specialAttackButton->ColorGradeModeFinish();
 	}
 	
 	//死亡条件
@@ -150,10 +166,6 @@ void Player::Update()
 		playerCom.stateManager->SetNoStateChange(true);
 	}
 
-	if (obj->GetTransform()->position.y <= -10000.0f) {
-		/*playerCom.stateManager->NowChangeState(StateID::BOSS_DIE_S);
-		playerCom.stateManager->SetNoStateChange(true);*/
-	}
 	if (redCounter > 0.0f) {
 		redCounter -= Time::DeltaTimeRate();
 		if (redCounter <= 0.0f) {
@@ -215,6 +227,8 @@ void Player::Start(Object3D* _obj)
 
 	playerCom.gameManager	= FindGameObject<GameManager>();
 	playerCom.enemyManager	= FindGameObject<EnemyManager>();
+
+	playerCom.specialAttackButton = FindGameObjectWithTag<Object2D>("XButton")->Component()->GetComponent<ButtonUI>();
 	
 	avoidStart				= false;
 	justAvoidCanCounter		= 0.0f;
@@ -451,7 +465,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	BossAttackBase::DamagePattern param = attack->GetDamageParam();
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
-		if (enemyAnim->GetCurrentFrame() <= startTime + 3.0f || startTime >= 0.0f) {
+		if (enemyAnim->GetCurrentFrame() <= startTime + 5.0f || startTime >= 0.0f) {
 			/*if (!LargeJustAvoid(attack)) {
 				return true;
 			}*/

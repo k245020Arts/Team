@@ -48,6 +48,9 @@ private:
 	MEB PlayUpdate();
 	MEBDraw PlayDraw();
 
+	MEB BossPlayBeforeUpdate();
+	MEB BossPlayBeforeDraw();
+
 	MEB WinUpdate();
 	MEBDraw WinDraw();
 

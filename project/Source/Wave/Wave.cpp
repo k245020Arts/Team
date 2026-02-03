@@ -1,6 +1,8 @@
 #include "Wave.h"
 #include "../Enemy/TrashEnemy/TrashEnemyManager.h"
 #include "../Enemy/EnemyManager.h"
+#include "../GameManager/GameManager.h"
+#include "../Common/Fead/Fead.h"
 
 Wave::Wave()
 {
@@ -28,6 +30,9 @@ void Wave::Update()
 	if (waveNow == 3) {
 		if (bossCreate) {
 			FindGameObject<EnemyManager>()->CreateBoss();
+			FindGameObject<GameManager>()->ChangeState("BOSS_PLAY_BEFORE");
+
+			FindGameObject<Fead>()->FeadIn(1.0f, 0x000000, Easing::EaseIn<int>);
 			bossCreate = false;
 		}
 	}
@@ -39,7 +44,7 @@ void Wave::Draw()
 
 void Wave::FirstRespown()
 {
-	tEnemyManager->CreateEnemy(SPWNPOS, INITIALSPAWN);
+	tEnemyManager->CreateEnemy(SPWNPOS, 5.0f);
 	first = true;
 }
 

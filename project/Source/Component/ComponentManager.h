@@ -21,6 +21,7 @@ public:
 		T* com = new T();
 		component.emplace_back(com);
 		com->Init(obj);
+		com->Awake();
 		return com;
 	}
 	//コンポーネントを削除する。

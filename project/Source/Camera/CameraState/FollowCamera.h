@@ -24,4 +24,5 @@ private:
 
 	VECTOR3 targetPos;
 	VECTOR3 currentTarget;
+	VECTOR3 addPos;
 };

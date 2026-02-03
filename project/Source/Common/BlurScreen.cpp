@@ -158,14 +158,14 @@ void BlurScreen::Play(float _time, float _fadeTime)
 	Reset();
 
 	
-	smallW		= Screen::WIDTH / 2;
-	smallH		= Screen::HEIGHT / 2;
+	smallW		= Screen::WIDTH;
+	smallH		= Screen::HEIGHT;
 	smallScreen = MakeScreen(smallW, smallH, TRUE);
 
 	//vignetteGraph = Load::GetHandle(ID::SCREEN_BLUR_IMAGE);
 	
 
-	//GraphFilter(vignetteGraph, DX_GRAPH_FILTER_GAUSS, 1024);
+	//GraphFilter(smallScreen, DX_GRAPH_FILTER_GAUSS, 8192);
 
 	for (int i = 0; i < SCREEN_NUM; i++) {
 		if (blurScreen[i] != -1) {

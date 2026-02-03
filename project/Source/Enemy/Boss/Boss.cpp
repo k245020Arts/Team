@@ -38,8 +38,10 @@
 #include "../Boss/BossState/BossRoar.h"
 #include "../Boss/BossState/BossThreat.h"
 #include "../Boss/BossState/BossDamage.h"
+#include "../Boss/BossState/BossAppear.h"
 #include "../TrashEnemy/TrashEnemyManager.h"//
 #include "../../Common/Random.h"
+#include "../../Component/UI/EnemyDamageUI.h"
 
 namespace {
 	std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable;
@@ -122,7 +124,7 @@ void Boss::Update()
 		if (!roaf) {
 			enemyBaseComponent.state->ChangeState(StateID::B_ROAR_S);
 			roaf = true;
-			obj->SetBaseTimeSpeed(1.2f);
+			//obj->SetBaseTimeSpeed(1.2f);
 			obj->SetObjectTimeRate();
 		}
 		
@@ -238,11 +240,12 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossRoar>("BossRoar", StateID::B_ROAR_S);
 	enemyBaseComponent.state->CreateState<BossThreat>("BossThreat", StateID::B_THREAT_S);
 	enemyBaseComponent.state->CreateState<BossDamage>("BossDamage", StateID::BOSS_DAMAGE_S);
+	enemyBaseComponent.state->CreateState<BossAppear>("BossAppear", StateID::BOSS_APPEAR_S);
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
 	// 初期ステート
-	enemyBaseComponent.state->StartState(StateID::BOSS_IDOL_S);
+	enemyBaseComponent.state->StartState(StateID::BOSS_APPEAR_S);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::B_MODEL, -1);
@@ -425,6 +428,7 @@ void Boss::PlayerHit()
 	bool lastBeforeAttack = false;
 	auto bossParam = enemyTable.find(attackID);
 	float angleRand = Random::GetFloat(0.0f, 360.0f);
+	Object2D* damageNum = nullptr;
 	if (bossParam != enemyTable.end()) {
 		const auto& e = bossParam->second;
 		switch (e.attackType)
@@ -499,11 +503,15 @@ void Boss::PlayerHit()
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			enemyBaseComponent.state->ChangeState(bossParam->second.changeStateID);
 			specialAttackHit = false;
+			hp -= 10.0f;
 			break;
 		default:
 			break;
 		}
 	}
+	damageNum = new Object2D();
+	damageNum->Init(Transform(VZero, VZero, VOne), "damageNum");
+	damageNum->Component()->AddComponent<EnemyDamageUI>()->SetInformation(VECTOR3(GetRand(400) - 200, 800 + GetRand(400) - 200, GetRand(400) - 200), damage + GetRand(15) + 100.0f, VECTOR3(0, -0.4f, 0), 0.5f, Load::GetHandle(ID::DAMAGE_UI_BUTTON), bossTransform, VECTOR2I(81, 90));
 	EnemyDamageMove(dInfo);
 	hp -= damage;
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。

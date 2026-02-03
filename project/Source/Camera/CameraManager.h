@@ -15,6 +15,9 @@ public:
 	void ParentObj(std::string _str);
 	Object3D* GetCamera() { return mainCamera; }
 
+	void TitleCameraCreate();
+	void TitleParentObj(std::string _str);
+
 private:
 	Object3D* mainCamera;
 };
