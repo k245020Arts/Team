@@ -465,7 +465,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	BossAttackBase::DamagePattern param = attack->GetDamageParam();
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
-		if (enemyAnim->GetCurrentFrame() <= startTime + 5.0f || startTime >= 0.0f) {
+		if (enemyAnim->GetCurrentFrame() <= startTime + 8.0f || startTime >= 0.0f) {
 			/*if (!LargeJustAvoid(attack)) {
 				return true;
 			}*/
@@ -484,7 +484,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	}
 	else {
 		//ジャスト回避が出来るようになったらスルー
-		if (enemyAnim->GetCurrentFrame() <= startTime + 2.0f && attack != nullptr) {
+		if (enemyAnim->GetCurrentFrame() <= startTime + 8.0f && attack != nullptr) {
 			return false;
 		}
 		else {

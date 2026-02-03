@@ -29,6 +29,7 @@ EnemyStateBase::EnemyStateBase()
 
 	fallFrame = 0.0f;
 	animSlowCounter = 0.0f;
+	slowMode = false;
 }
 
 EnemyStateBase::~EnemyStateBase()
@@ -42,13 +43,20 @@ void EnemyStateBase::Update()
 		animSlowCounter -= Time::DeltaTimeRate();
 		if (animSlowCounter < 0.0f) {
 #ifdef PATTERN1
-			e->enemyBaseComponent.anim->SetPlaySpeed(keepAnimSpeed -0.3f);
+			e->enemyBaseComponent.anim->SetPlaySpeed(keepAnimSpeed);
+			slowMode = true;
 #else
 			e->enemyBaseComponent.anim->SetPlaySpeed(keepAnimSpeed - 0.7f);
 			/*if (!e->enemyBaseComponent.anim->AnimEventCan()) {
 				e->enemyBaseComponent.anim->SetPlaySpeed(keepAnimSpeed + 0.3f);
 			}*/
 #endif
+		}
+	}
+	if (slowMode) {
+		if (e->enemyBaseComponent.anim->EventFinishTime(animId) - 5.0f <= e->enemyBaseComponent.anim->GetCurrentFrame()) {
+			e->enemyBaseComponent.anim->SetPlaySpeed(keepAnimSpeed + 0.3f);
+			slowMode = false;
 		}
 	}
 }
@@ -60,6 +68,7 @@ void EnemyStateBase::Start()
 	attackTime = e->enemyBaseComponent.anim->EventFinishTime(animId) - e->enemyBaseComponent.anim->EventStartTime(animId);
 	sound = true;
 	e->enemyBaseComponent.anim->AnimEventReset();
+	slowMode = false;
 }
 
 void EnemyStateBase::AttackCollsion()

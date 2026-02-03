@@ -33,4 +33,5 @@ protected:
 	float fallFrame;
 	float animSlowCounter;
 	float keepAnimSpeed;
+	bool slowMode;
 };

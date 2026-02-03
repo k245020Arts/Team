@@ -101,5 +101,5 @@ void TitleControl::Draw()
 {
 	/*DrawGraph(0, 0, hImage, true);*/
 	DrawGraph(750, 100, titleImage, true);
-	DrawRotaGraph(1000, 900, (double)exrate,0.0,keyImage, true);
+	DrawRotaGraph(1000, 1000, (double)exrate,0.0,keyImage, true);
 }
