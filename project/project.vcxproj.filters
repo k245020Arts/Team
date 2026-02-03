@@ -299,18 +299,6 @@
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack1.cpp">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack2.cpp">
-      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack3.cpp">
-      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack4.cpp">
-      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack5.cpp">
-      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Stage\SkyManager.cpp">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
@@ -539,6 +527,9 @@
     </ClCompile>
     <ClCompile Include="Source\Component\UI\UIBase.cpp">
       <Filter>Component\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttack5.cpp">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -853,9 +844,6 @@
     <ClInclude Include="Source\Player\PlayerState\PlayerStateManager.h">
       <Filter>PlayScene\Player\PlayerState\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack5.h">
-      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttack1.h">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
@@ -872,15 +860,6 @@
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack1.h">
-      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack2.h">
-      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack3.h">
-      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack4.h">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="Source\Stage\Wall.h">
@@ -1135,6 +1114,9 @@
     </ClInclude>
     <ClInclude Include="Source\Component\UI\UIBase.h">
       <Filter>Component\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttack5.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -29,12 +29,9 @@
 #include "../Player/PlayerState/PlayerBlowAway.h"
 #include "../Player/PlayerState/PlayerTurn.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack1.h"
-#include "../Player/PlayerState/AttackState/playerJustAvoidAttack2.h"
 #include "../Player/PlayerState/AttackState/playerAttack3.h"
 #include "../Player/PlayerState/AttackState/playerAttack4.h"
-#include "../Player/PlayerState/AttackState/playerJustAvoidAttack3.h"
-#include "../Player/PlayerState/AttackState/playerJustAvoidAttack4.h"
-#include "../Player/PlayerState/AttackState/playerJustAvoidAttack5.h"
+#include "../Player/PlayerState/AttackState/playerAttack5.h"
 #include "../Player/PlayerState/PlayerAvoid.h"
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
@@ -132,12 +129,9 @@ void PlayerManager::CreatePlayer()
 	stateManager->CreateState<PlayerAttack1>("PlayerAttack1", StateID::PLAYER_ATTACK1_S);
 	stateManager->CreateState<PlayerJustAvoidAttack1>("PlayerJustAvoidAttack1", StateID::PLAYER_JUST_AVOID_ATTACK1_S);
 	stateManager->CreateState<PlayerAttack2>("PlayerAttack2", StateID::PLAYER_ATTACK2_S);
-	stateManager->CreateState<PlayerJustAvoidAttack2>("PlayerJustAvoidAttack2", StateID::PLAYER_JUST_AVOID_ATTACK2_S);
 	stateManager->CreateState<PlayerAttack3>("PlayerAttack3", StateID::PLAYER_ATTACK3_S);
-	stateManager->CreateState<PlayerJustAvoidAttack3>("PlayerJustAvoidAttack3", StateID::PLAYER_JUST_AVOID_ATTACK3_S);
+	stateManager->CreateState<PlayerAttack5>("PlayerAttack5", StateID::PLAYER_ATTACK5_S);
 	stateManager->CreateState<PlayerAttack4>("PlayerAttack4", StateID::PLAYER_ATTACK4_S);
-	stateManager->CreateState<PlayerJustAvoidAttack4>("PlayerJustAvoidAttack4", StateID::PLAYER_JUST_AVOID_ATTACK4_S);
-	stateManager->CreateState<PlayerJustAvoidAttack5>("PlayerJustAvoidAttack5", StateID::PLAYER_JUST_AVOID_ATTACK5_S);
 	stateManager->CreateState<PlayerDamage>("PlayerDamage", StateID::PLAYER_DAMAGE_S);
 	stateManager->CreateState<PlayerBlowAway>("PlayerBlowAway", StateID::PLAYER_BLOW_AWAY_S);
 	stateManager->CreateState<PlayerDie>("PlayerDie", StateID::PLAYER_DIE_S);
@@ -159,11 +153,10 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK1,				"P_ATTACK01_M_1", false, 2.3f,19.0f,27.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1,	"P_ATTACK11", false, 9.0f,7.0f,25.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK2,				"P_ATTACK02_M_1", false, 2.1f, 10.0f, 30.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK2,	"P_ATTACK11_M_1", false, 0.7f, 4.0f, 21.0f);
+	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1,	"P_ATTACK11_M_1", false, 0.7f, 4.0f, 21.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK3,				"P_ATTACK03_M_1", false, 2.1f, 14.0f, 19.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK3,	"P_ATTACK05_M_1", false, 1.5f, 10.0f, 20.0f);
+	anim->AddFile(ID::IDType::P_ANIM_ATTACK_5,				"P_ATTACK05_M_1", false, 1.5f, 10.0f, 20.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK4,				"P_ATTACK04_M_1", false, 3.1f, 30.0f, 42.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK4,	"P_ATTACK46", false, 2.0f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_DIE,						"P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_TURN_ANIM,					"P_TURN1", false, 1.3f, 10.0f, 21.0f);
 	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM,		"P_SPECIAL_ATTACK_2", false, 1.0f, 7.0f, 39.0f);
@@ -300,9 +293,9 @@ void PlayerManager::CreateTitlePlayer()
 	stateManager->CreateState<PlayerAttack1>("PlayerAttack1", StateID::PLAYER_ATTACK1_S);
 	stateManager->CreateState<PlayerJustAvoidAttack1>("PlayerJustAvoidAttack1", StateID::PLAYER_JUST_AVOID_ATTACK1_S);
 	stateManager->CreateState<PlayerAttack2>("PlayerAttack2", StateID::PLAYER_ATTACK2_S);
-	stateManager->CreateState<PlayerJustAvoidAttack2>("PlayerJustAvoidAttack2", StateID::PLAYER_JUST_AVOID_ATTACK2_S);
+	stateManager->CreateState<PlayerJustAvoidAttack1>("PlayerJustAvoidAttack1", StateID::PLAYER_JUST_AVOID_ATTACK1_S);
 	stateManager->CreateState<PlayerAttack3>("PlayerAttack3", StateID::PLAYER_ATTACK3_S);
-	stateManager->CreateState<PlayerJustAvoidAttack3>("PlayerJustAvoidAttack3", StateID::PLAYER_JUST_AVOID_ATTACK3_S);
+	stateManager->CreateState<PlayerAttack5>("PlayerAttack5", StateID::PLAYER_ATTACK5_S);
 	stateManager->CreateState<PlayerAttack4>("PlayerAttack4", StateID::PLAYER_ATTACK4_S);
 	stateManager->CreateState<PlayerJustAvoidAttack4>("PlayerJustAvoidAttack4", StateID::PLAYER_JUST_AVOID_ATTACK4_S);
 	stateManager->CreateState<PlayerJustAvoidAttack5>("PlayerJustAvoidAttack5", StateID::PLAYER_JUST_AVOID_ATTACK5_S);
@@ -326,11 +319,10 @@ void PlayerManager::CreateTitlePlayer()
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK1, "P_ATTACK01_M_1", false, 2.3f, 19.0f, 27.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1, "P_ATTACK11", false, 9.0f, 7.0f, 25.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK2, "P_ATTACK02_M_1", false, 2.1f, 10.0f, 30.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK2, "P_ATTACK11_M_1", false, 0.7f, 4.0f, 21.0f);
+	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1, "P_ATTACK11_M_1", false, 0.7f, 4.0f, 21.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK3, "P_ATTACK03_M_1", false, 2.1f, 14.0f, 19.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK3, "P_ATTACK05_M_1", false, 1.5f, 10.0f, 20.0f);
+	anim->AddFile(ID::IDType::P_ANIM_ATTACK_5, "P_ATTACK05_M_1", false, 1.5f, 10.0f, 20.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK4, "P_ATTACK04_M_1", false, 3.1f, 30.0f, 42.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK4, "P_ATTACK46", false, 2.0f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_DIE, "P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_TURN_ANIM, "P_TURN1", false, 1.3f, 10.0f, 21.0f);
 	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM, "P_SPECIAL_ATTACK_2", false, 1.0f, 7.0f, 39.0f);

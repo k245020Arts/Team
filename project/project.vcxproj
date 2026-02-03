@@ -303,12 +303,9 @@
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttack2.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttack3.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttack4.h" />
+    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttack5.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttackStateBase.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack1.h" />
-    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack2.h" />
-    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack3.h" />
-    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack4.h" />
-    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack5.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerAvoid.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerBefore.h" />
@@ -488,12 +485,9 @@
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttack2.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttack3.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttack4.cpp" />
+    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttack5.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttackStateBase.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack1.cpp" />
-    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack2.cpp" />
-    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack3.cpp" />
-    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack4.cpp" />
-    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack5.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerAvoid.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerBefore.cpp" />

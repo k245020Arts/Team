@@ -31,12 +31,9 @@
 #include "../Player/PlayerState/PlayerTurn.h"
 #include "../Player/PlayerState/PlayerBossAppear.h"
 #include "../Player/PlayerState/AttackState/playerJustAvoidAttack1.h"
-#include "../Player/PlayerState/AttackState/playerJustAvoidAttack2.h"
 #include "../Player/PlayerState/AttackState/playerAttack3.h"
 #include "../Player/PlayerState/AttackState/playerAttack4.h"
-#include "../Player/PlayerState/AttackState/playerJustAvoidAttack3.h"
-#include "../Player/PlayerState/AttackState/playerJustAvoidAttack4.h"
-#include "../Player/PlayerState/AttackState/playerJustAvoidAttack5.h"
+#include "../Player/PlayerState/AttackState/PlayerAttack5.h"
 #include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 #include "../Common/LoadManager.h"
 #include "../Enemy/TrashEnemy/Enemy.h"
@@ -57,10 +54,8 @@ namespace {
 	{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, { VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
 	{  StateID::PLAYER_ATTACK2_S, { VECTOR3(50,50,50), 0.1f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
 	{  StateID::PLAYER_ATTACK3_S, { VECTOR3(50,50,50), 0.12f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ StateID::PLAYER_JUST_AVOID_ATTACK3_S, { VECTOR3(150,100,100), 0.05f, VECTOR3(30,50,50), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ StateID::PLAYER_ATTACK5_S, { VECTOR3(150,100,100), 0.05f, VECTOR3(30,50,50), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
 	{  StateID::PLAYER_ATTACK4_S, { VECTOR3(100,100,100), 0.2f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ StateID::PLAYER_JUST_AVOID_ATTACK4_S, { VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ StateID::PLAYER_JUST_AVOID_ATTACK5_S, { VECTOR3(100,100,100), 0.3f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
 	};
 
 

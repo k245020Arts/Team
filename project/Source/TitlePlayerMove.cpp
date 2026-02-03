@@ -93,7 +93,7 @@ void TitlePlayerMove::Update()
 		//{
 		//	if (true /*player->largeJustAvoid*/)
 		//	{
-		//		player->playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_ATTACK2_S);
+		//		player->playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_ATTACK1_S);
 		//	}
 		//	else
 		//	{

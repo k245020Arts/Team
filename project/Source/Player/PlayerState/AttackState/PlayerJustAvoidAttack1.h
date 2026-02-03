@@ -16,12 +16,10 @@ public:
 	void Finish()override;
 
 	void Again();
-
+	void StateImguiDraw() override;
 
 private:
-	int count;
-	float animSpeed;
-
-	const int MAX_ATTACKNUM = 5;
 	float timer;
+	int count;
+	bool attack;
 };

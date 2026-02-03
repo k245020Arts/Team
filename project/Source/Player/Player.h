@@ -21,9 +21,9 @@ public:
 	friend class PlayerAttack1;
 	friend class PlayerJustAvoidAttack1;
 	friend class PlayerAttack2;
-	friend class PlayerJustAvoidAttack2;
+	friend class PlayerJustAvoidAttack1;
 	friend class PlayerAttack3;
-	friend class PlayerJustAvoidAttack3;
+	friend class PlayerAttack5;
 	friend class PlayerAttack4;
 	friend class PlayerJustAvoidAttack4;
 	friend class PlayerAttack5;

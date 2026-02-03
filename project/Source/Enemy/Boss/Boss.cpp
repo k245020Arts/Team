@@ -364,10 +364,10 @@ void Boss::PlayerHit()
 	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
 	//	//enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VOne * VECTOR3(0, 0, 50.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
 	//	break;
-	//case ID::P_ANIM_JUST_AVOID_ATTACK2:
+	//case ID::P_ANIM_JUST_AVOID_ATTACK1:
 	//	
 	//	break;
-	//case ID::P_ANIM_JUST_AVOID_ATTACK3:
+	//case ID::P_ANIM_ATTACK_5:
 	//	//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
 	//	dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, -2000.0f, -2000.0f), VECTOR3(200, 200, 200), 0.2f, 0.8f);
 	//	enemyBaseComponent.control->ControlVibrationStartFrame(70, 40);

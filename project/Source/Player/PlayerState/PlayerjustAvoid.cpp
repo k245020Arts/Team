@@ -99,7 +99,7 @@ void PlayerJustAvoid::Update()
 	if (easingCount >= 0.5f) {
 		if (attack) {
 			if (p->largeJustAvoid) {
-				p->playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_ATTACK2_S);
+				p->playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_ATTACK1_S);
 			}
 			else {
 				p->playerCom.stateManager->ChangeState(StateID::PLAYER_ATTACK1_S);

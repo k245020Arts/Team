@@ -1,33 +1,31 @@
 #include "playerJustAvoidAttack1.h"
 #include "../../../Component/Animator/Animator.h"
+#include "../../../Component/Physics/Physics.h"
 #include "../playerStateManager.h"
-#include <typeinfo>
 #include "../../../Common/InputManager/ControllerInputManager.h"
 #include "../../player.h"
-#include "../../../Component/Physics/Physics.h"
-#include "../../../Camera/Camera.h"
-#include "../../../Common/Easing.h"
+#include "../../../Common/function.h"
 #include "../../../Component/Shaker/Shaker.h"
-#include "../../../Common/Function.h"
 #include "../../../Common/Effect/EffectManager.h"
-#include "../../../Common/Sound/SoundManager.h"
 #include "../../../Component/Color/Color.h"
 #include "../../../Common/InputManager/InputManager.h"
+#include "../../../Common/Sound/SoundManager.h"
 
 PlayerJustAvoidAttack1::PlayerJustAvoidAttack1()
 {
-	string		= Function::GetClassNameC<PlayerJustAvoidAttack1>();
-	nextAttack	= false;
-	animId		= ID::P_ANIM_JUST_AVOID_ATTACK1;
-	collTrans	= Transform(VECTOR3(0, 70, 200), VZero, VECTOR3(300, 0, 0));
-	timer		= 0.0f;
-	//nextAttackID = ID::P_ANIM_JUST_AVOID_ATTACK4;
-	nextAttackID = StateID::PLAYER_JUST_AVOID_ATTACK4_S;
-	frontSpeed	= 2000.0f;
-	hitDamage	= 1;
-	animSpeed	= 0.0f;
-	count		= 0;
-	timer		= 0.0f;
+	string = Function::GetClassNameC<PlayerJustAvoidAttack1>();
+	//id =  ID::P_ANIM_JUST_AVOID_ATTACK1;
+	animId = ID::P_ANIM_JUST_AVOID_ATTACK1;
+	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(300, 0, 0));
+	//nextAttackID = ID::P_ANIM_ATTACK1;
+	nextAttackID = StateID::PLAYER_ATTACK1_S;
+	frontSpeed = 10000.0f;
+	hitDamage = 30.0f;
+	defalutTrail = false;
+	attack = false;
+	count = 0;
+	timer = 0.0f;
+	distSize = 0.0f;
 }
 
 PlayerJustAvoidAttack1::~PlayerJustAvoidAttack1()
@@ -39,45 +37,55 @@ void PlayerJustAvoidAttack1::Update()
 	Player* p = GetBase<Player>();
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
-	if (noStateChange) {
-		return;
+	if (p->playerCom.anim->AnimEventCan()) {
+		p->playerCom.player->DrawTrail(VECTOR3(0, 0, -100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
 	}
-	if (distSize <= ATTACK_MOVE_DIST) {
-		EnemyRotation();
-	}
-	timer -= Time::DeltaTimeRate();
-	//’·‰Ÿ‚µ‚ð‚µ‚Ä‚¢‚éŠÔ‚Ìˆ—
-	if (p->playerCom.anim->GetCurrentFrame() >= 10.0f && timer <= 0.0f) {
-		//UŒ‚‚ðƒqƒbƒg‚³‚¹‚½‚¢‰ñ”‚ª‚Ü‚¾‚ ‚Á‚½‚çUŒ‚‚ð‘±‚¯‚é
-		if (count > 0) {
-			Again();
-			count--;
-			return;
+	if (!noStateChange) {
+		if (distSize <= ATTACK_MOVE_DIST) {
+			EnemyRotation();
 		}
-		runTimer		= 0.1f;
-		noStateChange	= true;
-		p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-	}
-	if (p->playerCom.InputManager->KeyInputDown("avoid")) {
-		p->playerCom.player->AvoidReady();
-		noStateChange = true;
-	}
-	if (p->playerCom.InputManager->KeyInput("attack")) {
-		nextAttack	= true;
-	}
-	else {
-		runTimer		= 0.3f;
-		noStateChange	= true;
-		p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
-		p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-		nextAttack		= false;
-	}
-	//UŒ‚‚ðÅ‘å‚Ü‚Å‚¢‚Á‚½‚çƒvƒŒƒCƒ„[‚ðŽ~‚ß‚é
-	if (count >= MAX_ATTACKNUM) {
+		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
+			p->playerCom.player->AvoidReady();
+			noStateChange = true;
+		}
+		if (p->playerCom.InputManager->KeyInputDown("attack")) {
+			nextAttack = true;
+		}
 		dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
-		if (dist.Size() <= DISTANCE_MOVE) {
-			p->playerCom.anim->SetPlaySpeed(1.5f);
-			p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(15000.0f, 15000.0f, 15000.0f));
+		distSize = dist.Size();
+		if (distSize <= DISTANCE_MOVE && beforeAttack) {
+			p->playerCom.anim->SetPlaySpeed(0.8f);
+			p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(30000.0f, 30000.0f, 30000.0f));
+		}
+		else {
+			angle = atan2f(dist.x, dist.z);
+			p->playerCom.physics->AddVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle), false);
+		}
+		if (p->playerCom.anim->AnimEventCan()) {
+			p->playerCom.anim->SetPlaySpeed(1.6f);
+			beforeAttack = false;
+			rotation = true;
+			frontSpeed = 2000.0f;
+			p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
+
+		}
+		else {
+			if (beforeAttack)
+				p->playerCom.anim->SetPlaySpeed(0.3f);
+			else {
+				p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(30000.0f, 30000.0f, 30000.0f));
+				if (nextAttack) {
+					runTimer = 1.0f;
+					noStateChange = true;
+					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
+				}
+				else {
+					runTimer = 1.0f;
+					noStateChange = true;
+					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
+					p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
+				}
+			}
 		}
 	}
 }
@@ -90,14 +98,59 @@ void PlayerJustAvoidAttack1::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
-	PlayerAttackStateBase::Start();
-	animSpeed	= 1.0f;
-	count		= MAX_ATTACKNUM;
-	p->playerCom.anim->SetPlaySpeed(0.05f);
-	firstColl = true;
-	if (distSize <= ATTACK_MOVE_DIST) {
-		p->playerCom.physics->SetVelocity(norm * distSize * 4.0f);
+
+	nextAttack = false;
+	nextAvoid = false;
+	p->playerCom.player->SetAvoidStart(false);
+	p->playerCom.anim->AnimEventReset();
+
+	noStateChange = false;
+	if (p->playerCom.hitObj != nullptr) {
+		targetTrans = *(p->playerCom.hitObj->GetTransform());
 	}
+	else {
+		targetTrans = Transform();
+	}
+	rockOn = true;
+
+	dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
+
+	//Šp“xŒvŽZ
+	angle = atan2f(dist.x, dist.z);
+	easingCount = 0.0f;
+	beforeAngle = p->playerCom.player->GetPlayerTransform()->rotation.y;
+	firstColl = true;
+	distSize = dist.Size();
+	norm = dist.Normalize();
+	beforeAttack = true;
+	runTimer = 0.0f;
+	if (dist.Size() >= 2500 && p->playerCom.hitObj != nullptr) {
+		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
+		rotation = false;;
+		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));
+	}
+	else {
+		//‹ß‚¢‚Æ“G‚Ì•ûŒü‚ÉŒü‚©‚Á‚ÄUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
+		rotation = true;
+		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
+	}
+
+
+	if (distSize <= ATTACK_MOVE_DIST) {
+		p->playerCom.physics->SetVelocity(norm * distSize * 3.5f);
+	}
+	p->playerCom.anim->SetPlaySpeed(0.01f);
+	firstColl = true;
+	attack = false;
+	p->playerCom.shaker->ShakeStart(VECTOR3(20.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 1.0f);
+	p->playerCom.controller->ControlVibrationStartFrame(100, 20);
+	if (p->largeJustAvoid) {
+		p->playerCom.hitObj->SetObjectTimeRate(PlayerInformation::JUST_AVOID_ENEMY_TIME_SCALE + 0.5f);
+	}
+	/*p->playerCom.anim->SetPlaySpeed(0.1f);
+	timer = 0.5f;
+	p->playerCom.shaker->ShakeStart(VECTOR3(30.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 0.4f);*/
+	//p->playerCom.controller->ControlVibrationStartFrame(100, 20);
 }
 
 void PlayerJustAvoidAttack1::Finish()
@@ -105,24 +158,17 @@ void PlayerJustAvoidAttack1::Finish()
 	Player* p = GetBase<Player>();
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
-	p->playerCom.player->DeleteCollision();
 	p->playerCom.anim->AnimEventReset();
+	p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
 	PlayerAttackStateBase::Finish();
+	p->playerCom.hitObj->SetObjectTimeRate();
+	p->largeJustAvoid = false;
+	/*p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
+	p->justAvoid = false;
+	p->justFeedOutTime = p->JUST_FEED_OUT_TIME;*/
 }
 
-void PlayerJustAvoidAttack1::Again()
+void PlayerJustAvoidAttack1::StateImguiDraw()
 {
-	Player* p	= GetBase<Player>();
-	//p->playerCom.anim->Play(ID::P_ANIM_IDOL);
-	p->playerCom.player->DeleteCollision();
-	firstColl	= true;
-	//PlayerStateBase::Start();
-	if (distSize <= ATTACK_MOVE_DIST) {
-		p->playerCom.physics->SetVelocity(norm * distSize * 2.5f);
-	}
-	animSpeed += 0.1f;
-	p->playerCom.anim->SetPlaySpeed(0.0f);
-	p->playerCom.anim->SetFrame(10.0f);
-	timer		= 0.12f;
-	p->playerCom.sound->RandamSe("P_AttackV", 4);
+	ImGui::Text("distSize = %.f1", distSize);
 }

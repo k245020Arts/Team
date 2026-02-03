@@ -18,7 +18,7 @@ PlayerAttack4::PlayerAttack4()
 	frontSpeed		= 5000.0f;
 	//frontSpeed		= 0.0f;
 	hitDamage		= 30.0f;
-	nextAttackID	= StateID::PLAYER_JUST_AVOID_ATTACK3_S;
+	nextAttackID	= StateID::PLAYER_ATTACK5_S;
 }
 
 PlayerAttack4::~PlayerAttack4()

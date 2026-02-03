@@ -55,33 +55,15 @@ namespace
 			Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 			true, 0.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
-			// ÉWÉÉÉXÉgâÒîçUåÇ
-			{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, { StateID::PLAYER_JUST_AVOID_ATTACK1_S, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-20000,2000), VECTOR3(400,400,400),0.05f,0.8f),
-				EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal,  StateID::B_THREAT_S, 30, 40,
-				Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-				true, 0.0f, Effect_ID::PLAYER_SLASH_ATTACK, false, -1, 0.0f } },
-
-			{ StateID::PLAYER_JUST_AVOID_ATTACK2_S, { StateID::PLAYER_JUST_AVOID_ATTACK2_S, EnemyDamage::EnemyDamageInfo(), EnemyBlowAway::EnemyBlowAwayInfo(),
+			{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, { StateID::PLAYER_JUST_AVOID_ATTACK1_S, EnemyDamage::EnemyDamageInfo(), EnemyBlowAway::EnemyBlowAwayInfo(),
 				EnemyInformation::EnemyReaction::Type::LoopCombo,  StateID::B_THREAT_S, 0, 0,
 				Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 				true, 90.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, 5, 0.13f } },
 
-			{StateID::PLAYER_JUST_AVOID_ATTACK3_S, { StateID::PLAYER_JUST_AVOID_ATTACK3_S, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200),0.2f,0.8f),
+			{StateID::PLAYER_ATTACK5_S, { StateID::PLAYER_ATTACK5_S, EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200),0.2f,0.8f),
 				EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal,  StateID::B_THREAT_S, 70, 40,
 				Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
 				true, 180.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
-
-			{ StateID::PLAYER_JUST_AVOID_ATTACK4_S, { StateID::PLAYER_JUST_AVOID_ATTACK4_S, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,7000), VECTOR3(200,200,200),0.2f,0.8f),
-				EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Normal,  StateID::B_THREAT_S, 40, 40,
-				Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-				true, 80.0f * DegToRad, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
-
-				// êÅÇ¡îÚÇŒÇµçUåÇ
-				{ StateID::PLAYER_JUST_AVOID_ATTACK5_S, { StateID::PLAYER_JUST_AVOID_ATTACK5_S, EnemyDamage::EnemyDamageInfo(),
-					EnemyBlowAway::EnemyBlowAwayInfo(4000,3000,VECTOR3(15,15,15),VECTOR3(0.3f,0.3f,0.3f),2000,20),
-					EnemyInformation::EnemyReaction::Type::BlowAway,  StateID::B_THREAT_S, 100, 60,
-					Effect_ID::SPECIAL_HIT_EFFECT, 5.0f, EnemyInformation::HIT_EFFECT_SCALE_RATE,
-					true, 0.0f, Effect_ID::PLAYER_SLASH_ATTACK, true, -1, 0.0f } },
 
 			{  StateID::PLAYER_SPECIAL_ATTACK_S, { StateID::PLAYER_SPECIAL_ATTACK_S, EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100),0.15f,0.8f),
 		EnemyBlowAway::EnemyBlowAwayInfo(), EnemyInformation::EnemyReaction::Type::Special, StateID::B_THREAT_S, 10, 10,

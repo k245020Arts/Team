@@ -69,12 +69,13 @@ void PlayerAttackStateBase::Update()
 			}
 			
 			else {
-				if (id == ID::P_ANIM_JUST_AVOID_ATTACK5) {
+				/*if (id == ID::P_ANIM_JUST_AVOID_ATTACK5) {
 					p->playerCom.player->AvoidFinishState();
 				}
 				else {
 					p->playerCom.player->AvoidFinishState();
-				}
+				}*/
+				p->playerCom.player->AvoidFinishState();
 			}
 			
 		}
