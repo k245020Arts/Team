@@ -77,7 +77,7 @@ void Wave::EnemySpawn()
 
 void Wave::CooperateAttack()
 {
-	if (/*waveNow != 2 ||*/ tEnemyManager->EnemyList().size() > 4 || isCooperate)
+	if (tEnemyManager->GetActiveEnemy() > 4 || isCooperate)
 		return;
 
 	tEnemyManager->Cooperate(StateID::COOPERATEATTACK1);

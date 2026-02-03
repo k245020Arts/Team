@@ -87,15 +87,15 @@ private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
 
-	//targetPos‚É“ü‚Á‚Ä‚é•ûŒü‚ÉŒü‚­
-	void LookTarget();
+	//_pos‚Ì•ûŒü‚ÉŒü‚­
+	void LookTarget(VECTOR3 _pos);
 	bool IsPlayerSpecialMove();
 	//ŒvZ®
 	float DamageCalculation(float _damage);
 
 	bool active;
 	//‚Ç‚±‚ÉŒü‚­‚©
-	VECTOR3 targetPos;
+	/*VECTOR3 targetPos;*/
 
 	//’ÊíUŒ‚‚ğ‚µ‚Ä‚à‚æ‚¢‚©
 	bool isAttack;

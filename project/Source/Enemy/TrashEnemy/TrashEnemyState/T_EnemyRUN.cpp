@@ -27,7 +27,7 @@ void T_EnemyRun::Update()
 		targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 
 	rotation = e->obj->GetTransform()->rotation;
-	Look();
+	e->LookTarget(targetPos);
 
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
 

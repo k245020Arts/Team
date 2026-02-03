@@ -201,9 +201,9 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 	}
 }
 
-void TrashEnemy::LookTarget()
+void TrashEnemy::LookTarget(VECTOR3 _pos)
 {
-	VECTOR3 distance = targetPos - obj->GetTransform()->position;
+	VECTOR3 distance = _pos - obj->GetTransform()->position;
 	//向くべき角度
 	float direction = -atan2f(distance.z, distance.x) - 0.5f * DX_PI_F;
 	//その角度とどれだけ差があるか
@@ -413,25 +413,25 @@ void TrashEnemy::CooperateAtkFinish()
 
 void TrashEnemy::Move(float _speed, float _max)
 {
-	VECTOR3 pos = GetBaseObject()->GetTransform()->position;
+	//VECTOR3 pos = GetBaseObject()->GetTransform()->position;
 
-	// ターゲット座標へ向かうベクトル
-	VECTOR3 dir = VECTOR3(targetPos - pos).Normalize();
-	dir.y = 0;
+	//// ターゲット座標へ向かうベクトル
+	//VECTOR3 dir = VECTOR3(targetPos - pos).Normalize();
+	//dir.y = 0;
 
-	// スピードをかける
-	VECTOR3 velocity = dir * _speed;
+	//// スピードをかける
+	//VECTOR3 velocity = dir * _speed;
 
-	enemyBaseComponent.physics->AddVelocity(velocity, false);
+	//enemyBaseComponent.physics->AddVelocity(velocity, false);
 
-	VECTOR3 moveVelo = enemyBaseComponent.physics->GetVelocity() * VECTOR3(1, 0, 1);
+	//VECTOR3 moveVelo = enemyBaseComponent.physics->GetVelocity() * VECTOR3(1, 0, 1);
 
-	// 最大速度制限
-	if (moveVelo.SquareSize() >= _max * _max) {
-		moveVelo = moveVelo.Normalize() * _max;
-		moveVelo.y = enemyBaseComponent.physics->GetVelocity().y;
-		enemyBaseComponent.physics->SetVelocity(moveVelo);
-	}
+	//// 最大速度制限
+	//if (moveVelo.SquareSize() >= _max * _max) {
+	//	moveVelo = moveVelo.Normalize() * _max;
+	//	moveVelo.y = enemyBaseComponent.physics->GetVelocity().y;
+	//	enemyBaseComponent.physics->SetVelocity(moveVelo);
+	//}
 }
 
 void TrashEnemy::AddPos(VECTOR3 _pos)
