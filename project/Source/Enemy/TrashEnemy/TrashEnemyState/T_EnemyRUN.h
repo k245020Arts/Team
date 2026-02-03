@@ -12,8 +12,6 @@ public:
 	void Finish()override;
 
 private:
-	void Look();
-	//void Move(float _speed, float _max);
 	VECTOR3 rotation;
 	VECTOR3 velocity;
 	VECTOR3 targetPos;

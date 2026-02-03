@@ -79,43 +79,6 @@ void AttackSorting::Update()
 	else {
 		b->enemyBaseComponent.state->ChangeState(attackKind[kind]);
 	}
-	
-	/*Boss* b = GetBase<Boss>();
-	if (jump) {
-		if (b->maxAttack != 0) {
-			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
-			b->maxAttack--;
-		}
-		else {
-			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK1_S);
-		}
-			
-	}
-	else {
-		if (b->maxAttack == 0)
-			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK1_S);
-		else if (b->maxAttack == 1)
-			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK1_S);
-		else if (b->maxAttack == 2)
-			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK2_S);
-		else if (b->maxAttack == 3)
-			b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK3_S);
-		else
-		{
-			RandomAttack();
-			if (!Hp())
-				b->maxAttack = 0;
-		}
-	}*/
-
-	
-
-	/*VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
-	if (targetVec.Size() >= b->bs->GetStatus().range)
-	{
-		b->enemyBaseComponent.state->ChangeState(ID::B_RUN);
-		b->maxAttack = 0;
-	}*/
 }
 
 void AttackSorting::Start()
@@ -168,26 +131,6 @@ void AttackSorting::Start()
 	else {
 		NormalAttackSelect();
 	}
-	//if ()
-	//{
-	//	//‰½‰ñ˜A‘±UŒ‚‚·‚é‚©Œˆ‚ß‚é
-	//	if (b->maxAttack == 0)
-	//		b->maxAttack = GetRand(maxAttack - 1);
-	//	else
-	//		b->maxAttack--;
-	//}
-	//else
-	//	b->maxAttack = 0;
-
-	//if (b->maxAttack == 0) {
-	//	if (randam) {
-	//		jump = true;
-	//		b->maxAttack = GetRand(maxAttack + 10);
-	//	}
-	//	else {
-	//		jump = false;
-	//	}
-	//}
 	
 }
 
