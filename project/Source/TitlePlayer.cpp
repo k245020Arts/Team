@@ -1,5 +1,10 @@
-#include "TitlePlayer.h"
+#include "TitleScene.h"
 #include "TitleCamera.h"
+
+#include "TitlePlayer.h"
+#include "TitlePlayerIdol.h"
+#include "TitlePlayerMove.h"
+
 #include "State/StateManager.h"
 #include "Player/PlayerState/PlayerStateManager.h"
 #include "Component/MeshRenderer/MeshRenderer.h"
@@ -24,9 +29,6 @@
 #include "Common/LoadManager.h"
 #include "Common/Transitor/FadeTransitor.h"
 #include "Common/Easing.h"
-#include "TitleScene.h"
-#include "TitlePlayerIdol.h"
-#include "TitlePlayerMove.h"
 
 TitlePlayer::TitlePlayer()
 {
@@ -57,34 +59,34 @@ void TitlePlayer::Start(Object3D* _obj) {
 	playerCom.stateManager->CreateState<TitlePlayerIdol>("_TitleIdol", StateID::PLAYER_WAIT_S);
 	playerCom.stateManager->CreateState<TitlePlayerMove>("_TitleMove", StateID::PLAYER_AVOID_S);
 
+	//コンポーネントや参照関連
 	ComponentManager* c = obj->Component();
 
 	playerCom.renderer = c->GetComponent<MeshRenderer>();
-	playerCom.meshRenderer2D = c->GetComponent<MeshRenderer2D>();
-	playerCom.physics = c->GetComponent<Physics>();
-	playerCom.physics->SetGravity(VZero);
-
-    camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<TitleCamera>();
-
-	playerCom.InputManager = FindGameObject<InputManager>();
-	playerCom.controller = FindGameObject<ControllerInputManager>();
-	playerCom.keyboard = FindGameObject<KeyboardInputManager>();
-
-	VECTOR3 firstPos = VECTOR3(0, 30, 0);
-	obj->GetTransform()->position = firstPos;
-	playerTransform = obj->GetTransform();
-
-	playerCom.anim = obj->Component()->GetComponent<Animator>();
-	playerCom.anim2D = obj->Component()->GetComponent<Anim2D>();
-	playerCom.anim->Play(ID::P_ANIM_RUN);
+	//playerCom.meshRenderer2D = c->GetComponent<MeshRenderer2D>();
 	playerCom.color = obj->Component()->GetComponent<Color>();
-	playerCom.shaker = c->GetComponent<Shaker>();
+	playerCom.anim = obj->Component()->GetComponent<Animator>();
+	//playerCom.anim2D = obj->Component()->GetComponent<Anim2D>();
+	playerCom.physics = c->GetComponent<Physics>();
+	//playerCom.shaker = c->GetComponent<Shaker>();
+	playerCom.blur = obj->Component()->GetComponent<MotionBlur>();
+
+	camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<TitleCamera>();
 
 	playerCom.effect = FindGameObject<EffectManager>();
 	playerCom.sound = FindGameObject<SoundManager>();
-
+	//playerCom.InputManager = FindGameObject<InputManager>();
+	playerCom.controller = FindGameObject<ControllerInputManager>();
+	//playerCom.keyboard = FindGameObject<KeyboardInputManager>();
 	playerCom.weapon = FindGameObject<WeaponManager>(); //
-	playerCom.blur = obj->Component()->GetComponent<MotionBlur>();
+
+	//重力を0に変更
+	playerCom.physics->SetGravity(VZero);
+
+	//初期位置を設定
+	VECTOR3 firstPos = VECTOR3(0, 30, 0);
+	obj->GetTransform()->position = firstPos;
+	playerTransform = obj->GetTransform();
 
 	collName = "p_attack";
 
@@ -94,12 +96,6 @@ void TitlePlayer::Start(Object3D* _obj) {
 	playerCom.stateManager->SetComponent<TitlePlayer>(this);
 
 	playerCom.stateManager->StartState(StateID::PLAYER_WAIT_S);
-	//3DSoundのベースはプレイヤーに持たせる。
-	//playerCom.sound->Base3DSoundObject(obj);
-	
-
-	//タイトルシーンの情報はここからとれる。（ボタンを押したときなどの）
-	title = GetScene<TitleScene>();
 }
 
 void TitlePlayer::RotationChange(VECTOR3 _angle, float _speed)

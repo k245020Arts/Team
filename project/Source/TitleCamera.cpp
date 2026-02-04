@@ -14,7 +14,7 @@ TitleCamera::TitleCamera()
 	reap = 0.0f;
 	reap = CameraInformation::DEFALUT_RAPE;
 
-	defalutDistance = VECTOR3(0.0f, 0.0f, -800.0f); // 800
+	defalutDistance = VECTOR3(0.0f, 0.0f, -800.0f); // -800
 	currentDistance = defalutDistance;
 	
 	debugId = 33;
@@ -59,7 +59,7 @@ void TitleCamera::Update_Normal()
 	const VECTOR3 POS_1 = VECTOR3(500, 200, 1500); // 1つ目のターゲットポジション
 	const VECTOR3 POS_2 = VECTOR3(0, 300, 1750); // 2つ目のターゲットポジション
 
-	const float RATIO = 0.5f; // 1つ目から2つ目のポジションに移動するまでの時間の比率(0～1)
+	const float RATIO = 0.2f; // 1つ目から2つ目のポジションに移動するまでの時間の比率(0～1)
 
 	titleCtrl = FindGameObject<TitleControl>();
 

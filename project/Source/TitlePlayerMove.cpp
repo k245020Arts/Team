@@ -3,7 +3,6 @@
 #include "TitlePlayerMove.h"
 #include "Component/Animator/Animator.h"
 #include "Common/Easing.h"
-#include "Player/Player.h"
 
 #include "Common/InputManager/ControllerInputManager.h"
 #include "Component/Physics/Physics.h"
@@ -52,10 +51,10 @@ void TitlePlayerMove::Start()
 	//エフェクトの再生
 	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, Effect_ID::JUST_AVOID_EFFECT, 10.0f, false);
 	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 150, 0), VZero, VOne * 1.0f), obj, Effect_ID::PLAYER_FLASH, 10.0f);
-	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VZero, VOne), obj, Effect_ID::PLAYER_AURA, 10.0f);
+	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, -100), VZero, VOne), obj, Effect_ID::PLAYER_AURA, 0.0f);
 
 	//プレイヤーを青くする
-	player->playerCom.color->setRGB(Color::Rgb(0, 0, 255, 255));
+	//player->playerCom.color->setRGB(Color::Rgb(0, 0, 255, 255));
 	player->playerCom.controller->ControlVibrationStartFrame(50, 10);
 
 	cameraLeap = 0.02f;
