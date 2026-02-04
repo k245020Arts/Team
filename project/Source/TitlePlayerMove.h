@@ -2,6 +2,8 @@
 #include "TitlePlayer.h"
 #include "Player/PlayerState/PlayerStateBase.h"
 
+class TitleControl;
+class TitlePlayer;
 class BlurScreen;
 
 class TitlePlayerMove : public PlayerStateBase
@@ -14,7 +16,10 @@ public:
 	void Start() override;
 	void Finish()override;
 
+	float progress;
 private:
+	TitleControl* titleCtrl;
+	TitlePlayer* player;
 	static const int SHADOW_NUM_MAX = 10;
 	int shadowNum;
 	float easingCount;
@@ -28,5 +33,5 @@ private:
 	float startTimer;
 	float volume;
 
-	void Avoid(float _speed, float _speedMax, float cameraAngle);
+	void Avoid(float speed);
 };

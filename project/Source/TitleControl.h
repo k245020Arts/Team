@@ -16,6 +16,8 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	float GetNowProgress();
+	void SetNowProgress(float nowProgress);
 	float progress;
 private:
 	int hImage;

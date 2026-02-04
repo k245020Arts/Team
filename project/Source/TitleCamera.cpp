@@ -53,32 +53,41 @@ void TitleCamera::Update()
 	debugButton == 1 ? Update_Debug() : Update_Normal();
 }
 
+void TitleCamera::Update_Normal()
+{
+	const VECTOR3 POS_0 = VECTOR3(420, 190, 550); // 初期位置
+	const VECTOR3 POS_1 = VECTOR3(500, 200, 1500); // 1つ目のターゲットポジション
+	const VECTOR3 POS_2 = VECTOR3(0, 300, 1750); // 2つ目のターゲットポジション
+
+	const float RATIO = 0.5f; // 1つ目から2つ目のポジションに移動するまでの時間の比率(0～1)
+
+	titleCtrl = FindGameObject<TitleControl>();
+
+	float lerpProgress = titleCtrl->GetNowProgress();
+
+	VECTOR3 cameraPos = VZero;
+	if (lerpProgress < RATIO)
+	{
+		// 1つ目のポジションに移動
+		cameraPos.x = Easing::Lerp(POS_0.x, POS_1.x, lerpProgress / RATIO);
+		cameraPos.y = Easing::Lerp(POS_0.y, POS_1.y, lerpProgress / RATIO);
+		cameraPos.z = Easing::Lerp(POS_0.z, POS_1.z, lerpProgress / RATIO);
+	}
+	else
+	{
+		// 2つ目のポジションに移動
+		cameraPos.x = Easing::EaseOut(POS_1.x, POS_2.x, (lerpProgress - RATIO) / (1 - RATIO));
+		cameraPos.y = Easing::EaseOut(POS_1.y, POS_2.y, (lerpProgress - RATIO) / (1 - RATIO));
+		cameraPos.z = Easing::EaseOut(POS_1.z, POS_2.z, (lerpProgress - RATIO) / (1 - RATIO));
+	}
+	SetCameraPositionAndTarget_UpVecY(cameraPos, target + VECTOR3(0, 300, 0));
+}
+
 void TitleCamera::Update_Debug()
 {
 	Transform transform = *obj->GetTransform();
 	//SetCameraPositionAndTarget_UpVecY(transform.position, diffTarget);
 }
-
-void TitleCamera::Update_Normal()
-{
-	float lerpProgress = 0;
-	if (!titleCtrl)
-		titleCtrl = FindGameObject<TitleControl>();
-	lerpProgress = titleCtrl->progress;
-
-	if (lerpProgress > 1)
-	{
-		lerpProgress = 1;
-	}
-	
-	VECTOR3 transform = VZero;
-	transform.x = Easing::Lerp(420, 0, lerpProgress); // 420->0
-	transform.y = Easing::Lerp(190, 300, lerpProgress); // 190->300
-	transform.z = Easing::Lerp(550, 850, lerpProgress);//550->700
-
-	SetCameraPositionAndTarget_UpVecY(transform, target + VECTOR3(0, 300, 0));
-}
-
 
 void TitleCamera::Draw()
 {
@@ -128,11 +137,6 @@ void TitleCamera::PlayerSet(BaseObject* _pObj)
 		cameraComponent.cameraTransform->rotation.x = 30.0f * DegToRad;
 	}
 	
-	
-	
-	
-	
-
 	cameraComponent.shaker = obj->Component()->AddComponent<Shaker>();
 
 	//タイトルシーンの情報はここからとれる。（ボタンを押したときなどの）

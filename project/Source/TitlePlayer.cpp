@@ -27,7 +27,6 @@
 #include "TitleScene.h"
 #include "TitlePlayerIdol.h"
 #include "TitlePlayerMove.h"
-#include "Common/InputManager/InputManager.h"
 
 TitlePlayer::TitlePlayer()
 {
@@ -87,19 +86,14 @@ void TitlePlayer::Start(Object3D* _obj) {
 	playerCom.weapon = FindGameObject<WeaponManager>(); //
 	playerCom.blur = obj->Component()->GetComponent<MotionBlur>();
 
-	/*avoidStart = false;
-	justAvoidCanCounter = 0.0f;*/
 	collName = "p_attack";
 
 	using namespace ID;
-	//ステートのセット
-
 
 	playerCom.stateManager->NodeDrawReady();
 	playerCom.stateManager->SetComponent<TitlePlayer>(this);
 
 	playerCom.stateManager->StartState(StateID::PLAYER_WAIT_S);
-	/*redCounter = 0.0f;*/
 	//3DSoundのベースはプレイヤーに持たせる。
 	//playerCom.sound->Base3DSoundObject(obj);
 	
@@ -115,13 +109,15 @@ void TitlePlayer::RotationChange(VECTOR3 _angle, float _speed)
 	VECTOR3 target = _angle * MGetRotY(camera->GetCameraTransform()->rotation.y);
 	float dot = VDot(target.Normalize(), forward.Normalize());	//コサインの値が正面ベクトルとカメラの角度を計算
 	//内積を使って補正
-	if (dot >= cosf(_speed * DegToRad)) {
+	if (dot >= cosf(_speed * DegToRad))
+	{
 		float inRot = atan2f(target.x, target.z);
 		playerTransform->rotation.y = inRot;
 	}
-	else {
+	else
+	{
 		playerTransform->rotation.y = (VDot(right, target) > 0) ? playerTransform->rotation.y + _speed * DegToRad :
-			playerTransform->rotation.y - _speed * DegToRad;
+		playerTransform->rotation.y - _speed * DegToRad;
 	}
 }
 

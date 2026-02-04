@@ -50,7 +50,7 @@ TitleScene::TitleScene()
 	player->CreateTitlePlayer();
 	//enemy->PlayerObjPointer();
 	cameraManager->TitleParentObj("PLAYER");
-	//weapon->CreatePlayerWeapon();
+	weapon->CreatePlayerWeapon();
 	collManager->SetDrawOrder(-90000);
 	hierachy->SetDrawOrder(-100000);
 	sky->CreateSky();
