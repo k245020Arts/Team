@@ -24,7 +24,7 @@ TitleControl::TitleControl()
 	keyImage = Load::LoadImageGraph(Load::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
 	sound = FindGameObject<SoundManager>();
 	sound->TitleSceneLoad();
-	sound->PlaySceneLoad(); // 
+	sound->PlaySceneLoad(); //
 	sound->PlayBGM(Sound_ID::TITLE_BGM, true, true);
 	firstCounter = 1.0f;
 	pushCounter = 0.0f;
@@ -66,9 +66,14 @@ void TitleControl::Update()
 	}
 	else 
 	{
-		if (input->KeyInputDown("SceneChange")) // ‰Ÿ‚µ‚½‚ç
+		if (input->KeyInputDown("SceneChange") && progress == 0) // ‰Ÿ‚µ‚½‚ç
 		{
 			sound->PlaySe(Sound_ID::PUSH);
+			sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
+			//sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
+			sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
+			sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
+
 			player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
 		}
 

@@ -42,11 +42,9 @@ void TitlePlayerMove::Start()
 	//player->playerCom.sound->FeedInOut(Sound_ID::TITLE_BGM, 0.2f);
 
 	//音を鳴らす
-	volume = 200;
-
-	player->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
-	player->playerCom.sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
-	player->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
+	//player->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
+	//player->playerCom.sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
+	//player->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
 
 	//エフェクトの再生
 	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, Effect_ID::JUST_AVOID_EFFECT, 10.0f, false);
@@ -59,7 +57,7 @@ void TitlePlayerMove::Start()
 
 	cameraLeap = 0.02f;
 
-	player->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
+	//player->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
 
 	player->playerCom.anim->SetFrame(12.0f);
 	num = 0;
