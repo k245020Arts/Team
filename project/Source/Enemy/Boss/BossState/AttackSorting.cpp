@@ -3,11 +3,12 @@
 #include "../../../State/StateManager.h"
 #include "BossStatus.h"
 #include "../../../Common/Random.h"
+#include "../../../Common/Random.h"
 
 namespace {
 	const int ATTACK_KIND_MAX		= 6;
 	const int COMBO_ATTACK_KIND_MAX = 3;
-	enum COMBO_ATTACK
+	/*enum COMBO_ATTACK
 	{
 		NORMAL_COMBO1,
 		NORMAL_COMBO2,
@@ -19,7 +20,8 @@ namespace {
 		{NORMAL_COMBO2},
 		{JUMP_COMBO},
 		{RUN_COMBO},
-	};
+	};*/
+	//単発攻撃の種類
 	std::vector<StateID::State_ID> attackKind{
 		{StateID::BOSS_NORMAL_ATTACK1_S},
 		{StateID::BOSS_NORMAL_ATTACK2_S},
@@ -31,6 +33,26 @@ namespace {
 		{StateID::BOSS_NORMAL_ATTACK5_S},
 		{StateID::BOSS_NORMAL_ATTACK6_S},
 	};
+	struct ActionParam
+	{
+		StateID::State_ID id;
+		int priority;	//プライオリティ
+		int weight;		//重さ
+	};
+	std::vector<ActionParam> actions =
+	{
+		{StateID::BOSS_WALK,					10, 40},
+		{StateID::BOSS_NORMAL_ATTACK1_S,		10, 10},
+		{StateID::BOSS_NORMAL_ATTACK2_S,		10, 10},
+		{StateID::BOSS_NORMAL_ATTACK3_S,		10, 10},
+		{StateID::BOSS_NORMAL_ATTACK4_S,		10, 10},
+		{StateID::BOSS_NORMAL_ATTACK5_S,		30, 10},
+		{StateID::BOSS_NORMAL_ATTACK6_S,		30, 10},
+		{StateID::BOSS_SPECIAL_ATTACK1_S,		50, 30},
+		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	50, 30},
+		{StateID::BOSS_SPECIAL_ATTACK2_S,		50, 30},
+	};
+
 	//通常攻撃の重み
 	const std::vector<std::vector<double>> normalAttackParam{
 		{ 1.0,	1.0,	0.5,	0.0,	0.0,	0.0,	1.0,	1.0,	0.5 },
@@ -63,6 +85,7 @@ AttackSorting::AttackSorting()
 	jump		= false;
 	kind		= 0;
 
+	bossPriority = 0;
 }
 
 AttackSorting::~AttackSorting()
@@ -73,12 +96,11 @@ AttackSorting::~AttackSorting()
 void AttackSorting::Update()
 {
 	Boss* b = GetBase<Boss>();
-	if (b->maxAttack != -1) {
+
+	if (b->maxAttack != -1)
 		b->enemyBaseComponent.state->ChangeState(comboOrder[kind][attackNum - b->maxAttack]);
-	}
-	else {
-		b->enemyBaseComponent.state->ChangeState(attackKind[kind]);
-	}
+	else 
+		b->enemyBaseComponent.state->ChangeState(nextState/*attackKind[kind]*/);
 }
 
 void AttackSorting::Start()
@@ -86,36 +108,42 @@ void AttackSorting::Start()
 	animId = ID::B_IDOL;
 	EnemyStateBase::Start();
 	Boss* b = GetBase<Boss>();
-	if (b->maxAttack >= 0) {
+	/*if (b->maxAttack >= 0) {
 		b->maxAttack--;
 		if (b->maxAttack == -1) {
 			NormalAttackSelect();
 		}
 		b->comboFirstAttack = false;
 		return;
-	}
-	int maxAttack = b->bs->GetStatus().maxAttack;
-	int randam = GetRand(1);
+	}*/
+	/*int maxAttack = b->bs->GetStatus().maxAttack;
+	int randam = GetRand(1);*/
 	hp = b->Hp();
 	//コンボ攻撃をするか決める
 	float comboAttackRate = 0.0f;
+
 	switch (hp)
 	{
 	case Boss::MAX:
 		comboAttackRate = 0.0f;
+		bossPriority = 10;
 		break;
 	case Boss::EIGHT:
 		comboAttackRate = 0.2f;
+		bossPriority = 30;
 		break;
 	case Boss::FIVE:
 		comboAttackRate = 0.7f;
+		bossPriority = 50;
 		break;
 	case Boss::THREE:
 		comboAttackRate = 0.9f;
+		bossPriority = 80;
 		break;
 	}
 
-	bool combo = Random::GetBernoulli(comboAttackRate);
+	BuildTable(bossPriority);
+	/*bool combo = Random::GetBernoulli(comboAttackRate);
 	if (combo) {
 		std::vector<double> rand = comboAttackParam[hp];
 		VECTOR3 dist = b->obj->GetTransform()->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
@@ -130,23 +158,12 @@ void AttackSorting::Start()
 	}
 	else {
 		NormalAttackSelect();
-	}
-	
+	}*/
 }
 
 void AttackSorting::Finish()
 {
 
-}
-
-void AttackSorting::RandomAttack()
-{
-	Boss* b = GetBase<Boss>();
-	int random = GetRand(1);
-	if (random == 0)
-		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK1_S);
-	else if (random == 1)
-		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_NORMAL_ATTACK2_S);
 }
 
 void AttackSorting::NormalAttackSelect()
@@ -188,4 +205,28 @@ void AttackSorting::NormalAttackSelect()
 	}
 	kind = Random::GetWeightedIndex(rand);
 	b->maxAttack = -1;
+}
+
+void AttackSorting::BuildTable(int _priority)
+{
+	int totalWeight = 0;
+	for (auto& itr : actions)
+	{
+		if (itr.priority > _priority)
+			continue;
+		totalWeight += itr.weight;
+	}
+
+	//打てる技の合計からランダムな数字をだす
+	int r = GetRand(totalWeight - 1);
+
+	for (auto& itr : actions)
+	{
+		r -= itr.weight;
+		if (r < 0)
+		{
+			nextState = itr.id;
+			break;
+		}
+	}
 }

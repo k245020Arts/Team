@@ -17,6 +17,7 @@
 #include "../../GameManager/GameManager.h"
 #include "../Boss/BossState/BossIdol.h"
 #include "../Boss/BossState/BossRun.h"
+#include "../Boss/BossState/BossWalk.h"
 #include "../Boss/BossState/Attack/BossNormalAttack1.h"
 #include "../Boss/BossState/Attack/BossNormalAttack2.h"
 #include "../Boss/BossState/Attack/BossNormalAttack3.h"
@@ -227,6 +228,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossRun>("BossRun", StateID::BOSS_RUN_S);
 	enemyBaseComponent.state->CreateState<BossCoolTime>("BossCoolTime", StateID::BOSS_COOL_TIME_S);
 	enemyBaseComponent.state->CreateState<AttackSorting>("AttackSorting", StateID::ATTACK_SORTING_S);
+	enemyBaseComponent.state->CreateState<BossWalk>("BossWalk", StateID::BOSS_WALK);
 	enemyBaseComponent.state->CreateState<BossNormalAttack1>("BossNormalAttack1", StateID::BOSS_NORMAL_ATTACK1_S);
 	enemyBaseComponent.state->CreateState<BossNormalAttack2>("BossNormalAttack2", StateID::BOSS_NORMAL_ATTACK2_S);
 	enemyBaseComponent.state->CreateState<BossNormalAttack3>("BossNormalAttack3", StateID::BOSS_NORMAL_ATTACK3_S);

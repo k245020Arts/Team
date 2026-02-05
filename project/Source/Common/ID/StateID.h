@@ -28,6 +28,7 @@ namespace StateID{
         BOSS_RUN_S,
         BOSS_COOL_TIME_S,
         ATTACK_SORTING_S,
+        BOSS_WALK,
         BOSS_NORMAL_ATTACK1_S,
         BOSS_NORMAL_ATTACK2_S,
         BOSS_NORMAL_ATTACK3_S,
