@@ -19,13 +19,16 @@ public:
 
 	void AttackMoveStart();
 
+	void AgainAttackCollsion();
+	void AgainTimerSet(float _time,int _attackNum);
+
 protected:
 	float easingCount;
 	float beforeAngle;
 	float angle;
 	bool nextAttack;
 	bool nextAvoid;
-	Transform targetTrans;
+	
 	VECTOR3 dist;
 	VECTOR3 norm;
 	float distSize;
@@ -48,4 +51,9 @@ protected:
 	bool defalutTrail;
 	bool rockOn;
 
+	int attackCount;
+	float attackAgainStartCounter;
+	float attackAgainStartCounterMax;
+
+	int attackNum;
 };

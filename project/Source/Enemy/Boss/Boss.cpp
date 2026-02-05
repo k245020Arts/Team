@@ -389,7 +389,7 @@ void Boss::PlayerHit()
 	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 0.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 	//	break;
 	//default:
-	//	Debug::DebugLog("PlayerNoAttackState");
+	//	Debug::("PlayerNoAttackState");
 	//}
 	//EnemyDamageMove(dInfo);
 	//hit = true;
@@ -434,6 +434,7 @@ void Boss::PlayerHit()
 		switch (e.attackType)
 		{
 		case EnemyInformation::EnemyReaction::Type::Normal:
+			Debug::DebugLog("hitToPlayerBoss");
 			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne *e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);

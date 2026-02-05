@@ -9,6 +9,7 @@
 #include "../../../Component/MotionBlur/MotionBlur.h"
 #include "../../../Enemy/EnemyManager.h"
 #include "../../../Camera/Camera.h"
+#include "../../../Component/Collider/SphereCollider.h"
 
 PlayerAttackStateBase::PlayerAttackStateBase()
 {
@@ -29,7 +30,6 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	rockOn			= false;
 	hitDamage		= 0.0f;
 
-	targetTrans		= Transform();
 	dist			= VZero;
 	norm			= VZero;
 
@@ -37,6 +37,10 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 
 	rotation		= false;
 	defalutTrail	= true;
+	attackAgainStartCounter = 0.0f;
+	attackAgainStartCounterMax = 0.0f;
+
+	attackNum = 0;
 }
 
 PlayerAttackStateBase::~PlayerAttackStateBase()
@@ -47,8 +51,15 @@ void PlayerAttackStateBase::Update()
 {
 	Player* p = GetBase<Player>();
 	
-	if (p->playerCom.anim->AnimEventCan() && defalutTrail) {
-		p->playerCom.player->DrawTrail();
+	if (p->playerCom.anim->AnimEventCan()) {
+		if (defalutTrail) {
+			p->playerCom.player->DrawTrail();
+		}
+		attackAgainStartCounter -= Time::DeltaTimeRate();
+		if (attackAgainStartCounter <= 0.0f) {
+			attackAgainStartCounter = attackAgainStartCounterMax;
+			AgainAttackCollsion();
+		}
 		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
 	}
 	
@@ -107,21 +118,22 @@ void PlayerAttackStateBase::Start()
 	nextAvoid			= false;
 	p->playerCom.player->SetAvoidStart(false);
 	noStateChange		= false;
+
 	if (p->playerCom.targetObj != nullptr) {
-		targetTrans		= *(p->playerCom.targetObj->GetTransform());
+		p->attackTargetTrans		= *(p->playerCom.targetObj->GetTransform());
 	}
 	else {
 		Transform nearEnemyPos = p->playerCom.enemyManager->NearEnemyPos(p->playerTransform->position);
-		targetTrans				= nearEnemyPos;
-		//targetTrans.position = VECTOR3(0, 0, 1) * p->playerTransform->rotation;
+		p->attackTargetTrans				= nearEnemyPos;
+		//p->attackTargetTrans.position = VECTOR3(0, 0, 1) * p->playerTransform->rotation;
 	}
 	if (!p->playerCom.enemyManager->CameraInEnemy()) {
-		p->playerCom.camera->AttackEnemyFovChange(&targetTrans,1000.0f);
+		p->playerCom.camera->AttackEnemyFovChange(&p->attackTargetTrans,1000.0f);
 	}
 	
-	
+	AgainTimerSet(100.0f, 0);
 	//“G‚ÆƒvƒŒƒCƒ„[‚Ì‹——£‚ð‚Æ‚é
-	dist				= targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
+	dist				= p->attackTargetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
 	
 	VECTOR3 frontVector = VECTOR3(0.0f, 0.0f, 1.0f) * MGetRotY(p->playerTransform->rotation.y);
 	rockOn = false;
@@ -167,14 +179,64 @@ bool PlayerAttackStateBase::IsAttack()
 void PlayerAttackStateBase::AttackMoveStart()
 {
 	Player* p = GetBase<Player>();
-	if (dist.Size() >= 5000) {
+	//if (dist.Size() >= 5000) {
 		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
-		rotation = false;;
-		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));
-	}
-	else {
+		//rotation = false;;
+		//p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));
+	//}
+	//else {
 		//‹ß‚¢‚Æ“G‚Ì•ûŒü‚ÉŒü‚©‚Á‚ÄUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
 		rotation = true;
 		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
+	//}
+}
+
+void PlayerAttackStateBase::AgainAttackCollsion()
+{
+	Player* p = GetBase<Player>();
+
+	if (attackCount <= 0) {
+		return;
 	}
+
+	firstColl = true;
+	attackCount--;
+
+	//p->DeleteCollision();
+	/*if (attackCount % 2 == 0) {
+		p->playerCom.anim->Play(animId, 0.01f);
+		p->playerCom.anim->SetPlaySpeed(2.5f);
+	}
+	else {
+		p->playerCom.anim->Play(ID::P_ANIM_ATTACK3, 0.01f);
+		p->playerCom.anim->SetPlaySpeed(2.0f);
+	}
+	nextAttack = false;
+	p->playerCom.sound->RandamSe("P_AttackV", 4);
+	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);*/
+
+	//firstColl = false;
+	//p->playerCom.player->CollsionStart<SphereCollider>(CollsionInformation::SPHERE, collTrans);
+	//p->playerCom.player->SetShape(CollsionInformation::SPHERE);
+	//p->playerCom.sound->RandamSe("swordWind", 5);
+
+	p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("p_attack");
+
+	ColliderBase* collider = p->obj->Component()->AddComponent<SphereCollider>();
+	CollsionInfo info;
+
+	info.parentTransfrom = obj->GetTransform();
+	info.oneColl = true;
+	info.shape = CollsionInformation::SPHERE;
+	info.tag = CollsionInformation::Tag::P_ATTACK;
+	info.size = 1.0f;
+	collider->CollsionAdd(info, collTrans, "p_attack");
+}
+
+void PlayerAttackStateBase::AgainTimerSet(float _time, int _attackNum)
+{
+	attackNum = _attackNum;
+	attackCount = attackNum;
+	attackAgainStartCounter = _time;
+	attackAgainStartCounterMax = attackAgainStartCounter;
 }

@@ -197,6 +197,7 @@ void PlayerSpecialAttack::Finish()
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->noDamage = false;
 	p->obj->Component()->GetComponent<SphereCollider>()->CollsionRespown();
+	p->playerCom.meshRenderer2D->FeedOutDraw(0.5f);
 }
 
 void PlayerSpecialAttack::SpecialRotationChange()

@@ -31,6 +31,7 @@ void PlayerAttack2::Update()
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
 	if (!noStateChange) {
+		EnemyRotation();
 		//UŒ‚‚ÌŽž‚ÉŽŸ‚Ìƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚çŽŸ‚ÌUŒ‚
 		if (p->playerCom.InputManager->KeyInputDown("attack")) {
 			nextAttack = true;

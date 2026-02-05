@@ -25,7 +25,7 @@ StateManager::~StateManager()
 	state = nullptr;
 	stateInfo.clear();
 	ed::DestroyEditor(nodeWindow);
-	Debug::DebugLogPrintf(Debug::printfString("%s : size = %d", nodeName.c_str(), state.use_count()));
+	//Debug::DebugLogPrintf(Debug::printfString("%s : size = %d", nodeName.c_str(), state.use_count()));
 }
 
 void StateManager::Update()

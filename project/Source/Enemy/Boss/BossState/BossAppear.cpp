@@ -38,7 +38,7 @@ void BossAppear::Update()
 	}
 	if (b->enemyBaseComponent.camera->GetCutNum() == 5) {
 		if (!roar) {
-			b->enemyBaseComponent.anim->Play(ID::B_ROAR, 0.2f);
+			b->enemyBaseComponent.anim->Play(ID::B_ROAR_2, 0.2f);
 			roar = true;
 		}
 		

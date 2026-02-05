@@ -100,6 +100,9 @@ namespace ID {
 		Y_BUTTON,
 		DAMAGE_UI_BUTTON,
 		P_LEG_UP,
+		P_HEAVY_ATTACK,
+		P_HEAVY_CHARGE,
+
 
 		ID_MAX,
 	};

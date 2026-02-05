@@ -24,7 +24,6 @@ PlayerAttack5::PlayerAttack5()
 	hitDamage = 55.0f;
 	defalutTrail = true;
 	timer = 0.0f;
-	count = 0;
 }
 
 PlayerAttack5::~PlayerAttack5()
@@ -95,6 +94,7 @@ void PlayerAttack5::Update()
 
 
 	if (!noStateChange) {
+		EnemyRotation();
 		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
 			//p->playerCom.player->AvoidReady();
 			nextAvoid = true;
@@ -168,6 +168,7 @@ void PlayerAttack5::Start()
 	p->playerCom.physics->SetGravity(VZero);
 	//timer = 2.0f;
 	//count = ATTACK_NUMMAX;
+	AgainTimerSet(0.2f, 5);
 }
 
 void PlayerAttack5::Finish()
@@ -182,23 +183,10 @@ void PlayerAttack5::Finish()
 
 void PlayerAttack5::Again()
 {
-	Player* p = GetBase<Player>();
+	
 	PlayerAttackStateBase::Start();
 	/*if (distSize <= ATTACK_MOVE_DIST) {
 		p->playerCom.physics->SetVelocity(norm * distSize * 5.0f);
 	}*/
-	firstColl = true;
-	count--;
-
-	if (count % 2 == 0) {
-		p->playerCom.anim->Play(animId, 0.01f);
-		p->playerCom.anim->SetPlaySpeed(2.5f);
-	}
-	else {
-		p->playerCom.anim->Play(ID::P_ANIM_ATTACK3, 0.01f);
-		p->playerCom.anim->SetPlaySpeed(2.0f);
-	}
-	nextAttack = false;
-	p->playerCom.sound->RandamSe("P_AttackV", 4);
-	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
+	
 }

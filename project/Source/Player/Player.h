@@ -174,5 +174,7 @@ private:
 	VECTOR3 specialAttackCenterPos;
 	VECTOR3 specialAttackStartPos;
 
+	Transform attackTargetTrans;
+
 	
 };

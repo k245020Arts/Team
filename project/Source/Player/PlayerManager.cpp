@@ -38,7 +38,7 @@
 #include "../GameManager/GameManager.h"
 #include "PlayerState/PlayerWin.h"
 #include "PlayerState/PlayerBefore.h"
-#include "../Component/Animator/Anim2D.h"7
+#include "../Component/Animator/Anim2D.h"
 #include "../Screen.h"
 #include "../TitlePlayer.h"
 #include "../Player/PlayerState/PlayerBossAppear.h"
@@ -164,6 +164,7 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_WIN,						"P_WIN", false, 1.0f, 30.0f, 45.0f);
 	anim->AddFile(ID::IDType::PLAYER_WIN_IDOL,				"P_WINIDOL", true, 1.0f, 0.0f, 50.0f);
 	anim->AddFile(ID::IDType::P_LEG_UP,						"P_LEG_UP", false, 1.0f, 0.0f, 50.0f);
+	anim->AddFile(ID::IDType::P_HEAVY_ATTACK,				"P_HEAVY_ATTACK", false, 1.0f, 0.0f, 50.0f);
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);
@@ -321,14 +322,16 @@ void PlayerManager::CreateTitlePlayer()
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK2, "P_ATTACK02_M_1", false, 2.1f, 10.0f, 30.0f);
 	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1, "P_ATTACK11_M_1", false, 0.7f, 4.0f, 21.0f);
 	anim->AddFile(ID::IDType::P_ANIM_ATTACK3, "P_ATTACK03_M_1", false, 2.1f, 14.0f, 19.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK_5, "P_ATTACK05_M_1", false, 1.5f, 10.0f, 20.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK4, "P_ATTACK04_M_1", false, 3.1f, 30.0f, 42.0f);
+	anim->AddFile(ID::IDType::P_ANIM_ATTACK_5, "P_ATTACK05_M_1", false, 1.5f, 5.0f, 25.0f);
+	anim->AddFile(ID::IDType::P_ANIM_ATTACK4, "P_ATTACK04_M_1", false, 3.1f, 20.0f, 48.0f);
 	anim->AddFile(ID::IDType::P_DIE, "P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
 	anim->AddFile(ID::IDType::P_TURN_ANIM, "P_TURN1", false, 1.3f, 10.0f, 21.0f);
 	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM, "P_SPECIAL_ATTACK_2", false, 1.0f, 7.0f, 39.0f);
 	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, "P_SPECIAL_ATTACK_BEFORE", false, 1.2f, 7.0f, 39.0f);
 	anim->AddFile(ID::IDType::P_WIN, "P_WIN", false, 1.0f, 30.0f, 45.0f);
 	anim->AddFile(ID::IDType::PLAYER_WIN_IDOL, "P_WINIDOL", true, 1.0f, 0.0f, 100.0f);
+	anim->AddFile(ID::IDType::P_HEAVY_ATTACK, "P_HEAVY_ATTACK", false, 1.0f, 0.0f, 100.0f);
+	anim->AddFile(ID::IDType::P_HEAVY_CHARGE, "P_HEAVY_CHARGE", false, 1.0f, 0.0f, 100.0f);
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);

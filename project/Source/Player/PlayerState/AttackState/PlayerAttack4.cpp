@@ -31,6 +31,7 @@ void PlayerAttack4::Update()
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
 	if (!noStateChange) {
+		EnemyRotation();
 		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
 			//p->playerCom.player->AvoidReady();
 			nextAvoid = true;
@@ -80,6 +81,7 @@ void PlayerAttack4::Start()
 	//p->playerCom.shaker->ShakeStart(VECTOR3(20.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 0.4f);
 	//p->playerCom.controller->ControlVibrationStartFrame(100, 20);
 	p->playerCom.physics->SetGravity(PlayerInformation::BASE_GRAVITY);
+	AgainTimerSet(0.5f, 3);
 }
 
 void PlayerAttack4::Finish()

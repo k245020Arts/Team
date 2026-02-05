@@ -89,6 +89,7 @@ void PlayerAttack1::Start()
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
 	Player* p = GetBase<Player>();
+	//AgainTimerSet(0.0f, 0);
 	//p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(40000.0f, 0.0f, 40000.0f));
 }
 

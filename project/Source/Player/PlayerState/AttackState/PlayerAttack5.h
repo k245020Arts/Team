@@ -19,7 +19,7 @@ public:
 
 private:
 	float timer;
-	int count;
+	
 
 	const int ATTACK_NUMMAX = 2;
 };

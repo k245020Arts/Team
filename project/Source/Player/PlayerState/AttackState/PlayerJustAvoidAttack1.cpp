@@ -51,7 +51,7 @@ void PlayerJustAvoidAttack1::Update()
 		if (p->playerCom.InputManager->KeyInputDown("attack")) {
 			nextAttack = true;
 		}
-		dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
+		dist = p->attackTargetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
 		distSize = dist.Size();
 		if (distSize <= DISTANCE_MOVE && beforeAttack) {
 			p->playerCom.anim->SetPlaySpeed(0.8f);
@@ -106,14 +106,14 @@ void PlayerJustAvoidAttack1::Start()
 
 	noStateChange = false;
 	if (p->playerCom.hitObj != nullptr) {
-		targetTrans = *(p->playerCom.hitObj->GetTransform());
+		p->attackTargetTrans = *(p->playerCom.hitObj->GetTransform());
 	}
 	else {
-		targetTrans = Transform();
+		p->attackTargetTrans = Transform();
 	}
 	rockOn = true;
 
-	dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
+	dist = p->attackTargetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
 
 	//äpìxåvéZ
 	angle = atan2f(dist.x, dist.z);

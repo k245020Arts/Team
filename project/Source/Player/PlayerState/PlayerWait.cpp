@@ -45,7 +45,7 @@ void PlayerWait::Start()
 	
 	PlayerStateBase::Start();
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
-	
+	p->attackTargetTrans = Transform();
 }
 
 void PlayerWait::Finish()

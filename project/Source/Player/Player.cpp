@@ -91,6 +91,7 @@ Player::Player()
 	specialAttackStartPos		= VZero;
 	specialAttackBar			= 0.0f;
 	specialAttackBarMax			= 100.0f;
+	attackTargetTrans			= Transform();
 }
 //
 //Object2D* guage = new Object2D();
