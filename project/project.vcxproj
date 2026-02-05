@@ -270,6 +270,7 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\BossRun.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossStatus.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossThreat.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossWalk.h" />
     <ClInclude Include="Source\Enemy\EnemyBase.h" />
     <ClInclude Include="Source\Enemy\EnemyInformation.h" />
     <ClInclude Include="Source\Enemy\EnemyManager.h" />
@@ -456,6 +457,7 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossRoar.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossRun.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossThreat.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossWalk.cpp" />
     <ClCompile Include="Source\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Source\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\Enemy.cpp" />

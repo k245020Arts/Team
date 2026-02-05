@@ -16,6 +16,7 @@ public:
 	friend class BossCoolTime;
 	friend class BossIdol;
 	friend class BossRun;
+	friend class BossWalk;
 	friend class BossNormalAttack1;
 	friend class BossNormalAttack2;
 	friend class BossNormalAttack3;

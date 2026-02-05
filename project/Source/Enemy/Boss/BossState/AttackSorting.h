@@ -18,7 +18,12 @@ private:
 
 	void NormalAttackSelect();
 	//int AttackPriority();
-	void BuildTable(int currentPriority);
+	
+	/// <summary>
+	/// s“®‚ğŒˆ‚ß‚é
+	/// </summary>
+	/// <param name="_priority">¡‚Ìƒ{ƒX‚Ìó‹µ‚ğ“ü‚ê‚é</param>
+	void BuildTable(int _priority);
 
 	float coolTime;
 
@@ -28,12 +33,15 @@ private:
 	int kind;
 	int attackNum;
 
-	struct ActionRange
+	/*struct ActionRange
 	{
 		int min;
 		int max;
 		StateID::State_ID id;
 		ActionRange();
 	};
-	std::vector<ActionRange> table;
+	std::vector<ActionRange> table;*/
+
+	int bossPriority;//
+	StateID::State_ID nextState;
 };
