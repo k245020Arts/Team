@@ -34,6 +34,8 @@ public:
 	friend class PlayerWin;
 	friend class PlayerSpecialAttack;
 	friend class PlayerBossAppear;
+	friend class PlayerHeavyCharge;
+	friend class PlayerHeavyAttack;
 
 	Player();
 	~Player();
@@ -143,7 +145,7 @@ public:
 
 	void SpecialVarAdd(float _add);
 
-	
+	bool GetCharge() { return charge; }
 
 private:
 	PlayerInformation::CharaComponent playerCom;
@@ -175,6 +177,7 @@ private:
 	VECTOR3 specialAttackStartPos;
 
 	Transform attackTargetTrans;
+	bool charge;
 
 	
 };

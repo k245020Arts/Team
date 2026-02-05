@@ -534,6 +534,15 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossWalk.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerHeavyCharge.cpp">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerHeavyAttack.cpp">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera\CameraState\PlayerHeavyAttackCamera.cpp">
+      <Filter>PlayScene\Camera\CameraState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1123,6 +1132,15 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossState\BossWalk.h">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerHeavyCharge.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerHeavyAttack.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CameraState\PlayerHeavyAttackCamera.h">
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

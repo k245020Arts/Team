@@ -178,6 +178,7 @@
     <ClInclude Include="Source\Camera\CameraState\JustAvoidAttackCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\JustAvoidAttackHitCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\JustAvoidCamera.h" />
+    <ClInclude Include="Source\Camera\CameraState\PlayerHeavyAttackCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h" />
     <ClInclude Include="Source\Camera\CutSceneBox.h" />
     <ClInclude Include="Source\CharaBase\CharaBase.h" />
@@ -306,6 +307,8 @@
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttack4.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttack5.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttackStateBase.h" />
+    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerHeavyAttack.h" />
+    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerHeavyCharge.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack1.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerAvoid.h" />
@@ -372,6 +375,7 @@
     <ClCompile Include="Source\Camera\CameraState\JustAvoidAttackCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\JustAvoidAttackHitCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\JustAvoidCamera.cpp" />
+    <ClCompile Include="Source\Camera\CameraState\PlayerHeavyAttackCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.cpp" />
     <ClCompile Include="Source\Camera\CutSceneBox.cpp" />
     <ClCompile Include="Source\CharaBase\CharaBase.cpp" />
@@ -489,6 +493,8 @@
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttack4.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttack5.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttackStateBase.cpp" />
+    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerHeavyAttack.cpp" />
+    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerHeavyCharge.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack1.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerAvoid.cpp" />

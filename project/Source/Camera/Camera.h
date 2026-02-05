@@ -121,6 +121,7 @@ public:
 	friend class CameraEditorGui;
 	friend class PlayerSpecialAttackCamera;
 	friend class CutSceneCamera;
+	friend class PlayerHeavyAttackCamera;
 	
 	Camera();
 	~Camera();

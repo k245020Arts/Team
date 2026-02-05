@@ -20,6 +20,7 @@
 #include "CameraState/PlayerSpecialAttackCamera.h"
 #include "CutSceneBox.h"
 #include "../Component/UI/UIManager/UIManager.h"
+#include "CameraState/PlayerHeavyAttackCamera.h"
 
 Camera::Camera()
 {
@@ -183,6 +184,7 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.state->CreateState<FreeCamera>					("_FreeCamera", StateID::FREE_CAMERA_S);
 	cameraComponent.state->CreateState<PlayerSpecialAttackCamera>	("_PlayerSpecialAttackCamera", StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
 	cameraComponent.state->CreateState<CutSceneCamera>				("_CutSceneCamera", StateID::CUT_SCENE_CAMERA_S);
+	cameraComponent.state->CreateState<PlayerHeavyAttackCamera>		("_PlayerHeavyAttackCamera", StateID::PLAYER_HEAVY_CHARGE_CAMERA_S);
 
 	cameraComponent.state->NodeDrawReady();
 	cameraComponent.target.shaker = _obj->Component()->GetComponent<Shaker>();

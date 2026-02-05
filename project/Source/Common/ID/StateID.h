@@ -23,6 +23,8 @@ namespace StateID{
         PLAYER_WIN_STATE_S,
         PLAYER_BEFORE_S,
         PLAYER_BOSS_APPEAR_S,
+        PLAYER_HEAVY_CHARGE_S,
+        PLAYER_HEAVY_ATTACK_S,
 
         BOSS_IDOL_S,
         BOSS_RUN_S,
@@ -51,6 +53,7 @@ namespace StateID{
         FREE_CAMERA_S,
         PLAYER_SPECIAL_ATTACK_CAMERA_S,
         CUT_SCENE_CAMERA_S,
+        PLAYER_HEAVY_CHARGE_CAMERA_S,
 
         T_ENEMY_IDOL_S,
         T_ENEMY_RUN_S,

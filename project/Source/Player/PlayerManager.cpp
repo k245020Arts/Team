@@ -32,6 +32,8 @@
 #include "../Player/PlayerState/AttackState/playerAttack3.h"
 #include "../Player/PlayerState/AttackState/playerAttack4.h"
 #include "../Player/PlayerState/AttackState/playerAttack5.h"
+#include "../Player/PlayerState/AttackState/PlayerHeavyCharge.h"
+#include "../Player/PlayerState/AttackState/PlayerHeavyAttack.h"
 #include "../Player/PlayerState/PlayerAvoid.h"
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
@@ -140,6 +142,8 @@ void PlayerManager::CreatePlayer()
 	stateManager->CreateState<PlayerWin>("_PlayerWin", StateID::PLAYER_WIN_STATE_S);
 	stateManager->CreateState<PlayerBefore>("_PlayerBefore", StateID::PLAYER_BEFORE_S);
 	stateManager->CreateState<PlayerBossAppear>("_PlayerBossAppear", StateID::PLAYER_BOSS_APPEAR_S);
+	stateManager->CreateState<PlayerHeavyCharge>("_PlayerHeavyCharge", StateID::PLAYER_HEAVY_CHARGE_S);
+	stateManager->CreateState<PlayerHeavyAttack>("_PlayerHeavyAttack", StateID::PLAYER_HEAVY_ATTACK_S);
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),		"mixamorig:Hips");
@@ -164,7 +168,8 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_WIN,						"P_WIN", false, 1.0f, 30.0f, 45.0f);
 	anim->AddFile(ID::IDType::PLAYER_WIN_IDOL,				"P_WINIDOL", true, 1.0f, 0.0f, 50.0f);
 	anim->AddFile(ID::IDType::P_LEG_UP,						"P_LEG_UP", false, 1.0f, 0.0f, 50.0f);
-	anim->AddFile(ID::IDType::P_HEAVY_ATTACK,				"P_HEAVY_ATTACK", false, 1.0f, 0.0f, 50.0f);
+	anim->AddFile(ID::IDType::P_HEAVY_ATTACK,				"P_HEAVY_ATTACK", false, 1.0f, 5.0f, 40.0f);
+	anim->AddFile(ID::IDType::P_HEAVY_CHARGE,				"P_HEAVY_CHARGE", false, 2.0f, 0.0f, 50.0f);
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);

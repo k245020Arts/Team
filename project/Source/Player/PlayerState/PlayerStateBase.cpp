@@ -70,6 +70,9 @@ void PlayerStateBase::DefalutWalk()
 	if (p->playerCom.InputManager->KeyInputDown("attack")) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_ATTACK1_S);
 	}
+	if (p->playerCom.InputManager->KeyInputDown("heavyAttack")) {
+		p->playerCom.stateManager->ChangeState(StateID::PLAYER_HEAVY_CHARGE_S);
+	}
 	if (p->playerCom.InputManager->KeyInputDown("SpecialAttack")) {
 		if (p->CanSpecialAttack()) {
 			p->playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
