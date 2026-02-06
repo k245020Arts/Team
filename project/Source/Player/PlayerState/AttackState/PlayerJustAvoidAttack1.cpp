@@ -20,7 +20,7 @@ PlayerJustAvoidAttack1::PlayerJustAvoidAttack1()
 	//nextAttackID = ID::P_ANIM_ATTACK1;
 	nextAttackID = StateID::PLAYER_ATTACK1_S;
 	frontSpeed = 10000.0f;
-	hitDamage = 30.0f;
+	hitDamage = 200.0f;
 	defalutTrail = false;
 	attack = false;
 	count = 0;

@@ -18,7 +18,7 @@ PlayerAttack2::PlayerAttack2()
 	nextAttackID	= StateID::PLAYER_ATTACK3_S;
 	frontSpeed		= 7500.0f;
 	//frontSpeed = 0.0f;
-	hitDamage		= 15.0f;
+	hitDamage		= 150.0f;
 }
 
 PlayerAttack2::~PlayerAttack2()

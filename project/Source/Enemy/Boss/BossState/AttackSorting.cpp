@@ -141,7 +141,7 @@ void AttackSorting::Start()
 		bossPriority = 80;
 		break;
 	}
-
+	
 	BuildTable(bossPriority);
 	/*bool combo = Random::GetBernoulli(comboAttackRate);
 	if (combo) {
@@ -188,6 +188,7 @@ void AttackSorting::NormalAttackSelect()
 	default:
 		break;
 	}*/
+	
 	VECTOR3 dist = b->obj->GetTransform()->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 	float size = dist.Size();
 	if (size > 1400.0f) {

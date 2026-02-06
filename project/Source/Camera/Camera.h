@@ -173,6 +173,9 @@ public:
 
 	int GetCutNum() { return cutSceneIndex; }
 
+	void CameraPerspectiveShakeStart(float _power,float _time);
+	void CameraPerspectiveShakeFinish();
+
 private:
 
 	float timeTest;
@@ -205,4 +208,8 @@ private:
 	CutSceneBox* cutSceneBox;
 	bool cutSceneBoxDraw;
 	UIManager* uiManager;
+
+	float shakePower;
+	float shakeTime;
+	float keepFov;
 };

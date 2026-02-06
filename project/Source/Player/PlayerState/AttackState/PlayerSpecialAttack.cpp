@@ -30,7 +30,7 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	//TODO “–‚½‚è”»’è‚ð“®‚©‚È‚¢‚æ‚¤‚ÉV‚µ‚¢“–‚½‚è”»’è‚Ì¶¬
 	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(radius, 0, 0));
 	//frontSpeed = 1000.0f;
-	hitDamage = 3.0f;
+	hitDamage = 400.0f;
 	
 
 	moveNum = 0;
@@ -426,6 +426,7 @@ void PlayerSpecialAttack::ChargeUpdate()
 		//p->playerCom.anim->SetPlaySpeed(3.0f);
 		p->playerCom.shaker->ShakeFinish();
 		p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_FINAL_ATTACKV);
+		hitDamage = 1500.0f;
 	}
 }
 

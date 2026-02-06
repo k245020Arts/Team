@@ -51,6 +51,7 @@ void BossAppear::Update()
 				b->enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(0.0f, 100.0f, 0.0f), VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_ROAR, 2.0f);
 				b->enemyBaseComponent.sound->PlaySe(Sound_ID::BOSS_ROAR_VOICE);
 				b->enemyBaseComponent.sound->FeedInOut(Sound_ID::BOSS_BEFORE, 0.5f);
+				b->enemyBaseComponent.camera->CameraPerspectiveShakeStart(5.0f, 2.0f);
 			}
 
 		}

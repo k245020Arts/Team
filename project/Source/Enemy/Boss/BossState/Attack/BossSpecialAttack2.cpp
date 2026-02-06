@@ -107,6 +107,7 @@ void BossSpecialAttack2::Start()
 	Boss* b = GetBase<Boss>();
 	EnemyStateBase::Start();
 	BossAttackBase::BossStart();
+	
 	if (!b->comboFirstAttack) {
 		//b->enemyBaseComponent.anim->SetPlaySpeed(3.0f);
 		AttackStart();

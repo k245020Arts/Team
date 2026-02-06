@@ -22,7 +22,7 @@ PlayerAttack1::PlayerAttack1()
 	frontSpeed		= 5500.0f;
 	//frontSpeed		= 0.0f;
 	time			= 0.0f;
-	hitDamage		= 15.0f;
+	hitDamage		= 150.0f;
 }
 
 PlayerAttack1::~PlayerAttack1()

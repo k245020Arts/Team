@@ -7,6 +7,7 @@
 #include "../../../../Component/Collider/DountCollider.h"
 #include "../../../../Component/EnemyAttackObject/ShockWave/ShockWave.h"
 #include "../../../../Common/Sound/SoundManager.h"
+#include "../../../../Camera/Camera.h"
 
 BossSpecialSmallAttack1::BossSpecialSmallAttack1()
 {
@@ -67,6 +68,7 @@ void BossSpecialSmallAttack1::Update()
 
 				w->CreateWave(CollsionInformation::B_E_ATTACK, Transform(VZero, VZero, VOne), 50.0f, 50.0f);
 				b->enemyBaseComponent.sound->PlaySe(Sound_ID::GROUND);
+				b->enemyBaseComponent.camera->CameraPerspectiveShakeStart(1.0f, 0.4f);
 			}
 		}
 

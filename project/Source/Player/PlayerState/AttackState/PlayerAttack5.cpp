@@ -21,7 +21,7 @@ PlayerAttack5::PlayerAttack5()
 	nextAttackID = StateID::PLAYER_ATTACK1_S;
 	//frontSpeed = 500.0f;
 	frontSpeed = 0.0f;
-	hitDamage = 55.0f;
+	hitDamage = 550.0f;
 	defalutTrail = true;
 	timer = 0.0f;
 }

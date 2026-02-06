@@ -21,6 +21,7 @@
 #include "CutSceneBox.h"
 #include "../Component/UI/UIManager/UIManager.h"
 #include "CameraState/PlayerHeavyAttackCamera.h"
+#include "../Common/Random.h"
 
 Camera::Camera()
 {
@@ -61,6 +62,7 @@ Camera::Camera()
 	cutSceneBox							= new CutSceneBox();
 	cutSceneBoxDraw						= false;
 	uiManager							= FindGameObject<UIManager>();
+	keepFov								= fov;
 }
 
 Camera::~Camera()
@@ -93,6 +95,13 @@ void Camera::Update()
 			rockOn = false;
 		}
 		
+	}
+	if (shakeTime > 0.0f) {
+		shakeTime -= Time::DeltaTimeRate();
+		fov = Random::GetFloat(-shakePower, shakePower) + keepFov;
+	}
+	else {
+		fov = keepFov;
 	}
 }
 
@@ -357,4 +366,15 @@ void Camera::SleepTargetSet(int _stop, bool _sleep)
 	if (_stop & CutSceneSpece::ALL_ENEMY) {
 		cameraComponent.enemyManager->SleepAllEnemy(_sleep);
 	}
+}
+
+void Camera::CameraPerspectiveShakeStart(float _power, float _time)
+{
+	shakePower = _power * DegToRad;
+	shakeTime = _time;
+}
+
+void Camera::CameraPerspectiveShakeFinish()
+{
+	shakeTime = 0.0f;
 }

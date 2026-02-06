@@ -22,7 +22,7 @@ PlayerHeavyAttack::PlayerHeavyAttack()
 	frontSpeed = 4000.0f;
 	//frontSpeed		= 0.0f;
 	time = 0.0f;
-	hitDamage = 30.0f;
+	hitDamage = 300.0f;
 	chargeCount = 0.0f;
 	defalutTrail = true;
 }

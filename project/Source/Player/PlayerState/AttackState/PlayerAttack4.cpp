@@ -17,7 +17,7 @@ PlayerAttack4::PlayerAttack4()
 	collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	frontSpeed		= 5000.0f;
 	//frontSpeed		= 0.0f;
-	hitDamage		= 30.0f;
+	hitDamage		= 300.0f;
 	nextAttackID	= StateID::PLAYER_ATTACK5_S;
 }
 
