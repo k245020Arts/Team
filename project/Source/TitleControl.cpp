@@ -24,14 +24,15 @@ TitleControl::TitleControl()
 	keyImage = Load::LoadImageGraph(Load::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
 	sound = FindGameObject<SoundManager>();
 	sound->TitleSceneLoad();
-	sound->PlaySceneLoad(); // 
+	sound->PlaySceneLoad(); //
 	sound->PlayBGM(Sound_ID::TITLE_BGM, true, true);
 	firstCounter = 1.0f;
 	pushCounter = 0.0f;
 	exrate = 0.0f;
 	moveButton = 0.0f;
 	moveButton = 1.0f;
-
+	progress = 0.0f;
+	
 	Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
 	player = obj->Component()->GetComponent<TitlePlayer>();
 
@@ -45,6 +46,14 @@ TitleControl::~TitleControl()
 
 void TitleControl::Update()
 {
+	//プレイヤーの回避アニメーションが終わったら、シーンを遷移
+	if (progress >= 0.99f)
+	{
+		Time::ChangeDeltaRate(1);
+		FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
+	}
+
+
 	if (firstCounter > 0.0f) 
 	{
 		firstCounter -= Time::DeltaTimeRate();
@@ -57,30 +66,21 @@ void TitleControl::Update()
 	}
 	else 
 	{
-		// モデルが変わるまで変えない
-		const float TIME_CHANGE = 0.75f; // シーンが切り替わるまでの時間(秒)
-		const float TIME_CAMERA = 0.32f; // カメラが到着するまでの時間(秒)
-
-		if (input->KeyInputDown("SceneChange")) // 押したら
+		if (input->KeyInputDown("SceneChange") && progress == 0) // 押したら
 		{
 			sound->PlaySe(Sound_ID::PUSH);
-			player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
+			sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
+			//sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
+			sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
+			sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
 
-			pushCounter = TIME_CHANGE;
+			player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
 		}
 
 		if (pushCounter > 0.0f) // 押したあと
 		{
-			pushCounter -= Time::DeltaTimeRate();
-			if (pushCounter <= 0.0f) 
-			{
-				pushCounter = 0.0f;
-				Time::ChangeDeltaRate(1);
-				FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
-			}
 			float rate = pushCounter / 0.5f;
 			exrate = Easing::Sin90Cube(0.5f, 0.8f, 0.8f - rate);
-			progress = (TIME_CHANGE - pushCounter) / TIME_CAMERA;
 		}
 		else 
 		{
@@ -109,8 +109,17 @@ void TitleControl::Update()
 
 			exrate = Easing::EaseIn(0.4f, 0.5f, rate);
 		}
-
 	}
+}
+
+float TitleControl::GetNowProgress()
+{
+	return progress;
+}
+
+void TitleControl::SetNowProgress(float nowProgress)
+{
+	progress = nowProgress;
 }
 
 void TitleControl::Draw()
@@ -119,3 +128,4 @@ void TitleControl::Draw()
 	DrawGraph(750, 100, titleImage, true);
 	DrawRotaGraph(1000, 1000, (double)exrate,0.0,keyImage, true);
 }
+
