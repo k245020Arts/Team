@@ -27,4 +27,6 @@ private:
 	BlurScreen* blurScreen;
 	float startTimer;
 	float volume;
+
+	void Avoid(float _speed, float _speedMax, float cameraAngle);
 };

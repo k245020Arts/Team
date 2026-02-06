@@ -6,6 +6,7 @@
 //https://dxlib.xsrv.jp/dxfunc.html
 
 class TitleScene;
+class TitleControl;
 
 class TitleCamera : public CameraBase
 {
@@ -24,6 +25,8 @@ public:
 
 private:
 	TitleScene* title;
+	TitleControl* titleCtrl;
+
 	float cameraNear;
 	float cameraFar;
 	bool rockOn;

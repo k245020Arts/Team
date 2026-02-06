@@ -13,9 +13,7 @@ TitlePlayerIdol::~TitlePlayerIdol()
 
 void TitlePlayerIdol::Update()
 {
-	//‚±‚ÌŠÖ”‚ÅtitlePlayer‚Ìî•ñ‚ğ“Ç‚Ş
-	//private‚Ì•Ï”‚ğ‚¢‚¶‚è‚½‚¢‚Æ‚«‚ÍtitlePlayer.h‚Åfriend Class‚ğg‚¢İ’è
-	TitlePlayer* player = GetBase<TitlePlayer>();
+	obj->GetTransform()->position = firstPos;
 }
 
 void TitlePlayerIdol::Draw()
@@ -24,12 +22,14 @@ void TitlePlayerIdol::Draw()
 
 void TitlePlayerIdol::Start()
 {
-	//PlayerStateBase::Start();
 	TitlePlayer* player = GetBase<TitlePlayer>();
 	player->playerCom.anim->Play(animId, blendSpeed);
 	noStateChange = false;
+
+	firstPos = obj->Component()->GetComponent<Transform>()->position;
 }
 
 void TitlePlayerIdol::Finish()
 {
 }
+

@@ -41,8 +41,6 @@ TitlePlayer::~TitlePlayer()
 
 void TitlePlayer::Update()
 {
-	obj->GetTransform()->position = VZero;
-	obj->GetTransform()->position.y = 30;
 }
 
 void TitlePlayer::Draw()
@@ -56,9 +54,9 @@ void TitlePlayer::Start(Object3D* _obj) {
 	obj = _obj;
 	playerCom.stateManager = obj->Component()->GetComponent<StateManager>();
 
+	// ステート関連
 	playerCom.stateManager->CreateState<TitlePlayerIdol>("_TitleIdol", StateID::PLAYER_WAIT_S);
 	playerCom.stateManager->CreateState<TitlePlayerMove>("_TitleMove", StateID::PLAYER_AVOID_S);
-	//playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
 
 	ComponentManager* c = obj->Component();
 
@@ -73,35 +71,26 @@ void TitlePlayer::Start(Object3D* _obj) {
 	playerCom.controller = FindGameObject<ControllerInputManager>();
 	playerCom.keyboard = FindGameObject<KeyboardInputManager>();
 
+	VECTOR3 firstPos = VECTOR3(0, 30, 0);
+	obj->GetTransform()->position = firstPos;
 	playerTransform = obj->GetTransform();
 
 	playerCom.anim = obj->Component()->GetComponent<Animator>();
 	playerCom.anim2D = obj->Component()->GetComponent<Anim2D>();
 	playerCom.anim->Play(ID::P_ANIM_RUN);
 	playerCom.color = obj->Component()->GetComponent<Color>();
-	//playerCom.targetObj = FindGameObjectWithTag<Object3D>("ENEMY");
-	playerCom.targetObj = nullptr;
-	playerCom.hitObj = nullptr;
 	playerCom.shaker = c->GetComponent<Shaker>();
 
 	playerCom.effect = FindGameObject<EffectManager>();
 	playerCom.sound = FindGameObject<SoundManager>();
 
-	playerCom.weapon = FindGameObject<WeaponManager>();
+	playerCom.weapon = FindGameObject<WeaponManager>(); //
 	playerCom.blur = obj->Component()->GetComponent<MotionBlur>();
-
-	/*playerCom.gameManager = FindGameObject<GameManager>();
-	playerCom.enemyManager = FindGameObject<EnemyManager>();*/
-
-	//playerCom.specialAttackButton = FindGameObjectWithTag<Object2D>("XButton")->Component()->GetComponent<ButtonUI>();
 
 	/*avoidStart = false;
 	justAvoidCanCounter = 0.0f;*/
-	attackColl = nullptr;
 	collName = "p_attack";
-	//playerCom.physics->SetVelocity(VECTOR3(10.0f, 5.0f, 0.0f));
 
-	//physics->SetInterect(VECTOR3(5.0f, -1.0f, 0.0f),0.1);
 	using namespace ID;
 	//ステートのセット
 

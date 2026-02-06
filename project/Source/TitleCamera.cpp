@@ -7,13 +7,14 @@
 #include "Component/Shaker/Shaker.h"
 #include "Common/Easing.h"
 #include "TitleScene.h"
+#include "TitleControl.h"
 
 TitleCamera::TitleCamera()
 {
 	reap = 0.0f;
 	reap = CameraInformation::DEFALUT_RAPE;
 
-	defalutDistance = VECTOR3(0.0f, 0.0f, -800.0f);
+	defalutDistance = VECTOR3(0.0f, 0.0f, -800.0f); // 800
 	currentDistance = defalutDistance;
 	
 	debugId = 33;
@@ -47,9 +48,6 @@ void TitleCamera::Update()
 	Follow();
 	
 	SetCameraNearFar(cameraNear, cameraFar);
-	/*SetFogEnable(true);
-	SetFogStartEnd(nearFog, farFog);
-	SetFogColor(137, 189, 222);*/
 	SetupCamera_Perspective(fov);
 
 	debugButton == 1 ? Update_Debug() : Update_Normal();
@@ -63,10 +61,20 @@ void TitleCamera::Update_Debug()
 
 void TitleCamera::Update_Normal()
 {
-	VECTOR3 transform = cameraComponent.cameraTransform->position;
-	transform.x = 420;
-	transform.y -= 300;
-	transform.z = 550;
+	float lerpProgress = 0;
+	if (!titleCtrl)
+		titleCtrl = FindGameObject<TitleControl>();
+	lerpProgress = titleCtrl->progress;
+
+	if (lerpProgress > 1)
+	{
+		lerpProgress = 1;
+	}
+	
+	VECTOR3 transform = VZero;
+	transform.x = Easing::Lerp(420, 0, lerpProgress); // 420->0
+	transform.y = Easing::Lerp(190, 300, lerpProgress); // 190->300
+	transform.z = Easing::Lerp(550, 850, lerpProgress);//550->700
 
 	SetCameraPositionAndTarget_UpVecY(transform, target + VECTOR3(0, 300, 0));
 }

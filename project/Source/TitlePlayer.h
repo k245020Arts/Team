@@ -13,6 +13,7 @@ class TitlePlayer: public CharaBase
 {
 public:
 
+	friend class TitleControl;
 	friend class TitlePlayerIdol;
 	friend class TitlePlayerMove;
 
