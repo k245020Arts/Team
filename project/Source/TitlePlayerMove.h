@@ -5,6 +5,7 @@
 class TitleControl;
 class TitlePlayer;
 class BlurScreen;
+class Fead;
 
 class TitlePlayerMove : public PlayerStateBase
 {
@@ -15,23 +16,14 @@ public:
 	void Draw() override;
 	void Start() override;
 	void Finish()override;
-
-	float progress;
 private:
 	TitleControl* titleCtrl;
 	TitlePlayer* player;
-	static const int SHADOW_NUM_MAX = 10;
-	int shadowNum;
-	float easingCount;
-	float cameraAngle;
+	Fead* fead;
 	VECTOR3 cameraRotation;
-	float cameraLeap;
-	bool attack;
-	int num;
 
-	BlurScreen* blurScreen;
-	float startTimer;
-	float volume;
+	float progress;
 
+	//BlurScreen* blurScreen;
 	void Avoid(float speed);
 };

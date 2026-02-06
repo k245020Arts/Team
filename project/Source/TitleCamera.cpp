@@ -57,7 +57,7 @@ void TitleCamera::Update_Normal()
 {
 	const VECTOR3 POS_0 = VECTOR3(420, 190, 550); // 初期位置
 	const VECTOR3 POS_1 = VECTOR3(500, 200, 1500); // 1つ目のターゲットポジション
-	const VECTOR3 POS_2 = VECTOR3(0, 300, 1750); // 2つ目のターゲットポジション
+	const VECTOR3 POS_2 = VECTOR3(0, 300, 1800); // 2つ目のターゲットポジション 1750
 
 	const float RATIO = 0.2f; // 1つ目から2つ目のポジションに移動するまでの時間の比率(0～1)
 
@@ -80,7 +80,7 @@ void TitleCamera::Update_Normal()
 		cameraPos.y = Easing::EaseOut(POS_1.y, POS_2.y, (lerpProgress - RATIO) / (1 - RATIO));
 		cameraPos.z = Easing::EaseOut(POS_1.z, POS_2.z, (lerpProgress - RATIO) / (1 - RATIO));
 	}
-	SetCameraPositionAndTarget_UpVecY(cameraPos, target + VECTOR3(0, 300, 0));
+	SetCameraPositionAndTarget_UpVecY(cameraPos, VECTOR3(0, 330, 0)/*target + VECTOR3(0, 300, 0)*/);
 }
 
 void TitleCamera::Update_Debug()

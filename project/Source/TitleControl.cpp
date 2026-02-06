@@ -14,6 +14,7 @@
 #include "../Source/Common/Sound/SoundManager.h"
 #include "../Source/Common/Easing.h"
 #include "State/StateManager.h"
+#include "Screen.h"
 
 TitleControl::TitleControl()
 {
@@ -24,7 +25,6 @@ TitleControl::TitleControl()
 	keyImage = Load::LoadImageGraph(Load::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
 	sound = FindGameObject<SoundManager>();
 	sound->TitleSceneLoad();
-	sound->PlaySceneLoad(); //
 	sound->PlayBGM(Sound_ID::TITLE_BGM, true, true);
 	firstCounter = 1.0f;
 	pushCounter = 0.0f;
@@ -53,6 +53,19 @@ void TitleControl::Update()
 		FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
 	}
 
+	if (input->KeyInputDown("SceneChange") && progress == 0) // ‰Ÿ‚µ‚½‚ç
+	{
+		sound->TitleSceneLoad();
+
+		sound->PlaySe(Sound_ID::PUSH);
+		sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
+		//sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
+		sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
+		sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
+
+		player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
+	}
+
 
 	if (firstCounter > 0.0f) 
 	{
@@ -66,17 +79,6 @@ void TitleControl::Update()
 	}
 	else 
 	{
-		if (input->KeyInputDown("SceneChange") && progress == 0) // ‰Ÿ‚µ‚½‚ç
-		{
-			sound->PlaySe(Sound_ID::PUSH);
-			sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
-			//sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
-			sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
-			sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
-
-			player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
-		}
-
 		if (pushCounter > 0.0f) // ‰Ÿ‚µ‚½‚ ‚Æ
 		{
 			float rate = pushCounter / 0.5f;
@@ -90,9 +92,7 @@ void TitleControl::Update()
 				moveButton -= Time::DeltaTimeRate();
 				rate = moveButton / 1.0f;
 				if (moveButton <= 0.0f) 
-				{
 					moveButton = -1.0f;
-				}
 
 			}
 			else if (moveButton < 0.0f) 
@@ -101,13 +101,9 @@ void TitleControl::Update()
 				rate = moveButton / -1.0f;
 				rate = 1 - rate;
 				if (moveButton >= 0.0f) 
-				{
 					moveButton = 1.0f;
-				}
-
 			}
-
-			exrate = Easing::EaseIn(0.4f, 0.5f, rate);
+			exrate = Easing::EaseInOut(0.4f, 0.5f, rate);
 		}
 	}
 }
@@ -126,6 +122,8 @@ void TitleControl::Draw()
 {
 	/*DrawGraph(0, 0, hImage, true);*/
 	DrawGraph(750, 100, titleImage, true);
-	DrawRotaGraph(1000, 1000, (double)exrate,0.0,keyImage, true);
+	if (progress > 0)
+		return;
+	DrawRotaGraph(Screen::WIDTH / 2, 850, (double)exrate * 2,0.0,keyImage, true);
 }
 

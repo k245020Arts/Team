@@ -16,13 +16,14 @@
 #include "Common/BlurScreen.h"
 #include "Common/InputManager/InputManager.h"
 #include "State/StateManager.h"
+#include "Common/Fead/Fead.h"
 
 
 TitlePlayerMove::TitlePlayerMove()
 {
 	animId = ID::P_ANIM_AVOID;
 	string = Function::GetClassNameC<TitlePlayerMove>();;
-	blurScreen = FindGameObject<BlurScreen>();
+	//blurScreen = FindGameObject<BlurScreen>();
 	titleCtrl = FindGameObject<TitleControl>();
 }
 
@@ -34,33 +35,24 @@ void TitlePlayerMove::Start()
 {
 	player = GetBase<TitlePlayer>();
 	player->playerCom.anim->Play(animId, blendSpeed);
-	noStateChange = false;
-
-	easingCount = 0.0f;
 
 	player->playerCom.anim->SetPlaySpeed(1.0f);
 	//player->playerCom.sound->FeedInOut(Sound_ID::TITLE_BGM, 0.2f);
 
-	//音を鳴らす
-	//player->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
-	//player->playerCom.sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
-	//player->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
-
 	//エフェクトの再生
 	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, Effect_ID::JUST_AVOID_EFFECT, 10.0f, false);
 	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 150, 0), VZero, VOne * 1.0f), obj, Effect_ID::PLAYER_FLASH, 10.0f);
-	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, -100), VZero, VOne), obj, Effect_ID::PLAYER_AURA, 0.0f);
+	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, -100), VZero, VOne), obj, Effect_ID::PLAYER_AURA, 1.0f);
+	//player->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_AURA, 3.0f);
 
-	//プレイヤーを青くする
-	//player->playerCom.color->setRGB(Color::Rgb(0, 0, 255, 255));
-	player->playerCom.controller->ControlVibrationStartFrame(50, 10);
+	//コントローラーを振動させる
+	//player->playerCom.controller->ControlVibrationStartFrame(50, 10);
 
-	cameraLeap = 0.02f;
-
-	//player->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
+	fead = FindGameObject<Fead>();
 
 	player->playerCom.anim->SetFrame(12.0f);
-	num = 0;
+
+	//fead->FeadIn(0.8f, 0XFFFFFF, Easing::EaseIn<int>);
 }
 
 
@@ -83,8 +75,8 @@ void TitlePlayerMove::Update()
 	Time::ChangeDeltaRate(nowTimescalse);
 
 	//進捗が一定以上なら、ブラースクリーンを表示させる
-	if (progress >= 0.75f)
-		blurScreen->Play(1.0f, 0.1f);
+	//if (progress >= 0.95f)
+	//	blurScreen->Play(1.0f, 0.1f);
 
 	//アニメーションが終わったら、進捗を強制的に1に変更
 	if (player->playerCom.anim->IsFinish())

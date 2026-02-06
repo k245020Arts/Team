@@ -125,6 +125,9 @@ void SoundManager::TitleSceneLoad()
 {
 	SoundLoad(Sound_ID::TITLE_BGM, "titleBGM", ".wav", 150);
 	SoundLoad(Sound_ID::PUSH, "titlePush (1)", ".wav", 250);
+	SoundLoad(Sound_ID::SOUND_ID::JUST_AVOID_SOUND, "justAvoid10", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::JUST_AVOID_SUCCESS, "success", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::V_P_JUST_AVOID, "P_JustAvoidV", ".wav", 255);
 }
 
 void SoundManager::CommonSceneLoad()
