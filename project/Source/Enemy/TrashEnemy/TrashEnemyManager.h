@@ -38,8 +38,8 @@ public:
 private:
 	std::list<TrashEnemy*> enemies;
 	const int ENEMIESMAX = 30;
-	const int ATK_COUNTER_MIN = 3;
-	const int ATK_COUNTER_MAX = 5;
+	const int ATK_COUNTER_MIN = 1;
+	const int ATK_COUNTER_MAX = 3;
 	
 	struct WayPoint
 	{

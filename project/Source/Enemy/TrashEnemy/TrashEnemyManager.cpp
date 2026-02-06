@@ -299,7 +299,7 @@ void TrashEnemyManager::CooperateAttackMove(TrashEnemy* _enemy)
 void TrashEnemyManager::WayPointOffset()
 {
 	const int waypointMax = 8;
-	const float RANGE = 1200.0f;// プレイヤー中心の半径
+	const float RANGE = 1500.0f;// プレイヤー中心の半径
 
 	for (int i = 0; i < waypointMax; i++)
 	{
