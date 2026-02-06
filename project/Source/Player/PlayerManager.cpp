@@ -139,11 +139,11 @@ void PlayerManager::CreatePlayer()
 	stateManager->CreateState<PlayerDie>("PlayerDie", StateID::PLAYER_DIE_S);
 	stateManager->CreateState<PlayerTurn>("PlayerTurn", StateID::PLAYER_TURN_S);
 	stateManager->CreateState<PlayerSpecialAttack>("PlayerSpecialAttack", StateID::PLAYER_SPECIAL_ATTACK_S);
-	stateManager->CreateState<PlayerWin>("_PlayerWin", StateID::PLAYER_WIN_STATE_S);
-	stateManager->CreateState<PlayerBefore>("_PlayerBefore", StateID::PLAYER_BEFORE_S);
-	stateManager->CreateState<PlayerBossAppear>("_PlayerBossAppear", StateID::PLAYER_BOSS_APPEAR_S);
-	stateManager->CreateState<PlayerHeavyCharge>("_PlayerHeavyCharge", StateID::PLAYER_HEAVY_CHARGE_S);
-	stateManager->CreateState<PlayerHeavyAttack>("_PlayerHeavyAttack", StateID::PLAYER_HEAVY_ATTACK_S);
+	stateManager->CreateState<PlayerWin>("PlayerWin", StateID::PLAYER_WIN_STATE_S);
+	stateManager->CreateState<PlayerBefore>("PlayerBefore", StateID::PLAYER_BEFORE_S);
+	stateManager->CreateState<PlayerBossAppear>("PlayerBossAppear", StateID::PLAYER_BOSS_APPEAR_S);
+	stateManager->CreateState<PlayerHeavyCharge>("PlayerHeavyCharge", StateID::PLAYER_HEAVY_CHARGE_S);
+	stateManager->CreateState<PlayerHeavyAttack>("PlayerHeavyAttack", StateID::PLAYER_HEAVY_ATTACK_S);
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),		"mixamorig:Hips");

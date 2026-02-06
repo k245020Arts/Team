@@ -84,6 +84,7 @@ void PlayerHeavyAttack::Start()
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
 	chargeCount = 1.0f;
+	AgainTimerSet(0.2f, 5);
 }
 
 void PlayerHeavyAttack::Finish()

@@ -202,7 +202,6 @@ void PlayerAttackStateBase::AgainAttackCollsion()
 	firstColl = true;
 	attackCount--;
 
-	//p->DeleteCollision();
 	/*if (attackCount % 2 == 0) {
 		p->playerCom.anim->Play(animId, 0.01f);
 		p->playerCom.anim->SetPlaySpeed(2.5f);
@@ -214,13 +213,14 @@ void PlayerAttackStateBase::AgainAttackCollsion()
 	nextAttack = false;
 	p->playerCom.sound->RandamSe("P_AttackV", 4);
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);*/
+	Debug::DebugLog("collsionCreate");
+	p->DeleteCollision();
+	firstColl = false;
+	p->playerCom.player->CollsionStart<SphereCollider>(CollsionInformation::SPHERE, collTrans);
+	p->playerCom.player->SetShape(CollsionInformation::SPHERE);
+	p->playerCom.sound->RandamSe("swordWind", 5);
 
-	//firstColl = false;
-	//p->playerCom.player->CollsionStart<SphereCollider>(CollsionInformation::SPHERE, collTrans);
-	//p->playerCom.player->SetShape(CollsionInformation::SPHERE);
-	//p->playerCom.sound->RandamSe("swordWind", 5);
-
-	p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("p_attack");
+	/*p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("p_attack");
 
 	ColliderBase* collider = p->obj->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -230,7 +230,7 @@ void PlayerAttackStateBase::AgainAttackCollsion()
 	info.shape = CollsionInformation::SPHERE;
 	info.tag = CollsionInformation::Tag::P_ATTACK;
 	info.size = 1.0f;
-	collider->CollsionAdd(info, collTrans, "p_attack");
+	collider->CollsionAdd(info, collTrans, "p_attack");*/
 }
 
 void PlayerAttackStateBase::AgainTimerSet(float _time, int _attackNum)

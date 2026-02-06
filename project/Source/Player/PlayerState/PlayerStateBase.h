@@ -9,9 +9,9 @@ class PlayerStateBase : public StateBase
 {
 public:
 	PlayerStateBase();
-	~PlayerStateBase();
-	void Update() override;
-	void Draw()override;
+	virtual~PlayerStateBase();
+	virtual void Update() override;
+	virtual void Draw()override;
 
 	virtual void Start()override;
 

@@ -6,13 +6,13 @@ class PlayerAttackStateBase : public PlayerStateBase
 public:
 
 	PlayerAttackStateBase();
-	~PlayerAttackStateBase();
+	virtual ~PlayerAttackStateBase();
 
 	virtual void Update()override;
 
 	virtual void EnemyRotation();
-	void Start()override;
-	void Finish() override;
+	virtual void Start()override;
+	virtual void Finish() override;
 
 	float GetHitDamage() { return hitDamage; }
 	bool IsAttack();
