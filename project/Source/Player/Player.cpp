@@ -131,7 +131,7 @@ void Player::Update()
 		}
 	}
 
-	if (playerCom.keyboard->GetIsKeyboardPut(KEY_INPUT_2)){
+	if (playerCom.keyboard->GetIsKeyboardPut(KEY_INPUT_B)){
 		playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
 	}
 	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_4)) {
@@ -141,8 +141,11 @@ void Player::Update()
 		//playerCom.camera->CutSceneChangeState("test");
 		hp -= 5.0f;
 	}
-	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_8)) {
-		noDamage = false;
+	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_M)) {
+		noDamage = true;
+	}
+	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_N)) {
+		noDamage = true;
 	}
 
 	//必殺技が発動できればUIを不透明度を上げる。
