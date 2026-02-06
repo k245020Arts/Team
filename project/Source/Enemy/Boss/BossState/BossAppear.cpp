@@ -8,6 +8,8 @@
 #include "../../../GameManager/GameManager.h"
 #include "../../../Common/Fead/Fead.h"
 #include "../../../Common/Effect/EffectManager.h"
+#include "../../../Common/InputManager/InputManager.h"
+#include "../../../Common/InputManager/ControllerInputManager.h"
 #include "../../../Common/Sound/SoundManager.h"
 #include "../../../Component/UI/UIManager/UIManager.h"
 
@@ -40,6 +42,7 @@ void BossAppear::Update()
 		if (!roar) {
 			b->enemyBaseComponent.anim->Play(ID::B_ROAR_2, 0.2f);
 			roar = true;
+			b->enemyBaseComponent.anim->AnimEventReset();
 		}
 		
 	}
@@ -52,6 +55,7 @@ void BossAppear::Update()
 				b->enemyBaseComponent.sound->PlaySe(Sound_ID::BOSS_ROAR_VOICE);
 				b->enemyBaseComponent.sound->FeedInOut(Sound_ID::BOSS_BEFORE, 0.5f);
 				b->enemyBaseComponent.camera->CameraPerspectiveShakeStart(5.0f, 2.0f);
+				b->enemyBaseComponent.control->ControlVibrationStartFrame(500, 120);
 			}
 
 		}
@@ -69,6 +73,7 @@ void BossAppear::Update()
 			b->enemyBaseComponent.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::MIX_SHAKE, false, 1.0f);
 			feedInFinish = false;
 			b->enemyBaseComponent.sound->PlaySe(Sound_ID::ENEMY_FALL);
+			b->enemyBaseComponent.control->ControlVibrationStartFrame(200, 60);
 		}
 		if (!b->enemyBaseComponent.camera->IsCutScene()) {
 			

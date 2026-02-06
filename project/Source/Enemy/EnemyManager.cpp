@@ -160,7 +160,7 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_S_ATTACK1_SMALL, "B_SATTACK1_SAMLL", false, 1.3f, 40.0f, 55.0f);
 	anim->AddFile(ID::BOSS_DIE, "B_DIE", false, 1.2f);
 	anim->AddFile(ID::B_ROAR, "B_ROAR", false, 1.0f, 30.0f, 40.0f);
-	anim->AddFile(ID::B_ROAR_2, "B_ROAR3", false, 0.7f, 80.0f, 120.0f);
+	anim->AddFile(ID::B_ROAR_2, "B_ROAR3", false, 0.7f, 30.0f, 120.0f);
 	anim->AddFile(ID::B_DUSH, "B_RUN", true, 1.2f, 30.0f, 40.0f);
 	anim->AddFile(ID::B_THREAT, "B_THREAT", false, 1.2f, 10.0f, 70.0f);
 	anim->AddFile(ID::BOSS_DAMAGE, "B_DAMAGE", false, 1.8f, 10.0f, 70.0f);
