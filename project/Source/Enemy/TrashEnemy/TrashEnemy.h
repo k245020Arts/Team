@@ -90,8 +90,7 @@ private:
 	//_pos‚Ì•ûŒü‚ÉŒü‚­
 	void LookTarget(VECTOR3 _pos);
 	bool IsPlayerSpecialMove();
-	//ŒvŽZŽ®
-	float DamageCalculation(float _damage);
+	
 
 	bool active;
 	//‚Ç‚±‚ÉŒü‚­‚©

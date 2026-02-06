@@ -8,6 +8,8 @@
 #include "../Common/Memory/MemoryCount.h"
 #include "EnemyManager.h"
 #include "../Common/LoadManager.h"
+#include "../Component/UI/EnemyDamageUI.h"
+#include "../Component/ComponentManager.h"
 
 EnemyBase::EnemyBase()
 {
@@ -84,4 +86,19 @@ void EnemyBase::EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info)
 {
 	//“G‚ªƒ_ƒ[ƒW‚ðŽó‚¯‚½Žž‚Ì‚Á”ò‚Î‚µ—Ê‚ÌÝ’è
 	enemyBaseComponent.physics->SetVelocity(_info.speed * MGetRotY(enemyBaseComponent.playerObj->GetTransform()->rotation.y));
+}
+
+float EnemyBase::DamageCalculation(VECTOR3 _pos, float _damage,float _defense, float deviation)
+{
+	float damage = _damage + (_damage * 2) / (_defense / 4);
+
+	damageNum = new Object2D();
+
+	damageNum->Init(Transform(VZero, VZero, VOne), "damageNum");
+	damageNum->Component()->AddComponent<EnemyDamageUI>()->
+		SetInformation(_pos+ VECTOR3(GetRand(100),GetRand(100),GetRand(100))/*VECTOR3(GetRand(400) - 200, 800 + GetRand(400) - 200, GetRand(400) - 200)*/,
+		damage +GetRand(deviation), VECTOR3(0, -0.4f, 0), 0.5f,
+		Load::GetHandle(ID::DAMAGE_UI_BUTTON), GetEnemyObj()->GetTransform(), VECTOR2I(81, 90));
+	
+	return damage;
 }

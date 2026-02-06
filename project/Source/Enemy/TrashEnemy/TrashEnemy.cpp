@@ -245,10 +245,6 @@ bool TrashEnemy::IsPlayerSpecialMove()
 	}		
 }
 
-float TrashEnemy::DamageCalculation(float _damage)
-{
-	return _damage + (_damage * 2) / (defense / 4);
-}
 
 void TrashEnemy::Trail()
 {
@@ -368,9 +364,9 @@ void TrashEnemy::PlayerHit()
 	EnemyDamageMove(dInfo);
 	//連携攻撃のときは耐性を付与
 	if (isCooperateAtk)
-		damage = damage / 2;
+		damage = damage / 5;
 
-	hp -= DamageCalculation(damage);
+	hp -= DamageCalculation(GetEnemyObj()->GetTransform()->position, damage, eStatus->GetStatus().defense,30);
 
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();

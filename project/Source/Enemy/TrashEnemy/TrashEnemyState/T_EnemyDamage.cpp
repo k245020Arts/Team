@@ -87,7 +87,7 @@ void T_EnemyDamage::KnockbackMove(TrashEnemy* _e, float _speed,float a, float h,
 	//段々減速させるため
 	float speed = _speed;
 	if (speed >= 0)
-		speed -= Time::DeltaTimeRate() * 5.0f/** 0.5f*/;
+		speed -= Time::DeltaTimeRate() * 10.0f;
 	else
 		speed = 0;
 	//0以上なら右側、0以上なら左側（三項演算子）
