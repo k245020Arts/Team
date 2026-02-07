@@ -24,7 +24,7 @@ TitleScene::TitleScene()
 {
 	//hImage = LoadGraph("data/image/SlashLocus.png");
 
-
+	
 
 	BlurScreen* blur = new BlurScreen();
 
