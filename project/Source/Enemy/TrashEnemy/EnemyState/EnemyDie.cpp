@@ -19,7 +19,7 @@ void EnemyDie::Update()
 {
 	Enemy* e = GetBase<Enemy>();
 	if (e->enemyBaseComponent.anim->IsFinish()) {
-		e->enemyBaseComponent.gameManager->ChangeState("LOSE");
+		e->enemyBaseComponent.gameManager->ChangeState(GameManager::GameState::LOSE);
 
 	}
 	else {

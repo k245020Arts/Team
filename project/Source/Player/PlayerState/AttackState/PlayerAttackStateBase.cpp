@@ -41,6 +41,8 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	attackAgainStartCounterMax = 0.0f;
 
 	attackNum = 0;
+	attackCount = 0;
+	collsionCreate = false;
 }
 
 PlayerAttackStateBase::~PlayerAttackStateBase()
@@ -216,10 +218,7 @@ void PlayerAttackStateBase::AgainAttackCollsion()
 	Debug::DebugLog("collsionCreate");
 	p->DeleteCollision();
 	firstColl = false;
-	p->playerCom.player->CollsionStart<SphereCollider>(CollsionInformation::SPHERE, collTrans);
-	p->playerCom.player->SetShape(CollsionInformation::SPHERE);
-	p->playerCom.sound->RandamSe("swordWind", 5);
-
+	BaseAttackCollsion();
 	/*p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("p_attack");
 
 	ColliderBase* collider = p->obj->Component()->AddComponent<SphereCollider>();
@@ -239,4 +238,26 @@ void PlayerAttackStateBase::AgainTimerSet(float _time, int _attackNum)
 	attackCount = attackNum;
 	attackAgainStartCounter = _time;
 	attackAgainStartCounterMax = attackAgainStartCounter;
+}
+
+void PlayerAttackStateBase::AttackCollsion()
+{
+	Player* p = GetBase<Player>();
+	//アニメーションのイベントが始まったら攻撃の当たり判定を生成する。
+	if (p->playerCom.anim->AnimEventCan()) {
+		//最初の一回のみ生成したい
+		if (firstColl) {
+			firstColl = false;
+			BaseAttackCollsion();
+		}
+	}
+}
+
+void PlayerAttackStateBase::BaseAttackCollsion()
+{
+	Player* p = GetBase<Player>();
+	p->playerCom.player->CollsionStart<SphereCollider>(CollsionInformation::SPHERE, collTrans);
+	p->playerCom.player->SetShape(CollsionInformation::SPHERE);
+	p->playerCom.sound->RandamSe("swordWind", 5);
+	collsionCreate = true;
 }

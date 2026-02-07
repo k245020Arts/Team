@@ -543,6 +543,12 @@
     <ClCompile Include="Source\Camera\CameraState\PlayerHeavyAttackCamera.cpp">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Player\PlayerState\PlayerLose.cpp">
+      <Filter>PlayScene\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossLose.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1141,6 +1147,12 @@
     </ClInclude>
     <ClInclude Include="Source\Camera\CameraState\PlayerHeavyAttackCamera.h">
       <Filter>PlayScene\Camera\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\PlayerState\PlayerLose.h">
+      <Filter>PlayScene\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossLose.h">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

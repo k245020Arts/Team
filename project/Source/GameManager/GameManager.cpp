@@ -22,6 +22,8 @@ namespace {
 	};
 }
 
+
+
 GameManager::GameManager()
 {
 	state = MEB(&GameManager::BeforeUpdate);;
@@ -32,9 +34,17 @@ GameManager::GameManager()
 	loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
 	resultCounter = 3.0f;
 	sound = FindGameObject<SoundManager>();
+
+#ifdef STRING_MODE
 	beforeState = "";
 	nowState = "BEFORE";
+#else
+	beforeGameState = GameState::NONE;
+	gameState = GameState::BEFORE;
+#endif // STRING_MODE
+	
 	changeState = true;
+	
 }
 
 GameManager::~GameManager()
@@ -48,13 +58,23 @@ void GameManager::Update()
 		changeState = false;
 	}
 	else {
+
+#ifdef STRING_MODE
 		if (nowState != beforeState) {
 			beforeState = nowState;
 			changeState = true;
 		}
+#else
+		if (gameState != beforeGameState) {
+			beforeGameState = gameState;
+			changeState = true;
+		}
+#endif
+
 	}
 	state = state.Act(this);
 
+#ifdef STRING_MODE
 	if (Debug::GetDebugMode()) {
 		ImGui::Begin("gameState");
 		if (ImGui::Button("before")) {
@@ -71,6 +91,26 @@ void GameManager::Update()
 		}
 		ImGui::End();
 	}
+#else
+	if (Debug::GetDebugMode()) {
+		ImGui::Begin("gameState");
+		if (ImGui::Button("before")) {
+			ChangeState(GameState::BEFORE);
+		}
+		if (ImGui::Button("play")) {
+			ChangeState(GameState::PLAY);
+		}
+		if (ImGui::Button("win")) {
+			ChangeState(GameState::WIN);
+		}
+		if (ImGui::Button("lose")) {
+			ChangeState(GameState::LOSE);
+		}
+		ImGui::End();
+	}
+#endif // STRING_MODE
+
+	
 	
 }
 
@@ -79,9 +119,11 @@ void GameManager::Draw()
 	stateDraw.Act(this);
 }
 
+#ifdef STRING_MODE
+
 void GameManager::ChangeState(std::string _name)
 {
-	for (int i = 0; i < GAME_STATE_MAX;i++) {
+	for (int i = 0; i < GAME_STATE_MAX; i++) {
 		if (stateName[i] == _name) {
 			switch (i)
 			{
@@ -100,19 +142,97 @@ void GameManager::ChangeState(std::string _name)
 			case 3:
 				state = MEB(&GameManager::WinUpdate);
 				stateDraw = MEBDraw(&GameManager::WinDraw);
-				
+
 				break;
 			case 4:
 				state = MEB(&GameManager::LoseUpdate);
 				stateDraw = MEBDraw(&GameManager::LoseDraw);
 				break;
 			}
-			
+
 			nowState = stateName[i];
 			//changeState = true;
 		}
 	}
 }
+
+
+int GameManager::GetStateNumber()
+{
+	int num = 0;
+	if (nowState == "BEFORE") {
+		num = 0;
+	}
+	else if (nowState == "PLAY") {
+		num = 1;
+	}
+	else if (nowState == "BOSS_PLAY_BEFORE") {
+
+		num = 2;
+	}
+	else if (nowState == "WIN") {
+		num = 3;
+	}
+	else {
+		num = 4;
+	}
+	return num;
+}
+
+
+std::string GameManager::GetStateName()
+{
+	return nowState;
+}
+
+#else
+
+void GameManager::ChangeState(GameState _name)
+{
+	gameState = _name;
+
+	switch (_name)
+	{
+	case GameState::BEFORE:
+		state = MEB(&GameManager::BeforeUpdate);
+		stateDraw = MEBDraw(&GameManager::BeforeDraw);
+		break;
+
+	case GameState::PLAY:
+		state = MEB(&GameManager::PlayUpdate);
+		stateDraw = MEBDraw(&GameManager::PlayDraw);
+		break;
+
+	case GameState::BOSS_PLAY_BEFORE:
+		state = MEB(&GameManager::BossPlayBeforeUpdate);
+		stateDraw = MEBDraw(&GameManager::BossPlayBeforeDraw);
+		break;
+
+	case GameState::WIN:
+		state = MEB(&GameManager::WinUpdate);
+		stateDraw = MEBDraw(&GameManager::WinDraw);
+		break;
+
+	case GameState::LOSE:
+		state = MEB(&GameManager::LoseUpdate);
+		stateDraw = MEBDraw(&GameManager::LoseDraw);
+		break;
+	case GameState::SCENE_CHANGE:
+		state = MEB(&GameManager::SceneChangeUpdate);
+		stateDraw = MEBDraw(&GameManager::SceneChangeDraw);
+		break;
+	default:
+		break;
+	}
+}
+
+GameManager::GameState GameManager::GetStateNumber()
+{
+	return gameState;
+}
+
+#endif // STRING_MODE
+
 
 void GameManager::CreateNum()
 {	
@@ -124,36 +244,11 @@ void GameManager::CreateNum()
 	//mesh->TextureHandle(Load::LoadImageGraph(Load::IMAGE_PATH + "Number_01", ID::START_NUM), MeshRenderer2D::DRAW_NUM);
 }
 
-std::string GameManager::GetStateName()
-{
-	return nowState;
-}
+
 
 void GameManager::SetPointer()
 {
 	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
-}
-
-int GameManager::GetStateNumber()
-{
-	int num = 0;
-	if (nowState == "BEFORE") {
-		num = 0;
-	}
-	else if (nowState == "PLAY") {
-		num = 1;
-	}
-	else if(nowState == "BOSS_PLAY_BEFORE"){
-		
-		num = 2;
-	}
-	else if (nowState == "WIN") {
-		num = 3;
-	}
-	else {
-		num = 4;
-	}
-	return num;
 }
 
 MEB GameManager::BeforeUpdate()
@@ -166,7 +261,13 @@ MEB GameManager::BeforeUpdate()
 	}
 	else {
 		FindGameObject<Wave>()->FirstRespown();
+#ifdef STRING_MODE
 		ChangeState("PLAY");
+#else
+		ChangeState(GameState::PLAY);
+#endif // STRING_MODE
+
+		
 		return &GameManager::PlayUpdate;
 	}
 }
@@ -201,11 +302,9 @@ MEB GameManager::BossPlayBeforeDraw()
 
 MEB GameManager::WinUpdate()
 {
-	if (sound->CheckSe(Sound_ID::WIN)) {
-		return &GameManager::WinUpdate;
-	}
-	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
-	return MEB();
+
+	//FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
+	return &GameManager::WinUpdate;
 }
 
 MEBDraw GameManager::WinDraw()
@@ -217,11 +316,7 @@ MEBDraw GameManager::WinDraw()
 
 MEB GameManager::LoseUpdate()
 {
-	if (sound->CheckSe(Sound_ID::LOSE)) {
-		return &GameManager::LoseUpdate;
-	}
-	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
-	return MEB();
+	return &GameManager::LoseUpdate;
 }
 
 MEBDraw GameManager::LoseDraw()
@@ -229,4 +324,15 @@ MEBDraw GameManager::LoseDraw()
 	
 	DrawGraph(750, 100, loseImage, true);
 	return &GameManager::LoseDraw;
+}
+
+MEB GameManager::SceneChangeUpdate()
+{
+	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
+	return  &GameManager::SceneChangeUpdate;
+}
+
+MEBDraw GameManager::SceneChangeDraw()
+{
+	return  &GameManager::SceneChangeDraw;
 }

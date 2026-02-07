@@ -16,11 +16,7 @@ public:
 	virtual void Start()override;
 
 	void AvoidStart()override;
-	/// <summary>
-	/// UŒ‚‚Ì“–‚½‚è”»’è‚Ì¶¬‚ğ‚ ‚é’ö“x“ˆê‰»‚³‚¹‚½ŠÖ”
-	/// </summary>
-	void AttackCollsion();
-
+	
 	/// <summary>
 	/// •’Ê‚Ìó‘Ô‚Å•à‚­‚Æ‚«‚É‚Í‚±‚ÌŠÖ”‚ğŒÄ‚Ô
 	/// </summary>

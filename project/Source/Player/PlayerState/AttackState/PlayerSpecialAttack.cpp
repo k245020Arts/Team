@@ -131,6 +131,7 @@ void PlayerSpecialAttack::Start()
 	//AttackCollsion();
 
 	state = BEFORE;
+	collsionCreate = true;
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 
 	waitCounter = -1.0f;
@@ -184,6 +185,7 @@ void PlayerSpecialAttack::Start()
 	p->playerCom.sound->PlaySe(Sound_ID::CUTIN_START);
 	p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_V);
 	attackDamage = false;
+	hitDamage = 400.0f;
 }
 
 void PlayerSpecialAttack::Finish()

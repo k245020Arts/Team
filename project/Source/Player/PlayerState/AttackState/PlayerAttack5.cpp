@@ -21,7 +21,7 @@ PlayerAttack5::PlayerAttack5()
 	nextAttackID = StateID::PLAYER_ATTACK1_S;
 	//frontSpeed = 500.0f;
 	frontSpeed = 0.0f;
-	hitDamage = 550.0f;
+	hitDamage = 200.0f;
 	defalutTrail = true;
 	timer = 0.0f;
 }
@@ -89,6 +89,7 @@ void PlayerAttack5::Update()
 	}*/
 
 	Player* p = GetBase<Player>();
+	collsionCreate = false;
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
 
@@ -168,7 +169,7 @@ void PlayerAttack5::Start()
 	p->playerCom.physics->SetGravity(VZero);
 	//timer = 2.0f;
 	//count = ATTACK_NUMMAX;
-	AgainTimerSet(0.2f, 5);
+	AgainTimerSet(0.1f, 5);
 }
 
 void PlayerAttack5::Finish()

@@ -35,6 +35,7 @@ PlayerJustAvoidAttack1::~PlayerJustAvoidAttack1()
 void PlayerJustAvoidAttack1::Update()
 {
 	Player* p = GetBase<Player>();
+	collsionCreate = false;
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
 	if (p->playerCom.anim->AnimEventCan()) {
@@ -105,6 +106,7 @@ void PlayerJustAvoidAttack1::Start()
 	p->playerCom.anim->AnimEventReset();
 
 	noStateChange = false;
+	
 	if (p->playerCom.hitObj != nullptr) {
 		p->attackTargetTrans = *(p->playerCom.hitObj->GetTransform());
 	}

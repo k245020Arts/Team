@@ -160,7 +160,7 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_S_ATTACK1_SMALL, "B_SATTACK1_SAMLL", false, 1.3f, 40.0f, 55.0f);
 	anim->AddFile(ID::BOSS_DIE, "B_DIE", false, 1.2f);
 	anim->AddFile(ID::B_ROAR, "B_ROAR", false, 1.0f, 30.0f, 40.0f);
-	anim->AddFile(ID::B_ROAR_2, "B_ROAR3", false, 0.7f, 30.0f, 120.0f);
+	anim->AddFile(ID::B_ROAR_2, "B_ROAR3", false, 0.6f, 30.0f, 120.0f);
 	anim->AddFile(ID::B_DUSH, "B_RUN", true, 1.2f, 30.0f, 40.0f);
 	anim->AddFile(ID::B_THREAT, "B_THREAT", false, 1.2f, 10.0f, 70.0f);
 	anim->AddFile(ID::BOSS_DAMAGE, "B_DAMAGE", false, 1.8f, 10.0f, 70.0f);
@@ -618,24 +618,29 @@ void EnemyManager::GameSceneChangeState()
 			StateManager* stateManager = obj->Component()->GetComponent<StateManager>();
 			switch (gameManager->GetStateNumber())
 			{
-			case 0:
-				/*stateManager->ChangeState(StateID::PLAYER_BEFORE_S);*/
+			case GameManager::GameState::BEFORE:
+				// stateManager->ChangeState(StateID::PLAYER_BEFORE_S);
 				break;
-			case 1:
+
+			case GameManager::GameState::PLAY:
 				stateManager->ChangeState(StateID::BOSS_IDOL_S);
 				break;
-			case 2:
-				
-				//stateManager->ChangeState(StateID::BOSS_APPEAR_S);
-				/*stateManager->SetNoStateChange(true);*/
-				/*stateManager->ChangeState(StateID::);*/
-				break;
-			case 3:
-				/*stateManager->NowChangeState(StateID::PLAYER_DIE_S);
-				stateManager->SetNoStateChange(true);*/
-				break;
-			case 4:
 
+			case GameManager::GameState::BOSS_PLAY_BEFORE:
+				// stateManager->ChangeState(StateID::BOSS_APPEAR_S);
+				// stateManager->SetNoStateChange(true);
+				break;
+
+			case GameManager::GameState::WIN:
+				stateManager->NowChangeState(StateID::BOSS_LOSE_S);
+				stateManager->SetNoStateChange(true);
+				break;
+
+			case GameManager::GameState::LOSE:
+
+				break;
+
+			default:
 				break;
 			}
 			return;

@@ -32,6 +32,7 @@ public:
 	friend class BossAttackBase;
 	friend class BossDamage;
 	friend class BossAppear;
+	friend class BossLose;
 	
 	enum HP_RATE
 	{
@@ -104,4 +105,5 @@ private:
 
 	float noAttackChangeCounter;
 	int alotAttack;
+	bool oneDie;
 };

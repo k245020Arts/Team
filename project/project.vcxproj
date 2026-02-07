@@ -267,6 +267,7 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\BossDamage.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossDie.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossIdol.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossLose.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossRoar.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossRun.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossStatus.h" />
@@ -318,6 +319,7 @@
     <ClInclude Include="Source\Player\PlayerState\PlayerDamage.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerDie.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerjustAvoid.h" />
+    <ClInclude Include="Source\Player\PlayerState\PlayerLose.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerStateBase.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerStateManager.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerTurn.h" />
@@ -458,6 +460,7 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossDamage.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossDie.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossIdol.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossLose.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossRoar.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossRun.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossThreat.cpp" />
@@ -504,6 +507,7 @@
     <ClCompile Include="Source\Player\PlayerState\PlayerDamage.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerDie.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerjustAvoid.cpp" />
+    <ClCompile Include="Source\Player\PlayerState\PlayerLose.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerStateBase.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerStateManager.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerTurn.cpp" />

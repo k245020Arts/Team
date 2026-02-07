@@ -36,6 +36,7 @@
 #include "../Boss/BossState/BossCoolTime.h"
 #include "../Boss/BossState/BossStatus.h"
 #include "../Boss/BossState/BossDie.h"
+#include "../Boss/BossState/BossLose.h"
 #include "../Boss/BossState/BossRoar.h"
 #include "../Boss/BossState/BossThreat.h"
 #include "../Boss/BossState/BossDamage.h"
@@ -86,6 +87,9 @@ Boss::Boss()
 	alotAttack = 0;
 
 	upPos = VECTOR3(0, 1500, 0);
+	/*enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
+	enemyBaseComponent.state->SetNoStateChange(true);*/
+	oneDie = true;
 }
 
 Boss::~Boss()
@@ -99,9 +103,15 @@ Boss::~Boss()
 void Boss::Update()
 {
 	EnemyBase::Update();
-	if (hp <= 0.0f) {
-		enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
-		enemyBaseComponent.state->SetNoStateChange(true);
+	if (hp <= 0.0f && !enemyBaseComponent.camera->IsCutScene()) {
+		if (oneDie) {
+			enemyBaseComponent.state->SetNoStateChange(false);
+			enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
+			enemyBaseComponent.state->SetNoStateChange(true);
+			oneDie = false;
+		}
+	
+		
 	}
 
 	if (obj->GetTransform()->position.y <= -10000.0f) {
@@ -110,7 +120,7 @@ void Boss::Update()
 	}
 
 	if (CheckHitKey(KEY_INPUT_NUMPAD0)) {
-		hp -= 20.0f;
+		hp -= 200.0f;
 	}
 
 	if (CheckHitKey(KEY_INPUT_1)) {
@@ -243,6 +253,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossThreat>("BossThreat", StateID::B_THREAT_S);
 	enemyBaseComponent.state->CreateState<BossDamage>("BossDamage", StateID::BOSS_DAMAGE_S);
 	enemyBaseComponent.state->CreateState<BossAppear>("BossAppear", StateID::BOSS_APPEAR_S);
+	enemyBaseComponent.state->CreateState<BossLose>("BossLose", StateID::BOSS_LOSE_S);
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 

@@ -1,11 +1,11 @@
 #pragma once
-#include "playerStateBase.h"
+#include "PlayerStateBase.h"
 
-class PlayerDie : public PlayerStateBase
+class PlayerLose : public PlayerStateBase
 {
 public:
-	PlayerDie();
-	~PlayerDie();
+	PlayerLose();
+	~PlayerLose();
 
 	void Update()override;
 	void Draw()override;
@@ -13,8 +13,6 @@ public:
 	void Start()override;
 	void Finish()override;
 
-
 private:
-	float slowTime;
-	//bool one;
+
 };

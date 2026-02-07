@@ -10,13 +10,13 @@
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Component/Collider/ModelCollider.h"
 #include "../../../Component/Collider/SphereCollider.h"
+#include "../../../State/StateManager.h"
 
 BossDie::BossDie()
 {
 	animId		= ID::BOSS_DIE;
 	//id = ID::BOSS_DIE;
 	string		= Function::GetClassNameC<BossDie>();
-	one			= true;
 	slowTime	= 0.0f;
 }
 
@@ -28,13 +28,9 @@ void BossDie::Update()
 {
 	Boss* b = GetBase<Boss>();
 	if (b->enemyBaseComponent.anim->IsFinish()) {
-		b->enemyBaseComponent.gameManager->ChangeState("WIN");
-		if (one) {
-			b->enemyBaseComponent.sound->StopBGM(Sound_ID::PLAY_BGM);
-			b->enemyBaseComponent.sound->PlaySe(Sound_ID::WIN);
-			b->enemyBaseComponent.camera->CutSceneChangeState("PlayerWin",false);
-			one = false;
-		}
+		b->enemyBaseComponent.state->SetNoStateChange(false);
+		b->enemyBaseComponent.gameManager->ChangeState(GameManager::GameState::WIN);
+			
 	
 	}
 	else {
@@ -62,11 +58,11 @@ void BossDie::Start()
 	slowTime	= 0.5f;
 	b->enemyBaseComponent.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	b->enemyBaseComponent.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
-	one			= true;
 	//Ž€‚ñ‚¾‚Æ‚«‚É“–‚½‚è”»’è‚ðÁ‚µ‚½‚¢‚Ì‚Å“–‚½‚è”»’è‚ðÁ‚·B
 	obj->Component()->RemoveAllComponent<SphereCollider>();
 	obj->Component()->RemoveAllComponent<ModelCollider>();
 	b->enemyBaseComponent.physics->SetGravity(VZero);
+	b->enemyBaseComponent.sound->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
 }
 
 void BossDie::Finish()

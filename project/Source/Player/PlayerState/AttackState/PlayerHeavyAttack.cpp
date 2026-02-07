@@ -37,8 +37,10 @@ void PlayerHeavyAttack::Update()
 	if (p->playerCom.anim->IsFinish()) {
 		p->AvoidFinishState();
 	}
-	PlayerAttackStateBase::Update();
+	collsionCreate = false;
 	AttackCollsion();
+	PlayerAttackStateBase::Update();
+	
 	if (!noStateChange) {
 
 		EnemyRotation();
