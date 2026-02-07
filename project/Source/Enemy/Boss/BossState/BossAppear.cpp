@@ -60,7 +60,7 @@ void BossAppear::Update()
 
 		}
 		if (b->enemyBaseComponent.anim->IsFinish()) {
-			b->enemyBaseComponent.gameManager->ChangeState("PLAY");
+			b->enemyBaseComponent.gameManager->ChangeState(GameManager::GameState::PLAY);
 			b->enemyBaseComponent.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 		}
 	}

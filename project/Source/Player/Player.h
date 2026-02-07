@@ -36,6 +36,7 @@ public:
 	friend class PlayerBossAppear;
 	friend class PlayerHeavyCharge;
 	friend class PlayerHeavyAttack;
+	friend class PlayerLose;
 
 	Player();
 	~Player();

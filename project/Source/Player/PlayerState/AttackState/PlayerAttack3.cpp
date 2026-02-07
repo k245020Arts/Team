@@ -28,6 +28,7 @@ PlayerAttack3::~PlayerAttack3()
 void PlayerAttack3::Update()
 {
 	Player* p = GetBase<Player>();
+	collsionCreate = false;
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
 	if (!noStateChange) {

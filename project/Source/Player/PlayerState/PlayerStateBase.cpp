@@ -44,21 +44,6 @@ void PlayerStateBase::Start() {
 	//Debug::DebugLog(string);
 }
 
-void PlayerStateBase::AttackCollsion()
-{
-	Player* p = GetBase<Player>();
-	//アニメーションのイベントが始まったら攻撃の当たり判定を生成する。
-	if (p->playerCom.anim->AnimEventCan()) {
-		//最初の一回のみ生成したい
-		if (firstColl) {
-			firstColl = false;
-			p->playerCom.player->CollsionStart<SphereCollider>(CollsionInformation::SPHERE, collTrans);
-			p->playerCom.player->SetShape(CollsionInformation::SPHERE);
-			p->playerCom.sound->RandamSe("swordWind", 5);
-		}
-	}
-}
-
 void PlayerStateBase::DefalutWalk()
 {
 	Player* p = GetBase<Player>();

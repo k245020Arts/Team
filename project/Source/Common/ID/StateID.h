@@ -25,6 +25,7 @@ namespace StateID{
         PLAYER_BOSS_APPEAR_S,
         PLAYER_HEAVY_CHARGE_S,
         PLAYER_HEAVY_ATTACK_S,
+        PLAYER_LOSE_S,
 
         BOSS_IDOL_S,
         BOSS_RUN_S,
@@ -45,6 +46,7 @@ namespace StateID{
         B_THREAT_S,
         BOSS_DAMAGE_S,
         BOSS_APPEAR_S,
+        BOSS_LOSE_S,
 
         FOLLOW_CAMERA_S,
         JUST_AVOID_CAMERA_S,

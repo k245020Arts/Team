@@ -22,6 +22,13 @@ public:
 	void AgainAttackCollsion();
 	void AgainTimerSet(float _time,int _attackNum);
 
+	/// <summary>
+	/// UŒ‚‚Ì“–‚½‚è”»’è‚Ì¶¬‚ğ‚ ‚é’ö“x“ˆê‰»‚³‚¹‚½ŠÖ”
+	/// </summary>
+	void AttackCollsion();
+
+	bool GetCollsionCreate() { return collsionCreate; }
+
 protected:
 	float easingCount;
 	float beforeAngle;
@@ -56,4 +63,7 @@ protected:
 	float attackAgainStartCounterMax;
 
 	int attackNum;
+	bool collsionCreate;
+
+	void BaseAttackCollsion();
 };

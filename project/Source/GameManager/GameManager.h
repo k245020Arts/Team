@@ -8,9 +8,22 @@ typedef MethodExec<class GameManager> MEBDraw;
 class SoundManager;
 class Camera;
 
+//#define STRING_MODE
+
 class GameManager : public GameObject
 {
 public:
+
+	enum GameState
+	{
+		NONE = -1,
+		BEFORE,
+		PLAY,
+		BOSS_PLAY_BEFORE,
+		WIN,
+		LOSE,
+		SCENE_CHANGE,
+	};
 
 	friend class EnemyIdol;
 	friend class PlayerWait;
@@ -23,19 +36,31 @@ public:
 	void Update()override;
 	void Draw()override;
 
+#ifdef STRING_MODE
 	void ChangeState(std::string _name);
+	//std::string GetStateName();
+	int GetStateNumber();
+#else
+	GameState GetStateNumber();
+	void ChangeState(GameState _name);
+#endif // STRING_MODE
+
+	
+
+	
 
 	MEB::MethodPtr GetGameState() { return state.GetMethodFunc(); }
 
 	void CreateNum();
 
-	std::string GetStateName();
+	
+	
 
 	void SetPointer();
 
 	bool GetChangeState() { return changeState; }
 
-	int GetStateNumber();
+	
 
 private:
 	
@@ -57,6 +82,9 @@ private:
 	MEB LoseUpdate();
 	MEBDraw LoseDraw();
 
+	MEB SceneChangeUpdate();
+	MEBDraw SceneChangeDraw();
+
 	float startCount;
 	Object2D* obj;
 
@@ -69,4 +97,7 @@ private:
 	Camera* camera;
 	bool changeState;
 	std::string beforeState;
+
+	GameState gameState;
+	GameState beforeGameState;
 };

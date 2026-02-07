@@ -25,6 +25,7 @@
 #include "../Player/PlayerState/AttackState/playerAttack1.h"
 #include "../Player/PlayerState/AttackState/playerAttack2.h"
 #include "../Player/PlayerState/playerDamage.h"
+#include "../Player/PlayerState/PlayerLose.h"
 #include "../Player/PlayerState/playerjustAvoid.h"
 #include "../Player/PlayerState/PlayerBlowAway.h"
 #include "../Player/PlayerState/PlayerTurn.h"
@@ -144,6 +145,7 @@ void PlayerManager::CreatePlayer()
 	stateManager->CreateState<PlayerBossAppear>("PlayerBossAppear", StateID::PLAYER_BOSS_APPEAR_S);
 	stateManager->CreateState<PlayerHeavyCharge>("PlayerHeavyCharge", StateID::PLAYER_HEAVY_CHARGE_S);
 	stateManager->CreateState<PlayerHeavyAttack>("PlayerHeavyAttack", StateID::PLAYER_HEAVY_ATTACK_S);
+	stateManager->CreateState<PlayerLose>("PlayerLose", StateID::PLAYER_LOSE_S);
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),		"mixamorig:Hips");
@@ -218,23 +220,29 @@ void PlayerManager::GameSceneChangeState()
 {
 	switch (gameManager->GetStateNumber())
 	{
-	case 0:
+	case GameManager::GameState::BEFORE:
 		stateManager->ChangeState(StateID::PLAYER_BEFORE_S);
 		break;
-	case 1:
+
+	case GameManager::GameState::PLAY:
 		stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 		break;
-	case 2:
+
+	case GameManager::GameState::BOSS_PLAY_BEFORE:
 		stateManager->ChangeState(StateID::PLAYER_BOSS_APPEAR_S);
 		break;
-	case 3:
+
+	case GameManager::GameState::WIN:
 		stateManager->NowChangeState(StateID::PLAYER_WIN_STATE_S);
 		stateManager->SetNoStateChange(true);
-		
 		break;
-	case 4:
-		/*stateManager->NowChangeState(StateID::PLAYER_DIE_S);
-		stateManager->SetNoStateChange(true);*/
+
+	case GameManager::GameState::LOSE:
+		stateManager->NowChangeState(StateID::PLAYER_LOSE_S);
+		stateManager->SetNoStateChange(true);
+		break;
+
+	default:
 		break;
 	}
 }

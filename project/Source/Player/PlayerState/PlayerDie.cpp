@@ -6,13 +6,14 @@
 #include "../../Common/Sound/SoundManager.h"
 #include "../../Component/Collider/SphereCollider.h"
 #include "../../Enemy/EnemyManager.h"
+#include "../../State/StateManager.h"
 
 PlayerDie::PlayerDie()
 {
 	animId	= ID::P_DIE;
 	//id = ID::P_DIE;
 	string	= Function::GetClassNameC<PlayerDie>();
-	one		= false;
+	//one		= false;
 }
 
 PlayerDie::~PlayerDie()
@@ -23,17 +24,9 @@ void PlayerDie::Update()
 {
 	Player* p = GetBase<Player>();
 	if (p->playerCom.anim->IsFinish()) {
-		p->playerCom.gameManager->ChangeState("LOSE");
-		
-		if (one) {
-			p->playerCom.sound->StopBGM(Sound_ID::PLAY_BGM);
-			p->playerCom.sound->PlaySe(Sound_ID::LOSE);
-			one = false;
-			p->playerCom.enemyManager->CameraRockOnStart(p->playerCom.camera);
-			p->playerCom.camera->CutSceneChangeState("PlayerDie", false);
-		}
-	
-		
+		p->playerCom.stateManager->SetNoStateChange(false);
+		p->playerCom.gameManager->ChangeState(GameManager::GameState::LOSE);
+		//p->playerCom.stateManager->ChangeState(StateID::PLAYER_ATTACK1_S);
 	}
 	else {
 		//Ž€‚ñ‚¾uŠÔ‚ÍƒXƒ[Ä¶‚ð‚³‚¹‚é
@@ -60,8 +53,9 @@ void PlayerDie::Start()
 	slowTime	= 0.5f;
 	p->playerCom.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	p->playerCom.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
-	one			= true;
+	//one			= true;
 	p->obj->Component()->RemoveAllComponent<SphereCollider>();
+	p->playerCom.sound->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
 }
 
 void PlayerDie::Finish()

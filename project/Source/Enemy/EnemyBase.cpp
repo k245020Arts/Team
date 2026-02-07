@@ -60,7 +60,7 @@ void EnemyBase::Update()
 		}
 	}
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
-		if (!pState->GetState<PlayerAttackStateBase>()->IsAttack()) {
+		if (pState->GetState<PlayerAttackStateBase>()->GetCollsionCreate()) {
 			hit = false;
 		}
 	}
