@@ -528,6 +528,7 @@ void EnemyManager::NearEnemyAlpha(VECTOR3 camPos)
 
 Transform EnemyManager::NearEnemyPos(const VECTOR3& _pos)
 {
+
 	if (chara.size() == 0) {
 		return Transform();
 	}
@@ -538,6 +539,31 @@ Transform EnemyManager::NearEnemyPos(const VECTOR3& _pos)
 		if (dist.Size() <= nearDist) {
 			nearTransform = *(*itr)->GetBaseObject()->GetTransform();
 			nearDist = dist.Size();
+		}
+	}
+	return nearTransform;
+}
+
+Transform EnemyManager::NearFovEnemyPos(Transform& _transform, float _angle)
+{
+	if (chara.size() == 0) {
+		return Transform();
+	}
+	float nearDist = 10000.0f;
+	Transform nearTransform = *(*chara.begin())->GetBaseObject()->GetTransform();
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		VECTOR3 dir = _transform.Forward();
+		dir = dir.Normalize();
+
+		VECTOR3 target = _transform.position - (*itr)->GetBaseObject()->GetTransform()->position ;
+		float dist = target.Size();
+
+		if (VDot(dir, target.Normalize()) < cosf(_angle * DegToRad)) {
+			continue;
+		}
+		if (dist <= nearDist) {
+			nearTransform = *(*itr)->GetBaseObject()->GetTransform();
+			nearDist = dist;
 		}
 	}
 	return nearTransform;
@@ -647,6 +673,23 @@ void EnemyManager::GameSceneChangeState()
 		}
 	}
 	
+}
+
+int EnemyManager::PlayerFovEnemyNum(Transform* _pTransform, float _angle)
+{
+	int num = 0;
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		VECTOR3 dir = VECTOR3(0,0,1) * MGetRotY(_pTransform->rotation.y);
+		dir = dir.Normalize();
+
+		VECTOR3 target = (*itr)->GetBaseObject()->GetTransform()->position - _pTransform->position;
+		float dist = target.Size();
+
+		if (VDot(dir, target.Normalize()) >= cosf(_angle * DegToRad)) {
+			num++;
+		}
+	}
+	return num;
 }
 
 

@@ -9,6 +9,8 @@ class CharaWeapon;
 class BossStatus;
 //class TrashEnemyManager;
 
+class PlayerSpecialAttack;
+
 class Boss : public EnemyBase
 {
 public:
@@ -80,6 +82,7 @@ public:
 	bool RunChangeAttack();
 
 private:
+	void PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps,VECTOR3 _randomPos,float _randomAngle);
 	Boss* boss;
 	BossStatus* bs;
 

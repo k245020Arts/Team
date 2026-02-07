@@ -20,6 +20,7 @@
 #include "../../../Screen.h"
 #include "../../../Component/MeshRenderer2D/MeshRenderer2D.h"
 #include "../../../Component/Animator/Anim2D.h"
+#include "../../../Stage/StageManager.h"
 
 PlayerSpecialAttack::PlayerSpecialAttack()
 {
@@ -126,9 +127,31 @@ void PlayerSpecialAttack::Start()
 	PlayerAttackStateBase::Start();
 	//p->playerCom.anim->Play(ID::P_SPECIAL_ATTACK_BEFORE_ANIM);
 	firstColl = true;
-	defalutRotation = p->playerTransform->rotation;
+	
 	//p->playerCom.camera->CutSceneChangeState("playerSpecialAttackBefore", CutSceneSpece::ALL_ENEMY);
 	//AttackCollsion();
+
+	const int ROTATION_CHANGE_LOOP = 8;
+	int max = 0;
+	int finalAngle = p->playerTransform->rotation.y;
+
+	for (int i = 0; i < ROTATION_CHANGE_LOOP; i++) {
+		int n = p->playerCom.enemyManager->PlayerFovEnemyNum(obj->GetTransform(), 45.0f);
+		if (max <= n) {
+			max = n;
+			finalAngle = p->playerTransform->rotation.y;
+		}
+		p->playerTransform->rotation.y += 45.0f * DegToRad;
+	}
+
+	p->playerTransform->rotation.y = finalAngle;
+	Transform nearPos = p->playerCom.enemyManager->NearFovEnemyPos(*p->playerTransform,45.0f * DegToRad);
+
+	VECTOR3 nearEnemyDir = nearPos.position - p->playerTransform->position;
+
+	p->playerTransform->rotation.y = atan2(nearEnemyDir.x, nearEnemyDir.z);
+
+	defalutRotation = p->playerTransform->rotation;
 
 	state = BEFORE;
 	collsionCreate = true;
@@ -185,6 +208,7 @@ void PlayerSpecialAttack::Start()
 	p->playerCom.sound->PlaySe(Sound_ID::CUTIN_START);
 	p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_V);
 	attackDamage = false;
+	moveStart = false;
 	hitDamage = 400.0f;
 }
 
@@ -284,8 +308,10 @@ void PlayerSpecialAttack::BeforeUpdate()
 				p->specialAttackCenterPos = p->specialAttackStartPos + forward * radius;
 				MoveStart(0.0f);
 				moveNum = 20;
-				p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
-				p->playerTransform->rotation.z += 90.0f * DegToRad;
+				moveStart = true;
+				p->playerCom.camera->CutSceneChangeState("PlayerSpecialAttack", false);
+				//p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
+				//p->playerTransform->rotation.z += 90.0f * DegToRad;
 				p->playerCom.meshRenderer2D->FeedOutDraw(0.5f);
 				p->playerCom.camera->SleepTargetSet(CutSceneSpece::ALL_ENEMY, false);
 				//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 1.8f);
@@ -300,6 +326,11 @@ void PlayerSpecialAttack::GroundUpdate()
 {
 #ifdef MODE_1
 	Player* p = GetBase<Player>();
+	if (moveStart) {
+		obj->SetObjectTimeRate(1.0f);
+		moveStart = false;
+		return;
+	}
 	float dt = Time::DeltaTimeRate();
 
 	p->playerCom.player->DrawTrail(VECTOR3(0, 0, 100),VECTOR3(0, 0, -350),250.0f, 235.0f,0.0f, 150.0f,28, 0.4f);
@@ -345,10 +376,34 @@ void PlayerSpecialAttack::GroundUpdate()
 	}
 
 	
-	if (moveNum <= 0)
+	if (!p->playerCom.camera->IsCutScene())
 	{
 		// 次フェーズへ
 		p->playerTransform->position = p->specialAttackStartPos;
+		VECTOR3 specialCenterPos = p->specialAttackCenterPos;
+		
+		if (fabs(specialCenterPos.z) >= WALL_EDGE_POS - 5000.0f) {
+			if (specialCenterPos.z > 0.0f) {
+				p->playerTransform->position.z -= radius * 2.0f;
+				p->specialAttackCenterPos.z -= radius * 2.0f;
+			}
+			else {
+				p->playerTransform->position.z += radius * 2.0f;
+				p->specialAttackCenterPos.z += radius * 2.0f;
+			}
+		}
+		else if (fabs(specialCenterPos.x) >= WALL_EDGE_POS - 5000.0f) {
+			if (specialCenterPos.x > 0.0f) {
+				p->playerTransform->position.x -= radius * 2.0f;
+				p->specialAttackCenterPos.x -= radius * 2.0f;
+			}
+			else {
+				p->playerTransform->position.x += radius;
+				p->specialAttackCenterPos.x += radius;
+			}
+		}
+			
+		
 		//p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 		ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
 		float angle = 36.0f * DegToRad;

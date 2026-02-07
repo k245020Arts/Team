@@ -45,6 +45,7 @@ public:
 
 	void NearEnemyAlpha(VECTOR3 camPos);
 	Transform NearEnemyPos(const VECTOR3& _pos);
+	Transform NearFovEnemyPos(Transform& _transform,float _angle);
 
 	void SetCameraRockOnObject(EnemyBase* _enemy, Camera* _camera);
 	void CameraRockOnStart(Camera* _camera);
@@ -61,6 +62,8 @@ public:
 	void SleepAllEnemy(bool _sleep);
 
 	void GameSceneChangeState();
+
+	int PlayerFovEnemyNum(Transform* _pTransform, float _angle);
 
 private:
 	

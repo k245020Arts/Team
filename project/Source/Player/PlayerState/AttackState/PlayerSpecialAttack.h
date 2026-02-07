@@ -75,4 +75,6 @@ private:
 
 	float beforeWaitCounter;
 	bool attackDamage;
+
+	bool moveStart;
 };
