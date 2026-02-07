@@ -47,6 +47,7 @@ namespace ID {
 		C_FREE,
 		B_IDOL,
 		B_RUN,
+		B_WAIT_SEE,
 		B_COOLTIME,
 		B_ATTACKSORTING,
 		B_N_ATTACK1,

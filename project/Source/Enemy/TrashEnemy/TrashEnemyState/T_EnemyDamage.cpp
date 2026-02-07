@@ -15,6 +15,9 @@ T_EnemyDamage::T_EnemyDamage()
 	isGetInformation = false;
 	rightVec = VZero;
 	side = 0;
+
+	backSpeed = 0;
+
 }
 
 T_EnemyDamage::~T_EnemyDamage()
@@ -24,6 +27,8 @@ T_EnemyDamage::~T_EnemyDamage()
 void T_EnemyDamage::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
+	if (e->hp < 0)
+		return;
 
 	if (e->IsPlayerSpecialMove())
 	{
@@ -36,7 +41,9 @@ void T_EnemyDamage::Update()
 	float a = -2000.0f;  //落下の強さ（重力）
 	float h = 0.5f;		 //最高点までの時間
 	float k = 800.0f;    //吹き飛びの高さ
+
 	KnockbackMove(e, 20.0f, a, h, k);
+
 
 	if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
@@ -82,18 +89,17 @@ void T_EnemyDamage::KnockbackMove(TrashEnemy* _e, float _speed,float a, float h,
 		side = VDot(rightVec, vec);
 
 		isGetInformation = true;
+		backSpeed = _speed;
 	}
 	
-	//段々減速させるため
-	float speed = _speed;
-	if (speed >= 0)
-		speed -= Time::DeltaTimeRate() * 10.0f;
+	if (backSpeed >= 0)//段々減速させるため
+		backSpeed -= Time::DeltaTimeRate() * 10.0f;
 	else
-		speed = 0;
+		backSpeed = 0;
 	//0以上なら右側、0以上なら左側（三項演算子）
 	float dir = (side >= 0) ? 1.0f : -1.0f;
 	//ポジションに適応する
-	_e->GetEnemyObj()->GetTransform()->position -= rightVec * dir * speed;;
+	_e->GetEnemyObj()->GetTransform()->position -= rightVec * dir * backSpeed;
 
 	_e->GetEnemyObj()->GetTransform()->position.y = offsetY;
 }

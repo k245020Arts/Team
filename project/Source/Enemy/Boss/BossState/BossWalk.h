@@ -15,4 +15,8 @@ private:
 	float timeCounter;
 
 	int maxCounter;
+
+	//‚Ç‚±‚ÉˆÚ“®‚·‚é‚©‚í‚©‚é
+	VECTOR3 newPos;
+	bool isRedefinition;
 };
