@@ -8,7 +8,7 @@
 UIManager::UIManager()
 {
 	SetDrawOrder(-20000);
-	Load::LoadImageGraph(Load::IMAGE_PATH + "Mark_Avoid2", ID::A_BUTTON);
+	Load::LoadImageGraph(Load::IMAGE_PATH + "Mark_Avoid", ID::A_BUTTON);
 	Load::LoadImageGraph(Load::IMAGE_PATH + "Mark_Normal", ID::B_BUTTON);
 	Load::LoadImageGraph(Load::IMAGE_PATH + "Mark_Special", ID::X_BUTTON);
 	Load::LoadImageGraph(Load::IMAGE_PATH + "Number_01", ID::DAMAGE_UI_BUTTON);
