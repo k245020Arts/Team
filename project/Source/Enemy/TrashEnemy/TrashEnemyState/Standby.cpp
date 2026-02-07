@@ -101,6 +101,7 @@ void Standby::Finish()
 	e->isStandby = false;
 	e->isAttack = false;
 	isRedefinition = true;
+
 }
 
 void Standby::NormalMove()

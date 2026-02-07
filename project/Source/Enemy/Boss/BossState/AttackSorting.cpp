@@ -159,6 +159,8 @@ void AttackSorting::Start()
 	else {
 		NormalAttackSelect();
 	}*/
+
+	b->comboFirstAttack = true;
 }
 
 void AttackSorting::Finish()

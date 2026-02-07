@@ -33,6 +33,8 @@ protected:
 	VECTOR3 rightVec;
 	//¶‰E”»’è
 	float side;
+
+	float backSpeed;
 private:
 	
 };

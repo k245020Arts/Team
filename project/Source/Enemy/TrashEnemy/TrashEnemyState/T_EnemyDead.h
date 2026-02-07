@@ -13,7 +13,9 @@ public:
 	void Finish()override;
 private:
 	const float SPEED = 20.0f;
-	const float FADE_SPEED = 1.5f;
+	const float FADE_SPEED = 1.0f;
 	
 	float fadeCounter;
+
+	bool a;
 };

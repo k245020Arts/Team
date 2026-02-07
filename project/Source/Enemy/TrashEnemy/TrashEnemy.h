@@ -120,4 +120,5 @@ private:
 	float slowCounter;
 	//ƒ‚[ƒVƒ‡ƒ“‚ª~‚Ü‚é‘¬“x
 	float mStopCounter;
+
 };

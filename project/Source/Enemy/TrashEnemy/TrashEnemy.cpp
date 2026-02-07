@@ -97,6 +97,7 @@ TrashEnemy::TrashEnemy()
 	slowCounter = 0;
 
 	mStopCounter = 0;
+
 }
 
 TrashEnemy::~TrashEnemy()
@@ -253,8 +254,8 @@ void TrashEnemy::Trail()
 
 void TrashEnemy::PlayerHit()
 {
-	if (hp <= 0)
-		return;
+	/*if (hp <= 0)
+		return;*/
 
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
 	float damage = 0;
@@ -332,6 +333,7 @@ void TrashEnemy::PlayerHit()
 				enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
 				angleRan = (float)GetRand(360);
 				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+				damage = damage * 5;
 			}
 			else
 			{
@@ -354,7 +356,8 @@ void TrashEnemy::PlayerHit()
 			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			specialAttackHit = false;
 
-			enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DAMAGE);
+			if (hp <= 0)
+				enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DAMAGE);
 			damage = damage * 2;
 			break;
 		default:
@@ -378,8 +381,8 @@ void TrashEnemy::PlayerHit()
 
 void TrashEnemy::GetWayPoint(VECTOR3 _pos, StateID::State_ID _id)
 {
-	/*if (_pos.Size() >= 2000)
-		return;*/
+	if (hp <= 0)
+		return;
 
 	wayPoint = _pos;
 
