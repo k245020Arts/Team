@@ -3,6 +3,8 @@
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
 #include "../../../Player/Player.h"
+#include "../../../Common/Easing.h"
+#include "../../../Component/Color/Color.h"
 
 T_EnemyDamage::T_EnemyDamage()
 {
@@ -18,6 +20,7 @@ T_EnemyDamage::T_EnemyDamage()
 
 	backSpeed = 0;
 
+	fadeCounter = FADE_SPEED;
 }
 
 T_EnemyDamage::~T_EnemyDamage()
@@ -27,9 +30,7 @@ T_EnemyDamage::~T_EnemyDamage()
 void T_EnemyDamage::Update()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	if (e->hp < 0)
-		return;
-
+	
 	if (e->IsPlayerSpecialMove())
 	{
 		e->enemyBaseComponent.anim->SetPlaySpeed(0);
@@ -44,9 +45,25 @@ void T_EnemyDamage::Update()
 
 	KnockbackMove(e, 20.0f, a, h, k);
 
+	if (e->hp > 0)
+	{
+		if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
+			e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+	}
+	else
+	{
+		if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
+		{
+			fadeCounter -= Time::DeltaTimeRate();
+			float reet = fadeCounter / FADE_SPEED;
+			float alph = Easing::EaseIn(0.0f, 255.0f, reet);
 
-	if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
-		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+			float color = 255.0f;
+			e->enemyBaseComponent.color->setRGB(Color::Rgb(255, 255, 255, alph));
+			if (fadeCounter <= 0)
+				e->active = false;
+		}
+	}
 }
 
 void T_EnemyDamage::Draw()
@@ -66,7 +83,7 @@ void T_EnemyDamage::Start()
 
 void T_EnemyDamage::Finish()
 {
-
+	
 }
 
 void T_EnemyDamage::KnockbackMove(TrashEnemy* _e, float _speed,float a, float h, float k)

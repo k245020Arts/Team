@@ -14,7 +14,6 @@ T_EnemyDead::T_EnemyDead()
 	counter = 0;
 	fadeCounter = FADE_SPEED;
 
-	a = true;
 }
 
 T_EnemyDead::~T_EnemyDead()
@@ -36,9 +35,8 @@ void T_EnemyDead::Update()
 	float a = -1000.0f;  //落下の強さ（重力）
 	float h = 0.5f;		 //最高点までの時間
 	float k = 800.0f;    //吹き飛びの高さ
-
-	if (a)
-		KnockbackMove(e, 30.0f, a, h, k);
+	
+	//KnockbackMove(e, 30.0f, a, h, k);
 
 	if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
 	{

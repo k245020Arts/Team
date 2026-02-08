@@ -16,6 +16,4 @@ private:
 	const float FADE_SPEED = 1.0f;
 	
 	float fadeCounter;
-
-	bool a;
 };
