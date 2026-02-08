@@ -36,8 +36,5 @@ protected:
 
 	float backSpeed;
 private:
-	const float SPEED = 20.0f;
-	const float FADE_SPEED = 1.0f;
-
-	float fadeCounter;
+	
 };

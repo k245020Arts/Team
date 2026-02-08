@@ -32,7 +32,7 @@ void BossWalk::Update()
 	VECTOR3 vec = b->GetEnemyObj()->GetTransform()->position - newPos;
 
 	if (vec.Size() >= 300)// ˆÚ“®
-		b->GetEnemyObj()->GetTransform()->position += 10 * newPos.Normalize();
+		b->GetEnemyObj()->GetTransform()->position += 7 * newPos.Normalize();
 
 	timeCounter += Time::DeltaTimeRate();
 	if (timeCounter >= maxCounter)

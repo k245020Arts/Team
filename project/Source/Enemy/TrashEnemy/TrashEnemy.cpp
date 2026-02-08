@@ -217,7 +217,7 @@ void TrashEnemy::Update()
 	EnemyBase::Update();
 
 	if (hp <= 0)
-		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DAMAGE/*T_ENEMY_DEAD*/);
+		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 
 	/*if (!isCooperateAtk)
 		targetPos = enemyBaseComponent.playerObj->GetTransform()->position;*/

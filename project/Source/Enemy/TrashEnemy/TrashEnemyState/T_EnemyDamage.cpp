@@ -19,8 +19,6 @@ T_EnemyDamage::T_EnemyDamage()
 	side = 0;
 
 	backSpeed = 0;
-
-	fadeCounter = FADE_SPEED;
 }
 
 T_EnemyDamage::~T_EnemyDamage()
@@ -49,20 +47,6 @@ void T_EnemyDamage::Update()
 	{
 		if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
 			e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
-	}
-	else
-	{
-		if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
-		{
-			fadeCounter -= Time::DeltaTimeRate();
-			float reet = fadeCounter / FADE_SPEED;
-			float alph = Easing::EaseIn(0.0f, 255.0f, reet);
-
-			float color = 255.0f;
-			e->enemyBaseComponent.color->setRGB(Color::Rgb(255, 255, 255, alph));
-			if (fadeCounter <= 0)
-				e->active = false;
-		}
 	}
 }
 

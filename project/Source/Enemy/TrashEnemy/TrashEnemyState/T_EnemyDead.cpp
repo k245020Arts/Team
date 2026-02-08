@@ -36,7 +36,7 @@ void T_EnemyDead::Update()
 	float h = 0.5f;		 //Å‚“_‚Ü‚Å‚ÌŽžŠÔ
 	float k = 800.0f;    //‚«”ò‚Ñ‚Ì‚‚³
 	
-	//KnockbackMove(e, 30.0f, a, h, k);
+	KnockbackMove(e, 30.0f, a, h, k);
 
 	if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
 	{
