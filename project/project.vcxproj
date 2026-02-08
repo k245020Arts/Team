@@ -275,13 +275,8 @@
     <ClInclude Include="Source\Enemy\EnemyBase.h" />
     <ClInclude Include="Source\Enemy\EnemyInformation.h" />
     <ClInclude Include="Source\Enemy\EnemyManager.h" />
-    <ClInclude Include="Source\Enemy\TrashEnemy\Enemy.h" />
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\AttackState\EnemyAttack1.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyBlowAway.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDamage.h" />
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDie.h" />
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyIdol.h" />
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyRun.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateBase.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateManager.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemy.h" />
@@ -466,13 +461,6 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossWalk.cpp" />
     <ClCompile Include="Source\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Source\Enemy\EnemyManager.cpp" />
-    <ClCompile Include="Source\Enemy\TrashEnemy\Enemy.cpp" />
-    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\AttackState\EnemyAttack1.cpp" />
-    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyBlowAway.cpp" />
-    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDamage.cpp" />
-    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDie.cpp" />
-    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyIdol.cpp" />
-    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyRun.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateBase.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateManager.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemy.cpp" />

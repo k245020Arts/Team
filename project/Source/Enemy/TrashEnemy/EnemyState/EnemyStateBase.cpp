@@ -1,6 +1,6 @@
 #include "EnemyStateBase.h"
 #include "../../../Component/Animator/Animator.h"
-#include "../Enemy.h"
+//#include "../Enemy.h"
 #include "../../../Component/Transform/transform.h"
 #include "../../../Component/Collider/sphereCollider.h"
 #include "../../EnemyBase.h"

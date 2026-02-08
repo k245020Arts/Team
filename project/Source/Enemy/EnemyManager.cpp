@@ -9,7 +9,7 @@
 #include "../Common/LoadManager.h"
 #include "../Component/Collider/sphereCollider.h"
 #include "../Component/Animator/Animator.h"
-#include "TrashEnemy/enemy.h"
+//#include "TrashEnemy/enemy.h"
 #include "../Weapon/WeaponManager.h"
 #include "../Component/Shaker/Shaker.h"
 #include "../Component/Object/Object2D.h"
@@ -73,7 +73,7 @@ void EnemyManager::PlayerObjPointer()
 {
 	
 	for (auto itr = enemy.begin(); itr != enemy.end(); itr++) {
-		Enemy* e = (*itr)->Component()->GetComponent<Enemy>();
+		//Enemy* e = (*itr)->Component()->GetComponent<Enemy>();
 		//e->PlayerPointerSet(obj);
 		//e->Start((*itr));
 		(*itr)->SetDrawOrder(-5);
@@ -85,7 +85,7 @@ void EnemyManager::PlayerObjPointer()
 		(*itr)->AddChild(guage);
 
 		Guage* g = guage->Component()->AddComponent<Guage>();
-		g->GuageDrawReady<Enemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
+		//g->GuageDrawReady<Enemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHpGuage", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
 	}
 	
 	player->Component()->GetComponent<Player>()->TargetObjSet(*enemy.begin());

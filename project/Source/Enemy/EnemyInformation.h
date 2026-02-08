@@ -4,7 +4,7 @@
 #include "TrashEnemy/EnemyState/EnemyDamage.h"
 
 class StateManager;
-class Enemy;
+//class Enemy;
 class TrashEnemy;
 class Animator;
 class Physics;
@@ -25,7 +25,7 @@ namespace EnemyInformation {
 	{
 		EnemyComponent() {
 			state = nullptr;
-			enemy = nullptr;
+			//enemy = nullptr;
 			physics = nullptr;
 			camera = nullptr;
 			control = nullptr;
@@ -40,7 +40,7 @@ namespace EnemyInformation {
 			trashEnemy = nullptr;
 		}
 		StateManager* state;
-		Enemy* enemy;
+		//Enemy* enemy;
 		TrashEnemy* trashEnemy;
 		Physics* physics;
 		Animator* anim;
@@ -156,6 +156,5 @@ namespace EnemyInformation {
 
 		int loopMax;          // -1でループなし
 		float loopInterval;   // ループ間隔
-	};
-	
+	};	
 };

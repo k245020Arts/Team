@@ -13,7 +13,7 @@
 #include "../../Common/LoadManager.h"
 #include "../../Component/Collider/sphereCollider.h"
 #include "../../Component/Animator/Animator.h"
-#include "../TrashEnemy/Enemy.h"
+//#include "../TrashEnemy/Enemy.h"
 #include "../../Weapon/WeaponManager.h"
 #include "../../Component/Shaker/Shaker.h"
 #include "../../Component/Object/Object2D.h"
