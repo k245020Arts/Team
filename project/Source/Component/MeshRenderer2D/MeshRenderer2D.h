@@ -26,42 +26,95 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	//初期化処理
+	/// <summary>
+	/// TextureHandleの設定
+	/// </summary>
+	/// <param name="_image">画像ハンドル</param>
+	/// <param name="_mode">描画モード</param>
 	void TextureHandle(int _image,GraphMode _mode);
-	void SetTransform(const VECTOR3 _pos, const VECTOR3 _rotate, const VECTOR3 _scale);
+	/// <summary>
+	/// 複数個セットするときにobjのTransformが使えないので画像専用のTransformをセットする関数
+	/// </summary>
+	/// <param name="_pos">ポジション</param>
+	/// <param name="_rotate">回転</param>
+	/// <param name="_scale">大きさ</param>
+	void SetTransform(const VECTOR3& _pos, const VECTOR3& _rotate, const VECTOR3& _scale);
+	/// <summary>
+	/// 複数個セットするときにobjのTransformが使えないので画像専用のTransformをセットする関数
+	/// </summary>
+	/// <param name="transform">Transformを直に入れる</param>
 	void SetTransform(const Transform& transform);
 	void ImguiDraw()override;
 
-	void SetStartPos(VECTOR2I _pos);
+	/// <summary>
+	/// DrawRectGraphなどの始まる位置をセットする関数
+	/// </summary>
+	/// <param name="_pos">始まる位置</param>
+	void SetStartPos(const VECTOR2I& _pos);
 
+	/// <summary>
+	/// アニメーションをスタートさせる関数
+	/// </summary>
+	/// <param name="_speed">速さ</param>
+	/// <param name="_num">画像を何分割しているか</param>
+	/// <param name="_animX">アニメーションの移動をX軸基準に行うか</param>
 	void AnimStart(float _speed,int _num,bool _animX);
+	/// <summary>
+	///  アニメーションをスタートさせる関数、アニメーションの移動をX軸基準にする
+	/// </summary>
+	/// <param name="_speed">速さ</param>
+	/// <param name="_num">画像を何分割しているか</param>
 	void AnimStart(float _speed,int _num);
 	/// <summary>
 	/// 画像の大きさを取得
 	/// </summary>
 	/// <returns></returns>
 	VECTOR2I GetImageSize() { return imageSize; }
-	void SetDrawImageSize(VECTOR2I _pos);
+	/// <summary>
+	/// 画像の大きさをセットしている関数
+	/// </summary>
+	/// <param name="_pos">大きさ</param>
+	void SetDrawImageSize(VECTOR2I _size);
 	/// <summary>
 	/// 文字の描画をしたいときに文字をセットした分の文字が数字で描画されるようにする
 	/// </summary>
 	/// <param name="_num"></param>
 	void SetNum(int _num) { num = _num; }
 	
-	//描画の設定項目
+	/// <summary>
+	/// 画像の描画をするかしないか
+	/// </summary>
+	/// <param name="_draw">描画するならtrue</param>
 	void SetDraw(bool _draw) { draw = _draw; }
 
+	/// <summary>
+	/// 画像の位置をセットする関数
+	/// </summary>
+	/// <param name="_position">画像の位置</param>
 	void SetPosition(VECTOR3 _position);
 
+	/// <summary>
+	/// 加算合成モードにするかどうか
+	/// </summary>
+	/// <param name="_mode">trueなら加算合成モード</param>
 	void SetAddMode(bool _mode) { addMode = _mode;}
 
-	void NormalDraw(const Transform& transform);
-	void AddDraw(const Transform& transform);
-
+	/// <summary>
+	/// 画像のフェードインの開始
+	/// </summary>
+	/// <param name="_timer">時間</param>
 	void FeedInDraw(float _timer);
+	/// <summary>
+	/// 画像のフェードアウトの開始
+	/// </summary>
+	/// <param name="_timer">時間 </param>
 	void FeedOutDraw(float _timer);
 
-	float GetAlpha() { return alpha; }
+	/// <summary>
+	/// 画像の半透明度を取得
+	/// </summary>
+	/// <returns></returns>
+	float GetAlpha() const { return alpha; } 
 
 private:
 	int hImage;
@@ -77,6 +130,8 @@ private:
 	bool draw;
 
 	void DrawNum();
+	void NormalDraw(const Transform& transform);
+	void AddDraw(const Transform& transform);
 
 	bool addMode;
 	bool xAnim;

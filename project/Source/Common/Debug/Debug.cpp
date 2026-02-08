@@ -47,25 +47,25 @@ void Debug::InitDebug(InputManager* _input)
 #endif
 }
 
-void Debug::UpdateDebug()
-{
-#ifdef _DEBUG
-	ImGui::Begin("debug");
-	if (ImGui::TreeNode("ger")) {
-		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(500, 200));
-		for (std::string& str : logger) {
-			ImGui::Text("%s", str.c_str());
-			ImGui::Separator();
-		}
-		ImGui::EndChild();
-		ImGui::TreePop();
-	}
-	if (logger.size() >= 100) {
-		logger.pop_front();
-	}
-	ImGui::End();
-#endif
-}
+//void Debug::UpdateDebug()
+//{
+//#ifdef _DEBUG
+//	ImGui::Begin("debug");
+//	if (ImGui::TreeNode("ger")) {
+//		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(500, 200));
+//		for (std::string& str : logger) {
+//			ImGui::Text("%s", str.c_str());
+//			ImGui::Separator();
+//		}
+//		ImGui::EndChild();
+//		ImGui::TreePop();
+//	}
+//	if (logger.size() >= 100) {
+//		logger.pop_front();
+//	}
+//	ImGui::End();
+//#endif
+//}
 
 void Debug::DebugUpdate()
 {

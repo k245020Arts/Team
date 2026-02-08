@@ -109,7 +109,7 @@ void MeshRenderer2D::TextureHandle(int _image, GraphMode _mode)
 	}
 }
 
-void MeshRenderer2D::SetTransform(const VECTOR3 _pos, const VECTOR3 _rotate, const VECTOR3 _scale)
+void MeshRenderer2D::SetTransform(const VECTOR3& _pos, const VECTOR3& _rotate, const VECTOR3& _scale)
 {
 	transform2D = new Transform(_pos, _rotate, _scale);
 }
@@ -139,7 +139,7 @@ void MeshRenderer2D::ImguiDraw()
 	}
 }
 
-void MeshRenderer2D::SetStartPos(VECTOR2I _pos)
+void MeshRenderer2D::SetStartPos(const VECTOR2I& _pos)
 {
 	startPos = _pos;
 }
@@ -155,9 +155,9 @@ void MeshRenderer2D::AnimStart(float _speed, int _num)
 	AnimStart(_speed, _num, true);
 }
 
-void MeshRenderer2D::SetDrawImageSize(VECTOR2I _pos)
+void MeshRenderer2D::SetDrawImageSize(VECTOR2I _size)
 {
-	drawImageSize = _pos;
+	drawImageSize = _size;
 }
 
 void MeshRenderer2D::SetPosition(VECTOR3 _position)

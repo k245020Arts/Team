@@ -30,10 +30,10 @@ void RayCollider::Start()
 	
 }
 
-void RayCollider::RaySet(CollsionInfo _info, Transform _transform, Transform _transform2)
+void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _transform2)
 {
 	ColliderBase::CollsionAdd(_info, _transform);
 
-	transform2 = new Transform( _transform2);
+	transform2 = new Transform(_transform2);
 	transform2->SetParent(_info.parentTransfrom);
 }

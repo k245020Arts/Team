@@ -162,18 +162,18 @@ void Hierachy::InspectorDraw()
 	ImGui::End();
 }
 
-void Hierachy::TransformDraw(BaseObject* _obj)
-{
-	//トランスフォームを描画
-	std::string smallName = _obj->GetTag();
-	std::transform(smallName.begin(), smallName.end(), smallName.begin(), [](char c) { return std::tolower(c); });
-	std::string pName = smallName + "_position";
-	std::string rName = smallName + "_rotation";
-	std::string sName = smallName + "_scale";
-	
-	
-
-}
+//void Hierachy::TransformDraw(BaseObject* _obj)
+//{
+//	//トランスフォームを描画
+//	std::string smallName = _obj->GetTag();
+//	std::transform(smallName.begin(), smallName.end(), smallName.begin(), [](char c) { return std::tolower(c); });
+//	std::string pName = smallName + "_position";
+//	std::string rName = smallName + "_rotation";
+//	std::string sName = smallName + "_scale";
+//	
+//	
+//
+//}
 
 void Hierachy::RemoveHierachy(BaseObject* _obj)
 {

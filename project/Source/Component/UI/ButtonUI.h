@@ -26,10 +26,22 @@ public:
 	void Draw()override;
 
 	void Start(ButtonType _buttonType,int _handle);
+	/// <summary>
+	/// UIのアクティブモードを有効にする
+	/// </summary>
 	void ButtonActiveStart() { buttonActive = true; }
+	/// <summary>
+	/// UIのアクティブモードを無効にする
+	/// </summary>
 	void ButtonActiveFinish() { buttonActive = false; }
 
+	/// <summary>
+	/// UIの強調表現の開始
+	/// </summary>
 	void ColorGradeMode() { gradeMode = true; }
+	/// <summary>
+	/// UIの強調表現の終了
+	/// </summary>
 	void ColorGradeModeFinish() { gradeMode = false; }
 
 private:

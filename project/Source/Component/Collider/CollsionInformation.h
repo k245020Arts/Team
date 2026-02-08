@@ -54,6 +54,14 @@ namespace CollsionInformation {
 
 struct CollsionInfo
 {
+	CollsionInfo()
+	{
+		shape = CollsionInformation::SHAPE_MAX;
+		tag = CollsionInformation::TAG_MAX;
+		size = 0.0f;
+		parentTransfrom = nullptr;
+		oneColl = false;
+	}
 	CollsionInformation::Shape shape;
 	CollsionInformation::Tag tag;
 	float size;
@@ -70,6 +78,14 @@ struct PushInfo {
 	CollsionInformation::Shape shape;
 	VECTOR3 targetPos;
 
+	PushInfo() {
+
+		normal = VZero;
+		penetration = 0.0f;
+		shape = CollsionInformation::SHAPE_MAX;
+		targetPos = VZero;
+	}
+
 	PushInfo(const VECTOR3& n, float p, CollsionInformation::Shape _shape,VECTOR3 _targetPos)
 		: normal(n), penetration(p) ,shape(_shape) , targetPos(_targetPos) {
 	}
@@ -79,17 +95,32 @@ class Pushback {
 public:
 	Pushback();
 	~Pushback();
+	/// <summary>
+	/// 当たり判定情報を削除
+	/// </summary>
 	void Clear();
 
-	// 押し返しデータを追加
-	void AddPush(const VECTOR3& normal, float penetration, CollsionInformation::Shape _shape, VECTOR3 _targetPos);
+	/// <summary>
+	/// 押し返しデータのセット
+	/// </summary>
+	/// <param name="normal">法線</param>
+	/// <param name="penetration">押し返しの量</param>
+	/// <param name="_shape">形</param>
+	/// <param name="_targetPos">押し返しに使う相手の当たり判定</param>
+	void AddPush(const VECTOR3& _normal, float _penetration, CollsionInformation::Shape _shape, const VECTOR3& _targetPos);
 
 	// 押し返しベクトルを計算して返す
-	VECTOR3 ResultPushback(float maxLength = 5.0f);
+	VECTOR3 ResultPushback(float  _maxLength = 5.0f);
 
-	// 位置と速度に押し返しを適用
-	void Apply(Transform* transform, Physics* physics, bool affectVelocity = true, float maxLength = 5.0f);
-	bool IsGrounded(float minYNormal = 0.6f) const;
+	/// <summary>
+	/// 押し返しを適用
+	/// </summary>
+	/// <param name="transform">当たり判定に使用するTransform</param>
+	/// <param name="physics">フィジックスのポインタ</param>
+	/// <param name="affectVelocity">velocityを適用するか</param>
+	/// <param name="maxLength">最大の長さ</param>
+	void Apply(Transform* _transform, Physics* _physics, bool _affectVelocity = true, float _maxLength = 5.0f);
+	bool IsGrounded(float _minYNormal = 0.6f);
 	std::vector<PushInfo>& GetPushInfo() { return pushes; }
 private:
 	std::vector<PushInfo> pushes;

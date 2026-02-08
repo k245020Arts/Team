@@ -3,7 +3,6 @@
 #include "../Component/Shaker/Shaker.h"
 #include "cameraInformation.h"
 #include "../Common/ID/StateID.h"
-#include "../Component/Transform/Quaternion.h"
 #include "../Common/JsonReader.h"
 #include "../Camera/CameraBase.h"
 
@@ -131,29 +130,79 @@ public:
 
 	void Start(BaseObject* _eObj);
 	void ImguiDraw()override;
+	/// <summary>
+	/// Playerの情報をセットする関数
+	/// </summary>
+	/// <param name="_obj">プレイヤーのポインタ</param>
 	void PlayerSet(BaseObject* _obj)override;
 
+	/// <summary>
+	/// ターゲットを設定する関数
+	/// </summary>
+	/// <param name="_obj"></param>
 	void TargetSet(BaseObject* _obj);
 
+	/// <summary>
+	/// cameraComponentのtargetの値をtargetに代入する関数
+	/// </summary>
 	void TargetEnemySet();
-
+	/// <summary>
+	/// カメラのラープのセット
+	/// </summary>
+	/// <param name="_rape"></param>
 	void CameraLeapSet(float _rape);
+	/// <summary>
+	/// カメラのstateをチェンジする関数
+	/// </summary>
+	/// <param name="_id">ステートID</param>
 	void ChangeStateCamera(StateID::State_ID _id);
-
-	VECTOR3 GetTarget() { return target; }
-
-	void CollsionPosHit(VECTOR3 norm, float size, VECTOR3 groundPos);
-
-	void PushCamera(VECTOR3 norm, float size,VECTOR3 groundPos);
-
+	/// <summary>
+	/// 注視点を取得
+	/// </summary>
+	/// <returns>注視点</returns>
+	VECTOR3 GetTarget()const {  return target; }
+	/// <summary>
+	/// 地面とカメラの当たり判定をするカメラの設定
+	/// </summary>
+	/// <param name="norm">法線</param>
+	/// <param name="size">大きさ</param>
+	/// <param name="groundPos">地面の座標</param>
+	void CollsionPosHit(const VECTOR3& _norm, float _size, const VECTOR3& _groundPos);
+	/// <summary>
+	/// カメラの当たり判定で押し返しをするカメラの設定
+	/// </summary>
+	/// <param name="norm">法線</param>
+	/// <param name="size">大きさ</param>
+	/// <param name="groundPos">地面の座標</param>
+	void PushCamera(const VECTOR3& _norm, float _size, const VECTOR3& _groundPos);
+	/// <summary>
+	/// 敵が攻撃した時にカメラを向く座標
+	/// </summary>
+	/// <param name="_targetTransform">敵の座標</param>
+	/// <param name="_maxspeed">最大のスピード</param>
 	void AttackEnemyFovChange(Transform* _targetTransform,float _maxspeed);
 
+	/// <summary>
+	/// targetTransformの中で視野に入っているかどうかの判定
+	/// </summary>
+	/// <param name="_targetTransform">ターゲットトランスフォーム</param>
+	/// <param name="maxFov">最大の角度</param>
+	/// <returns>視野内に入っているかどうか</returns>
 	bool IsFovIn(const Transform& _targetTransform,float maxFov);
-
+	/// <summary>
+	/// カメラの回転させる関数
+	/// </summary>
+	/// <param name="_targetTransform">ターゲットトランスフォーム</param>
+	/// <param name="_speed">スピード</param>
 	void RotationChange(const Transform& _targetTransform, float _speed);
-
+	/// <summary>
+	/// カメラの回転をしているかどうかの判定
+	/// </summary>
+	/// <returns>カメラ回転をしていたらtrue</returns>
 	bool CameraRotationMove();
-
+	/// <summary>
+	/// cameraEditorModeのWindowを出す
+	/// </summary>
 	void CameraEditor();
 
 	/// <summary>
@@ -161,19 +210,42 @@ public:
 	/// ストップするため
 	/// </summary>
 	/// <param name="_name">ファイル名</param>
-	/// <param name="_space">cutScene中に止めるべき対象</param>
+	/// <param name="_cutScene">黒いボックスを出すかどうか</param>
 	void CutSceneChangeState(std::string _name,bool _cutScene);
-	
+	/// <summary>
+	/// CutSceneを開始するための関数
+	/// ストップするため
+	/// </summary>
+	/// <param name="_name">ファイル名</param>
+	/// <param name="_cutScene">黒いボックスを出すかどうか</param>
+	/// <param name="_space">cutScene中に止めるべき対象</param>
 	void CutSceneChangeState(std::string _name, bool _cutScene, int _stop);
 	
-
-	bool IsCutScene() { return isCutScene; }
-
+	/// <summary>
+	/// カットシーン中かどうか
+	/// </summary>
+	/// <returns>カットシーン中ならtrue</returns>
+	bool IsCutScene()const { return isCutScene; }
+	/// <summary>
+	/// sleepModeの時にその対象をsleepさせるか
+	/// </summary>
+	/// <param name="_stop">ストップさせる対象</param>
+	/// <param name="_sleep">スリープモードにするときはtrue、解除するときはfalse</param>
 	void SleepTargetSet(int _stop,bool _sleep);
-
-	int GetCutNum() { return cutSceneIndex; }
-
+	/// <summary>
+	/// カットシーンで現在のcut数を取る
+	/// </summary>
+	/// <returns></returns>
+	int GetCutNum() const { return cutSceneIndex; }
+	/// <summary>
+	/// カメラの視野角shakeのスタート
+	/// </summary>
+	/// <param name="_power">振動の強さ</param>
+	/// <param name="_time">時間</param>
 	void CameraPerspectiveShakeStart(float _power,float _time);
+	/// <summary>
+	/// この関数を呼ぶとshakeの終了
+	/// </summary>
 	void CameraPerspectiveShakeFinish();
 
 private:

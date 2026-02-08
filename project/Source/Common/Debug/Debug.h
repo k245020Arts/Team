@@ -20,10 +20,20 @@ namespace Debug {
 
 	void CreateMessageBox(const std::string& _error, const std::string& _title);
 
+	/// <summary>
+	/// Debugの初期化、bootSceneにて使用
+	/// </summary>
+	/// <param name="_input">inputManagerのポインタ</param>
 	void InitDebug(InputManager* _input);
 
-	void UpdateDebug();
+	/// <summary>
+	/// DebugModeのUpdate
+	/// </summary>
+	/*void UpdateDebug();*/
 
+	/// <summary>
+	/// DebugModeのUpdate
+	/// </summary>
 	void DebugUpdate();
 
 	/// <summary>
@@ -37,13 +47,26 @@ namespace Debug {
 	/// 上の関数はエスケープシーケンス対応ver
 	/// 下の関数は非対応ver
 	/// </summary>
-	/// <param name="_log"></param>
-	/// <param name=""></param>
+	/// <param name="_log">ログ内容</param>
+	/// <param name="">エスケープシーケンス</param>
 	void DebugLogPrintfArgs(const TCHAR* _log,...);
+	/// <summary>
+	/// Log出力する値を挿入する関数
+	/// Printfみたいな形で出力したいときに使う
+	/// エスケープシーケンス非対応ver
+	/// </summary>
+	/// <param name="_log">ログ内容</param>
 	void DebugLogPrintf(const TCHAR* _log);
 
+	/// <summary>
+	/// Logを流すようのUpdate
+	/// </summary>
 	void UpdateLogger();
 
+	/// <summary>
+	/// DebugWindowを流すかどうかの判定
+	/// </summary>
+	/// <returns></returns>
 	bool GetDebugMode();
 
 	//ログ出力をリセットする
@@ -66,7 +89,11 @@ namespace Debug {
 		_vstprintf_s(strPrintf, _format, args);
 		return strPrintf;
 	}
-
+	/// <summary>
+	/// OutPutDebugStringにて出力をするクラス
+	/// </summary>
+	/// <param name="fmt">ログ内容</param>
+	/// <param name="">エスケープシーケンス</param>
 	inline void DebugOutPutPrintf(const char* fmt, ...)
 	{
 		char buf[1024];

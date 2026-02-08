@@ -1,8 +1,7 @@
 #include "transform.h"
 #include "../../../ImGui/imgui.h"
-#include "Quaternion.h"
 
-MATRIX Transform::GetPositionMatrix()
+MATRIX Transform::GetPositionMatrix()const
 {
 	return MGetTranslate(position);
 }
@@ -16,7 +15,7 @@ MATRIX Transform::GetRotationMatrix()
 	return rotMatrix;
 }
 
-MATRIX Transform::GetScaleMatrix()
+MATRIX Transform::GetScaleMatrix()const
 {
 	return MGetScale(scale);
 }
@@ -77,7 +76,7 @@ Transform Transform::WorldTransform()
 	//return Transform(worldPos, worldRot, worldScale);
 }
 
-void Transform::SetWorld(Transform _transform)
+void Transform::SetWorld(const Transform& _transform)
 {
 	if (parent == nullptr) {
 		position = _transform.position;

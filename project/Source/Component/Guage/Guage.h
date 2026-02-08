@@ -28,7 +28,10 @@ public:
 		barValue = obj->GetParent()->Component()->GetComponent<T>()->GetHp();
 		barValueMax = obj->GetParent()->Component()->GetComponent<T>()->GetMaxHp();
 	}
-
+	/// <summary>
+	/// 必殺技ゲージの取得
+	/// </summary>
+	/// <typeparam name="T">誰の必殺技ゲージか</typeparam>
 	template <typename T>
 	void GetSpecialAttack() {
 		barValue = obj->GetParent()->Component()->GetComponent<T>()->GetSpecialAttackGuage();
@@ -42,6 +45,13 @@ public:
 	/// <param name="_mode"></param>
 	/// <param name="_transfrom"></param>
 	void EdgeDrawReady(int _image, MeshRenderer2D::GraphMode _mode,Transform _transfrom);
+	/// <summary>
+	/// ゲージを描画する前に設定する
+	/// </summary>
+	/// <typeparam name="T">誰のゲージを生成したいか</typeparam>
+	/// <param name="_image">画像ハンドル</param>
+	/// <param name="_mode">描画方法</param>
+	/// <param name="_bar_mode">どのモードか</param>
 	template <typename T>
 	void GuageDrawReady(int _image, MeshRenderer2D::GraphMode _mode,BAR_MODE _bar_mode) {
 		guage = obj->Component()->AddComponent<MeshRenderer2D>();
@@ -59,10 +69,19 @@ public:
 		}
 		chara = obj->GetParent()->Component()->GetComponent<T>();
 	}
-
+	
+	/// <summary>
+	/// ワールド座標をスクリーンモードで描画をするかを設定
+	/// </summary>
+	/// <param name="_mode">ワールド座標をスクリーンモードならtrue</param>
+	/// <param name="_plusPos">位置の調整</param>
 	void WorldToScreenMode(bool _mode,VECTOR3 _plusPos);
 
-	void SetAddMode(bool _mode) {guage->SetAddMode(_mode);}
+	/// <summary>
+	/// 加算合成モードかどうか
+	/// </summary>
+	/// <param name="_mode">加算合成モードならtrue</param>
+	void SetAddMode(bool _mode) const  {guage->SetAddMode(_mode);}
 
 private:
 	float* barValue;

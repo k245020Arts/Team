@@ -67,7 +67,10 @@ public:
     void Update()override {
 
     }
-
+    /// <summary>
+    /// RGB情報をセットする
+    /// </summary>
+    /// <param name="_rgb">RGBのセット</param>
     void setRGB(Rgb _rgb) {
         rgb.r = std::clamp(_rgb.r, 0.0f, 255.0f);
         rgb.g = std::clamp(_rgb.g, 0.0f, 255.0f);

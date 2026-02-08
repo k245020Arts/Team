@@ -8,11 +8,23 @@ using JSON = nlohmann::json;
 class JsonReader
 {
 public:
-    bool Load(const std::string& filename);// data_ に読み込む
+    /// <summary>
+    /// data_に読み込む
+    /// </summary>
+    /// <param name="filename">ファイルネーム</param>
+    /// <returns>取得できたかどうか</returns>
+    bool Load(const std::string& filename);
+    /// <summary>
+    /// 上書き保存
+    /// </summary>
+    /// <param name="filename">ファイルネーム</param>
+    /// <returns>セーブできたかどうか</returns>
+    bool Save(const std::string& filename, JSON& newData) const;
 
-    bool Save(const std::string& filename, JSON& newData) const;// 上書き保存
-
-    // 読み書き用アクセサ
+   /// <summary>
+   /// jsonデータの取得
+   /// </summary>
+   /// <returns>読み書き用のアクセサ</returns>
    JSON& Data(){ return data;}
 
 private:

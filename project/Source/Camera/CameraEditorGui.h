@@ -7,17 +7,10 @@ public:
 	CameraEditorGui();
 	CameraEditorGui(Camera* _camera);
 	~CameraEditorGui();
-
+	/// <summary>
+	/// EditorWindow‚Ì•\Ž¦
+	/// </summary>
 	void EditorWindow();
-
-	bool IsUsingCutScene(int cutNum, const nlohmann::json& root);
-
-	void SavePopUp(bool _using);
-
-	void DataSave();
-
-	void LoadCutScene();
-
 private:
 	Camera* camera;
 	std::string fileName;
@@ -34,5 +27,13 @@ private:
 	int  currentLoadedCut;
 	bool isLoaded;
 	std::string lastFileName;
+
+	bool IsUsingCutScene(int cutNum, const nlohmann::json& root);
+
+	void SavePopUp(bool _using);
+
+	void DataSave();
+
+	void LoadCutScene();
 	
 };

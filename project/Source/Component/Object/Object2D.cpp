@@ -22,7 +22,7 @@ void Object2D::Draw()
 	BaseObject::Draw();
 }
 
-void Object2D::Init(const VECTOR2F _pos, const VECTOR2F _rotate, const VECTOR2F _scale, std::string name)
+void Object2D::Init(const VECTOR2F& _pos, const VECTOR2F& _rotate, const VECTOR2F& _scale, std::string name)
 {
 	//2D‚¾‚Æz‚Í‚È‚¢‚Ì‚Å0‚É‚µ‚Äs‚¤
 	BaseObject::Init(name);
@@ -32,7 +32,7 @@ void Object2D::Init(const VECTOR2F _pos, const VECTOR2F _rotate, const VECTOR2F 
 	transform->scale = VECTOR3(_scale.x, _scale.y, 0.0f);
 }
 
-void Object2D::Init(Transform _transform, std::string name)
+void Object2D::Init(const Transform& _transform, std::string name)
 {
 	Init(VECTOR2F(_transform.position.x,_transform.position.y), VECTOR2F(_transform.rotation.x, _transform.rotation.y), VECTOR2F(_transform.scale.x, _transform.scale.y), name);
 }

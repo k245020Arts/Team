@@ -15,9 +15,7 @@ Physics::Physics()
 	lastTransform = nullptr;
 	currentTransform = nullptr;
 	gravity = VZero;
-	interectAddPos = VZero;
 	velocity = VZero;
-	frictionCoefficient = 0.0f;
 	noGravity = false;
 	debugId = 9;
 	tag = Function::GetClassNameC<Physics>();
@@ -92,18 +90,6 @@ void Physics::AddVelocity(VECTOR3 _addVelocity, bool _deltaTime)
 		add *= obj->GetObjectTimeRate();
 	}
 	velocity += add;
-}
-
-void Physics::AddInterect(VECTOR3 _addInterect, float _firctionCoeffocoent)
-{
-	interectAddPos += _addInterect;
-	frictionCoefficient = _firctionCoeffocoent;
-}
-
-void Physics::SetInterect(VECTOR3 _setInterect, float _firctionCoeffocoent)
-{
-	interectAddPos = _setInterect;
-	frictionCoefficient = _firctionCoeffocoent;
 }
 
 void Physics::SetFirction(VECTOR3 _setFirction)

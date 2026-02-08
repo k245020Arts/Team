@@ -57,18 +57,18 @@ void Pushback::Clear() {
     pushes.clear();
 }
 
-void Pushback::AddPush(const VECTOR3& normal, float penetration, CollsionInformation::Shape _shape,VECTOR3 _targetPos)
+void Pushback::AddPush(const VECTOR3& _normal, float  _penetration, CollsionInformation::Shape _shape, const VECTOR3& _targetPos)
 {
-    if (penetration > 0.0f) {
-        PushInfo i(normal, penetration, _shape,_targetPos);
+    if (_penetration > 0.0f) {
+        PushInfo i(_normal, _penetration, _shape, _targetPos);
 
         pushes.emplace_back(i);
     }
 }
 
-VECTOR3 Pushback::ResultPushback(float maxLength) {
+VECTOR3 Pushback::ResultPushback(float  _maxLength) {
     if (pushes.empty()) {
-        return VECTOR3(0, 0, 0);
+        return VZero;
     }
  
     VECTOR3 totalPush = VECTOR3(0, 0, 0);
@@ -94,35 +94,37 @@ VECTOR3 Pushback::ResultPushback(float maxLength) {
     }
 
     //最大の値を越したらそれ以上は押し返さないようにする
-    if (totalPush.Size() > maxLength) {
-        totalPush = totalPush.Normalize() * maxLength;
+    if (totalPush.Size() > _maxLength) {
+        totalPush = totalPush.Normalize() * _maxLength;
     }
 
     return totalPush;
 
 }
 
-void Pushback::Apply(Transform* transform, Physics* physics, bool affectVelocity, float maxLength) {
-    VECTOR3 push = ResultPushback(maxLength);
-    if (push.Size() < 0.001f) return; // 微小なら無視
+void Pushback::Apply(Transform* _transform, Physics* _physics, bool  _affectVelocity, float  _maxLength) {
+    VECTOR3 push = ResultPushback(_maxLength);
+    if (push.Size() < 0.001f) { // 微小なら無視
+        return;
+    }
 
     // 位置補正
-    transform->position += push;
+    _transform->position += push;
 
-    if (affectVelocity && physics) {
-        VECTOR3 vel = physics->GetVelocity();
+    if (_affectVelocity && _physics) {
+        VECTOR3 vel = _physics->GetVelocity();
         VECTOR3 pushNorm = push.Normalize();
 
         // めり込み方向の速度だけ打ち消す
         float dot = VDot(vel, pushNorm);
         if (dot < 0.0f) {
             vel -= pushNorm * dot;
-            physics->SetVelocity(vel);
+            _physics->SetVelocity(vel);
         }
     }
 }
 
-bool Pushback::IsGrounded(float minYNormal) const {
+bool Pushback::IsGrounded(float minYNormal){
     for (const auto& push : pushes) {
         // 法線のY成分が一定以上なら「地面」とみなす
         if (push.normal.y >= minYNormal) {

@@ -96,7 +96,11 @@ public:
 		}
 		return nullptr;
 	}
-
+	/// <summary>
+	/// コンポーネントを取得
+	/// </summary>
+	/// <typeparam name="T">指定する型</typeparam>
+	/// <returns>指定したコンポーネントのポインタ</returns>
 	template <typename T>
 	T* GetComponent() {
 		for (Component* c:component) {
@@ -106,7 +110,10 @@ public:
 		}
 		return nullptr;
 	}
-
+	/// <summary>
+	/// すべてのリストのコンポーネントを取得
+	/// </summary>
+	/// <returns></returns>
 	const std::list<Component*>& GetAllComponent() {
 		return component;
 	}

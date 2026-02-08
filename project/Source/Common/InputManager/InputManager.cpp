@@ -69,7 +69,7 @@ MouseInputManager* InputManager::GetMouseInput()
 	return nullptr;
 }
 
-void InputManager::CreateInputData(KeyConfigData _data)
+void InputManager::CreateInputData(const KeyConfigData& _data)
 {
 	auto it = inputData.find(_data.action);
 	if (inputData.end() == it) {

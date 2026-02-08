@@ -30,7 +30,7 @@ void ModelCollider::Draw()
 	MV1DrawModel(modelHandle);
 }
 
-void ModelCollider::ModelColliderSet(CollsionInfo _info, Transform _transform, int _modelHandle)
+void ModelCollider::ModelColliderSet(const CollsionInfo& _info, const Transform& _transform, int _modelHandle)
 {
 	ColliderBase::CollsionAdd(_info, _transform);
 

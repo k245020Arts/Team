@@ -40,18 +40,29 @@ public:
 
 	void ChangeSpeed(float _speed) { speed = _speed; }
 
+	/// <summary>
+	/// 現在使用してるエフェクトのIDをわたす
+	/// </summary>
+	/// <returns>エフェクトのID</returns>
 	Effect_ID::EFFECT_ID GetEffectID() { return id; }
+	/// <summary>
+	/// エフェクトの再生を止める
+	/// </summary>
 	void EffectStop();
 	
 	/// <summary>
 	/// エフェクトのスピードを調整
 	/// </summary>
-	/// <param name="_speed"></param>
+	/// <param name="_speed">基準を1としたときのスピード</param>
 	void EffectSpeedSet(float _speed);
 	/// <summary>
-	/// エフェクトの色を変える2Dと3Dで関数を分けている
+	/// エフェクトの色を変える2Dver
 	/// </summary>
 	void SetColor2D(Color::Rgb _rgb);
+	/// <summary>
+	///  エフェクトの色を変える3Dver
+	/// </summary>
+	/// <param name="_rgb">RGBの構造体</param>
 	void SetColor3D(Color::Rgb _rgb);
 	void SetColor(Color::Rgb _rgb);
 

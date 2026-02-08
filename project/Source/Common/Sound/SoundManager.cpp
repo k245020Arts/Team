@@ -210,7 +210,7 @@ void SoundManager::SetFeedInOutList(Sound* sound)
 	feedInOutList.push_back(sound);
 }
 
-void SoundManager::ChangeSound(Sound_ID::SOUND_ID _id, float _change)
+void SoundManager::ChangeVolumeSound(Sound_ID::SOUND_ID _id, float _change)
 {
 	sound[Sound_ID::GetSoundID(_id)]->ChangeVolumeSound(_change);
 }

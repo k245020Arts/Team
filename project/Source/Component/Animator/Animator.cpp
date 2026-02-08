@@ -59,14 +59,6 @@ void Animator::BaseModelSet(int _model, std::string _rootName)
 
 }
 
-// --- 追加ヘルパー（ファイル先頭近くに置いても可） ---
-static inline float NormalizeAngle(float a)
-{
-    while (a > DX_PI_F) a -= DX_PI_F * 2.0f;
-    while (a < -DX_PI_F) a += DX_PI_F * 2.0f;
-    return a;
-}
-
 void Animator::Update()
 {
     //一回リセットしないと位置が戻らないので戻す。
@@ -278,12 +270,12 @@ std::string Animator::GetCurrentID()
     return current.fileID;
 }
 
-float Animator::GetCurrentFrame()
+float Animator::GetCurrentFrame()const
 {
     return current.frame;
 }
 
-float Animator::GetCurrentBeforeFrame()
+float Animator::GetCurrentBeforeFrame()const
 {
     return current.beforeFrame;
 }
@@ -324,17 +316,17 @@ void Animator::SetFrame(float _frame)
     current.beforeFrame = current.frame;
 }
 
-int Animator::GetBaseModel()
+int Animator::GetBaseModel()const
 {
     return baseModel;
 }
 
-int Animator::GetCurrentAttackID()
+int Animator::GetCurrentAttachID()const
 {
     return current.attachID;
 }
 
-bool Animator::BlendFinish()
+bool Animator::BlendFinish()const
 {
     return blendTime >= blendTimeMax;
 }

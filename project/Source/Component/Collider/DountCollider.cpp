@@ -22,7 +22,7 @@ void DountCollider::Draw()
 	DrawSphere3D(collTransform->WorldTransform().position, outRadius, 10, 0xffff00, 0xffff00, false);*/
 }
 
-void DountCollider::DountSet(CollsionInfo _info, Transform _transform, float _outRadius)
+void DountCollider::DountSet(const CollsionInfo& _info, const Transform& _transform, float _outRadius)
 {
 	ColliderBase::CollsionAdd(_info, _transform);
 

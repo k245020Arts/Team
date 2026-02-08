@@ -15,9 +15,18 @@ public:
 
 	void Start()override;
 
+	/// <summary>
+	/// 影の大きさをセットする関数
+	/// </summary>
+	/// <param name="_dist">プレイヤーと地面の距離</param>
+	/// <param name="_groundPos">地面の位置</param>
 	void ChangeScale(VECTOR3 _dist, VECTOR3 _groundPos);
 
-	const float GetMaxDist() { return MAX_DIST; }
+	/// <summary>
+	/// 影の大きさがゼロになる距離の値を取得
+	/// </summary>
+	/// <returns>最大距離</returns>
+	const float GetMaxDist() const  { return MAX_DIST; }
 
 private:
 	int model;

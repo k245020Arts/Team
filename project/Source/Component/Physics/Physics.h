@@ -16,31 +16,79 @@ public:
 	void Draw()override;
 	void Start(VECTOR3 _gravityAmout,VECTOR3 _fir);
 
-	//移動をするvelocityに値をいれる
+	/// <summary>
+	/// velocityのセット
+	/// </summary>
+	/// <param name="_addVelocity">追加するベロシティ</param>
+	/// <param name="_deltaTime">毎フレームAddVelocityをするならこれをtrueにする</param>
 	void AddVelocity(VECTOR3 _addVelocity, bool _deltaTime);
+	/// <summary>
+	/// velocityのセット
+	/// </summary>
+	/// <param name="_velocity">セットするvelocity</param>
 	void SetVelocity(VECTOR3 _velocity) { velocity = _velocity; }
 
-	void AddInterect(VECTOR3 _addInterect, float  _firctionCoeffocoent);
-	void SetInterect(VECTOR3 _setInterect, float _firctionCoeffocoent);
-	//抵抗を設定する
+	
+	/*void AddInterect(VECTOR3 _addInterect, float  _firctionCoeffocoent);
+	void SetInterect(VECTOR3 _setInterect, float _firctionCoeffocoent);*/
+	/// <summary>
+	/// 空気抵抗をセットする
+	/// </summary>
+	/// <param name="_setFirction">セットする空気抵抗</param>
 	void SetFirction(VECTOR3 _setFirction);
+	/// <summary>
+	/// 空気抵抗をセットする
+	/// </summary>
+	/// <param name="_setFirction">加算する空気抵抗</param>
 	void AddFirction(VECTOR3 _addFirction);
-	//重力を設定する
-	VECTOR3 GetGravity() { return gravity; }
+	
+	/// <summary>
+	/// 重力の取得
+	/// </summary>
+	/// <returns>重力</returns>
+	VECTOR3 GetGravity()const { return gravity; }
+	/// <summary>
+	/// 重力をセットする
+	/// </summary>
+	/// <param name="_setGravity">セットする重力</param>
 	void SetGravity(VECTOR3 _setGravity);
+	/// <summary>
+	/// 重力をセットする
+	/// </summary>
+	/// <param name="_setGravity">加算する重力</param>
 	void AddGravity(VECTOR3 _addGraivty);
-
-	VECTOR3 GetFirction() { return firction; }
-
-	VECTOR3 GetVelocity() { return velocity; }
+	/// <summary>
+	/// 空気抵抗の取得
+	/// </summary>
+	/// <returns>空気抵抗</returns>
+	VECTOR3 GetFirction()const { return firction; }
+	/// <summary>
+	/// ベロシティの取得
+	/// </summary>
+	/// <returns>ベロシティ</returns>
+	VECTOR3 GetVelocity()const { return velocity; }
 
 	void ImguiDraw()override;
-
-	Transform* GetLastTransform() { return lastTransform; }
-	//ポジションをたす
+	/// <summary>
+	/// 1フレ前のtransformを取得
+	/// </summary>
+	/// <returns></returns>
+	Transform* GetLastTransform()const { return lastTransform; }
+	/// <summary>
+	/// ポジションを足す
+	/// </summary>
+	/// <param name="_pos">プラスするポジション</param>
 	void AddPosition(VECTOR3 _pos) { currentTransform->position += _pos; }
 
+	/// <summary>
+	/// 地面についていたらtrue
+	/// </summary>
+	/// <param name="_g"> 地面についていたらtrue</param>
 	void SetGround(bool _g) { ground = _g; }
+	/// <summary>
+	/// 地面についているかどうかの判定
+	/// </summary>
+	/// <returns>地面についているかどうか</returns>
 	bool GetGround() { return ground; }
 
 private:
@@ -51,9 +99,6 @@ private:
 
 	Transform* lastTransform;//最後のトランスフォーム
 
-	VECTOR3 interectAddPos;
-
-	float frictionCoefficient;
 	VECTOR3 gravity; //重力
 	VECTOR3 firction; //抵抗、摩擦係数
 

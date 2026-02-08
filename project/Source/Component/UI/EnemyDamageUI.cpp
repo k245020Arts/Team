@@ -126,7 +126,7 @@ void EnemyDamageUI::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-void EnemyDamageUI::SetInformation(VECTOR3 _offset, int _damageNum, VECTOR3 _movePos, float _timer, int _image, Transform* _world, VECTOR2I _graphsize)
+void EnemyDamageUI::SetInformation(const VECTOR3& _offset, int _damageNum, const VECTOR3& _movePos, float _timer, int _image, Transform* _world, const VECTOR2I& _graphsize)
 {
 	worldTransform = _world;
 	worldOffset = _offset;

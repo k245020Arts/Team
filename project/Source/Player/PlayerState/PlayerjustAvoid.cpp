@@ -116,7 +116,7 @@ void PlayerJustAvoid::Update()
 			volume -= 40.0f;
 			if (volume <= 120.0f) {
 				p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
-				p->playerCom.sound->ChangeSound(Sound_ID::JUST_AVOID_SUCCESS, volume);
+				p->playerCom.sound->ChangeVolumeSound(Sound_ID::JUST_AVOID_SUCCESS, volume);
 			}
 		}
 		num++;

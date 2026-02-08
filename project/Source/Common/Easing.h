@@ -4,6 +4,14 @@
 /// <summary>
 /// easingを使うときはこの関数を使う
 /// </summary>
+/// 
+
+
+/// <typeparam name="T">Easingによる取得をする型</typeparam>
+/// <param name="a">Easingの最小（tが0になった時の値)</param>
+/// <param name="b">Easingの最小（tが1になった時の値)</param>
+/// <param name="t">0～1割合</param>
+/// <returns>各々Easingによって返される値</returns>
 namespace Easing {
     /// <summary>
     /// 二点の間の値を求める
@@ -54,6 +62,10 @@ namespace Easing {
         return Lerp<T>(a, b, t);
     }
 
+    /// <summary>
+    /// 急激に上がって少し戻るようなイージング
+    /// </summary>
+    
     template<typename T>
     T inline EaseInExpo(T a, T b, float t) {
         t = powf(2, 10 * t - 10);
@@ -114,7 +126,10 @@ namespace Easing {
         return Lerp<T>(a, b, t);
 
     }
-
+    /// <summary>
+    /// サインカーブをする
+    /// </summary>
+    
     template<typename T>
     T inline SinCube(T a, T b, float t) {
 
@@ -131,9 +146,19 @@ namespace Easing {
         return Lerp<T>(a, b, t);
 
     }
-
+    /// <summary>
+    /// Easingのカウンタを下げてそこからEasingの値を掛けて値を取得する流れを関数化
+    /// </summary>
+    /// <typeparam name="T">Easingによって返される値の型</typeparam>
+    /// <param name="_counter">今現在のカウンターのポインタ</param>
+    /// <param name="_maxTime">最大の時間</param>
+    /// <param name="min">Easingの最小（counterが0になった時の値)</param>
+    /// <param name="max">Easingの最大<counterが_maxTimeの時の値)</param>
+    /// <param name="_func">関数</param>
+    /// <returns>_funcによって取得した値</returns>
     template<typename T>
     T EasingFlow(float* _counter, float _maxTime, T min, T max, std::function<T(T, T, float)> _func) {
+        //カウンターが0より下になったらminの値を返す
         if (*_counter <= 0.0f) {
             float rate = *_counter / _maxTime;
             return _func(min, max, rate);

@@ -1042,9 +1042,6 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\Transform\Quaternion.h">
-      <Filter>Component\Transform</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossState\BossThreat.h">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>

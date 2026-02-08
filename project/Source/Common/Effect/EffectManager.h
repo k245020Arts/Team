@@ -30,32 +30,35 @@ public:
 	/// <summary>
 	/// エフェクトの再生を止める
 	/// </summary>
-	/// <param name="_id"></param>
+	/// <param name="_id">エフェクトID</param>
 	void StopEffekseer(Effect_ID::EFFECT_ID _id);
 	/// <summary>
 	/// エフェクトのスピード調整
 	/// </summary>
-	/// <param name="_id"></param>
-	/// <param name="_speed"></param>
+	/// <param name="_id">エフェクトID</param>
+	/// <param name="_speed">基準を1としたときのスピード</param>
 	void SetSpeedEffekseer(Effect_ID::EFFECT_ID _id,float _speed);
+	/// <summary>
+	/// すべてのエフェクトをストップさせる
+	/// </summary>
 	void AllStopEffekseer();
 	/// <summary>
 	/// エフェクトが再生されているか
 	/// </summary>
-	/// <param name="_id"></param>
-	/// <returns></returns>
+	/// <param name="_id">エフェクトID</param>
+	/// <returns>再生されているか</returns>
 	bool IsPlayIng(Effect_ID::EFFECT_ID _id);
 	/// <summary>
 	/// エフェクトの色を変えたいときに使う。
 	/// 主にalphaで使うことが多いかも？
 	/// </summary>
-	/// <param name="_id"></param>
-	/// <param name="_rgb"></param>
+	/// <param name="_id">エフェクトID</param>
+	/// <param name="_rgb">RGBの構造体</param>
 	void SetColor(Effect_ID::EFFECT_ID _id, Color::Rgb _rgb);
 	/// <summary>
 	///　親のトランスフォームを外すための関数
 	/// </summary>
-	/// <param name="_obj"></param>
+	/// <param name="_obj">今親になっているObject</param>
 	void ParentTransformRemove(BaseObject* _obj);
 	
 private:

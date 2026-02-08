@@ -15,8 +15,14 @@ public:
 
 	void Update()override;
 	void Draw()override;
-
-	void CreateWave(CollsionInformation::Tag _tag, Transform _transform, float _startOutRange, float _speed);
+	/// <summary>
+	/// 衝撃波を生成する
+	/// </summary>
+	/// <param name="_tag">当たり判定のタグ</param>
+	/// <param name="_transform">今現在のトランスフォーム</param>
+	/// <param name="_startOutRange">外側の半径</param>
+	/// <param name="_speed"速度></param>
+	void CreateWave(CollsionInformation::Tag _tag, const Transform& _transform, float _startOutRange, float _speed);
 
 private:
 
