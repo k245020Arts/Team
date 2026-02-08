@@ -46,8 +46,8 @@ void CutSceneBox::Draw()
 	
 
 	/*SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);*/
-	DrawBoxAA(0, 0, Screen::WIDTH, boxPosY, 0x000000, true);
-	DrawBoxAA(0, Screen::HEIGHT - boxPosY, Screen::WIDTH, Screen::HEIGHT, 0x000000, true);
+	DrawBoxAA(0.0f, 0.0f, (float)Screen::WIDTH, (float)boxPosY, 0x000000, true);
+	DrawBoxAA(0.0f, (float)(Screen::HEIGHT - boxPosY), (float)Screen::WIDTH, (float)Screen::HEIGHT, 0x000000, true);
 	/*SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);*/
 }
 

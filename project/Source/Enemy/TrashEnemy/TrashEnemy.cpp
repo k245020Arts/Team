@@ -473,7 +473,7 @@ void TrashEnemy::PlayerHit()
 	//連携攻撃のときは耐性を付与
 	if (isCooperateAtk)
 		damage = damage / 5;
-	VECTOR3 a = VECTOR3(GetRand(100), 500 + GetRand(100), GetRand(100));
+	VECTOR3 a = VECTOR3((float)GetRand(100), (float)(500 + GetRand(100)), (float)GetRand(100));
 	hp -= DamageCalculation(a, damage, eStatus->GetStatus().defense,30);
 
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。

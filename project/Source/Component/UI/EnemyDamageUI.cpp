@@ -119,7 +119,7 @@ void EnemyDamageUI::Draw()
 		const float MAX_SCALE = 0.05f;
 		float charScale = scale + sinf(180.0f * DegToRad * t) * MAX_SCALE;
 
-		DrawRectRotaGraph(startX + (digitCount - 1 - i) * graphSize.x * scale,screenPos.y - bounce,digit * graphSize.x,
+		DrawRectRotaGraph((int)(startX + (digitCount - 1 - i) * graphSize.x * scale),(int)(screenPos.y - bounce),digit * graphSize.x,
 			0,graphSize.x,graphSize.y,charScale,0.0f,numImage,true);
 	}
 

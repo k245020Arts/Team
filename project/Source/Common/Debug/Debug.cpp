@@ -21,9 +21,9 @@ namespace {
 
 void Debug::CreateMessageBox(const std::string& _error, const std::string& _title)
 {
-#if DebugIf
+//#if DebugIf
 	MessageBox(NULL, _error.c_str(), _title.c_str(), MB_ICONERROR | MB_OK);
-#endif
+//#endif
 }
 
 void Debug::InitDebug(InputManager* _input)

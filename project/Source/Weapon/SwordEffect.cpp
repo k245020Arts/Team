@@ -294,7 +294,7 @@ void SwordEffect::Draw()
 	splineTop[2] = points[readp + 2].top;
 	splineTop[3] = points[readp + 3].top;*/
 
-	int s = points.size();
+	int s = (int)points.size();
 	if (readp == writep)
 		return;
 	for (int idx = readp; idx != writep; idx = (idx + 1) % s) {
@@ -340,7 +340,7 @@ void SwordEffect::Draw()
 	if (vertecxes.size() <= 4) {
 		return;
 	}
-	int pointSize = vertecxes.size();
+	int pointSize = (int)vertecxes.size();
 	float add = 1.0f / pointSize;
 	for (int i = 0; i < pointSize; i++) {
 		vertecxes[i].v -= add * i;
@@ -358,7 +358,7 @@ void SwordEffect::Draw()
 	SetUseLighting(FALSE);
 
 	SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
-	DrawPolygonIndexed3D(vertecxes.data(), vertecxes.size(), indexes.data(), indexes.size() / 3, image, true);
+	DrawPolygonIndexed3D(vertecxes.data(), (int)vertecxes.size(), indexes.data(), (int)indexes.size() / 3, image, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 	SetUseLighting(TRUE);
@@ -408,14 +408,14 @@ VERTEX3D SwordEffect::MakeVertex(VECTOR3 _pos, float u, float v,Color::Rgb _rgb)
 	vertex.u = u;
 	vertex.v = v;
 	vertex.norm = VECTOR3(0.0f, 1.0f, 0.0f);
-	vertex.dif = GetColorU8(_rgb.r, _rgb.g, _rgb.b, 255);
-	vertex.spc = GetColorU8(0.0f, 0.0f, 0.0f, 0.0f);
+	vertex.dif = GetColorU8((int)_rgb.r, (int)_rgb.g, (int)_rgb.b, 255);
+	vertex.spc = GetColorU8(0, 0, 0, 0);
 	return vertex;
 }
 
 int SwordEffect::adj(int idx)
 {
-	int s = points.size();
+	int s = (int)points.size();
 	return (idx + s) % s;
 }
 

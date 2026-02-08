@@ -58,7 +58,7 @@ void MeshRenderer2D::Draw()
 		return;
 	}
 	if (feedIn || feedOut) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
 	}
 	Transform transform;
 	if (transform2D == nullptr) {
@@ -190,7 +190,7 @@ void MeshRenderer2D::NormalDraw(const Transform& transform)
 		DrawRectRotaGraphFast3F(transform.position.x, transform.position.y, startPos.x, startPos.y, drawImageSize.x, drawImageSize.y, imageSize.x * 0.5f, imageSize.y * 0.5f, transform.scale.x, transform.scale.y, transform.rotation.y, hImage, TRUE);
 		break;
 	case MeshRenderer2D::DRAW_BILLBOARD:
-		DrawBillboard3D(transform.position, 0.5f, 0.5f, imageSize.x, 0.0f, hImage,true);
+		DrawBillboard3D(transform.position, 0.5f, 0.5f, (float)imageSize.x, 0.0f, hImage,true);
 		break;
 	}
 }

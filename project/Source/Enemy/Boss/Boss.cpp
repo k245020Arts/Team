@@ -524,7 +524,7 @@ void Boss::PlayerHit()
 		}
 	}
 	EnemyDamageMove(dInfo);
-	hp -= DamageCalculation(VECTOR3(GetRand(400) - 200, 800 + GetRand(400) - 200, GetRand(400) - 200), damage ,500.0f, GetRand(15));
+	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage ,500.0f, (float)GetRand(15));
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();
 	std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();

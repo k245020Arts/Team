@@ -54,8 +54,8 @@ namespace {
 	{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, PlayerInformation::PlayerReaction(VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
 	{ StateID::PLAYER_ATTACK2_S, PlayerInformation::PlayerReaction(VECTOR3(50,50,50), 0.1f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
 	{ StateID::PLAYER_ATTACK3_S, PlayerInformation::PlayerReaction(VECTOR3(50,50,50), 0.12f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
-	{ StateID::PLAYER_ATTACK5_S, PlayerInformation::PlayerReaction(VECTOR3(150,100,100), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
-	{ StateID::PLAYER_ATTACK4_S, PlayerInformation::PlayerReaction(VECTOR3(100,100,100), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_ATTACK5_S, PlayerInformation::PlayerReaction(VECTOR3(150,100,100), 0.3f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_ATTACK4_S, PlayerInformation::PlayerReaction(VECTOR3(100,100,100), 0.3f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
 	{ StateID::PLAYER_HEAVY_ATTACK_S, PlayerInformation::PlayerReaction(VECTOR3(150,150,150), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
 
 	};

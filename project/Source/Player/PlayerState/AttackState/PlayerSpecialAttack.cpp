@@ -114,7 +114,7 @@ void PlayerSpecialAttack::Draw()
 	}
 	SetDrawBright(255, 255, 255);*/
 	
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
 	//DrawRotaGraph(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, zoomRate, 0.0f * DegToRad, playerHandle, true);
 	DrawRectRotaGraph((int)Screen::WIDTH / 2, (int)Screen::HEIGHT / 2, 0, (int)zoomSize / 2, (int)Screen::WIDTH, (int)(200.0f - zoomSize), (double)zoomRate, 0.0 * DegToRad, playerHandle, true);
 	
@@ -133,7 +133,7 @@ void PlayerSpecialAttack::Start()
 
 	const int ROTATION_CHANGE_LOOP = 8;
 	int max = 0;
-	int finalAngle = p->playerTransform->rotation.y;
+	float finalAngle = p->playerTransform->rotation.y;
 
 	for (int i = 0; i < ROTATION_CHANGE_LOOP; i++) {
 		int n = p->playerCom.enemyManager->PlayerFovEnemyNum(obj->GetTransform(), 45.0f);

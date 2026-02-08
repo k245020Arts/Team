@@ -73,7 +73,7 @@ public:
 	/// </summary>
 	/// <param name="_id">ボリュームを変えたいID</param>
 	/// <param name="_change">音の大きさ</param>
-	void ChangeVolumeSound(Sound_ID::SOUND_ID _id,float _change);
+	void ChangeVolumeSound(Sound_ID::SOUND_ID _id,int _change);
 	/// <summary>
 	/// 設定したIDを初期に設定したボリュームに変更
 	/// </summary>

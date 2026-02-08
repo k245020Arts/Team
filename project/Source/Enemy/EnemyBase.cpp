@@ -97,7 +97,7 @@ float EnemyBase::DamageCalculation(const VECTOR3& _pos, float _damage,float _def
 	damageNum->Init(Transform(VZero, VZero, VOne), "damageNum");
 	damageNum->Component()->AddComponent<EnemyDamageUI>()->
 		SetInformation(_pos,
-		damage +GetRand(deviation), VECTOR3(0, -0.4f, 0), 0.5f,
+		damage +(float)GetRand(deviation), VECTOR3(0.0f, -0.4f, 0.0f), 0.5f,
 		Load::GetHandle(ID::DAMAGE_UI_BUTTON), GetEnemyObj()->GetTransform(), VECTOR2I(81, 90));
 	
 	return damage;

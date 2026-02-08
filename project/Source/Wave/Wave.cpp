@@ -65,7 +65,7 @@ void Wave::EnemySpawn()
 	if (tEnemyManager->EnemyList().size() <= 0)
 	{
 		if (waveNow < WAVE_MAX) {
-			tEnemyManager->CreateEnemy(SPWNPOS, spawn);
+			tEnemyManager->CreateEnemy(SPWNPOS, (float)spawn);
 		}
 
 		isCooperate = false;

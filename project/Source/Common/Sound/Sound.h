@@ -44,7 +44,7 @@ public:
 	/// Volumeを途中で変える時に使う
 	/// </summary>
 	/// <param name="_volume">音のボリューム</param>
-	void ChangeVolumeSound(float _volume);
+	void ChangeVolumeSound(int _volume);
 	/// <summary>
 	/// 最初に設定したボリュームに戻す
 	/// </summary>
@@ -54,7 +54,7 @@ public:
 	/// ボリュームを取得
 	/// </summary>
 	/// <returns>ボリューム</returns>
-	const float GetVolumn() { return volume; }
+	const int GetVolumn() { return volume; }
 
 	/// <summary>
 	/// 音の周波数を変える

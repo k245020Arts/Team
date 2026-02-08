@@ -114,7 +114,7 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_WALK, "AS_373275_ドスッ_重めの足音", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_ROAR_VOICE, "B_ROAR_2", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_JUMP_WIND, "BOSS_JUMP_WIND", ".wav", 200);
-	SoundLoad(Sound_ID::SOUND_ID::BOSS_BEFORE, "BossBefore", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::BOSS_BEFORE, "BossBefore", ".wav", 100);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK2, "p_walk2", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK3, "p_walk3", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK4, "p_walk4", ".wav", 255);
@@ -210,7 +210,7 @@ void SoundManager::SetFeedInOutList(Sound* sound)
 	feedInOutList.push_back(sound);
 }
 
-void SoundManager::ChangeVolumeSound(Sound_ID::SOUND_ID _id, float _change)
+void SoundManager::ChangeVolumeSound(Sound_ID::SOUND_ID _id, int _change)
 {
 	sound[Sound_ID::GetSoundID(_id)]->ChangeVolumeSound(_change);
 }
@@ -227,7 +227,7 @@ void SoundManager::Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj, f
 	VECTOR3 dist = targetTransform->position - base3DTransfom->position;
 	float size = dist.Size();
 
-	float vol = 0;
+	int vol = 0;
 	if (_maxVolSize <= size) {
 		vol = 0;
 	}
@@ -236,7 +236,7 @@ void SoundManager::Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj, f
 	}
 	else {
 		float rate = (size - _maxVolSize) / (_minVolSize - _maxVolSize);
-		vol = Easing::Lerp(0.0f, sound[Sound_ID::GetSoundID(_id)]->GetVolumn(),rate);
+		vol = Easing::Lerp(0, sound[Sound_ID::GetSoundID(_id)]->GetVolumn(),rate);
 	}
 	sound[Sound_ID::GetSoundID(_id)]->ChangeVolumeSound(vol);
 

@@ -90,7 +90,7 @@ void Sound::BGMFeedOut(float time)
 	active		= true;
 }
 
-void Sound::ChangeVolumeSound(float _volume)
+void Sound::ChangeVolumeSound(int _volume)
 {
 	ChangeVolumeSoundMem(_volume, soundHandle);
 }
