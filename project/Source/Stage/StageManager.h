@@ -13,8 +13,17 @@ public:
 	~StageManager();
 	void Update() override;
 	void Draw() override;
+	/// <summary>
+	/// ステージの生成
+	/// </summary>
 	void CreateStage();
+	/// <summary>
+	/// ステージの壁の生成
+	/// </summary>
 	void CreateWall();
+	/// <summary>
+	/// ステージの床の生成
+	/// </summary>
 	void CreateFloor();
 
 private:

@@ -234,17 +234,6 @@ GameManager::GameState GameManager::GetStateNumber()
 #endif // STRING_MODE
 
 
-void GameManager::CreateNum()
-{	
-	obj = new Object2D();
-	obj->Init(VECTOR2F(1000, 300), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.5f, 1.0f), "count");
-	obj->SetDrawOrder(-500);
-
-	MeshRenderer2D* mesh =  obj->Component()->AddComponent<MeshRenderer2D>();
-	//mesh->TextureHandle(Load::LoadImageGraph(Load::IMAGE_PATH + "Number_01", ID::START_NUM), MeshRenderer2D::DRAW_NUM);
-}
-
-
 
 void GameManager::SetPointer()
 {
@@ -280,7 +269,7 @@ MEB GameManager::BeforeDraw()
 
 MEB GameManager::PlayUpdate()
 {
-	obj->Component()->GetComponent<MeshRenderer2D>()->SetDraw(false);
+	//obj->Component()->GetComponent<MeshRenderer2D>()->SetDraw(false);
 	return &GameManager::PlayUpdate;
 }
 

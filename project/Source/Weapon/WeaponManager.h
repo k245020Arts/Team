@@ -11,8 +11,13 @@ public:
 	~WeaponManager();
 	void Update()override;
 	void Draw()override;
-
+	/// <summary>
+	/// Player‚Ì•Ší‚Ì¶¬
+	/// </summary>
 	void CreatePlayerWeapon();
+	/// <summary>
+	/// “G‚Ì•Ší‚Ì¶¬
+	/// </summary>
 	void CreateEnemyWeapon();
 
 	/// <summary>

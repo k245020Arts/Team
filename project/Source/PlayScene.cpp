@@ -32,7 +32,7 @@
 #include "../Source/Wave/Wave.h"
 #include "Component/UI/UIManager/UIManager.h"
 
-int PlayScene::count = 0;
+//int PlayScene::count = 0;
 
 //YAML_CONVERT_STRUCT(P, name, level, items)
 
@@ -85,7 +85,7 @@ PlayScene::PlayScene()
 	collManager->SetDrawOrder(-90000);
 	hierachy->SetDrawOrder(-100000);
 	sky->CreateSky();
-	gameManager->CreateNum();
+	//gameManager->CreateNum();
 	gameManager->SetPointer();
 
 	//YamlReader ya;

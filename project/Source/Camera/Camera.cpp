@@ -255,7 +255,7 @@ void Camera::PushCamera(const VECTOR3& _norm, float _size, const VECTOR3& _groun
 
 void Camera::AttackEnemyFovChange(Transform* _targetTransform,float _maxspeed)
 {
-	std::shared_ptr<StateBase> freeCamera = cameraComponent.state->GetCurrentState();
+	std::shared_ptr<StateBase> freeCamera = cameraComponent.state->GetState<StateBase>();
 	if (moveTimer > 0.0f || freeCamera->GetID() != StateID::FREE_CAMERA_S || CameraRotationMove()) {
 		return;
 	}

@@ -48,19 +48,40 @@ public:
 	~Boss();
 	void Update()override;
 	void Draw()override;
-
+	/// <summary>
+	/// jsonを読み込み
+	/// </summary>
+	/// <param name="j">jsonデータ</param>
+	/// <returns>jsonDataの中身</returns>
 	EnemyInformation::EnemyReaction JsonRead(const JSON& j);
-
+	/// <summary>
+	/// ボスの開始
+	/// </summary>
+	/// <param name="_obj"></param>
 	void Start(Object3D* _obj);
-
+	
 	void ImguiDraw()override;
-
-	//プレイヤーの方に向く関数
+	
+	/// <summary>
+	/// プレイヤーの方に向く関数
+	/// </summary>
 	void LookPlayer();
+
+	/// <summary>
+	/// プレイヤーの方に向く関数
+	/// </summary>
+	/// <param name="speed">振り向くスピード</param>
 	void LookPlayer(float speed);
 
+	/// <summary>
+	/// 攻撃の当たり判定の開始
+	/// </summary>
+	/// <typeparam name="T">当たり判定のクラス名</typeparam>
+	/// <param name="_shape">当たり判定の形</param>
+	/// <param name="_trans">基準のTransform</param>
+	/// <returns>当たり判定クラスのポインタ</returns>
 	template<typename T>
-	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans) {
+	T* CollsionStart(CollsionInformation::Shape _shape, const Transform& _trans) {
 		if (attackColl == nullptr) {
 			CollsionInfo info = CharaBase::CollsionInstant<T>(_shape, _trans);
 			info.tag = CollsionInformation::Tag::B_ATTACK;
@@ -69,16 +90,40 @@ public:
 		};
 		return static_cast<T*>(attackColl);
 	}
-
+	/// <summary>
+	/// playerにダメージを食らった時の判定
+	/// </summary>
 	void PlayerHit()override;
+	/// <summary>
+	/// 攻撃の軌跡を生成
+	/// </summary>
+	/// <param name="_right"></param>
 	void Drail(bool _right);
-
+	/// <summary>
+	/// HPの割合を取得
+	/// </summary>
+	/// <returns>HPの割合の列挙型</returns>
 	HP_RATE Hp();
-
+	/// <summary>
+	/// ボスが移動をする
+	/// </summary>
+	/// <param name="_speed">スピード</param>
+	/// <param name="_max">最大スピード</param>
 	void MoveBoss(float _speed,float _max);
+	/// <summary>
+	/// 攻撃のクールタイムの取得
+	/// </summary>
+	/// <returns>攻撃のクールタイム</returns>
 	float GetAttackCoolTime();
 
+	/// <summary>
+	/// ボスの攻撃をさせたいときに呼ぶ
+	/// </summary>
 	void BossAttackStateChange();
+	/// <summary>
+	/// プレイヤーの範囲内なら攻撃
+	/// </summary>
+	/// <returns>trueなら攻撃可能</returns>
 	bool RunChangeAttack();
 
 private:

@@ -41,23 +41,32 @@ public:
 	//std::string GetStateName();
 	int GetStateNumber();
 #else
+	/// <summary>
+	/// Stateの種類の取得
+	/// </summary>
+	/// <returns>現在のstate</returns>
 	GameState GetStateNumber();
+	/// <summary>
+	/// ゲームStateの変更
+	/// </summary>
+	/// <param name="_name">ゲームステート</param>
 	void ChangeState(GameState _name);
 #endif // STRING_MODE
 
-	
-
-	
-
+	/// <summary>
+	/// 現在のStateの関数ポインタを取得
+	/// </summary>
+	/// <returns>関数ポインタ</returns>
 	MEB::MethodPtr GetGameState() { return state.GetMethodFunc(); }
 
-	void CreateNum();
-
-	
-	
-
+	/// <summary>
+	/// カメラのポインタを取得
+	/// </summary>
 	void SetPointer();
-
+	/// <summary>
+	/// Stateが1フレーム前にチェンジされたかどうかを取得
+	/// </summary>
+	/// <returns>1フレ前にステートがチェンジされていたらtrue</returns>
 	bool GetChangeState() { return changeState; }
 
 	

@@ -9,7 +9,9 @@ public:
 	~Wave();
 	void Update();
 	void Draw();
-
+	/// <summary>
+	/// ‰‚ß‚Ä¶¬‚³‚ê‚é‚Æ‚«‚Ég—p
+	/// </summary>
 	void FirstRespown();
 
 private:

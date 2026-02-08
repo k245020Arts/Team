@@ -26,7 +26,6 @@ PlayerJustAvoid::PlayerJustAvoid()
 	cameraAngle		= 0.0f;
 	cameraLeap		= 0.0f;
 	startTimer		= 0.0f;
-	shadowNum		= 0;
 	num				= 0;
 	easingCount		= 0.0f;
 	
@@ -219,17 +218,6 @@ void PlayerJustAvoid::Finish()
 		p->largeJustAvoid	= false;
 	}
 	
-}
-
-void PlayerJustAvoid::JustAvoidShadow()
-{
-	/*avoidShadowStart = true;
-	shadowNum = 0;
-	shadowAddTime = 0.0f;
-	for (int i = 0; i < SHADOW_NUM_MAX; i++) {
-		anim[i]->Play(ID::P_ANIM_AVOID);
-		anim[i]->Init(p->playerCom.player->GetPlayerObj());
-	}*/
 }
 
 void PlayerJustAvoid::JustAvoidRotation()

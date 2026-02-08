@@ -15,11 +15,9 @@ public:
 	void Start()override;
 	void Finish()override;
 
-	void Again();
-
 private:
 	float timer;
-	
+	void Again();
 
 	const int ATTACK_NUMMAX = 2;
 };

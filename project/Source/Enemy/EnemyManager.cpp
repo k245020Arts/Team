@@ -509,7 +509,7 @@ EnemyBase* EnemyManager::PlayerNearEnemy()
 	return nearEnemy;
 }
 
-void EnemyManager::NearEnemyAlpha(VECTOR3 camPos)
+void EnemyManager::NearEnemyAlpha(const VECTOR3& camPos)
 {
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
 		VECTOR3 dist = (*itr)->GetBaseObject()->GetTransform()->position - camPos;
@@ -598,7 +598,7 @@ EnemyAttackChangeCameraDirection EnemyManager::BossAttackCamera(Camera* camera, 
 		return EnemyAttackChangeCameraDirection::NONE;
 	}
 
-	VECTOR3 right = target.Normalize() * MGetRotY(90 * DegToRad);
+	VECTOR3 right = target.Normalize() * MGetRotY(90.0f * DegToRad);
 	VECTOR3 tar = player->GetTransform()->position - _targetTransform.position;
 	tar.y = 0;
 

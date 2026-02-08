@@ -21,22 +21,19 @@ public:
 	void Start()override;
 	void Finish()override;
 
-	void SpecialRotationChange();
-
-	void MoveStart(float _angle);
-
-	void AddCollsion();
-
 	void StateImguiDraw()override;
 
-	void BeforeUpdate();
-	void GroundUpdate();
-	void ChargeUpdate();
-	void FinalAttackUpdate();
-
+	
+	/// <summary>
+	/// •KE‹Z‚Ìó‘Ô‚Ìæ“¾
+	/// </summary>
+	/// <returns></returns>
 	PLAYER_SPECIAL_ATTACK_STATE GetSpecialAttackState() { return state; }
-
-	bool GetAttackDamage() { return attackDamage; }
+	/// <summary>
+	/// UŒ‚—Í‚Ìæ“¾
+	/// </summary>
+	/// <returns>UŒ‚—Í</returns>
+	bool GetAttackDamage()const { return attackDamage; }
 
 private:
 
@@ -77,4 +74,14 @@ private:
 	bool attackDamage;
 
 	bool moveStart;
+
+	void BeforeUpdate();
+	void GroundUpdate();
+	void ChargeUpdate();
+	void FinalAttackUpdate();
+	void SpecialRotationChange();
+
+	void MoveStart(float _angle);
+
+	void AddCollsion();
 };

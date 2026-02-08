@@ -14,7 +14,9 @@ public:
 	virtual void Draw()override;
 
 	virtual void Start()override;
-
+	/// <summary>
+	/// ‰ñ”ð‚ÌŠJŽn
+	/// </summary>
 	void AvoidStart()override;
 	
 	/// <summary>

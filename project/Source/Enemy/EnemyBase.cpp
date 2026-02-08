@@ -82,13 +82,13 @@ void EnemyBase::DrawTrail() {
 	enemyBaseComponent.weapon->CreateTrailEnemy(VECTOR3(0, 0, 0), VECTOR3(-70, 200, -230), 100.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
 }
 
-void EnemyBase::EnemyDamageMove(EnemyDamage::EnemyDamageInfo _info)
+void EnemyBase::EnemyDamageMove(const EnemyDamage::EnemyDamageInfo& _info)
 {
 	//“G‚ªƒ_ƒ[ƒW‚ðŽó‚¯‚½Žž‚Ì‚Á”ò‚Î‚µ—Ê‚ÌÝ’è
 	enemyBaseComponent.physics->SetVelocity(_info.speed * MGetRotY(enemyBaseComponent.playerObj->GetTransform()->rotation.y));
 }
 
-float EnemyBase::DamageCalculation(VECTOR3 _pos, float _damage,float _defense, float deviation)
+float EnemyBase::DamageCalculation(const VECTOR3& _pos, float _damage,float _defense, float deviation)
 {
 	float damage = _damage + (_damage * 2) / (_defense / 4);
 

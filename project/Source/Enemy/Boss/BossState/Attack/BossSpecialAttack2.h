@@ -13,7 +13,7 @@ public:
 	void Start()override;
 	void Finish()override;
 
-	void BossDushSound();
+	
 
 private:
 	float attackCount;
@@ -24,6 +24,7 @@ private:
 	float turningTime;
 
 	void AttackStart();
+	void BossDushSound();
 
 	bool sound;
 	bool firstOnes;

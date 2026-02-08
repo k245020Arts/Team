@@ -47,24 +47,26 @@ public:
 	/// <summary>
 	/// 移動の関数
 	/// </summary>
-	/// <param name="_speed"></param>
-	/// <param name="_speedMax"></param>
+	/// <param name="_speed">移動</param>
+	/// <param name="_speedMax">最大移動速度</param>
 	void Move(float _speed,float _speedMax);
 	/// <summary>
-	/// プレイヤーの回転を滑らかに行うために行っている関数
-	/// 上は自由指定ver、下はデフォルト値ver
+	/// プレイヤーの回転を滑らかに行うために行っている関数、自由指定ver
 	/// </summary>
-	/// <param name="_angle"></param>
-	/// <param name="_speed"></param>
+	/// <param name="_angle">強制する角度</param>
+	/// <param name="_speed">速度</param>
 	void RotationChange(VECTOR3 _angle,float _speed);
+	/// <summary>
+	/// プレイヤーの回転を滑らかに行うために行っている関数,、デフォルト値ver
+	/// </summary>
 	void RotationChange();
 	/// <summary>
 	/// 回避の向き指定とか移動とかの処理を行っている関数
 	/// </summary>
-	/// <param name="_speed"></param>
-	/// <param name="_speedMax"></param>
-	/// <param name="cameraAngle"></param>
-	/// <param name="_upSpeed"></param>
+	/// <param name="_speed">速度</param>
+	/// <param name="_speedMax">最大速度</param>
+	/// <param name="cameraAngle">カメラの角度</param>
+	/// <param name="_upSpeed">プレイヤーの上昇速度</param>
 	void Avoid(float _speed, float _speedMax,float cameraAngle,float _upSpeed);
 	void ImguiDraw()override;
 	/// <summary>
@@ -72,8 +74,20 @@ public:
 	/// </summary>
 	void PlayerStickInput();
 
-	VECTOR3 GetWalkAngle() { return walkAngle; }
-	bool GetAvoidStart() { return avoidStart; }
+	/// <summary>
+	/// 歩きのスティックの向きを取得
+	/// </summary>
+	/// <returns>左スティックの向き</returns>
+	VECTOR3 GetWalkAngle()const { return walkAngle; }
+	/// <summary>
+	/// 回避がスタートできるかを取得
+	/// </summary>
+	/// <returns>trueなら回避の開始</returns>
+	bool GetAvoidStart()const { return avoidStart; }
+	/// <summary>
+	/// 回避の開始を設定する関数
+	/// </summary>
+	/// <param name="_set">trueなら回避の開始</param>
 	void SetAvoidStart(bool _set) { avoidStart = _set; }
 	/// <summary>
 	/// 回避が始まるときのちょっとした隙をつくるかんすう
@@ -87,28 +101,44 @@ public:
 	/// <summary>
 	/// 敵の攻撃を食らった時の処理
 	/// </summary>
-	/// <param name="_attackId"></param>
-	/// <param name="_obj"></param>
-	/// <returns></returns>
+	/// <param name="_attackId">敵の攻撃のID</param>
+	/// <param name="_obj">敵のオブジェクト</param>
+	/// <returns>ダメージを受けたかどうか</returns>
 	bool EnemyHit(ID::IDType _attackId, BaseObject* _obj);
-	Transform* GetPlayerTransform(){ return playerTransform; }
+	/// <summary>
+	/// playerのtransformを取得
+	/// </summary>
+	/// <returns>playerのtransform</returns>
+	Transform* GetPlayerTransform()const{ return playerTransform; }
+	/// <summary>
+	/// プレイヤーのオブジェクトを取得
+	/// </summary>
+	/// <returns>プレイヤーのオブジェクトを取得</returns>
 	BaseObject* GetPlayerObj() { return obj; }
-	void JustAvoidCan();
 	/// <summary>
 	/// カメラのターゲットをセットする関数
 	/// </summary>
 	/// <param name="_base"></param>
 	void TargetObjSet(BaseObject* _base);
-
-	BaseObject* GetTargetObj() { return playerCom.targetObj; }
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	//BaseObject* GetTargetObj()const { return playerCom.targetObj; }
 	/// <summary>
 	/// 攻撃を食らったりしたときとか、ジャスト回避した敵の種類をエル関数
 	/// </summary>
 	/// <param name="_base"></param>
 	void HitObjectSet(BaseObject* _base);
-
+	/// <summary>
+	/// 攻撃の当たり判定の開始
+	/// </summary>
+	/// <typeparam name="T">当たり判定のクラス名</typeparam>
+	/// <param name="_shape">当たり判定の形</param>
+	/// <param name="_trans">基準のTransform</param>
+	/// <returns>当たり判定クラスのポインタ</returns>
 	template<typename T>
-	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans) {
+	T* CollsionStart(CollsionInformation::Shape _shape, const Transform& _trans) {
 		if (attackColl == nullptr) {
 			CollsionInfo info = CharaBase::CollsionInstant<T>(_shape, _trans);
 			info.tag = CollsionInformation::Tag::P_ATTACK;
@@ -118,11 +148,29 @@ public:
 		};
 		return static_cast<T*>(attackColl);
 	}
+	/// <summary>
+	/// プレイヤーの攻撃が当たった時のリアクション
+	/// </summary>
 	void PlayerAttackHit();
-	bool IsShake();
-	bool GetJustAvoid() { return justAvoid; }
-	StateManager* GetPlayerStateManager();
+	/// <summary>
+	/// プレイヤーが振動しているかどうか
+	/// </summary>
+	/// <returns>振動していたらtrue</returns>
+	bool IsShake()const ;
+	/// <summary>
+	/// ジャスト回避中か取得する関数
+	/// </summary>
+	/// <returns></returns>
+	bool GetJustAvoid() const{ return justAvoid; }
+	/// <summary>
+	/// PlayerのStateManagerを取得する関数
+	/// </summary>
+	/// <returns></returns>
+	StateManager* GetPlayerStateManager()const;
 
+	/// <summary>
+	/// ジャスト回避が終わった時に通る関数
+	/// </summary>
 	void AvoidFinishState();
 
 	/// <summary>
@@ -130,22 +178,65 @@ public:
 	/// 特別仕様にカスタマイズしたいなら下の関数を使用する
 	/// </summary>
 	void DrawTrail();
-	void DrawTrail(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, float index, float _time);
-
+	/// <summary>
+	/// パラメーターセット軌跡
+	/// </summary>
+	/// <param name="_nPos">剣の末端</param>
+	/// <param name="_fPos">剣先</param>
+	/// <param name="_r">赤成分</param>
+	/// <param name="_g">緑成分</param>
+	/// <param name="_b">青成分</param>
+	/// <param name="_a">半透明成分</param>
+	/// <param name="index">剣を持っている手のindex</param>
+	/// <param name="_time">何秒表示するか</param>
+	void DrawTrail(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, float _g, float _b, float _a, float index, float _time);
+	/// <summary>
+	/// 当たり判定の削除
+	/// </summary>
 	void DeleteCollision() override;
-
+	/// <summary>
+	/// 敵が出す妨害オブジェクトに当たった時に通る関数
+	/// </summary>
+	/// <param name="_obj">妨害オブジェクトのオブジェクト</param>
+	/// <returns>当たっているかどうか</returns>
 	bool EnemyAttackObjectHitIsPlayer(BaseObject* _obj);
-
-	bool GetBossThreat() { return bossThreat; }
+	/// <summary>
+	/// ボスが威嚇しているかどうか
+	/// </summary>
+	/// <returns>威嚇していたらtrue</returns>
+	bool GetBossThreat()const  { return bossThreat; }
+	/// <summary>
+	/// ボスの威嚇状態を終了させる
+	/// </summary>
 	void BossThreatFinish() { bossThreat = false; }
 
+	/// <summary>
+	/// 大きいジャスト回避をするかどうか
+	/// </summary>
+	/// <param name="_attack">アタックID</param>
+	/// <returns>大きいジャスト回避ならtrued</returns>
 	bool LargeJustAvoid(std::shared_ptr<BossAttackBase> _attack);
 
-	VECTOR3 GetSpecialAttackCenterPos() { return specialAttackCenterPos; }
-	VECTOR3 GetSpecialAttackStartPos() { return specialAttackStartPos; }
+	/// <summary>
+	/// 必殺技の円の中心点を取得する関数
+	/// </summary>
+	/// <returns>必殺技の円の中心点</returns>
+	const VECTOR3& GetSpecialAttackCenterPos()const { return specialAttackCenterPos; }
+	/// <summary>
+	/// 必殺技の円の中心点を取得する関数
+	/// </summary>
+	/// <returns>必殺技の円の中心点</returns>
+	const VECTOR3& GetSpecialAttackStartPos()const { return specialAttackStartPos; }
 
+	/// <summary>
+	/// 必殺技ゲージの増殖
+	/// </summary>
+	/// <param name="_add"></param>
 	void SpecialVarAdd(float _add);
-
+	/// <summary>
+	/// 現在攻撃の溜めが行われているかどうか
+	/// </summary>
+	/// <returns></returns>
 	bool GetCharge() { return charge; }
 
 private:

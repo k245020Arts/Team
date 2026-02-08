@@ -82,7 +82,7 @@ void CharaWeapon::ImguiDraw()
 	}
 }
 
-void CharaWeapon::CreateSwordEffect(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, float index, float _time)
+void CharaWeapon::CreateSwordEffect(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, float _g, float _b, float _a, float index, float _time)
 {
 	
 	SwordEffect* sE = obj->Component()->GetComponent<SwordEffect>();
