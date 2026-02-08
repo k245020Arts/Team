@@ -84,7 +84,7 @@ void InputManager::CreateInputData(const KeyConfigData& _data)
 bool InputManager::KeyInputDown(std::string _name)
 {
 	bool data = IsData(_name);
-	if (!data) {
+	if (!data) {//データが存在していないならキーを入力をしていないものとして返す
 		Debug::DebugLog("noAction");
 		return false;
 	}
@@ -113,7 +113,7 @@ bool InputManager::KeyInputDown(std::string _name)
 bool InputManager::KeyInput(std::string _name)
 {
 	bool data = IsData(_name);
-	if (!data) {
+	if (!data) { //データが存在していないならキーを入力をしていないものとして返す
 		Debug::DebugLog("noAction");
 		return false;
 	}
@@ -142,7 +142,7 @@ bool InputManager::KeyInput(std::string _name)
 bool InputManager::KeyInputUp(std::string _name)
 {
 	bool data = IsData(_name);
-	if (!data) {
+	if (!data) {//データが存在していないならキーを入力をしていないものとして返す
 		Debug::DebugLog("noAction");
 		return false;
 	}
@@ -171,7 +171,7 @@ bool InputManager::KeyInputUp(std::string _name)
 bool InputManager::IsData(std::string _name)
 {
 	auto it = inputData.find(_name);
-	if (inputData.end() == it) {
+	if (inputData.end() == it) {//データが存在していないならfalse
 		return false;
 	}
 	else {

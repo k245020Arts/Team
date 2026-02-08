@@ -23,7 +23,7 @@ EnemyDamageUI::EnemyDamageUI()
 	feedOut = false;
 	feedIn = true;
 
-	digitCount = 0;
+	drawNumCount = 0;
 	waitTimer = 0.06f;
 
 	worldTransform = nullptr;
@@ -90,37 +90,40 @@ void EnemyDamageUI::Draw()
 
 	float reTime = timerMax - timer;
 
-	float startX = screenPos.x - (graphSize.x * scale * digitCount) * 0.5f;
+	float startX = screenPos.x - (graphSize.x * scale * drawNumCount) * 0.5f;
 
 	int value = damageNum;
 
-	for (int i = 0; i < digitCount; i++)
+	for (int i = 0; i < drawNumCount; i++)
 	{
+		///一桁目の文字を抽出
 		int digit = value % 10;
 		value /= 10;
 
 		//一文字一文字ずつ描画させている。
-		float charTime = reTime - waitTimer * i;
+		float numTime = reTime - waitTimer * i;
 		//一個一個ずつ出していて、まだ出番ではないので出さない。
-		if (charTime < 0) {
+		if (numTime < 0) {
 			continue;
 		}
 
 		const float CHAR_TIME_MAX = 0.2f;
-		float t = charTime / CHAR_TIME_MAX;
+		float t = numTime / CHAR_TIME_MAX;
 
 		if (t >= CHAR_TIME_MAX) {
 			t = 1.0f;
 		}
 
-		const float BOUNCE_ADD = 42.0f;
+		const float BOUNCE = 84.0f;
 		
-		float bounce = sinf(180.0f * DegToRad * t) * BOUNCE_ADD;
+		float bounce = Easing::SinCube(0.0f, BOUNCE,t);
+		//float bounce = sinf(180.0f * DegToRad * t) * BOUNCE_ADD;
 		const float MAX_SCALE = 0.05f;
-		float charScale = scale + sinf(180.0f * DegToRad * t) * MAX_SCALE;
+		float plus = Easing::SinCube(0.0f, MAX_SCALE, t);
+		float numScale = scale + plus;
 
-		DrawRectRotaGraph((int)(startX + (digitCount - 1 - i) * graphSize.x * scale),(int)(screenPos.y - bounce),digit * graphSize.x,
-			0,graphSize.x,graphSize.y,charScale,0.0f,numImage,true);
+		DrawRectRotaGraph((int)(startX + (drawNumCount - 1 - i) * graphSize.x * scale),(int)(screenPos.y - bounce),digit * graphSize.x,
+			0,graphSize.x,graphSize.y, numScale,0.0f,numImage,true);
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -142,9 +145,9 @@ void EnemyDamageUI::SetInformation(const VECTOR3& _offset, int _damageNum, const
 
 	// 桁数計算
 	int temp = damageNum;
-	digitCount = 0;
+	drawNumCount = 0;
 	do {
-		digitCount++;
+		drawNumCount++;
 		temp /= 10;
 	} while (temp > 0);
 

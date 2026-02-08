@@ -113,7 +113,7 @@ void PlayerJustAvoid::Update()
 			p->playerCom.blur->MosionStart(0.3f, 0.04f, animId, 1);
 			
 			volume -= 40.0f;
-			if (volume <= 120.0f) {
+			if (volume <= 120.0f) { //volume‚ªˆê’è—Ê‰º‰ñ‚Á‚½‚ç‚à‚¤ˆê‰ñ—¬‚·
 				p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
 				p->playerCom.sound->ChangeVolumeSound(Sound_ID::JUST_AVOID_SUCCESS, (int)volume);
 			}

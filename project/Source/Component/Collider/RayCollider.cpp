@@ -20,7 +20,7 @@ void RayCollider::Update()
 
 void RayCollider::Draw()
 {
-	if (Debug::RayColliderDraw()) {
+	if (Debug::RayColliderDraw()) { //デバック表示モードがオフなら何もしない
 		DrawLine3D(collTransform->WorldTransform().position, transform2->WorldTransform().position, 0xff0000);
 	}
 }

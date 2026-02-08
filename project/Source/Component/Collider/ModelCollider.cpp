@@ -24,7 +24,7 @@ void ModelCollider::Update()
 
 void ModelCollider::Draw()
 {
-	if (!Debug::ModelColliderDraw()) {
+	if (!Debug::ModelColliderDraw()) { //デバック表示モードがオフなら何もしない
 		return;
 	}
 	MV1DrawModel(modelHandle);

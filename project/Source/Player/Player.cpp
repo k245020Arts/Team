@@ -451,9 +451,6 @@ void Player::AvoidRotationChange()
 
 bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 {
-	if (noDamage) {
-		return true;
-	}
 	//“G‚ÌUŒ‚‚ª“–‚½‚Á‚½‚Ìˆ—
 	std::shared_ptr<StateBase> pB	= playerCom.stateManager->GetState<StateBase>();
 	Animator* enemyAnim				= _obj->Component()->GetComponent<Animator>();
@@ -500,10 +497,15 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
 			//playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 			if (attack == nullptr) {
-				hp -= 50.0f;
+				if (!noDamage) { //–³“Gƒ‚[ƒh‚¶‚á‚È‚¢‚È‚ç
+					hp -= param.hitDamage;
+				}
 			}
 			else {
-				hp -= param.hitDamage;
+				if (!noDamage) { //–³“Gƒ‚[ƒh‚¶‚á‚È‚¢‚È‚ç
+					hp -= param.hitDamage;
+				}
+				
 			}
 			switch (param.damagePattern)
 			{

@@ -2,7 +2,7 @@
 
 void ErrorAssert(std::string_view errMsg, const char* file, int line)
 {
-	//Release‚É‚Íwassert‚Í‚È‚¢I
+	//Release‚É‚Íwassert‚Í‚È‚¢
 #ifdef _DEBUG
 
     // errMsg ‚Í string_view ‚È‚Ì‚ÅˆÀ‘S‚É std::string ‚É•ÏŠ·

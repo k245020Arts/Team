@@ -20,7 +20,7 @@ void SphereCollider::Update()
 
 void SphereCollider::Draw()
 {
-	if (Debug::SphereColliderDraw()) {
+	if (Debug::SphereColliderDraw()) { //デバック表示モードがオフなら何もしない
 		if (finish) {
 			DrawSphere3D(collTransform->WorldTransform().position, collTransform->scale.x, 10, 0xffff00, 0xff0000, false);
 		}

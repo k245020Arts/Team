@@ -115,10 +115,10 @@ void Boss::Update()
 		
 	}
 
-	if (obj->GetTransform()->position.y <= -10000.0f) {
-		enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
-		enemyBaseComponent.state->SetNoStateChange(true);
-	}
+	//if (obj->GetTransform()->position.y <= -10000.0f) {
+	//	enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
+	//	enemyBaseComponent.state->SetNoStateChange(true);
+	//}
 
 	if (CheckHitKey(KEY_INPUT_NUMPAD0)) {
 		hp -= 200.0f;
@@ -460,6 +460,7 @@ void Boss::PlayerHit()
 			break;
 		case EnemyInformation::EnemyReaction::Type::LoopCombo:
 			enemyBaseComponent.sound->RandamSe("swordHit00000", 7);
+			//攻撃の間隔の設定
 			if (loopNum == -1) {
 				hitCounter = 0.23f;
 				loopNum = 5;
@@ -477,6 +478,7 @@ void Boss::PlayerHit()
 				hitCounter = 0.13f;
 				loopNum--;
 			}
+			//最後の攻撃
 			if (lastAttack) {
 				//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 5000.0f), VECTOR3(100, 100, 100), 0.5f, 1.2f);
@@ -486,7 +488,7 @@ void Boss::PlayerHit()
 				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				hit = true;
 			}
-			else if (lastBeforeAttack) {
+			else if (lastBeforeAttack) {//最後の一個前の攻撃
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(100, 100, 100), 0.5f, 0.5f);
 				enemyBaseComponent.shaker->ShakeStart(VECTOR3(20, 20, 20), Shaker::HORIZONAL_SHAKE, true, 0.3f);
 				enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
@@ -494,7 +496,7 @@ void Boss::PlayerHit()
 				angleRan = (float)GetRand(360);
 				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 			}
-			else {
+			else {//それ以外なら
 				//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(20, 20, 20), 0.2f, 0.02f);
 				enemyBaseComponent.control->ControlVibrationStartFrame(450, 20);

@@ -126,7 +126,7 @@ void Pushback::Apply(Transform* _transform, Physics* _physics, bool  _affectVelo
 
 bool Pushback::IsGrounded(float minYNormal){
     for (const auto& push : pushes) {
-        // 法線のY成分が一定以上なら「地面」とみなす
+        // 法線のY成分が一定以上なら地面とみなす
         if (push.normal.y >= minYNormal) {
             return true;
         }

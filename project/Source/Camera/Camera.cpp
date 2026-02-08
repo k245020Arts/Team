@@ -256,6 +256,7 @@ void Camera::PushCamera(const VECTOR3& _norm, float _size, const VECTOR3& _groun
 void Camera::AttackEnemyFovChange(Transform* _targetTransform,float _maxspeed)
 {
 	std::shared_ptr<StateBase> freeCamera = cameraComponent.state->GetState<StateBase>();
+	//カメラが動いているときはこの関数は作動しない
 	if (moveTimer > 0.0f || freeCamera->GetID() != StateID::FREE_CAMERA_S || CameraRotationMove()) {
 		return;
 	}
@@ -360,6 +361,7 @@ void Camera::SleepTargetSet(int _stop, bool _sleep)
 	if (_stop == CutSceneSpece::NONE) {
 		return;
 	}
+	//ビット演算を使い判定
 	if (_stop & CutSceneSpece::PLAYER) {
 		cameraComponent.player.obj->SetSleep(_sleep);
 	}

@@ -53,7 +53,7 @@ void CutSceneBox::Draw()
 
 void CutSceneBox::StartBox(float _time, int _color, std::function<int(int, int, float)> _func)
 {
-	if (IsFead()) {
+	if (IsFead()) { //フェード中なら動かさない
 		return;
 	}
 	feedCountMax = _time;
@@ -67,7 +67,7 @@ void CutSceneBox::StartBox(float _time, int _color, std::function<int(int, int, 
 
 void CutSceneBox::FinishBox(float _time, int _color, std::function<int(int, int, float)> _func)
 {
-	if (IsFead()) {
+	if (IsFead()) { //フェード中なら動かさない
 		return;
 	}
 	feedCountMax = _time;

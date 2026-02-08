@@ -49,7 +49,7 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	lineStart = VZero;
 	lineEnd = VZero;
 
-	moveT = 0.0f;
+	moveCounter = 0.0f;
 	moveSpeed = 15.0f;
 	centerTo = false;
 	randAngle = 0.0f;
@@ -134,7 +134,7 @@ void PlayerSpecialAttack::Start()
 	const int ROTATION_CHANGE_LOOP = 8;
 	int max = 0;
 	float finalAngle = p->playerTransform->rotation.y;
-
+	//プレイヤーの視野に何人いるかを360に分けて判定、一番群れがいる角度に向かって必殺技を打つ
 	for (int i = 0; i < ROTATION_CHANGE_LOOP; i++) {
 		int n = p->playerCom.enemyManager->PlayerFovEnemyNum(obj->GetTransform(), 45.0f);
 		if (max <= n) {
@@ -161,7 +161,7 @@ void PlayerSpecialAttack::Start()
 	chargeCounter = -1.0f;
 	p->noDamage = true;
 
-	int makeHandle = MakeScreen(Screen::WIDTH, 200, TRUE);
+	//int makeHandle = MakeScreen(Screen::WIDTH, 200, TRUE);
 
 	/*SetDrawScreen(makeHandle);
 
@@ -189,12 +189,13 @@ void PlayerSpecialAttack::Start()
 	angle = 0.0f;
 	currentAngle = 0.0f;
 
+	//線の開始から終了地点の取得
 	VECTOR3 dir = VECTOR3(cosf(currentAngle),0.0f,sinf(currentAngle));
 
 	lineStart = p->specialAttackCenterPos + dir * radius;
 	lineEnd = p->specialAttackCenterPos - dir * radius;
 
-	moveT = 0.0f;
+	moveCounter = 0.0f;
 	centerTo = true;
 
 	zoomCounterBase = 1.0f;
@@ -287,7 +288,7 @@ void PlayerSpecialAttack::BeforeUpdate()
 	Player* p = GetBase<Player>();
 	float alpha = p->playerCom.meshRenderer2D->GetAlpha();
 	if (alpha >= 255.0f) {
-		if (zoom) {
+		if (zoom) { //ズームをする
 			zoomRate = Easing::EasingFlow<float>(&zoomCounter, zoomCounterBase, 2.0f, 1.0f, Easing::EaseIn<float>);
 			zoomSize = Easing::EasingFlow<float>(&zoomCounter, zoomCounterBase, 120.0f, 0, Easing::EaseIn<float>);
 			if (zoomCounter <= 0.0f) {
@@ -300,7 +301,7 @@ void PlayerSpecialAttack::BeforeUpdate()
 		}
 		if (beforeWaitCounter > 0.0f) {
 			beforeWaitCounter -= Time::DeltaTimeRate();
-			if (beforeWaitCounter <= 0.0f) {
+			if (beforeWaitCounter <= 0.0f) { //攻撃の開始
 				state = GROUND_ATTACK;
 				//p->playerTransform->position = keepPos;
 				p->specialAttackStartPos = p->playerTransform->position;
@@ -335,40 +336,41 @@ void PlayerSpecialAttack::GroundUpdate()
 
 	p->playerCom.player->DrawTrail(VECTOR3(0, 0, 100),VECTOR3(0, 0, -350),250.0f, 235.0f,0.0f, 150.0f,28, 0.4f);
 
-	moveT += moveSpeed * dt;
+	moveCounter += moveSpeed * dt;
 
 	// 線形補間で位置を決定
 	p->playerTransform->position =
-		Easing::EaseInOut(lineStart, lineEnd, moveT);
+		Easing::EaseInOut(lineStart, lineEnd, moveCounter);
 
-	// 向き（直線方向）
+	// 向き直線方向
 	VECTOR3 dir = lineEnd - lineStart;
 	dir = dir.Normalize();
 	float yaw = atan2f(dir.z, dir.x);
 	p->playerTransform->rotation.y = yaw;
 
-	if (moveT >= 1.0f)
+	if (moveCounter >= 1.0f)
 	{
 		centerTo = !centerTo;
 		if (centerTo) {
-			// 次の角度へ切り替え
+			//下でセットした最初の位置についたので中央に向かう
 			currentAngle += randAngle;
 
 			VECTOR3 outward(cosf(currentAngle), 0.0f, sinf(currentAngle));
+			
 			lineStart = p->specialAttackCenterPos + outward * radius;
 			lineEnd = p->specialAttackCenterPos - outward * radius;
 		}
 		else {
-			// 次の角度へ切り替え
+			//中央に向かわずに次の角度の最初の位置に移動する
 			randAngle = Random::GetFloat(angleMin, angleMax);
 			float nextAngle = currentAngle + randAngle;
-
+			//次の角度に向かって開始か終了か取得
 			VECTOR3 outward(cosf(nextAngle), 0.0f, sinf(nextAngle));
 			lineStart = lineEnd;
 			lineEnd = p->specialAttackCenterPos + outward * radius;
 		}
 		moveNum--;
-		moveT = 0.0f;
+		moveCounter = 0.0f;
 		ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
 		AddCollsion();
 		p->playerCom.sound->RandamSe("swordWind", 5);
@@ -381,7 +383,7 @@ void PlayerSpecialAttack::GroundUpdate()
 		// 次フェーズへ
 		p->playerTransform->position = p->specialAttackStartPos;
 		VECTOR3 specialCenterPos = p->specialAttackCenterPos;
-		
+		//壁近くならプレイヤーが壁にめり込まないように位置を補完
 		if (fabs(specialCenterPos.z) >= WALL_EDGE_POS - 5000.0f) {
 			if (specialCenterPos.z > 0.0f) {
 				p->playerTransform->position.z -= radius * 2.0f;
@@ -475,7 +477,7 @@ void PlayerSpecialAttack::ChargeUpdate()
 	Debug::DebugOutPutPrintf("charge : velocity.x = %.1f : velocity.y = %.1f : velocity.z = %.1f", p->playerCom.physics->GetVelocity().x, p->playerCom.physics->GetVelocity().y, p->playerCom.physics->GetVelocity().z);
 	Debug::DebugOutPutPrintf("charge : position.x = %.1f : position.y = %.1f : position.z = %.1f", p->playerCom.player->playerTransform->position.x, p->playerCom.player->playerTransform->position.y, p->playerCom.player->playerTransform->position.z);
 	p->playerCom.physics->SetVelocity(VZero);
-	if (chargeCounter <= 0.0f) {
+	if (chargeCounter <= 0.0f) {  //最後の攻撃の開始
 		p->playerTransform->position = p->specialAttackCenterPos + VECTOR3(0.0f, 0.0f, radius) * MGetRotY(p->playerTransform->rotation.y);
 		MoveStart(0.0f);
 		chargeCounter = 0.0f;
@@ -491,7 +493,7 @@ void PlayerSpecialAttack::FinalAttackUpdate()
 {
 	Player* p = GetBase<Player>();
 	
-	if (waitCounter >= 0.0f) {
+	if (waitCounter >= 0.0f) { //攻撃後の余韻が終わったら終了
 		waitCounter -= Time::DeltaTimeRate();
 		if (!p->playerCom.camera->IsCutScene()) {
 			p->playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
@@ -502,7 +504,7 @@ void PlayerSpecialAttack::FinalAttackUpdate()
 	float  distance = VECTOR3(p->specialAttackCenterPos - p->playerTransform->position).Size();
 	VECTOR3 forward = p->playerTransform->Forward();
 	p->playerCom.physics->AddVelocity(forward * 15000.0f, true);
-	if (distance > radius) {
+	if (distance > radius) { //半径より外側に出たら、攻撃後の余韻に以降
 		//ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
 		//p->playerTransform->position = forward * (radius);
 		waitCounter = 10.0f;

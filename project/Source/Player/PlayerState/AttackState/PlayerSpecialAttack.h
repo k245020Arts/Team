@@ -57,7 +57,7 @@ private:
 	VECTOR3 lineStart;
 	VECTOR3 lineEnd;
 
-	float moveT;
+	float moveCounter;
 	float moveSpeed; 
 	bool centerTo;
 

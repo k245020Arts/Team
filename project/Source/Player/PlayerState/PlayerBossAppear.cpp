@@ -25,7 +25,7 @@ PlayerBossAppear::~PlayerBossAppear()
 void PlayerBossAppear::Update()
 {
 	Player* p = GetBase<Player>();
-	if (!feadOut && !fead->IsFead()) {
+	if (!feadOut && !fead->IsFead()) { //フェードアウトが終わったらフェードインの開始
 		fead->FeadOut(1.0f, 0x000000, Easing::EaseIn<int>);
 		feadOut = true;
 		p->playerCom.camera->CutSceneChangeState("BossAppear",true);
@@ -33,7 +33,7 @@ void PlayerBossAppear::Update()
 		obj->GetTransform()->position = VECTOR3(300, 0, -2000);
 		obj->GetTransform()->rotation = VZero;
 	}
-	if (p->playerCom.camera->GetCutNum() == 2) {
+	if (p->playerCom.camera->GetCutNum() == 2) { //カット割りが2のときは違うアニメーションの再生
 		p->playerCom.anim->Play(ID::P_LEG_UP);
 	}
 	else {

@@ -45,7 +45,7 @@ namespace CutSceneSpece {
 		std::string firstPosBaseName;
 	};
 
-	// CutSceneCamera → JSON
+	// CutSceneCameraからJSONに
 	inline void to_json(nlohmann::json& j, const CutSceneCameraPos& c) {
 		j = {
 			{"startPos", c.startPos},
@@ -79,7 +79,7 @@ namespace CutSceneSpece {
 		return EaseType::Linear;
 	}
 
-	// CutScene → JSON
+	// CutSceneからJSON
 	inline void to_json(nlohmann::json& j, const CutScene& c) {
 		j = {
 			{"duration", c.duration},
@@ -218,7 +218,7 @@ public:
 	/// </summary>
 	/// <param name="_name">ファイル名</param>
 	/// <param name="_cutScene">黒いボックスを出すかどうか</param>
-	/// <param name="_space">cutScene中に止めるべき対象</param>
+	/// <param name="_space">cutScene中に止めるべき対象、ビット演算にて判定、CutStopChara型のenumを使用</param>
 	void CutSceneChangeState(std::string _name, bool _cutScene, int _stop);
 	
 	/// <summary>
@@ -229,7 +229,7 @@ public:
 	/// <summary>
 	/// sleepModeの時にその対象をsleepさせるか
 	/// </summary>
-	/// <param name="_stop">ストップさせる対象</param>
+	/// <param name="_stop">ストップさせる対象、ビット演算にて判定、CutStopChara型のenumを使用</param>
 	/// <param name="_sleep">スリープモードにするときはtrue、解除するときはfalse</param>
 	void SleepTargetSet(int _stop,bool _sleep);
 	/// <summary>

@@ -63,12 +63,14 @@ void ButtonUI::Update()
 void ButtonUI::Draw()
 {
 	Transform* transform = obj->GetTransform();
+	//分かりやすいように押しているときや、ボタンがアクティブじゃなかったら灰色にする
 	if (push || !buttonActive) {
 		SetDrawBright(50, 50, 50);
 	}
 	else {
 		SetDrawBright(200, 200, 200);
 	}
+	//加算合成モードなら加算合成を掛ける
 	if (gradeMode) {
 		SetDrawBright((int)r, (int)g, (int)b);
 		SetDrawBlendMode(DX_BLENDMODE_ADD, 60);

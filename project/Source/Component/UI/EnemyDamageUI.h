@@ -40,7 +40,7 @@ private:
 
 	float scale;
 	int alpha;
-	float digitCount;
+	float drawNumCount;
 	float waitTimer;
 	float feedInOutTime;
 	float feedInOutTimeMax;

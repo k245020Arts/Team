@@ -32,15 +32,16 @@ Physics::~Physics()
 
 void Physics::Update()
 {
-	if (!transitor->IsTransitor()) {
+
+	if (!transitor->IsTransitor()) { //ê–Ê‘JˆÚ’†‚È‚çˆÚ“®‚³‚¹‚È‚¢
 		return;
 	}
-	if (obj->GetTag() == "PLAYER") {
+	/*if (obj->GetTag() == "PLAYER") {
 		int a = 0;
 		if (velocity.Size() != 0.0f) {
 			int c = 0;
 		}
-	}
+	}*/
 	*lastTransform = *currentTransform;
 
 	float dt = obj->GetObjectTimeRate();

@@ -164,7 +164,7 @@ void Animator::Update()
        beforeMatrix *= MGetTranslate(VECTOR3(0.0f, framePos.y, 0.0f));
     }
 
-    // ◇前回のアニメーションが再生中なら、ブレンドする
+    //前回のアニメーションが再生中なら、ブレンドする
    if (before.attachID >= 0)
    {
        float rate = blendTime / blendTimeMax;

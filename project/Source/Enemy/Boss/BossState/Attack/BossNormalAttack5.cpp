@@ -33,6 +33,7 @@ void BossNormalAttack5::Update()
 	}
 	BossAttackCollsion();
 	boss->LookPlayer();
+	//UŒ‚‚Ì­‚µ‘O‚É‚È‚Á‚½‚çˆÚ“®‚µŽn‚ß‚é
 	if (boss->enemyBaseComponent.anim->EventStartTime(animId) - boss->enemyBaseComponent.anim->GetCurrentFrame() <= 6.0f) {
 		if (oneMove) {
 			VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;

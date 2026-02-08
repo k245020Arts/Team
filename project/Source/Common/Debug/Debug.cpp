@@ -75,7 +75,7 @@ void Debug::DebugUpdate()
 	}
 
 
-	if (!debug) {
+	if (!debug) { //デバックウィンドウ非表示モードならリターン
 		return;
 	}
 	num++;
