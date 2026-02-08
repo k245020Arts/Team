@@ -13,10 +13,7 @@ public:
 	void Start()override;
 	void Finish()override;
 
-	void EnemyChangeDir();
-	void StickMove();
 
-	float AnglePI(float _current, float _target);
 
 private:
 	float backCounter;
@@ -24,4 +21,8 @@ private:
 	const float TIMER_MAX = 0.5f;
 	VECTOR3 currentTarget;
 	float beforeTarget;
+	void EnemyChangeDir();
+	void StickMove();
+
+	float AnglePI(float _current, float _target);
 };

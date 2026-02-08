@@ -69,12 +69,77 @@ namespace EnemyInformation {
 	};
 
 	struct EnemyReaction {
+
+		EnemyReaction() {
+			attackID = StateID::State_ID::STATE_MAX;
+			dInfo = EnemyDamage::EnemyDamageInfo{};
+			bInfo = EnemyBlowAway::EnemyBlowAwayInfo{};
+
+			attackType = Type::Normal;
+			changeStateID = StateID::State_ID::STATE_MAX;
+
+			vibrationPower = 0;
+			vibrationType = 0;
+
+			hitEffectID = Effect_ID::EFFECT_ID::EFFECT_MAX;
+			hitEffectTime = 0.0f;
+			hitEffectScaleRate = 1.0f;
+
+			hit = false;
+			slashAngleRad = 0.0f;
+			slashEffectID = Effect_ID::EFFECT_ID::EFFECT_MAX;
+			useSlashEffect = false;
+
+			loopMax = -1;
+			loopInterval = 0.0f;
+		}
+		enum class Type {
+			None = -1,
+			Normal = 0,
+			BlowAway,
+			LoopCombo,
+			Special
+		};
+		EnemyReaction(
+			StateID::State_ID _attackID,
+			const EnemyDamage::EnemyDamageInfo& _dInfo,
+			const EnemyBlowAway::EnemyBlowAwayInfo& _bInfo,
+			Type _attackType,StateID::State_ID _changeStateID,
+			int _vibrationPower,int _vibrationType,Effect_ID::EFFECT_ID _hitEffectID,float _hitEffectTime,
+			float _hitEffectScaleRate,bool _hit,float _slashAngleRad,Effect_ID::EFFECT_ID _slashEffectID,
+			bool _useSlashEffect,int _loopMax,float _loopInterval
+		)
+		{
+			attackID = _attackID;
+			dInfo = _dInfo;
+			bInfo = _bInfo;
+
+			attackType = _attackType;
+			changeStateID = _changeStateID;
+
+			vibrationPower = _vibrationPower;
+			vibrationType = _vibrationType;
+
+			hitEffectID = _hitEffectID;
+			hitEffectTime = _hitEffectTime;
+			hitEffectScaleRate = _hitEffectScaleRate;
+
+			hit = _hit;
+			slashAngleRad = _slashAngleRad;
+			slashEffectID = _slashEffectID;
+			useSlashEffect = _useSlashEffect;
+
+			loopMax = _loopMax;
+			loopInterval = _loopInterval;
+		}
 		StateID::State_ID attackID;
 
 		EnemyDamage::EnemyDamageInfo dInfo;
 		EnemyBlowAway::EnemyBlowAwayInfo bInfo;
 
-		enum class Type { Normal, BlowAway, LoopCombo,Special } attackType;
+		
+		
+		Type attackType;
 		StateID::State_ID changeStateID;
 
 		int vibrationPower;

@@ -12,8 +12,17 @@ public:
 
 	void Update()override;
 	void Draw()override;
-
-	void SetInformation(VECTOR3 _offset, int _damageNum, VECTOR3 _movePos, float _timer, int _image, Transform* _world,VECTOR2I _graphsize);
+	/// <summary>
+	/// ダメージUIの表記
+	/// </summary>
+	/// <param name="_offset">どれだけずらすか</param>
+	/// <param name="_damageNum">描画をする文字</param>
+	/// <param name="_movePos">移動する座標</param>
+	/// <param name="_timer">表記される時間</param>
+	/// <param name="_image">画像イメージ</param>
+	/// <param name="_world">親のTransform</param>
+	/// <param name="_graphsize">画像サイズ</param>
+	void SetInformation(const VECTOR3& _offset, int _damageNum, const VECTOR3& _movePos, float _timer, int _image, Transform* _world,const VECTOR2I& _graphsize);
 
 private:
 
@@ -31,7 +40,7 @@ private:
 
 	float scale;
 	int alpha;
-	float digitCount;
+	float drawNumCount;
 	float waitTimer;
 	float feedInOutTime;
 	float feedInOutTimeMax;

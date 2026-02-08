@@ -24,13 +24,13 @@ void ModelCollider::Update()
 
 void ModelCollider::Draw()
 {
-	if (!Debug::ModelColliderDraw()) {
+	if (!Debug::ModelColliderDraw()) { //デバック表示モードがオフなら何もしない
 		return;
 	}
 	MV1DrawModel(modelHandle);
 }
 
-void ModelCollider::ModelColliderSet(CollsionInfo _info, Transform _transform, int _modelHandle)
+void ModelCollider::ModelColliderSet(const CollsionInfo& _info, const Transform& _transform, int _modelHandle)
 {
 	ColliderBase::CollsionAdd(_info, _transform);
 

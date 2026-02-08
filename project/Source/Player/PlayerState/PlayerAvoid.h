@@ -16,7 +16,7 @@ public:
 	void Start() override;
 	void Finish()override;
 
-	void StateChangeBase();
+	
 	
 
 private:
@@ -25,4 +25,5 @@ private:
 	float maxFrame;
 	float animTime;
 	Transform enemyTransform;
+	void StateChangeBase();
 };

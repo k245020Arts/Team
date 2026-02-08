@@ -12,7 +12,10 @@ public:
 
 	void Update()override;
 	void Draw()override;
-
+	/// <summary>
+	///壁に使われるモデルのセット
+	/// </summary>
+	/// <param name="_modelHandle"></param>
 	void ModelSet(int _modelHandle);
 
 	void ImguiDraw()override;

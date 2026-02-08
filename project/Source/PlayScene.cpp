@@ -31,8 +31,9 @@
 #include "../Source/Common/InputManager/inputManager.h"
 #include "../Source/Wave/Wave.h"
 #include "Component/UI/UIManager/UIManager.h"
+#include "../ImGui/imgui.h"
 
-int PlayScene::count = 0;
+//int PlayScene::count = 0;
 
 //YAML_CONVERT_STRUCT(P, name, level, items)
 
@@ -85,7 +86,7 @@ PlayScene::PlayScene()
 	collManager->SetDrawOrder(-90000);
 	hierachy->SetDrawOrder(-100000);
 	sky->CreateSky();
-	gameManager->CreateNum();
+	//gameManager->CreateNum();
 	gameManager->SetPointer();
 
 	//YamlReader ya;
@@ -97,7 +98,7 @@ PlayScene::PlayScene()
 	input = FindGameObject<InputManager>();
 
 	blur->SetDrawOrder(-500);
-
+	mode = NORMAL;
 	//m->TextureHandle(LoadGraph("data/texture/101backGround.png"),MeshRenderer2D::DRAW_RECT_ROTA_GRAPH,VECTOR3(500,500,500),VZero,VZero);
 
 	Wave* wave = new Wave;
@@ -118,6 +119,7 @@ void PlayScene::Update()
 		//FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
 	//}
 	
+#ifdef _DEBUG
 	if (input->KeyInputDown("changeMode")) {
 		if (mode == NORMAL) {
 			mode = CAMERA_EDITOR;
@@ -127,9 +129,11 @@ void PlayScene::Update()
 		}
 	}
 
+
 	if (mode == CAMERA_EDITOR) {
 		return;
 	}
+#endif // _DEBUG
 
 	if (CheckHitKey(KEY_INPUT_T)) {
 		FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);

@@ -37,7 +37,15 @@ public:
 	void BossStart();
 	void BossFinish();
 
-	float GetHitDamage() { return damage.hitDamage; }
+	/// <summary>
+	/// ダメージを受けているダメージ
+	/// </summary>
+	/// <returns></returns>
+	float GetHitDamage()const  { return damage.hitDamage; }
+	/// <summary>
+	/// ダメージのパラメーターを取得
+	/// </summary>
+	/// <returns>ダメージのパラメーター</returns>
 	const DamagePattern& GetDamageParam() { return damage; }
 protected:
 	DamagePattern damage;

@@ -134,8 +134,8 @@ float FreeCamera::AnglePI(float _current, float _target)
 {
 	float diff = _target - _current;
 
-	while (diff > DX_PI_F) diff -= 2.0f * DX_PI_F;
-	while (diff < -DX_PI_F) diff += 2.0f * DX_PI_F;
+	while (diff > 180.0f * DegToRad) diff -= 2.0f * 180.0f * DegToRad;
+	while (diff < -180.0f * DegToRad) diff += 2.0f * 180.0f * DegToRad;
 
 	return diff;
 }

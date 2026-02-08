@@ -33,9 +33,15 @@ public:
 	/// <param name="_stop">完全にストップするか</param>
 	/// <param name="_second">秒数(-1を指定すると下のshakeStop関数が呼ばれるまでずっと振動)</param>
 	void CameraShake(VECTOR3 _power, Shaker::ShakePattern _pattern, bool _stop, float _second);
+	/// <summary>
+	/// カメラ振動の解除
+	/// </summary>
 	void CameraShakeStop();
-
-	Transform* GetCameraTransform() { return cameraComponent.cameraTransform; }
+	/// <summary>
+	/// カメラトランスフォームの取得
+	/// </summary>
+	/// <returns> カメラトランスフォーム</returns>
+	Transform* GetCameraTransform() const { return cameraComponent.cameraTransform; }
 
 protected:
 	CameraInformation::CameraComponent cameraComponent;

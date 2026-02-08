@@ -25,24 +25,50 @@ public:
 
 	virtual void Update(){}
 	virtual void Draw(){}
+	/// <summary>
+	/// ステートが切り替わった時に呼ばれる
+	/// </summary>
 	virtual void Start() { ; }
-
-	std::string GetString() { return string; }
-	StateID::State_ID GetID() { return id; }
-
+	/// <summary>
+	/// Stateの文字を取得
+	/// </summary>
+	/// <returns>Stateの文字</returns>
+	std::string GetString()const { return string; }
+	/// <summary>
+	/// StateのIDを取得
+	/// </summary>
+	/// <returns>StateのID</returns>
+	StateID::State_ID GetID()const { return id; }
+	/// <summary>
+	/// 回避が始まった時に呼ぶ
+	/// </summary>
 	virtual void AvoidStart() { ; }
+	/// <summary>
+	/// Stateが切り替わるときに呼ぶ
+	/// </summary>
 	virtual void Finish() { ; }
 
+	/// <summary>
+	/// どのオブジェクトのStateなのかがわからないためそれをセットする
+	/// </summary>
+	/// <typeparam name="T">どのクラス名のStateなのか</typeparam>
+	/// <param name="_c">どのクラス名のStateなのか</param>
 	template<typename T>
 	void SetComponent(T* _c) {
 		com = _c;
 	}
-
+	/// <summary>
+	/// 親のオブジェクトのポインタを取得
+	/// </summary>
+	/// <typeparam name="T">親のオブジェクトのクラス名</typeparam>
+	/// <returns>親のオブジェクトのポインタ</returns>
 	template<typename T> 
 	T* GetBase() {
 		return dynamic_cast<T*>(com);
 	}
-
+	/// <summary>
+	/// StateVerのimgui
+	/// </summary>
 	virtual void StateImguiDraw() { ; };
 
 protected:

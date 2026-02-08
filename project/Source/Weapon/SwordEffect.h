@@ -96,11 +96,19 @@ public:
 	void Update()override;
 	void Draw()override;
 	void ImguiDraw()override;
-
-	VERTEX3D MakeVertex(VECTOR3 _pos, float u, float v, Color::Rgb _rgb);
-
+	/// <summary>
+	/// 剣軌跡のイメージを取得
+	/// </summary>
+	/// <param name="_model"></param>
 	void SetImage(int _model);
-
+	/// <summary>
+	/// 剣の軌跡の生成
+	/// </summary>
+	/// <param name="_topPos">剣の先端</param>
+	/// <param name="_bottomPos">剣の末端</param>
+	/// <param name="_rgb">色</param>
+	/// <param name="_boneIndex">キャラクターのボーンのフレーム番号</param>
+	/// <param name="_time">生成される時間</param>
 	void CreateEffect(VECTOR3 _topPos, VECTOR3 _bottomPos, Color::Rgb _rgb, int _boneIndex, float _time);
 
 private:
@@ -126,6 +134,7 @@ private:
 	float timeMax;
 
 	bool called;
+	VERTEX3D MakeVertex(VECTOR3 _pos, float u, float v, Color::Rgb _rgb);
 };
 
 

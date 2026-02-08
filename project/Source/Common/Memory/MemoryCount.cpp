@@ -117,9 +117,8 @@ size_t GetTotalMemory()
     return 0;
 }
 
-//======================================
-// CRTデバッグ対応版（★重要）
-//======================================
+
+// CRTデバッグ対応版
 #ifdef _DEBUG
 void* operator new(
     size_t size,

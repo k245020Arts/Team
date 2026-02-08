@@ -78,8 +78,12 @@ public:
 	/// 現在の再生フレーム
 	/// </summary>
 	/// <returns>再生フレーム</returns>
-	float GetCurrentFrame();
-	float GetCurrentBeforeFrame();
+	float GetCurrentFrame()const;
+	/// <summary>
+	/// １フレーム前の再生フレーム
+	/// </summary>
+	/// <returns>再生フレーム</returns>
+	float GetCurrentBeforeFrame()const;
 
 	/// <summary>
 	/// 現在再生中アニメーションの最大フレームを返す
@@ -97,17 +101,49 @@ public:
 	VECTOR3 BoneMovePositionAdd(VECTOR3 _position);
 	VECTOR3 BoneNowPosition();
 
+	/// <summary>
+	/// アニメーションイベントを生成しているかどうか
+	/// </summary>
+	/// <returns>アニメーションイベントが発動しているならtrue</returns>
 	bool AnimEventCan() { return animEventCan; }
+	/// <summary>
+	/// アニメーションイベントを発動をキャンセルする
+	/// </summary>
 	void AnimEventReset() { animEventCan = false; }
+	/// <summary>
+	/// アニメーションイベントの開始時間取得
+	/// </summary>
+	/// <param name="id">取得したいID</param>
+	/// <returns>アニメーションイベントの開始時間</returns>
 	float EventStartTime(ID::IDType id) { return fileInfos[ID::GetID(id)].eventStartTime; }
+	/// <summary>
+	/// アニメーションイベントの終了時間取得
+	/// </summary>
+	/// <param name="id">取得したいID</param>
+	/// <returns>アニメーションイベントの終了時間</returns>
 	float EventFinishTime(ID::IDType id) { return fileInfos[ID::GetID(id)].eventFinishTime; }
 
+	/// <summary>
+	/// アニメーションのフレームをセットする
+	/// </summary>
+	/// <param name="_frame"></param>
 	void SetFrame(float _frame);
 
-	int GetBaseModel();
-	int GetCurrentAttackID();
-
-	bool BlendFinish();
+	/// <summary>
+	/// 基準となるモデルを取得
+	/// </summary>
+	/// <returns>基準となるモデル</returns>
+	int GetBaseModel() const ;
+	/// <summary>
+	/// 今のアタッチしているアニメーションの取得
+	/// </summary>
+	/// <returns>アタッチしてるアニメーション</returns>
+	int GetCurrentAttachID() const ;
+	/// <summary>
+	/// アニメーションブレンドが終了しているかどうか
+	/// </summary>
+	/// <returns>終了してたらtrue</returns>
+	bool BlendFinish() const ;
 
 	void ImguiDraw()override;
 
@@ -150,4 +186,6 @@ private:
 	VECTOR3 subPosition;
 
 	bool animEventCan;
+
+	
 };

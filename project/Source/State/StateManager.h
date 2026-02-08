@@ -86,22 +86,37 @@ public:
 	/// </summary>
 	/// <param name="_noChange"></param>
 	void SetNoStateChange(bool _noChange) { stateNoChange = _noChange; }
-
+	
+	/// <summary>
+	/// 現在のStateを取得
+	/// </summary>
+	/// <returns></returns>
 	std::shared_ptr<StateBase> GetCurrentState() { return state; }
-
-	//現在のステートをとる。
+	/// <summary>
+	/// 現在のStateを取得
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
 	template <typename T>
 	std::shared_ptr<T> GetState() {
 		return std::dynamic_pointer_cast<T>(GetCurrentState());
 	}
-
-
+	/// <summary>
+	/// ImguiNodeの生成、現在は未使用
+	/// </summary>
 	void NodeDrawReady();
 
+	/// <summary>
+	/// ImguiNodeの位置をcsvから取得、現在は未使用
+	/// </summary>
 	void LoadState();
-
+	/// <summary>
+	/// ImguiNodeの位置をcsvにセーブ、現在は未使用
+	/// </summary>
 	void SaveState();
-
+	/// <summary>
+	/// StateのImguiを使用
+	/// </summary>
 	void StateNodeDraw();
 
 	void ImguiDraw();
@@ -129,7 +144,10 @@ protected:
 
 	std::string fileName;
 	bool stateNoChange;
+
+
 private:
 
 	void Change(StateID::State_ID _id);
+	
 };

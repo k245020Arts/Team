@@ -15,9 +15,7 @@ Physics::Physics()
 	lastTransform = nullptr;
 	currentTransform = nullptr;
 	gravity = VZero;
-	interectAddPos = VZero;
 	velocity = VZero;
-	frictionCoefficient = 0.0f;
 	noGravity = false;
 	debugId = 9;
 	tag = Function::GetClassNameC<Physics>();
@@ -34,15 +32,16 @@ Physics::~Physics()
 
 void Physics::Update()
 {
-	if (!transitor->IsTransitor()) {
+
+	if (!transitor->IsTransitor()) { //ê–Ê‘JˆÚ’†‚È‚çˆÚ“®‚³‚¹‚È‚¢
 		return;
 	}
-	if (obj->GetTag() == "PLAYER") {
+	/*if (obj->GetTag() == "PLAYER") {
 		int a = 0;
 		if (velocity.Size() != 0.0f) {
 			int c = 0;
 		}
-	}
+	}*/
 	*lastTransform = *currentTransform;
 
 	float dt = obj->GetObjectTimeRate();
@@ -92,18 +91,6 @@ void Physics::AddVelocity(VECTOR3 _addVelocity, bool _deltaTime)
 		add *= obj->GetObjectTimeRate();
 	}
 	velocity += add;
-}
-
-void Physics::AddInterect(VECTOR3 _addInterect, float _firctionCoeffocoent)
-{
-	interectAddPos += _addInterect;
-	frictionCoefficient = _firctionCoeffocoent;
-}
-
-void Physics::SetInterect(VECTOR3 _setInterect, float _firctionCoeffocoent)
-{
-	interectAddPos = _setInterect;
-	frictionCoefficient = _firctionCoeffocoent;
 }
 
 void Physics::SetFirction(VECTOR3 _setFirction)

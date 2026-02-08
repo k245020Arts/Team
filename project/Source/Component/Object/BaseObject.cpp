@@ -28,9 +28,9 @@ BaseObject::BaseObject()
 
 BaseObject::~BaseObject()
 {
-	if (GetTag() == "PLAYER") {
+	/*if (GetTag() == "PLAYER") {
 		int a = 0;
-	}
+	}*/
 	delete componentManager;
 	FindGameObject<Hierachy>()->RemoveHierachy(this);
 	RemoveParent();
@@ -43,15 +43,16 @@ void BaseObject::Update()
 	/*if (!transitor->IsTransitor()) {
 		return;
 	}*/
-	if (sleep) {
+	if (sleep) { //sleepモード中ならUpdateを通さない
 		return;
 	}
-	if (GetTag() == "STAGE") {
+	/*if (GetTag() == "STAGE") {
 		int a = 0;
-	}
+	}*/
 	PlayScene* playscene = GetScene<PlayScene>();
-
+	//カメラ以外のオブジェクト
 	if (GetTag() != "CAMERA_OBJ") {
+		//カメラEditorモードならUpdateを止める
 		if (playscene != nullptr && playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
 			return;
 		}
@@ -145,7 +146,8 @@ void BaseObject::DeleteAllChildren() {
 }
 
 void BaseObject::RemoveParent() {
-	if (parent) {
+
+	if (parent) {//親がいるなら親の子供リストから削除
 		parent->RemoveChild(this);
 		parent = nullptr;
 	}

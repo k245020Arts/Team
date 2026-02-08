@@ -15,12 +15,9 @@ public:
 	void Start()override;
 	void Finish()override;
 
-	void JustAvoidShadow();
-	void JustAvoidRotation();
+	
 
 private:
-	static const int SHADOW_NUM_MAX = 10;
-	int shadowNum;
 	float easingCount;
 	float cameraAngle;
 	VECTOR3 cameraRotation;
@@ -31,4 +28,5 @@ private:
 	BlurScreen* blurScreen;
 	float startTimer;
 	float volume;
+	void JustAvoidRotation();
 };

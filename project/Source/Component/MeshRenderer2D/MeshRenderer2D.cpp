@@ -58,7 +58,7 @@ void MeshRenderer2D::Draw()
 		return;
 	}
 	if (feedIn || feedOut) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
 	}
 	Transform transform;
 	if (transform2D == nullptr) {
@@ -109,7 +109,7 @@ void MeshRenderer2D::TextureHandle(int _image, GraphMode _mode)
 	}
 }
 
-void MeshRenderer2D::SetTransform(const VECTOR3 _pos, const VECTOR3 _rotate, const VECTOR3 _scale)
+void MeshRenderer2D::SetTransform(const VECTOR3& _pos, const VECTOR3& _rotate, const VECTOR3& _scale)
 {
 	transform2D = new Transform(_pos, _rotate, _scale);
 }
@@ -139,7 +139,7 @@ void MeshRenderer2D::ImguiDraw()
 	}
 }
 
-void MeshRenderer2D::SetStartPos(VECTOR2I _pos)
+void MeshRenderer2D::SetStartPos(const VECTOR2I& _pos)
 {
 	startPos = _pos;
 }
@@ -155,9 +155,9 @@ void MeshRenderer2D::AnimStart(float _speed, int _num)
 	AnimStart(_speed, _num, true);
 }
 
-void MeshRenderer2D::SetDrawImageSize(VECTOR2I _pos)
+void MeshRenderer2D::SetDrawImageSize(VECTOR2I _size)
 {
-	drawImageSize = _pos;
+	drawImageSize = _size;
 }
 
 void MeshRenderer2D::SetPosition(VECTOR3 _position)
@@ -190,7 +190,7 @@ void MeshRenderer2D::NormalDraw(const Transform& transform)
 		DrawRectRotaGraphFast3F(transform.position.x, transform.position.y, startPos.x, startPos.y, drawImageSize.x, drawImageSize.y, imageSize.x * 0.5f, imageSize.y * 0.5f, transform.scale.x, transform.scale.y, transform.rotation.y, hImage, TRUE);
 		break;
 	case MeshRenderer2D::DRAW_BILLBOARD:
-		DrawBillboard3D(transform.position, 0.5f, 0.5f, imageSize.x, 0.0f, hImage,true);
+		DrawBillboard3D(transform.position, 0.5f, 0.5f, (float)imageSize.x, 0.0f, hImage,true);
 		break;
 	}
 }

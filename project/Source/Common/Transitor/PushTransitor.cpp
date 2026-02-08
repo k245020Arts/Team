@@ -43,7 +43,7 @@ void PushTransitor::Draw()
 {
 	int bit;
 	GetScreenState(&size.x, &size.y, &bit);
-	if (IsEnd()) {
+	if (IsEnd()) { //I—¹‚µ‚Ä‚¢‚½‚ç•Ô‚·
 		return;
 	}
 	SetDrawScreen(DX_SCREEN_BACK);

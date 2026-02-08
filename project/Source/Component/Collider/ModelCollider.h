@@ -11,8 +11,18 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void ModelColliderSet(CollsionInfo _info, Transform _transform , int _modelHandle);
+	/// <summary>
+	/// メッシュ当たり判定の初期化
+	/// </summary>
+	/// <param name="_info">当たり判定の情報</param>
+	/// <param name="_transform">Transformの取得</param>
+	/// <param name="_modelHandle">当たり判定に使用するモデルデーター</param>
+	void ModelColliderSet(const CollsionInfo& _info, const Transform& _transform , int _modelHandle);
 
+	/// <summary>
+	/// 現在使われているモデルデータ
+	/// </summary>
+	/// <returns>当たり判定に使用するモデルデーター</returns>
 	int GetModel() { return modelHandle; }
 
 private:

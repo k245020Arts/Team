@@ -31,13 +31,26 @@ public:
 	//タグを設定できるようにする「
 	virtual void SetTag(std::string name) { tag = name; }
 	virtual std::string GetTag() { return tag; }
-
+	/// <summary>
+	/// ヒエラルキー用のdebugID
+	/// </summary>
+	/// <returns>debugID</returns>
 	int GetId() { return debugId; }
+	/// <summary>
+	/// 当たり判定用のタグを取得
+	/// </summary>
+	/// <returns>当たり判定用のタグ</returns>
 	std::string GetCollTag() { return colltag; }
+	/// <summary>
+	/// 当たり判定用のタグをセット
+	/// </summary>
+	/// <param name="_tag">当たり判定用のタグ</param>
 	void SetCollTag(std::string _tag) { colltag = _tag; }
+	/// <summary>
+	/// コンポーネントの親オブジェクトの取得
+	/// </summary>
+	/// <returns></returns>
 	BaseObject* GetBaseObject() { my_null_assert(obj); return obj; }
-
-	BaseObject* operator->() { GetBaseObject(); }
 
 	//void SetSlowMode(bool _slow) { slowMode = _slow;}
 

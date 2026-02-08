@@ -27,7 +27,7 @@ void ShockWave::Draw()
 {
 }
 
-void ShockWave::CreateWave(CollsionInformation::Tag _tag, Transform _transform, float _startOutRange, float _speed)
+void ShockWave::CreateWave(CollsionInformation::Tag _tag, const Transform& _transform, float _startOutRange, float _speed)
 {
 	
 	CollsionInfo info;

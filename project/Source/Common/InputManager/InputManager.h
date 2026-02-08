@@ -76,12 +76,17 @@ public:
 	/// キーコンフィグ用データを生成する。
 	/// </summary>
 	/// <param name="_data"></param>
-	void CreateInputData(KeyConfigData _data);
+	void CreateInputData(const KeyConfigData& _data);
 	//キーコンフィグ用のボタンの種類
 	bool KeyInputDown(std::string _name);//最初の一回のみ
 	bool KeyInput(std::string _name);//入力し続けている間
 	bool KeyInputUp(std::string _name);//話した瞬間
 
+	/// <summary>
+	/// データが存在しているかどうか
+	/// </summary>
+	/// <param name="_name">登録名</param>
+	/// <returns>登録しているかどうか</returns>
 	bool IsData(std::string _name);
 
 private:

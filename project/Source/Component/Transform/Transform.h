@@ -20,7 +20,7 @@ public:
 		debugId = 11;
 		tag = Function::GetClassNameC<Transform>();
 	}
-	Transform(const VECTOR3 _pos, const VECTOR3 _rotate, const VECTOR3 _scale) {
+	Transform(const VECTOR3& _pos, const VECTOR3& _rotate, const VECTOR3& _scale) {
 		position = _pos;
 		rotation = _rotate;
 		scale = _scale;
@@ -40,11 +40,11 @@ public:
 		}
 	}
 
-	MATRIX GetPositionMatrix();
-	MATRIX GetRotationMatrix();
-	MATRIX GetScaleMatrix();
+	MATRIX GetPositionMatrix()const ;
+	MATRIX GetRotationMatrix() ;
+	MATRIX GetScaleMatrix()const ;
 
-	MATRIX GetMatrix();
+	MATRIX GetMatrix() ;
 
 	//子が親を追加したいとき
 	void SetParent(Transform* _pare);
@@ -58,13 +58,22 @@ public:
 	}
 	//子のポジションのワールド座標を取り出す関数。
 	Transform WorldTransform();
-	
-	void SetWorld(Transform _transform);
+	/// <summary>
+	/// ワールドTransformをセットする
+	/// </summary>
+	/// <param name="_transform">ワールドTransform</param>
+	void SetWorld(const Transform& _transform);
 	void ImguiDraw()override;
-
+	/// <summary>
+	/// 子供を取り除く
+	/// </summary>
+	/// <param name="_child"></param>
 	void RemoveChild(Transform* _child);
-
-	void SetRotationMatrix(MATRIX _matrix) { rotMatrix = _matrix; }
+	/// <summary>
+	/// ローテーションマトリックスをセットする
+	/// </summary>
+	/// <param name="_matrix">回転行列</param>
+	void SetRotationMatrix(const MATRIX& _matrix) { rotMatrix = _matrix; }
 
 private:
 

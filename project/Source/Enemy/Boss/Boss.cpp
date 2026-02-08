@@ -29,6 +29,7 @@
 #include  "../Boss/BossState/Attack/BossSpecialAttack2.h"
 #include "../TrashEnemy/EnemyState/EnemyDamage.h"
 #include "../../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
+#include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 #include "../../Weapon/SwordEffect.h"
 #include "../../Weapon/CharaWeapon.h"
 #include "../../Common/LoadManager.h"
@@ -114,10 +115,10 @@ void Boss::Update()
 		
 	}
 
-	if (obj->GetTransform()->position.y <= -10000.0f) {
-		enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
-		enemyBaseComponent.state->SetNoStateChange(true);
-	}
+	//if (obj->GetTransform()->position.y <= -10000.0f) {
+	//	enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
+	//	enemyBaseComponent.state->SetNoStateChange(true);
+	//}
 
 	if (CheckHitKey(KEY_INPUT_NUMPAD0)) {
 		hp -= 200.0f;
@@ -441,6 +442,7 @@ void Boss::PlayerHit()
 	bool lastBeforeAttack = false;
 	auto bossParam = enemyTable.find(attackID);
 	float angleRand = Random::GetFloat(0.0f, 360.0f);
+	std::shared_ptr<PlayerSpecialAttack> pSpecial = pState->GetState<PlayerSpecialAttack>();
 	Object2D* damageNum = nullptr;
 	if (bossParam != enemyTable.end()) {
 		const auto& e = bossParam->second;
@@ -458,6 +460,7 @@ void Boss::PlayerHit()
 			break;
 		case EnemyInformation::EnemyReaction::Type::LoopCombo:
 			enemyBaseComponent.sound->RandamSe("swordHit00000", 7);
+			//攻撃の間隔の設定
 			if (loopNum == -1) {
 				hitCounter = 0.23f;
 				loopNum = 5;
@@ -475,6 +478,7 @@ void Boss::PlayerHit()
 				hitCounter = 0.13f;
 				loopNum--;
 			}
+			//最後の攻撃
 			if (lastAttack) {
 				//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 5000.0f), VECTOR3(100, 100, 100), 0.5f, 1.2f);
@@ -484,7 +488,7 @@ void Boss::PlayerHit()
 				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				hit = true;
 			}
-			else if (lastBeforeAttack) {
+			else if (lastBeforeAttack) {//最後の一個前の攻撃
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(100, 100, 100), 0.5f, 0.5f);
 				enemyBaseComponent.shaker->ShakeStart(VECTOR3(20, 20, 20), Shaker::HORIZONAL_SHAKE, true, 0.3f);
 				enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
@@ -492,7 +496,7 @@ void Boss::PlayerHit()
 				angleRan = (float)GetRand(360);
 				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 			}
-			else {
+			else {//それ以外なら
 				//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(20, 20, 20), 0.2f, 0.02f);
 				enemyBaseComponent.control->ControlVibrationStartFrame(450, 20);
@@ -512,19 +516,17 @@ void Boss::PlayerHit()
 				return;
 			}
 			
-			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
-			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), angleRand * DegToRad, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
-			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
-			enemyBaseComponent.state->ChangeState(bossParam->second.changeStateID);
+			if (pState->GetState<PlayerSpecialAttack>() != nullptr) {
+				PlayerSpecialAttackHit(e,pSpecial, VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), angleRand);
+			}
 			specialAttackHit = false;
-			hp -= 10.0f;
 			break;
 		default:
 			break;
 		}
 	}
 	EnemyDamageMove(dInfo);
-	hp -= DamageCalculation(VECTOR3(GetRand(400) - 200, 800 + GetRand(400) - 200, GetRand(400) - 200), damage ,500.0f, GetRand(15));
+	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage ,500.0f, (float)GetRand(15));
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();
 	std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();
@@ -637,4 +639,38 @@ bool Boss::RunChangeAttack()
 		result = true;
 	}
 	return result;
+}
+
+void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps, VECTOR3 _randomPos, float _randomAngle)
+{
+	PlayerSpecialAttack::PLAYER_SPECIAL_ATTACK_STATE state = _ps->GetSpecialAttackState();
+
+	switch (state)
+	{
+	case PlayerSpecialAttack::NO_ATTACK:
+		break;
+	case PlayerSpecialAttack::BEFORE:
+		break;
+	case PlayerSpecialAttack::GROUND_ATTACK:
+		enemyBaseComponent.control->ControlVibrationStartFrame(_e.vibrationPower, _e.vibrationType);
+		enemyBaseComponent.effect->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);
+		enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
+		enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
+		specialAttackHit = false;
+		break;
+	case PlayerSpecialAttack::CHARGE:
+		enemyBaseComponent.effect->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);
+		enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
+		enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
+		enemyBaseComponent.shaker->ShakeStart(VECTOR3(100, 100, 100), Shaker::HORIZONAL_SHAKE, true, 2.0f);
+		break;
+	case PlayerSpecialAttack::FINAL_ATTACK:
+		enemyBaseComponent.control->ControlVibrationStartFrame(_e.vibrationPower, _e.vibrationType);
+		enemyBaseComponent.effect->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);
+		enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
+		enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
+		break;
+	default:
+		break;
+	}
 }

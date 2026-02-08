@@ -21,9 +21,9 @@ namespace {
 
 void Debug::CreateMessageBox(const std::string& _error, const std::string& _title)
 {
-#if DebugIf
+//#if DebugIf
 	MessageBox(NULL, _error.c_str(), _title.c_str(), MB_ICONERROR | MB_OK);
-#endif
+//#endif
 }
 
 void Debug::InitDebug(InputManager* _input)
@@ -47,25 +47,25 @@ void Debug::InitDebug(InputManager* _input)
 #endif
 }
 
-void Debug::UpdateDebug()
-{
-#ifdef _DEBUG
-	ImGui::Begin("debug");
-	if (ImGui::TreeNode("ger")) {
-		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(500, 200));
-		for (std::string& str : logger) {
-			ImGui::Text("%s", str.c_str());
-			ImGui::Separator();
-		}
-		ImGui::EndChild();
-		ImGui::TreePop();
-	}
-	if (logger.size() >= 100) {
-		logger.pop_front();
-	}
-	ImGui::End();
-#endif
-}
+//void Debug::UpdateDebug()
+//{
+//#ifdef _DEBUG
+//	ImGui::Begin("debug");
+//	if (ImGui::TreeNode("ger")) {
+//		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(500, 200));
+//		for (std::string& str : logger) {
+//			ImGui::Text("%s", str.c_str());
+//			ImGui::Separator();
+//		}
+//		ImGui::EndChild();
+//		ImGui::TreePop();
+//	}
+//	if (logger.size() >= 100) {
+//		logger.pop_front();
+//	}
+//	ImGui::End();
+//#endif
+//}
 
 void Debug::DebugUpdate()
 {
@@ -75,7 +75,7 @@ void Debug::DebugUpdate()
 	}
 
 
-	if (!debug) {
+	if (!debug) { //デバックウィンドウ非表示モードならリターン
 		return;
 	}
 	num++;

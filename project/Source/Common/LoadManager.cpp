@@ -204,10 +204,14 @@ int Load::GetHandle(ID::IDType id) {
     std::string name = ID::GetID(id);
 
     auto it = fileLoad.find(name);
-    if (it != fileLoad.end()) return it->second.handle;
+    if (it != fileLoad.end()) {
+        return it->second.handle;
+    }
 
     it = commonFileLoad.find(name);
-    if (it != commonFileLoad.end()) return it->second.handle;
+    if (it != commonFileLoad.end()) {
+        return it->second.handle;
+    };
 
     Debug::DebugLog("そのIDはありません: " + std::to_string((int)id));
     return -1;
@@ -217,10 +221,14 @@ int Load::GetSoundHandle(Sound_ID::SOUND_ID id) {
     std::string name = Sound_ID::GetSoundID(id);
 
     auto it = fileLoad.find(name);
-    if (it != fileLoad.end()) return it->second.handle;
+    if (it != fileLoad.end()) {
+        return it->second.handle;
+    }
 
     it = commonFileLoad.find(name);
-    if (it != commonFileLoad.end()) return it->second.handle;
+    if (it != commonFileLoad.end()) {
+        return it->second.handle;
+    }
 
     Debug::DebugLog("そのサウンドデータはありません: " + std::to_string((int)id));
     return -1;
@@ -230,10 +238,14 @@ int Load::GetEffectHandle(Effect_ID::EFFECT_ID id) {
     std::string name = Effect_ID::GetEffectID(id);
 
     auto it = fileLoad.find(name);
-    if (it != fileLoad.end()) return it->second.handle;
+    if (it != fileLoad.end()) {
+        return it->second.handle;
+    }
 
     it = commonFileLoad.find(name);
-    if (it != commonFileLoad.end()) return it->second.handle;
+    if (it != commonFileLoad.end()) {
+        return it->second.handle;
+    }
 
     Debug::DebugLog("そのエフェクトデータはありません: " + std::to_string((int)id));
     return -1;

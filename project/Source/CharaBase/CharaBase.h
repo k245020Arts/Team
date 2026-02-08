@@ -49,9 +49,15 @@ public:
 	/// 最終ターゲットかどうかを取得する関数
 	/// </summary>
 	void LastTargetIn() { lastTarget = true; }
+	/// <summary>
+	/// 最終ターゲットではない
+	/// </summary>
 	void LastTargetOut() { lastTarget = false; }
-
-	bool GetLastTarget() { return lastTarget; }
+	/// <summary>
+	/// 現在カメラロックオンされているかどうかを取得する関数
+	/// </summary>
+	/// <returns>現在ロックオンされていたらtrue</returns>
+	bool GetLastTarget()const  { return lastTarget; }
 
 	/// <summary>
 	/// 当たり判定の削除をする、Charaによって違うがある程度は対応できるようにしておく
@@ -69,8 +75,11 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const float GetMaxSpecialAttackGuage() { return specialAttackBarMax; }
-
-	bool CanSpecialAttack() { return (specialAttackBar >= specialAttackBarMax); }
+	/// <summary>
+	/// スペシャル攻撃をだせるかどうかの判定
+	/// </summary>
+	/// <returns></returns>
+	bool CanSpecialAttack()const { return (specialAttackBar >= specialAttackBarMax); }
 
 protected:
 	ColliderBase* attackColl;

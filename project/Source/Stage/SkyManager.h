@@ -12,7 +12,9 @@ public:
 	~SkyManager();
 	void Update()override;
 	void Draw()override;
-
+	/// <summary>
+	/// SKYSphere‚Ì¶¬
+	/// </summary>
 	void CreateSky();
 
 private:

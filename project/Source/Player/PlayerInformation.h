@@ -82,13 +82,45 @@ namespace PlayerInformation {
 		ButtonUI* specialAttackButton;
 
 	};
-
+	/// <summary>
+	/// 基準の空気抵抗値
+	/// </summary>
 	static const VECTOR3 BASE_INTERIA = VECTOR3(7500.0f, -7500.0f, 7500.0f);
+	/// <summary>
+	/// 基準の重力値
+	/// </summary>
 	static const VECTOR3 BASE_GRAVITY = VECTOR3(0.0f, -5000.0f, 0.0f);
+	/// <summary>
+	/// ジャスト回避をした時にどれくらい敵をスローさせるか
+	/// </summary>
 	static const float JUST_AVOID_ENEMY_TIME_SCALE = 0.3f;
 
 	struct PlayerReaction
 	{
+		PlayerReaction() {
+			shakePower = VZero;
+			shakeTime = 0.0f;
+			cameraShakePower = VZero;
+			cameraShakeTime = 0.0f;
+			soundName.clear();
+			soundKind = 0;
+			shakerLoop = false;
+			shakePattern = Shaker::NONE;
+		}
+		PlayerReaction(const VECTOR3& _shakePower,float _shakeTime,const VECTOR3& _cameraShakePower,
+			float _cameraShakeTime,const std::string& _soundName,int _soundKind,bool _shakerLoop,
+			Shaker::ShakePattern _shakePattern)
+		{
+			shakePower = _shakePower;
+			shakeTime = _shakeTime;
+			cameraShakePower = _cameraShakePower;
+			cameraShakeTime = _cameraShakeTime;
+			soundName = _soundName;
+			soundKind = _soundKind;
+			shakerLoop = _shakerLoop;
+			shakePattern = _shakePattern;
+		}
+
 		VECTOR3 shakePower;
 		float shakeTime;
 		VECTOR3 cameraShakePower;

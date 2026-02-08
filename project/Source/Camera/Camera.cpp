@@ -234,28 +234,29 @@ void Camera::ChangeStateCamera(StateID::State_ID _id)
 	cameraComponent.state->ChangeState(_id);
 }
 
-void Camera::CollsionPosHit(VECTOR3 norm, float size, VECTOR3 groundPos)
+void Camera::CollsionPosHit(const VECTOR3& _norm, float _size, const VECTOR3& _groundPos)
 {
-	hitPos		= groundPos;
-	hitNormal	= norm;
-	hitDist		= size;
+	hitPos		= _groundPos;
+	hitNormal	= _norm;
+	hitDist		= _size;
 	hit			= true;
 }
 
-void Camera::PushCamera(VECTOR3 norm, float size, VECTOR3 groundPos)
+void Camera::PushCamera(const VECTOR3& _norm, float _size, const VECTOR3& _groundPos)
 {
 	float offset	= 5.0f; 
-	float newDist	= max(0, size - offset);
+	float newDist	= max(0, _size - offset);
 	counter			= counter > 1.0f ? 1.0f : counter + Time::DeltaTimeRate() * 3.0f;
 	float rate		= counter / 1.0f;
 	hit				= true;
 
-	cameraComponent.cameraTransform->position = VECTOR3(cameraComponent.cameraTransform->position.x ,groundPos.y + 280.0f, cameraComponent.cameraTransform->position.z);
+	cameraComponent.cameraTransform->position = VECTOR3(cameraComponent.cameraTransform->position.x ,_groundPos.y + 280.0f, cameraComponent.cameraTransform->position.z);
 }
 
 void Camera::AttackEnemyFovChange(Transform* _targetTransform,float _maxspeed)
 {
-	std::shared_ptr<StateBase> freeCamera = cameraComponent.state->GetCurrentState();
+	std::shared_ptr<StateBase> freeCamera = cameraComponent.state->GetState<StateBase>();
+	//カメラが動いているときはこの関数は作動しない
 	if (moveTimer > 0.0f || freeCamera->GetID() != StateID::FREE_CAMERA_S || CameraRotationMove()) {
 		return;
 	}
@@ -360,6 +361,7 @@ void Camera::SleepTargetSet(int _stop, bool _sleep)
 	if (_stop == CutSceneSpece::NONE) {
 		return;
 	}
+	//ビット演算を使い判定
 	if (_stop & CutSceneSpece::PLAYER) {
 		cameraComponent.player.obj->SetSleep(_sleep);
 	}

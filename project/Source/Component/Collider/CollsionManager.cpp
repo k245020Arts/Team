@@ -232,7 +232,7 @@ bool CollsionManager::CollsionSphereToDount(ColliderBase* col1, ColliderBase* co
 	float outRadius = dynamic_cast<DountCollider*>(col2)->GetOutRadius();
 
 	float dist = VSize(VSub(trans1->WorldTransform().position, trans2->WorldTransform().position));
-
+	//“à‘¤‚Ì‰~‚Ì“–‚½‚è”»’è‚É“–‚½‚Á‚Ä‚¢‚È‚¢‚©‚ÂŠO‘¤‚Ì‰~‚Ì“–‚½‚è”»’è‚É“–‚½‚Á‚Ä‚¢‚é‚Æ‚«
 	if (dist <= trans1->scale.x + outRadius) {
 		if (dist >= trans1->scale.x + trans2->scale.x) {
 			return true;

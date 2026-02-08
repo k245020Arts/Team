@@ -26,7 +26,6 @@ PlayerJustAvoid::PlayerJustAvoid()
 	cameraAngle		= 0.0f;
 	cameraLeap		= 0.0f;
 	startTimer		= 0.0f;
-	shadowNum		= 0;
 	num				= 0;
 	easingCount		= 0.0f;
 	
@@ -114,9 +113,9 @@ void PlayerJustAvoid::Update()
 			p->playerCom.blur->MosionStart(0.3f, 0.04f, animId, 1);
 			
 			volume -= 40.0f;
-			if (volume <= 120.0f) {
+			if (volume <= 120.0f) { //volume‚ªˆê’è—Ê‰º‰ñ‚Á‚½‚ç‚à‚¤ˆê‰ñ—¬‚·
 				p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
-				p->playerCom.sound->ChangeSound(Sound_ID::JUST_AVOID_SUCCESS, volume);
+				p->playerCom.sound->ChangeVolumeSound(Sound_ID::JUST_AVOID_SUCCESS, (int)volume);
 			}
 		}
 		num++;
@@ -219,17 +218,6 @@ void PlayerJustAvoid::Finish()
 		p->largeJustAvoid	= false;
 	}
 	
-}
-
-void PlayerJustAvoid::JustAvoidShadow()
-{
-	/*avoidShadowStart = true;
-	shadowNum = 0;
-	shadowAddTime = 0.0f;
-	for (int i = 0; i < SHADOW_NUM_MAX; i++) {
-		anim[i]->Play(ID::P_ANIM_AVOID);
-		anim[i]->Init(p->playerCom.player->GetPlayerObj());
-	}*/
 }
 
 void PlayerJustAvoid::JustAvoidRotation()

@@ -169,7 +169,7 @@ void PlayerAttack5::Start()
 	p->playerCom.physics->SetGravity(VZero);
 	//timer = 2.0f;
 	//count = ATTACK_NUMMAX;
-	AgainTimerSet(0.1f, 5);
+	AgainTimerSet(0.1f, 4);
 }
 
 void PlayerAttack5::Finish()

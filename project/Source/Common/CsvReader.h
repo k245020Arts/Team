@@ -42,12 +42,37 @@ public:
 	/// <param name="_filename"></param>
 	/// <param name="_all"></param>
 	void ResetAll(std::string _filename, const std::string& _allText);
-
+	/// <summary>
+	/// 行の数を取る
+	/// </summary>
+	/// <returns>csvで読み込んだ行の数</returns>
 	int GetLines();
+	/// <summary>
+	/// 指定した行の列数を取得
+	/// </summary>
+	/// <param name="line">列数を取得する対象の行番号（整数）</param>
+	/// <returns>指定した行の列数を表す整数</returns>
 	int GetColums(int line);
+	/// <summary>
+	/// 指定した行と列に対応するintの値を取得
+	/// </summary>
+	/// <param name="line">対象の行番号</param>
+	/// <param name="column">対象の行番号</param>
+	/// <returns>指定した行と列にあるintの値</returns>
 	int GetInt(int line, int column);
+	/// <summary>
+	/// 指定した行と列に対応するfloatの値を取得
+	/// </summary>
+	/// <param name="line">対象の行番号</param>
+	/// <param name="column">対象の行番号</param>
+	/// <returns>指定した行と列にあるfloatの値</returns>
 	float GetFloat(int line, int column);
-
+	/// <summary>
+	/// 指定した行番号と列番号に対応する文字列の取得
+	/// </summary>
+	/// <param name="line">取得対象の行番号</param>
+	/// <param name="colum">取得対象の列番号</param>
+	/// <returns>指定した位置にある文字列を取得</returns>
 	std::string GetString(int line, int colum);
 private:
 	std::vector<std::vector<std::string>> record;

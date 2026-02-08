@@ -32,7 +32,7 @@ void BossNormalAttack1::Update()
 	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
 		//UŒ‚‚É‚©‚©‚éŽžŠÔ‚Å90‹‰ñ‚µ‚½‚¢‚Ì‚Å‚PƒtƒŒ[ƒ€‚²‚Æ‚Éi‚ÞŠp“x‚ð‹‚ß‚Ä‚¢‚éB
 		averageSpeed = 90.0f / attackTime;
-		averageSpeed *= boss->obj->GetObjectRate();
+		averageSpeed *= boss->obj->GetObjectTimeRate();
 
 		boss->bossTransform->rotation.y += averageSpeed * DegToRad;
 	}

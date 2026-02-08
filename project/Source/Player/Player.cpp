@@ -50,13 +50,14 @@
 namespace {
 
 	std::unordered_map<StateID::State_ID, PlayerInformation::PlayerReaction> attackEffects = {
-	{ StateID::PLAYER_ATTACK1_S, { VECTOR3(50,50,50), 0.07f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, { VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{  StateID::PLAYER_ATTACK2_S, { VECTOR3(50,50,50), 0.1f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{  StateID::PLAYER_ATTACK3_S, { VECTOR3(50,50,50), 0.12f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{ StateID::PLAYER_ATTACK5_S, { VECTOR3(150,100,100), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{  StateID::PLAYER_ATTACK4_S, { VECTOR3(100,100,100), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
-	{  StateID::PLAYER_HEAVY_ATTACK_S, { VECTOR3(150,150,150), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE } },
+	{ StateID::PLAYER_ATTACK1_S, PlayerInformation::PlayerReaction(VECTOR3(50,50,50), 0.07f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, PlayerInformation::PlayerReaction(VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_ATTACK2_S, PlayerInformation::PlayerReaction(VECTOR3(50,50,50), 0.1f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_ATTACK3_S, PlayerInformation::PlayerReaction(VECTOR3(50,50,50), 0.12f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_ATTACK5_S, PlayerInformation::PlayerReaction(VECTOR3(150,100,100), 0.3f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_ATTACK4_S, PlayerInformation::PlayerReaction(VECTOR3(100,100,100), 0.3f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_HEAVY_ATTACK_S, PlayerInformation::PlayerReaction(VECTOR3(150,150,150), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+
 	};
 
 
@@ -121,10 +122,6 @@ void Player::Update()
 	if (avoidReady) {
 		AvoidRotationChange();
 	}
-	//ƒWƒƒƒXƒg‰ñ”ð‚ªo—ˆ‚é‚æ‚¤‚É‚È‚é
-	if (enemyHit) {
-		JustAvoidCan();
-	}
 	//UŒ‚‚Ì‚ ‚½‚è‚Í‚ñ‚Ä‚¢‚ªI‚í‚Á‚½‚çíœ
 	if (playerCom.stateManager->GetState<PlayerAttackStateBase>() != nullptr) {
 		if (!playerCom.stateManager->GetState<PlayerAttackStateBase>()->IsAttack()) {
@@ -169,7 +166,7 @@ void Player::Update()
 		}
 		
 	}
-
+	//ƒ_ƒ[ƒW‚ðŽó‚¯‚½Žž‚ÌÔ“_–Å
 	if (redCounter > 0.0f) {
 		redCounter -= Time::DeltaTimeRate();
 		if (redCounter <= 0.0f) {
@@ -454,9 +451,6 @@ void Player::AvoidRotationChange()
 
 bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 {
-	if (noDamage) {
-		return true;
-	}
 	//“G‚ÌUŒ‚‚ª“–‚½‚Á‚½Žž‚Ìˆ—
 	std::shared_ptr<StateBase> pB	= playerCom.stateManager->GetState<StateBase>();
 	Animator* enemyAnim				= _obj->Component()->GetComponent<Animator>();
@@ -503,10 +497,15 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
 			//playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 			if (attack == nullptr) {
-				hp -= 50.0f;
+				if (!noDamage) { //–³“Gƒ‚[ƒh‚¶‚á‚È‚¢‚È‚ç
+					hp -= param.hitDamage;
+				}
 			}
 			else {
-				hp -= param.hitDamage;
+				if (!noDamage) { //–³“Gƒ‚[ƒh‚¶‚á‚È‚¢‚È‚ç
+					hp -= param.hitDamage;
+				}
+				
 			}
 			switch (param.damagePattern)
 			{
@@ -533,10 +532,6 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 		}
 	}
 	return true;
-}
-
-void Player::JustAvoidCan()
-{
 }
 
 void Player::TargetObjSet(BaseObject* _base)
@@ -567,12 +562,12 @@ void Player::PlayerAttackHit()
 	}
 }
 
-bool Player::IsShake() 
+bool Player::IsShake() const
 {
 	return playerCom.shaker->IsShakeing();
 }
 
-StateManager* Player::GetPlayerStateManager()
+StateManager* Player::GetPlayerStateManager()const
 {
 	return playerCom.stateManager;
 }
@@ -594,7 +589,7 @@ void Player::DrawTrail()
 	DrawTrail(VECTOR3(-23, -4, -200), VECTOR3(23, 4, 16), 0.0f, 0.0f, 255.0f, 100.0f, 28, 0.25f);
 }
 
-void Player::DrawTrail(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, float index, float _time)
+void Player::DrawTrail(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, float _g, float _b, float _a, float index, float _time)
 {
 	//Œ•‚Ì‹OÕ‚Ìˆ—
 	playerCom.weapon->CreateTrailPlayer(_nPos,_fPos,_r,_g,_b,_a,index,_time);

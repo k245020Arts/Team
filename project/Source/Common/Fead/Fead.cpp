@@ -49,7 +49,7 @@ void Fead::Draw()
 
 void Fead::FeadIn(float _time, int _color, std::function<int(int, int, float)> _func)
 {
-	if (IsFead()) {
+	if (IsFead()) { //フェード中なら通らない
 		return;
 	}
 	feedCountMax = _time;
@@ -62,7 +62,7 @@ void Fead::FeadIn(float _time, int _color, std::function<int(int, int, float)> _
 
 void Fead::FeadOut(float _time, int _color, std::function<int(int, int, float)> _func)
 {
-	if (IsFead()) {
+	if (IsFead()) {//フェード中なら通らない
 		return;
 	}
 	feedCountMax = _time;

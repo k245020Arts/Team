@@ -35,13 +35,20 @@ public:
 	/// </summary>
 	void InspectorDraw();
 
-	void TransformDraw(BaseObject* _obj);
+	/// <summary>
+	/// ヒエラルキーの要素を削除する
+	/// </summary>
+	/// <param name="_obj">ヒエラルキーの要素を削除したいオブジェクト</param>
 	void RemoveHierachy(BaseObject* _obj);
 	/// <summary>
 	/// すべてのデータを削除
 	/// </summary>
 	void AllDeleteList();
 
+	/// <summary>
+	/// カメラEditor用のウィンドウをセット
+	/// </summary>
+	/// <param name="_camera"></param>
 	void SetCameraEditor(Camera* _camera);
 
 private:

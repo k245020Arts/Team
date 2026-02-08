@@ -12,10 +12,15 @@ public:
 	~PlayerManager();
 	void Update() override;
 	void Draw() override;
+	/// <summary>
+	/// プレイシーンのプレイヤーの生成
+	/// </summary>
 	void CreatePlayer();
 
-	void GameSceneChangeState();
-
+	
+	/// <summary>
+	/// タイトルシーンのプレイヤーの生成
+	/// </summary>
 	void CreateTitlePlayer();
 
 private:
@@ -24,5 +29,5 @@ private:
 
 	GameManager* gameManager;
 	StateManager* stateManager;
-
+	void GameSceneChangeState();
 };

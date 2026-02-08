@@ -13,8 +13,16 @@ public:
 	~MeshRenderer();
 	void Update()override;
 	void Draw()override;
-	
+	/// <summary>
+	/// モデルハンドルのセット
+	/// </summary>
+	/// <param name="_hHandle">モデルハンドル</param>
+	/// <param name="_depricate">複製するかどうか</param>
 	void ModelHandle(int _hHandle,bool _depricate);
+	/// <summary>
+	/// モデルハンドルのセット
+	/// </summary>
+	/// <param name="_hHandle">モデルハンドル</param>
 	void ModelHandle(int _hHandle);
 	void ImguiDraw()override;
 

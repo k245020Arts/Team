@@ -36,7 +36,7 @@ void StripTransitor::Update()
 
 void StripTransitor::Draw()
 {
-	if (IsEnd()) {
+	if (IsEnd()) {//I—¹‚µ‚Ä‚¢‚½‚ç•Ô‚·
 		return;
 	}
 	const int width = 80;

@@ -19,15 +19,15 @@ public:
 	/// <param name="_fadeTime">フェードアウトの時間</param>
 	void Play(float _time,float _fadeTime);
 
+private:
+
+	void CurrentScreenSet();
+
 	void ScreenFinish();
 
 	void FeedOut();
 
 	void Reset();
-
-private:
-
-	void CurrentScreenSet();
 
 	static const int SCREEN_NUM = 2;
 

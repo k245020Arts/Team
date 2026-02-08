@@ -20,7 +20,7 @@ void RayCollider::Update()
 
 void RayCollider::Draw()
 {
-	if (Debug::RayColliderDraw()) {
+	if (Debug::RayColliderDraw()) { //デバック表示モードがオフなら何もしない
 		DrawLine3D(collTransform->WorldTransform().position, transform2->WorldTransform().position, 0xff0000);
 	}
 }
@@ -30,10 +30,10 @@ void RayCollider::Start()
 	
 }
 
-void RayCollider::RaySet(CollsionInfo _info, Transform _transform, Transform _transform2)
+void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _transform2)
 {
 	ColliderBase::CollsionAdd(_info, _transform);
 
-	transform2 = new Transform( _transform2);
+	transform2 = new Transform(_transform2);
 	transform2->SetParent(_info.parentTransfrom);
 }

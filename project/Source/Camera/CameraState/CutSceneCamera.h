@@ -18,10 +18,10 @@ public:
 
     void StateImguiDraw() override;
 
-    Transform* PlayerEnemyWorldToPos(std::string _name);
+   
 
 private:
-
+    Transform* PlayerEnemyWorldToPos(std::string _name);
     struct CutPositionInformation
     {
         CutPositionInformation() {
