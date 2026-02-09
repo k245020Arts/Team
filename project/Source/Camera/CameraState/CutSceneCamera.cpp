@@ -383,6 +383,7 @@ void CutSceneCamera::Start()
     camera->cutSceneIndex = 0;
     time = camera->cutSceneData[0].duration;
     first = true;
+    camera->rockOn = false;
 
     position = CutSceneObj();
     target = CutSceneObj();
