@@ -42,7 +42,7 @@ TrashEnemyManager::TrashEnemyManager()
 	debugWaypoint = false;
 
 	searchCounter = 1.0f;
-	maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
+	maxAttackCounter = ATK_COUNTER_MAX * (float)Random::GetReal();
 
 	cooperateCounter = 0;
 }
@@ -94,7 +94,7 @@ void TrashEnemyManager::Draw()
 	}
 }
 
-void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
+void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 {
 	//“¯‚¶Ží—Þ‚Ì“G‚ð‰½‘Ìo‚·‚©
 	int kindsCounter = enemySpawnCounter / 3;
@@ -163,7 +163,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, float enemySpawnCounter)
         enemies.emplace_back(t);
 
         // ˆÊ’u‚ðŒˆ‚ß‚é
-        const float R_MAX = 2000.0f;
+        const int R_MAX = 2000;
         float rangeX = (float)GetRand(R_MAX * 2) - R_MAX;
 		float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
         VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
@@ -268,7 +268,7 @@ void TrashEnemyManager::NormalAttackMove(TrashEnemy* _enemy)
 		{
 			_enemy->AttackCommand();
 			attackCounter = 0;
-			maxAttackCounter = ATK_COUNTER_MAX * Random::GetReal();
+			maxAttackCounter = ATK_COUNTER_MAX * (float)Random::GetReal();
 		}
 	}
 	else if (attackCounter >= ATK_COUNTER_MAX)

@@ -11,9 +11,10 @@ Standby::Standby()
 	string = Function::GetClassNameC<Standby>();
 	counter = 0;
 
+	range = 0;
 	randomSpeed = 0;
-
 	redefinitionCounter = 0;
+	isRedefinition = true;
 }
 
 Standby::~Standby()
@@ -41,12 +42,10 @@ void Standby::Update()
 			}
 			else
 				counter++;
-
-			angle = CalculateAngle();
 		}
 		else
 		{
-			NormalMove();
+			RotateMove();
 			if (vec.Size() <= range / 2)
 			{
 				pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
@@ -88,8 +87,6 @@ void Standby::Start()
 
 	pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	aiMove = 0;
-
 	randomSpeed = (float)Random::GetReal();
 	EnemyStateBase::Start();
 }
@@ -104,35 +101,16 @@ void Standby::Finish()
 
 }
 
-void Standby::NormalMove()
-{
-	if (aiMove == 0) 
-		aiMove = 1 + GetRand(1);
-
-	if (aiMove == 1) 
-		RotateMove(1); 
-	else if (aiMove == 2) 
-		RotateMove(-1); 
-}
-
-void Standby::RotateMove(int rotDir)
+void Standby::RotateMove()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-
-	// ‰~‰^“®‚Ì‚½‚ß‚ÌŠp“x‚ði‚ß‚é
-	//angle += 0.5f * randomSpeed * DegToRad * rotDir;
-
-	// ƒvƒŒƒCƒ„[’†S‚Ì‰~Žüã‚ÌˆÊ’u‚ðŒvŽZ
-	//VECTOR3 newPos;
-	//newPos.x = pPos.x + cosf(angle) * range;
-	//newPos.z = pPos.z + sinf(angle) * range;
 
 	VECTOR3 enemyPos = e->GetPos();
 	float MAX = 50;
 	if (isRedefinition)
 	{
-		float _rangeX = MAX * Random::GetReal() - MAX * Random::GetReal();
-		float _rangeZ = MAX * Random::GetReal() - MAX * Random::GetReal();
+		float _rangeX = MAX * (float)Random::GetReal() - MAX * (float)Random::GetReal();
+		float _rangeZ = MAX * (float)Random::GetReal() - MAX * (float)Random::GetReal();
 		newPos = /*enemyPos +*/ VECTOR3(_rangeX, 0, _rangeZ);
 		isRedefinition = false;
 	}
@@ -151,7 +129,7 @@ void Standby::RotateMove(int rotDir)
 	e->GetEnemyObj()->GetTransform()->position += 10 * newPos.Normalize();
 }
 
-float Standby::CalculateAngle()
-{
-	return -GetBase<TrashEnemy>()->GetEnemyObj()->GetTransform()->rotation.y + 0.5f * DX_PI_F;
-}
+//float Standby::CalculateAngle()
+//{
+//	return -GetBase<TrashEnemy>()->GetEnemyObj()->GetTransform()->rotation.y + 0.5f * DX_PI_F;
+//}

@@ -183,8 +183,7 @@ TrashEnemy::TrashEnemy()
 	tag = Function::GetClassNameC<TrashEnemy>();
 	eStatus = new T_EnemyStatus;
 
-	/*hp = eStatus->GetStatus().maxHp;
-	maxHp = hp;*/
+	chara = nullptr;
 
 	speed = 0;
 	defense = 0;
@@ -203,6 +202,7 @@ TrashEnemy::TrashEnemy()
 
 	mStopCounter = 0;
 
+	active = true;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -269,15 +269,12 @@ void TrashEnemy::Start(Object3D* _obj)
 	chara->ObjectPointer(_obj, 10, ID::E_MODEL, -1);
 	chara->SetImage(Load::GetHandle(ID::SWORD_EFFECT_B));
 
-	//playerSp = enemyBaseComponent.playerObj->Component()->GetComponent<PlayerSpecialAttack>();
-
-	active = true;
+	//active = true;
 }
 
 void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 {
 	obj->GetTransform()->position = _pos;
-	number = kinds;
 
 	const float MAX = 1.2f;
 	const float MIN = 0.8f;
