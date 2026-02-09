@@ -21,6 +21,9 @@ MeshRenderer2D::MeshRenderer2D()
 	feedOut				= false;
 	feedInOutTimer		= 0.0f;
 	feedInOutTimerBase	= 0.0f;
+	alpha				= 0.0f;
+	xAnim				= false;
+
 }
 
 MeshRenderer2D::~MeshRenderer2D()

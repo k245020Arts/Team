@@ -10,6 +10,7 @@
 #include "../Common/LoadManager.h"
 #include "../Component/UI/EnemyDamageUI.h"
 #include "../Component/ComponentManager.h"
+#include "../Camera/Camera.h"
 
 EnemyBase::EnemyBase()
 {
@@ -73,7 +74,7 @@ void EnemyBase::Draw()
 	if (!lastTarget) {
 		return;
 	}
-	DrawSphere3D(obj->GetTransform()->position + upPos, 20, 2, 0xffff00, 0xffff00, true);
+	DrawCone3D(obj->GetTransform()->position + upPos, obj->GetTransform()->position + upPos + VECTOR3(0.0f,0.0f,50.0f) * MGetRotY(obj->GetTransform()->rotation.y), 20, 2, 0xffff00, 0xffff00, true);
 }
 
 void EnemyBase::DrawTrail() {
@@ -97,7 +98,7 @@ float EnemyBase::DamageCalculation(const VECTOR3& _pos, float _damage,float _def
 	damageNum->Init(Transform(VZero, VZero, VOne), "damageNum");
 	damageNum->Component()->AddComponent<EnemyDamageUI>()->
 		SetInformation(_pos,
-		damage +(float)GetRand(deviation), VECTOR3(0.0f, -0.4f, 0.0f), 0.5f,
+		(int)damage + GetRand((int)deviation), VECTOR3(0.0f, -0.4f, 0.0f), 0.5f,
 		Load::GetHandle(ID::DAMAGE_UI_BUTTON), GetEnemyObj()->GetTransform(), VECTOR2I(81, 90));
 	
 	return damage;

@@ -31,12 +31,25 @@ namespace CutSceneSpece {
 	};
 
 	struct CutSceneCameraPos {
+		CutSceneCameraPos(){
+			startPos = VZero;
+			endPos = VZero;
+			target = endPos;
+		}
 		VECTOR3 startPos;
 		VECTOR3 endPos;
 		VECTOR3 target;
 	};
 
 	struct CutScene {
+		CutScene() {
+			duration = 0.0f;
+			ease = EaseType::Linear;
+			camera = CutSceneCameraPos();
+			followPosName.clear();
+			followPosTarget.clear();;
+			firstPosBaseName.clear();
+		}
 		float duration;
 		EaseType ease;
 		CutSceneCameraPos camera;

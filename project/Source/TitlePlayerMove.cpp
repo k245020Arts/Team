@@ -25,6 +25,10 @@ TitlePlayerMove::TitlePlayerMove()
 	string = Function::GetClassNameC<TitlePlayerMove>();;
 	//blurScreen = FindGameObject<BlurScreen>();
 	titleCtrl = FindGameObject<TitleControl>();
+
+	fead = nullptr;
+	player = nullptr;
+	progress = 0.0f;
 }
 
 TitlePlayerMove::~TitlePlayerMove()

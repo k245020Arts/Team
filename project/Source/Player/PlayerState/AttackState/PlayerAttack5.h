@@ -20,4 +20,5 @@ private:
 	void Again();
 
 	const int ATTACK_NUMMAX = 2;
+	bool avoidReady;
 };

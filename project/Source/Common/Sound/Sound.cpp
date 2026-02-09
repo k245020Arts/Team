@@ -30,11 +30,11 @@ Sound::~Sound()
 void Sound::Update()
 {
 	if (feedInTime > 0.0f) {
-		float valume = Easing::EasingFlow<float>(&feedInTime, timeMax, (float)volume, 0, Easing::EaseIn<float>);
+		float valume = Easing::EasingFlow<float>(&feedInTime, timeMax, (float)volume, 0.0f, Easing::EaseIn<float>);
 		ChangeVolumeSoundMem((int)valume, soundHandle);
 	}
 	if (feedOutTime > 0.0f) {
-		float valume = Easing::EasingFlow<float>(&feedOutTime, timeMax, 0, (float)volume, Easing::EaseIn<float>);
+		float valume = Easing::EasingFlow<float>(&feedOutTime, timeMax, 0.0f, (float)volume, Easing::EaseIn<float>);
 		ChangeVolumeSoundMem((int)valume, soundHandle);
 	}
 }

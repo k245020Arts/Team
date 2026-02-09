@@ -63,6 +63,11 @@ Camera::Camera()
 	cutSceneBoxDraw						= false;
 	uiManager							= FindGameObject<UIManager>();
 	keepFov								= fov;
+	cutStopChara						= false;
+	isCutScene							= false;
+	shakePower							= 0.0f;
+	shakeTime							= 0.0f;
+	rokPos								= 0.0f;
 }
 
 Camera::~Camera()

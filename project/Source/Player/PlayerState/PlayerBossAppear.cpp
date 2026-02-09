@@ -16,6 +16,8 @@ PlayerBossAppear::PlayerBossAppear()
 	string = string = Function::GetClassNameC<PlayerBossAppear>();;
 	animId = ID::P_ANIM_IDOL;
 	fead = FindGameObject<Fead>();
+
+	feadOut = false;
 }
 
 PlayerBossAppear::~PlayerBossAppear()

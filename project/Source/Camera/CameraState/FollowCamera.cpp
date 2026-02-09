@@ -17,6 +17,8 @@ FollowCamera::FollowCamera()
 	string		= Function::GetClassNameC<FollowCamera>();
 	backCounter = 0.0f;
 	addPos		= VZero;
+	player = nullptr;
+	playerShake = false;
 }
 
 FollowCamera::~FollowCamera()

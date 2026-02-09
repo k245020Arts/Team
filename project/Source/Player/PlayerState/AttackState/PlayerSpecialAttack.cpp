@@ -31,7 +31,7 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	//TODO ìñÇΩÇËîªíËÇìÆÇ©Ç»Ç¢ÇÊÇ§Ç…êVÇµÇ¢ìñÇΩÇËîªíËÇÃê∂ê¨
 	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(radius, 0, 0));
 	//frontSpeed = 1000.0f;
-	hitDamage = 400.0f;
+	hitDamage = 200.0f;
 	
 
 	moveNum = 0;
@@ -62,6 +62,11 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	zoom = true;
 	zoomRate = 0.0f;
 	zoomSize = 0.0f;
+
+	attackDamage = false;
+	beforeWaitCounter = 0.0f;
+	moveStart = false;
+	
 }
 
 PlayerSpecialAttack::~PlayerSpecialAttack()
@@ -210,7 +215,7 @@ void PlayerSpecialAttack::Start()
 	p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_V);
 	attackDamage = false;
 	moveStart = false;
-	hitDamage = 400.0f;
+	hitDamage = 200.0f;
 }
 
 void PlayerSpecialAttack::Finish()
@@ -290,7 +295,7 @@ void PlayerSpecialAttack::BeforeUpdate()
 	if (alpha >= 255.0f) {
 		if (zoom) { //ÉYÅ[ÉÄÇÇ∑ÇÈ
 			zoomRate = Easing::EasingFlow<float>(&zoomCounter, zoomCounterBase, 2.0f, 1.0f, Easing::EaseIn<float>);
-			zoomSize = Easing::EasingFlow<float>(&zoomCounter, zoomCounterBase, 120.0f, 0, Easing::EaseIn<float>);
+			zoomSize = Easing::EasingFlow<float>(&zoomCounter, zoomCounterBase, 120.0f, 0.0f, Easing::EaseIn<float>);
 			if (zoomCounter <= 0.0f) {
 				beforeWaitCounter = 1.0f;
 				zoom = false;
@@ -485,7 +490,7 @@ void PlayerSpecialAttack::ChargeUpdate()
 		//p->playerCom.anim->SetPlaySpeed(3.0f);
 		p->playerCom.shaker->ShakeFinish();
 		p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_FINAL_ATTACKV);
-		hitDamage = 1500.0f;
+		hitDamage = 5000.0f;
 	}
 }
 

@@ -28,6 +28,8 @@ EnemyDamageUI::EnemyDamageUI()
 
 	worldTransform = nullptr;
 	worldOffset = VZero;
+	mesh2D = nullptr;
+
 }
 
 EnemyDamageUI::~EnemyDamageUI()

@@ -28,7 +28,7 @@ PlayerJustAvoid::PlayerJustAvoid()
 	startTimer		= 0.0f;
 	num				= 0;
 	easingCount		= 0.0f;
-	
+	volume = 0.0f;
 }
 
 PlayerJustAvoid::~PlayerJustAvoid()

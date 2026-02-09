@@ -11,6 +11,8 @@ Fead::Fead()
 
 	DontDestroyOnSceneChange();
 	SetDrawOrder(-10000);
+
+	feadIn = Fead::NONE;;
 }
 
 Fead::~Fead()

@@ -33,6 +33,10 @@ TitleCamera::TitleCamera()
 	cameraComponent.cameraTransform = nullptr;
 	rockOn = false;
 	counter = 0;
+
+	title = nullptr;
+	titleCtrl = nullptr;
+
 }
 
 TitleCamera::~TitleCamera()

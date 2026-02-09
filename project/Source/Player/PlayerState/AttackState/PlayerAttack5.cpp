@@ -21,9 +21,10 @@ PlayerAttack5::PlayerAttack5()
 	nextAttackID = StateID::PLAYER_ATTACK1_S;
 	//frontSpeed = 500.0f;
 	frontSpeed = 0.0f;
-	hitDamage = 200.0f;
+	hitDamage = 150.0f;
 	defalutTrail = true;
 	timer = 0.0f;
+	avoidReady = false;
 }
 
 PlayerAttack5::~PlayerAttack5()
@@ -98,7 +99,7 @@ void PlayerAttack5::Update()
 		EnemyRotation();
 		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
 			//p->playerCom.player->AvoidReady();
-			nextAvoid = true;
+			avoidReady = true;
 			//noStateChange = true;
 		}
 		if (p->playerCom.InputManager->KeyInputDown("attack")) {
@@ -140,7 +141,10 @@ void PlayerAttack5::Update()
 			}*/
 		}
 		if (p->playerCom.physics->GetGround()) {
-			if (beforeAttack) {
+			if (avoidReady) {
+				nextAvoid = true;
+			}
+			else if (beforeAttack) {
 				//p->playerCom.anim->SetPlaySpeed(1.5f);
 			}
 			else {

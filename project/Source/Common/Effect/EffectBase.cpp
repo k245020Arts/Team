@@ -8,7 +8,16 @@ EffectBase::EffectBase()
 	speed	= 1.0f;
 	debugId = 22;
 	tag		= Function::GetClassNameC<EffectBase>();
-	
+	effectColor = nullptr;
+	effectPlay = nullptr;
+	effectStop = nullptr;
+	feedInTime = 0.0f;
+	hPlayHandle = -1;
+	id = Effect_ID::EFFECT_MAX;
+	parent = nullptr;
+	time = 0.0f;
+	transform = nullptr;
+
 }
 
 EffectBase::~EffectBase()

@@ -14,4 +14,5 @@ public:
 
 private:
 	float timer;
+	bool avoidReady;
 };
