@@ -42,7 +42,7 @@
           "z": 2000.0
         }
       },
-      "duration": 1.0,
+      "duration": 0.5,
       "ease": "In",
       "firstPosBaseName": "World",
       "followPos": "First_Player",
