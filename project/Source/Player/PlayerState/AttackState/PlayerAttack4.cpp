@@ -86,6 +86,7 @@ void PlayerAttack4::Start()
 	//p->playerCom.controller->ControlVibrationStartFrame(100, 20);
 	p->playerCom.physics->SetGravity(PlayerInformation::BASE_GRAVITY);
 	AgainTimerSet(0.2f, 3);
+	avoidReady = false;
 }
 
 void PlayerAttack4::Finish()

@@ -174,6 +174,8 @@ void PlayerAttack5::Start()
 	//timer = 2.0f;
 	//count = ATTACK_NUMMAX;
 	AgainTimerSet(0.1f, 4);
+	avoidReady = false;
+
 }
 
 void PlayerAttack5::Finish()
