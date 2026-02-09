@@ -89,17 +89,18 @@ void Camera::Update()
 	//	counter = 0.0f;
 	//}
 	if (input->KeyInputDown("camera")) {
-		if (!rockOn) {
-			cameraComponent.enemyManager->CameraRockOnStart(this);
-			cameraComponent.state->NowChangeState(StateID::FOLLOW_CAMERA_S);
-			rockOn = true;
+		if (!IsCutScene()) {
+			if (!rockOn) {
+				cameraComponent.enemyManager->CameraRockOnStart(this);
+				cameraComponent.state->NowChangeState(StateID::FOLLOW_CAMERA_S);
+				rockOn = true;
+			}
+			else {
+				cameraComponent.enemyManager->TargetCancel(this);
+				cameraComponent.state->NowChangeState(StateID::FREE_CAMERA_S);
+				rockOn = false;
+			}
 		}
-		else {
-			cameraComponent.enemyManager->TargetCancel(this);
-			cameraComponent.state->NowChangeState(StateID::FREE_CAMERA_S);
-			rockOn = false;
-		}
-		
 	}
 	if (shakeTime > 0.0f) {
 		shakeTime -= Time::DeltaTimeRate();
