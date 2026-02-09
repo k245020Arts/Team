@@ -12,9 +12,8 @@ public:
 	void Start()override;
 	void Finish()override;
 private:
-	void NormalMove();
-	void RotateMove(int _index);
-	float CalculateAngle();
+	void RotateMove();
+	//float CalculateAngle();
 	const float BACKSPEED = 60.0f;
 
 	VECTOR3 vec;
@@ -22,13 +21,12 @@ private:
 	//どこに移動するかわかる
 	VECTOR3 newPos;
 
-	int aiMove;
+	//int aiMove;
 	float counter;
-	float angle;
+	//float angle;
 	float range;
 	float randomSpeed;
 	float redefinitionCounter;
-	bool isBach;
 	//次のポジションを再定義する
 	bool isRedefinition;
 };

@@ -91,11 +91,8 @@ private:
 	void LookTarget(VECTOR3 _pos);
 	bool IsPlayerSpecialMove();
 	
-
 	bool active;
-	//どこに向くか
-	/*VECTOR3 targetPos;*/
-
+	
 	//通常攻撃をしてもよいか
 	bool isAttack;
 
@@ -114,8 +111,7 @@ private:
 	//強めの味方についていくか
 	bool isEnemyFollow;
 	VECTOR3 wayPoint;
-	//自分の敵の種類
-	int number;
+
 	//必殺技を食らったときに敵をスローにする
 	float slowCounter;
 	//モーションが止まる速度

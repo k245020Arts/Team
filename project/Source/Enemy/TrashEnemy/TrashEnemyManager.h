@@ -20,7 +20,7 @@ public:
 	/// </summary>
 	/// <param name="_pos">座標</param>
 	/// <param name="enemySpawnCounter">何体生成するか</param>
-	void CreateEnemy(VECTOR3 _pos,float enemySpawnCounter);
+	void CreateEnemy(VECTOR3 _pos,int enemySpawnCounter);
 	//敵のリストの取得
 	std::list<TrashEnemy*>& EnemyList(){ return enemies; }
 	//敵が何人生きているかわかる関数
@@ -39,7 +39,7 @@ private:
 	std::list<TrashEnemy*> enemies;
 	const int ENEMIESMAX = 30;
 	const int ATK_COUNTER_MIN = 1;
-	const int ATK_COUNTER_MAX = 3;
+	const float ATK_COUNTER_MAX = 3;
 	
 	struct WayPoint
 	{
@@ -81,7 +81,7 @@ private:
 	bool comboRequest;
 	//int counter;
 	float attackCounter;
-	int maxAttackCounter;
+	float maxAttackCounter;//
 	int standbyCounter;
 
 	float searchCounter;
