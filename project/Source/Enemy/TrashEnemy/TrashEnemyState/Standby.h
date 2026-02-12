@@ -13,6 +13,7 @@ public:
 	void Finish()override;
 private:
 	void RotateMove();
+	void InCameraView();
 	//float CalculateAngle();
 	const float BACKSPEED = 60.0f;
 

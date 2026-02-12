@@ -10,10 +10,10 @@ private:
 		const float maxHp = 1500;				//最大HP
 		const float defense = 500;
 		const float coolTime = 30.0f;			//一段目の攻撃までの時間
-		const float runSpeed = 50.0f;			//移動速度
+		const float runSpeed = 40.0f;			//移動速度
 		const float cooperateSoeed = 300.0f;	//連携攻撃時のrunスピード
 		const float range = 2000.0f;			//idelとrunの切り替わり
-		const float atkRang = 600.0f;			//runと攻撃の切り替わり
+		const float atkRang = 800.0f;			//runと攻撃の切り替わり
 		const float chaseRange = 1200.0f;		//プレイヤーと離れたときに切り替わる
 		const float cooperateRange = 200.0f;
 	};

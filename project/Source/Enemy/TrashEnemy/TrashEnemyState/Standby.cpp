@@ -4,6 +4,7 @@
 #include "../../../State/StateManager.h"
 #include "T_EnemyStatus.h"
 #include "../../../Common/Random.h"
+#include "../../../Camera/Camera.h"
 
 Standby::Standby()
 {
@@ -26,13 +27,14 @@ void Standby::Update()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	e->LookTarget(pPos);
-
+	
 	vec = e->enemyBaseComponent.playerObj->GetTransform()->position - e->GetPos();
 	if (!e->isCooperateAtk)
 	{
-		if (counter < BACKSPEED)
-		{
-			if (vec.Size() <= range)
+		InCameraView();
+		//if (counter < BACKSPEED)
+		//{
+			if (vec.Size() <= range)//プレイヤーとの距離を見て後ろに下がる
 			{
 				isRedefinition = true;
 				float rotY = e->GetEnemyObj()->GetTransform()->rotation.y;
@@ -40,9 +42,9 @@ void Standby::Update()
 				e->GetEnemyObj()->GetTransform()->position.x -= range / BACKSPEED * cosf(rotY - 0.5f * DX_PI_F);
 				e->GetEnemyObj()->GetTransform()->position.z -= range / BACKSPEED * sinf(rotY - 0.5f * DX_PI_F);
 			}
-			else
-				counter++;
-		}
+			/*else
+				counter++;*/
+		//}
 		else
 		{
 			RotateMove();
@@ -105,7 +107,8 @@ void Standby::RotateMove()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
-	VECTOR3 enemyPos = e->GetPos();
+	VECTOR3 pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
+
 	float MAX = 50;
 	if (isRedefinition)
 	{
@@ -127,6 +130,24 @@ void Standby::RotateMove()
 
 	// 移動
 	e->GetEnemyObj()->GetTransform()->position += 10 * newPos.Normalize();
+}
+
+void Standby::InCameraView()
+{
+	TrashEnemy* _e = GetBase<TrashEnemy>();
+	VECTOR3 cameraPos = _e->enemyBaseComponent.camera->GetCameraTransform()->position;
+	cameraPos.y = 0;
+	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(_e->enemyBaseComponent.camera->GetCameraTransform()->rotation.y);
+	//VECTOR3 vec = _e->GetEnemyObj()->GetTransform()->position - cameraPos;
+	VECTOR3 vec = _e->GetEnemyObj()->GetTransform()->position - _e->enemyBaseComponent.playerObj->GetTransform()->position;
+
+	//内積(カメラ)
+	float dotProduct = VDot(frontVec, vec.Normalize());
+	
+	if (dotProduct > cosf(45 * DegToRad) )//カメラに写っているかつプレイヤーの前
+		_e->isAttack = true;
+	else
+		_e->isAttack = false;
 }
 
 //float Standby::CalculateAngle()

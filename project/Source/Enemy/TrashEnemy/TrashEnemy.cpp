@@ -248,6 +248,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.effect = FindGameObject<EffectManager>();
 	enemyBaseComponent.sound = FindGameObject<SoundManager>();
 	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
+	enemyBaseComponent.camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
 
 	using namespace ID;
 
@@ -276,8 +277,9 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 {
 	obj->GetTransform()->position = _pos;
 
-	const float MAX = 1.2f;
-	const float MIN = 0.8f;
+	const float MAX = 1.5f;
+	const float MID = 1.25f;
+	const float MIN = 1.0f;
 
 	switch (kinds)
 	{
@@ -287,12 +289,13 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 		speed = eStatus->GetStatus().runSpeed * MAX;
 		defense = eStatus->GetStatus().defense * MIN;
 		GetEnemyObj()->GetTransform()->scale = GetEnemyObj()->GetTransform()->scale * MIN;
+		
 		break;
 	case 1:
-		hp = eStatus->GetStatus().maxHp;
+		hp = eStatus->GetStatus().maxHp * MID;
 		maxHp = hp;
-		speed = eStatus->GetStatus().runSpeed;
-		defense = eStatus->GetStatus().defense;
+		speed = eStatus->GetStatus().runSpeed * MID;
+		defense = eStatus->GetStatus().defense * MID;
 		break;
 	default://d‚¢“G
 		hp = eStatus->GetStatus().maxHp * MAX;
