@@ -138,10 +138,9 @@ void Standby::InCameraView()
 	VECTOR3 cameraPos = _e->enemyBaseComponent.camera->GetCameraTransform()->position;
 	cameraPos.y = 0;
 	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(_e->enemyBaseComponent.camera->GetCameraTransform()->rotation.y);
-	//VECTOR3 vec = _e->GetEnemyObj()->GetTransform()->position - cameraPos;
 	VECTOR3 vec = _e->GetEnemyObj()->GetTransform()->position - _e->enemyBaseComponent.playerObj->GetTransform()->position;
-
-	//内積(カメラ)
+	
+	//内積
 	float dotProduct = VDot(frontVec, vec.Normalize());
 	
 	if (dotProduct > cosf(45 * DegToRad) )//カメラに写っているかつプレイヤーの前
