@@ -170,7 +170,7 @@ void PlayerManager::CreatePlayer()
 	anim->AddFile(ID::IDType::P_WIN,						"P_WIN", false, 1.0f, 30.0f, 45.0f);
 	anim->AddFile(ID::IDType::PLAYER_WIN_IDOL,				"P_WINIDOL", true, 1.0f, 0.0f, 50.0f);
 	anim->AddFile(ID::IDType::P_LEG_UP,						"P_LEG_UP", false, 1.0f, 0.0f, 50.0f);
-	anim->AddFile(ID::IDType::P_HEAVY_ATTACK,				"P_HEAVY_ATTACK", false, 1.0f, 5.0f, 40.0f);
+	anim->AddFile(ID::IDType::P_HEAVY_ATTACK,				"P_HEAVY_ATTACK", false, 1.0f, 5.0f, 20.0f);
 	anim->AddFile(ID::IDType::P_HEAVY_CHARGE,				"P_HEAVY_CHARGE", false, 2.0f, 0.0f, 50.0f);
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);

@@ -34,24 +34,32 @@ void PlayerHeavyAttackCamera::Update()
 		if (backCounter >= 0.0f) {
 
 			float t = 1.0f - backCounter / 2.0f;
-			VECTOR3 easedT = Easing::EaseOut(c->defalutDistance, VECTOR3(0, 0, -500), t);
+			VECTOR3 easedT = Easing::Lerp(c->defalutDistance, VECTOR3(0, 0, -800), t);
 			c->currentDistance = easedT;
 			backCounter -= Time::DeltaTimeRate();
+			VECTOR3 targetp = c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0);
+			c->target = Easing::Lerp(currentTarget, targetp, t);
 		}
 		else {
-			c->currentDistance = VECTOR3(0, 0, -500);
+			c->currentDistance = VECTOR3(0, 0, -800);
+			VECTOR3 targetp = c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0);
+			c->target = targetp;
 		}
 	}
 	else {
 		if (zoomTimer >= 0.0f) {
 
 			float t = 1.0f - zoomTimer / 0.2f;
-			VECTOR3 easedT = Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
+			VECTOR3 easedT = Easing::Lerp(c->currentDistance, c->defalutDistance, t);
 			c->currentDistance = easedT;
 			zoomTimer -= Time::DeltaTimeRate();
+			VECTOR3 targetp = c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0);
+			c->target = Easing::Lerp(currentTarget, targetp, t);
 		}
 		else {
 			c->currentDistance = c->defalutDistance;
+			VECTOR3 targetp = c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0);
+			c->target = targetp;
 		}
 		
 	}
@@ -74,6 +82,7 @@ void PlayerHeavyAttackCamera::Start()
 	currentTarget = c->target;
 	backCounter = 2.0f;
 	zoomTimer = 0.2f;
+	//c->cameraComponent.cameraTransform->rotation.y = player->GetPlayerTransform()->rotation.y;
 }
 
 void PlayerHeavyAttackCamera::Finish()

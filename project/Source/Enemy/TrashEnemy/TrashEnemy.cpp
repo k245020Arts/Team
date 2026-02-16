@@ -175,6 +175,26 @@ namespace
 		)
 	},
 
+	{ StateID::PLAYER_HEAVY_ATTACK_S,
+	EnemyInformation::EnemyReaction(
+		StateID::PLAYER_HEAVY_ATTACK_S,
+		EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200), 0.2f, 0.8f),
+		EnemyBlowAway::EnemyBlowAwayInfo(),
+		EnemyInformation::EnemyReaction::Type::Normal,
+		StateID::B_THREAT_S,
+		70, 40,
+		Effect_ID::HIT_EFFECT,
+		EnemyInformation::HIT_EFFECT_TIME,
+		EnemyInformation::HIT_EFFECT_SCALE_RATE,
+		true,
+		180.0f * DegToRad,
+		Effect_ID::PLAYER_SLASH_ATTACK,
+		true,
+		-1,
+		0.0f
+	)
+	},
+
 	};
 }
 

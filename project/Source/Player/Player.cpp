@@ -95,6 +95,8 @@ Player::Player()
 	specialAttackBarMax			= 100.0f;
 	attackTargetTrans			= Transform();
 	charge						= false;
+	attackLevel					= NONE;
+	specialAttackGuageMax		= false;
 }
 //
 //Object2D* guage = new Object2D();
@@ -655,5 +657,43 @@ bool Player::LargeJustAvoid(std::shared_ptr<BossAttackBase> _attack)
 void Player::SpecialVarAdd(float _add)
 {
 	float add = specialAttackBar + _add;
+	if (add >= specialAttackBarMax) {
+		if (!specialAttackGuageMax) {
+			specialAttackGuageMax = true;
+			playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_CAN);
+			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0.0f, 150.0f, 0.0f), VZero, VOne), obj, Effect_ID::PLAYER_SPECIAL_ATTACK_CAN, 1.0f);
+		}
+	}
 	specialAttackBar = std::clamp(add, 0.0f, specialAttackBarMax);
+}
+
+void Player::HeavyAttackChangeParam(HeavyAttackLevel _level)
+{
+	auto& param = attackEffects[StateID::PLAYER_HEAVY_ATTACK_S];
+	attackLevel = _level;
+	switch (attackLevel)
+	{
+	case Player::LEVEL1:
+		param.shakePower = VECTOR3(30, 30, 30);
+		param.shakeTime = 0.05f;
+		param.cameraShakePower = VECTOR3(30, 30, 30);
+		param.cameraShakeTime = 0.1f;
+		break;
+	case Player::LEVEL2:
+		param.shakePower = VECTOR3(50, 50, 50);
+		param.shakeTime = 0.2f;
+		param.cameraShakePower = VECTOR3(50, 50, 50);
+		param.cameraShakeTime = 0.1f;
+		break;
+	case Player::LEVEL3:
+		param.shakePower = VECTOR3(150, 150, 150);
+		param.shakeTime = 0.4f;
+		param.cameraShakePower = VECTOR3(100, 100, 100);
+		param.cameraShakeTime = 0.3f;
+		break;
+	default:
+		my_error_assert("チャージ攻撃のレベルがセットされていません");
+		break;
+	}
+	
 }

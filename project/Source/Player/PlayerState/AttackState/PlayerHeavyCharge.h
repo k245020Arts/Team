@@ -15,4 +15,6 @@ public:
 
 private:
 	float chargeCount;
+	bool chargeFinish;
+	int baseFrequ;
 };

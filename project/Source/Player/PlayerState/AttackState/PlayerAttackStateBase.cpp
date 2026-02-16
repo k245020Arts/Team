@@ -2,6 +2,7 @@
 #include "../../player.h"
 #include "../../../Common/Easing.h"
 #include "../../../Common/Sound/SoundManager.h"
+#include "../../../Common/InputManager/InputManager.h"
 #include "../playerStateManager.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Weapon/WeaponManager.h"
@@ -52,7 +53,7 @@ PlayerAttackStateBase::~PlayerAttackStateBase()
 void PlayerAttackStateBase::Update()
 {
 	Player* p = GetBase<Player>();
-	
+	SpecialAttackStart();
 	if (p->playerCom.anim->AnimEventCan()) {
 		if (defalutTrail) {
 			p->playerCom.player->DrawTrail();
@@ -250,6 +251,18 @@ void PlayerAttackStateBase::AttackCollsion()
 			firstColl = false;
 			BaseAttackCollsion();
 		}
+	}
+}
+
+void PlayerAttackStateBase::SpecialAttackStart()
+{
+	Player* p = GetBase<Player>();
+	if (p->playerCom.InputManager->KeyInputDown("SpecialAttack")) {
+		if (p->CanSpecialAttack()) {
+			p->playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
+			p->specialAttackBar = 0.0f;
+		}
+
 	}
 }
 

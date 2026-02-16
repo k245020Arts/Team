@@ -271,5 +271,16 @@ private:
 	Transform attackTargetTrans;
 	bool charge;
 
+	enum HeavyAttackLevel
+	{
+		NONE = -1,
+		LEVEL1,
+		LEVEL2,
+		LEVEL3,
+	};
+	void HeavyAttackChangeParam(HeavyAttackLevel _level);
+
+	HeavyAttackLevel attackLevel;
+	bool specialAttackGuageMax;
 	
 };

@@ -109,12 +109,14 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_ATTACK_V1, "PlayerSpecialAttackAttackV1", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_ATTACK_V2, "PlayerSpecialAttackAttackV2", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_FINAL_ATTACKV, "PlayerSpecialFinalAttackV", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_CAN, "PlayerSpecialAttackCan", ".wav", 255);
 	
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK1, "p_walk1", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_WALK, "AS_373275_ドスッ_重めの足音", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_ROAR_VOICE, "B_ROAR_2", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_JUMP_WIND, "BOSS_JUMP_WIND", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_BEFORE, "BossBefore", ".wav", 100);
+	SoundLoad(Sound_ID::SOUND_ID::PLAYER_CHARGE, "PlayerCharge", ".wav", 150);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK2, "p_walk2", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK3, "p_walk3", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK4, "p_walk4", ".wav", 255);

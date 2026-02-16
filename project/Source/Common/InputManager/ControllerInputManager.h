@@ -139,6 +139,12 @@ public:
 	/// <param name="_power">振動の強さ(0~1000)</param>
 	///	<param name="_timeFrame">振動時間(フレーム数)</param>
 	void ControlVibrationStartFrame(int _power, int _timeFrame);
+	/// <summary>
+	/// コントローラーの振動をストップする
+	/// </summary>
+	/// <param name="_power"></param>
+	/// <param name="_timeFrame"></param>
+	void StopControlVibrationStartFrame();
 
 	//何Pのコントローラーの情報を入手するかを設定する(何もしなかったら1P)
 	void SetControllerPlayer(ControllerPlayer _playerNumber) { playerNumber = _playerNumber; }

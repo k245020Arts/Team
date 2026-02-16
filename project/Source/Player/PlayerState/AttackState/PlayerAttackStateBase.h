@@ -37,6 +37,11 @@ public:
 	/// <returns>UŒ‚‚ª¶¬‚³‚ê‚Ä‚¢‚½‚çtrue</returns>
 	bool GetCollsionCreate() { return collsionCreate; }
 
+	/// <summary>
+	/// •KE‹Z‚ğ”­“®
+	/// </summary>
+	void SpecialAttackStart();
+
 protected:
 	float easingCount;
 	float beforeAngle;

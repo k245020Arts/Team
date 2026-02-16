@@ -74,7 +74,7 @@ void EnemyBase::Draw()
 	if (!lastTarget) {
 		return;
 	}
-	DrawCone3D(obj->GetTransform()->position + upPos, obj->GetTransform()->position + upPos + VECTOR3(0.0f,0.0f,50.0f) * MGetRotY(obj->GetTransform()->rotation.y), 20, 2, 0xffff00, 0xffff00, true);
+	DrawCone3D(obj->GetTransform()->position + upPos, obj->GetTransform()->position + upPos + VECTOR3(0.0f,0.0f,50.0f) * MGetRotY(obj->GetTransform()->rotation.y), 50, 2, 0xffff00, 0xffff00, true);
 }
 
 void EnemyBase::DrawTrail() {

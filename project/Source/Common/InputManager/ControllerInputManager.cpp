@@ -392,6 +392,11 @@ void ControllerInputManager::ControlVibrationStartFrame(int _power, int _timeFra
 	StartJoypadVibration(playerNumber, _power, _timeFrame * 1000 / 60);
 }
 
+void ControllerInputManager::StopControlVibrationStartFrame()
+{
+	StopJoypadVibration(playerNumber);
+}
+
 StickDirections ControllerInputManager::ReverceDirection(StickDirections _direction)
 {
 	StickDirections direction = S_NO_DIRECTION;

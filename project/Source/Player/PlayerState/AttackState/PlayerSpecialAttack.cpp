@@ -130,7 +130,7 @@ void PlayerSpecialAttack::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerAttackStateBase::Start();
-	//p->playerCom.anim->Play(ID::P_SPECIAL_ATTACK_BEFORE_ANIM);
+	p->playerCom.anim->Play(ID::P_ANIM_IDOL);
 	firstColl = true;
 	
 	//p->playerCom.camera->CutSceneChangeState("playerSpecialAttackBefore", CutSceneSpece::ALL_ENEMY);
@@ -199,7 +199,6 @@ void PlayerSpecialAttack::Start()
 
 	lineStart = p->specialAttackCenterPos + dir * radius;
 	lineEnd = p->specialAttackCenterPos - dir * radius;
-
 	moveCounter = 0.0f;
 	centerTo = true;
 
@@ -216,6 +215,7 @@ void PlayerSpecialAttack::Start()
 	attackDamage = false;
 	moveStart = false;
 	hitDamage = 200.0f;
+	p->specialAttackGuageMax = false;
 }
 
 void PlayerSpecialAttack::Finish()

@@ -35,8 +35,12 @@ EffectManager::EffectManager()
 	Load::LoadEffect("SpecialFinalAttack",			Effect_ID::PLAYER_SPECIAL_FINAL,50.0f);
 	Load::LoadEffect("PlayerSpecialAttackFlash",	Effect_ID::PLAYER_SPECIAL_FLASH,50.0f);
 	Load::LoadEffect("PlayerSpecialAttackCharge",	Effect_ID::PLAYER_SPECIAL_CHARGE,50.0f);
+	Load::LoadEffect("PlayerChargeFirstEffect",		Effect_ID::PLAYER_CHARGE_FIRST,50.0f);
+	Load::LoadEffect("PlayerChargeSecondEffect",	Effect_ID::PLAYER_CHARGE_SECOND,50.0f);
+	Load::LoadEffect("PlayerChargeFinalEffect",		Effect_ID::PLAYER_CHARGE_FINAL,50.0f);
+	Load::LoadEffect("specialAttackCan",			Effect_ID::PLAYER_SPECIAL_ATTACK_CAN,10.0f);
 	//Effekseer_SetGraphicsDeviceDXLib();
-	SetDrawOrder(-10000);
+	SetDrawOrder(-50000);
 }
 
 EffectManager::~EffectManager()

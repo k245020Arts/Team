@@ -51,7 +51,6 @@ void PlayerHeavyAttack::Update()
 		//攻撃の時に回避行動をいれたら回避状態に移行
 		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
 			//p->playerCom.player->AvoidReady();
-			nextAvoid = true;
 			//noStateChange = true;
 		}
 		//当たり判定がある間はスピードを早く
@@ -85,8 +84,31 @@ void PlayerHeavyAttack::Start()
 {
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
+	Player* p = GetBase<Player>();
 	chargeCount = 1.0f;
-	AgainTimerSet(0.2f, 5);
+	p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_HEAVY_CHARGE_CAMERA_S);
+	switch (p->attackLevel)
+	{
+	case Player::LEVEL1:
+		AgainTimerSet(0.2f, 0);
+		frontSpeed = 1000.0f;
+		hitDamage = 50.0f;
+		break;
+	case Player::LEVEL2:
+		AgainTimerSet(0.3f, 2);
+		frontSpeed = 2000.0f;
+		hitDamage = 150.0f;
+		break;
+	case Player::LEVEL3:
+		AgainTimerSet(0.1f, 6);
+		frontSpeed = 4000.0f;
+		hitDamage = 300.0f;
+		break;
+	default:
+		my_error_assert("チャージ攻撃のレベルがセットされていません");
+		break;
+	}
+	
 }
 
 void PlayerHeavyAttack::Finish()
