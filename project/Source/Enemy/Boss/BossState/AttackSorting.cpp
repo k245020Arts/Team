@@ -38,19 +38,20 @@ namespace {
 		StateID::State_ID id;
 		int priority;	//プライオリティ
 		int weight;		//重さ
+		int maxAction;	//連続で何回行動できるか
 	};
 	std::vector<ActionParam> actions =
 	{
-		{StateID::BOSS_WALK,					10, 40},
-		{StateID::BOSS_NORMAL_ATTACK1_S,		10, 10},
-		{StateID::BOSS_NORMAL_ATTACK2_S,		10, 10},
-		{StateID::BOSS_NORMAL_ATTACK3_S,		10, 10},
-		{StateID::BOSS_NORMAL_ATTACK4_S,		10, 10},
-		{StateID::BOSS_NORMAL_ATTACK5_S,		30, 10},
-		{StateID::BOSS_NORMAL_ATTACK6_S,		30, 10},
-		{StateID::BOSS_SPECIAL_ATTACK1_S,		50, 30},
-		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	50, 30},
-		{StateID::BOSS_SPECIAL_ATTACK2_S,		50, 30},
+		{StateID::BOSS_WALK,					10, 40, 0},
+		{StateID::BOSS_NORMAL_ATTACK1_S,		10, 10, 1},
+		{StateID::BOSS_NORMAL_ATTACK2_S,		10, 10, 1},
+		{StateID::BOSS_NORMAL_ATTACK3_S,		10, 10, 1},
+		{StateID::BOSS_NORMAL_ATTACK4_S,		10, 10, 1},
+		{StateID::BOSS_NORMAL_ATTACK5_S,		30, 10, 1},
+		{StateID::BOSS_NORMAL_ATTACK6_S,		30, 10, 1},
+		{StateID::BOSS_SPECIAL_ATTACK1_S,		50, 30, 1},
+		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	50, 30, 1},
+		{StateID::BOSS_SPECIAL_ATTACK2_S,		50, 30, 1},
 	};
 
 	//通常攻撃の重み
@@ -86,6 +87,10 @@ AttackSorting::AttackSorting()
 	kind		= 0;
 
 	bossPriority = 0;
+	copyPriority = 0;
+	moveCounter = 0;
+
+	copyState = StateID::STATE_MAX;
 }
 
 AttackSorting::~AttackSorting()
@@ -96,6 +101,9 @@ AttackSorting::~AttackSorting()
 void AttackSorting::Update()
 {
 	Boss* b = GetBase<Boss>();
+	coolTime += Time::DeltaTimeRate();
+	if (coolTime <= COOLTIME)
+		return;
 
 	if (b->maxAttack != -1)
 		b->enemyBaseComponent.state->ChangeState(comboOrder[kind][attackNum - b->maxAttack]);
@@ -161,11 +169,14 @@ void AttackSorting::Start()
 	}*/
 
 	b->comboFirstAttack = true;
+
+	coolTime = 0;
 }
 
 void AttackSorting::Finish()
 {
-
+	copyState = nextState;
+	moveCounter++;
 }
 
 void AttackSorting::NormalAttackSelect()
@@ -215,9 +226,22 @@ void AttackSorting::BuildTable(int _priority)
 	int totalWeight = 0;
 	for (auto& itr : actions)
 	{
+		if (itr.id == copyState)//一個前の行動と同じとき
+		{
+			if (itr.maxAction < moveCounter)//指定した行動
+			{
+				copyPriority = itr.priority;
+				itr.priority = 0;
+				continue;
+			}
+		}
+		else
+			moveCounter = 0;
+
 		if (itr.priority > _priority)
 			continue;
-		totalWeight += itr.weight;
+		else
+			totalWeight += itr.weight;
 	}
 
 	//打てる技の合計からランダムな数字をだす
@@ -225,6 +249,12 @@ void AttackSorting::BuildTable(int _priority)
 
 	for (auto& itr : actions)
 	{
+		if (itr.priority == 0)
+		{
+			itr.priority = copyPriority;
+			continue;
+		}
+
 		r -= itr.weight;
 		if (r < 0)
 		{

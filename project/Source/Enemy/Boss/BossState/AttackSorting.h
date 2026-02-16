@@ -14,7 +14,7 @@ public:
 	void Finish()override;
 
 private:
-	const float COOLTIME = 30.0f;
+	const float COOLTIME = 0.5f;
 
 	void NormalAttackSelect();
 	//int AttackPriority();
@@ -44,4 +44,8 @@ private:
 
 	int bossPriority;//
 	StateID::State_ID nextState;
+	StateID::State_ID copyState;
+
+	int copyPriority;
+	int moveCounter;
 };
