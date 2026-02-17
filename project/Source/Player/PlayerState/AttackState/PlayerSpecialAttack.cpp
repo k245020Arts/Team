@@ -106,7 +106,7 @@ void PlayerSpecialAttack::Draw()
 	//DrawSphere3D(p->specialAttackCenterPos, 10, 1, 0xffffff, 0xffffff, true);
 	float alpha = p->playerCom.meshRenderer2D->GetAlpha();
 	float add = alpha;
-	if (add >= 60) {
+	if (add >= 60.0f) {
 		add = 60.0f;
 	}
 

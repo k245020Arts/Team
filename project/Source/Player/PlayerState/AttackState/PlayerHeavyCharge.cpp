@@ -27,6 +27,7 @@ PlayerHeavyCharge::PlayerHeavyCharge()
 	defalutTrail	= false;
 	chargeFinish	= false;
 	baseFrequ		= 0;
+	maxCharge		= false;
 }
 
 PlayerHeavyCharge::~PlayerHeavyCharge()
@@ -43,7 +44,7 @@ void PlayerHeavyCharge::Update()
 		chargeCount -= Time::DeltaTimeRate();
 		if (chargeCount <= 0.0f) {
 			p->attackLevel = Player::LEVEL3;
-			p->playerCom.shaker->SetShakePower(VECTOR3(50, 50, 50));
+			p->playerCom.shaker->SetShakePower(VECTOR3(20, 20, 20));
 			p->playerCom.controller->ControlVibrationStartFrame(150, -1);
 			
 			if (!p->playerCom.effect->IsPlayIng(Effect_ID::PLAYER_CHARGE_FINAL)) {
@@ -53,10 +54,15 @@ void PlayerHeavyCharge::Update()
 			if (!p->playerCom.sound->CheckSe(Sound_ID::PLAYER_MAX_CHARGE)) {
 				p->playerCom.sound->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_MAX_CHARGE, 0, baseFrequ);
 			}
+			if (!maxCharge) {
+				maxCharge = true;
+				p->playerCom.sound->PlaySe(Sound_ID::PLAYER_CHARGE_END);
+				p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0,100,0),VZero,VOne), obj, Effect_ID::PLAYER_CHARGE_END, 1.0f);
+			}
 		}
 		else if (chargeCount <= 1.0f) {
 			p->attackLevel = Player::LEVEL2;
-			p->playerCom.shaker->SetShakePower(VECTOR3(30, 30, 30));
+			p->playerCom.shaker->SetShakePower(VECTOR3(10, 10, 10));
 			p->playerCom.controller->ControlVibrationStartFrame(100, -1);
 			if (!p->playerCom.effect->IsPlayIng(Effect_ID::PLAYER_CHARGE_SECOND)) {
 				p->playerCom.effect->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_SECOND, 1.0f);
@@ -94,7 +100,8 @@ void PlayerHeavyCharge::Start()
 	//p->playerCom.sound->PlaySe(Sound_ID::PLAYER_CHARGE);
 	baseFrequ = 50000;
 	chargeFinish = false;
-	p->playerCom.shaker->ShakeStart(VECTOR3(10, 10, 10), Shaker::MIX_SHAKE, false, -1);
+	p->playerCom.shaker->ShakeStart(VECTOR3(5, 5, 5), Shaker::MIX_SHAKE, false, -1);
+	maxCharge = false;
 	p->attackLevel = Player::LEVEL1;
 	p->playerCom.controller->ControlVibrationStartFrame(50, -1);
 	p->playerCom.effect->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FIRST, 1.0f);
@@ -108,4 +115,6 @@ void PlayerHeavyCharge::Finish()
 	p->playerCom.anim->AnimEventReset();
 	p->charge = false;
 	p->playerCom.camera->ChangeStateCamera(StateID::FREE_CAMERA_S);
+	p->playerCom.shaker->ShakeFinish();
+	p->playerCom.controller->StopControlVibrationStartFrame();
 }

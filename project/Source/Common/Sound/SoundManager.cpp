@@ -118,6 +118,7 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_BEFORE, "BossBefore", ".wav", 100);
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_CHARGE, "PlayerCharge", ".wav", 150);
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_MAX_CHARGE, "PlayerMaxCharge", ".wav", 180);
+	SoundLoad(Sound_ID::SOUND_ID::PLAYER_CHARGE_END, "PlayerChargeEnd", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_BOM, "PlayerSpecialAttackBom", ".wav", 200);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK2, "p_walk2", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK3, "p_walk3", ".wav", 255);

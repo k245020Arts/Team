@@ -24,6 +24,7 @@ BootScene::BootScene()
 	//Load::SetAsync(false);
 	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL, true);
 	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL, true);
+
 }
 
 BootScene::~BootScene()

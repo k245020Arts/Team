@@ -252,6 +252,7 @@
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\AttackSorting.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossHalfSpecialAttack.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack1.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack2.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack3.h" />
@@ -440,6 +441,7 @@
     <ClCompile Include="Source\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossHalfSpecialAttack.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack1.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack2.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack3.cpp" />

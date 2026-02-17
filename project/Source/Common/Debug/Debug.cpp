@@ -17,6 +17,7 @@ namespace {
 	bool rayColliderDraw;
 	InputManager* inputManager;
 	bool debug;
+	bool mouse;
 }
 
 void Debug::CreateMessageBox(const std::string& _error, const std::string& _title)
@@ -41,9 +42,10 @@ void Debug::InitDebug(InputManager* _input)
 
 #ifdef _DEBUG
 	debug = false;
+	mouse = true;
 #else
 	debug = false;
-
+	mouse = false;
 #endif
 }
 
@@ -69,6 +71,7 @@ void Debug::InitDebug(InputManager* _input)
 
 void Debug::DebugUpdate()
 {
+	MouseDrawUpdate();
 #ifdef _DEBUG
 	if (inputManager->KeyInputDown("debugChange")) {
 		debug = !debug;
@@ -216,4 +219,12 @@ void Debug::DrawMemory()
 		ImGui::TreePop();
 	}
 	
+}
+
+void Debug::MouseDrawUpdate()
+{
+	SetMouseDispFlag(mouse);
+	if (inputManager->KeyInputDown("Mouse")) {
+		mouse = !mouse;
+	}
 }

@@ -126,17 +126,17 @@ int Load::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id, 
     return targetLoad[name].handle;
 }
 
-int Load::LoadEffect(std::string path, Effect_ID::EFFECT_ID id, float size) {
-    return LoadEffect(path, id, size, false);
+int Load::LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size) {
+    return LoadEffect(path, _exten, id,size, false);
 }
 
 
-int Load::LoadEffect(std::string path, Effect_ID::EFFECT_ID id, float size, bool _common) {
+int Load::LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad;
 
     if (targetLoad[name].handle == -1) {
-        std::string loadName = Load::EFFECT_PATH + path + ".efkefc";
+        std::string loadName = Load::EFFECT_PATH + path + _exten;
         targetLoad[name].handle = LoadEffekseerEffect(loadName.c_str(), size);
         targetLoad[name].type = Type::EFFECT;
         Effect_ID::SetEffectID(path, id);

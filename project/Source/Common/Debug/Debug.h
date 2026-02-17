@@ -104,4 +104,8 @@ namespace Debug {
 		OutputDebugStringA(buf);
 		OutputDebugStringA("\n");
 	}
+	/// <summary>
+	/// マウスの表示、非表示を管理
+	/// </summary>
+	void MouseDrawUpdate();
 }

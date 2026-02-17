@@ -1,0 +1,19 @@
+#pragma once
+#include "BossAttackBase.h"
+
+class BossHalfSpecialAttack : public BossAttackBase
+{
+public:
+	BossHalfSpecialAttack();
+	~BossHalfSpecialAttack();
+
+	void Update()override;
+	void Draw()override;
+
+	void Start()override;
+	void Finish()override;
+
+
+private:
+
+};

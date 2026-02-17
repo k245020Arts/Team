@@ -52,7 +52,7 @@ namespace Load {
 	/// <param name="id">設定するID</param>
 	/// <param name="size">エフェクトの大きさ</param>
 	/// <returns>エフェクトデータ</returns>
-	int LoadEffect(std::string path, Effect_ID::EFFECT_ID id, float size);
+	int LoadEffect(std::string path, std::string _exten,Effect_ID::EFFECT_ID id, float size);
 	/// <summary>
 	/// エフェクトのロードをする
 	/// </summary>
@@ -61,7 +61,7 @@ namespace Load {
 	/// <param name="size">エフェクトの大きさ</param>
 	/// <param name="_common">コモンデータに入れるかどうかtrueなら入れる</param>
 	/// <returns>エフェクトデータ</returns>
-	int LoadEffect(std::string path, Effect_ID::EFFECT_ID id, float size, bool _common);
+	int LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size, bool _common);
 	/// <summary>
 	/// 画像のロードをする
 	/// </summary>
