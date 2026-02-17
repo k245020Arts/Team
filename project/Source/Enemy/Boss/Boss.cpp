@@ -27,6 +27,7 @@
 #include  "../Boss/BossState/Attack/BossSpecialAttack1.h"
 #include  "../Boss/BossState/Attack/BossSpecialSmallAttack1.h"
 #include  "../Boss/BossState/Attack/BossSpecialAttack2.h"
+#include  "../Boss/BossState/Attack/BossHalfSpecialAttack.h"
 #include "../TrashEnemy/EnemyState/EnemyDamage.h"
 #include "../../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
 #include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
@@ -255,6 +256,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossDamage>("BossDamage", StateID::BOSS_DAMAGE_S);
 	enemyBaseComponent.state->CreateState<BossAppear>("BossAppear", StateID::BOSS_APPEAR_S);
 	enemyBaseComponent.state->CreateState<BossLose>("BossLose", StateID::BOSS_LOSE_S);
+	enemyBaseComponent.state->CreateState<BossHalfSpecialAttack>("BossHalfAttack", StateID::BOSS_HALF_ATTACK_S);
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 

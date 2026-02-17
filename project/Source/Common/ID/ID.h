@@ -103,7 +103,9 @@ namespace ID {
 		P_LEG_UP,
 		P_HEAVY_ATTACK,
 		P_HEAVY_CHARGE,
-
+		ROCK_1,
+		ROCK_2,
+		ROCK_3,
 
 		ID_MAX,
 	};

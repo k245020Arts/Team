@@ -47,6 +47,7 @@ namespace StateID{
         BOSS_DAMAGE_S,
         BOSS_APPEAR_S,
         BOSS_LOSE_S,
+        BOSS_HALF_ATTACK_S,
 
         FOLLOW_CAMERA_S,
         JUST_AVOID_CAMERA_S,

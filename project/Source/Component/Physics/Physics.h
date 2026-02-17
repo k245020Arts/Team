@@ -14,19 +14,19 @@ public:
 	~Physics();
 	void Update()override;
 	void Draw()override;
-	void Start(VECTOR3 _gravityAmout,VECTOR3 _fir);
+	void Start(const VECTOR3& _gravityAmout, const VECTOR3& _fir);
 
 	/// <summary>
 	/// velocityのセット
 	/// </summary>
 	/// <param name="_addVelocity">追加するベロシティ</param>
 	/// <param name="_deltaTime">毎フレームAddVelocityをするならこれをtrueにする</param>
-	void AddVelocity(VECTOR3 _addVelocity, bool _deltaTime);
+	void AddVelocity(const VECTOR3& _addVelocity, bool _deltaTime);
 	/// <summary>
 	/// velocityのセット
 	/// </summary>
 	/// <param name="_velocity">セットするvelocity</param>
-	void SetVelocity(VECTOR3 _velocity) { velocity = _velocity; }
+	void SetVelocity(const VECTOR3& _velocity) { velocity = _velocity; }
 
 	
 	/*void AddInterect(VECTOR3 _addInterect, float  _firctionCoeffocoent);
@@ -35,12 +35,12 @@ public:
 	/// 空気抵抗をセットする
 	/// </summary>
 	/// <param name="_setFirction">セットする空気抵抗</param>
-	void SetFirction(VECTOR3 _setFirction);
+	void SetFirction(const VECTOR3& _setFirction);
 	/// <summary>
 	/// 空気抵抗をセットする
 	/// </summary>
 	/// <param name="_setFirction">加算する空気抵抗</param>
-	void AddFirction(VECTOR3 _addFirction);
+	void AddFirction(const VECTOR3& _addFirction);
 	
 	/// <summary>
 	/// 重力の取得
@@ -51,12 +51,12 @@ public:
 	/// 重力をセットする
 	/// </summary>
 	/// <param name="_setGravity">セットする重力</param>
-	void SetGravity(VECTOR3 _setGravity);
+	void SetGravity(const VECTOR3& _setGravity);
 	/// <summary>
 	/// 重力をセットする
 	/// </summary>
 	/// <param name="_setGravity">加算する重力</param>
-	void AddGravity(VECTOR3 _addGraivty);
+	void AddGravity(const VECTOR3& _addGraivty);
 	/// <summary>
 	/// 空気抵抗の取得
 	/// </summary>
@@ -78,7 +78,7 @@ public:
 	/// ポジションを足す
 	/// </summary>
 	/// <param name="_pos">プラスするポジション</param>
-	void AddPosition(VECTOR3 _pos) { currentTransform->position += _pos; }
+	void AddPosition(const VECTOR3& _pos) { currentTransform->position += _pos; }
 
 	/// <summary>
 	/// 地面についていたらtrue

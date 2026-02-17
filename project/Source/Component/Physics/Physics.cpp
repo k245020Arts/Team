@@ -74,7 +74,7 @@ void Physics::Draw()
 	DrawLine3D(pos, pos + (velocity * obj->GetObjectTimeRate()), 0xff0000);
 }
 
-void Physics::Start(VECTOR3 _gravityAmout, VECTOR3 _fir)
+void Physics::Start(const VECTOR3& _gravityAmout, const VECTOR3& _fir)
 {
 	currentTransform = obj->GetTransform();
 	lastTransform = new Transform(VECTOR3(0,0,0),VZero,VZero);
@@ -84,7 +84,7 @@ void Physics::Start(VECTOR3 _gravityAmout, VECTOR3 _fir)
 	transitor = FindGameObject<TransitorManager>();
 }
 
-void Physics::AddVelocity(VECTOR3 _addVelocity, bool _deltaTime)
+void Physics::AddVelocity(const VECTOR3& _addVelocity, bool _deltaTime)
 {
 	VECTOR3 add = _addVelocity;
 	if (_deltaTime) {
@@ -93,22 +93,22 @@ void Physics::AddVelocity(VECTOR3 _addVelocity, bool _deltaTime)
 	velocity += add;
 }
 
-void Physics::SetFirction(VECTOR3 _setFirction)
+void Physics::SetFirction(const VECTOR3& _setFirction)
 {
 	firction = _setFirction;
 }
 
-void Physics::AddFirction(VECTOR3 _addFirction)
+void Physics::AddFirction(const VECTOR3& _addFirction)
 {
 	firction += _addFirction;
 }
 
-void Physics::SetGravity(VECTOR3 _setGravity)
+void Physics::SetGravity(const VECTOR3& _setGravity)
 {
 	gravity = _setGravity;
 }
 
-void Physics::AddGravity(VECTOR3 _addGraivty)
+void Physics::AddGravity(const VECTOR3& _addGraivty)
 {
 	gravity += _addGraivty;
 }

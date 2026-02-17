@@ -20,7 +20,7 @@ public:
 	/// </summary>
 	/// <param name="_dist">プレイヤーと地面の距離</param>
 	/// <param name="_groundPos">地面の位置</param>
-	void ChangeScale(VECTOR3 _dist, VECTOR3 _groundPos);
+	void ChangeScale(const VECTOR3& _dist, const VECTOR3& _groundPos);
 
 	/// <summary>
 	/// 影の大きさがゼロになる距離の値を取得

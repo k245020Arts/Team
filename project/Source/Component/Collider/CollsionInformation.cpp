@@ -23,6 +23,8 @@ void CollsionInformation::InitSetPair()
     SetPair(FLOOR, SHADOW);
     SetPair(PLAYER, B_E_ATTACK);
     SetPair(PLAYER, E_ATTACK);
+    SetPair(PLAYER, BOSS_ROCK);
+    SetPair(BOSS, BOSS_ROCK);
     SetPair(PLAYER, WALL);
     //SetPair(CAMERA, FLOOR);
     SetPair(ENEMY, P_ATTACK);
@@ -34,6 +36,7 @@ void CollsionInformation::InitSetPair()
     SetPair(FLOOR, E_FLOOR);
     SetPair(FLOOR, C_FLOOR);
     SetPair(FLOOR, B_FLOOR);
+    SetPair(FLOOR, BOSS_ROCK_F);
     SetPair(P_SPECIAL_ATTACK, BOSS);
     SetPair(P_SPECIAL_ATTACK, ENEMY);
 }

@@ -41,7 +41,7 @@ void Shaker::Draw()
 {
 }
 
-void Shaker::ShakeStart(VECTOR3 _power, ShakePattern _pattern, float rok, float _second)
+void Shaker::ShakeStart(const VECTOR3& _power, ShakePattern _pattern, float rok, float _second)
 {
 	if (!Debug::ShakeStop()) {
 		return;
@@ -61,7 +61,7 @@ void Shaker::ShakeStart(VECTOR3 _power, ShakePattern _pattern, float rok, float 
 	shakePos = VZero;
 }
 
-void Shaker::ShakeStart(VECTOR3 _power, ShakePattern _pattern, float rok, float _second, Transform* _baseTransform)
+void Shaker::ShakeStart(const VECTOR3& _power, ShakePattern _pattern, float rok, float _second, Transform* _baseTransform)
 {
 	if (!Debug::ShakeStop()) {
 		return;
@@ -83,17 +83,17 @@ void Shaker::ShakeStart(VECTOR3 _power, ShakePattern _pattern, float rok, float 
 	}
 }
 
-void Shaker::SetShakePower(VECTOR3 _power)
+void Shaker::SetShakePower(const VECTOR3& _power)
 {
 	power = _power;
 }
 
-void Shaker::AddShakePower(VECTOR3 _power)
+void Shaker::AddShakePower(const VECTOR3& _power)
 {
 	power += _power;
 }
 
-VECTOR3 Shaker::GetShake(VECTOR3 _shake)
+VECTOR3 Shaker::GetShake(const VECTOR3& _shake)
 {
 	return  _shake * (GetRand(66535) - 66535 / 2.0f) / (65535 / 2.0f);
 }

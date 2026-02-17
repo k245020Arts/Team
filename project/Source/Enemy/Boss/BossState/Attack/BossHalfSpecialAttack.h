@@ -15,5 +15,6 @@ public:
 
 
 private:
-
+	float rockCreateCounter;
+	bool oneCreate;
 };

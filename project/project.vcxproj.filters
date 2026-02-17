@@ -531,6 +531,9 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossHalfSpecialAttack.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRock.cpp">
+      <Filter>Component\EnemyAttackObject\BossRock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1121,6 +1124,9 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossHalfSpecialAttack.h">
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRock.h">
+      <Filter>Component\EnemyAttackObject\BossRock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1320,6 +1326,9 @@
     </Filter>
     <Filter Include="Common\Fead">
       <UniqueIdentifier>{e9433428-080b-400a-8d9e-62d766c3b662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\EnemyAttackObject\BossRock">
+      <UniqueIdentifier>{d19ebe7e-2ebc-4a85-9c91-fb553f062ca8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

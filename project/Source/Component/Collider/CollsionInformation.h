@@ -36,6 +36,8 @@ namespace CollsionInformation {
 		B_E_ATTACK,
 		P_SPECIAL_ATTACK,
 		BOSS_PUSH,
+		BOSS_ROCK,
+		BOSS_ROCK_F,
 
 		TAG_MAX,
 	};

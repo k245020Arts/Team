@@ -38,7 +38,7 @@ void Shadow::Start()
     baseScale = obj->GetTransform()->scale;
 }
 
-void Shadow::ChangeScale(VECTOR3 _dist, VECTOR3 _groundPos)
+void Shadow::ChangeScale(const VECTOR3& _dist, const VECTOR3& _groundPos)
 {
 	float base = baseScale.x;
 	float d = _dist.y;

@@ -29,7 +29,7 @@ public:
 	/// <param name="rok">trueにするとヒットストップになってアニメーションとかも全部止まるようになる。falseにすると普通に動く</param>
 	/// <param name="_second">秒数</param>
 	/// <param name="_baseTransform">自身のtransform(obj->GetTransform())を使うのではなく、別のtransformを使いたいときはこれを書く。</param>
-	void ShakeStart(VECTOR3 _power,ShakePattern _pattern,float rok,float _second);
+	void ShakeStart(const VECTOR3& _power,ShakePattern _pattern,float rok,float _second);
 	/// <summary>
 	/// シェイクを始めたいときに呼ぶとshakeが出来る。
 	/// </summary>
@@ -38,18 +38,18 @@ public:
 	/// <param name="rok">trueにするとヒットストップになってアニメーションとかも全部止まるようになる。falseにすると普通に動く</param>
 	/// <param name="_second">秒数</param>
 	/// <param name="_baseTransform">自身のtransform(obj->GetTransform())を使うのではなく、別のtransformを使いたいときはこれを書く。</param>
-	void ShakeStart(VECTOR3 _power,ShakePattern _pattern,float rok,float _second,Transform* _baseTransform);
+	void ShakeStart(const VECTOR3& _power,ShakePattern _pattern,float rok,float _second,Transform* _baseTransform);
 	
 	/// <summary>
 	/// shakeの強さをセットっする
 	/// </summary>
 	/// <param name="_power">振動のパワー</param>
-	void SetShakePower(VECTOR3 _power);
+	void SetShakePower(const VECTOR3& _power);
 	/// <summary>
 	/// shakeの強さを足していく
 	/// </summary>
 	/// <param name="_power">振動の追加パワー</param>
-	void AddShakePower(VECTOR3 _power);
+	void AddShakePower(const VECTOR3& _power);
 	
 	/// <summary>
 	/// 振動の終了
@@ -96,7 +96,7 @@ private:
 	bool stop;
 
 	void ShakePower();
-	VECTOR3 GetShake(VECTOR3 _shake);
+	VECTOR3 GetShake(const VECTOR3& _shake);
 
 	VECTOR3 shakePos;
 
