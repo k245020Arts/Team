@@ -517,5 +517,6 @@ void PlayerSpecialAttack::FinalAttackUpdate()
 		p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos + VECTOR3(0.0f,150.0f,0.0f), VECTOR3(0.0f, 0.0f, 180.0f * DegToRad), VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_FINAL, 1.5f);
 		//p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_SPECIAL_FINAL, 1.0f);
 		attackDamage = true;
+		p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_BOM);
 	}
 }

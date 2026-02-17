@@ -11,6 +11,7 @@ UIManager::UIManager()
 	Load::LoadImageGraph(Load::IMAGE_PATH + "Mark_Avoid", ID::A_BUTTON);
 	Load::LoadImageGraph(Load::IMAGE_PATH + "Mark_Normal", ID::B_BUTTON);
 	Load::LoadImageGraph(Load::IMAGE_PATH + "Mark_Special", ID::X_BUTTON);
+	Load::LoadImageGraph(Load::IMAGE_PATH + "Mark_Heavy", ID::Y_BUTTON);
 	Load::LoadImageGraph(Load::IMAGE_PATH + "Number_01", ID::DAMAGE_UI_BUTTON);
 	draw = true;
 }
@@ -57,6 +58,12 @@ void UIManager::ButtonUISet()
 	ButtonUI* c = xbutton->Component()->AddComponent<ButtonUI>();
 	c->Start(ButtonUI::X_BUTTON, Load::GetHandle(ID::X_BUTTON));
 	xbutton->SetDrawOrder(-1000);
+
+	Object2D* ybutton = new Object2D();
+	ybutton->Init(Transform(VECTOR3(1650, 800, 0), VZero, VOne), "YButton");
+	ButtonUI* y = ybutton->Component()->AddComponent<ButtonUI>();
+	y->Start(ButtonUI::Y_BUTTON, Load::GetHandle(ID::Y_BUTTON));
+	ybutton->SetDrawOrder(-1000);
 }
 
 void UIManager::UIPush(BaseObject* _base)

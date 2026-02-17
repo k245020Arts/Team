@@ -250,6 +250,7 @@ void PlayerAttackStateBase::AttackCollsion()
 		if (firstColl) {
 			firstColl = false;
 			BaseAttackCollsion();
+			p->playerCom.sound->RandamSe("swordWind", 5);
 		}
 	}
 }
@@ -271,6 +272,6 @@ void PlayerAttackStateBase::BaseAttackCollsion()
 	Player* p = GetBase<Player>();
 	p->playerCom.player->CollsionStart<SphereCollider>(CollsionInformation::SPHERE, collTrans);
 	p->playerCom.player->SetShape(CollsionInformation::SPHERE);
-	p->playerCom.sound->RandamSe("swordWind", 5);
+	
 	collsionCreate = true;
 }

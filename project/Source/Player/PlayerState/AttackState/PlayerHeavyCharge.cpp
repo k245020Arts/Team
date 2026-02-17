@@ -15,19 +15,18 @@
 
 PlayerHeavyCharge::PlayerHeavyCharge()
 {
-	string = Function::GetClassNameC<PlayerHeavyCharge>();
-	//id = ID::P_ANIM_ATTACK1;
-	nextAttack = false;
-	animId = ID::P_HEAVY_CHARGE;
-	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
-	nextAttackID = StateID::PLAYER_HEAVY_ATTACK_S;
-	frontSpeed = 5500.0f;
-	//frontSpeed		= 0.0f;
-	time = 0.0f;
-	hitDamage = 30.0f;
-	chargeCount = 0.0f;
-	defalutTrail = false;
-	chargeFinish = false;
+	string			= Function::GetClassNameC<PlayerHeavyCharge>();
+	nextAttack		= false;
+	animId			= ID::P_HEAVY_CHARGE;
+	collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
+	nextAttackID	= StateID::PLAYER_HEAVY_ATTACK_S;
+	frontSpeed		= 5500.0f;
+	time			= 0.0f;
+	hitDamage		= 30.0f;
+	chargeCount		= 0.0f;
+	defalutTrail	= false;
+	chargeFinish	= false;
+	baseFrequ		= 0;
 }
 
 PlayerHeavyCharge::~PlayerHeavyCharge()
@@ -39,9 +38,7 @@ void PlayerHeavyCharge::Update()
 	Player* p = GetBase<Player>();
 	//AttackCollsion();
 	PlayerAttackStateBase::Update();
-	if (!p->playerCom.sound->CheckSe(Sound_ID::PLAYER_CHARGE)) {
-		p->playerCom.sound->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_CHARGE, 0, baseFrequ);
-	}
+	
 	if (p->playerCom.InputManager->KeyInput("heavyAttack")) {
 		chargeCount -= Time::DeltaTimeRate();
 		if (chargeCount <= 0.0f) {
@@ -52,7 +49,10 @@ void PlayerHeavyCharge::Update()
 			if (!p->playerCom.effect->IsPlayIng(Effect_ID::PLAYER_CHARGE_FINAL)) {
 				p->playerCom.effect->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FINAL, 1.0f);
 			}
-			baseFrequ = 100000;
+			baseFrequ = 90000;
+			if (!p->playerCom.sound->CheckSe(Sound_ID::PLAYER_MAX_CHARGE)) {
+				p->playerCom.sound->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_MAX_CHARGE, 0, baseFrequ);
+			}
 		}
 		else if (chargeCount <= 1.0f) {
 			p->attackLevel = Player::LEVEL2;
@@ -62,6 +62,9 @@ void PlayerHeavyCharge::Update()
 				p->playerCom.effect->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_SECOND, 1.0f);
 			}
 			baseFrequ = 80000;
+			if (!p->playerCom.sound->CheckSe(Sound_ID::PLAYER_CHARGE)) {
+				p->playerCom.sound->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_CHARGE, 0, baseFrequ);
+			}
 		}
 		
 	}
