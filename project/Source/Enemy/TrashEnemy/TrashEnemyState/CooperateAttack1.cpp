@@ -12,6 +12,7 @@ CooperateAttack1::CooperateAttack1()
 	damage.damagePattern = BossAttackBase::BACK;
 
 	damage.hitDamage = 30;
+	time = 0;
 }
 
 CooperateAttack1::~CooperateAttack1()
@@ -23,6 +24,10 @@ void CooperateAttack1::Update()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
 	AttackInformation(e);
+	time += Time::DeltaTimeRate();
+
+	if (time >= 1)
+		e->isCooperateAtk = false;
 }
 
 void CooperateAttack1::Start()

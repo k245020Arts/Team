@@ -529,7 +529,6 @@ void TrashEnemy::CooperateAtkFinish()
 {
 	isCooperateAtk = false;
 	isMovingToPlayer = false;
-	isMovingToPlayer = false;
 	
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_IDOL_S);
 }

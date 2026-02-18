@@ -84,6 +84,7 @@ void Standby::Start()
 	
 	if (e->isCooperateAtk)
 		e->isMovingToPlayer = true;
+		
 	/*else
 		e->isAttack = true;*/
 

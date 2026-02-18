@@ -15,4 +15,5 @@ private:
 	VECTOR3 velocity;
 
 	float speed;
+	float time;
 };
