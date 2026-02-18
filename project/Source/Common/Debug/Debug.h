@@ -81,6 +81,8 @@ namespace Debug {
 	bool RayColliderDraw();
 	void DrawMemory();
 
+	bool UIDraw();
+
 	//printfのエスケープシーケンスの文字列をデバックログで出したいときに使う関数。
 	inline const TCHAR* printfString(const TCHAR* _format, ...) {
 		static TCHAR strPrintf[1024];

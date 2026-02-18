@@ -130,9 +130,9 @@ void PlayerAttackStateBase::Start()
 		p->attackTargetTrans				= nearEnemyPos;
 		//p->attackTargetTrans.position = VECTOR3(0, 0, 1) * p->playerTransform->rotation;
 	}
-	if (!p->playerCom.enemyManager->CameraInEnemy()) {
+	/*if (!p->playerCom.enemyManager->CameraInEnemy()) {
 		p->playerCom.camera->AttackEnemyFovChange(&p->attackTargetTrans,1000.0f);
-	}
+	}*/
 	
 	AgainTimerSet(100.0f, 0);
 	//“G‚ÆƒvƒŒƒCƒ„[‚Ì‹——£‚ğ‚Æ‚é

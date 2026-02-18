@@ -109,8 +109,8 @@ void PlayerJustAvoid::Update()
 	//Žc‘œ‚ð•t‚¯‚é
 	if (p->playerCom.anim->AnimEventCan()) {
 		
-		if (num % 30 == 0) {
-			p->playerCom.blur->MosionStart(0.3f, 0.04f, animId, 1);
+		if (num % 5 == 0) {
+			p->playerCom.blur->MosionStart(0.4f, 0.06f, animId, 1);
 			
 			volume -= 40.0f;
 			if (volume <= 120.0f) { //volume‚ªˆê’è—Ê‰º‰ñ‚Á‚½‚ç‚à‚¤ˆê‰ñ—¬‚·

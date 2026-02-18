@@ -2,27 +2,27 @@
   "cutScenes": {
     "cutScene0": {
       "camera": {
-        "endPos": {
+        "endPos": {     // 到着地点
           "x": -1000.0,
           "y": 0.0,
           "z": 1000.0
         },
-        "startPos": {
+        "startPos": {   // 開始地点
           "x": 1000.0,
           "y": 0.0,
           "z": 1000.0
         },
-        "target": {
+        "target": {     // 注視点のオフセット
           "x": 0.0,
           "y": 400.0,
           "z": 0.0
         }
       },
-      "duration": 1.0,
-      "ease": "InOut",
-      "firstPosBaseName": "World",
-      "followPos": "Player",
-      "followTarget": "Player"
+      "duration": 1.0,              // 何秒で終了地点に達するか
+      "ease": "InOut",              // Easingのタイプの種類
+      "firstPosBaseName": "World",  // 最初の基準点
+      "followPos": "Player",        // どのオブジェクトに追従するか(座標)
+      "followTarget": "Player"      // どのオブジェクトに追従するか(注視点)
     },
     "cutScene1": {
       "camera": {

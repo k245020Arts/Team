@@ -4,6 +4,7 @@
 #include "../../Transform/Transform.h"
 #include "../../ComponentManager.h"
 #include "../../../Common/LoadManager.h"
+#include "../../../Common/Debug/Debug.h"
 
 UIManager::UIManager()
 {
@@ -27,7 +28,7 @@ void UIManager::Update()
 
 void UIManager::Draw()
 {
-	if (!draw) {
+	if (!draw || !Debug::UIDraw()) {
 		return;
 	}
 	

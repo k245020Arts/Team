@@ -18,6 +18,7 @@ namespace {
 	InputManager* inputManager;
 	bool debug;
 	bool mouse;
+	bool uiDraw;
 }
 
 void Debug::CreateMessageBox(const std::string& _error, const std::string& _title)
@@ -39,6 +40,7 @@ void Debug::InitDebug(InputManager* _input)
 	inputManager		= _input;
 
 	logger.clear();
+	uiDraw = true;
 
 #ifdef _DEBUG
 	debug = false;
@@ -119,6 +121,9 @@ void Debug::DebugUpdate()
 			}
 			if (ImGui::Button("rayColliderDraw")) {
 				rayColliderDraw = !rayColliderDraw;
+			}
+			if (ImGui::Button("UiDraw")) {
+				uiDraw = !uiDraw;
 			}
 			ImGui::TreePop();
 		}
@@ -219,6 +224,11 @@ void Debug::DrawMemory()
 		ImGui::TreePop();
 	}
 	
+}
+
+bool Debug::UIDraw()
+{
+	return uiDraw;
 }
 
 void Debug::MouseDrawUpdate()
