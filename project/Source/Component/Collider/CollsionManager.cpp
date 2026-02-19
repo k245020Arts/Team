@@ -9,6 +9,7 @@
 #include "../Physics/Physics.h"
 #include "rayCollider.h"
 #include "DountCollider.h"
+#include "AABBCollider.h"
 #include "../Shadow/Shadow.h"
 
 static int plus = 0;
@@ -22,6 +23,7 @@ CollsionManager::CollsionManager()
 	collsionKind[EnumTag(SPHERE ,MODEL,SHAPE_MAX)] = &CollsionManager::CollsionSphereToModel;
 	collsionKind[EnumTag(SPHERE, DONUT,SHAPE_MAX)] = &CollsionManager::CollsionSphereToDount;
 	collsionKind[EnumTag(MODEL ,RAY,SHAPE_MAX)] = &CollsionManager::CollsionModelToRay;
+	collsionKind[EnumTag(RAY ,AABB,SHAPE_MAX)] = &CollsionManager::CollsionAABBToRay;
 	collList.clear();
 
 	event = new CollsionEvent();
@@ -62,8 +64,9 @@ void CollsionManager::Update()
 			if (kind == nullptr) {
 				continue;
 			}
-			Pushback resolver;
-			hit = (this->*kind)((*itr1), (*itr2),resolver);
+			Pushback resolver = Pushback();
+			VECTOR3 hitPos = VZero;
+			hit = (this->*kind)((*itr1), (*itr2),resolver,hitPos);
 			if (!hit) {
 				continue;
 			}
@@ -73,7 +76,7 @@ void CollsionManager::Update()
 			if ((*itr2)->GetOneColl()) {
 				(*itr2)->CollsionFinish();
 			}
-			event->Event((*itr1), (*itr2),resolver);
+			event->Event((*itr1), (*itr2),resolver, hitPos);
 		}
 	}
 }
@@ -103,7 +106,7 @@ void CollsionManager::RemoveCollList(ColliderBase* obj)
 	}
 }
 
-bool CollsionManager::CollsionSphereToSphere(ColliderBase* col1, ColliderBase* col2, Pushback& resolver)
+bool CollsionManager::CollsionSphereToSphere(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
 {
 	Transform* trans1 = col1->GetTransform();
 	Transform* trans2 = col2->GetTransform();
@@ -117,7 +120,7 @@ bool CollsionManager::CollsionSphereToSphere(ColliderBase* col1, ColliderBase* c
 	return false;
 }
 
-bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver)
+bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
 {
 	//Transform* trans1 = col1->GetTransform();
 	//Transform* trans2 = col2->GetTransform();
@@ -190,7 +193,7 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 
 }
 
-bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2, Pushback& resolver)
+bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
 {
 	Transform* trans1 = col1->GetTransform();
 	Transform* trans2 = col2->GetTransform();
@@ -225,7 +228,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 
 }
 
-bool CollsionManager::CollsionSphereToDount(ColliderBase* col1, ColliderBase* col2, Pushback& resolver)
+bool CollsionManager::CollsionSphereToDount(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
 {
 	Transform* trans1 = col1->GetTransform();
 	Transform* trans2 = col2->GetTransform();
@@ -240,4 +243,66 @@ bool CollsionManager::CollsionSphereToDount(ColliderBase* col1, ColliderBase* co
 	}
 
 	return false;
+}
+
+bool CollsionManager::CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
+{
+	Transform* rayStartTrans = col1->GetTransform();  // レイの始点
+	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col1)->Get2Transform(); // レイの終点
+
+	// レイの開始点と終了点(ワールド座標)
+	VECTOR3 startPos = rayStartTrans->WorldTransform().position;
+	VECTOR3 endPos = rayEndTrans->WorldTransform().position;
+
+	VECTOR3 dir = endPos - startPos; // 方向ベクトル
+	dir = dir.Normalize();
+
+	AABBCollider::AABBInfo box = dynamic_cast<AABBCollider*>(col2)->GetAABBInfo();
+
+	float tMin = 0.0f;
+	float tMax = 20000.0f;
+
+	for (int i = 0; i < 3; ++i)
+	{
+		float o = ((float*)&startPos)[i];
+		float d = ((float*)&dir)[i];
+		float min = ((float*)&box.boxMin)[i];
+		float max = ((float*)&box.boxMax)[i];
+
+		if (fabs(d) < 0.000001f)
+		{
+			// レイがこの軸に平行
+			if (o < min || o > max)
+				return false;
+		}
+		else
+		{
+			float inv = 1.0f / d;
+			float t1 = (min - o) * inv;
+			float t2 = (max - o) * inv;
+
+			if (t1 > t2)
+				std::swap(t1, t2);
+
+			tMin = max(tMin, t1);
+			tMax = min(tMax, t2);
+
+			if (tMin > tMax)
+				return false;
+		}
+	}
+
+	if (tMax < 0.0f)
+		return false;
+
+	float hitT = tMin;
+
+	//もしレイの始点が箱の中にある場合
+	if (hitT < 0.0f)
+		hitT = tMax;
+
+	_hitPos = startPos + dir * hitT;
+	Debug::DebugLog("AABBHit");
+
+	return true;
 }

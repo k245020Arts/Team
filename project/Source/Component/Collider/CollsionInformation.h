@@ -38,6 +38,11 @@ namespace CollsionInformation {
 		BOSS_PUSH,
 		BOSS_ROCK,
 		BOSS_ROCK_F,
+		BOSS_ROCK_ATTACK,
+		BOSS_ROCK_DAMAGE,
+		BOSS_ROCK_UI,
+		BOSS_ROCK_PLAYER_ATTACK,
+		FLOOR_AABB,
 
 		TAG_MAX,
 	};

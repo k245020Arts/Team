@@ -23,14 +23,17 @@ void CollsionInformation::InitSetPair()
     SetPair(FLOOR, SHADOW);
     SetPair(PLAYER, B_E_ATTACK);
     SetPair(PLAYER, E_ATTACK);
+    SetPair(PLAYER, BOSS_ROCK_ATTACK);
     SetPair(PLAYER, BOSS_ROCK);
     SetPair(BOSS, BOSS_ROCK);
+    SetPair(BOSS, BOSS_ROCK_DAMAGE);
     SetPair(PLAYER, WALL);
     //SetPair(CAMERA, FLOOR);
     SetPair(ENEMY, P_ATTACK);
     SetPair(ENEMY, WALL);
     SetPair(PLAYER, B_ATTACK);
     SetPair(BOSS, P_ATTACK);
+    SetPair(BOSS_ROCK_PLAYER_ATTACK, P_ATTACK);
     SetPair(BOSS, WALL);
     SetPair(FLOOR, P_FLOOR);
     SetPair(FLOOR, E_FLOOR);
@@ -39,6 +42,7 @@ void CollsionInformation::InitSetPair()
     SetPair(FLOOR, BOSS_ROCK_F);
     SetPair(P_SPECIAL_ATTACK, BOSS);
     SetPair(P_SPECIAL_ATTACK, ENEMY);
+    SetPair(BOSS_ROCK_UI, FLOOR_AABB);
 }
 
 bool CollsionInformation::IsCollPair(Tag tag1, Tag tag2)

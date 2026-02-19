@@ -32,7 +32,12 @@ void RayCollider::Start()
 
 void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _transform2)
 {
-	ColliderBase::CollsionAdd(_info, _transform);
+	RaySet(_info, _transform,_transform2, "");
+}
+
+void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _transform2, std::string _tag)
+{
+	ColliderBase::CollsionAdd(_info, _transform,_tag);
 
 	transform2 = new Transform(_transform2);
 	transform2->SetParent(_info.parentTransfrom);

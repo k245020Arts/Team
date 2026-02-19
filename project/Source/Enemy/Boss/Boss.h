@@ -126,6 +126,10 @@ public:
 	/// </summary>
 	/// <returns>trueなら攻撃可能</returns>
 	bool RunChangeAttack();
+	/// <summary>
+	/// ボスが地面に当たった時の処理
+	/// </summary>
+	void RockHitDamage();
 
 private:
 	void PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps,VECTOR3 _randomPos,float _randomAngle);

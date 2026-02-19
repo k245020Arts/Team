@@ -1,9 +1,11 @@
 #pragma once
 #include "../EnemyAttackObject.h"
 #include "../../Collider/CollsionInformation.h"
+#include "../../Transform/Transform.h"
 
 class SphereCollider;
 class RayCollider;
+class ModelCollider;
 
 class BossRock : public EnemyAttackObject
 {
@@ -27,12 +29,28 @@ public:
 
 	void SetRockModel();
 
+	void SetPreInfo(const VECTOR3& _pos);
+
+	void Ground();
+	void PlayerAttackRockFlyAway(Transform& _playerTransform);
+
 private:
 	RayCollider* randColl;
 	SphereCollider* playerHitColl;
 	SphereCollider* bossHitColl;
+	SphereCollider* playerAttackHitColl;
+	RayCollider* uiColl;
+	ModelCollider* pushColl;
 
 	CollsionInformation::Tag collTag;
 
 	float time;
+	bool preDraw;
+	Transform preTransform;
+	int preModel;
+
+	bool groundInit;
+	int useHandleNumber;
+	Physics* physics;
+	bool fly;
 };

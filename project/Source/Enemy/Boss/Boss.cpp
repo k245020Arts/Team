@@ -643,6 +643,14 @@ bool Boss::RunChangeAttack()
 	return result;
 }
 
+void Boss::RockHitDamage()
+{
+	float damage = 500.0f;
+	enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
+	enemyBaseComponent.physics->AddVelocity(VZero,false);
+	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage, 500.0f, (float)GetRand(15));
+}
+
 void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps, VECTOR3 _randomPos, float _randomAngle)
 {
 	PlayerSpecialAttack::PLAYER_SPECIAL_ATTACK_STATE state = _ps->GetSpecialAttackState();

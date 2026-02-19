@@ -10,6 +10,7 @@
 #include "../Player/PlayerState/PlayerStateManager.h"
 #include "../Component/Object/Object3D.h"
 #include "SkyManager.h"
+#include "../Component/Collider/AABBCollider.h"
 
 #define NEW_STAGE
 
@@ -148,6 +149,11 @@ void StageManager::CreateFloor()
 	stage->AddChild(obj, false);
 	//}
 	
+	AABBCollider* aabb = obj->Component()->AddComponent<AABBCollider>();
+	info.shape = CollsionInformation::AABB;
+	info.tag = CollsionInformation::FLOOR_AABB;
+	VECTOR3 minPos = VECTOR3(-WALL_EDGE_POS, -100.0f, -WALL_EDGE_POS);
+	aabb->SetUpAABBCollsion(info, minPos, VECTOR3(WALL_EDGE_POS, 100.0f, WALL_EDGE_POS));
 
 	//Transform transform2;
 	//transform2 = Transform(CUT_SCENE_POS + VECTOR3(0, -1000, 0), VZero, VOne * VECTOR3(500.0f, 10.0f, 500.0f));

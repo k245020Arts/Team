@@ -32,7 +32,12 @@ void ModelCollider::Draw()
 
 void ModelCollider::ModelColliderSet(const CollsionInfo& _info, const Transform& _transform, int _modelHandle)
 {
-	ColliderBase::CollsionAdd(_info, _transform);
+	ModelColliderSet(_info, _transform, _modelHandle,"");
+}
+
+void ModelCollider::ModelColliderSet(const CollsionInfo& _info, const Transform& _transform, int _modelHandle, std::string _tag)
+{
+	ColliderBase::CollsionAdd(_info, _transform,_tag);
 
 	modelHandle = _modelHandle;
 	int i = MV1SetupCollInfo(modelHandle, -1, 8, 8, 8);

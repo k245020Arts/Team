@@ -28,12 +28,16 @@ void BossHalfSpecialAttack::Update()
 		
 		if (oneCreate) {
 			Object3D* rock = new Object3D();
-			rock->Init(Transform(VECTOR3(0, 10000, 0), VZero, VOne), "bossRock");
+			int randomX = GetRand(20000) - 10000;
+			int randomZ = GetRand(20000) - 10000;
+			rock->Init(Transform(VECTOR3(randomX, 10000, randomZ), VECTOR3(0.0f,0.0f,0.0f), VOne * 1.0f), "bossRock");
 			BossRock* bossRock = rock->Component()->AddComponent<BossRock>();
 			Physics* phy = rock->Component()->AddComponent<Physics>();
-			phy->Start(VECTOR3(0, -1000, 0), VECTOR3(0, 500, 0));
-			bossRock->StartCollAdd(CollsionInformation::BOSS_ROCK, Transform());
+			phy->Start(VECTOR3(0, -2000, 0), VECTOR3(0, 1500, 0));
+			bossRock->StartCollAdd(CollsionInformation::BOSS_ROCK_ATTACK, Transform());;
+
 			bossRock->SetRockModel();
+			obj->AddChild(rock,false);
 			oneCreate = false;
 		}
 		

@@ -8,19 +8,27 @@ public:
 	~CollsionEvent();
 
 	//イベント発生
-	void Event(ColliderBase* _coll1,ColliderBase* _coll2, Pushback& resolver);
+	void Event(ColliderBase* _coll1,ColliderBase* _coll2, Pushback& resolver,const VECTOR3& _hitPos);
 
 private:
 	//プレイヤーがダメージを食らった時
-	void PlayerDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2);
+	void PlayerDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2, const VECTOR3& _hitPos);
 	//敵がダメージを食らった時
-	void EnemyDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2);
+	void EnemyDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2, const VECTOR3& _hitPos);
 
 	//プレイヤーがダメージを食らった時
-	void PlayerDamageBossEvent(ColliderBase* _coll1,ColliderBase* _coll2);
-	void PlayerDamageBossEffectEvent(ColliderBase* _coll1,ColliderBase* _coll2);
+	void PlayerDamageBossEvent(ColliderBase* _coll1,ColliderBase* _coll2, const VECTOR3& _hitPos);
+	void PlayerDamageBossEffectEvent(ColliderBase* _coll1,ColliderBase* _coll2, const VECTOR3& _hitPos);
 	//ボスがダメージを食らった時
-	void BossDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2);
-	void CameraPushEvent(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver);
+	void BossDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2, const VECTOR3& _hitPos);
+	void CameraPushEvent(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos);
+	//ボスの子供で攻撃をするのが当たった時
+	void PlayerDamageBossChildEvent(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos);
+	//ボスの岩の予測線を出す。
+	void BossRockPrePosition(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos);
+	void BossRockGround(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos);
+	void PlayerAttackRock(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos);
+
+	void BossRockDamage(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos);
 	//void DamageEvent(ColliderBase* _coll1, ColliderBase* _coll2);
 };
