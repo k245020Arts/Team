@@ -15,4 +15,6 @@ private:
 	VECTOR3 rotation;
 	VECTOR3 velocity;
 	VECTOR3 targetPos;
+
+	float motionSpeed;
 };

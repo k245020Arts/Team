@@ -41,7 +41,7 @@ void T_EnemyDamage::Update()
 	float h = 0.5f;		 //ç≈çÇì_Ç‹Ç≈ÇÃéûä‘
 	float k = 800.0f;    //êÅÇ´îÚÇ—ÇÃçÇÇ≥
 
-	KnockbackMove(e, 20.0f, a, h, k);
+	KnockbackMove(e, e->deadPreset);
 
 	if (e->hp > 0)
 	{
@@ -70,11 +70,11 @@ void T_EnemyDamage::Finish()
 	
 }
 
-void T_EnemyDamage::KnockbackMove(TrashEnemy* _e, float _speed,float a, float h, float k)
+void T_EnemyDamage::KnockbackMove(TrashEnemy* _e, DeadData _deadData)
 {
 	counter += Time::DeltaTimeRate();
 	
-	float offsetY = Orbit(a, h, k);
+	float offsetY = Orbit(_deadData.gravity, _deadData.timeToPeak, _deadData.maxHeight);
 
 	if (offsetY <= 0)
 		offsetY = 0;
@@ -90,7 +90,7 @@ void T_EnemyDamage::KnockbackMove(TrashEnemy* _e, float _speed,float a, float h,
 		side = VDot(rightVec, vec);
 
 		isGetInformation = true;
-		backSpeed = _speed;
+		backSpeed = _deadData.maxVelocity;
 	}
 	
 	if (backSpeed >= 0)//íiÅXå∏ë¨Ç≥ÇπÇÈÇΩÇﬂ

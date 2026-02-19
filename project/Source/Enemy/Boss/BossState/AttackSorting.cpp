@@ -40,7 +40,7 @@ namespace {
 		int weight;		//d‚³
 		int maxAction;	//˜A‘±‚Å‰½‰ñs“®‚Å‚«‚é‚©
 	};
-	std::vector<ActionParam> actions =
+	std::vector<ActionParam> actions 
 	{
 		{StateID::BOSS_WALK,					10, 40, 0},
 		{StateID::BOSS_NORMAL_ATTACK1_S,		10, 10, 1},

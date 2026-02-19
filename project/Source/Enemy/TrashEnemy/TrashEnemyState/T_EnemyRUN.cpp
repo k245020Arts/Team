@@ -10,6 +10,8 @@ T_EnemyRun::T_EnemyRun()
 	string = Function::GetClassNameC<T_EnemyRun>();
 
 	targetPos = VZero;
+
+	motionSpeed = 0;
 }
 
 T_EnemyRun::~T_EnemyRun()
@@ -21,7 +23,12 @@ void T_EnemyRun::Update()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
 	if (e->IsPlayerSpecialMove())
-		return; 
+	{
+		e->enemyBaseComponent.anim->SetPlaySpeed(0);
+		return;
+	}
+	else
+		e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
 	if (!e->isCooperateAtk || e->isMovingToPlayer)
 		targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
@@ -53,6 +60,8 @@ void T_EnemyRun::Start()
 		targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 	else
 		targetPos = e->wayPoint;
+
+	motionSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
 }
 
 void T_EnemyRun::Finish()

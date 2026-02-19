@@ -8,6 +8,21 @@ class EnemyStateManager;
 class CharaWeapon;
 class T_EnemyStatus;
 
+struct DeadData
+{
+	float maxVelocity;	//速度
+	float gravity;		//落下の強さ（重力）
+	float timeToPeak;	//最高点までの時間
+	float maxHeight;	//吹き飛びの高さ
+	/*DeadData()
+	{
+		gravity		= 0;
+		timeToPeak	= 0;
+		maxHeight	= 0;
+		maxVelocity = 0;
+	}*/
+};
+
 class TrashEnemy : public EnemyBase
 {
 public:
@@ -86,6 +101,15 @@ public:
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
+
+	DeadData deadPreset;
+	std::vector<DeadData> deadPresets
+	{
+		{0,0,0,0},
+		{10.0f, -800.0f ,0.5f,600.0f},//通常
+		{30.0f, -1000.0f,0.5f,800.0f},//ジャスト回避
+		{40.0f, -1200.0f,0.5f,1000.0f},//必殺
+	};
 
 	//_posの方向に向く
 	void LookTarget(VECTOR3 _pos);
