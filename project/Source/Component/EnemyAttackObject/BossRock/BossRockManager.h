@@ -15,7 +15,7 @@ public:
 	void Update()override;
 	void Draw() override;
 
-	void CreateRock(int _createNum);
+	void CreateRock(int _index, int _total, float _rotateAngle);
 	void CreateLastRock();
 
 	void PushList(BossRock* _obj);

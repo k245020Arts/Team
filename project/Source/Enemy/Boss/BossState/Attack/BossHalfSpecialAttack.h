@@ -22,4 +22,10 @@ private:
 	float interval;
 	bool lastRockCreated;
 	float timer;
+
+	float rotateAngle;
+	float rotateSpeed;
+
+	bool chargingLast;
+	float chargeTimer;
 };

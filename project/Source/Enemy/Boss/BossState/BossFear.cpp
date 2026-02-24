@@ -42,7 +42,7 @@ void BossFear::Start()
 {
 	Boss* b = GetBase<Boss>();
 	EnemyStateBase::Start();
-	fearCounter = 3.0f;
+	fearCounter = 10.0f;
 }
 
 void BossFear::Finish()

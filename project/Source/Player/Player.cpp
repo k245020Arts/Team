@@ -639,7 +639,14 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 	PlayerDamage& param = damageParam[_tag];
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
 	bool damage = false;
-	playerCom.hitObj = _obj;
+	BaseObject* parent = _obj->GetParent();
+	if (parent != nullptr) {
+		playerCom.hitObj = parent;
+	}
+	else {
+		playerCom.hitObj = _obj;
+	}
+	
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 

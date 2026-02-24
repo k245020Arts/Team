@@ -9,6 +9,7 @@
 #include "../../Common/Effect/EffectBase.h"
 #include "../../Camera/Camera.h"
 #include "../EnemyAttackObject/BossRock/BossRock.h"
+#include "../Physics/Physics.h"
 
 CollsionEvent::CollsionEvent()
 {
@@ -183,8 +184,9 @@ void CollsionEvent::BossRockDamage(ColliderBase* _coll1, ColliderBase* _coll2, P
 {
 	Boss* boss = _coll1->GetObj()->Component()->GetComponent<Boss>();
 	BossRock* rock = _coll2->GetObj()->Component()->GetComponent<BossRock>();
+	Physics* physics = _coll2->GetObj()->Component()->GetComponent<Physics>();
 
-	boss->RockHitDamage();
+	boss->RockHitDamage(physics);
 	rock->GetBaseObject()->DestroyMe();
 }
 
@@ -192,6 +194,7 @@ void CollsionEvent::BossRockRush(ColliderBase* _coll1, ColliderBase* _coll2, Pus
 {
 	Boss* boss = _coll2->GetObj()->Component()->GetComponent<Boss>();
 	BossRock* rock = _coll1->GetObj()->Component()->GetComponent<BossRock>();
+	
 
 	boss->RockHitRushDamage();
 	rock->GetBaseObject()->DestroyMe();
@@ -218,6 +221,8 @@ void CollsionEvent::BossRockBlastDamageBoss(ColliderBase* _coll1, ColliderBase* 
 	if (rock->HitObjects(boss->GetEnemyObj())) {
 		return;
 	}
-	boss->RockHitDamage();
+	Physics* physics = _coll2->GetObj()->Component()->GetComponent<Physics>();
+
+	boss->RockHitDamage(physics);
 	rock->AddHitObj(boss->GetEnemyObj());
 }

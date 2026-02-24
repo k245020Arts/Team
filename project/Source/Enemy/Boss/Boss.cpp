@@ -648,19 +648,34 @@ bool Boss::RunChangeAttack()
 	return result;
 }
 
-void Boss::RockHitDamage()
+void Boss::RockHitDamage(Physics* _phy)
 {
 	float damage = 500.0f;
 	enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
-	enemyBaseComponent.physics->AddVelocity(VZero,false);
+	VECTOR3 baseSpeed = _phy->GetVelocity() * 1.0f;
+	if (baseSpeed.Size() <= 3000.0f) {
+		baseSpeed = baseSpeed.Normalize() * 3000.0f;
+	}
+	if (baseSpeed.Size() >= 6000.0f) {
+		baseSpeed = baseSpeed.Normalize() * 6000.0f;
+	}
+	enemyBaseComponent.physics->AddVelocity(baseSpeed, false);
 	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage, 500.0f, (float)GetRand(15));
 }
 
 void Boss::RockHitRushDamage()
 {
-	float damage = 500.0f;
+	float damage = 1000.0f;
 	enemyBaseComponent.state->ChangeState(StateID::BOSS_FEAR_S);
-	enemyBaseComponent.physics->AddVelocity(VZero, false);
+	VECTOR3 baseSpeed = enemyBaseComponent.physics->GetVelocity() * -1.0f;
+	if (baseSpeed.Size() <= 3000.0f) {
+		baseSpeed = baseSpeed.Normalize() * 3000.0f;
+	}
+	if (baseSpeed.Size() >= 8000.0f) {
+		baseSpeed = baseSpeed.Normalize() * 6000.0f;
+	}
+	enemyBaseComponent.physics->AddVelocity(baseSpeed, false);
+
 	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage, 500.0f, (float)GetRand(15));
 }
 
@@ -692,6 +707,7 @@ void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std
 		enemyBaseComponent.effect->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);
 		enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
+		enemyBaseComponent.physics->SetVelocity(VECTOR3(0.0f,0.0f,-3000.0f) * obj->GetTransform()->Forward());
 		break;
 	default:
 		break;

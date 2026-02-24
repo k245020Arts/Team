@@ -44,7 +44,7 @@ public:
 	}
 
 	void AddHitObj(BaseObject* _obj) { hitObjects.insert(_obj); }
-
+	void SetCanBlast(bool _blast) { blastCan = _blast; }
 private:
 	RayCollider* randColl;
 	SphereCollider* playerHitColl;
@@ -82,4 +82,5 @@ private:
 	bool bossHit;
 
 	std::unordered_set<BaseObject*> hitObjects;
+	bool blastCan;
 };

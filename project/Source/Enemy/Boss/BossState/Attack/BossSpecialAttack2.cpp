@@ -187,7 +187,9 @@ void BossSpecialAttack2::AttackStart()
 	info.tag = CollsionInformation::BOSS_RUSH;
 
 	rockColl = obj->Component()->AddComponent<SphereCollider>();
-	rockColl->CollsionAdd(info, collTrans,"Rush");
+	Transform rushColl = collTrans;
+	rushColl.scale.x += 50.0f;
+	rockColl->CollsionAdd(info, rushColl,"Rush");
 
 	if (b->maxAttack <= 0) {
 		AttackBeforeFrash(ID::B_MODEL, 36, "E_AttackV");

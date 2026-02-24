@@ -132,7 +132,7 @@ public:
 	/// <summary>
 	/// 石にダメージを食らった時の処理
 	/// </summary>
-	void RockHitDamage();
+	void RockHitDamage(Physics* _phy);
 	/// <summary>
 	/// 突進でダメージを食らった時の処理
 	/// </summary>

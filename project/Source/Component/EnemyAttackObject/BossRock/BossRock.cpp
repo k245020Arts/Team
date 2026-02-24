@@ -42,6 +42,7 @@ BossRock::BossRock()
 	ChangeColorMode = false;
 	soundManager = FindGameObject<SoundManager>();
 	effectManager = FindGameObject<EffectManager>();
+	blastCan = false;
 }
 
 BossRock::~BossRock()
@@ -189,6 +190,9 @@ void BossRock::SetRockModel()
 
 void BossRock::SetPreInfo(const VECTOR3& _pos)
 {
+	if (preDraw) {
+		return;
+	}
 	preTransform = Transform(_pos,VZero,VECTOR3(5.0f,0.1f,5.0f));
 	preDraw = true;
 }
@@ -213,6 +217,7 @@ void BossRock::Ground()
 	randColl = nullptr;
 	playerHitColl = nullptr;
 	preDraw = false;
+	physics->SetVelocity(VZero);
 
 	CollsionInfo info;
 	info.parentTransfrom = obj->GetTransform();
@@ -250,8 +255,9 @@ void BossRock::Ground()
 	bossRushHitColl = obj->Component()->AddComponent<SphereCollider>();
 	bossRushHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(200.0f, 1.0f, 1.0f)), "bossRushAttack");
 	rockManager->ShakeCamera();
-
-	blast = true;
+	if (blastCan) {
+		blast = true;
+	}
 }
 
 void BossRock::PlayerAttackRockFlyAway(Transform& _playerTransform)
