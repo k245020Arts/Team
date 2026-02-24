@@ -97,6 +97,8 @@ Player::Player()
 	charge						= false;
 	attackLevel					= NONE;
 	specialAttackGuageMax		= false;
+	objHit						= false;
+	bossRockManager				= nullptr;
 }
 //
 //Object2D* guage = new Object2D();
@@ -603,28 +605,54 @@ void Player::DeleteCollision()
 	CharaBase::DeleteCollision();
 }
 
-bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj)
+bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation::Tag _tag)
 {
 	//敵の攻撃が当たった時の処理
 	if (noDamage) {
 		return true;
 	}
+	objHit = true;
+	struct PlayerDamage
+	{
+		PlayerDamage() {
+			damage = 0.0f;
+			changeID = StateID::STATE_MAX;
+			moveAdd = VZero;
+		}
+		PlayerDamage(float _damage, StateID::State_ID _id,VECTOR3 _move) {
+			damage = _damage;
+			changeID = _id;
+			moveAdd = _move;
+		}
+		float damage;
+		StateID::State_ID changeID;
+		VECTOR3 moveAdd;
+	};
+	std::map< CollsionInformation::Tag, PlayerDamage> damageParam
+	{
+		{CollsionInformation::ROCK_BLAST_DAMAGE, { PlayerDamage(100.0f,StateID::PLAYER_BLOW_AWAY_S,VECTOR3(0,0,-1000)) } },
+		{ CollsionInformation::B_E_ATTACK,{PlayerDamage(50.0f,StateID::PLAYER_DAMAGE_S,VECTOR3(0,0,-1000))} },
+		{ CollsionInformation::BOSS_ROCK_ATTACK,{PlayerDamage(20.0f,StateID::PLAYER_DAMAGE_S,VECTOR3(0,0,-1000))} },
+
+	};
+
+	PlayerDamage& param = damageParam[_tag];
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
 	bool damage = false;
 	playerCom.hitObj = _obj;
 	//ジャスト回避が出来る処理
 	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
-		
+
 		playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
 		Debug::DebugLog("JustAvoid");
-		avoidStart			= false;
-		avoidReady			= false;
+		avoidStart = false;
+		avoidReady = false;
 		justAvoidCanCounter = 0.0f;
-		justAvoid			= true;
-		justFeedInTime		= JUST_FEED_IN_TIME;
-		largeJustAvoid		= true;
+		justAvoid = true;
+		justFeedInTime = JUST_FEED_IN_TIME;
+		largeJustAvoid = true;
 	}
-	else {	
+	else {
 		//出来なかったらダメージを食らう
 		damage = true;
 	}
@@ -632,8 +660,9 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj)
 	if (damage) {
 		if (pB->GetID() != StateID::PLAYER_AVOID_S) {
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
-			playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
-			hp -= 50.0f;
+			playerCom.stateManager->ChangeState(param.changeID);
+			playerCom.physics->AddVelocity(param.moveAdd,false);
+			hp -= param.damage;
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
 			playerCom.sound->RandamSe("EnemyAttackHit", 4);
 			playerCom.sound->RandamSe("P_DamageV", 2);

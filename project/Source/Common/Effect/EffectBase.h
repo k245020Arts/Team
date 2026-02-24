@@ -7,6 +7,7 @@
 #include "../../Component/Color/Color.h"
 
 class BaseObject;
+class EffectManager;
 
 class EffectBase : public Component
 {
@@ -87,4 +88,5 @@ private:
 	float speed;
 	float feedInTime;
 	const float FEEDIN_TIME = 0.1f;
+	EffectManager* effectManager;
 };

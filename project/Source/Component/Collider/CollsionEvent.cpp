@@ -67,6 +67,20 @@ void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& 
 	if (tag1 == BOSS && tag2 == BOSS_ROCK_DAMAGE) {
 		BossRockDamage(_coll1, _coll2, resolver, _hitPos);
 	}
+
+	if (tag1 == BOSS_ROCK_RUSH && tag2 == BOSS_RUSH) {
+		BossRockRush(_coll1, _coll2, resolver, _hitPos);
+	}
+
+	if (tag1 == PLAYER && tag2 == ROCK_BLAST_DAMAGE) {
+		/*Debug::DebugLog("EnemyAttackHit");*/
+		BossRockBlastDamagePlayer(_coll1, _coll2, resolver, _hitPos);
+	}
+
+	if (tag1 == BOSS && tag2 == ROCK_BLAST_DAMAGE) {
+		/*Debug::DebugLog("EnemyAttackHit");*/
+		BossRockBlastDamageBoss(_coll1, _coll2, resolver, _hitPos);
+	}
 }
 
 void CollsionEvent::PlayerDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2, const VECTOR3& _hitPos)
@@ -109,7 +123,7 @@ void CollsionEvent::PlayerDamageBossEffectEvent(ColliderBase* _coll1, ColliderBa
 	EffectBase* effect = _coll2->GetObj()->Component()->GetComponent<EffectBase>();
 	Boss* b = effect->GetBaseObject()->GetParent()->Component()->GetComponent<Boss>();
 
-	bool damage = player->EnemyAttackObjectHitIsPlayer(b->GetBaseObject());
+	bool damage = player->EnemyAttackObjectHitIsPlayer(b->GetBaseObject(), _coll2->GetCollTag());
 	if (!damage) {
 		_coll2->CollsionRespown();
 	}
@@ -139,7 +153,7 @@ void CollsionEvent::PlayerDamageBossChildEvent(ColliderBase* _coll1, ColliderBas
 	Player* player = _coll1->GetObj()->Component()->GetComponent<Player>();
 	Boss* b = _coll2->GetObj()->GetParent()->Component()->GetComponent<Boss>();
 
-	bool damage = player->EnemyAttackObjectHitIsPlayer(b->GetBaseObject());
+	bool damage = player->EnemyAttackObjectHitIsPlayer(b->GetBaseObject(), _coll2->GetCollTag());
 	if (!damage) {
 		_coll2->CollsionRespown();
 	}
@@ -172,4 +186,38 @@ void CollsionEvent::BossRockDamage(ColliderBase* _coll1, ColliderBase* _coll2, P
 
 	boss->RockHitDamage();
 	rock->GetBaseObject()->DestroyMe();
+}
+
+void CollsionEvent::BossRockRush(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
+{
+	Boss* boss = _coll2->GetObj()->Component()->GetComponent<Boss>();
+	BossRock* rock = _coll1->GetObj()->Component()->GetComponent<BossRock>();
+
+	boss->RockHitRushDamage();
+	rock->GetBaseObject()->DestroyMe();
+}
+
+void CollsionEvent::BossRockBlastDamagePlayer(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
+{
+	BossRock* rock = _coll2->GetObj()->Component()->GetComponent<BossRock>();
+	Player* player = _coll1->GetObj()->Component()->GetComponent<Player>();
+	if (rock->HitObjects(player->GetPlayerObj())) {
+		return;
+	}
+	bool damage = player->EnemyAttackObjectHitIsPlayer(_coll2->GetBaseObject(),_coll2->GetCollTag());
+	if (!damage) {
+		_coll2->CollsionRespown();
+	}
+	rock->AddHitObj(player->GetPlayerObj());
+}
+
+void CollsionEvent::BossRockBlastDamageBoss(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
+{
+	BossRock* rock = _coll2->GetObj()->Component()->GetComponent<BossRock>();
+	Boss* boss = _coll1->GetObj()->Component()->GetComponent<Boss>();
+	if (rock->HitObjects(boss->GetEnemyObj())) {
+		return;
+	}
+	boss->RockHitDamage();
+	rock->AddHitObj(boss->GetEnemyObj());
 }

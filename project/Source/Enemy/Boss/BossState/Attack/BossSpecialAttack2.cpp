@@ -2,6 +2,7 @@
 #include "../../Boss.h"
 #include "../../../../State/StateManager.h"
 #include "../../../../Component/Animator/Animator.h"
+#include "../../../../Component/Collider/SphereCollider.h"
 #include "../../../../Component/Physics/Physics.h"
 #include "../../../../Camera/Camera.h"
 #include "../../../../Common/Sound/SoundManager.h"
@@ -25,6 +26,8 @@ BossSpecialAttack2::BossSpecialAttack2()
 	sound = false;
 	firstOnes = false;
 	secondOnes = false;
+
+	rockColl = nullptr;
 }
 
 BossSpecialAttack2::~BossSpecialAttack2()
@@ -129,6 +132,8 @@ void BossSpecialAttack2::Finish()
 		
 	}
 	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	rockColl->GetBaseObject()->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("Rush");
+	rockColl = nullptr;
 }
 
 void BossSpecialAttack2::BossDushSound()
@@ -174,6 +179,15 @@ void BossSpecialAttack2::AttackStart()
 	firstColl = true;
 	look = true;
 	distance = pos.Size();
+
+	CollsionInfo info;
+	info.parentTransfrom = obj->GetTransform();
+	info.shape = CollsionInformation::SPHERE;
+	info.oneColl = true;
+	info.tag = CollsionInformation::BOSS_RUSH;
+
+	rockColl = obj->Component()->AddComponent<SphereCollider>();
+	rockColl->CollsionAdd(info, collTrans,"Rush");
 
 	if (b->maxAttack <= 0) {
 		AttackBeforeFrash(ID::B_MODEL, 36, "E_AttackV");

@@ -107,6 +107,7 @@ namespace ID {
 		ROCK_2,
 		ROCK_3,
 		BOSS_PRE_MODEL,
+		BOSS_FEAR,
 
 		ID_MAX,
 	};

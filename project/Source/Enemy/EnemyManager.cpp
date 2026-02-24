@@ -167,6 +167,7 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::BOSS_DAMAGE,			"B_DAMAGE", false, 1.8f, 10.0f, 70.0f);
 	anim->AddFile(ID::B_APPEAR_FALL,		"B_APPEAR_FALL", true, 1.0f, 10.0f, 70.0f);
 	anim->AddFile(ID::B_APPEAR_LAND,		"B_APPEAR_LAND", false, 1.5f, 10.0f, 70.0f);
+	anim->AddFile(ID::BOSS_FEAR,			"B_FEAR", true, 1.0f, 10.0f, 70.0f);
 	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 
 	b->Start(boss);

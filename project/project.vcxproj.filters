@@ -534,6 +534,12 @@
     <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRock.cpp">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRockManager.cpp">
+      <Filter>Component\EnemyAttackObject\BossRock</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossFear.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1126,6 +1132,12 @@
     </ClInclude>
     <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRock.h">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRockManager.h">
+      <Filter>Component\EnemyAttackObject\BossRock</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossFear.h">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

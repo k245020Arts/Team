@@ -7,6 +7,7 @@
 class Player;
 class CharaWeapon;
 class BossStatus;
+class BossRockManager;
 //class TrashEnemyManager;
 
 class PlayerSpecialAttack;
@@ -36,6 +37,8 @@ public:
 	friend class BossAppear;
 	friend class BossLose;
 	friend class BossHalfSpecialAttack;
+	friend class BossRockManager;
+	friend class BossFear;
 	
 	enum HP_RATE
 	{
@@ -127,9 +130,13 @@ public:
 	/// <returns>trueなら攻撃可能</returns>
 	bool RunChangeAttack();
 	/// <summary>
-	/// ボスが地面に当たった時の処理
+	/// 石にダメージを食らった時の処理
 	/// </summary>
 	void RockHitDamage();
+	/// <summary>
+	/// 突進でダメージを食らった時の処理
+	/// </summary>
+	void RockHitRushDamage();
 
 private:
 	void PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps,VECTOR3 _randomPos,float _randomAngle);
@@ -159,4 +166,6 @@ private:
 	float noAttackChangeCounter;
 	int alotAttack;
 	bool oneDie;
+
+	BossRockManager* rockManager;
 };

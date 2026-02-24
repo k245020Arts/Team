@@ -2,11 +2,15 @@
 #include "../../Collider/SphereCollider.h"
 #include "../../Collider/RayCollider.h"
 #include "../../Collider/ModelCollider.h"
+#include "../../Collider/DountCollider.h"
 #include "../../MeshRenderer/MeshRenderer.h"
 #include "../../ComponentManager.h"
 #include "../../../Common/Effect/EffectManager.h"
+#include "../../../Common/Sound/SoundManager.h"
 #include "../../../Common/LoadManager.h"
 #include "../../Physics/Physics.h"
+#include "BossRockManager.h"
+#include "../../../Common/Effect/EffectManager.h"
 
 BossRock::BossRock()
 {
@@ -28,6 +32,16 @@ BossRock::BossRock()
 	useHandleNumber = -1;
 	playerAttackHitColl = nullptr;
 	fly = true;
+	rockManager = FindGameObject<BossRockManager>();
+	physics = nullptr;
+	bossRushHitColl = nullptr;
+	blast = false;
+	color = nullptr;
+	blinkCounter = 0.0f;
+	blinkBaseMax = 0.5f;
+	ChangeColorMode = false;
+	soundManager = FindGameObject<SoundManager>();
+	effectManager = FindGameObject<EffectManager>();
 }
 
 BossRock::~BossRock()
@@ -39,14 +53,49 @@ BossRock::~BossRock()
 	pushColl = nullptr;
 	useHandleNumber = -1;
 	playerAttackHitColl = nullptr;
+	physics = nullptr;
+	bossRushHitColl = nullptr;
+	rockManager->RemoveList(this);
+	hitObjects.clear();
 }
 
 void BossRock::Update()
 {
-	time -= Time::DeltaTimeRate();
-	//obj->GetTransform()->rotation.z += 1.0f * DegToRad;
-	if (time <= 0.0f) {
-		obj->DestroyMe();
+	if (nowBlast) {
+		float waveSpeed = 50.0f;
+		blastColl->GetTransform()->scale.x += waveSpeed;
+		blastColl->AddOutRadius(waveSpeed);
+		if (blastColl->GetOutRadius() >= 3000.0f) {
+			obj->DestroyMe();
+		}
+	}
+	else {
+		if (blast) {
+			blinkCounter -= Time::DeltaTimeRate();
+			if (blinkCounter <= 0.0f) {
+				blinkCounter = blinkBaseMax;
+				ChangeColorMode = !ChangeColorMode;
+				blinkBaseMax -= blinkBaseMax / 8.0f;
+			}
+			if (ChangeColorMode) {
+				color->setRGB(Color::Rgb(255, 0, 0, 255));
+			}
+			else {
+				color->setRGB(Color::Rgb(255, 255, 255, 255));
+			}
+			if (blinkBaseMax <= 0.01f) {
+				blastColl = obj->Component()->AddComponent<DountCollider>();
+				nowBlast = true;
+				CollsionInfo info;
+				info.parentTransfrom = obj->GetTransform();
+				info.shape = CollsionInformation::DONUT;
+				info.oneColl = false;
+				info.tag = CollsionInformation::ROCK_BLAST_DAMAGE;
+				blastColl->DountSet(info, Transform(VZero,VZero,VOne * 50.0f), 100.0f);
+				soundManager->PlaySe(Sound_ID::ROCK_BLAST);
+				effectManager->CreateEffekseer(Transform(obj->GetTransform()->position, VZero, VOne * 3.0f), nullptr, Effect_ID::ROCK_BLAST, 1.0f);
+			}
+		}
 	}
 }
 
@@ -90,6 +139,18 @@ void BossRock::StartCollAdd(CollsionInformation::Tag _tag, const Transform& _tra
 	groundInit = false;
 
 	physics = obj->Component()->GetComponent<Physics>();
+	rockManager->PushList(this);
+	fly = false;
+	blast = false;
+	color = obj->Component()->GetComponent<Color>();
+	
+	blinkBaseMax = 0.5f;
+	blinkCounter = blinkBaseMax;
+	ChangeColorMode = false;
+	nowBlast = false;
+	soundManager->PlaySe(Sound_ID::ROCK_FALL);
+
+	effectManager->CreateEffekseer(Transform(VZero, VZero, VOne * 2.0f), obj, Effect_ID::ROCK_FALL, 3.0f);
 }
 
 void BossRock::RemoveCollider(std::string _name)
@@ -136,10 +197,16 @@ void BossRock::Ground()
 {
 	if (fly) {
 		obj->DestroyMe();
+		soundManager->PlaySe(Sound_ID::ROCK_BREAK);
+		effectManager->CreateEffekseer(Transform(VZero, VZero, VOne), obj, Effect_ID::ROCK_BREAK, 1.0f);
+		return;
 	}
 	if (groundInit) {
 		return;
 	}
+	soundManager->PlaySe(Sound_ID::ROCK_GROUND);
+	effectManager->CreateEffekseer(Transform(VZero, VZero, VOne), obj, Effect_ID::BOSS_GROUND, 6.0f);
+	//effectManager->StopEffekseer(Effect_ID::ROCK_FALL);
 	groundInit = true;
 	obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("_rockAttack");
 	obj->Component()->RemoveComponentWithTagIsCollsion<RayCollider>("uiColl");
@@ -157,13 +224,13 @@ void BossRock::Ground()
 	switch (useHandleNumber)
 	{
 	case 0:
-		pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 2.0f), MV1DuplicateModel(Load::GetHandle(ID::BOSS_PUSH)));
+		pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 4.0f), MV1DuplicateModel(Load::GetHandle(ID::BOSS_PUSH)));
 		break;
 	case 1:
-		pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 2.0f), MV1DuplicateModel(Load::GetHandle(ID::BOSS_PUSH)));
+		pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 3.0f), MV1DuplicateModel(Load::GetHandle(ID::BOSS_PUSH)));
 		break;
 	case 2:
-		pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 4.0f), MV1DuplicateModel(Load::GetHandle(ID::BOSS_PUSH)));
+		pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 10.0f), MV1DuplicateModel(Load::GetHandle(ID::BOSS_PUSH)));
 		break;
 	}
 
@@ -175,6 +242,16 @@ void BossRock::Ground()
 	playerAttackHitColl = obj->Component()->AddComponent<SphereCollider>();
 	playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(200.0f, 1.0f, 1.0f)), "bossplayerAttack");
 
+	info.parentTransfrom = obj->GetTransform();
+	info.shape = CollsionInformation::SPHERE;
+	info.oneColl = true;
+	info.tag = CollsionInformation::BOSS_ROCK_RUSH;
+
+	bossRushHitColl = obj->Component()->AddComponent<SphereCollider>();
+	bossRushHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(200.0f, 1.0f, 1.0f)), "bossRushAttack");
+	rockManager->ShakeCamera();
+
+	blast = true;
 }
 
 void BossRock::PlayerAttackRockFlyAway(Transform& _playerTransform)

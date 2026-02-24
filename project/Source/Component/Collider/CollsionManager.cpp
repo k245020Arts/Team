@@ -208,6 +208,10 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 	VECTOR3 ret = VZero;
 
 	//Pushback resolver;
+	if (result.HitNum <= 0) {
+		MV1CollResultPolyDimTerminate(result);
+		return false;
+	}
 
 	for (int i = 0; i < result.HitNum; i++) {
 		auto& pol = result.Dim[i];
@@ -224,7 +228,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 
 	MV1CollResultPolyDimTerminate(result);
 
-	return false;
+	return true;
 
 }
 

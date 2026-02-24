@@ -60,6 +60,8 @@ public:
 	/// </summary>
 	/// <param name="_obj">¡e‚É‚È‚Á‚Ä‚¢‚éObject</param>
 	void ParentTransformRemove(BaseObject* _obj);
+
+	void RemoveEffekseer(BaseObject* _obj);
 	
 private:
 	std::list<BaseObject*> effect;

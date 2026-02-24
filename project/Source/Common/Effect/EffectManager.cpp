@@ -41,6 +41,9 @@ EffectManager::EffectManager()
 	Load::LoadEffect("PlayerChargeFinalEffect",		".efkefc",Effect_ID::PLAYER_CHARGE_FINAL,60.0f);
 	Load::LoadEffect("specialAttackCan",			".efkefc",Effect_ID::PLAYER_SPECIAL_ATTACK_CAN,30.0f);
 	Load::LoadEffect("PlayerChargeEnd",				".efkefc",Effect_ID::PLAYER_CHARGE_END,35.0f);
+	Load::LoadEffect("RockBlast",				".efkefc",Effect_ID::ROCK_BLAST,100.0f);
+	Load::LoadEffect("RockBreak",				".efkefc",Effect_ID::ROCK_BREAK,100.0f);
+	Load::LoadEffect("RockFall",				".efkefc",Effect_ID::ROCK_FALL,100.0f);
 	//Effekseer_SetGraphicsDeviceDXLib();
 	SetDrawOrder(-50000);
 }
@@ -61,7 +64,7 @@ void EffectManager::DeleteAllEffect()
 
 void EffectManager::Update()
 {
-	for (auto e = effect.begin(); e != effect.end();) {
+	/*for (auto e = effect.begin(); e != effect.end();) {
 
 		EffectBase* base = (*e)->Component()->GetComponent<EffectBase>();
 
@@ -73,7 +76,7 @@ void EffectManager::Update()
 		else {
 			e++;
 		}
-	}
+	}*/
 
 	UpdateEffekseer2D();
 	UpdateEffekseer3D();
@@ -185,5 +188,10 @@ void EffectManager::ParentTransformRemove(BaseObject* _obj)
 			e++;
 		}
 	}
+}
+
+void EffectManager::RemoveEffekseer(BaseObject* _obj)
+{
+	effect.remove(_obj);
 }
 

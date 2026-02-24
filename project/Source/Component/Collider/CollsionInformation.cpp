@@ -26,7 +26,10 @@ void CollsionInformation::InitSetPair()
     SetPair(PLAYER, BOSS_ROCK_ATTACK);
     SetPair(PLAYER, BOSS_ROCK);
     SetPair(BOSS, BOSS_ROCK);
+    SetPair(PLAYER, ROCK_BLAST_DAMAGE);
+    SetPair(BOSS, ROCK_BLAST_DAMAGE);
     SetPair(BOSS, BOSS_ROCK_DAMAGE);
+    SetPair(BOSS_ROCK_RUSH, BOSS_RUSH);
     SetPair(PLAYER, WALL);
     //SetPair(CAMERA, FLOOR);
     SetPair(ENEMY, P_ATTACK);

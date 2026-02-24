@@ -43,6 +43,9 @@ namespace CollsionInformation {
 		BOSS_ROCK_UI,
 		BOSS_ROCK_PLAYER_ATTACK,
 		FLOOR_AABB,
+		BOSS_ROCK_RUSH,
+		BOSS_RUSH,
+		ROCK_BLAST_DAMAGE,
 
 		TAG_MAX,
 	};

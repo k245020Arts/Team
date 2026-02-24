@@ -2,6 +2,7 @@
 #include "../../Component/Object/Object3D.h"
 #include "../LoadManager.h"
 #include "../Easing.h"
+#include "EffectManager.h"
 
 EffectBase::EffectBase()
 {
@@ -17,13 +18,14 @@ EffectBase::EffectBase()
 	parent = nullptr;
 	time = 0.0f;
 	transform = nullptr;
-
+	effectManager = FindGameObject<EffectManager>();
 }
 
 EffectBase::~EffectBase()
 {
 	delete transform;
 	(this->*effectStop)();
+	effectManager->RemoveEffekseer(obj);
 }
 
 void EffectBase::Update() 
@@ -33,6 +35,7 @@ void EffectBase::Update()
 		time		-= Time::DeltaTimeRate();
 		if (time <= 0.0f) {
 			(this->*effectStop)();
+			obj->DestroyMe();
 			active	= false;
 		}
 	}

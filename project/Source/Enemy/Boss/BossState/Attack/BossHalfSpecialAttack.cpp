@@ -6,6 +6,7 @@
 #include "../../../../State/StateManager.h"
 #include "../../../../Common/Easing.h"
 #include "../BossStatus.h"
+#include "../../../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
 
 BossHalfSpecialAttack::BossHalfSpecialAttack()
 {
@@ -13,6 +14,12 @@ BossHalfSpecialAttack::BossHalfSpecialAttack()
 	string = Function::GetClassNameC<BossHalfSpecialAttack>();
 	rockCreateCounter = 0.0f;
 	oneCreate = false;
+    totalRocks = 12;
+    rocksDropped = 0;
+    interval = 0.3f;
+    lastRockCreated = false;
+    rockCreateCounter = 10.0f;
+    timer = interval;
 }
 
 BossHalfSpecialAttack::~BossHalfSpecialAttack()
@@ -21,33 +28,28 @@ BossHalfSpecialAttack::~BossHalfSpecialAttack()
 
 void BossHalfSpecialAttack::Update()
 {
-	Boss* boss = GetBase<Boss>();
-	int rockCounter = (int)rockCreateCounter;
-	rockCreateCounter -= Time::DeltaTimeRate();
-	if (rockCounter % 2 == 0) {
-		
-		if (oneCreate) {
-			Object3D* rock = new Object3D();
-			int randomX = GetRand(20000) - 10000;
-			int randomZ = GetRand(20000) - 10000;
-			rock->Init(Transform(VECTOR3(randomX, 10000, randomZ), VECTOR3(0.0f,0.0f,0.0f), VOne * 1.0f), "bossRock");
-			BossRock* bossRock = rock->Component()->AddComponent<BossRock>();
-			Physics* phy = rock->Component()->AddComponent<Physics>();
-			phy->Start(VECTOR3(0, -2000, 0), VECTOR3(0, 1500, 0));
-			bossRock->StartCollAdd(CollsionInformation::BOSS_ROCK_ATTACK, Transform());;
+    Boss* boss = GetBase<Boss>();
+    timer -= Time::DeltaTimeRate();
 
-			bossRock->SetRockModel();
-			obj->AddChild(rock,false);
-			oneCreate = false;
-		}
-		
-	}
-	else {
-		oneCreate = true;
-	}
-	if (rockCreateCounter <= 0.0f) {
-		boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_IDOL_S);
-	}
+  
+    if (timer <= 0.0f && rocksDropped < totalRocks) {
+        boss->rockManager->CreateRock(1);
+        rocksDropped++;
+        timer = interval;
+    }
+
+    // 最後の1個（巨大岩）は全て落とした後に生成
+    if (rocksDropped >= totalRocks && !lastRockCreated) {
+        VECTOR3 playerPos = boss->enemyBaseComponent.playerObj->GetTransform()->position;
+        boss->rockManager->CreateLastRock();
+        lastRockCreated = true;
+    }
+
+    // 攻撃終了判定
+    rockCreateCounter -= Time::DeltaTimeRate();
+    if (rockCreateCounter <= 0.0f && lastRockCreated) {
+        boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_IDOL_S);
+    }
 }
 
 void BossHalfSpecialAttack::Draw()
@@ -58,8 +60,12 @@ void BossHalfSpecialAttack::Start()
 {
 	BossAttackBase::Start();
 	EnemyStateBase::Start();
-	rockCreateCounter = 10.0f;
-	oneCreate = true;
+    totalRocks = 12;
+    rocksDropped = 0;
+    interval = 0.3f;
+    lastRockCreated = false;
+    rockCreateCounter = 10.0f;
+    timer = interval;
 }
 
 void BossHalfSpecialAttack::Finish()

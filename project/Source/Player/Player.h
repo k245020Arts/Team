@@ -7,6 +7,7 @@
 #include "../Common/ID/SoundID.h"
 
 class BossAttackBase;
+class BossRockManager;
 
 class Player : public CharaBase
 {
@@ -199,7 +200,7 @@ public:
 	/// </summary>
 	/// <param name="_obj">妨害オブジェクトのオブジェクト</param>
 	/// <returns>当たっているかどうか</returns>
-	bool EnemyAttackObjectHitIsPlayer(BaseObject* _obj);
+	bool EnemyAttackObjectHitIsPlayer(BaseObject* _obj,CollsionInformation::Tag _tag);
 	/// <summary>
 	/// ボスが威嚇しているかどうか
 	/// </summary>
@@ -282,5 +283,7 @@ private:
 
 	HeavyAttackLevel attackLevel;
 	bool specialAttackGuageMax;
-	
+	bool objHit;
+
+	BossRockManager* bossRockManager;
 };

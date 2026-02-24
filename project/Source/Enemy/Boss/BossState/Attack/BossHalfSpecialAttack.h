@@ -17,4 +17,9 @@ public:
 private:
 	float rockCreateCounter;
 	bool oneCreate;
+	int totalRocks;
+	int rocksDropped;
+	float interval;
+	bool lastRockCreated;
+	float timer;
 };

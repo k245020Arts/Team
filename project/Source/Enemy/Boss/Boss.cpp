@@ -43,9 +43,11 @@
 #include "../Boss/BossState/BossThreat.h"
 #include "../Boss/BossState/BossDamage.h"
 #include "../Boss/BossState/BossAppear.h"
+#include "../Boss/BossState/BossFear.h"
 #include "../TrashEnemy/TrashEnemyManager.h"//
 #include "../../Common/Random.h"
 #include "../../Component/UI/EnemyDamageUI.h"
+#include "../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
 
 namespace {
 	std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable;
@@ -92,6 +94,8 @@ Boss::Boss()
 	/*enemyBaseComponent.state->NowChangeState(StateID::BOSS_DIE_S);
 	enemyBaseComponent.state->SetNoStateChange(true);*/
 	oneDie = true;
+
+	rockManager = new BossRockManager(this);
 }
 
 Boss::~Boss()
@@ -257,6 +261,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossAppear>("BossAppear", StateID::BOSS_APPEAR_S);
 	enemyBaseComponent.state->CreateState<BossLose>("BossLose", StateID::BOSS_LOSE_S);
 	enemyBaseComponent.state->CreateState<BossHalfSpecialAttack>("BossHalfAttack", StateID::BOSS_HALF_ATTACK_S);
+	enemyBaseComponent.state->CreateState<BossFear>("BossFear", StateID::BOSS_FEAR_S);
 
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
@@ -648,6 +653,14 @@ void Boss::RockHitDamage()
 	float damage = 500.0f;
 	enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
 	enemyBaseComponent.physics->AddVelocity(VZero,false);
+	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage, 500.0f, (float)GetRand(15));
+}
+
+void Boss::RockHitRushDamage()
+{
+	float damage = 500.0f;
+	enemyBaseComponent.state->ChangeState(StateID::BOSS_FEAR_S);
+	enemyBaseComponent.physics->AddVelocity(VZero, false);
 	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage, 500.0f, (float)GetRand(15));
 }
 

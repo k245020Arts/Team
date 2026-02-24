@@ -2,10 +2,15 @@
 #include "../EnemyAttackObject.h"
 #include "../../Collider/CollsionInformation.h"
 #include "../../Transform/Transform.h"
+#include <unordered_set>
 
 class SphereCollider;
 class RayCollider;
 class ModelCollider;
+class BossRockManager;
+class DountCollider;
+class SoundManager;
+class EffectManager;
 
 class BossRock : public EnemyAttackObject
 {
@@ -34,13 +39,24 @@ public:
 	void Ground();
 	void PlayerAttackRockFlyAway(Transform& _playerTransform);
 
+	bool HitObjects(BaseObject* _obj) {
+		return (hitObjects.count(_obj) > 0);
+	}
+
+	void AddHitObj(BaseObject* _obj) { hitObjects.insert(_obj); }
+
 private:
 	RayCollider* randColl;
 	SphereCollider* playerHitColl;
 	SphereCollider* bossHitColl;
 	SphereCollider* playerAttackHitColl;
+	SphereCollider* bossRushHitColl;
+	DountCollider* blastColl;
 	RayCollider* uiColl;
 	ModelCollider* pushColl;
+
+	SoundManager* soundManager;
+	EffectManager* effectManager;
 
 	CollsionInformation::Tag collTag;
 
@@ -53,4 +69,17 @@ private:
 	int useHandleNumber;
 	Physics* physics;
 	bool fly;
+	BossRockManager* rockManager;
+
+	bool blast;
+	Color* color;
+	float blinkCounter;
+	float blinkBaseMax;
+	bool ChangeColorMode;
+	
+	bool nowBlast;
+	bool playerHit;
+	bool bossHit;
+
+	std::unordered_set<BaseObject*> hitObjects;
 };

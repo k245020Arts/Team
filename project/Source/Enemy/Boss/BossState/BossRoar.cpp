@@ -34,7 +34,7 @@ void BossRoar::Update()
 	}
 	if (b->enemyBaseComponent.anim->IsFinish()) {
 		b->enemyBaseComponent.state->SetNoStateChange(false);
-		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_HALF_ATTACK_S);
 	}
 }
 

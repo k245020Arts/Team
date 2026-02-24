@@ -60,10 +60,24 @@ void BaseObject::Update()
 	//コンポーネントで回している
 	componentManager->Update();
 	//子供のオブジェクトをまわす
-	for (BaseObject* child : children) {
-		child->Update();
-	}
+	for (auto itr = children.begin(); itr != children.end(); )
+	{
+		BaseObject* child = *itr;
 
+		if (!child->DestroyRequested())
+		{
+			child->Update();
+			++itr;
+		}
+		else
+		{
+			if (transformParent && transform != nullptr) {
+				transform->RemoveChild((*itr)->GetTransform());
+			}
+			delete child;
+			itr = children.erase(itr);
+		}
+	}
 }
 
 void BaseObject::Draw()
@@ -148,7 +162,9 @@ void BaseObject::DeleteAllChildren() {
 void BaseObject::RemoveParent() {
 
 	if (parent) {//親がいるなら親の子供リストから削除
-		parent->RemoveChild(this);
+		if (!this->DestroyRequested()) { //削除要請があったらUpdateで削除するので削除しない
+			parent->RemoveChild(this);
+		}
 		parent = nullptr;
 	}
 }

@@ -1,6 +1,8 @@
 #pragma once
 #include "BossAttackBase.h"
 
+class SphereCollider;
+
 class BossSpecialAttack2 : public BossAttackBase
 {
 public:
@@ -29,4 +31,6 @@ private:
 	bool sound;
 	bool firstOnes;
 	bool secondOnes;
+
+	SphereCollider* rockColl;
 };
