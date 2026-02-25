@@ -69,7 +69,7 @@ void T_EnemyAttack::Start()
 	//e->enemyBaseComponent.anim->SetFrame(5.0f);
 	damage.hitDamage = e->eStatus->GetStatus().normalAttack1;
 	counter = 0;
-	e->isAttack = false;
+	//e->isAttack = false;
 	mMaxFrame = e->enemyBaseComponent.anim->GetMaxFrame();
 	isDecel = true;
 }
