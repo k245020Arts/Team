@@ -83,7 +83,7 @@ void BossRockManager::CreateRock(int _index,int _total,float _rotateAngle)
     startPos.y = center.y + offset;
 
 	VECTOR3 rotation = VZero;
-	rotation.z = 45.0f * DegToRad;
+	//rotation.z = 45.0f * DegToRad;
 
     rock->Init(Transform(startPos, rotation, VOne),"bossRock");
 

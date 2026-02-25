@@ -164,7 +164,6 @@ void BossRock::SetRockModel()
 	MeshRenderer* mesh = obj->Component()->AddComponent<MeshRenderer>();
 
 	int random = GetRand(2);
-	
 
 	switch (random)
 	{
@@ -190,9 +189,6 @@ void BossRock::SetRockModel()
 
 void BossRock::SetPreInfo(const VECTOR3& _pos)
 {
-	if (preDraw) {
-		return;
-	}
 	preTransform = Transform(_pos,VZero,VECTOR3(5.0f,0.1f,5.0f));
 	preDraw = true;
 }
