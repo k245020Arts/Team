@@ -132,6 +132,7 @@ void Camera::Draw()
 	SetFogEnable(true);
 	SetFogStartEnd(nearFog, farFog);
 	SetFogColor(137, 189, 222);
+	//SetFogColor(255, 255, 255);
 	SetupCamera_Perspective(fov);
 
 	if (debugButton == 2) {

@@ -48,6 +48,6 @@ void Shadow::ChangeScale(const VECTOR3& _dist, const VECTOR3& _groundPos)
 	float s = Easing::EaseOut(base, 0.2f, d / MAX_DIST);
 	obj->GetTransform()->scale.x = s;
 	obj->GetTransform()->scale.z = s;
-	groundPos = _groundPos + VECTOR3(0, 50, 0); //‰e‚ª‚µ‚Á‚©‚è•`‰æ‚³‚ê‚é‚æ‚¤‚É’n–Ê‚æ‚è­‚µ‚‚­Ý’è
+	groundPos = _groundPos + VECTOR3(0, 55, 0); //‰e‚ª‚µ‚Á‚©‚è•`‰æ‚³‚ê‚é‚æ‚¤‚É’n–Ê‚æ‚è­‚µ‚‚­Ý’è
 	dist = _dist;
 }

@@ -70,8 +70,14 @@ void Physics::Update()
 
 void Physics::Draw()
 {
+
+#ifdef _DEBUG
+
 	VECTOR3 pos = obj->GetTransform()->position;
 	DrawLine3D(pos, pos + (velocity * obj->GetObjectTimeRate()), 0xff0000);
+
+#endif //_DEBUG
+
 }
 
 void Physics::Start(const VECTOR3& _gravityAmout, const VECTOR3& _fir)
