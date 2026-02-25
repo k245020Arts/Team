@@ -251,6 +251,10 @@ void TrashEnemy::Update()
 void TrashEnemy::Draw()
 {
 	EnemyBase::Draw();
+	/*if (isAttack)
+		enemyBaseComponent.color->setRGB(Color::Rgb(255.0f, 0.0f, 0.0f, 255.0f));
+	else
+		enemyBaseComponent.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));*/
 }
 
 void TrashEnemy::Start(Object3D* _obj)
