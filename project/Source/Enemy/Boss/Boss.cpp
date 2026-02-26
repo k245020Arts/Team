@@ -24,6 +24,7 @@
 #include "../Boss/BossState/Attack/BossNormalAttack4.h"
 #include "../Boss/BossState/Attack/BossNormalAttack5.h"
 #include "../Boss/BossState/Attack/BossNormalAttack6.h"
+#include "../Boss/BossState/Attack/BossNormalAttack7.h"
 #include  "../Boss/BossState/Attack/BossSpecialAttack1.h"
 #include  "../Boss/BossState/Attack/BossSpecialSmallAttack1.h"
 #include  "../Boss/BossState/Attack/BossSpecialAttack2.h"
@@ -251,6 +252,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossNormalAttack4>("BossNormalAttack4", StateID::BOSS_NORMAL_ATTACK4_S);
 	enemyBaseComponent.state->CreateState<BossNormalAttack5>("BossNormalAttack5", StateID::BOSS_NORMAL_ATTACK5_S);
 	enemyBaseComponent.state->CreateState<BossNormalAttack6>("BossNormalAttack6", StateID::BOSS_NORMAL_ATTACK6_S);
+	enemyBaseComponent.state->CreateState<BossNormalAttack7>("BossNormalAttack7", StateID::BOSS_NORMAL_ATTACK7_S);
 	enemyBaseComponent.state->CreateState<BossSpecialAttack1>("BossSpecialAttack1", StateID::BOSS_SPECIAL_ATTACK1_S);
 	enemyBaseComponent.state->CreateState<BossSpecialSmallAttack1>("BossSpecialSmallAttack1", StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
 	enemyBaseComponent.state->CreateState<BossSpecialAttack2>("BossSpecialAttack2", StateID::BOSS_SPECIAL_ATTACK2_S);

@@ -540,6 +540,15 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossFear.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack7.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRockBase.cpp">
+      <Filter>Component\EnemyAttackObject\BossRock</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossThrowRock.cpp">
+      <Filter>Component\EnemyAttackObject\BossRock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1138,6 +1147,15 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossState\BossFear.h">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack7.h">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRockBase.h">
+      <Filter>Component\EnemyAttackObject\BossRock</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossThrowRock.h">
+      <Filter>Component\EnemyAttackObject\BossRock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

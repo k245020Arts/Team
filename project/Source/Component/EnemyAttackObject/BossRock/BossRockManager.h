@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../../Library/GameObject.h"
 
-class BossRock;
+class BossRockBase;
 class Boss;
 class BaseObject;
 
@@ -18,8 +18,8 @@ public:
 	void CreateRock(int _index, int _total, float _rotateAngle);
 	void CreateLastRock();
 
-	void PushList(BossRock* _obj);
-	void RemoveList(BossRock* _obj);
+	void PushList(BossRockBase* _obj);
+	void RemoveList(BossRockBase* _obj);
 
 	size_t GetSize() { return rocks.size(); }
 
@@ -27,8 +27,11 @@ public:
 
 	void ShakeCamera();
 
+	void ThrowStart();
+	void CreateThrow(VECTOR3& _addPos);
+
 private:
-	std::list<BossRock*> rocks;
+	std::list<BossRockBase*> rocks;
 	Boss* boss;
 
 	void SetRockComponent(BaseObject* _base,const VECTOR3& _gravity, const VECTOR3& _fir);

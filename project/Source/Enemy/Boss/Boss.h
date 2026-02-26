@@ -26,6 +26,7 @@ public:
 	friend class BossNormalAttack4;
 	friend class BossNormalAttack5;
 	friend class BossNormalAttack6;
+	friend class BossNormalAttack7;
 	friend class BossSpecialAttack1;
 	friend class BossSpecialSmallAttack1;
 	friend class BossSpecialAttack2;

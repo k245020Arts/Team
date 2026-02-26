@@ -1,5 +1,7 @@
 ﻿#include "BossRockManager.h"
+#include "BossRockBase.h"
 #include "BossRock.h"
+#include "BossThrowRock.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Component/Shadow/Shadow.h"
@@ -121,12 +123,12 @@ void BossRockManager::CreateLastRock()
 	SetRockComponent(rock, VECTOR3(0, -3000, 0), VECTOR3(0, 1500, 0));
 }
 
-void BossRockManager::PushList(BossRock* _obj)
+void BossRockManager::PushList(BossRockBase* _obj)
 {
 	rocks.push_back(_obj);
 }
 
-void BossRockManager::RemoveList(BossRock* _obj)
+void BossRockManager::RemoveList(BossRockBase* _obj)
 {
 	for (auto itr = rocks.begin(); itr != rocks.end();) {
 		if (*itr == _obj) {
@@ -153,6 +155,32 @@ bool BossRockManager::IsFreePos(const VECTOR3& _pos, float _minDist)
 void BossRockManager::ShakeCamera()
 {
 	boss->enemyBaseComponent.camera->CameraPerspectiveShakeStart(2.0f, 0.1f);
+}
+
+void BossRockManager::ThrowStart()
+{
+	for (auto rock : rocks) {
+		BossThrowRock* throwRock = rock->GetBaseObject()->Component()->GetComponent<BossThrowRock>();
+		if (throwRock == nullptr) {
+			continue;
+		}
+		throwRock->ThrowRockStart();
+	}
+
+}
+
+void BossRockManager::CreateThrow(VECTOR3& _addPos)
+{
+	Object3D* rock = new Object3D();
+	rock->Init(Transform(), "bossRock");
+	BossThrowRock* throwRock = rock->Component()->AddComponent<BossThrowRock>();
+	Physics* phy = rock->Component()->AddComponent<Physics>();
+	
+	phy->Start(VZero, VECTOR3(0,1500,0));
+	throwRock->CreateThrowRock(_addPos);
+
+	throwRock->SetRockModel();
+	boss->obj->AddChild(rock, false);
 }
 
 void BossRockManager::SetRockComponent(BaseObject* _base, const VECTOR3& _gravity, const VECTOR3& _fir)

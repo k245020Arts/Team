@@ -5,7 +5,7 @@ class EnemyAttackObject : public Component
 {
 public:
 	EnemyAttackObject();
-	~EnemyAttackObject();
+	virtual ~EnemyAttackObject();
 
 	void Update()override;
 	void Draw()override;

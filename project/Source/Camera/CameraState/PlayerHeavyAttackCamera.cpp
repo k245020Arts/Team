@@ -34,7 +34,7 @@ void PlayerHeavyAttackCamera::Update()
 		if (backCounter >= 0.0f) {
 
 			float t = 1.0f - backCounter / 2.0f;
-			VECTOR3 easedT = Easing::Lerp(c->defalutDistance, VECTOR3(0, 0, -800), t);
+			VECTOR3 easedT = Easing::Lerp(c->defalutDistance, VECTOR3(0, 0, -1200), t);
 			c->currentDistance = easedT;
 			backCounter -= Time::DeltaTimeRate();
 			VECTOR3 targetp = c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0);
