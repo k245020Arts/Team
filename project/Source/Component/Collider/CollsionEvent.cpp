@@ -193,7 +193,7 @@ void CollsionEvent::PlayerAttackRock(ColliderBase* _coll1, ColliderBase* _coll2,
 	else {
 		throwRock->PlayerAttackRockFlyAway(*player->GetPlayerTransform());
 	}
-
+	player->AttackRockHit();
 }
 
 void CollsionEvent::BossRockDamage(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)

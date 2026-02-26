@@ -240,6 +240,11 @@ public:
 	/// <returns></returns>
 	bool GetCharge() { return charge; }
 
+	/// <summary>
+	///@UŒ‚‚ªŠâ‚É“–‚½‚Á‚½‚Éˆ—‚·‚é
+	/// </summary>
+	void AttackRockHit();
+
 private:
 	PlayerInformation::CharaComponent playerCom;
 	float size;

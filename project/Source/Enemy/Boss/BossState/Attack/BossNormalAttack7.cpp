@@ -11,6 +11,8 @@ BossNormalAttack7::BossNormalAttack7()
 {
 	string = Function::GetClassNameC<BossNormalAttack7>();
 	animId = ID::B_N_ATTACK7;
+	throwRock = false;
+	rockGet = false;
 }
 
 BossNormalAttack7::~BossNormalAttack7()
@@ -33,6 +35,17 @@ void BossNormalAttack7::Update()
 
 	AttackSound();
 	AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
+	if (boss->enemyBaseComponent.anim->GetCurrentFrame() >= 31.58683f) {
+		if (!rockGet) {
+			VECTOR3 vzero = VECTOR3(VZero);
+			boss->rockManager->CreateThrow(vzero);
+			rockGet = true;
+		}
+	}
+
+	if (boss->enemyBaseComponent.anim->GetCurrentFrame() >= 54.475f && boss->enemyBaseComponent.anim->GetCurrentFrame() <= boss->enemyBaseComponent.anim->EventStartTime(animId)) {
+		boss->LookPlayer();
+	}
 }
 
 void BossNormalAttack7::Draw()
@@ -45,10 +58,13 @@ void BossNormalAttack7::Start()
 	EnemyStateBase::Start();
 	BossAttackBase::BossStart();
 	throwRock = false;
-	VECTOR3 vzero = VECTOR3(VZero);
-	boss->rockManager->CreateThrow(vzero);
+	rockGet = false;
 }
 
 void BossNormalAttack7::Finish()
 {
+	Boss* boss = GetBase<Boss>();
+	BossAttackBase::BossFinish();
+	boss->enemyBaseComponent.anim->AnimEventReset();
+	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 }

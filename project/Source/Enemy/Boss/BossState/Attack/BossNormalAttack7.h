@@ -15,4 +15,5 @@ public:
 
 private:
 	bool throwRock;
+	bool rockGet;
 };

@@ -82,7 +82,7 @@ void BossThrowRock::CreateThrowRock(VECTOR3& _addPos)
 	addPos = _addPos;
 }
 
-void BossThrowRock::ThrowRockStart()
+void BossThrowRock::ThrowRockStart(BaseObject* _player)
 {
 	if (throwRock) {
 		return;
@@ -94,14 +94,53 @@ void BossThrowRock::ThrowRockStart()
 	info.shape = CollsionInformation::RAY;
 	info.oneColl = false;
 	info.tag = CollsionInformation::BOSS_ROCK_F;
-	randColl = obj->Component()->AddComponent<RayCollider>();
-	randColl->RaySet(info, Transform(VECTOR3(0, 300, 0), VZero, VOne), Transform(VECTOR3(0, -300, 0), VZero, VOne));
+	if (randColl == nullptr) {
+		randColl = obj->Component()->AddComponent<RayCollider>();
+		randColl->RaySet(info, Transform(VECTOR3(0, 300, 0), VZero, VOne), Transform(VECTOR3(0, -300, 0), VZero, VOne));
+	}
+
+	info.parentTransfrom = obj->GetTransform();
+	info.shape = CollsionInformation::SPHERE;
+	info.oneColl = true;
+	info.tag = CollsionInformation::BOSS_ROCK_PLAYER_ATTACK;
+
+	if (playerAttackHitColl == nullptr) {
+		playerAttackHitColl = obj->Component()->AddComponent<SphereCollider>();
+		playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(250.0f, 1.0f, 1.0f)), "bossplayerAttack");
+	}
 
 	throwRock = true;
-	VECTOR3 gravity = VECTOR3(0, -2000.0f, 0);
-	gravity.y = Random::GetFloat(1500.0f, 3000.0f);
-	gravity.y *= -1.0f;
-	physics->AddGravity(gravity);
-	physics->AddVelocity(dir * 5000.0f, false);
-	physics->AddVelocity(VECTOR3(0,10000,0), false);
+	//プレイヤーに向かって飛ぶ
+	VECTOR3 start = obj->GetTransform()->position;
+	VECTOR3 target = _player->GetTransform()->position;
+
+	VECTOR3 diff = target - start;
+
+	float g = 2000.0f;
+	physics->SetGravity(VECTOR3(0, -g, 0));
+
+	VECTOR3 diffXZ = VECTOR3(diff.x, 0, diff.z);
+	float distance = diffXZ.Size();
+
+	float height = diff.y;
+
+	float angle = 30.0f * DegToRad;
+
+	float cosA = cosf(angle);
+	float sinA = sinf(angle);
+
+	float numerator = g * distance * distance;
+	float denominator = 2 * cosA * cosA * (distance * tanf(angle) - height);
+
+	float speed = sqrtf(numerator / denominator);
+
+	// 速度ベクトル
+	VECTOR3 dir = diffXZ.Normalize();
+
+	VECTOR3 velocity;
+	velocity.x = dir.x * speed * cosA;
+	velocity.z = dir.z * speed * cosA;
+	velocity.y = speed * sinA;
+
+	physics->AddVelocity(velocity, false);
 }

@@ -703,6 +703,13 @@ void Player::SpecialVarAdd(float _add)
 	specialAttackBar = std::clamp(add, 0.0f, specialAttackBarMax);
 }
 
+void Player::AttackRockHit()
+{
+	playerCom.shaker->ShakeStart(VOne * 50.0f, Shaker::MIX_SHAKE, true, 0.35f);
+	playerCom.camera->CameraPerspectiveShakeStart(5.0f, 0.35f);
+	playerCom.controller->ControlVibrationStartFrame(80, 30);
+}
+
 void Player::HeavyAttackChangeParam(HeavyAttackLevel _level)
 {
 	auto& param = attackEffects[StateID::PLAYER_HEAVY_ATTACK_S];

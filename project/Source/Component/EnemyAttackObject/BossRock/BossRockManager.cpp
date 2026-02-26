@@ -8,6 +8,7 @@
 #include "../../../Enemy/Boss/Boss.h"
 #include "../../../State/StateManager.h"
 #include "../../../Common/Easing.h"
+#include "../../../Component/Shaker/Shaker.h"
 #include "../../../Enemy/Boss/BossState/BossStatus.h"
 #include "../../../Camera/Camera.h"
 #include "../../../Common/Random.h"
@@ -164,7 +165,7 @@ void BossRockManager::ThrowStart()
 		if (throwRock == nullptr) {
 			continue;
 		}
-		throwRock->ThrowRockStart();
+		throwRock->ThrowRockStart(boss->enemyBaseComponent.playerObj);
 	}
 
 }
@@ -175,8 +176,9 @@ void BossRockManager::CreateThrow(VECTOR3& _addPos)
 	rock->Init(Transform(), "bossRock");
 	BossThrowRock* throwRock = rock->Component()->AddComponent<BossThrowRock>();
 	Physics* phy = rock->Component()->AddComponent<Physics>();
+	Shaker* shaker = rock->Component()->AddComponent<Shaker>();
 	
-	phy->Start(VZero, VECTOR3(0,1500,0));
+	phy->Start(VZero, VZero);//
 	throwRock->CreateThrowRock(_addPos);
 
 	throwRock->SetRockModel();
@@ -189,7 +191,7 @@ void BossRockManager::SetRockComponent(BaseObject* _base, const VECTOR3& _gravit
 	Physics* phy = _base->Component()->AddComponent<Physics>();
 	phy->Start(_gravity,_fir);
 	bossRock->StartCollAdd(CollsionInformation::BOSS_ROCK_ATTACK, Transform());;
-
+	Shaker* shaker = _base->Component()->AddComponent<Shaker>();
 	bossRock->SetRockModel();
 	//Shadow* shadow = _base->Component()->AddComponent<Shadow>();
 	/*Object3D* shadow = new Object3D();
