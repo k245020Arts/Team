@@ -230,3 +230,17 @@ void BossRockBase::SetRockModel()
 
 	useHandleNumber = random;
 }
+
+void BossRockBase::RockBossHit()
+{
+	blastColl = obj->Component()->AddComponent<DountCollider>();
+	nowBlast = true;
+	CollsionInfo info;
+	info.parentTransfrom = obj->GetTransform();
+	info.shape = CollsionInformation::DONUT;
+	info.oneColl = false;
+	info.tag = CollsionInformation::ROCK_BLAST_DAMAGE;
+	blastColl->DountSet(info, Transform(VZero, VZero, VOne * 50.0f), 100.0f);
+	soundManager->PlaySe(Sound_ID::ROCK_BLAST);
+	effectManager->CreateEffekseer(Transform(obj->GetTransform()->position, VZero, VOne * 3.0f), nullptr, Effect_ID::ROCK_BLAST, 1.0f);
+}

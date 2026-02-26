@@ -140,9 +140,6 @@
     <ClCompile Include="Source\Component\Animator\Anim2D.cpp">
       <Filter>Component\Anim2D</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component\Collider\AABBCollider.cpp">
-      <Filter>Component\Collider\AABB</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Component\Collider\ColliderBase.cpp">
       <Filter>Component\Collider\ColliderBase</Filter>
     </ClCompile>
@@ -548,6 +545,9 @@
     </ClCompile>
     <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossThrowRock.cpp">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\Collider\AABBCollider.cpp">
+      <Filter>Component\Collider\AABB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

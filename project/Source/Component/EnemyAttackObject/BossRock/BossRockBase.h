@@ -32,6 +32,8 @@ public:
 
 	void SetRockModel();
 
+	void RockBossHit();
+
 protected:
 
 	RayCollider* randColl;
