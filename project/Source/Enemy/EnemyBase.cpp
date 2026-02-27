@@ -24,6 +24,7 @@ EnemyBase::EnemyBase()
 	cursolImage = -1;
 	damageFlash = 0.0f;
 	specialAttackHit = false;
+	justAvoidCollTime = 0.0f;
 
 }
 
@@ -35,10 +36,19 @@ EnemyBase::~EnemyBase()
 void EnemyBase::Update()
 {
 	if (!enemyBaseComponent.anim->AnimEventCan()) {
-		if (attackColl != nullptr) {
-			DeleteColliderComponent();
-			attackColl = nullptr;
+		if (attackColl.instance != nullptr) {
+			DeleteColliderComponent(&attackColl);
+			attackColl.instance = nullptr;
 		}
+	}
+	justAvoidCollTime -= Time::DeltaTimeRate();
+	float time = enemyBaseComponent.anim->EventStartTime(enemyBaseComponent.anim->GetCurrentID());
+	if (time + 5.0f >= enemyBaseComponent.anim->GetCurrentFrame()) {
+		if (justAvoidColl.instance != nullptr) {
+			DeleteColliderComponent(&justAvoidColl);
+			justAvoidColl.instance = nullptr;
+		}
+		justAvoidCollTime = 0.0f;
 	}
 	//敵のダメージフラッシュが終わったら元に戻す
 	if (damageFlash > 0.0f) {

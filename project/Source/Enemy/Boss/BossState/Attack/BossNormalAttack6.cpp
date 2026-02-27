@@ -31,6 +31,7 @@ void BossNormalAttack6::Update()
 		boss->BossAttackStateChange();
 	}
 	BossAttackCollsion();
+	BossJustAvoidCollsion();
 	//boss->LookPlayer();
 	if (!boss->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
@@ -82,7 +83,7 @@ void BossNormalAttack6::Start()
 void BossNormalAttack6::Finish()
 {
 	Boss* boss = GetBase<Boss>();
-	boss->DeleteCollision();
+	boss->DeleteCollision(&boss->attackColl);
 	BossAttackBase::BossFinish();
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);

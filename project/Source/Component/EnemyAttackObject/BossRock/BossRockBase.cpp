@@ -40,6 +40,8 @@ BossRockBase::BossRockBase()
 	effectManager = FindGameObject<EffectManager>();
 
 	useHandleNumber = -1;
+
+	justAvoidCollider = nullptr;
 }
 
 BossRockBase::~BossRockBase()
@@ -58,6 +60,7 @@ BossRockBase::~BossRockBase()
 	useHandleNumber = -1;
 	physics = nullptr;
 	rockManager->RemoveList(this);
+	justAvoidCollider = nullptr;
 	hitObjects.clear();
 }
 
@@ -122,6 +125,7 @@ void BossRockBase::Ground()
 	//effectManager->StopEffekseer(Effect_ID::ROCK_FALL);
 	groundInit = true;
 	obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("_rockAttack");
+	obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("justAvoid_rock");
 	//randColl = nullptr;
 	playerHitColl = nullptr;
 	
@@ -159,6 +163,12 @@ void BossRockBase::Ground()
 		playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(200.0f, 1.0f, 1.0f)), "bossplayerAttack");
 	}
 
+	info.oneColl = false;
+	info.tag = CollsionInformation::JUST_AVOID;
+	if (justAvoidCollider == nullptr) {
+		justAvoidCollider = obj->Component()->AddComponent<SphereCollider>();
+		justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(250.0f, 1.0f, 1.0f)), "justAvoid_rock");
+	}
 
 	info.parentTransfrom = obj->GetTransform();
 	info.shape = CollsionInformation::SPHERE;

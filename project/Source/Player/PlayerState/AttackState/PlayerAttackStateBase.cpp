@@ -166,7 +166,7 @@ void PlayerAttackStateBase::Start()
 void PlayerAttackStateBase::Finish()
 {
 	Player* p = GetBase<Player>();
-    p->DeleteCollision();
+    p->DeleteCollision(&p->attackColl);
 	if (!nextAttack) {
 		p->playerCom.camera->CameraLeapSet(0.2f);
 		p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
@@ -217,7 +217,7 @@ void PlayerAttackStateBase::AgainAttackCollsion()
 	p->playerCom.sound->RandamSe("P_AttackV", 4);
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);*/
 	Debug::DebugLog("collsionCreate");
-	p->DeleteCollision();
+	p->DeleteCollision(&p->attackColl);
 	firstColl = false;
 	BaseAttackCollsion();
 	/*p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("p_attack");
@@ -270,8 +270,8 @@ void PlayerAttackStateBase::SpecialAttackStart()
 void PlayerAttackStateBase::BaseAttackCollsion()
 {
 	Player* p = GetBase<Player>();
-	p->playerCom.player->CollsionStart<SphereCollider>(CollsionInformation::SPHERE, collTrans);
-	p->playerCom.player->SetShape(CollsionInformation::SPHERE);
+	p->playerCom.player->CollsionStart<SphereCollider>(&p->attackColl, collTrans);
+	p->playerCom.player->SetShape(CollsionInformation::SPHERE, &p->attackColl);
 	
 	collsionCreate = true;
 }

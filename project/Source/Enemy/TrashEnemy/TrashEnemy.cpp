@@ -265,6 +265,9 @@ void TrashEnemy::Start(Object3D* _obj)
 
 	enemyBaseComponent.collider = FindGameObjects<ColliderBase>();
 
+	attackColl		= CharaBase::CollsionSet(nullptr, CollsionInformation::SPHERE, "e_attack", true, CollsionInformation::E_ATTACK);
+	justAvoidColl	= CharaBase::CollsionSet(nullptr, CollsionInformation::SPHERE, "e_just_avoid", false, CollsionInformation::JUST_AVOID_ENEMY);
+
 	enemyBaseComponent.anim = obj->Component()->GetComponent<Animator>();
 	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
 	enemyBaseComponent.control = FindGameObject<ControllerInputManager>();

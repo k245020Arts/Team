@@ -46,6 +46,9 @@ namespace CollsionInformation {
 		BOSS_ROCK_RUSH,
 		BOSS_RUSH,
 		ROCK_BLAST_DAMAGE,
+		JUST_AVOID,
+		JUST_AVOID_ENEMY,
+		JUST_AVOID_BOSS,
 
 		TAG_MAX,
 	};

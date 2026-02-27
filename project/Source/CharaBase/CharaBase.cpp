@@ -3,10 +3,10 @@
 
 CharaBase::CharaBase()
 {
-	lastTarget = false;
-	collShape = CollsionInformation::Shape::SPHERE;
+	lastTarget = false;;
 	maxHp = 0;
-	attackColl = nullptr;
+	attackColl = CharaBase::CollsionSet();
+	justAvoidColl = CharaBase::CollsionSet();
 	hp = 0;
 	specialAttackBar = 0.0f;
 	specialAttackBarMax = 0.0f;
@@ -24,12 +24,12 @@ void CharaBase::Draw()
 {
 }
 
-void CharaBase::DeleteColliderComponent()
+void CharaBase::DeleteColliderComponent(CollsionSet* _set)
 {
-	switch (collShape)
+	switch (_set->shape)
 	{
 	case CollsionInformation::SPHERE:
-		obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>(collName);
+		obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>(_set->collName);
 		break;
 	case CollsionInformation::MODEL:
 		break;
@@ -44,10 +44,10 @@ void CharaBase::DeleteColliderComponent()
 	}
 }
 
-void CharaBase::DeleteCollision()
+void CharaBase::DeleteCollision(CollsionSet* _set)
 {
-	if (attackColl != nullptr) {
-		DeleteColliderComponent();
-		attackColl = nullptr;
+	if (_set->instance != nullptr) {
+		DeleteColliderComponent(_set);
+		_set->instance = nullptr;
 	}
 }

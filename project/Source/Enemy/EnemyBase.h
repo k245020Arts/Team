@@ -88,4 +88,5 @@ protected:
 	VECTOR3 upPos;
 
 	bool specialAttackHit;
+	float justAvoidCollTime;
 };

@@ -96,6 +96,7 @@ void BossSpecialAttack1::Update()
 	
 	
 	BossAttackCollsion();
+	BossJustAvoidCollsion();
 	AttackFlash (ID::B_MODEL, 36, "E_AttackV");
 	damage.flash = true;
 }

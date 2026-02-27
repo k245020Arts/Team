@@ -43,5 +43,5 @@ void CooperateAttack1::Finish()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->speed=e->eStatus->GetStatus().runSpeed;
 	e->CooperateAtkFinish();
-	e->DeleteCollision();
+	e->DeleteCollision(&e->attackColl);
 }

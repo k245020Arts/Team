@@ -123,6 +123,12 @@ void Player::Update()
 {
 	//playerCom.stateManager->Update();
 	//回避状態が始まるときに回転に補正を掛けるための処理
+	if (justAvoidColHit) {
+		justAvoidCan = true;
+	}
+	else {
+		justAvoidCan = false;
+	}
 	playerTransform->position = playerCom.anim->BoneMovePositionAdd(playerTransform->position);
 	if (avoidReady) {
 		AvoidRotationChange();
@@ -130,7 +136,7 @@ void Player::Update()
 	//攻撃のあたりはんていが終わったら削除
 	if (playerCom.stateManager->GetState<PlayerAttackStateBase>() != nullptr) {
 		if (!playerCom.stateManager->GetState<PlayerAttackStateBase>()->IsAttack()) {
-			DeleteCollision();
+			DeleteCollision(&attackColl);
 		}
 	}
 
@@ -179,6 +185,7 @@ void Player::Update()
 			playerCom.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));
 		}
 	}
+	justAvoidColHit = false;
 	//playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
 }
 
@@ -238,8 +245,7 @@ void Player::Start(Object3D* _obj)
 	
 	avoidStart				= false;
 	justAvoidCanCounter		= 0.0f;
-	attackColl				= nullptr;
-	collName				= "p_attack";
+	attackColl = CharaBase::CollsionSet(nullptr, CollsionInformation::SPHERE, "p_attack", false, CollsionInformation::P_ATTACK);
 	//playerCom.physics->SetVelocity(VECTOR3(10.0f, 5.0f, 0.0f));
 
 	//physics->SetInterect(VECTOR3(5.0f, -1.0f, 0.0f),0.1);
@@ -326,7 +332,6 @@ void Player::Move(float _speed, float _speedMax)
 	else {
 		playerCom.stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 	}
-	
 }
 
 void Player::RotationChange(VECTOR3 _angle,float _speed)
@@ -427,12 +432,28 @@ void Player::AvoidReady()
 		return;
 	}*/
 	//回避のスタート処理
-	PlayerStickInput();
-	avoidReady			= true;
-	justAvoidCanCounter = 0.15f;
-	avoidCounter--;
-	noAvoidCounter		= 2.0f;
-	avoidReadyCounter	= 0.00f;
+	if (justAvoidCan) {
+		playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
+
+		playerCom.enemyManager->JustAvoidTargetChange(dynamic_cast<Object3D*>(playerCom.hitObj));
+		playerCom.camera->TargetSet(playerCom.hitObj);
+		Debug::DebugLog("JustAvoid");
+		avoidStart = false;
+		avoidReady = false;
+		justAvoidCanCounter = 0.0f;
+		justAvoid = true;
+		justFeedInTime = JUST_FEED_IN_TIME;
+		SpecialVarAdd(10.0f);
+	}
+	else {
+		PlayerStickInput();
+		avoidReady = true;
+		justAvoidCanCounter = 0.0f;
+		avoidCounter--;
+		noAvoidCounter = 2.0f;
+		avoidReadyCounter = 0.00f;
+	}
+
 }
 
 void Player::AvoidRotationChange()
@@ -462,40 +483,40 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	std::shared_ptr<BossAttackBase> attack = _obj->Component()->GetComponent<StateManager>()->GetState<BossAttackBase>();
 	float startTime					= enemyAnim->EventStartTime(_attackId);
 	bool damage						= false;
+	if (justAvoid)
+		return true;
+	
 	if (attack == nullptr)
 		return true;
 
 	BossAttackBase::DamagePattern param = attack->GetDamageParam();
 	//ジャスト回避が出来る処理
-	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
-		if (enemyAnim->GetCurrentFrame() <= startTime + 8.0f || startTime >= 0.0f) {
-			/*if (!LargeJustAvoid(attack)) {
-				return true;
-			}*/
-			playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
-			playerCom.hitObj	= _obj;
-			playerCom.enemyManager->JustAvoidTargetChange(dynamic_cast<Object3D*>(_obj));
-			playerCom.camera->TargetSet(_obj);
-			Debug::DebugLog("JustAvoid");
-			avoidStart			= false;
-			avoidReady			= false;
-			justAvoidCanCounter = 0.0f;
-			justAvoid			= true;
-			justFeedInTime		= JUST_FEED_IN_TIME;
-			SpecialVarAdd(10.0f);
-		}
+	//if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
+	//	if (enemyAnim->GetCurrentFrame() <= startTime + 8.0f || startTime >= 0.0f) {
+	//		/*if (!LargeJustAvoid(attack)) {
+	//			return true;
+	//		}*/
+	//		
+	//	}
+	//}
+	//else {
+	//	//ジャスト回避が出来るようになったらスルー
+	//	if (enemyAnim->GetCurrentFrame() <= startTime + 8.0f && attack != nullptr) {
+	//		return false;
+	//	}
+	//	else {
+	//		//出来なかったらダメージを食らう
+	//		damage = true;
+	//	}
+	//	
+	//}
+	if (justAvoidCan) {
+		damage = false;
 	}
 	else {
-		//ジャスト回避が出来るようになったらスルー
-		if (enemyAnim->GetCurrentFrame() <= startTime + 8.0f && attack != nullptr) {
-			return false;
-		}
-		else {
-			//出来なかったらダメージを食らう
-			damage = true;
-		}
-		
+		damage = true;
 	}
+	
 	//ダメージが入ったらパラメーターのセット
 	if (damage) {
 		if (pB->GetID() != ID::P_ANIM_AVOID) {
@@ -536,7 +557,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0,50,0),VZero,VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);
 		}
 	}
-	return true;
+	return damage;
 }
 
 void Player::TargetObjSet(BaseObject* _base)
@@ -600,9 +621,9 @@ void Player::DrawTrail(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, flo
 	playerCom.weapon->CreateTrailPlayer(_nPos,_fPos,_r,_g,_b,_a,index,_time);
 }
 
-void Player::DeleteCollision()
+void Player::DeleteCollision(CollsionSet* _set)
 {
-	CharaBase::DeleteCollision();
+	CharaBase::DeleteCollision(_set);
 }
 
 bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation::Tag _tag)
@@ -611,6 +632,10 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 	if (noDamage) {
 		return true;
 	}
+	if (justAvoid) {
+		return true;
+	}
+	
 	objHit = true;
 	struct PlayerDamage
 	{
@@ -648,21 +673,27 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 	}
 	
 	//ジャスト回避が出来る処理
-	if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
+	//if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 
-		playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
-		Debug::DebugLog("JustAvoid");
-		avoidStart = false;
-		avoidReady = false;
-		justAvoidCanCounter = 0.0f;
-		justAvoid = true;
-		justFeedInTime = JUST_FEED_IN_TIME;
-		largeJustAvoid = true;
+	//	playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_S);
+	//	Debug::DebugLog("JustAvoid");
+	//	avoidStart = false;
+	//	avoidReady = false;
+	//	justAvoidCanCounter = 0.0f;
+	//	justAvoid = true;
+	//	justFeedInTime = JUST_FEED_IN_TIME;
+	//	largeJustAvoid = true;
+	//}
+	//else {
+	//	//出来なかったらダメージを食らう
+	//	damage = true;
+	//}
+	/*if (justAvoidCan) {
+		damage = false;
 	}
 	else {
-		//出来なかったらダメージを食らう
 		damage = true;
-	}
+	}*/
 	//ダメージが入ったらパラメーターのセット
 	if (damage) {
 		if (pB->GetID() != StateID::PLAYER_AVOID_S) {
@@ -708,6 +739,12 @@ void Player::AttackRockHit()
 	playerCom.shaker->ShakeStart(VOne * 50.0f, Shaker::MIX_SHAKE, true, 0.35f);
 	playerCom.camera->CameraPerspectiveShakeStart(5.0f, 0.35f);
 	playerCom.controller->ControlVibrationStartFrame(80, 30);
+}
+
+void Player::JustAvoidCollsionHit(BaseObject* _obj)
+{
+	playerCom.hitObj = _obj;
+	justAvoidColHit = true;
 }
 
 void Player::HeavyAttackChangeParam(HeavyAttackLevel _level)

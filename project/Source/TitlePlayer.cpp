@@ -88,7 +88,7 @@ void TitlePlayer::Start(Object3D* _obj) {
 	obj->GetTransform()->position = firstPos;
 	playerTransform = obj->GetTransform();
 
-	collName = "p_attack";
+	//collName = "p_attack";
 
 	using namespace ID;
 

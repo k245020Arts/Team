@@ -44,11 +44,13 @@ protected:
 	DountCollider* blastColl;
 	RayCollider* uiColl;
 	ModelCollider* pushColl;
+	SphereCollider* justAvoidCollider;
 
 	SoundManager* soundManager;
 	EffectManager* effectManager;
 	Physics* physics;
 	BossRockManager* rockManager;
+
 
 	bool blast;
 	Color* color;

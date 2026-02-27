@@ -1,10 +1,12 @@
 #include "BossAttackBase.h"
 #include "../../Boss.h"
 #include "../../../../Component/Animator/Animator.h"
+#include "../../../../CharaBase/CharaBase.h"
 
 BossAttackBase::BossAttackBase()
 {
 	damage = DamagePattern();
+	
 }
 
 BossAttackBase::~BossAttackBase()
@@ -16,6 +18,7 @@ void BossAttackBase::BossStart()
 	Boss* boss		= GetBase<Boss>();
 	boss->threat	= false;
 	damage.flash	= false;
+	
 }
 
 void BossAttackBase::BossFinish()

@@ -29,6 +29,7 @@ void BossNormalAttack1::Update()
 		boss->BossAttackStateChange();
 	}
 	BossAttackCollsion();
+	BossJustAvoidCollsion();
 	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
 		//攻撃にかかる時間で90°回したいので１フレームごとに進む角度を求めている。
 		averageSpeed = 90.0f / attackTime;
@@ -67,7 +68,7 @@ void BossNormalAttack1::Start()
 void BossNormalAttack1::Finish()
 {
 	Boss* boss = GetBase<Boss>();
-	boss->DeleteCollision();
+	boss->DeleteCollision(&boss->attackColl);
 	BossAttackBase::BossFinish();
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);

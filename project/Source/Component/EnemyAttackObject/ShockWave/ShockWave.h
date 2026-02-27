@@ -28,5 +28,6 @@ private:
 
 	EffectManager* effect;
 	DountCollider* collider;
+	DountCollider* justAvoidCollider;
 	float waveSpeed;
 };

@@ -78,6 +78,7 @@ void BossSpecialAttack2::Update()
 	}
 	//b->enemyBaseComponent.physics->AddVelocity(rotation * 10000.0f, true);
 	BossAttackCollsion();
+	BossJustAvoidCollsion();
 	
 	VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
 	VECTOR3 angle = pos - b->GetBaseObject()->GetTransform()->position;

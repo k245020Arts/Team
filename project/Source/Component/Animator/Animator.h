@@ -116,12 +116,14 @@ public:
 	/// <param name="id">取得したいID</param>
 	/// <returns>アニメーションイベントの開始時間</returns>
 	float EventStartTime(ID::IDType id) { return fileInfos[ID::GetID(id)].eventStartTime; }
+	float EventStartTime(std::string id) { return fileInfos[id].eventStartTime; }
 	/// <summary>
 	/// アニメーションイベントの終了時間取得
 	/// </summary>
 	/// <param name="id">取得したいID</param>
 	/// <returns>アニメーションイベントの終了時間</returns>
 	float EventFinishTime(ID::IDType id) { return fileInfos[ID::GetID(id)].eventFinishTime; }
+	float EventFinishTime(std::string id) { return fileInfos[id].eventFinishTime; }
 
 	/// <summary>
 	/// アニメーションのフレームをセットする
@@ -168,7 +170,6 @@ private:
 		float frame;
 		float beforeFrame;
 		int boneIndex;
-		
 
 		PlayInfo() : fileID("NONE"), attachID(-1), frame(0.0f),beforeFrame(0.0f), boneIndex(-1){}
 	};

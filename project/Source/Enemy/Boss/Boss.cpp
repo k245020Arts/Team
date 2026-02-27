@@ -232,8 +232,8 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
 	//enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 
-	attackColl = nullptr;
-	collName = "b_attack";
+	attackColl = CharaBase::CollsionSet(nullptr, CollsionInformation::SPHERE, "b_attack", true, CollsionInformation::B_ATTACK);
+	justAvoidColl = CharaBase::CollsionSet(nullptr, CollsionInformation::SPHERE, "b_just_avoid", false, CollsionInformation::JUST_AVOID_BOSS);
 
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 

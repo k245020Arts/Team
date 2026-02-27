@@ -94,6 +94,7 @@ void BossSpecialSmallAttack1::Update()
 
 
 	BossAttackCollsion();
+	BossJustAvoidCollsion();
 }
 
 void BossSpecialSmallAttack1::Draw()

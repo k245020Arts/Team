@@ -23,6 +23,9 @@ public:
 	void Trail();
 	void BossTrail(bool _right);
 
+	void BossJustAvoidCollsion();
+	void EnemyJustAvoidCollsion();
+
 protected:
 	ID::IDType animId;
 	bool firstColl;

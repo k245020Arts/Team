@@ -78,7 +78,7 @@ void T_EnemyAttack::Finish()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	e->isAttack = false;
-	e->DeleteCollision();
+	e->DeleteCollision(&e->attackColl);
 }
 
 void T_EnemyAttack::AttackInformation(TrashEnemy* _e)
@@ -91,4 +91,5 @@ void T_EnemyAttack::AttackInformation(TrashEnemy* _e)
 	AttackFlash(ID::E_MODEL, 35, "E_AttackV");
 	_e->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	Trail();
+	EnemyJustAvoidCollsion();
 }

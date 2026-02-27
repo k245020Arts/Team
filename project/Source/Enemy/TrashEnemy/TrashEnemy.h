@@ -35,6 +35,7 @@ public:
 	friend class T_EnemyJump;
 	friend class CooperateAttack1;
 	friend class T_EnemyDamage;
+	friend class EnemyStateBase;
 
 	TrashEnemy();
 	~TrashEnemy();
@@ -87,16 +88,15 @@ public:
 	void AddPos(VECTOR3 _pos);
 
 	template<typename T>
-	T* CollsionStart(CollsionInformation::Shape _shape, Transform _trans)
+	T* CollsionStart(CollsionSet* _set, const Transform& _trans)
 	{
-		if (attackColl == nullptr)
-		{
-			CollsionInfo info = CharaBase::CollsionInstant<T>(_shape, _trans);
-			info.tag = CollsionInformation::Tag::E_ATTACK;
-			collName = "e_attack";
-			attackColl->CollsionAdd(info, _trans, collName);
+		if (_set->instance == nullptr) {
+			CollsionInfo info = CharaBase::CollsionInstant<T>(_set, _trans);
+			info.tag = _set->tag;
+			//collName = _set->collName;
+			_set->instance->CollsionAdd(info, _trans, _set->collName);
 		};
-		return static_cast<T*>(attackColl);
+		return static_cast<T*>(_set->instance);
 	}
 private:
 	CharaWeapon* chara;

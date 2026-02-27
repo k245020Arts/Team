@@ -37,6 +37,7 @@ void BossNormalAttack3::Update()
 		b->BossAttackStateChange();
 
 	BossAttackCollsion();
+	BossJustAvoidCollsion();
 	AttackSound();
 	if (b->maxAttack <= 0) {
 		AttackFlash(ID::B_MODEL, b->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
@@ -73,7 +74,7 @@ void BossNormalAttack3::Start()
 void BossNormalAttack3::Finish()
 {
 	Boss* boss = GetBase<Boss>();
-	boss->DeleteCollision();
+	boss->DeleteCollision(&boss->attackColl);
 	BossAttackBase::BossFinish();
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	if (boss->maxAttack == 0)

@@ -78,8 +78,8 @@ void EnemyStateBase::AttackCollsion()
 	if (e->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
 			firstColl = false;
-			e->CollsionStart<SphereCollider>(CollsionInformation::SPHERE,collTrans);
-			e->SetShape(CollsionInformation::SPHERE);
+			e->CollsionStart<SphereCollider>(&e->attackColl,collTrans);
+			e->SetShape(CollsionInformation::SPHERE, &e->attackColl);
 		}
 	}
 }
@@ -91,8 +91,8 @@ void EnemyStateBase::BossAttackCollsion()
 	if (b->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
 			firstColl = false;
-			b->CollsionStart<SphereCollider>(CollsionInformation::SPHERE, collTrans);
-			b->SetShape(CollsionInformation::SPHERE);
+			b->CollsionStart<SphereCollider>(&b->attackColl, collTrans);
+			b->SetShape(CollsionInformation::SPHERE, &b->attackColl);
 		}
 	}
 }
@@ -172,5 +172,33 @@ void EnemyStateBase::BossTrail(bool _right)
 	//Œ•‚Ì‹OÕ‚ğ”­¶
 	if (time - 7.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time + 5.0f >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
 		e->Drail(_right);
+	}
+}
+
+void EnemyStateBase::BossJustAvoidCollsion()
+{
+	Boss* e = GetBase<Boss>();
+	float time = e->enemyBaseComponent.anim->EventStartTime(animId);
+	//“G‚ÌŒ•‰ñ‚è‚ğŒõ‚ç‚¹‚Ä‚¢‚é‚±‚Æ‚Ö‚Ìİ’è
+	if (time - 5.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
+		Transform colTrans = collTrans;
+		colTrans.scale.x += 100.0f;
+		e->CollsionStart<SphereCollider>(&e->justAvoidColl, colTrans);
+		e->SetShape(CollsionInformation::SPHERE, &e->justAvoidColl);
+		e->justAvoidCollTime = 3.0f;
+	}
+}
+
+void EnemyStateBase::EnemyJustAvoidCollsion()
+{
+	TrashEnemy* e = GetBase<TrashEnemy>();
+	float time = e->enemyBaseComponent.anim->EventStartTime(animId);
+	//“G‚ÌŒ•‰ñ‚è‚ğŒõ‚ç‚¹‚Ä‚¢‚é‚±‚Æ‚Ö‚Ìİ’è
+	if (time - 5.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
+		Transform colTrans = collTrans;
+		colTrans.scale.x += 100.0f;
+		e->CollsionStart<SphereCollider>(&e->justAvoidColl, colTrans);
+		e->SetShape(CollsionInformation::SPHERE, &e->justAvoidColl);
+		e->justAvoidCollTime = 3.0f;
 	}
 }

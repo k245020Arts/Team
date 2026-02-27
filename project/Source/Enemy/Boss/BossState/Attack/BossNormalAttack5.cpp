@@ -32,6 +32,7 @@ void BossNormalAttack5::Update()
 		boss->BossAttackStateChange();
 	}
 	BossAttackCollsion();
+	BossJustAvoidCollsion();
 	boss->LookPlayer();
 	//UŒ‚‚Ì­‚µ‘O‚É‚È‚Á‚½‚çˆÚ“®‚µŽn‚ß‚é
 	if (boss->enemyBaseComponent.anim->EventStartTime(animId) - boss->enemyBaseComponent.anim->GetCurrentFrame() <= 6.0f) {
@@ -81,7 +82,7 @@ void BossNormalAttack5::Start()
 void BossNormalAttack5::Finish()
 {
 	Boss* boss = GetBase<Boss>();
-	boss->DeleteCollision();
+	boss->DeleteCollision(&boss->attackColl);
 	BossAttackBase::BossFinish();
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);

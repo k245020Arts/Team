@@ -40,6 +40,7 @@ public:
 	friend class BossHalfSpecialAttack;
 	friend class BossRockManager;
 	friend class BossFear;
+	friend class EnemyStateBase;
 	
 	enum HP_RATE
 	{
@@ -86,14 +87,14 @@ public:
 	/// <param name="_trans">基準のTransform</param>
 	/// <returns>当たり判定クラスのポインタ</returns>
 	template<typename T>
-	T* CollsionStart(CollsionInformation::Shape _shape, const Transform& _trans) {
-		if (attackColl == nullptr) {
-			CollsionInfo info = CharaBase::CollsionInstant<T>(_shape, _trans);
-			info.tag = CollsionInformation::Tag::B_ATTACK;
-			collName = "b_attack";
-			attackColl->CollsionAdd(info, _trans, "b_attack");
+	T* CollsionStart(CollsionSet* _set,const Transform& _trans) {
+		if (_set->instance == nullptr) {
+			CollsionInfo info = CharaBase::CollsionInstant<T>(_set, _trans);
+			info.tag = _set->tag;
+			//collName = _set->collName;
+			_set->instance->CollsionAdd(info, _trans, _set->collName);
 		};
-		return static_cast<T*>(attackColl);
+		return static_cast<T*>(_set->instance);
 	}
 	/// <summary>
 	/// playerにダメージを食らった時の判定

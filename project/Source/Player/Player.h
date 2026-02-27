@@ -139,15 +139,14 @@ public:
 	/// <param name="_trans">基準のTransform</param>
 	/// <returns>当たり判定クラスのポインタ</returns>
 	template<typename T>
-	T* CollsionStart(CollsionInformation::Shape _shape, const Transform& _trans) {
-		if (attackColl == nullptr) {
-			CollsionInfo info = CharaBase::CollsionInstant<T>(_shape, _trans);
-			info.tag = CollsionInformation::Tag::P_ATTACK;
-			info.oneColl = false;
-			//collName = "p_attack"
-			attackColl->CollsionAdd(info, _trans, "p_attack");
+	T* CollsionStart(CollsionSet* _set, const Transform& _trans) {
+		if (_set->instance == nullptr) {
+			CollsionInfo info = CharaBase::CollsionInstant<T>(_set, _trans);
+			info.tag = _set->tag;
+			//collName = _set->collName;
+			_set->instance->CollsionAdd(info, _trans, _set->collName);
 		};
-		return static_cast<T*>(attackColl);
+		return static_cast<T*>(_set->instance);
 	}
 	/// <summary>
 	/// プレイヤーの攻撃が当たった時のリアクション
@@ -194,7 +193,7 @@ public:
 	/// <summary>
 	/// 当たり判定の削除
 	/// </summary>
-	void DeleteCollision() override;
+	void DeleteCollision(CollsionSet* _set) override;
 	/// <summary>
 	/// 敵が出す妨害オブジェクトに当たった時に通る関数
 	/// </summary>
@@ -245,6 +244,8 @@ public:
 	/// </summary>
 	void AttackRockHit();
 
+	void JustAvoidCollsionHit(BaseObject* _obj);
+
 private:
 	PlayerInformation::CharaComponent playerCom;
 	float size;
@@ -291,4 +292,7 @@ private:
 	bool objHit;
 
 	BossRockManager* bossRockManager;
+
+	bool justAvoidCan;
+	bool justAvoidColHit;
 };
