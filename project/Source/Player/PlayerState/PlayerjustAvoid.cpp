@@ -67,7 +67,9 @@ void PlayerJustAvoid::Update()
 	{
 		p->playerCom.player->AvoidFinishState();
 		p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
-		p->playerCom.hitObj->SetObjectTimeRate();
+		if (p->playerCom.hitObj != nullptr) {
+			p->playerCom.hitObj->SetObjectTimeRate();
+		}
 	}
 	//Ä¶‘¬“x‚ð’x‚­‚µ‚Ä‚¢‚é
 	if (p->playerCom.anim->GetCurrentFrame() >= 14.0f && p->playerCom.anim->GetCurrentFrame() <= 17.0f){
@@ -165,7 +167,9 @@ void PlayerJustAvoid::Start()
 
 	//“G‚ÌUŒ‚‚ð’x‚­‚·‚é
 	if (p->largeJustAvoid) {
-		p->playerCom.hitObj->SetObjectTimeRate(0.8f);
+		if (p->playerCom.hitObj != nullptr) {
+			p->playerCom.hitObj->SetObjectTimeRate(0.8f);
+		}
 		Time::ChangeDeltaRate(0.6f);//¢ŠE‚ð’x‚­‚·‚é
 		cameraLeap = 0.02f;
 
@@ -174,14 +178,18 @@ void PlayerJustAvoid::Start()
 		//cameraLeap = 0.02f;
 	}
 	else {
-		p->playerCom.hitObj->SetObjectTimeRate(0.6f);
+		if (p->playerCom.hitObj != nullptr) {
+			p->playerCom.hitObj->SetObjectTimeRate(0.6f);
+		}
 		Time::ChangeDeltaRate(0.6f);//¢ŠE‚ð’x‚­‚·‚é
 		cameraLeap = 0.2f;
 	}
 	
 	
 	p->playerCom.camera->CameraLeapSet(cameraLeap);
-	p->playerCom.camera->TargetSet(p->playerCom.hitObj);
+	if (p->playerCom.hitObj != nullptr) {
+		p->playerCom.camera->TargetSet(p->playerCom.hitObj);
+	}
 	p->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
 
 
@@ -208,7 +216,9 @@ void PlayerJustAvoid::Finish()
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.player->PlayerStickInput();
 	p->playerCom.camera->CameraLeapSet(0.2f);
-	p->playerCom.hitObj->SetObjectTimeRate();
+	if (p->playerCom.hitObj != nullptr) {
+		p->playerCom.hitObj->SetObjectTimeRate();
+	}
 
 	p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 	p->justAvoid			= false;

@@ -306,7 +306,7 @@ void CollsionEvent::JustAvoidEnemy(ColliderBase* _coll1, ColliderBase* _coll2, P
 	Player* player = _coll1->GetObj()->Component()->GetComponent<Player>();
 	TrashEnemy* enemy = _coll2->GetObj()->Component()->GetComponent<TrashEnemy>();
 
-	player->JustAvoidCollsionHit(enemy->GetBaseObject());
+	player->JustAvoidCollsionHit(enemy->GetBaseObject(), _coll2->GetCollTag());
 }
 
 void CollsionEvent::JustAvoidBoss(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
@@ -314,7 +314,7 @@ void CollsionEvent::JustAvoidBoss(ColliderBase* _coll1, ColliderBase* _coll2, Pu
 	Player* player = _coll1->GetObj()->Component()->GetComponent<Player>();
 	Boss* b = _coll2->GetObj()->Component()->GetComponent<Boss>();
 
-	player->JustAvoidCollsionHit(b->GetBaseObject());
+	player->JustAvoidCollsionHit(b->GetBaseObject(), _coll2->GetCollTag());
 }
 
 void CollsionEvent::JustAvoid(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
@@ -326,5 +326,5 @@ void CollsionEvent::JustAvoid(ColliderBase* _coll1, ColliderBase* _coll2, Pushba
 		_obj = _obj->GetParent();
 	}
 
-	player->JustAvoidCollsionHit(_obj);
+	player->JustAvoidCollsionHit(_obj,_coll2->GetCollTag());
 }

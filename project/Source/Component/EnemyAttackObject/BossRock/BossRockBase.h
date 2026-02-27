@@ -42,6 +42,7 @@ protected:
 	SphereCollider* playerAttackHitColl;
 	SphereCollider* bossRushHitColl;
 	DountCollider* blastColl;
+	DountCollider* blastJustAvoidColl;
 	RayCollider* uiColl;
 	ModelCollider* pushColl;
 	SphereCollider* justAvoidCollider;

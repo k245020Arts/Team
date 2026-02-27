@@ -244,7 +244,7 @@ public:
 	/// </summary>
 	void AttackRockHit();
 
-	void JustAvoidCollsionHit(BaseObject* _obj);
+	void JustAvoidCollsionHit(BaseObject* _obj,CollsionInformation::Tag _tag);
 
 private:
 	PlayerInformation::CharaComponent playerCom;

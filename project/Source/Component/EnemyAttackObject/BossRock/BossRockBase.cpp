@@ -22,7 +22,8 @@ BossRockBase::BossRockBase()
 	playerAttackHitColl = nullptr;
 	bossRushHitColl = nullptr;
 	blastColl = nullptr;
-	physics = nullptr;
+	physics = nullptr; 
+	blastJustAvoidColl = nullptr;
 
 	blast = false;
 	color = nullptr;
@@ -61,6 +62,7 @@ BossRockBase::~BossRockBase()
 	physics = nullptr;
 	rockManager->RemoveList(this);
 	justAvoidCollider = nullptr;
+	blastJustAvoidColl = nullptr;
 	hitObjects.clear();
 }
 
@@ -75,7 +77,12 @@ void BossRockBase::Update()
 		float waveSpeed = 50.0f;
 		blastColl->GetTransform()->scale.x += waveSpeed;
 		blastColl->AddOutRadius(waveSpeed);
+		blastJustAvoidColl->GetTransform()->scale.x += waveSpeed;
+		blastJustAvoidColl->AddOutRadius(waveSpeed);
 		if (blastColl->GetOutRadius() >= 3000.0f) {
+			obj->DestroyMe();
+		}
+		if (blastJustAvoidColl->GetOutRadius() >= 3000.0f) {
 			obj->DestroyMe();
 		}
 	}
@@ -95,6 +102,7 @@ void BossRockBase::Update()
 			}
 			if (blinkBaseMax <= 0.01f) {
 				blastColl = obj->Component()->AddComponent<DountCollider>();
+				blastJustAvoidColl = obj->Component()->AddComponent<DountCollider>();
 				nowBlast = true;
 				CollsionInfo info;
 				info.parentTransfrom = obj->GetTransform();
@@ -102,6 +110,10 @@ void BossRockBase::Update()
 				info.oneColl = false;
 				info.tag = CollsionInformation::ROCK_BLAST_DAMAGE;
 				blastColl->DountSet(info, Transform(VZero, VZero, VOne * 50.0f), 100.0f);
+				info.oneColl = false;
+				info.tag = CollsionInformation::JUST_AVOID;
+				blastJustAvoidColl->DountSet(info, Transform(VZero, VZero, VOne * 300.0f), 950.0f);
+				soundManager->PlaySe(Sound_ID::ROCK_BLAST);
 				soundManager->PlaySe(Sound_ID::ROCK_BLAST);
 				effectManager->CreateEffekseer(Transform(obj->GetTransform()->position, VZero, VOne * 3.0f), nullptr, Effect_ID::ROCK_BLAST, 1.0f);
 			}
@@ -163,12 +175,7 @@ void BossRockBase::Ground()
 		playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(200.0f, 1.0f, 1.0f)), "bossplayerAttack");
 	}
 
-	info.oneColl = false;
-	info.tag = CollsionInformation::JUST_AVOID;
-	if (justAvoidCollider == nullptr) {
-		justAvoidCollider = obj->Component()->AddComponent<SphereCollider>();
-		justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(250.0f, 1.0f, 1.0f)), "justAvoid_rock");
-	}
+	
 
 	info.parentTransfrom = obj->GetTransform();
 	info.shape = CollsionInformation::SPHERE;
@@ -244,6 +251,7 @@ void BossRockBase::SetRockModel()
 void BossRockBase::RockBossHit()
 {
 	blastColl = obj->Component()->AddComponent<DountCollider>();
+	blastJustAvoidColl = obj->Component()->AddComponent<DountCollider>();
 	nowBlast = true;
 	CollsionInfo info;
 	info.parentTransfrom = obj->GetTransform();
@@ -251,6 +259,9 @@ void BossRockBase::RockBossHit()
 	info.oneColl = false;
 	info.tag = CollsionInformation::ROCK_BLAST_DAMAGE;
 	blastColl->DountSet(info, Transform(VZero, VZero, VOne * 50.0f), 100.0f);
+	info.oneColl = false;
+	info.tag = CollsionInformation::JUST_AVOID;
+	blastJustAvoidColl->DountSet(info, Transform(VZero, VZero, VOne * 500.0f), 850.0f);
 	soundManager->PlaySe(Sound_ID::ROCK_BLAST);
 	effectManager->CreateEffekseer(Transform(obj->GetTransform()->position, VZero, VOne * 3.0f), nullptr, Effect_ID::ROCK_BLAST, 1.0f);
 }

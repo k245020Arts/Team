@@ -44,7 +44,7 @@ void ShockWave::CreateWave(CollsionInformation::Tag _tag, const Transform& _tran
 	info.oneColl = false;
 	info.tag = CollsionInformation::Tag::JUST_AVOID;
 	Transform transform = _transform;
-	transform.scale.x += 50.0f;
-	justAvoidCollider->DountSet(info, transform, _startOutRange + 50.0f);
+	transform.scale.x += 150.0f;
+	justAvoidCollider->DountSet(info, transform, _startOutRange + 650.0f);
 	waveSpeed				= _speed;
 }

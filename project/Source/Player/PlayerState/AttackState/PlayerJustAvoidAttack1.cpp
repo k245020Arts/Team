@@ -147,7 +147,9 @@ void PlayerJustAvoidAttack1::Start()
 	p->playerCom.shaker->ShakeStart(VECTOR3(20.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 1.0f);
 	p->playerCom.controller->ControlVibrationStartFrame(100, 20);
 	if (p->largeJustAvoid) {
-		p->playerCom.hitObj->SetObjectTimeRate(PlayerInformation::JUST_AVOID_ENEMY_TIME_SCALE + 0.5f);
+		if (p->playerCom.hitObj != nullptr) {
+			p->playerCom.hitObj->SetObjectTimeRate(PlayerInformation::JUST_AVOID_ENEMY_TIME_SCALE + 0.5f);
+		}
 	}
 	/*p->playerCom.anim->SetPlaySpeed(0.1f);
 	timer = 0.5f;
@@ -163,7 +165,9 @@ void PlayerJustAvoidAttack1::Finish()
 	p->playerCom.anim->AnimEventReset();
 	p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
 	PlayerAttackStateBase::Finish();
-	p->playerCom.hitObj->SetObjectTimeRate();
+	if (p->playerCom.hitObj != nullptr) {
+		p->playerCom.hitObj->SetObjectTimeRate();
+	}
 	p->largeJustAvoid = false;
 	/*p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 	p->justAvoid = false;

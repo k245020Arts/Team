@@ -64,6 +64,13 @@ void BossThrowRock::CreateThrowRock(VECTOR3& _addPos)
 	playerHitColl = obj->Component()->AddComponent<SphereCollider>();
 	playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(200.0f, 1.0f, 1.0f)), "_rockAttack");
 
+	info.oneColl = false;
+	info.tag = CollsionInformation::JUST_AVOID;
+	if (justAvoidCollider == nullptr) {
+		justAvoidCollider = obj->Component()->AddComponent<SphereCollider>();
+		justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(450.0f, 1.0f, 1.0f)), "justAvoid_rock");
+	}
+
 	groundInit = false;
 
 	physics = obj->Component()->GetComponent<Physics>();

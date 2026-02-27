@@ -695,6 +695,7 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 		damage = true;
 	}*/
 	//ダメージが入ったらパラメーターのセット
+	damage = true;
 	if (damage) {
 		if (pB->GetID() != StateID::PLAYER_AVOID_S) {
 			playerCom.controller->ControlVibrationStartFrame(80, 30);
@@ -741,9 +742,15 @@ void Player::AttackRockHit()
 	playerCom.controller->ControlVibrationStartFrame(80, 30);
 }
 
-void Player::JustAvoidCollsionHit(BaseObject* _obj)
+void Player::JustAvoidCollsionHit(BaseObject* _obj, CollsionInformation::Tag _tag)
 {
-	playerCom.hitObj = _obj;
+	if (_tag == CollsionInformation::JUST_AVOID) {
+		playerCom.hitObj = nullptr;
+	}
+	else {
+		playerCom.hitObj = _obj;
+	}
+	
 	justAvoidColHit = true;
 }
 
