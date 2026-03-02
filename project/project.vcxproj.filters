@@ -549,6 +549,9 @@
     <ClCompile Include="Source\Component\Collider\AABBCollider.cpp">
       <Filter>Component\Collider\AABB</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Result\ResultUi.cpp">
+      <Filter>PlayScene\Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1157,6 +1160,9 @@
     <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossThrowRock.h">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Result\ResultUi.h">
+      <Filter>PlayScene\Result</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1359,6 +1365,9 @@
     </Filter>
     <Filter Include="Component\EnemyAttackObject\BossRock">
       <UniqueIdentifier>{d19ebe7e-2ebc-4a85-9c91-fb553f062ca8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Result">
+      <UniqueIdentifier>{79c97a35-532e-4050-b1b0-be3787e031bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -66,8 +66,9 @@ PlayScene::PlayScene()
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	SkyManager* sky = new SkyManager();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
-	GameManager* gameManager = new GameManager();
 	UIManager* uiManager = new UIManager();
+	GameManager* gameManager = new GameManager();
+	
 
 	
 	uiManager->ButtonUISet();

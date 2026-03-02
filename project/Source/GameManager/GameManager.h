@@ -7,6 +7,7 @@ typedef MethodExec<class GameManager> MEB;
 typedef MethodExec<class GameManager> MEBDraw;
 class SoundManager;
 class Camera;
+class ResultUi;
 
 //#define STRING_MODE
 
@@ -69,6 +70,7 @@ public:
 	/// <returns>1フレ前にステートがチェンジされていたらtrue</returns>
 	bool GetChangeState() { return changeState; }
 
+	void ResultUiStart(bool _win);
 	
 
 private:
@@ -109,4 +111,6 @@ private:
 
 	GameState gameState;
 	GameState beforeGameState;
+
+	ResultUi* resultUi;
 };

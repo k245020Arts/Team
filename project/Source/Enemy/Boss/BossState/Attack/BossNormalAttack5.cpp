@@ -36,14 +36,25 @@ void BossNormalAttack5::Update()
 	boss->LookPlayer();
 	//攻撃の少し前になったら移動し始める
 	if (boss->enemyBaseComponent.anim->EventStartTime(animId) - boss->enemyBaseComponent.anim->GetCurrentFrame() <= 6.0f) {
-		if (oneMove) {
+		//if (oneMove) {
 			VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
 			normal = dis.Normalize();
 			//y座標をいじりたくないので0にする。
 			normal.y = 0.0f;
-			boss->enemyBaseComponent.physics->AddVelocity(normal * 4500.0f, false);
-			oneMove = false;
-		}
+			if (dis.Size() <= 1000.0f) {
+				boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
+			}
+			else {
+				float speed = dis.Size();
+				speed = std::clamp(speed, 4000.0f, 7000.0f);
+				boss->enemyBaseComponent.physics->SetVelocity(normal * speed);
+				oneMove = false;
+			}
+			
+		//}
+	}
+	if (boss->enemyBaseComponent.anim->EventFinishTime(animId) <= boss->enemyBaseComponent.anim->GetCurrentFrame()) {
+		boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
 	}
 	AttackSound();
 	if (boss->maxAttack <= 0) {
@@ -86,6 +97,7 @@ void BossNormalAttack5::Finish()
 	BossAttackBase::BossFinish();
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
 	//boss->threat = true;
 	oneMove = false;
 }

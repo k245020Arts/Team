@@ -327,6 +327,7 @@
     <ClInclude Include="Source\Player\PlayerState\PlayerWait.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerWalk.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerWin.h" />
+    <ClInclude Include="Source\Result\ResultUi.h" />
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\PlayScene.h" />
     <ClInclude Include="Source\SceneFactory.h" />
@@ -516,6 +517,7 @@
     <ClCompile Include="Source\Player\PlayerState\PlayerWalk.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerWin.cpp" />
     <ClCompile Include="Source\PlayScene.cpp" />
+    <ClCompile Include="Source\Result\ResultUi.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />
     <ClCompile Include="Source\Stage\SkyManager.cpp" />
     <ClCompile Include="Source\Stage\Stage.cpp" />

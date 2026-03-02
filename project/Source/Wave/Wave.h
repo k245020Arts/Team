@@ -14,6 +14,8 @@ public:
 	/// </summary>
 	void FirstRespown();
 
+	bool GetBossWave();
+
 private:
 	void EnemySpawn();
 	void CooperateAttack();
@@ -34,4 +36,5 @@ private:
 
 	bool bossCreate;
 	bool first;
+	bool bossWave;
 };

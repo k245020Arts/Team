@@ -14,6 +14,7 @@ Wave::Wave()
 	isCooperate = false;
 	bossCreate = true;
 	first = false;
+	bossWave = false;
 }
 
 Wave::~Wave()
@@ -34,6 +35,7 @@ void Wave::Update()
 
 			FindGameObject<Fead>()->FeadIn(1.0f, 0x000000, Easing::EaseIn<int>);
 			bossCreate = false;
+			bossWave = true;
 		}
 	}
 }
@@ -46,6 +48,11 @@ void Wave::FirstRespown()
 {
 	tEnemyManager->CreateEnemy(SPWNPOS, 5.0f);
 	first = true;
+}
+
+bool Wave::GetBossWave()
+{
+	return bossWave;
 }
 
 void Wave::EnemySpawn()

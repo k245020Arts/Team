@@ -322,7 +322,7 @@ void CollsionEvent::JustAvoid(ColliderBase* _coll1, ColliderBase* _coll2, Pushba
 	Player* player = _coll1->GetObj()->Component()->GetComponent<Player>();
 	//EnemyBase* enemy = _coll2->GetObj()->Component()->GetComponent<TrashEnemy>();
 	BaseObject* _obj = _coll2->GetObj();
-	if (_obj->GetParent() == nullptr) {
+	if (_obj->GetParent() != nullptr) {
 		_obj = _obj->GetParent();
 	}
 

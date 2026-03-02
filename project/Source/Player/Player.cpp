@@ -100,17 +100,6 @@ Player::Player()
 	objHit						= false;
 	bossRockManager				= nullptr;
 }
-//
-//Object2D* guage = new Object2D();
-//
-//guage->Init(VECTOR2F(150, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.1f, 0.1f), "TrashEnemyHpGuage");
-//
-//e->AddChild(guage);
-//
-//Guage* g = guage->Component()->AddComponent<Guage>();
-//g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
-//g->GuageDrawReady<TrashEnemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
-//g->WorldToScreenMode(true, VECTOR3(0, 500, 0));
 
 Player::~Player()
 {
@@ -320,6 +309,7 @@ void Player::Move(float _speed, float _speedMax)
 		playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 		//アニメーションのスピードを傾き方で測定
 		playerCom.anim->SetPlaySpeed(walkAngle.Size());
+		
 
 		
 		/*if (nowStick == S_NO_DIRECTION || stick == S_NO_DIRECTION) {
@@ -518,10 +508,8 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	}
 	
 	//ダメージが入ったらパラメーターのセット
-	if (damage) {
-		if (pB->GetID() != ID::P_ANIM_AVOID) {
-			playerCom.controller->ControlVibrationStartFrame(80, 30);
-			//playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
+	if (pB->GetID() != StateID::PLAYER_AVOID_S) {
+		if (damage) {
 			if (attack == nullptr) {
 				if (!noDamage) { //無敵モードじゃないなら
 					hp -= param.hitDamage;
@@ -531,30 +519,35 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 				if (!noDamage) { //無敵モードじゃないなら
 					hp -= param.hitDamage;
 				}
-				
+
 			}
-			switch (param.damagePattern)
-			{
-			case BossAttackBase::NO_BACK:
-				playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
-				break;
-			case BossAttackBase::BACK:
-				playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
-				break;
-			case BossAttackBase::BLOW_AWAY:
-				playerCom.stateManager->ChangeState(StateID::PLAYER_BLOW_AWAY_S);
-				break;
-			default:
-				my_error_assert("ダメージの状態が入っていません");
-				break;
+			if (pB->GetID() != StateID::PLAYER_HEAVY_CHARGE_S) {
+				playerCom.controller->ControlVibrationStartFrame(80, 30);
+				//playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
+				switch (param.damagePattern)
+				{
+				case BossAttackBase::NO_BACK:
+					playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
+					break;
+				case BossAttackBase::BACK:
+					playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
+					break;
+				case BossAttackBase::BLOW_AWAY:
+					playerCom.stateManager->ChangeState(StateID::PLAYER_BLOW_AWAY_S);
+					break;
+				default:
+					my_error_assert("ダメージの状態が入っていません");
+					break;
+				}
 			}
 			playerCom.color->setRGB(Color::Rgb(255.0f, 0.0f, 0.0f, 255.0f));
 			redCounter = 0.5f;
 			playerCom.hitObj = _obj;
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
-			playerCom.sound->RandamSe("EnemyAttackHit",4);
-			playerCom.sound->RandamSe("P_DamageV",2);
-			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0,50,0),VZero,VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);
+			playerCom.sound->RandamSe("EnemyAttackHit", 4);
+			playerCom.sound->RandamSe("P_DamageV", 2);
+			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 50, 0), VZero, VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);
+
 		}
 	}
 	return damage;
@@ -745,7 +738,7 @@ void Player::AttackRockHit()
 void Player::JustAvoidCollsionHit(BaseObject* _obj, CollsionInformation::Tag _tag)
 {
 	if (_tag == CollsionInformation::JUST_AVOID) {
-		playerCom.hitObj = nullptr;
+		playerCom.hitObj = _obj;
 	}
 	else {
 		playerCom.hitObj = _obj;

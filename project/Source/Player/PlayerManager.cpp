@@ -188,7 +188,7 @@ void PlayerManager::CreatePlayer()
 	Object3D* shadow = new Object3D();
 	shadow->Init(Transform(VECTOR3(0.0f, -100.0f, 0.0f), VZero, VECTOR3(playerPointer->GetTransform()->scale.x - 1.0f, 0.15f, playerPointer->GetTransform()->scale.z - 1.0f)), "PlayerShadow");
 	Shadow* s = shadow->Component()->AddComponent<Shadow>();
-	s->Start();
+	s->Start(57.0f);
 
 	RayCollider* collider4 = shadow->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
@@ -361,7 +361,7 @@ void PlayerManager::CreateTitlePlayer()
 	Object3D* shadow = new Object3D();
 	shadow->Init(Transform(VECTOR3(0.0f, -100.0f, 0.0f), VZero, VECTOR3(playerPointer->GetTransform()->scale.x - 1.0f, 0.1f, playerPointer->GetTransform()->scale.z - 1.0f)), "PlayerShadow");
 	Shadow* s = shadow->Component()->AddComponent<Shadow>();
-	s->Start();
+	s->Start(55.0f);
 
 	RayCollider* collider4 = shadow->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;

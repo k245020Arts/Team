@@ -158,8 +158,8 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_N_ATTACK1,			"B_ATTACK1", false, 1.2f, 25.0f, 60.0f);
 	anim->AddFile(ID::B_N_ATTACK2,			"B_ATTACK2", false, 1.2f, 25.0f, 60.0f);
 	anim->AddFile(ID::B_N_ATTACK3,			"B_ATTACK3", false, 1.2f, 40.0f, 55.0f);
-	anim->AddFile(ID::B_N_ATTACK4,			"B_ATTACK4", false, 1.2f, 20.0f, 55.0f);
-	anim->AddFile(ID::B_N_ATTACK5,			"B_ATTACK5", false, 1.2f, 20.0f, 55.0f);
+	anim->AddFile(ID::B_N_ATTACK4,			"B_ATTACK4", false, 1.2f, 20.0f, 30.0f);
+	anim->AddFile(ID::B_N_ATTACK5,			"B_ATTACK5", false, 1.2f, 20.0f, 30.0f);
 	anim->AddFile(ID::B_N_ATTACK6,			"B_ATTACK6", false, 1.2f, 50.0f, 65.0f);
 	anim->AddFile(ID::B_N_ATTACK7,			"B_ATTACK7", false, 1.2f, 72.41592f, 85.0f); //31.0f, 75.0f
 	anim->AddFile(ID::B_S_ATTACK1,			"B_SATTACK1", false, 1.0f, 50.0f, 55.0f);
@@ -196,7 +196,7 @@ void EnemyManager::CreateBoss()
 	Object3D* shadow = new Object3D();
 	shadow->Init(Transform(VECTOR3(0.0f, -20.0f, 0.0f), VZero, VECTOR3(boss->GetTransform()->scale.x - 2.0f, 0.1f, boss->GetTransform()->scale.z - 2.0f)), "BossShadow");
 	Shadow* s = shadow->Component()->AddComponent<Shadow>();
-	s->Start();
+	s->Start(50.0f);
 
 	RayCollider* collider5 = shadow->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
