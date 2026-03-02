@@ -180,9 +180,9 @@ void EnemyStateBase::BossJustAvoidCollsion()
 	Boss* e = GetBase<Boss>();
 	float time = e->enemyBaseComponent.anim->EventStartTime(animId);
 	//“G‚ÌŒ•‰ñ‚è‚ğŒõ‚ç‚¹‚Ä‚¢‚é‚±‚Æ‚Ö‚Ìİ’è
-	if (time - 5.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
+	if (time - 7.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
 		Transform colTrans = collTrans;
-		colTrans.scale.x += 100.0f;
+		colTrans.scale.x += 200.0f;
 		e->CollsionStart<SphereCollider>(&e->justAvoidColl, colTrans);
 		e->SetShape(CollsionInformation::SPHERE, &e->justAvoidColl);
 		e->justAvoidCollTime = 3.0f;
@@ -194,9 +194,9 @@ void EnemyStateBase::EnemyJustAvoidCollsion()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	float time = e->enemyBaseComponent.anim->EventStartTime(animId);
 	//“G‚ÌŒ•‰ñ‚è‚ğŒõ‚ç‚¹‚Ä‚¢‚é‚±‚Æ‚Ö‚Ìİ’è
-	if (time - 5.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
+	if (time - 7.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
 		Transform colTrans = collTrans;
-		colTrans.scale.x += 100.0f;
+		colTrans.scale.x += 200.0f;
 		e->CollsionStart<SphereCollider>(&e->justAvoidColl, colTrans);
 		e->SetShape(CollsionInformation::SPHERE, &e->justAvoidColl);
 		e->justAvoidCollTime = 3.0f;
