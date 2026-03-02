@@ -38,6 +38,7 @@ GameManager::GameManager()
 	result->Init(Transform(VECTOR3(980.0f, 149.0f, 0.00), VZero, VOne), "resultUi");
 	result->SetDraw(false);
 	resultUi  = result->Component()->AddComponent<ResultUi>();
+	result->SetDrawOrder(-1000);
 	
 	resultCounter = 3.0f;
 	sound = FindGameObject<SoundManager>();
@@ -252,7 +253,7 @@ void GameManager::SetPointer()
 
 void GameManager::ResultUiStart(bool _win)
 {
-	resultUi->GetBaseObject()->SetDraw(_win);
+	resultUi->GetBaseObject()->SetDraw(true);
 	resultUi->ResultStart(_win);
 }
 

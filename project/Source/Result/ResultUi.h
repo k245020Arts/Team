@@ -1,7 +1,7 @@
 #pragma once
 #include "../Component/UI/UIBase.h"
 
-class ResultUi : public UIBase
+class ResultUi : public Component
 {
 public:
 	ResultUi();
@@ -23,4 +23,6 @@ private:
 	float addCount;
 	int addDrawValue;
 	float scaleCount;
+
+	float flashTime; 
 };

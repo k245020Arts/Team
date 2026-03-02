@@ -10,6 +10,7 @@
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Component/Collider/ModelCollider.h"
 #include "../../../Component/Collider/SphereCollider.h"
+#include "../../../Component/UI/UIManager/UIManager.h"
 
 BossLose::BossLose()
 {
@@ -42,6 +43,7 @@ void BossLose::Start()
 	b->enemyBaseComponent.sound->StopBGM(Sound_ID::PLAY_BGM);
 	b->enemyBaseComponent.sound->PlaySe(Sound_ID::WIN);
 	b->enemyBaseComponent.camera->CutSceneChangeState("PlayerWin", false);
+	FindGameObject<UIManager>()->SetUIDraw(false);
 }
 
 void BossLose::Finish()

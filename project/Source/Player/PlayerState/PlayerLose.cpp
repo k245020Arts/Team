@@ -7,6 +7,7 @@
 #include "../../Component/Collider/SphereCollider.h"
 #include "../../Enemy/EnemyManager.h"
 #include "../../Wave/Wave.h"
+#include "../../../Source/Component/UI/UIManager/UIManager.h"
 
 PlayerLose::PlayerLose()
 {
@@ -50,7 +51,7 @@ void PlayerLose::Start()
 	else {
 		p->playerCom.camera->CutSceneChangeState("PlayerDie", false);
 	}
-
+	FindGameObject<UIManager>()->SetUIDraw(false);
 }
 
 void PlayerLose::Finish()
