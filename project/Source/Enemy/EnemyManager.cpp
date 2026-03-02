@@ -704,6 +704,16 @@ int EnemyManager::PlayerFovEnemyNum(Transform* _pTransform, float _angle)
 	return num;
 }
 
+bool EnemyManager::ObjectIsEnemy(BaseObject* _base)
+{
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		if ((*itr)->GetBaseObject() == _base) {
+			return true;
+		}
+	}
+	return false;
+}
+
 
 
 

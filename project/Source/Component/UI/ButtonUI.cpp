@@ -2,7 +2,6 @@
 #include "../../Common/InputManager/ControllerInputManager.h"
 #include "../../Common/InputManager/InputManager.h"
 #include "../../Component/Transform/Transform.h"
-#include "../../Component/Color/Color.h"
 #include "../ComponentManager.h"
 
 namespace {
@@ -68,7 +67,8 @@ void ButtonUI::Draw()
 		SetDrawBright(50, 50, 50);
 	}
 	else {
-		SetDrawBright(200, 200, 200);
+		SetDrawBright(rgbColor.r, rgbColor.g, rgbColor.b);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, rgbColor.a);
 	}
 	//‰ÁŽZ‡¬ƒ‚[ƒh‚È‚ç‰ÁŽZ‡¬‚ðŠ|‚¯‚é
 	if (gradeMode) {
@@ -88,9 +88,10 @@ void ButtonUI::Draw()
 
 	
 	SetDrawBright(255, 255, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-void ButtonUI::Start(ButtonType _buttonType, int _handle)
+void ButtonUI::Start(ButtonType _buttonType, int _handle, Color::Rgb _rgb)
 {
 	buttonImage = _handle;
 	type = _buttonType;
@@ -98,4 +99,5 @@ void ButtonUI::Start(ButtonType _buttonType, int _handle)
 	obj->GetTransform()->scale = 0.8f;
 	buttonActive = true;
 	backImage = LoadGraph("data/image/UICicle.png");
+	rgbColor = _rgb;
 }

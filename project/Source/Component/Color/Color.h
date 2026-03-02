@@ -123,3 +123,28 @@ private:
         rgb.r = colorfRgb.r * 255.0f;
     }
 };
+
+const Color::Rgb WHITE = Color::Rgb(255, 255, 255, 255);
+const Color::Rgb RED = Color::Rgb(255, 0, 0, 255);
+const Color::Rgb GREEN = Color::Rgb(0, 255, 0, 255);
+const Color::Rgb BLUE = Color::Rgb(0, 0, 255, 255);
+const Color::Rgb YELLOW = Color::Rgb(255, 255, 0, 255);
+const Color::Rgb MAGENTA = Color::Rgb(255, 0, 255, 255);
+const Color::Rgb CYAN = Color::Rgb(0, 255, 255, 255);
+const Color::Rgb BLACK = Color::Rgb(0, 0, 0, 255);
+const Color::Rgb SAKURA = Color::Rgb(253, 238, 239, 255);
+const Color::Rgb ORANGE = Color::Rgb(255, 165, 0, 255);
+const Color::Rgb PURPLE = Color::Rgb(128, 0, 128, 255);
+const Color::Rgb PINK = Color::Rgb(255, 192, 203, 255);
+const Color::Rgb BROWN = Color::Rgb(165, 42, 42, 255);
+const Color::Rgb GOLD = Color::Rgb(255, 215, 0, 255);
+const Color::Rgb SILVER = Color::Rgb(192, 192, 192, 255);
+const Color::Rgb SKY_BLUE = Color::Rgb(135, 206, 235, 255);
+const Color::Rgb DARK_BLUE = Color::Rgb(0, 0, 139, 255);
+const Color::Rgb LIGHT_BLUE = Color::Rgb(173, 216, 230, 255);
+const Color::Rgb DARK_RED = Color::Rgb(139, 0, 0, 255);
+const Color::Rgb LIGHT_GREEN = Color::Rgb(144, 238, 144, 255);
+const Color::Rgb DARK_GREEN = Color::Rgb(0, 100, 0, 255);
+const Color::Rgb GRAY = Color::Rgb(128, 128, 128, 255);
+const Color::Rgb DARK_GRAY = Color::Rgb(64, 64, 64, 255);
+const Color::Rgb LIGHT_GRAY = Color::Rgb(192, 192, 192, 255);
