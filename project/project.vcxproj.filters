@@ -553,7 +553,6 @@
       <Filter>PlayScene\Result</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy\Boss\BossState\BossWin.cpp">
-<ClCompile Include="Source\Enemy\Boss\BossState\BossBackStep.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
   </ItemGroup>
