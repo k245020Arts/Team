@@ -126,14 +126,15 @@ void BossRockBase::Ground()
 	if (fly) {
 		obj->DestroyMe();
 		soundManager->PlaySe(Sound_ID::ROCK_BREAK);
-		effectManager->CreateEffekseer(Transform(VZero, VZero, VOne), obj, Effect_ID::ROCK_BREAK, 1.0f);
+		effectManager->CreateEffekseer(Transform(VZero, VZero, VOne * 4.0f), obj, Effect_ID::ROCK_BREAK, 1.0f);
+		effectManager->CreateEffekseer(Transform(VECTOR3(0, -100, 0), VZero, VOne * 4.0f), obj, Effect_ID::BOSS_GROUND, 6.0f);
 		return;
 	}
 	if (groundInit) {
 		return;
 	}
 	soundManager->PlaySe(Sound_ID::ROCK_GROUND);
-	effectManager->CreateEffekseer(Transform(VZero, VZero, VOne), obj, Effect_ID::BOSS_GROUND, 6.0f);
+	effectManager->CreateEffekseer(Transform(VECTOR3(0,-100,0), VZero, VOne * 4.0f), obj, Effect_ID::BOSS_GROUND, 1.0f);
 	//effectManager->StopEffekseer(Effect_ID::ROCK_FALL);
 	groundInit = true;
 	obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("_rockAttack");
@@ -208,7 +209,7 @@ void BossRockBase::PlayerAttackRockFlyAway(Transform& _playerTransform)
 	physics->SetVelocity(_playerTransform.Forward() * 10000.0f);
 	physics->AddVelocity(VECTOR3(0,1700, 0), false);
 	fly = true;
-
+	effectManager->CreateEffekseer(Transform(obj->GetTransform()->position + VECTOR3(0, 0, -100), VZero, VOne * 2.0f), nullptr, Effect_ID::PLAYER_ATTACK_ROCK, 1.0f);
 	obj->Component()->GetComponent<Shaker>()->ShakeStart(VOne * 50.0f,Shaker::MIX_SHAKE,true,0.3f);
 
 	if (playerHitColl != nullptr) {
@@ -263,5 +264,5 @@ void BossRockBase::RockBossHit()
 	info.tag = CollsionInformation::JUST_AVOID;
 	blastJustAvoidColl->DountSet(info, Transform(VZero, VZero, VOne * 500.0f), 850.0f);
 	soundManager->PlaySe(Sound_ID::ROCK_BLAST);
-	effectManager->CreateEffekseer(Transform(obj->GetTransform()->position, VZero, VOne * 3.0f), nullptr, Effect_ID::ROCK_BLAST, 1.0f);
+	effectManager->CreateEffekseer(Transform(obj->GetTransform()->position , VZero, VOne * 3.0f), nullptr, Effect_ID::ROCK_BLAST, 1.0f);
 }

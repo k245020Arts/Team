@@ -41,9 +41,11 @@ EffectManager::EffectManager()
 	Load::LoadEffect("PlayerChargeFinalEffect",		".efkefc",Effect_ID::PLAYER_CHARGE_FINAL,60.0f);
 	Load::LoadEffect("specialAttackCan",			".efkefc",Effect_ID::PLAYER_SPECIAL_ATTACK_CAN,30.0f);
 	Load::LoadEffect("PlayerChargeEnd",				".efkefc",Effect_ID::PLAYER_CHARGE_END,35.0f);
-	Load::LoadEffect("RockBlast",				".efkefc",Effect_ID::ROCK_BLAST,100.0f);
-	Load::LoadEffect("RockBreak",				".efkefc",Effect_ID::ROCK_BREAK,100.0f);
-	Load::LoadEffect("RockFall",				".efkefc",Effect_ID::ROCK_FALL,100.0f);
+	Load::LoadEffect("RockBlast",					".efkefc",Effect_ID::ROCK_BLAST,100.0f);
+	Load::LoadEffect("RockBreak",					".efkefc",Effect_ID::ROCK_BREAK,100.0f);
+	Load::LoadEffect("RockFall",					".efkefc",Effect_ID::ROCK_FALL,100.0f);
+	Load::LoadEffect("BossRockHitRush",				".efkefc",Effect_ID::BOSS_ROCK_HIT_RUSH,50.0f);
+	Load::LoadEffect("playerAttackRock",			".efkefc",Effect_ID::PLAYER_ATTACK_ROCK,50.0f);
 	//Effekseer_SetGraphicsDeviceDXLib();
 	SetDrawOrder(-50000);
 }

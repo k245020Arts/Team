@@ -474,7 +474,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	float startTime					= enemyAnim->EventStartTime(_attackId);
 	bool damage						= false;
 	StateID::State_ID state = pB->GetID();
-	if (state == StateID::PLAYER_JUST_AVOID_S) {
+	if (state == StateID::PLAYER_JUST_AVOID_ATTACK1_S && playerCom.hitObj == _obj) {
 		return true;
 	}
 	if (justAvoid)

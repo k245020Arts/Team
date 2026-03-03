@@ -657,22 +657,24 @@ void Boss::RockHitDamage(Physics* _phy)
 {
 	float damage = 500.0f;
 	enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
-	VECTOR3 baseSpeed = _phy->GetVelocity() * 1.0f;
+	/*VECTOR3 baseSpeed = _phy->GetVelocity() * 1.0f;
 	if (baseSpeed.Size() <= 3000.0f) {
 		baseSpeed = baseSpeed.Normalize() * 3000.0f;
 	}
 	if (baseSpeed.Size() >= 6000.0f) {
 		baseSpeed = baseSpeed.Normalize() * 6000.0f;
 	}
-	enemyBaseComponent.physics->AddVelocity(baseSpeed, false);
+	enemyBaseComponent.physics->AddVelocity(baseSpeed, false);*/
 	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage, 500.0f, (float)GetRand(15));
 }
 
 void Boss::RockHitRushDamage()
 {
 	float damage = 1000.0f;
+	enemyBaseComponent.sound->PlaySe(Sound_ID::ROCK_BREAK);
 	enemyBaseComponent.state->ChangeState(StateID::BOSS_FEAR_S);
 	VECTOR3 baseSpeed = enemyBaseComponent.physics->GetVelocity() * -1.0f;
+	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(0,200,0), VZero, VOne), obj, Effect_ID::BOSS_ROCK_HIT_RUSH, 1.0f);
 	if (baseSpeed.Size() <= 3000.0f) {
 		baseSpeed = baseSpeed.Normalize() * 3000.0f;
 	}
