@@ -9,6 +9,7 @@
 #include "../Wave/Wave.h"
 #include "../../ImGui/imgui.h"
 #include "../Common/Debug/Debug.h"
+#include "../Result/ResultUi.h"
 
 namespace {
 	const int GAME_STATE_MAX = 5;
@@ -30,8 +31,15 @@ GameManager::GameManager()
 	stateDraw = MEBDraw(&GameManager::BeforeDraw);
 	startCount = 0.0f;
 	SetDrawOrder(-500);
-	winImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
-	loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
+	//winImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
+	//loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
+
+	Object2D* result = new Object2D();
+	result->Init(Transform(VECTOR3(980.0f, 149.0f, 0.00), VZero, VOne), "resultUi");
+	result->SetDraw(false);
+	resultUi  = result->Component()->AddComponent<ResultUi>();
+	result->SetDrawOrder(-1000);
+	
 	resultCounter = 3.0f;
 	sound = FindGameObject<SoundManager>();
 
@@ -211,11 +219,14 @@ void GameManager::ChangeState(GameState _name)
 	case GameState::WIN:
 		state = MEB(&GameManager::WinUpdate);
 		stateDraw = MEBDraw(&GameManager::WinDraw);
+		
 		break;
 
 	case GameState::LOSE:
 		state = MEB(&GameManager::LoseUpdate);
 		stateDraw = MEBDraw(&GameManager::LoseDraw);
+		/*resultUi->GetBaseObject()->SetDraw(true);
+		resultUi->ResultStart(false);*/
 		break;
 	case GameState::SCENE_CHANGE:
 		state = MEB(&GameManager::SceneChangeUpdate);
@@ -238,6 +249,12 @@ GameManager::GameState GameManager::GetStateNumber()
 void GameManager::SetPointer()
 {
 	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
+}
+
+void GameManager::ResultUiStart(bool _win)
+{
+	resultUi->GetBaseObject()->SetDraw(true);
+	resultUi->ResultStart(_win);
 }
 
 MEB GameManager::BeforeUpdate()
@@ -299,7 +316,6 @@ MEB GameManager::WinUpdate()
 MEBDraw GameManager::WinDraw()
 {
 	
-	DrawGraph(750, 100, winImage, true);
 	return MEBDraw();
 }
 
@@ -311,7 +327,7 @@ MEB GameManager::LoseUpdate()
 MEBDraw GameManager::LoseDraw()
 {
 	
-	DrawGraph(750, 100, loseImage, true);
+	//DrawGraph(750, 100, loseImage, true);
 	return &GameManager::LoseDraw;
 }
 

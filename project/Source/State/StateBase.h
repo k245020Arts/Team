@@ -64,7 +64,7 @@ public:
 	/// <returns>親のオブジェクトのポインタ</returns>
 	template<typename T> 
 	T* GetBase() {
-		return dynamic_cast<T*>(com);
+		return static_cast<T*>(com);
 	}
 	/// <summary>
 	/// StateVerのimgui

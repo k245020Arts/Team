@@ -5,6 +5,7 @@
 #include "../../ComponentManager.h"
 #include "../../../Common/LoadManager.h"
 #include "../../../Common/Debug/Debug.h"
+#include "../../Color/Color.h"
 
 UIManager::UIManager()
 {
@@ -45,25 +46,25 @@ void UIManager::ButtonUISet()
 	Object2D* abutton = new Object2D();
 	abutton->Init(Transform(VECTOR3(1650, 1000, 0), VZero, VOne), "AButton");
 	ButtonUI* a = abutton->Component()->AddComponent<ButtonUI>();
-	a->Start(ButtonUI::A_BUTTON, Load::GetHandle(ID::A_BUTTON));
+	a->Start(ButtonUI::A_BUTTON, Load::GetHandle(ID::A_BUTTON),LIGHT_GREEN);
 	abutton->SetDrawOrder(-1000);
 
 	Object2D* bbutton = new Object2D();
 	bbutton->Init(Transform(VECTOR3(1750, 900, 0), VZero, VOne), "BButton");
 	ButtonUI* b = bbutton->Component()->AddComponent<ButtonUI>();
-	b->Start(ButtonUI::B_BUTTON, Load::GetHandle(ID::B_BUTTON));
+	b->Start(ButtonUI::B_BUTTON, Load::GetHandle(ID::B_BUTTON), MAGENTA);
 	bbutton->SetDrawOrder(-1000);
 
 	Object2D* xbutton = new Object2D();
 	xbutton->Init(Transform(VECTOR3(1550, 900, 0), VZero, VOne), "XButton");
 	ButtonUI* c = xbutton->Component()->AddComponent<ButtonUI>();
-	c->Start(ButtonUI::X_BUTTON, Load::GetHandle(ID::X_BUTTON));
+	c->Start(ButtonUI::X_BUTTON, Load::GetHandle(ID::X_BUTTON),LIGHT_BLUE);
 	xbutton->SetDrawOrder(-1000);
 
 	Object2D* ybutton = new Object2D();
 	ybutton->Init(Transform(VECTOR3(1650, 800, 0), VZero, VOne), "YButton");
 	ButtonUI* y = ybutton->Component()->AddComponent<ButtonUI>();
-	y->Start(ButtonUI::Y_BUTTON, Load::GetHandle(ID::Y_BUTTON));
+	y->Start(ButtonUI::Y_BUTTON, Load::GetHandle(ID::Y_BUTTON), GOLD);
 	ybutton->SetDrawOrder(-1000);
 }
 

@@ -1,10 +1,11 @@
 #pragma once
 #include "../Component.h"
 #include "UIBase.h"
+#include "../../Component/Color/Color.h"
 
 class InputManager;
 class ControllerInputManager;
-class Color;
+struct Color::Rgb;
 
 class ButtonUI : public UIBase
 {
@@ -25,7 +26,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void Start(ButtonType _buttonType,int _handle);
+	void Start(ButtonType _buttonType,int _handle,Color::Rgb _rgb);
 	/// <summary>
 	/// UIのアクティブモードを有効にする
 	/// </summary>
@@ -54,4 +55,6 @@ private:
 	bool gradeMode;
 	float r, g, b;
 	int backImage;
+
+	Color::Rgb rgbColor;
 };

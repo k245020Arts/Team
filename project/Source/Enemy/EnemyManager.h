@@ -146,6 +146,8 @@ public:
 	/// <returns>“G‚Ìl”</returns>
 	int PlayerFovEnemyNum(Transform* _pTransform, float _angle);
 
+	bool ObjectIsEnemy(BaseObject* _base);
+
 private:
 	
 	std::list<BaseObject*> enemy;

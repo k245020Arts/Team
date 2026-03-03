@@ -109,8 +109,8 @@ namespace ID {
 		ROCK_3,
 		BOSS_PRE_MODEL,
 		BOSS_FEAR,
-		B_BACKSTEP,
-
+B_BACKSTEP,
+B_WIN,
 		ID_MAX,
 	};
 

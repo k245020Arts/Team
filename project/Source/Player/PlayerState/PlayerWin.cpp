@@ -1,6 +1,8 @@
 #include "PlayerWin.h"
 #include "../Player.h"
 #include "../../Component/Animator/Animator.h"
+#include "../../Camera/Camera.h"
+#include "../../GameManager/GameManager.h"
 
 PlayerWin::PlayerWin()
 {
@@ -25,6 +27,9 @@ void PlayerWin::Update()
 	}
 	else {
 		player->playerCom.anim->SetPlaySpeed(1.0f);
+	}
+	if (player->playerCom.camera->GetCutNum() == 7) {
+		player->playerCom.gameManager->ResultUiStart(true);
 	}
 }
 

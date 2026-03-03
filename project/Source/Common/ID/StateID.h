@@ -50,8 +50,8 @@ namespace StateID{
         BOSS_LOSE_S,
         BOSS_HALF_ATTACK_S,
         BOSS_FEAR_S,
-        BOSS_BACKSTEP_S,
-
+BOSS_BACKSTEP_S,
+ BOSS_WIN_S,
         FOLLOW_CAMERA_S,
         JUST_AVOID_CAMERA_S,
         JUST_AVOID_ATTACK_CAMERA_S,

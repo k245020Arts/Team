@@ -280,6 +280,7 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\BossStatus.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossThreat.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossWalk.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossWin.h" />
     <ClInclude Include="Source\Enemy\EnemyBase.h" />
     <ClInclude Include="Source\Enemy\EnemyInformation.h" />
     <ClInclude Include="Source\Enemy\EnemyManager.h" />
@@ -328,6 +329,7 @@
     <ClInclude Include="Source\Player\PlayerState\PlayerWait.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerWalk.h" />
     <ClInclude Include="Source\Player\PlayerState\PlayerWin.h" />
+    <ClInclude Include="Source\Result\ResultUi.h" />
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\PlayScene.h" />
     <ClInclude Include="Source\SceneFactory.h" />
@@ -475,6 +477,7 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossRun.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossThreat.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossWalk.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossWin.cpp" />
     <ClCompile Include="Source\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Source\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateBase.cpp" />
@@ -518,6 +521,7 @@
     <ClCompile Include="Source\Player\PlayerState\PlayerWalk.cpp" />
     <ClCompile Include="Source\Player\PlayerState\PlayerWin.cpp" />
     <ClCompile Include="Source\PlayScene.cpp" />
+    <ClCompile Include="Source\Result\ResultUi.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />
     <ClCompile Include="Source\Stage\SkyManager.cpp" />
     <ClCompile Include="Source\Stage\Stage.cpp" />

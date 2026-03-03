@@ -13,7 +13,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void Start()override;
+	void Start(int _height);
 
 	/// <summary>
 	/// ‰e‚Ì‘å‚«‚³‚ğƒZƒbƒg‚·‚éŠÖ”
@@ -35,4 +35,5 @@ private:
 	VECTOR3 groundPos;
 	VECTOR3 dist;
 	BaseObject* obj;
+	float height;
 };

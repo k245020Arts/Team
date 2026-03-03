@@ -41,7 +41,7 @@ void PlayerHeavyAttackCamera::Update()
 			c->target = Easing::Lerp(currentTarget, targetp, t);
 		}
 		else {
-			c->currentDistance = VECTOR3(0, 0, -800);
+			c->currentDistance = VECTOR3(0, 0, -1200);
 			VECTOR3 targetp = c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0);
 			c->target = targetp;
 		}

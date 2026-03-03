@@ -1,5 +1,6 @@
 #pragma once
 #include "../Component.h"
+#include "../../Common/LoadManager.h"
 
 class UIManager;
 

@@ -215,14 +215,18 @@ void Camera::PlayerSet(BaseObject* _obj)
 void Camera::TargetSet(BaseObject* _obj)
 {
 	if (_obj == nullptr) {
+		
 		cameraComponent.target.obj	= _obj;
 		rockOn						= false;
 		cameraComponent.state->ChangeState(StateID::FREE_CAMERA_S);
 		return;
 	}
-	cameraComponent.target.obj			= _obj;
-	cameraComponent.target.transform	= cameraComponent.target.obj->GetTransform();
-	rockOn								= true;
+	if (cameraComponent.enemyManager->ObjectIsEnemy(_obj)) {
+		cameraComponent.target.obj			= _obj;
+		cameraComponent.target.transform	= cameraComponent.target.obj->GetTransform();
+		rockOn								= true;
+	}
+	
 }
 
 void Camera::TargetEnemySet()

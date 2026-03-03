@@ -158,8 +158,8 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_N_ATTACK1,			"B_ATTACK1", false, 1.2f, 25.0f, 60.0f);
 	anim->AddFile(ID::B_N_ATTACK2,			"B_ATTACK2", false, 1.2f, 25.0f, 60.0f);
 	anim->AddFile(ID::B_N_ATTACK3,			"B_ATTACK3", false, 1.2f, 40.0f, 55.0f);
-	anim->AddFile(ID::B_N_ATTACK4,			"B_ATTACK4", false, 1.2f, 20.0f, 55.0f);
-	anim->AddFile(ID::B_N_ATTACK5,			"B_ATTACK5", false, 1.2f, 20.0f, 55.0f);
+	anim->AddFile(ID::B_N_ATTACK4,			"B_ATTACK4", false, 1.2f, 20.0f, 30.0f);
+	anim->AddFile(ID::B_N_ATTACK5,			"B_ATTACK5", false, 1.2f, 20.0f, 30.0f);
 	anim->AddFile(ID::B_N_ATTACK6,			"B_ATTACK6", false, 1.2f, 50.0f, 65.0f);
 	anim->AddFile(ID::B_N_ATTACK7,			"B_ATTACK7", false, 1.2f, 72.41592f, 85.0f); //31.0f, 75.0f
 	anim->AddFile(ID::B_S_ATTACK1,			"B_SATTACK1", false, 1.0f, 50.0f, 55.0f);
@@ -176,7 +176,8 @@ void EnemyManager::CreateBoss()
 	anim->AddFile(ID::B_APPEAR_FALL,		"B_APPEAR_FALL", true, 1.0f, 10.0f, 70.0f);
 	anim->AddFile(ID::B_APPEAR_LAND,		"B_APPEAR_LAND", false, 1.5f, 10.0f, 70.0f);
 	anim->AddFile(ID::BOSS_FEAR,			"B_FEAR", true, 1.0f, 10.0f, 70.0f);
-	anim->AddFile(ID::B_BACKSTEP,			"B_BACKSTEP", true, 1.0f);
+anim->AddFile(ID::B_BACKSTEP,			"B_BACKSTEP", true, 1.0f);
+anim->AddFile(ID::B_WIN,				"B_WIN", true, 1.0f, 10.0f, 70.0f);
 	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 
 	b->Start(boss);
@@ -197,7 +198,7 @@ void EnemyManager::CreateBoss()
 	Object3D* shadow = new Object3D();
 	shadow->Init(Transform(VECTOR3(0.0f, -20.0f, 0.0f), VZero, VECTOR3(boss->GetTransform()->scale.x - 2.0f, 0.1f, boss->GetTransform()->scale.z - 2.0f)), "BossShadow");
 	Shadow* s = shadow->Component()->AddComponent<Shadow>();
-	s->Start();
+	s->Start(50.0f);
 
 	RayCollider* collider5 = shadow->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
@@ -674,7 +675,8 @@ void EnemyManager::GameSceneChangeState()
 				break;
 
 			case GameManager::GameState::LOSE:
-
+				stateManager->NowChangeState(StateID::BOSS_WIN_S);
+				stateManager->SetNoStateChange(true);
 				break;
 
 			default:
@@ -701,6 +703,16 @@ int EnemyManager::PlayerFovEnemyNum(Transform* _pTransform, float _angle)
 		}
 	}
 	return num;
+}
+
+bool EnemyManager::ObjectIsEnemy(BaseObject* _base)
+{
+	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
+		if ((*itr)->GetBaseObject() == _base) {
+			return true;
+		}
+	}
+	return false;
 }
 
 

@@ -43,7 +43,7 @@ void EnemyBase::Update()
 	}
 	justAvoidCollTime -= Time::DeltaTimeRate();
 	float time = enemyBaseComponent.anim->EventStartTime(enemyBaseComponent.anim->GetCurrentID());
-	if (time + 5.0f >= enemyBaseComponent.anim->GetCurrentFrame()) {
+	if (time + 6.0f >= enemyBaseComponent.anim->GetCurrentFrame()) {
 		if (justAvoidColl.instance != nullptr) {
 			DeleteColliderComponent(&justAvoidColl);
 			justAvoidColl.instance = nullptr;

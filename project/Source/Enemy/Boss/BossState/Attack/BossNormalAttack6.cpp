@@ -32,19 +32,47 @@ void BossNormalAttack6::Update()
 	}
 	BossAttackCollsion();
 	BossJustAvoidCollsion();
-	//boss->LookPlayer();
 	if (!boss->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
-			/*VECTOR3 dis = boss->bossTransform->position - keepPlayerPosition ;
-			normal = dis.Normalize();*/
-			boss->enemyBaseComponent.physics->AddVelocity(normal * -6500.0f, true);
+			for (int i = 0; i < 3; i++) {
+				boss->LookPlayer();
+			}
+			VECTOR3 dis = boss->bossTransform->position - boss->enemyBaseComponent.playerObj->GetTransform()->position ;
+			normal = dis.Normalize();
+			if (dis.Size() <= 1000.0f) {
+				boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
+			}
+			else {
+				boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
+				float speed = dis.Size();
+				if (speed <= 2000.0f) {
+					speed = 2000.0f;
+				}
+				boss->enemyBaseComponent.physics->SetVelocity(normal * -speed);
+			}
 			
 		}
 	
 	}
-	if (boss->enemyBaseComponent.anim->EventFinishTime(animId) - boss->enemyBaseComponent.anim->GetCurrentFrame() <= 5.0f) {
-		boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
+	else {
+		
+		VECTOR3 dis = boss->bossTransform->position - boss->enemyBaseComponent.playerObj->GetTransform()->position;
+		if (dis.Size() <= 1000.0f) {
+			boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
+		}
+		else {
+			boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
+			float speed = dis.Size();
+			if (speed <= 2000.0f) {
+				speed = 2000.0f;
+			}
+			boss->enemyBaseComponent.physics->SetVelocity(normal * -speed);
+		}
+		
 	}
+	/*if (boss->enemyBaseComponent.anim->EventFinishTime(animId) - boss->enemyBaseComponent.anim->GetCurrentFrame() <= 5.0f) {
+		boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
+	}*/
 	AttackSound();
 	if (boss->maxAttack <= 0) {
 		AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");

@@ -549,7 +549,10 @@
     <ClCompile Include="Source\Component\Collider\AABBCollider.cpp">
       <Filter>Component\Collider\AABB</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\Boss\BossState\BossBackStep.cpp">
+    <ClCompile Include="Source\Result\ResultUi.cpp">
+      <Filter>PlayScene\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossWin.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1160,7 +1163,10 @@
     <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossThrowRock.h">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\Boss\BossState\BossBackStep.h">
+    <ClInclude Include="Source\Result\ResultUi.h">
+      <Filter>PlayScene\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossWin.h">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1365,6 +1371,9 @@
     </Filter>
     <Filter Include="Component\EnemyAttackObject\BossRock">
       <UniqueIdentifier>{d19ebe7e-2ebc-4a85-9c91-fb553f062ca8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Result">
+      <UniqueIdentifier>{79c97a35-532e-4050-b1b0-be3787e031bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

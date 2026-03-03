@@ -179,10 +179,10 @@ void EnemyStateBase::BossJustAvoidCollsion()
 {
 	Boss* e = GetBase<Boss>();
 	float time = e->enemyBaseComponent.anim->EventStartTime(animId);
-	//敵の剣回りを光らせていることへの設定
-	if (time - 5.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
+	//ジャスト回避判定の作成
+	if (time - 6.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
 		Transform colTrans = collTrans;
-		colTrans.scale.x += 100.0f;
+		colTrans.scale.x += 200.0f;
 		e->CollsionStart<SphereCollider>(&e->justAvoidColl, colTrans);
 		e->SetShape(CollsionInformation::SPHERE, &e->justAvoidColl);
 		e->justAvoidCollTime = 3.0f;
@@ -193,10 +193,10 @@ void EnemyStateBase::EnemyJustAvoidCollsion()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	float time = e->enemyBaseComponent.anim->EventStartTime(animId);
-	//敵の剣回りを光らせていることへの設定
-	if (time - 5.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
+	//ジャスト回避判定の作成
+	if (time - 6.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
 		Transform colTrans = collTrans;
-		colTrans.scale.x += 100.0f;
+		colTrans.scale.x += 200.0f;
 		e->CollsionStart<SphereCollider>(&e->justAvoidColl, colTrans);
 		e->SetShape(CollsionInformation::SPHERE, &e->justAvoidColl);
 		e->justAvoidCollTime = 3.0f;

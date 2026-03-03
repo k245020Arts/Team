@@ -6,6 +6,8 @@
 #include "../../Common/Sound/SoundManager.h"
 #include "../../Component/Collider/SphereCollider.h"
 #include "../../Enemy/EnemyManager.h"
+#include "../../Wave/Wave.h"
+#include "../../../Source/Component/UI/UIManager/UIManager.h"
 
 PlayerLose::PlayerLose()
 {
@@ -23,8 +25,11 @@ PlayerLose::~PlayerLose()
 void PlayerLose::Update()
 {
 	Player* p = GetBase<Player>();
-	if (!p->playerCom.sound->CheckSe(Sound_ID::LOSE)) {
+	if (!p->playerCom.camera->IsCutScene()) {
 		p->playerCom.gameManager->ChangeState(GameManager::SCENE_CHANGE);
+	}
+	if (p->playerCom.camera->GetCutNum() == 2) {
+		p->playerCom.gameManager->ResultUiStart(false);
 	}
 }
 
@@ -40,7 +45,13 @@ void PlayerLose::Start()
 	p->playerCom.sound->PlaySe(Sound_ID::LOSE);
 	//one = false;
 	p->playerCom.enemyManager->CameraRockOnStart(p->playerCom.camera);
-	p->playerCom.camera->CutSceneChangeState("PlayerDie", false);
+	if (FindGameObject<Wave>()->GetBossWave()) {
+		p->playerCom.camera->CutSceneChangeState("PlayerDieBoss", false);
+	}
+	else {
+		p->playerCom.camera->CutSceneChangeState("PlayerDie", false);
+	}
+	FindGameObject<UIManager>()->SetUIDraw(false);
 }
 
 void PlayerLose::Finish()
