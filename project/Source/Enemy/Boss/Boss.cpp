@@ -266,7 +266,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossLose>("BossLose", StateID::BOSS_LOSE_S);
 	enemyBaseComponent.state->CreateState<BossHalfSpecialAttack>("BossHalfAttack", StateID::BOSS_HALF_ATTACK_S);
 	enemyBaseComponent.state->CreateState<BossFear>("BossFear", StateID::BOSS_FEAR_S);
-enemyBaseComponent.state->CreateState<BossBackStep>("BossBackStep", StateID::BOSS_BACKSTEP_S);
+	enemyBaseComponent.state->CreateState<BossBackStep>("BossBackStep", StateID::BOSS_BACKSTEP_S);
 	enemyBaseComponent.state->CreateState<BossWin>("BossWin", StateID::BOSS_WIN_S);
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 

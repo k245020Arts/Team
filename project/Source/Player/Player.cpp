@@ -473,6 +473,10 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	std::shared_ptr<BossAttackBase> attack = _obj->Component()->GetComponent<StateManager>()->GetState<BossAttackBase>();
 	float startTime					= enemyAnim->EventStartTime(_attackId);
 	bool damage						= false;
+	StateID::State_ID state = pB->GetID();
+	if (state == StateID::PLAYER_JUST_AVOID_S) {
+		return true;
+	}
 	if (justAvoid)
 		return true;
 	
@@ -658,6 +662,10 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
 	bool damage = false;
 	BaseObject* parent = _obj->GetParent();
+	StateID::State_ID state = pB->GetID();
+	if (state == StateID::PLAYER_JUST_AVOID_ATTACK1_S && playerCom.hitObj == _obj) {
+		return true;
+	}
 	if (parent != nullptr) {
 		playerCom.hitObj = parent;
 	}
@@ -737,6 +745,11 @@ void Player::AttackRockHit()
 
 void Player::JustAvoidCollsionHit(BaseObject* _obj, CollsionInformation::Tag _tag)
 {
+	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
+	StateID::State_ID state = pB->GetID();
+	if (state == StateID::PLAYER_JUST_AVOID_S) {
+		return;
+	}
 	if (_tag == CollsionInformation::JUST_AVOID) {
 		playerCom.hitObj = _obj;
 	}
