@@ -38,7 +38,7 @@ void BossBackStep::Update()
 		counter++;
 	}
 	
-	if(time>=0.55f)
+	if(time>=0.55f||time >= 7.0f)
 		b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 }
 
