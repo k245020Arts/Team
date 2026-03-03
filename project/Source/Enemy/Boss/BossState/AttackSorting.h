@@ -48,4 +48,6 @@ private:
 
 	int copyPriority;
 	int moveCounter;
+
+	VECTOR3 vec;
 };

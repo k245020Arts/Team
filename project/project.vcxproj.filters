@@ -549,6 +549,9 @@
     <ClCompile Include="Source\Component\Collider\AABBCollider.cpp">
       <Filter>Component\Collider\AABB</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\BossBackStep.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1156,6 +1159,9 @@
     </ClInclude>
     <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossThrowRock.h">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\BossBackStep.h">
+      <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

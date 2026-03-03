@@ -39,6 +39,9 @@ namespace {
 		int priority;	//プライオリティ
 		int weight;		//重さ
 		int maxAction;	//連続で何回行動できるか
+
+		float distance = 0;//距離によってその技が出やすいかどうか
+		int addWeight = 0;//数字変動
 	};
 	std::vector<ActionParam> actions 
 	{
@@ -51,7 +54,8 @@ namespace {
 		{StateID::BOSS_NORMAL_ATTACK6_S,		30, 10, 1},
 		{StateID::BOSS_SPECIAL_ATTACK1_S,		50, 30, 1},
 		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	50, 30, 1},
-		{StateID::BOSS_SPECIAL_ATTACK2_S,		50, 30, 1},
+		{StateID::BOSS_SPECIAL_ATTACK2_S,		50, 0,  1, 3000},
+		{StateID::BOSS_BACKSTEP_S,				30, 30, 0},	
 	};
 
 	//通常攻撃の重み
@@ -91,6 +95,8 @@ AttackSorting::AttackSorting()
 	moveCounter = 0;
 
 	copyState = StateID::STATE_MAX;
+
+	vec = VZero;
 }
 
 AttackSorting::~AttackSorting()
@@ -149,7 +155,7 @@ void AttackSorting::Start()
 		bossPriority = 80;
 		break;
 	}
-	
+	vec = b->enemyBaseComponent.playerObj->GetTransform()->position - b->GetEnemyObj()->GetTransform()->position;
 	BuildTable(bossPriority);
 	/*bool combo = Random::GetBernoulli(comboAttackRate);
 	if (combo) {
@@ -224,6 +230,7 @@ void AttackSorting::NormalAttackSelect()
 void AttackSorting::BuildTable(int _priority)
 {
 	int totalWeight = 0;
+	
 	for (auto& itr : actions)
 	{
 		if (itr.id == copyState)//一個前の行動と同じとき
@@ -241,7 +248,13 @@ void AttackSorting::BuildTable(int _priority)
 		if (itr.priority > _priority)
 			continue;
 		else
-			totalWeight += itr.weight;
+		{
+			if (itr.distance!=0.0f&&vec.Size() > itr.distance)
+				itr.addWeight = 3000;
+
+			totalWeight += itr.weight + itr.addWeight;
+		}
+			
 	}
 
 	//打てる技の合計からランダムな数字をだす
@@ -254,8 +267,11 @@ void AttackSorting::BuildTable(int _priority)
 			itr.priority = copyPriority;
 			continue;
 		}
+		else if(itr.priority > _priority)//プライオリティを超えてるとき
+			continue;
 
-		r -= itr.weight;
+		r -= itr.weight + itr.addWeight;
+		itr.addWeight = 0;
 		if (r < 0)
 		{
 			nextState = itr.id;

@@ -41,6 +41,7 @@ public:
 	friend class BossRockManager;
 	friend class BossFear;
 	friend class EnemyStateBase;
+	friend class BossBackStep;
 	
 	enum HP_RATE
 	{
