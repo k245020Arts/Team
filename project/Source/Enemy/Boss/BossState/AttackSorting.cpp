@@ -52,10 +52,11 @@ namespace {
 		{StateID::BOSS_NORMAL_ATTACK4_S,		10, 10, 1},
 		{StateID::BOSS_NORMAL_ATTACK5_S,		30, 10, 1},
 		{StateID::BOSS_NORMAL_ATTACK6_S,		30, 10, 1},
+		{StateID::BOSS_NORMAL_ATTACK7_S,		50, 10, 0, 2000},
 		{StateID::BOSS_SPECIAL_ATTACK1_S,		50, 30, 1},
 		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	50, 30, 1},
-		{StateID::BOSS_SPECIAL_ATTACK2_S,		50, 0,  1, 3000},
-		{StateID::BOSS_BACKSTEP_S,				30, 30, 0},	
+		{StateID::BOSS_SPECIAL_ATTACK2_S,		50, 0,  1, 2000},
+		{StateID::BOSS_BACKSTEP_S,				50, 30, 0},	
 	};
 
 	//í èÌçUåÇÇÃèdÇ›

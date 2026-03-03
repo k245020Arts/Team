@@ -17,4 +17,6 @@ private:
 
 	float time;
 	float counter;
+
+	VECTOR3 vec;
 };

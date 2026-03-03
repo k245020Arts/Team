@@ -24,24 +24,19 @@ void BossBackStep::Update()
 	speed = Easing::EaseIn(0.0f, MaxSpeed, MaxSpeed / 60);
 
 	const float ROTY = -b->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F;
-	VECTOR3 vec = b->enemyBaseComponent.playerObj->GetTransform()->position - b->GetEnemyObj()->GetTransform()->position;
-
 	
+	time += Time::DeltaTimeRate();
 
 	if (vec.Size() <= 2200.0f && counter == 1|| vec.Size() <= 4400 && counter == 2)
 	{
 		b->GetEnemyObj()->GetTransform()->position.x -= speed * cosf(ROTY);
 		b->GetEnemyObj()->GetTransform()->position.z -= speed * sinf(ROTY);
 	}
-	else if (time < 0.5f)
-		time += Time::DeltaTimeRate();
 	else if (counter < 2)
 	{
 		time = 0.0f;
 		counter++;
 	}
-	else
-		time += Time::DeltaTimeRate();
 	
 	if(time>=0.55f)
 		b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
@@ -49,10 +44,13 @@ void BossBackStep::Update()
 
 void BossBackStep::Start()
 {
+	Boss* b = GetBase<Boss>();
 	EnemyStateBase::Start();
 	speed = 0.0f;
 	time = 0.0f;
 	counter = 0;
+
+	vec = b->enemyBaseComponent.playerObj->GetTransform()->position - b->GetEnemyObj()->GetTransform()->position;
 }
 
 void BossBackStep::Finish()
