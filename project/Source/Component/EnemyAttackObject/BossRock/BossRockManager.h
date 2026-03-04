@@ -29,6 +29,7 @@ public:
 
 	void ThrowStart();
 	void CreateThrow(VECTOR3& _addPos);
+	void DropRockStart();
 
 private:
 	std::list<BossRockBase*> rocks;

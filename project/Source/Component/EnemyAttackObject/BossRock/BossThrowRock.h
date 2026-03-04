@@ -15,6 +15,8 @@ public:
 	void CreateThrowRock(VECTOR3& _addPos);
 	void ThrowRockStart(BaseObject* _player);
 
+	void DropRock();
+
 private:
 	bool throwRock;
 	VECTOR3 dir;
