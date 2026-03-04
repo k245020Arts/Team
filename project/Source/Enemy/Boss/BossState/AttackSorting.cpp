@@ -272,11 +272,23 @@ void AttackSorting::BuildTable(int _priority)
 			continue;
 
 		r -= itr.weight + itr.addWeight;
-		itr.addWeight = 0;
+	
 		if (r < 0)
 		{
 			nextState = itr.id;
+			AllAddWeightZero();
 			break;
 		}
+	}
+}
+
+void AttackSorting::AllAddWeightZero()
+{
+	for (auto& itr : actions)
+	{
+		if (itr.addWeight == 0)
+			continue;
+
+		itr.addWeight = 0;
 	}
 }

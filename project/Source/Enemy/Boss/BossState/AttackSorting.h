@@ -24,6 +24,8 @@ private:
 	/// </summary>
 	/// <param name="_priority">¡‚Ìƒ{ƒX‚Ìó‹µ‚ğ“ü‚ê‚é</param>
 	void BuildTable(int _priority);
+	//•Ï“®‚³‚¹‚½’l‚ğ‚·‚×‚Äƒ[ƒ‚É‚·‚é
+	void AllAddWeightZero();
 
 	float coolTime;
 

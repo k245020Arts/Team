@@ -16,7 +16,7 @@ private:
 	float speed;
 
 	float time;
-	float counter;
+	int counter;
 
-	VECTOR3 vec;
+	VECTOR3 pPos;
 };
