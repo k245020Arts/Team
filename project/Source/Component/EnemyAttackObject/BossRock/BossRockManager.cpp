@@ -185,6 +185,17 @@ void BossRockManager::CreateThrow(VECTOR3& _addPos)
 	boss->obj->AddChild(rock, false);
 }
 
+void BossRockManager::DropRockStart()
+{
+	for (auto rock : rocks) {
+		BossThrowRock* throwRock = rock->GetBaseObject()->Component()->GetComponent<BossThrowRock>();
+		if (throwRock == nullptr) {
+			continue;
+		}
+		throwRock->DropRock();
+	}
+}
+
 void BossRockManager::SetRockComponent(BaseObject* _base, const VECTOR3& _gravity, const VECTOR3& _fir)
 {
 	BossRock* bossRock = _base->Component()->AddComponent<BossRock>();

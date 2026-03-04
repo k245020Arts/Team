@@ -67,4 +67,5 @@ void BossNormalAttack7::Finish()
 	BossAttackBase::BossFinish();
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	boss->rockManager->DropRockStart();
 }

@@ -151,3 +151,35 @@ void BossThrowRock::ThrowRockStart(BaseObject* _player)
 
 	physics->AddVelocity(velocity, false);
 }
+
+void BossThrowRock::DropRock()
+{
+	if (throwRock) {
+		return;
+	}
+	throwReady = false;
+	CollsionInfo info;
+	info.parentTransfrom = obj->GetTransform();
+	info.shape = CollsionInformation::RAY;
+	info.oneColl = false;
+	info.tag = CollsionInformation::BOSS_ROCK_F;
+	if (randColl == nullptr) {
+		randColl = obj->Component()->AddComponent<RayCollider>();
+		randColl->RaySet(info, Transform(VECTOR3(0, 300, 0), VZero, VOne), Transform(VECTOR3(0, -300, 0), VZero, VOne));
+	}
+
+	info.parentTransfrom = obj->GetTransform();
+	info.shape = CollsionInformation::SPHERE;
+	info.oneColl = true;
+	info.tag = CollsionInformation::BOSS_ROCK_PLAYER_ATTACK;
+
+	if (playerAttackHitColl == nullptr) {
+		playerAttackHitColl = obj->Component()->AddComponent<SphereCollider>();
+		playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(250.0f, 1.0f, 1.0f)), "bossplayerAttack");
+	}
+
+	throwRock = true;
+
+	float g = 2000.0f;
+	physics->SetGravity(VECTOR3(0, -g, 0));
+}

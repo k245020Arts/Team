@@ -207,7 +207,7 @@ void BossRockBase::PlayerAttackRockFlyAway(Transform& _playerTransform)
 	bossHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(200.0f, 1.0f, 1.0f)), "rockBossHit");
 
 	physics->SetVelocity(_playerTransform.Forward() * 10000.0f);
-	physics->AddVelocity(VECTOR3(0,1700, 0), false);
+	physics->AddVelocity(VECTOR3(0,1200, 0), false);
 	fly = true;
 	effectManager->CreateEffekseer(Transform(obj->GetTransform()->position + VECTOR3(0, 0, -100), VZero, VOne * 2.0f), nullptr, Effect_ID::PLAYER_ATTACK_ROCK, 1.0f);
 	obj->Component()->GetComponent<Shaker>()->ShakeStart(VOne * 50.0f,Shaker::MIX_SHAKE,true,0.3f);
