@@ -122,9 +122,9 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::SOUND_ID::PLAYER_SPECIAL_ATTACK_BOM, "PlayerSpecialAttackBom", ".wav", 200);
 
 	SoundLoad(Sound_ID::SOUND_ID::ROCK_BLAST,	"rockBlast", ".wav", 200);
-	SoundLoad(Sound_ID::SOUND_ID::ROCK_BREAK,	"rockBreak", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::ROCK_BREAK,	"rockBreak", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::ROCK_FALL,	"rockFall", ".wav", 200);
-	SoundLoad(Sound_ID::SOUND_ID::ROCK_GROUND,	"rockGround", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::ROCK_GROUND,	"rockGround", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK2, "p_walk2", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK3, "p_walk3", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK4, "p_walk4", ".wav", 255);

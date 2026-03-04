@@ -32,6 +32,8 @@ namespace Effect_ID {
 		ROCK_BLAST,
 		ROCK_FALL,
 		ROCK_BREAK,
+		PLAYER_ATTACK_ROCK,
+		BOSS_ROCK_HIT_RUSH,
 
 		EFFECT_MAX
 	};
