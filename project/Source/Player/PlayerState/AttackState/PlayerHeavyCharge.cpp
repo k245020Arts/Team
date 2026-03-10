@@ -40,36 +40,36 @@ void PlayerHeavyCharge::Update()
 	//AttackCollsion();
 	PlayerAttackStateBase::Update();
 	
-	if (p->playerCom.InputManager->KeyInput("heavyAttack")) {
+	if (InputManager::GetInstance()->KeyInput("heavyAttack")) {
 		chargeCount -= Time::DeltaTimeRate();
 		if (chargeCount <= 0.0f) {
 			p->attackLevel = Player::LEVEL3;
 			p->playerCom.shaker->SetShakePower(VECTOR3(20, 20, 20));
-			p->playerCom.controller->ControlVibrationStartFrame(150, -1);
+			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(150, -1);
 			
-			if (!p->playerCom.effect->IsPlayIng(Effect_ID::PLAYER_CHARGE_FINAL)) {
-				p->playerCom.effect->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FINAL, 1.0f);
+			if (!EffectManager::GetInstance()->IsPlayIng(Effect_ID::PLAYER_CHARGE_FINAL)) {
+				EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FINAL, 1.0f);
 			}
 			baseFrequ = 90000;
-			if (!p->playerCom.sound->CheckSe(Sound_ID::PLAYER_MAX_CHARGE)) {
-				p->playerCom.sound->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_MAX_CHARGE, 0, baseFrequ);
+			if (!SoundManager::GetInstance()->CheckSe(Sound_ID::PLAYER_MAX_CHARGE)) {
+				SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_MAX_CHARGE, 0, baseFrequ);
 			}
 			if (!maxCharge) {
 				maxCharge = true;
-				p->playerCom.sound->PlaySe(Sound_ID::PLAYER_CHARGE_END);
-				p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0,100,0),VZero,VOne), obj, Effect_ID::PLAYER_CHARGE_END, 1.0f);
+				SoundManager::GetInstance()->PlaySe(Sound_ID::PLAYER_CHARGE_END);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0,100,0),VZero,VOne), obj, Effect_ID::PLAYER_CHARGE_END, 1.0f);
 			}
 		}
 		else if (chargeCount <= 1.0f) {
 			p->attackLevel = Player::LEVEL2;
 			p->playerCom.shaker->SetShakePower(VECTOR3(10, 10, 10));
-			p->playerCom.controller->ControlVibrationStartFrame(100, -1);
-			if (!p->playerCom.effect->IsPlayIng(Effect_ID::PLAYER_CHARGE_SECOND)) {
-				p->playerCom.effect->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_SECOND, 1.0f);
+			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(100, -1);
+			if (!EffectManager::GetInstance()->IsPlayIng(Effect_ID::PLAYER_CHARGE_SECOND)) {
+				EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_SECOND, 1.0f);
 			}
 			baseFrequ = 80000;
-			if (!p->playerCom.sound->CheckSe(Sound_ID::PLAYER_CHARGE)) {
-				p->playerCom.sound->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_CHARGE, 0, baseFrequ);
+			if (!SoundManager::GetInstance()->CheckSe(Sound_ID::PLAYER_CHARGE)) {
+				SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_CHARGE, 0, baseFrequ);
 			}
 		}
 		
@@ -81,7 +81,7 @@ void PlayerHeavyCharge::Update()
 		p->HeavyAttackChangeParam(p->attackLevel);
 		p->playerCom.stateManager->ChangeState(nextAttackID);
 		p->playerCom.shaker->ShakeFinish();
-		p->playerCom.controller->StopControlVibrationStartFrame();
+		InputManager::GetInstance()->GetControllerInput()->StopControlVibrationStartFrame();
 	}
 }
 
@@ -103,8 +103,8 @@ void PlayerHeavyCharge::Start()
 	p->playerCom.shaker->ShakeStart(VECTOR3(5, 5, 5), Shaker::MIX_SHAKE, false, -1);
 	maxCharge = false;
 	p->attackLevel = Player::LEVEL1;
-	p->playerCom.controller->ControlVibrationStartFrame(50, -1);
-	p->playerCom.effect->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FIRST, 1.0f);
+	InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(50, -1);
+	EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FIRST, 1.0f);
 }
 
 void PlayerHeavyCharge::Finish()
@@ -116,5 +116,5 @@ void PlayerHeavyCharge::Finish()
 	p->charge = false;
 	p->playerCom.camera->ChangeStateCamera(StateID::FREE_CAMERA_S);
 	p->playerCom.shaker->ShakeFinish();
-	p->playerCom.controller->StopControlVibrationStartFrame();
+	InputManager::GetInstance()->GetControllerInput()->StopControlVibrationStartFrame();
 }

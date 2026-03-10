@@ -48,8 +48,7 @@ void ResultUi::Draw()
 		for (int i = 0; i < LOOP_NUM; i++) {
 			double t = (double)i / LOOP_NUM;
 			double s = size * (1.0 + t * 0.3);
-			double rot = t * 360.0 * DegToRad;
-			DrawRotaGraph((int)transform->position.x, (int)transform->position.y, s, rot, hImage, true);
+			DrawRotaGraph((int)transform->position.x, (int)transform->position.y, s, 0.0f, hImage, true);
 		}
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 

@@ -73,10 +73,6 @@ void TitlePlayer::Start(Object3D* _obj) {
 
 	camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<TitleCamera>();
 
-	playerCom.effect = FindGameObject<EffectManager>();
-	playerCom.sound = FindGameObject<SoundManager>();
-	//playerCom.InputManager = FindGameObject<InputManager>();
-	playerCom.controller = FindGameObject<ControllerInputManager>();
 	//playerCom.keyboard = FindGameObject<KeyboardInputManager>();
 	playerCom.weapon = FindGameObject<WeaponManager>(); //
 

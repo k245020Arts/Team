@@ -2,15 +2,15 @@
 #include "../../../Library/GameObject.h"
 #include <unordered_map>
 #include "../ID/SoundID.h"
+#include "../Singleton/SingletonBase.h"
 
 class Sound;
 class BaseObject;
 
-class SoundManager : public GameObject
+class SoundManager : public SingletonBase<SoundManager>
 {
 public:
-	SoundManager();
-	~SoundManager();
+	
 	void Update()override;
 	void Draw() override;
 
@@ -102,6 +102,11 @@ public:
 	void PlayRamdomChangeFrequencySe(Sound_ID::SOUND_ID _id,int _ramdom,int _baseFrequ);
 
 private:
+
+	friend class SingletonBase<SoundManager>;
+
+	SoundManager();
+	~SoundManager();
 	
 	std::unordered_map<std::string,Sound*> sound;
 

@@ -2,6 +2,7 @@
 #include "../../Component/Animator/Animator.h"
 #include "../../Component/Physics/Physics.h"
 #include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/InputManager.h"
 #include "../../Component/Collider/SphereCollider.h"
 #include "../../Component/Color/Color.h"
 #include "../../Component/Shaker/Shaker.h"
@@ -270,12 +271,11 @@ void TrashEnemy::Start(Object3D* _obj)
 
 	enemyBaseComponent.anim = obj->Component()->GetComponent<Animator>();
 	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
-	enemyBaseComponent.control = FindGameObject<ControllerInputManager>();
+	
 	enemyBaseComponent.color = obj->Component()->GetComponent<Color>();
 	enemyBaseComponent.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));
 	enemyBaseComponent.shaker = obj->Component()->GetComponent<Shaker>();
-	enemyBaseComponent.effect = FindGameObject<EffectManager>();
-	enemyBaseComponent.sound = FindGameObject<SoundManager>();
+	
 	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
 	enemyBaseComponent.camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
 
@@ -417,9 +417,9 @@ void TrashEnemy::PlayerHit()
 		switch (e.attackType)
 		{
 		case EnemyInformation::EnemyReaction::Type::Normal:
-			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
-			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
-			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
+			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			hit = true;
 			deadPreset = deadPresets[1];
 			break;
@@ -427,7 +427,7 @@ void TrashEnemy::PlayerHit()
 
 			break;
 		case EnemyInformation::EnemyReaction::Type::LoopCombo:
-			enemyBaseComponent.sound->RandamSe("swordHit00000", 7);
+			SoundManager::GetInstance()->RandamSe("swordHit00000", 7);
 			if (loopNum == -1)
 			{
 				hitCounter = 0.23f;
@@ -453,30 +453,30 @@ void TrashEnemy::PlayerHit()
 			{
 				//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 3500.0f), VECTOR3(100, 100, 100), 0.5f, 1.2f);
-				enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE * 14.5f), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
+				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(250, 60);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE * 14.5f), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
 				//angleRan = GetRand(360);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				hit = true;
 			}
 			else if (lastBeforeAttack)
 			{
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(100, 100, 100), 0.5f, 0.5f);
 				enemyBaseComponent.shaker->ShakeStart(VECTOR3(20, 20, 20), Shaker::HORIZONAL_SHAKE, true, 0.3f);
-				enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
+				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(250, 60);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
 				angleRan = (float)GetRand(360);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				damage = damage * 5;
 			}
 			else
 			{
 				//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(20, 20, 20), 0.2f, 0.02f);
-				enemyBaseComponent.control->ControlVibrationStartFrame(450, 20);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
+				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(450, 20);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
 				angleRan = (float)GetRand(360);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				enemyBaseComponent.playerObj->Component()->GetComponent<Shaker>()->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.05f);
 			}
 			hit = true;
@@ -487,9 +487,9 @@ void TrashEnemy::PlayerHit()
 			if (!specialAttackHit) 
 				return;
 			
-			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
-			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
-			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
+			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			specialAttackHit = false;
 
 			if (hp <= 0)
@@ -511,7 +511,7 @@ void TrashEnemy::PlayerHit()
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();
 	std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();
-	enemyBaseComponent.sound->RandamSe("E_DamageV", 2);
+	SoundManager::GetInstance()->RandamSe("E_DamageV", 2);
 	enemyBaseComponent.color->setRGB(Color::Rgb(255, 0, 0, 255));
 	damageFlash = 0.5f;
 }

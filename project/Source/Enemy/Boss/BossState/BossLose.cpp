@@ -27,7 +27,7 @@ BossLose::~BossLose()
 void BossLose::Update()
 {
 	Boss* b = GetBase<Boss>();
-	if (!b->enemyBaseComponent.sound->CheckSe(Sound_ID::WIN)) {
+	if (!SoundManager::GetInstance()->CheckSe(Sound_ID::WIN)) {
 		b->enemyBaseComponent.gameManager->ChangeState(GameManager::SCENE_CHANGE);
 	}
 }
@@ -40,8 +40,8 @@ void BossLose::Start()
 {
 	Boss* b = GetBase<Boss>();
 	EnemyStateBase::Start();
-	b->enemyBaseComponent.sound->StopBGM(Sound_ID::PLAY_BGM);
-	b->enemyBaseComponent.sound->PlaySe(Sound_ID::WIN);
+	SoundManager::GetInstance()->StopBGM(Sound_ID::PLAY_BGM);
+	SoundManager::GetInstance()->PlaySe(Sound_ID::WIN);
 	b->enemyBaseComponent.camera->CutSceneChangeState("PlayerWin", false);
 	FindGameObject<UIManager>()->SetUIDraw(false);
 }

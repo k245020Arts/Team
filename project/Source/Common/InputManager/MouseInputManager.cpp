@@ -5,7 +5,7 @@
 MouseInputManager::MouseInputManager()
 {
 	SetMouseDispFlag(true);
-	DontDestroyOnSceneChange(true);
+	//DontDestroyOnSceneChange(true);
 	SetUseDirectInputFlag(true);
 	nowMouseWheelVol = 0;
 }

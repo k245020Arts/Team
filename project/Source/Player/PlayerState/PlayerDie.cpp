@@ -55,7 +55,7 @@ void PlayerDie::Start()
 	p->playerCom.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	//one			= true;
 	p->obj->Component()->RemoveAllComponent<SphereCollider>();
-	p->playerCom.sound->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
+	SoundManager::GetInstance()->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
 }
 
 void PlayerDie::Finish()

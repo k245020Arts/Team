@@ -128,21 +128,21 @@ void Player::Update()
 			DeleteCollision(&attackColl);
 		}
 	}
-
-	if (playerCom.keyboard->GetIsKeyboardPut(KEY_INPUT_B)){
+	
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_B)){
 		playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
 	}
-	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_4)) {
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_4)) {
 		SpecialVarAdd(20.0f);
 	}
-	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_6)) {
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_6)) {
 		//playerCom.camera->CutSceneChangeState("test");
 		hp -= 5.0f;
 	}
-	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_M)) {
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_M)) {
 		noDamage = true;
 	}
-	if (playerCom.keyboard->GetIsKeyboardPushing(KEY_INPUT_N)) {
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_N)) {
 		noDamage = true;
 	}
 
@@ -206,9 +206,6 @@ void Player::Start(Object3D* _obj)
 	playerCom.camera		= FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
 
 	//playerCom.InputManager = FindGameObject<ImputManager>();
-	playerCom.controller	= FindGameObject<ControllerInputManager>();
-	playerCom.keyboard		= FindGameObject<KeyboardInputManager>();
-	playerCom.InputManager	= FindGameObject<InputManager>();
 
 	playerTransform			= obj->GetTransform();
 
@@ -220,9 +217,6 @@ void Player::Start(Object3D* _obj)
 	playerCom.targetObj		= nullptr;
 	playerCom.hitObj		= nullptr;
 	playerCom.shaker		= c->GetComponent<Shaker>();
-
-	playerCom.effect		= FindGameObject<EffectManager>();
-	playerCom.sound			= FindGameObject<SoundManager>();
 
 	playerCom.weapon		= FindGameObject<WeaponManager>();
 	playerCom.blur			= obj->Component()->GetComponent<MotionBlur>();
@@ -248,7 +242,7 @@ void Player::Start(Object3D* _obj)
 	playerCom.stateManager->StartState(StateID::PLAYER_WAIT_S);
 	redCounter = 0.0f;
 	//3DSoundのベースはプレイヤーに持たせる。
-	playerCom.sound->Base3DSoundObject(obj);
+	SoundManager::GetInstance()->Base3DSoundObject(obj);
 }
 
 void Player::Move(float _speed, float _speedMax)
@@ -280,8 +274,8 @@ void Player::Move(float _speed, float _speedMax)
 	
 	std::shared_ptr<PlayerStateBase> pB = playerCom.stateManager->GetState<PlayerStateBase>();
 
-	StickDirections stick = playerCom.controller->GetStickKnockingReverce(0.6f, 8).leftStick;
-	StickDirections nowStick = playerCom.controller->GetStickKnocking(0.6f, 1).leftStick;
+	StickDirections stick = InputManager::GetInstance()->GetControllerInput()->GetStickKnockingReverce(0.6f, 8).leftStick;
+	StickDirections nowStick = InputManager::GetInstance()->GetControllerInput()->GetStickKnocking(0.6f, 1).leftStick;
 	
 	//スティックの傾きの量が少なかったら移動しない
 	if ((fabs(walkAngle.x) >= 0.3f || fabs(walkAngle.z) >= 0.3f) && hp > 0.0f) {
@@ -413,7 +407,7 @@ void Player::ImguiDraw()
 void Player::PlayerStickInput()
 {
 	//スティックの角度とり
-	walkAngle = VECTOR3(playerCom.controller->GetStickInput().leftStick.x, 0.0f, playerCom.controller->GetStickInput().leftStick.y);
+	walkAngle = VECTOR3(InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x, 0.0f, InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y);
 }
 
 void Player::AvoidReady()
@@ -526,7 +520,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 
 			}
 			if (pB->GetID() != StateID::PLAYER_HEAVY_CHARGE_S) {
-				playerCom.controller->ControlVibrationStartFrame(80, 30);
+				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(80, 30);
 				//playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 				switch (param.damagePattern)
 				{
@@ -548,9 +542,9 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 			redCounter = 0.5f;
 			playerCom.hitObj = _obj;
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
-			playerCom.sound->RandamSe("EnemyAttackHit", 4);
-			playerCom.sound->RandamSe("P_DamageV", 2);
-			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 50, 0), VZero, VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);
+			SoundManager::GetInstance()->RandamSe("EnemyAttackHit", 4);
+			SoundManager::GetInstance()->RandamSe("P_DamageV", 2);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0, 50, 0), VZero, VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);
 
 		}
 	}
@@ -580,7 +574,7 @@ void Player::PlayerAttackHit()
 		const auto& e = it->second;
 		playerCom.shaker->ShakeStart(e.shakePower, e.shakePattern, e.shakerLoop, e.shakeTime);
 		playerCom.camera->CameraShake(e.cameraShakePower, e.shakePattern, false, e.cameraShakeTime);
-		playerCom.sound->RandamSe(e.soundName, e.soundKind);
+		SoundManager::GetInstance()->RandamSe(e.soundName, e.soundKind);
 		SpecialVarAdd(1.0f);
 	}
 }
@@ -699,14 +693,14 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 	damage = true;
 	if (damage) {
 		if (pB->GetID() != StateID::PLAYER_AVOID_S) {
-			playerCom.controller->ControlVibrationStartFrame(80, 30);
+			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(80, 30);
 			playerCom.stateManager->ChangeState(param.changeID);
 			playerCom.physics->AddVelocity(param.moveAdd,false);
 			hp -= param.damage;
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
-			playerCom.sound->RandamSe("EnemyAttackHit", 4);
-			playerCom.sound->RandamSe("P_DamageV", 2);
-			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 50, 0), VZero, VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);
+			SoundManager::GetInstance()->RandamSe("EnemyAttackHit", 4);
+			SoundManager::GetInstance()->RandamSe("P_DamageV", 2);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0, 50, 0), VZero, VOne * 6.0f), obj, Effect_ID::PLAYER_HIT, 1.0f);
 		}
 	}
 	return true;
@@ -729,8 +723,8 @@ void Player::SpecialVarAdd(float _add)
 	if (add >= specialAttackBarMax) {
 		if (!specialAttackGuageMax) {
 			specialAttackGuageMax = true;
-			playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_CAN);
-			playerCom.effect->CreateEffekseer(Transform(VECTOR3(0.0f, 150.0f, 0.0f), VZero, VOne), obj, Effect_ID::PLAYER_SPECIAL_ATTACK_CAN, 1.0f);
+			SoundManager::GetInstance()->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_CAN);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0.0f, 150.0f, 0.0f), VZero, VOne), obj, Effect_ID::PLAYER_SPECIAL_ATTACK_CAN, 1.0f);
 		}
 	}
 	specialAttackBar = std::clamp(add, 0.0f, specialAttackBarMax);
@@ -740,7 +734,7 @@ void Player::AttackRockHit()
 {
 	playerCom.shaker->ShakeStart(VOne * 50.0f, Shaker::MIX_SHAKE, true, 0.35f);
 	playerCom.camera->CameraPerspectiveShakeStart(5.0f, 0.35f);
-	playerCom.controller->ControlVibrationStartFrame(80, 30);
+	InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(80, 30);
 }
 
 void Player::JustAvoidCollsionHit(BaseObject* _obj, CollsionInformation::Tag _tag)

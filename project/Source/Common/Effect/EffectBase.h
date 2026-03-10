@@ -88,5 +88,4 @@ private:
 	float speed;
 	float feedInTime;
 	const float FEEDIN_TIME = 0.1f;
-	EffectManager* effectManager;
 };

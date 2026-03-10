@@ -48,7 +48,6 @@ public:
 private:
 	ButtonType type;
 	int buttonImage;
-	ControllerInputManager* control;
 	float scale;
 	bool push;
 	bool buttonActive;

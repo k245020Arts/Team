@@ -45,11 +45,11 @@ void PlayerJustAvoidAttack1::Update()
 		if (distSize <= ATTACK_MOVE_DIST) {
 			EnemyRotation();
 		}
-		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
+		if (InputManager::GetInstance()->KeyInputDown("avoid")) {
 			p->playerCom.player->AvoidReady();
 			noStateChange = true;
 		}
-		if (p->playerCom.InputManager->KeyInputDown("attack")) {
+		if (InputManager::GetInstance()->KeyInputDown("attack")) {
 			nextAttack = true;
 		}
 		dist = p->attackTargetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
@@ -145,7 +145,7 @@ void PlayerJustAvoidAttack1::Start()
 	firstColl = true;
 	attack = false;
 	p->playerCom.shaker->ShakeStart(VECTOR3(20.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 1.0f);
-	p->playerCom.controller->ControlVibrationStartFrame(100, 20);
+	InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(100, 20);
 	if (p->largeJustAvoid) {
 		if (p->playerCom.hitObj != nullptr) {
 			p->playerCom.hitObj->SetObjectTimeRate(PlayerInformation::JUST_AVOID_ENEMY_TIME_SCALE + 0.5f);

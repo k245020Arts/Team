@@ -4,7 +4,7 @@
 #include <list>
 
 
-class MouseInputManager :public GameObject
+class MouseInputManager
 {
 public:
 
@@ -30,7 +30,7 @@ public:
 
 	MouseInputManager();
 	~MouseInputManager();
-	void Update()override;
+	void Update();
 
 	///<summary>マウスカーソルの位置を取得する</summary>
 	/// <param name="_canScreenOut">TRUEなら画面外の座標も得られる,FALSEなら画面端が最大(最小)値になる</param>

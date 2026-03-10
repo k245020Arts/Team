@@ -4,6 +4,7 @@
 #include "Time.h"
 #include <DxLib.h>
 #include "../Source/Common/LoadManager.h"
+#include "../Source/Common/Singleton/SingleTonUpdater.h"
 
 void AppInit()
 {
@@ -16,13 +17,15 @@ void AppUpdate()
 {
 	SceneManager::Update();
 	ObjectManager::Update();
+	SingleTonUpdater::Update();
 }
 
 void AppDraw()
 {
 	Time::Refresh();
 	SceneManager::Draw();
-	ObjectManager::Draw();
+	ObjectManager::Draw(); 
+	SingleTonUpdater::Draw();
 }
 
 void AppRelease()
@@ -30,7 +33,9 @@ void AppRelease()
 	Time::Release();
 	SceneManager::Release();
 	ObjectManager::Release();
+	SingleTonUpdater::Release();
 	Load::AllDelete();
+
 }
 
 bool AppIsExit()

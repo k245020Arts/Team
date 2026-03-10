@@ -14,6 +14,77 @@
 
 CollsionEvent::CollsionEvent()
 {
+	using namespace CollsionInformation;
+
+	// Player © Enemy attack
+	eventTable[MakeKey(PLAYER, E_ATTACK)] = (EventFunc)&CollsionEvent::PlayerDamageEvent;
+
+	// Enemy © Player attack
+	eventTable[MakeKey(ENEMY, P_ATTACK)] = (EventFunc)&CollsionEvent::EnemyDamageEvent;
+
+	eventTable[MakeKey(ENEMY, P_SPECIAL_ATTACK)] = (EventFunc)&CollsionEvent::EnemyDamageEvent;
+
+
+	// Player © Boss attack
+	eventTable[MakeKey(PLAYER, B_ATTACK)] = (EventFunc)&CollsionEvent::PlayerDamageBossEvent;
+
+
+	// Player © Boss effect attack
+	eventTable[MakeKey(PLAYER, B_E_ATTACK)] = (EventFunc)&CollsionEvent::PlayerDamageBossEffectEvent;
+
+
+	// Boss © Player attack
+	eventTable[MakeKey(BOSS, P_ATTACK)] = (EventFunc)&CollsionEvent::BossDamageEvent;
+
+	eventTable[MakeKey(BOSS, P_SPECIAL_ATTACK)] = (EventFunc)&CollsionEvent::BossDamageEvent;
+
+
+	// Camera push
+	eventTable[MakeKey(FLOOR, C_FLOOR)] = (EventFunc)&CollsionEvent::CameraPushEvent;
+
+
+	// Player © BossRock attack
+	eventTable[MakeKey(PLAYER, BOSS_ROCK_ATTACK)] = (EventFunc)&CollsionEvent::PlayerDamageBossChildEvent;
+
+
+	// BossRock UI ¨ floor
+	eventTable[MakeKey(BOSS_ROCK_UI, FLOOR_AABB)] = (EventFunc)&CollsionEvent::BossRockPrePosition;
+
+
+	// Rock landing
+	eventTable[MakeKey(FLOOR, BOSS_ROCK_F)] = (EventFunc)&CollsionEvent::BossRockGround;
+
+
+	// Player attack rock
+	eventTable[MakeKey(BOSS_ROCK_PLAYER_ATTACK, P_ATTACK)] = (EventFunc)&CollsionEvent::PlayerAttackRock;
+
+
+	// Rock ¨ Boss damage
+	eventTable[MakeKey(BOSS, BOSS_ROCK_DAMAGE)] = (EventFunc)&CollsionEvent::BossRockDamage;
+
+
+	// Rock rush
+	eventTable[MakeKey(BOSS_ROCK_RUSH, BOSS_RUSH)] = (EventFunc)&CollsionEvent::BossRockRush;
+
+
+	// Rock blast damage player
+	eventTable[MakeKey(PLAYER, ROCK_BLAST_DAMAGE)] = (EventFunc)&CollsionEvent::BossRockBlastDamagePlayer;
+
+
+	// Rock blast damage boss
+	eventTable[MakeKey(BOSS, ROCK_BLAST_DAMAGE)] = (EventFunc)&CollsionEvent::BossRockBlastDamageBoss;
+
+
+	// Just avoid
+	eventTable[MakeKey(PLAYER, JUST_AVOID)] = (EventFunc)&CollsionEvent::JustAvoid;
+
+
+	// Just avoid enemy
+	eventTable[MakeKey(PLAYER, JUST_AVOID_ENEMY)] = (EventFunc)&CollsionEvent::JustAvoidEnemy;
+
+
+	// Just avoid boss
+	eventTable[MakeKey(PLAYER, JUST_AVOID_BOSS)] = (EventFunc)&CollsionEvent::JustAvoidBoss;
 }
 
 CollsionEvent::~CollsionEvent()
@@ -23,77 +94,18 @@ CollsionEvent::~CollsionEvent()
 void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
 {
 	using namespace CollsionInformation;
+	using namespace CollsionInformation;
+
 	Tag tag1 = _coll1->GetCollTag();
 	Tag tag2 = _coll2->GetCollTag();
-	if (tag1 == PLAYER && tag2 == E_ATTACK) {
-		/*Debug::DebugLog("EnemyAttackHit");*/
-		PlayerDamageEvent(_coll1, _coll2,_hitPos);
-	}
-	if (tag1 == ENEMY && (tag2 == P_ATTACK || tag2 == P_SPECIAL_ATTACK)) {
-		/*Debug::DebugLog("PlayerAttackHit");*/
-		EnemyDamageEvent(_coll1, _coll2, _hitPos);
-	}
-	if (tag1 == PLAYER && tag2 == B_ATTACK) {
-		/*Debug::DebugLog("EnemyAttackHit");*/
-		PlayerDamageBossEvent(_coll1, _coll2, _hitPos);
-	}
-	if (tag1 == PLAYER && tag2 == B_E_ATTACK) {
-		/*Debug::DebugLog("EnemyAttackHit");*/
-		PlayerDamageBossEffectEvent(_coll1, _coll2, _hitPos);
-	}
-	if (tag1 == BOSS && (tag2 == P_ATTACK || tag2 == P_SPECIAL_ATTACK)) {
-		/*Debug::DebugLog("PlayerAttackHit");*/
-		BossDamageEvent(_coll1, _coll2, _hitPos);
-	}
 
-	if (tag1 == FLOOR && tag2 == C_FLOOR) {
-		CameraPushEvent(_coll1, _coll2, resolver, _hitPos);
-	}
+	int key = MakeKey(tag1, tag2);
 
-	if (tag1 == PLAYER && tag2 == BOSS_ROCK_ATTACK) {
-		PlayerDamageBossChildEvent(_coll1, _coll2,resolver, _hitPos);
-	}
+	auto it = eventTable.find(key);
 
-	if (tag1 == BOSS_ROCK_UI && tag2 == FLOOR_AABB) {
-		BossRockPrePosition(_coll1, _coll2, resolver, _hitPos);
-	}
-
-	if (tag1 == FLOOR && tag2 == BOSS_ROCK_F) {
-		BossRockGround(_coll1, _coll2, resolver, _hitPos);
-	}
-
-	if (tag1 == BOSS_ROCK_PLAYER_ATTACK && tag2 == P_ATTACK) {
-		PlayerAttackRock(_coll1, _coll2, resolver, _hitPos);
-	}
-
-	if (tag1 == BOSS && tag2 == BOSS_ROCK_DAMAGE) {
-		BossRockDamage(_coll1, _coll2, resolver, _hitPos);
-	}
-
-	if (tag1 == BOSS_ROCK_RUSH && tag2 == BOSS_RUSH) {
-		BossRockRush(_coll1, _coll2, resolver, _hitPos);
-	}
-
-	if (tag1 == PLAYER && tag2 == ROCK_BLAST_DAMAGE) {
-		/*Debug::DebugLog("EnemyAttackHit");*/
-		BossRockBlastDamagePlayer(_coll1, _coll2, resolver, _hitPos);
-	}
-
-	if (tag1 == BOSS && tag2 == ROCK_BLAST_DAMAGE) {
-		/*Debug::DebugLog("EnemyAttackHit");*/
-		BossRockBlastDamageBoss(_coll1, _coll2, resolver, _hitPos);
-	}
-
-	if (tag1 == PLAYER && tag2 == JUST_AVOID) {
-		JustAvoid(_coll1, _coll2, resolver, _hitPos);
-	}
-
-	if (tag1 == PLAYER && tag2 == JUST_AVOID_ENEMY) {
-		JustAvoidEnemy(_coll1, _coll2, resolver, _hitPos);
-	}
-
-	if (tag1 == PLAYER && tag2 == JUST_AVOID_BOSS) {
-		JustAvoidBoss(_coll1, _coll2, resolver, _hitPos);
+	if (it != eventTable.end())
+	{
+		(this->*(it->second))(_coll1, _coll2, resolver, _hitPos);
 	}
 }
 
@@ -328,4 +340,9 @@ void CollsionEvent::JustAvoid(ColliderBase* _coll1, ColliderBase* _coll2, Pushba
 		}
 	}
 	player->JustAvoidCollsionHit(_obj,_coll2->GetCollTag());
+}
+
+int CollsionEvent::MakeKey(CollsionInformation::Tag t1, CollsionInformation::Tag t2)
+{
+	return Function::EnumTag(t1, t2, CollsionInformation::TAG_MAX);
 }

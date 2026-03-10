@@ -21,10 +21,8 @@ public:
 	float progress;
 private:
 	int hImage;
-	InputManager* input;
 	int keyImage;
 	int titleImage;
-	SoundManager* sound;
 	float firstCounter;
 	float exrate;
 	float pushCounter;

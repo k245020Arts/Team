@@ -47,8 +47,6 @@ protected:
 	ModelCollider* pushColl;
 	SphereCollider* justAvoidCollider;
 
-	SoundManager* soundManager;
-	EffectManager* effectManager;
 	Physics* physics;
 	BossRockManager* rockManager;
 

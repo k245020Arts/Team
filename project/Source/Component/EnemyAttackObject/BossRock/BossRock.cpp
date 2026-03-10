@@ -90,9 +90,9 @@ void BossRock::StartCollAdd(CollsionInformation::Tag _tag, const Transform& _tra
 	blinkCounter = blinkBaseMax;
 	ChangeColorMode = false;
 	nowBlast = false;
-	soundManager->PlaySe(Sound_ID::ROCK_FALL);
+	SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_FALL);
 
-	effectManager->CreateEffekseer(Transform(VZero, VZero, VOne * 2.0f), obj, Effect_ID::ROCK_FALL, 3.0f);
+	EffectManager::GetInstance()->CreateEffekseer(Transform(VZero, VZero, VOne * 2.0f), obj, Effect_ID::ROCK_FALL, 3.0f);
 }
 
 void BossRock::RemoveCollider(std::string _name)

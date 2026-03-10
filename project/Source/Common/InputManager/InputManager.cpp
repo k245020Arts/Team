@@ -1,25 +1,25 @@
 #include "inputManager.h"
 #include "../Debug/Debug.h"
 
-InputManager::InputManager(bool _useController, bool _useKeyboard, bool _useMouse)
+InputManager::InputManager()
 {
 	controller = nullptr;
 	keyboard = nullptr;
 	mouse = nullptr;
-	if (_useController)
+	if (controller == nullptr)
 	{
 		controller = new ControllerInputManager();
 	}
-	if (_useKeyboard)
+	if (keyboard == nullptr)
 	{
 		keyboard = new KeyboardInputManager();
 	}
-	if (_useMouse)
+	if (mouse == nullptr)
 	{
 		mouse = new MouseInputManager();
 	}
 
-	DontDestroyOnSceneChange(true);
+	//DontDestroyOnSceneChange(true);
 
 	CreateInputData(KeyConfigData("attack", KEY_INPUT_E, XINPUT_BUTTON_B, MouseInputManager::LEFT_CLICK));
 	CreateInputData(KeyConfigData("avoid", KEY_INPUT_X, XINPUT_BUTTON_A, MouseInputManager::MOUSE_NONE));
@@ -36,11 +36,35 @@ InputManager::InputManager(bool _useController, bool _useKeyboard, bool _useMous
 InputManager::~InputManager()
 {
 	inputData.clear();
+
+	if (controller != nullptr)
+	{
+		delete controller;
+	}
+	if (keyboard != nullptr)
+	{
+		delete keyboard;
+	}
+	if (mouse != nullptr)
+	{
+		delete mouse;
+	}
 }
 
 void InputManager::Update()
 {
-
+	if (controller != nullptr)
+	{
+		controller->Update();
+	}
+	if (keyboard != nullptr)
+	{
+		keyboard->Update();
+	}
+	if (mouse != nullptr)
+	{
+		mouse->Update();
+	}
 }
 
 ControllerInputManager* InputManager::GetControllerInput()

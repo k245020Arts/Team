@@ -3,15 +3,14 @@
 #include <EffekseerForDXLib.h>
 #include "../../Component/Color/Color.h"
 #include "../ID/EffectID.h"
+#include "../Singleton/SingletonBase.h"
 
 class Transform;
 class BaseObject;
 
-class EffectManager : public GameObject
+class EffectManager : public SingletonBase<EffectManager>
 {
 public:
-	EffectManager();
-	~EffectManager();
 
 	void DeleteAllEffect();
 
@@ -65,4 +64,9 @@ public:
 	
 private:
 	std::list<BaseObject*> effect;
+
+	friend class SingletonBase<EffectManager>;
+
+	EffectManager();
+	~EffectManager();
 };

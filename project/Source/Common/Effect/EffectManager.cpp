@@ -15,39 +15,39 @@ namespace {
 
 EffectManager::EffectManager()
 {
-	Load::LoadEffect("enemyChrage3",				".efkefc", Effect_ID::ENEMY_FLASH, 50.0f);
-	Load::LoadEffect("hitEffect",					".efkefc",Effect_ID::HIT_EFFECT,			50.0f);
-	Load::LoadEffect("specialHit",					".efkefc",Effect_ID::SPECIAL_HIT_EFFECT,	50.0f);
-	Load::LoadEffect("justAvoidEffect",				".efkefc",Effect_ID::JUST_AVOID_EFFECT,	50.0f);
-	Load::LoadEffect("playerFlash",					".efkefc",Effect_ID::PLAYER_FLASH,		50.0f);
-	Load::LoadEffect("aura",						".efkefc",Effect_ID::PLAYER_AURA,			50.0f);
-	Load::LoadEffect("playerHit",					".efkefc",Effect_ID::PLAYER_HIT,			50.0f);
-	Load::LoadEffect("playerAttackEffect",			".efkefc",Effect_ID::PLAYER_ATTACK,		50.0f);
-	Load::LoadEffect("hitSlash",					".efkefc",Effect_ID::PLAYER_SLASH_ATTACK, 30.0f);
-	Load::LoadEffect("enemyAttackCicle",			".efkefc",Effect_ID::ENEMY_ATTACK_CICLE,	50.0f);
-	Load::LoadEffect("AlphaCutoff",					".efkefc",Effect_ID::EFFECT_WALL,			50.0f);
-	Load::LoadEffect("bossWave1",					".efkefc",Effect_ID::BOSS_WAVE,			50.0f);
-	Load::LoadEffect("bossGround",					".efkefc",Effect_ID::BOSS_GROUND,			30.0f);
-	Load::LoadEffect("bossRoor",					".efkefc",Effect_ID::BOSS_ROAR,			10.0f);
-	Load::LoadEffect("bossRoor",					".efkefc",Effect_ID::BOSS_ROAR,			10.0f);
-	Load::LoadEffect("PlayerSpecialSlash",			".efkefc",Effect_ID::PLAYER_SPECIAL_SLASH,50.0f);
-	Load::LoadEffect("PlayerSpecialSlash",			".efkefc",Effect_ID::PLAYER_SPECIAL_SLASH,50.0f);
-	Load::LoadEffect("PlayerSpecialPlace",			".efkefc",Effect_ID::PLAYER_SPECIAL_PLACE,50.0f);
-	Load::LoadEffect("SpecialFinalAttack",			".efkefc",Effect_ID::PLAYER_SPECIAL_FINAL,50.0f);
-	Load::LoadEffect("PlayerSpecialAttackFlash",	".efkefc",Effect_ID::PLAYER_SPECIAL_FLASH,50.0f);
-	Load::LoadEffect("PlayerSpecialAttackCharge",	".efkefc",Effect_ID::PLAYER_SPECIAL_CHARGE,50.0f);
-	Load::LoadEffect("PlayerChargeFirstEffect",		".efkefc",Effect_ID::PLAYER_CHARGE_FIRST,20.0f);
-	Load::LoadEffect("PlayerChargeSecondEffect",	".efkefc",Effect_ID::PLAYER_CHARGE_SECOND,40.0f);
-	Load::LoadEffect("PlayerChargeFinalEffect",		".efkefc",Effect_ID::PLAYER_CHARGE_FINAL,60.0f);
-	Load::LoadEffect("specialAttackCan",			".efkefc",Effect_ID::PLAYER_SPECIAL_ATTACK_CAN,30.0f);
-	Load::LoadEffect("PlayerChargeEnd",				".efkefc",Effect_ID::PLAYER_CHARGE_END,35.0f);
-	Load::LoadEffect("RockBlast",					".efkefc",Effect_ID::ROCK_BLAST,100.0f);
-	Load::LoadEffect("RockBreak",					".efkefc",Effect_ID::ROCK_BREAK,100.0f);
-	Load::LoadEffect("RockFall",					".efkefc",Effect_ID::ROCK_FALL,100.0f);
-	Load::LoadEffect("BossRockHitRush",				".efkefc",Effect_ID::BOSS_ROCK_HIT_RUSH,50.0f);
-	Load::LoadEffect("playerAttackRock",			".efkefc",Effect_ID::PLAYER_ATTACK_ROCK,50.0f);
+	Load::LoadEffect("enemyChrage3",				".efkefc",Effect_ID::ENEMY_FLASH,				50.0f,true);
+	Load::LoadEffect("hitEffect",					".efkefc",Effect_ID::HIT_EFFECT,				50.0f,true);
+	Load::LoadEffect("specialHit",					".efkefc",Effect_ID::SPECIAL_HIT_EFFECT,		50.0f,true);
+	Load::LoadEffect("justAvoidEffect",				".efkefc",Effect_ID::JUST_AVOID_EFFECT,			50.0f,true);
+	Load::LoadEffect("playerFlash",					".efkefc",Effect_ID::PLAYER_FLASH,				50.0f,true);
+	Load::LoadEffect("aura",						".efkefc",Effect_ID::PLAYER_AURA,				50.0f,true);
+	Load::LoadEffect("playerHit",					".efkefc",Effect_ID::PLAYER_HIT,				50.0f,true);
+	Load::LoadEffect("playerAttackEffect",			".efkefc",Effect_ID::PLAYER_ATTACK,				50.0f,true);
+	Load::LoadEffect("hitSlash",					".efkefc",Effect_ID::PLAYER_SLASH_ATTACK,		30.0f,true);
+	Load::LoadEffect("enemyAttackCicle",			".efkefc",Effect_ID::ENEMY_ATTACK_CICLE,		50.0f,true);
+	Load::LoadEffect("AlphaCutoff",					".efkefc",Effect_ID::EFFECT_WALL,				50.0f,true);
+	Load::LoadEffect("bossWave1",					".efkefc",Effect_ID::BOSS_WAVE,					50.0f,true);
+	Load::LoadEffect("bossGround",					".efkefc",Effect_ID::BOSS_GROUND,				30.0f,true);
+	Load::LoadEffect("bossRoor",					".efkefc",Effect_ID::BOSS_ROAR,					10.0f,true);
+	Load::LoadEffect("bossRoor",					".efkefc",Effect_ID::BOSS_ROAR,					10.0f,true);
+	Load::LoadEffect("PlayerSpecialSlash",			".efkefc",Effect_ID::PLAYER_SPECIAL_SLASH,		50.0f,true);
+	Load::LoadEffect("PlayerSpecialSlash",			".efkefc",Effect_ID::PLAYER_SPECIAL_SLASH,		50.0f,true);
+	Load::LoadEffect("PlayerSpecialPlace",			".efkefc",Effect_ID::PLAYER_SPECIAL_PLACE,		50.0f,true);
+	Load::LoadEffect("SpecialFinalAttack",			".efkefc",Effect_ID::PLAYER_SPECIAL_FINAL,		50.0f,true);
+	Load::LoadEffect("PlayerSpecialAttackFlash",	".efkefc",Effect_ID::PLAYER_SPECIAL_FLASH,		50.0f,true);
+	Load::LoadEffect("PlayerSpecialAttackCharge",	".efkefc",Effect_ID::PLAYER_SPECIAL_CHARGE,		50.0f,true);
+	Load::LoadEffect("PlayerChargeFirstEffect",		".efkefc",Effect_ID::PLAYER_CHARGE_FIRST,		20.0f,true);
+	Load::LoadEffect("PlayerChargeSecondEffect",	".efkefc",Effect_ID::PLAYER_CHARGE_SECOND,		40.0f,true);
+	Load::LoadEffect("PlayerChargeFinalEffect",		".efkefc",Effect_ID::PLAYER_CHARGE_FINAL,		60.0f,true);
+	Load::LoadEffect("specialAttackCan",			".efkefc",Effect_ID::PLAYER_SPECIAL_ATTACK_CAN,	30.0f,true);
+	Load::LoadEffect("PlayerChargeEnd",				".efkefc",Effect_ID::PLAYER_CHARGE_END,			35.0f,true);
+	Load::LoadEffect("RockBlast",					".efkefc",Effect_ID::ROCK_BLAST,				100.0f,true);
+	Load::LoadEffect("RockBreak",					".efkefc",Effect_ID::ROCK_BREAK,				100.0f,true);
+	Load::LoadEffect("RockFall",					".efkefc",Effect_ID::ROCK_FALL,					100.0f,true);
+	Load::LoadEffect("BossRockHitRush",				".efkefc",Effect_ID::BOSS_ROCK_HIT_RUSH,		50.0f,true);
+	Load::LoadEffect("playerAttackRock",			".efkefc",Effect_ID::PLAYER_ATTACK_ROCK,		50.0f,true);
 	//Effekseer_SetGraphicsDeviceDXLib();
-	SetDrawOrder(-50000);
+	//SetDrawOrder(-50000);
 }
 
 EffectManager::~EffectManager()
@@ -196,4 +196,3 @@ void EffectManager::RemoveEffekseer(BaseObject* _obj)
 {
 	effect.remove(_obj);
 }
-

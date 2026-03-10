@@ -2,6 +2,7 @@
 #include "../../Component/Animator/Animator.h"
 #include "../../Component/Physics/Physics.h"
 #include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/InputManager.h"
 #include "../../Component/Collider/SphereCollider.h"
 #include "../../Component/Color/Color.h"
 #include "../../Component/Shaker/Shaker.h"
@@ -223,12 +224,9 @@ void Boss::Start(Object3D* _obj)
 	//enemyBaseComponent.boss = this;
 	enemyBaseComponent.anim = obj->Component()->GetComponent<Animator>();
 	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
-	enemyBaseComponent.control = FindGameObject<ControllerInputManager>();
 	enemyBaseComponent.color = obj->Component()->GetComponent<Color>();
 	enemyBaseComponent.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));
 	enemyBaseComponent.shaker = obj->Component()->GetComponent<Shaker>();
-	enemyBaseComponent.effect = FindGameObject<EffectManager>();
-	enemyBaseComponent.sound = FindGameObject<SoundManager>();
 	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
 
 	enemyBaseComponent.camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
@@ -462,16 +460,16 @@ void Boss::PlayerHit()
 		{
 		case EnemyInformation::EnemyReaction::Type::Normal:
 			Debug::DebugLog("hitToPlayerBoss");
-			enemyBaseComponent.control->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
-			enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne *e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
-			enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
+			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne *e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			hit = true;
 			break;
 		case EnemyInformation::EnemyReaction::Type::BlowAway:
 
 			break;
 		case EnemyInformation::EnemyReaction::Type::LoopCombo:
-			enemyBaseComponent.sound->RandamSe("swordHit00000", 7);
+			SoundManager::GetInstance()->RandamSe("swordHit00000", 7);
 			//攻撃の間隔の設定
 			if (loopNum == -1) {
 				hitCounter = 0.23f;
@@ -494,27 +492,27 @@ void Boss::PlayerHit()
 			if (lastAttack) {
 				//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 5000.0f), VECTOR3(100, 100, 100), 0.5f, 1.2f);
-				enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE * 14.5f), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
+				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(250, 60);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE * 14.5f), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
 				//angleRan = GetRand(360);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				hit = true;
 			}
 			else if (lastBeforeAttack) {//最後の一個前の攻撃
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(100, 100, 100), 0.5f, 0.5f);
 				enemyBaseComponent.shaker->ShakeStart(VECTOR3(20, 20, 20), Shaker::HORIZONAL_SHAKE, true, 0.3f);
-				enemyBaseComponent.control->ControlVibrationStartFrame(250, 60);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
+				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(250, 60);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
 				angleRan = (float)GetRand(360);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 			}
 			else {//それ以外なら
 				//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(20, 20, 20), 0.2f, 0.02f);
-				enemyBaseComponent.control->ControlVibrationStartFrame(450, 20);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
+				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(450, 20);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
 				angleRan = (float)GetRand(360);
-				enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				enemyBaseComponent.playerObj->Component()->GetComponent<Shaker>()->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.05f);
 				enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
 			}
@@ -542,7 +540,7 @@ void Boss::PlayerHit()
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();
 	std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();
-	enemyBaseComponent.sound->RandamSe("E_DamageV", 2);
+	SoundManager::GetInstance()->RandamSe("E_DamageV", 2);
 	enemyBaseComponent.color->setRGB(Color::Rgb(255, 0, 0, 255));
 	damageFlash = 0.5f;
 
@@ -671,10 +669,10 @@ void Boss::RockHitDamage(Physics* _phy)
 void Boss::RockHitRushDamage()
 {
 	float damage = 1000.0f;
-	enemyBaseComponent.sound->PlaySe(Sound_ID::ROCK_BREAK);
+	SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BREAK);
 	enemyBaseComponent.state->ChangeState(StateID::BOSS_FEAR_S);
 	VECTOR3 baseSpeed = enemyBaseComponent.physics->GetVelocity() * -1.0f;
-	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(0,200,0), VZero, VOne), obj, Effect_ID::BOSS_ROCK_HIT_RUSH, 1.0f);
+	EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0,200,0), VZero, VOne), obj, Effect_ID::BOSS_ROCK_HIT_RUSH, 1.0f);
 	if (baseSpeed.Size() <= 3000.0f) {
 		baseSpeed = baseSpeed.Normalize() * 3000.0f;
 	}
@@ -697,22 +695,22 @@ void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std
 	case PlayerSpecialAttack::BEFORE:
 		break;
 	case PlayerSpecialAttack::GROUND_ATTACK:
-		enemyBaseComponent.control->ControlVibrationStartFrame(_e.vibrationPower, _e.vibrationType);
-		enemyBaseComponent.effect->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);
-		enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
+		InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(_e.vibrationPower, _e.vibrationType);
+		EffectManager::GetInstance()->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);
+		EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
 		specialAttackHit = false;
 		break;
 	case PlayerSpecialAttack::CHARGE:
-		enemyBaseComponent.effect->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);
-		enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
+		EffectManager::GetInstance()->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);
+		EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
 		enemyBaseComponent.shaker->ShakeStart(VECTOR3(100, 100, 100), Shaker::HORIZONAL_SHAKE, true, 2.0f);
 		break;
 	case PlayerSpecialAttack::FINAL_ATTACK:
-		enemyBaseComponent.control->ControlVibrationStartFrame(_e.vibrationPower, _e.vibrationType);
-		enemyBaseComponent.effect->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);
-		enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
+		InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(_e.vibrationPower, _e.vibrationType);
+		EffectManager::GetInstance()->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);
+		EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
 		enemyBaseComponent.physics->SetVelocity(VECTOR3(0.0f,0.0f,-3000.0f) * obj->GetTransform()->Forward());
 		break;

@@ -18,15 +18,13 @@
 
 TitleControl::TitleControl()
 {
-	input = FindGameObject<InputManager>();
 
 	hImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Title", ID::TITLE_BACK);
 	titleImage = Load::LoadImageGraph(Load::IMAGE_PATH + "TitleImage", ID::TITLE);
 	keyImage = Load::LoadImageGraph(Load::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
-	sound = FindGameObject<SoundManager>();
-	sound->AllDeleteSound();
-	sound->TitleSceneLoad();
-	sound->PlayBGM(Sound_ID::TITLE_BGM, true, true);
+	SoundManager::GetInstance()->AllDeleteSound();
+	SoundManager::GetInstance()->TitleSceneLoad();
+	SoundManager::GetInstance()->PlayBGM(Sound_ID::TITLE_BGM, true, true);
 	firstCounter = 1.0f;
 	pushCounter = 0.0f;
 	exrate = 0.0f;
@@ -54,15 +52,15 @@ void TitleControl::Update()
 		FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
 	}
 
-	if (input->KeyInputDown("SceneChange") && progress == 0) // ‰Ÿ‚µ‚½‚ç
+	if (InputManager::GetInstance()->KeyInputDown("SceneChange") && progress == 0) // ‰Ÿ‚µ‚½‚ç
 	{
-		sound->TitleSceneLoad();
+		SoundManager::GetInstance()->TitleSceneLoad();
 
-		sound->PlaySe(Sound_ID::PUSH);
-		sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
+		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
+		SoundManager::GetInstance()->PlaySe(Sound_ID::JUST_AVOID_SOUND);
 		//sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
-		sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
-		sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
+		SoundManager::GetInstance()->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
+		SoundManager::GetInstance()->PlaySe(Sound_ID::V_P_JUST_AVOID);
 
 		player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
 	}

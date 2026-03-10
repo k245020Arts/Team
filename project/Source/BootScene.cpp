@@ -3,6 +3,7 @@
 #include "../Source/Common/LoadManager.h"
 #include "../Source/Component/Collider/CollsionManager.h"
 #include "../Source/Common/Sound/SoundManager.h"
+#include "../Source/Common/Effect/EffectManager.h"
 #include "../Source/Common/Debug/Debug.h"
 #include "../Source/Common/Transitor/TransitorManager.h"
 #include "../Source/Common/Transitor/FadeTransitor.h"
@@ -11,13 +12,14 @@
 
 BootScene::BootScene()
 {
-	InputManager* input			= new InputManager(true,true,false);
+	InputManager* input			= InputManager::GetInstance();
 	Load::Init();
 	ID::Init();
 	Sound_ID::InitID();
 	Debug::InitDebug(input);
 	Random::Init();
-	SoundManager*sound			=  new SoundManager();
+	SoundManager::GetInstance();
+	EffectManager::GetInstance();
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();
 	new Fead();

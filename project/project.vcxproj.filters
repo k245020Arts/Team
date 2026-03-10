@@ -558,6 +558,9 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossBackStep.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Common\Singleton\SingleTonUpdater.cpp">
+      <Filter>Common\SingleTon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1175,6 +1178,12 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\BossBackStep.h">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Common\Singleton\SingleTonUpdater.h">
+      <Filter>Common\SingleTon</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Common\Singleton\SingletonBase.h">
+      <Filter>Common\SingleTon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1380,6 +1389,9 @@
     </Filter>
     <Filter Include="PlayScene\Result">
       <UniqueIdentifier>{79c97a35-532e-4050-b1b0-be3787e031bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\SingleTon">
+      <UniqueIdentifier>{36a57967-6922-4469-bdec-9566319a063e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

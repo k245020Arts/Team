@@ -34,7 +34,7 @@ void BossAppear::Update()
 		if (!feedInFinish) {
 			b->enemyBaseComponent.physics->GetBaseObject()->SetObjectTimeRate(1.0f);
 			feedInFinish = true;
-			b->enemyBaseComponent.sound->PlaySe(Sound_ID::BOSS_JUMP_WIND);
+			SoundManager::GetInstance()->PlaySe(Sound_ID::BOSS_JUMP_WIND);
 		}
 		
 	}
@@ -51,17 +51,17 @@ void BossAppear::Update()
 			if (first) {
 				//b->trashEnemy->CreateEnemy(VZero, 4);
 				first = false;
-				b->enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(0.0f, 100.0f, 0.0f), VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_ROAR, 2.0f);
-				b->enemyBaseComponent.sound->PlaySe(Sound_ID::BOSS_ROAR_VOICE);
-				b->enemyBaseComponent.sound->FeedInOut(Sound_ID::BOSS_BEFORE, 0.5f);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0.0f, 100.0f, 0.0f), VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_ROAR, 2.0f);
+				SoundManager::GetInstance()->PlaySe(Sound_ID::BOSS_ROAR_VOICE);
+				SoundManager::GetInstance()->FeedInOut(Sound_ID::BOSS_BEFORE, 0.5f);
 				b->enemyBaseComponent.camera->CameraPerspectiveShakeStart(5.0f, 2.0f);
-				b->enemyBaseComponent.control->ControlVibrationStartFrame(500, 120);
+				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(500, 120);
 			}
 
 		}
 		if (b->enemyBaseComponent.anim->IsFinish()) {
 			b->enemyBaseComponent.gameManager->ChangeState(GameManager::GameState::PLAY);
-			b->enemyBaseComponent.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
+			SoundManager::GetInstance()->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 		}
 	}
 
@@ -72,8 +72,8 @@ void BossAppear::Update()
 			b->enemyBaseComponent.anim->Play(ID::B_APPEAR_LAND);
 			b->enemyBaseComponent.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::MIX_SHAKE, false, 1.0f);
 			feedInFinish = false;
-			b->enemyBaseComponent.sound->PlaySe(Sound_ID::ENEMY_FALL);
-			b->enemyBaseComponent.control->ControlVibrationStartFrame(200, 60);
+			SoundManager::GetInstance()->PlaySe(Sound_ID::ENEMY_FALL);
+			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(200, 60);
 		}
 		if (!b->enemyBaseComponent.camera->IsCutScene()) {
 			
@@ -95,9 +95,9 @@ void BossAppear::Start()
 	roar = false;
 	first = true;
 	uiManager->SetUIDraw(false);
-	b->enemyBaseComponent.sound->FeedInOut(Sound_ID::PLAY_BGM, 0.5f);
-	b->enemyBaseComponent.sound->PlayBGM(Sound_ID::BOSS_BEFORE,true,true);
-	b->enemyBaseComponent.sound->FeedInStart(Sound_ID::BOSS_BEFORE,0.5f);
+	SoundManager::GetInstance()->FeedInOut(Sound_ID::PLAY_BGM, 0.5f);
+	SoundManager::GetInstance()->PlayBGM(Sound_ID::BOSS_BEFORE,true,true);
+	SoundManager::GetInstance()->FeedInStart(Sound_ID::BOSS_BEFORE,0.5f);
 }
 
 void BossAppear::Finish()

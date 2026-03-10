@@ -36,7 +36,6 @@ namespace CameraInformation {
 			camera = nullptr;
 			shaker = nullptr;
 			cameraTransform = nullptr;
-			control = nullptr;
 			state = nullptr;
 			enemyManager = nullptr;
 			//target = nullptr;
@@ -49,7 +48,6 @@ namespace CameraInformation {
 		Camera* camera;
 		Shaker* shaker;
 		Transform* cameraTransform;
-		ControllerInputManager* control;
 		StateManager* state;
 		EnemyManager* enemyManager;
 		//VECTOR3* target;

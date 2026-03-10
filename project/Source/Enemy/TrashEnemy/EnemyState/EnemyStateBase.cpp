@@ -103,8 +103,8 @@ void EnemyStateBase::AttackSound()
 	float time = e->enemyBaseComponent.anim->EventStartTime(animId);
 	//“G‚ÌUŒ‚‚Ì‰¹‚ğ”­¶
 	if (time - 1.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
-		if (!e->enemyBaseComponent.sound->CheckSe(Sound_ID::ENEMY_SWORD_WIND1) && !e->enemyBaseComponent.sound->CheckSe(Sound_ID::ENEMY_SWORD_WIND2)) {
-			e->enemyBaseComponent.sound->RandamSe("EnemySword", 2);
+		if (!SoundManager::GetInstance()->CheckSe(Sound_ID::ENEMY_SWORD_WIND1) && !SoundManager::GetInstance()->CheckSe(Sound_ID::ENEMY_SWORD_WIND2)) {
+			SoundManager::GetInstance()->RandamSe("EnemySword", 2);
 		}
 	}
 }
@@ -138,14 +138,14 @@ void EnemyStateBase::AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std
 		VECTOR3 frashPosLocal = frameWorldPos * invObjWorldMat;
 		//e->enemyBaseComponent.effect->CreateEffekseer(Transform(frashPos_local, VZero, VOne), obj, Effect_ID::ENEMY_FLASH, 1.0f);
 		if (_modelId == ID::E_MODEL) {
-			e->enemyBaseComponent.effect->CreateEffekseer(Transform(frameWorldPos + obj->GetTransform()->position, VZero, VOne), nullptr, Effect_ID::ENEMY_FLASH, 1.0f);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(frameWorldPos + obj->GetTransform()->position, VZero, VOne), nullptr, Effect_ID::ENEMY_FLASH, 1.0f);
 		}
 		else {
-			e->enemyBaseComponent.effect->CreateEffekseer(Transform(frashPosLocal, VZero, VOne), obj, Effect_ID::ENEMY_FLASH, 1.0f);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(frashPosLocal, VZero, VOne), obj, Effect_ID::ENEMY_FLASH, 1.0f);
 		}
 		
-		e->enemyBaseComponent.sound->PlaySe(Sound_ID::ENEMY_ATTACK_BEFORE);
-		e->enemyBaseComponent.sound->RandamSe(_voice, 3);
+		SoundManager::GetInstance()->PlaySe(Sound_ID::ENEMY_ATTACK_BEFORE);
+		SoundManager::GetInstance()->RandamSe(_voice, 3);
 		//com.weapon->CreateTrailEnemy(VECTOR3(0, 0, 0), VECTOR3(500, 500, 1000) * MGetRotY(com.enemy->GetEnemyTransform()->rotation.y), 100.0f, 10.0f, 200.0f, 255.0f, 28, 0.5f);
 		sound = false;
 		keepAnimSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();

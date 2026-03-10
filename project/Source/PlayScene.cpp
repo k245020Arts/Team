@@ -39,12 +39,12 @@
 
 PlayScene::PlayScene()
 {
-	FindGameObject<SoundManager>()->AllDeleteSound();
+	SoundManager::GetInstance()->AllDeleteSound();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	//Load::LoadModel(Load::MODEL_PATH + "Player", ID::P_MODEL);
 	Hierachy* hierachy = new Hierachy();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
-	new EffectManager();
+	
 	//Debug::DebugLog(std::to_string(GetMemory()));
 	
 	BlurScreen* blur =  new BlurScreen();
@@ -94,9 +94,8 @@ PlayScene::PlayScene()
 	//std::vector<P> pl;
 	//ya.SaveVector<P>("ala", pl);
 	
-	FindGameObject<SoundManager>()->PlaySceneLoad();
-	FindGameObject<SoundManager>()->PlayBGM(Sound_ID::PLAY_BGM,true,true);
-	input = FindGameObject<InputManager>();
+	SoundManager::GetInstance()->PlaySceneLoad();
+	SoundManager::GetInstance()->PlayBGM(Sound_ID::PLAY_BGM,true,true);
 
 	blur->SetDrawOrder(-500);
 	mode = NORMAL;
@@ -121,7 +120,7 @@ void PlayScene::Update()
 	//}
 	
 #ifdef _DEBUG
-	if (input->KeyInputDown("changeMode")) {
+	if (InputManager::GetInstance()->KeyInputDown("changeMode")) {
 		if (mode == NORMAL) {
 			mode = CAMERA_EDITOR;
 		}

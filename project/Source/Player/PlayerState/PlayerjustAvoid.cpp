@@ -94,7 +94,7 @@ void PlayerJustAvoid::Update()
 		p->playerCom.player->GetPlayerObj()->SetObjectTimeRate(1.0f);
 	}
 	//ジャスト回避攻撃を遷移させる
-	if (p->playerCom.InputManager->KeyInput("attack")) {
+	if (InputManager::GetInstance()->KeyInput("attack")) {
 		attack = true;
 	}
 	if (easingCount >= 0.5f) {
@@ -116,8 +116,8 @@ void PlayerJustAvoid::Update()
 			
 			volume -= 40.0f;
 			if (volume <= 120.0f) { //volumeが一定量下回ったらもう一回流す
-				p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
-				p->playerCom.sound->ChangeVolumeSound(Sound_ID::JUST_AVOID_SUCCESS, (int)volume);
+				SoundManager::GetInstance()->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
+				SoundManager::GetInstance()->ChangeVolumeSound(Sound_ID::JUST_AVOID_SUCCESS, (int)volume);
 			}
 		}
 		num++;
@@ -138,7 +138,7 @@ void PlayerJustAvoid::Start()
 	easingCount = 0.0f;
 	
 	p->playerCom.anim->SetPlaySpeed(1.0f);
-	p->playerCom.sound->FeedInOut(Sound_ID::PLAY_BGM,0.2f);
+	SoundManager::GetInstance()->FeedInOut(Sound_ID::PLAY_BGM,0.2f);
 
 	//JustAvoidShadow();
 	cameraAngle = p->playerCom.camera->GetCameraTransform()->rotation.y;
@@ -148,19 +148,19 @@ void PlayerJustAvoid::Start()
 	cameraRotation = p->playerCom.camera->GetCameraTransform()->rotation;
 
 	//音を鳴らす
-	p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SOUND);
+	SoundManager::GetInstance()->PlaySe(Sound_ID::JUST_AVOID_SOUND);
 	volume = 200;
-	p->playerCom.sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
-	p->playerCom.sound->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
+	SoundManager::GetInstance()->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
+	SoundManager::GetInstance()->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
 
 	//エフェクトの再生
-	p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f , Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, Effect_ID::JUST_AVOID_EFFECT, 1.0f, false);
-	p->playerCom.effect->CreateEffekseer(Transform(MV1GetFramePosition(Load::GetHandle(ID::IDType::P_MODEL), 12), VZero, VOne * 1.0f), nullptr, Effect_ID::PLAYER_FLASH, 1.0f);
+	EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f , Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, Effect_ID::JUST_AVOID_EFFECT, 1.0f, false);
+	EffectManager::GetInstance()->CreateEffekseer(Transform(MV1GetFramePosition(Load::GetHandle(ID::IDType::P_MODEL), 12), VZero, VOne * 1.0f), nullptr, Effect_ID::PLAYER_FLASH, 1.0f);
 	//p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VZero, VOne), p->playerCom.player->GetPlayerObj(), ID::PLAYER_AURA, 10.0f);
 
 	//プレイヤーを青くする
 	p->playerCom.color->setRGB(Color::Rgb(0,0,255,255));
-	p->playerCom.controller->ControlVibrationStartFrame(50, 10);
+	InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(50, 10);
 
 	p->noDamage = true;
 	//カメラの追従速度を遅くする
@@ -190,7 +190,7 @@ void PlayerJustAvoid::Start()
 	if (p->playerCom.hitObj != nullptr) {
 		p->playerCom.camera->TargetSet(p->playerCom.hitObj);
 	}
-	p->playerCom.sound->PlaySe(Sound_ID::V_P_JUST_AVOID);
+	SoundManager::GetInstance()->PlaySe(Sound_ID::V_P_JUST_AVOID);
 
 
 	//カメラの状態遷移
@@ -220,7 +220,7 @@ void PlayerJustAvoid::Finish()
 		p->playerCom.hitObj->SetObjectTimeRate();
 	}
 
-	p->playerCom.sound->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
+	SoundManager::GetInstance()->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 	p->justAvoid			= false;
 	p->justFeedOutTime		= p->JUST_FEED_OUT_TIME;
 	if (!attack) {

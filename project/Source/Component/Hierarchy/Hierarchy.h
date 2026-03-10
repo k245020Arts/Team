@@ -57,7 +57,6 @@ private:
 	Color* color;
 	std::list<BaseObject*> list;
 
-	InputManager* inputManager;
 	bool debug;
 	FadeTransitor* fade;
 	int selectId;

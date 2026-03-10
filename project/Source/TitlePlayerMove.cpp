@@ -44,9 +44,9 @@ void TitlePlayerMove::Start()
 	//player->playerCom.sound->FeedInOut(Sound_ID::TITLE_BGM, 0.2f);
 
 	//エフェクトの再生
-	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, Effect_ID::JUST_AVOID_EFFECT, 10.0f, false);
-	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 150, 0), VZero, VOne * 1.0f), obj, Effect_ID::PLAYER_FLASH, 10.0f);
-	player->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, -100), VZero, VOne), obj, Effect_ID::PLAYER_AURA, 1.0f);
+	EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, Effect_ID::JUST_AVOID_EFFECT, 10.0f, false);
+	EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0, 150, 0), VZero, VOne * 1.0f), obj, Effect_ID::PLAYER_FLASH, 10.0f);
+	EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0, 100, -100), VZero, VOne), obj, Effect_ID::PLAYER_AURA, 1.0f);
 	//player->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_AURA, 3.0f);
 
 	//コントローラーを振動させる

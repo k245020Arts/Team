@@ -56,7 +56,7 @@ void FollowCamera::Update()
 
 	//ƒJƒƒ‰‚Ì‰ñ“]
 	c->cameraComponent.camera->CameraRotationSet();
-	StickDirections stickDir = c->cameraComponent.control->GetStickKnockingPut(0.5f).rightStick;
+	StickDirections stickDir = InputManager::GetInstance()->GetControllerInput()->GetStickKnockingPut(0.5f).rightStick;
 	if (stickDir == S_RIGHT) {
 		c->cameraComponent.enemyManager->ChangeCameraRockOn(c->cameraComponent.camera,true);
 		Start();

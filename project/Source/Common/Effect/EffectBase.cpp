@@ -18,14 +18,13 @@ EffectBase::EffectBase()
 	parent = nullptr;
 	time = 0.0f;
 	transform = nullptr;
-	effectManager = FindGameObject<EffectManager>();
 }
 
 EffectBase::~EffectBase()
 {
 	delete transform;
 	(this->*effectStop)();
-	effectManager->RemoveEffekseer(obj);
+	EffectManager::GetInstance()->RemoveEffekseer(obj);
 }
 
 void EffectBase::Update() 

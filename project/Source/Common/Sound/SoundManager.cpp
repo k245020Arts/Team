@@ -8,7 +8,6 @@
 
 SoundManager::SoundManager()
 {
-	DontDestroyOnSceneChange(true);
 	Base3DSoundObj = nullptr;
 }
 

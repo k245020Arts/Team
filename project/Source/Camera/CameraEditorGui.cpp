@@ -2,6 +2,7 @@
 #include "../../ImGui/imgui.h"
 #include "../Common/JsonReader.h"
 #include "../Enemy/EnemyManager.h"
+#include "../../ImGui/imgui_impl_dxlib.hpp"
 
 CameraEditorGui::CameraEditorGui() : CameraEditorGui(nullptr)
 {
@@ -28,9 +29,9 @@ void CameraEditorGui::EditorWindow()
 {
     ImGui::Begin("CutScene Editor");
 
-    // =============================
-    // File & Slot Info
-    // =============================
+    //=============================
+    //File & Slot Info
+    //=============================
     ImGui::Text("=== CutScene File ===");
     ImGui::InputText("File Name", cutSceneFileName, IM_ARRAYSIZE(cutSceneFileName));
 
@@ -61,20 +62,18 @@ void CameraEditorGui::EditorWindow()
         ImGui::TextColored(ImVec4(0.3f, 1, 0.3f, 1), "[EMPTY]");
     }
 
-    ImGui::Separator();
-
     if (ImGui::Button("targetSet")) {
         camera->cameraComponent.enemyManager->CameraRockOnStart(camera);
     }
 
-    
+    ImGui::Separator();
     if (ImGui::TreeNode("Camera Transform"))
     {
         ImGui::DragFloat3("Position", &camera->cameraComponent.cameraTransform->position.x, 1.0f);
         ImGui::DragFloat3("Rotation", &camera->cameraComponent.cameraTransform->rotation.x, 1.0f);
         ImGui::TreePop();
     }
-
+    ImGui::Separator();
  
     if (ImGui::TreeNode("Follow Position"))
     {
@@ -105,11 +104,13 @@ void CameraEditorGui::EditorWindow()
             cutScene.followPosName = WORLD_POS_NAME;
         }
 
+        ImGui::Separator();
+
         ImGui::Text("Current : %s", cutScene.followPosName.c_str());
         ImGui::TreePop();
     }
 
-   
+    ImGui::Separator();
     if (ImGui::TreeNode("Target"))
     {
         ImGui::DragFloat3("Base Target", &baseTarget.x, 1.0f);
@@ -143,10 +144,10 @@ void CameraEditorGui::EditorWindow()
         ImGui::TreePop();
     }
 
-   
+    ImGui::Separator();
     if (ImGui::TreeNode("CutScene Parameters"))
     {
-        ImGui::DragFloat3("Start Pos", &cutScene.camera.startPos.x, 1.0f);
+        ImGui::Text("Start Pos : %.1f , %.1f , %.1f", cutScene.camera.startPos.x, cutScene.camera.startPos.y, cutScene.camera.startPos.z);
         ImGui::SameLine();
         if (ImGui::Button("Set Start")) {
             cutScene.camera.startPos = offset;
@@ -162,18 +163,19 @@ void CameraEditorGui::EditorWindow()
         if (ImGui::Button("World")) {
             cutScene.firstPosBaseName = WORLD_POS_NAME;
         }
-
-        ImGui::DragFloat3("End Pos", &cutScene.camera.endPos.x, 1.0f);
+        ImGui::Text("End Pos : %.1f , %.1f , %.1f", cutScene.camera.endPos.x, cutScene.camera.endPos.y, cutScene.camera.endPos.z);
         ImGui::SameLine();
         if (ImGui::Button("Set End")) {
             cutScene.camera.endPos = offset;
         }
 
+        ImGui::Separator();
+
         ImGui::DragFloat("Duration", &cutScene.duration, 0.1f, 0.0f, 5.0f);
 
         ImGui::TreePop();
     }
-
+    ImGui::Separator();
     if (ImGui::TreeNode("Easing")) {
         const char* easingItems[] = {
                         "Linear",

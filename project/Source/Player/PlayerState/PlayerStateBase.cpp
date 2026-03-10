@@ -49,16 +49,16 @@ void PlayerStateBase::DefalutWalk()
 	Player* p = GetBase<Player>();
 	//ˆÚ“®ˆ—
 	p->playerCom.player->Move(20000.0f * Time::DeltaTimeRate(), 3200.0f);
-	if (p->playerCom.InputManager->KeyInputDown("avoid")) {
+	if (InputManager::GetInstance()->KeyInputDown("avoid")) {
 		p->playerCom.player->AvoidReady();
 	}
-	if (p->playerCom.InputManager->KeyInputDown("attack")) {
+	if (InputManager::GetInstance()->KeyInputDown("attack")) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_ATTACK1_S);
 	}
-	if (p->playerCom.InputManager->KeyInputDown("heavyAttack")) {
+	if (InputManager::GetInstance()->KeyInputDown("heavyAttack")) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_HEAVY_CHARGE_S);
 	}
-	if (p->playerCom.InputManager->KeyInputDown("SpecialAttack")) {
+	if (InputManager::GetInstance()->KeyInputDown("SpecialAttack")) {
 		if (p->CanSpecialAttack()) {
 			p->playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
 			p->specialAttackBar = 0.0f;

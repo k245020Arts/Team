@@ -38,4 +38,10 @@ private:
 
 	void JustAvoid(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos);
 	//void DamageEvent(ColliderBase* _coll1, ColliderBase* _coll2);
+
+	using EventFunc = void (CollsionEvent::*)(ColliderBase*, ColliderBase*, Pushback&, const VECTOR3&);
+
+	std::unordered_map<int, EventFunc> eventTable;
+
+	int MakeKey(CollsionInformation::Tag t1, CollsionInformation::Tag t2);
 };

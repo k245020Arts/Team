@@ -35,7 +35,7 @@ void ButtonUI::Update()
 		my_error_assert("ボタンの種類がセットされていません。");
 		return;
 	}
-	if (control->GetIsButtonPushingNow(buttonNum[type])) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetIsButtonPushingNow(buttonNum[type])) {
 		//obj->GetTransform()->scale = 0.5f;
 		push = true;
 	}
@@ -95,7 +95,6 @@ void ButtonUI::Start(ButtonType _buttonType, int _handle, Color::Rgb _rgb)
 {
 	buttonImage = _handle;
 	type = _buttonType;
-	control = FindGameObject<ControllerInputManager>();
 	obj->GetTransform()->scale = 0.8f;
 	buttonActive = true;
 	backImage = LoadGraph("data/image/UICicle.png");

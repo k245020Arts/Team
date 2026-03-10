@@ -41,7 +41,6 @@ Camera::Camera()
 	tag									= Function::GetClassNameC<Camera>();
 	fov									= 60.0f * DegToRad;
 
-	input								= FindGameObject<InputManager>();
 	rockOn								= false;
 	beforePos							= 0.0f;
 	nearFog								= 10000.0f;
@@ -49,7 +48,6 @@ Camera::Camera()
 	direction							= EnemyAttackChangeCameraDirection::NONE;
 	moveTimer							= 0.0f;
 	angleMaxSpeed						= 0.0f;
-	control								= nullptr;
 	counter								= 0.0f;
 	editor								= nullptr;
 	hit									= false;
@@ -88,7 +86,7 @@ void Camera::Update()
 	//else {
 	//	counter = 0.0f;
 	//}
-	if (input->KeyInputDown("camera")) {
+	if (InputManager::GetInstance()->KeyInputDown("camera")) {
 		if (!IsCutScene()) {
 			if (!rockOn) {
 				cameraComponent.enemyManager->CameraRockOnStart(this);
@@ -154,7 +152,6 @@ void Camera::Start(BaseObject* _eObj)
 	SetCameraNearFar(10.0f, 10000.0f);
 	SetupCamera_Perspective(DX_PI_F / 3.0f);
 	//cameraComponent.target = &target;
-	cameraComponent.control = FindGameObject<ControllerInputManager>();
 	cameraComponent.shaker	= obj->Component()->AddComponent<Shaker>();
 	
 	cameraComponent.state	= obj->Component()->GetComponent<StateManager>();
@@ -315,18 +312,18 @@ void Camera::RotationChange(const Transform& _targetTransform, float _speed)
 bool Camera::CameraRotationMove()
 {
 	bool cancel = false;
-	if (cameraComponent.control->GetStickInput().rightStick.x >= 0.3f || CheckHitKey(KEY_INPUT_RIGHT)) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.x >= 0.3f || CheckHitKey(KEY_INPUT_RIGHT)) {
 		cancel = true;
 	}
-	if (cameraComponent.control->GetStickInput().rightStick.x <= -0.3f || CheckHitKey(KEY_INPUT_LEFT)) {
-		cancel = true;
-	}
-
-	if (cameraComponent.control->GetStickInput().rightStick.y >= 0.3f || CheckHitKey(KEY_INPUT_UP)) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.x <= -0.3f || CheckHitKey(KEY_INPUT_LEFT)) {
 		cancel = true;
 	}
 
-	if (cameraComponent.control->GetStickInput().rightStick.y <= -0.3f || CheckHitKey(KEY_INPUT_DOWN)) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.y >= 0.3f || CheckHitKey(KEY_INPUT_UP)) {
+		cancel = true;
+	}
+
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.y <= -0.3f || CheckHitKey(KEY_INPUT_DOWN)) {
 		cancel = true;
 	}
 	return cancel;

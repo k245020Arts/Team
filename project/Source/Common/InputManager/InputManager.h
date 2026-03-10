@@ -5,6 +5,7 @@
 #include "keyboardInputManager.h"
 #include "mouseInputManager.h"
 #include <unordered_map>
+#include "../Singleton/SingletonBase.h"
 
 class ControllerInputManager;
 class KeyboardInputManager;
@@ -48,7 +49,7 @@ namespace
 /// プレイヤーの操作の入力を管理するクラス
 ///	シーンを跨いで存在できるようにしているためBootSceneで生成推奨
 /// </summary>
-class InputManager :public GameObject
+class InputManager : public SingletonBase<InputManager>
 {
 public:
 	/// <summary>
@@ -58,8 +59,7 @@ public:
 	/// <param name="_useController">コントローラー入力を取るか</param>
 	/// <param name="_useKeyboard">キーボード入力を取るか</param>
 	/// <param name="_useMouse">マウス入力を取るか</param>
-	InputManager(bool _useController,bool _useKeyboard,bool _useMouse);
-	~InputManager();
+	
 	void Update()override;
 
 	///<summary>指定したキーボードのキーかコントローラーのボタンが押されている間Trueを返す</summary>
@@ -90,6 +90,12 @@ public:
 	bool IsData(std::string _name);
 
 private:
+
+	InputManager();
+	~InputManager();
+
+	friend class SingletonBase<InputManager>;
+
 	ControllerInputManager* controller;
 	KeyboardInputManager* keyboard;
 	MouseInputManager* mouse;

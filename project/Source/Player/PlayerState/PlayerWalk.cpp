@@ -45,7 +45,7 @@ void PlayerWalk::Update()
 		secondOnes = false;
 	}
 	if (sound) {
-		p->playerCom.sound->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_WALK1,10000,60000);
+		SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_WALK1,10000,60000);
 		sound = false;
 	}
 	if (p->playerCom.anim->GetCurrentFrame() >= 19.0f) {

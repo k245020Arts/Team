@@ -65,13 +65,13 @@ void BossSpecialAttack1::Update()
 		if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 40) {
 			if (effect) {
 				effect = false;
-				BaseObject* obj1 = b->enemyBaseComponent.effect->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
-				BaseObject* obj2 = b->enemyBaseComponent.effect->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_GROUND, 1.0f);
+				BaseObject* obj1 = EffectManager::GetInstance()->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
+				BaseObject* obj2 = EffectManager::GetInstance()->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_GROUND, 1.0f);
 				ShockWave* w = obj1->Component()->AddComponent<ShockWave>();
-				b->enemyBaseComponent.effect->ParentTransformRemove(obj1);
-				b->enemyBaseComponent.effect->ParentTransformRemove(obj2);
+				EffectManager::GetInstance()->ParentTransformRemove(obj1);
+				EffectManager::GetInstance()->ParentTransformRemove(obj2);
 				w->CreateWave(CollsionInformation::B_E_ATTACK, Transform(VZero, VZero, VOne), 50.0f, 50.0f);
-				b->enemyBaseComponent.sound->PlaySe(Sound_ID::GROUND);
+				SoundManager::GetInstance()->PlaySe(Sound_ID::GROUND);
 				b->enemyBaseComponent.camera->CameraPerspectiveShakeStart(3.0f, 0.4f);
 			}
 		}

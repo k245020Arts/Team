@@ -41,7 +41,6 @@
 Hierachy::Hierachy()
 {
 	//transform = nullptr;
-	inputManager = FindGameObject<InputManager>();
 #ifdef _DEBUG
 	debug = true;
 #else
@@ -66,7 +65,7 @@ void Hierachy::Update()
 	}*/
 #ifdef _DEBUG
 
-	if (inputManager->KeyInputDown("debugChange")) {
+	if (InputManager::GetInstance()->KeyInputDown("debugChange")) {
 		debug = !debug; //デバックウィンドウの出し入れ
 	}
 	//デバックモードのみで作成

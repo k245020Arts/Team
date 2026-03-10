@@ -2,7 +2,7 @@
 
 KeyboardInputManager::KeyboardInputManager()
 {
-	DontDestroyOnSceneChange(true);
+	//DontDestroyOnSceneChange(true);
 }
 
 KeyboardInputManager::~KeyboardInputManager()

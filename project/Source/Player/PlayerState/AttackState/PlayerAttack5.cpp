@@ -97,12 +97,12 @@ void PlayerAttack5::Update()
 
 	if (!noStateChange) {
 		EnemyRotation();
-		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
+		if (InputManager::GetInstance()->KeyInputDown("avoid")) {
 			//p->playerCom.player->AvoidReady();
 			avoidReady = true;
 			//noStateChange = true;
 		}
-		if (p->playerCom.InputManager->KeyInputDown("attack")) {
+		if (InputManager::GetInstance()->KeyInputDown("attack")) {
 			nextAttack = true;
 		}
 		timer -= Time::DeltaTimeRate();

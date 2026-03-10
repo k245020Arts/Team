@@ -29,7 +29,6 @@ TitleScene::TitleScene()
 	BlurScreen* blur = new BlurScreen();
 
 	Hierachy* hierachy = new Hierachy();
-	new EffectManager();
 	
 	StageManager* stageManager = new StageManager();
 	

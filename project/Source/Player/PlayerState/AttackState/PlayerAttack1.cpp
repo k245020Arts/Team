@@ -40,11 +40,11 @@ void PlayerAttack1::Update()
 
 		EnemyRotation();
 		//UŒ‚‚ÌŽž‚ÉŽŸ‚Ìƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚çŽŸ‚ÌUŒ‚
-		if (p->playerCom.InputManager->KeyInputDown("attack")) {
+		if (InputManager::GetInstance()->KeyInputDown("attack")) {
 			nextAttack = true;
 		}
 		//UŒ‚‚ÌŽž‚É‰ñ”ðs“®‚ð‚¢‚ê‚½‚ç‰ñ”ðó‘Ô‚ÉˆÚs
-		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
+		if (InputManager::GetInstance()->KeyInputDown("avoid")) {
 			//p->playerCom.player->AvoidReady();
 			nextAvoid = true;
 			//noStateChange = true;

@@ -14,12 +14,12 @@ struct KeyboardInput
 	char kInput[KEYBOARD_BUF_NUM];
 };
 
-class KeyboardInputManager :public GameObject
+class KeyboardInputManager
 {
 public:
 	KeyboardInputManager();
 	~KeyboardInputManager();
-	void Update()override;
+	void Update();
 
 	///<summary>キーボード用　指定したキーが押されている間trueを返す</summary>
 	/// <param name="_keyCode">キーの種類</param>

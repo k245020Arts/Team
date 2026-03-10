@@ -133,14 +133,16 @@ void BossSpecialAttack2::Finish()
 		
 	}
 	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	rockColl->GetBaseObject()->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("Rush");
-	rockColl = nullptr;
+	if (rockColl != nullptr) {
+		rockColl->GetBaseObject()->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("Rush");
+		rockColl = nullptr;
+	}
 }
 
 void BossSpecialAttack2::BossDushSound()
 {
 	Boss* b = GetBase<Boss>();
-	b->enemyBaseComponent.sound->Play3DSound(Sound_ID::BOSS_WALK, obj, 200000, 30000);
+	SoundManager::GetInstance()->Play3DSound(Sound_ID::BOSS_WALK, obj, 200000, 30000);
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 6.0f && b->enemyBaseComponent.anim->GetCurrentFrame() <= 7.0f) {
 		if (firstOnes) {
 			sound = true;
@@ -154,7 +156,7 @@ void BossSpecialAttack2::BossDushSound()
 		secondOnes = false;
 	}
 	if (sound) {
-		b->enemyBaseComponent.sound->PlayRamdomChangeFrequencySe(Sound_ID::BOSS_WALK,30000,1000);
+		SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::BOSS_WALK,30000,1000);
 		sound = false;
 		Debug::DebugLog("bossDushSound");
 	}

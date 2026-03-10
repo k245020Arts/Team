@@ -41,8 +41,8 @@ void PlayerLose::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
-	p->playerCom.sound->StopBGM(Sound_ID::PLAY_BGM);
-	p->playerCom.sound->PlaySe(Sound_ID::LOSE);
+	SoundManager::GetInstance()->StopBGM(Sound_ID::PLAY_BGM);
+	SoundManager::GetInstance()->PlaySe(Sound_ID::LOSE);
 	//one = false;
 	p->playerCom.enemyManager->CameraRockOnStart(p->playerCom.camera);
 	if (FindGameObject<Wave>()->GetBossWave()) {

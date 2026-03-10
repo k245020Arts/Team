@@ -62,7 +62,7 @@ void BossDie::Start()
 	obj->Component()->RemoveAllComponent<SphereCollider>();
 	obj->Component()->RemoveAllComponent<ModelCollider>();
 	b->enemyBaseComponent.physics->SetGravity(VZero);
-	b->enemyBaseComponent.sound->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
+	SoundManager::GetInstance()->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
 }
 
 void BossDie::Finish()

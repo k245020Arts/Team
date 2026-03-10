@@ -267,8 +267,8 @@ private:
 	int cutSceneIndex;
 	bool normalCamera;
 	int targetChangeButton;
-	ControllerInputManager* control;
-	InputManager* input;
+	//ControllerInputManager* control;
+	//InputManager* input;
 	bool rockOn;
 	float beforePos;
 	float counter;

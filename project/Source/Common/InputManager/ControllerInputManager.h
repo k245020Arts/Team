@@ -54,12 +54,12 @@ struct StickDirection
 };
 
 
-class ControllerInputManager :public GameObject
+class ControllerInputManager
 {
 public:
 	ControllerInputManager();
 	~ControllerInputManager();
-	void Update()override;
+	void Update();
 
 	/// <summary>コントローラーのボタンが押されているか確認する</summary>
 	/// <param name="_getStick">スティックの傾きも取るか　通常はfalse</param>

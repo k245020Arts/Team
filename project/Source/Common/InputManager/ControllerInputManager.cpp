@@ -4,7 +4,7 @@
 ControllerInputManager::ControllerInputManager()
 {
 	playerNumber = PLAYER_1;
-	DontDestroyOnSceneChange(true);
+	//DontDestroyOnSceneChange(true);
 }
 
 ControllerInputManager::~ControllerInputManager()

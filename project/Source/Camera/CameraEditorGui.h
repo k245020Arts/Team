@@ -1,6 +1,8 @@
 #pragma once
 #include "Camera.h"
 
+struct ImFont;
+
 class CameraEditorGui
 {
 public:
@@ -35,5 +37,7 @@ private:
 	void DataSave();
 
 	void LoadCutScene();
+
+	ImFont* font;
 	
 };

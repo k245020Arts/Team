@@ -210,8 +210,8 @@ void PlayerSpecialAttack::Start()
 	zoomRate = 1.0f;
 	zoomSize = 0.0f;
 	p->playerCom.camera->SleepTargetSet(CutSceneSpece::ALL_ENEMY, true);
-	p->playerCom.sound->PlaySe(Sound_ID::CUTIN_START);
-	p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_V);
+	SoundManager::GetInstance()->PlaySe(Sound_ID::CUTIN_START);
+	SoundManager::GetInstance()->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_V);
 	attackDamage = false;
 	moveStart = false;
 	hitDamage = 200.0f;
@@ -223,8 +223,8 @@ void PlayerSpecialAttack::Finish()
 	Player* p = GetBase<Player>();
 	ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
 	//p->playerCom.camera->ChangeStateCamera(StateID::FREE_CAMERA_S);
-	p->playerCom.effect->StopEffekseer(Effect_ID::PLAYER_SPECIAL_PLACE);
-	p->playerCom.effect->StopEffekseer(Effect_ID::PLAYER_SPECIAL_SLASH);
+	EffectManager::GetInstance()->StopEffekseer(Effect_ID::PLAYER_SPECIAL_PLACE);
+	EffectManager::GetInstance()->StopEffekseer(Effect_ID::PLAYER_SPECIAL_SLASH);
 	state = NO_ATTACK;
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->noDamage = false;
@@ -255,7 +255,7 @@ void PlayerSpecialAttack::MoveStart(float _angle)
 	Player* p = GetBase<Player>();
 	ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
 	AddCollsion();
-	p->playerCom.sound->RandamSe("swordWind", 5);
+	SoundManager::GetInstance()->RandamSe("swordWind", 5);
 	
 	p->playerTransform->position = p->specialAttackCenterPos + VECTOR3(0.0f,0.0f,radius) * MGetRotY(p->playerTransform->rotation.y);
 
@@ -299,8 +299,8 @@ void PlayerSpecialAttack::BeforeUpdate()
 			if (zoomCounter <= 0.0f) {
 				beforeWaitCounter = 1.0f;
 				zoom = false;
-				p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f - 100.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VOne), nullptr, Effect_ID::PLAYER_SPECIAL_FLASH, 1.0f, false);
-				p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_SPECIAL_FLASH, 2.0f);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f - 100.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VOne), nullptr, Effect_ID::PLAYER_SPECIAL_FLASH, 1.0f, false);
+				EffectManager::GetInstance()->SetSpeedEffekseer(Effect_ID::PLAYER_SPECIAL_FLASH, 2.0f);
 				
 			}
 		}
@@ -378,8 +378,8 @@ void PlayerSpecialAttack::GroundUpdate()
 		moveCounter = 0.0f;
 		ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
 		AddCollsion();
-		p->playerCom.sound->RandamSe("swordWind", 5);
-		p->playerCom.sound->RandamSe("PlayerSpecialAttackAttackV", 2);
+		SoundManager::GetInstance()->RandamSe("swordWind", 5);
+		SoundManager::GetInstance()->RandamSe("PlayerSpecialAttackAttackV", 2);
 	}
 
 	
@@ -489,7 +489,7 @@ void PlayerSpecialAttack::ChargeUpdate()
 		state = FINAL_ATTACK;
 		//p->playerCom.anim->SetPlaySpeed(3.0f);
 		p->playerCom.shaker->ShakeFinish();
-		p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_FINAL_ATTACKV);
+		SoundManager::GetInstance()->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_FINAL_ATTACKV);
 		hitDamage = 5000.0f;
 	}
 }
@@ -514,9 +514,9 @@ void PlayerSpecialAttack::FinalAttackUpdate()
 		//p->playerTransform->position = forward * (radius);
 		waitCounter = 10.0f;
 		p->playerCom.physics->SetVelocity(VZero);
-		p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos + VECTOR3(0.0f,150.0f,0.0f), VECTOR3(0.0f, 0.0f, 180.0f * DegToRad), VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_FINAL, 1.5f);
+		EffectManager::GetInstance()->CreateEffekseer(Transform(p->specialAttackCenterPos + VECTOR3(0.0f,150.0f,0.0f), VECTOR3(0.0f, 0.0f, 180.0f * DegToRad), VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_FINAL, 1.5f);
 		//p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_SPECIAL_FINAL, 1.0f);
 		attackDamage = true;
-		p->playerCom.sound->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_BOM);
+		SoundManager::GetInstance()->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_BOM);
 	}
 }

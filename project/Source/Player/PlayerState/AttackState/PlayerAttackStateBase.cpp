@@ -156,7 +156,7 @@ void PlayerAttackStateBase::Start()
 	firstColl			= true;
 	distSize			= dist.Size();
 	norm				= dist.Normalize();
-	p->playerCom.sound->RandamSe("P_AttackV", 3);
+	SoundManager::GetInstance()->RandamSe("P_AttackV", 3);
 	beforeAttack		= true;
 	runTimer			= 0.0f;
 	
@@ -250,7 +250,7 @@ void PlayerAttackStateBase::AttackCollsion()
 		if (firstColl) {
 			firstColl = false;
 			BaseAttackCollsion();
-			p->playerCom.sound->RandamSe("swordWind", 5);
+			SoundManager::GetInstance()->RandamSe("swordWind", 5);
 		}
 	}
 }
@@ -258,7 +258,7 @@ void PlayerAttackStateBase::AttackCollsion()
 void PlayerAttackStateBase::SpecialAttackStart()
 {
 	Player* p = GetBase<Player>();
-	if (p->playerCom.InputManager->KeyInputDown("SpecialAttack")) {
+	if (InputManager::GetInstance()->KeyInputDown("SpecialAttack")) {
 		if (p->CanSpecialAttack()) {
 			p->playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
 			p->specialAttackBar = 0.0f;
