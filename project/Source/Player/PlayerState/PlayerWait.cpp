@@ -2,7 +2,7 @@
 #include "playerStateManager.h"
 #include "../../Component/Physics/Physics.h"
 #include ".../../../../Component/Animator/Animator.h"
-#include "../../GameManager/GameManager.h"
+#include "../../GameManager/GameControler.h"
 #include "../player.h"
 
 PlayerWait::PlayerWait()

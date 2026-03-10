@@ -15,7 +15,7 @@
 #include "../../Common/Sound/SoundManager.h"
 #include "../../Weapon/WeaponManager.h"
 #include "../../State/StateManager.h"
-#include "../../GameManager/GameManager.h"
+#include "../../GameManager/GameControler.h"
 #include "../Boss/BossState/BossIdol.h"
 #include "../Boss/BossState/BossRun.h"
 #include "../Boss/BossState/BossWalk.h"
@@ -237,7 +237,7 @@ void Boss::Start(Object3D* _obj)
 
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 
-	enemyBaseComponent.gameManager = FindGameObject<GameManager>();
+	enemyBaseComponent.gameManager = FindGameObject<GameControler>();
 
 	using namespace ID;
 

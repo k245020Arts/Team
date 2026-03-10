@@ -27,7 +27,7 @@
 #include "../Source/Common/Transitor/StripTransitor.h"
 #include "../Source/Common/Transitor/TitleTransitor.h"
 #include "../Source/Common/Transitor/IrisTransitor.h"
-#include "../Source/GameManager/GameManager.h"
+#include "../Source/GameManager/GameControler.h"
 #include "../Source/Common/InputManager/inputManager.h"
 #include "../Source/Wave/Wave.h"
 #include "Component/UI/UIManager/UIManager.h"
@@ -67,7 +67,7 @@ PlayScene::PlayScene()
 	SkyManager* sky = new SkyManager();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	UIManager* uiManager = new UIManager();
-	GameManager* gameManager = new GameManager();
+	GameControler* gameManager = new GameControler();
 	
 
 	

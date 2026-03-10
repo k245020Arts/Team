@@ -239,7 +239,7 @@
     <ClCompile Include="Source\Enemy\EnemyManager.cpp">
       <Filter>PlayScene\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameManager\GameManager.cpp">
+    <ClCompile Include="Source\GameManager\GameControler.cpp">
       <Filter>PlayScene\GameManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Light\Light.cpp">
@@ -832,7 +832,7 @@
     <ClInclude Include="Source\Enemy\EnemyManager.h">
       <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameManager\GameManager.h">
+    <ClInclude Include="Source\GameManager\GameControler.h">
       <Filter>PlayScene\GameManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Light\Light.h">

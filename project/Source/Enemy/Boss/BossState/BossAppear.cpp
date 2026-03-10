@@ -5,7 +5,7 @@
 #include "BossStatus.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Camera/Camera.h"
-#include "../../../GameManager/GameManager.h"
+#include "../../../GameManager/GameControler.h"
 #include "../../../Common/Fead/Fead.h"
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Common/InputManager/InputManager.h"
@@ -60,7 +60,7 @@ void BossAppear::Update()
 
 		}
 		if (b->enemyBaseComponent.anim->IsFinish()) {
-			b->enemyBaseComponent.gameManager->ChangeState(GameManager::GameState::PLAY);
+			b->enemyBaseComponent.gameManager->ChangeState(GameControler::GameState::PLAY);
 			SoundManager::GetInstance()->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
 		}
 	}

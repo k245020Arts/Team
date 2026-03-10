@@ -19,7 +19,7 @@
 #include "../Component/Collider/ModelCollider.h"
 #include "../Component/Shadow/Shadow.h"
 #include "../Common/Easing.h"
-#include "../GameManager/GameManager.h"
+#include "../GameManager/GameControler.h"
 #include "../State/StateManager.h"
 //#define VERSION2D
 //#define DOT_MODE
@@ -43,7 +43,7 @@ EnemyManager::~EnemyManager()
 void EnemyManager::Update()
 {
 	if (gameManager == nullptr) {
-		gameManager = FindGameObject<GameManager>();
+		gameManager = FindGameObject<GameControler>();
 	}
 
 	if (gameManager != nullptr && gameManager->GetChangeState()) {
@@ -656,25 +656,25 @@ void EnemyManager::GameSceneChangeState()
 			StateManager* stateManager = obj->Component()->GetComponent<StateManager>();
 			switch (gameManager->GetStateNumber())
 			{
-			case GameManager::GameState::BEFORE:
+			case GameControler::GameState::BEFORE:
 				// stateManager->ChangeState(StateID::PLAYER_BEFORE_S);
 				break;
 
-			case GameManager::GameState::PLAY:
+			case GameControler::GameState::PLAY:
 				stateManager->ChangeState(StateID::BOSS_IDOL_S);
 				break;
 
-			case GameManager::GameState::BOSS_PLAY_BEFORE:
+			case GameControler::GameState::BOSS_PLAY_BEFORE:
 				// stateManager->ChangeState(StateID::BOSS_APPEAR_S);
 				// stateManager->SetNoStateChange(true);
 				break;
 
-			case GameManager::GameState::WIN:
+			case GameControler::GameState::WIN:
 				stateManager->NowChangeState(StateID::BOSS_LOSE_S);
 				stateManager->SetNoStateChange(true);
 				break;
 
-			case GameManager::GameState::LOSE:
+			case GameControler::GameState::LOSE:
 				stateManager->NowChangeState(StateID::BOSS_WIN_S);
 				stateManager->SetNoStateChange(true);
 				break;

@@ -38,7 +38,7 @@
 #include "../Player/PlayerState/PlayerAvoid.h"
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
-#include "../GameManager/GameManager.h"
+#include "../GameManager/GameControler.h"
 #include "PlayerState/PlayerWin.h"
 #include "PlayerState/PlayerBefore.h"
 #include "../Component/Animator/Anim2D.h"
@@ -60,7 +60,7 @@ PlayerManager::~PlayerManager()
 void PlayerManager::Update()
 {
 	if (gameManager == nullptr) {
-		gameManager = FindGameObject<GameManager>();
+		gameManager = FindGameObject<GameControler>();
 	}
 
 	if (gameManager != nullptr &&  gameManager->GetChangeState()) {
@@ -220,24 +220,24 @@ void PlayerManager::GameSceneChangeState()
 {
 	switch (gameManager->GetStateNumber())
 	{
-	case GameManager::GameState::BEFORE:
+	case GameControler::GameState::BEFORE:
 		stateManager->ChangeState(StateID::PLAYER_BEFORE_S);
 		break;
 
-	case GameManager::GameState::PLAY:
+	case GameControler::GameState::PLAY:
 		stateManager->ChangeState(StateID::PLAYER_WAIT_S);
 		break;
 
-	case GameManager::GameState::BOSS_PLAY_BEFORE:
+	case GameControler::GameState::BOSS_PLAY_BEFORE:
 		stateManager->ChangeState(StateID::PLAYER_BOSS_APPEAR_S);
 		break;
 
-	case GameManager::GameState::WIN:
+	case GameControler::GameState::WIN:
 		stateManager->NowChangeState(StateID::PLAYER_WIN_STATE_S);
 		stateManager->SetNoStateChange(true);
 		break;
 
-	case GameManager::GameState::LOSE:
+	case GameControler::GameState::LOSE:
 		stateManager->NowChangeState(StateID::PLAYER_LOSE_S);
 		stateManager->SetNoStateChange(true);
 		break;

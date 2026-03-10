@@ -16,7 +16,7 @@ class Camera;
 class EffectManager;
 class SoundManager;
 class WeaponManager;
-class GameManager;
+class GameControler;
 class ColliderBase;
 
 namespace EnemyInformation {
@@ -49,7 +49,7 @@ namespace EnemyInformation {
 		//EffectManager* effect;
 		//SoundManager* sound;
 		WeaponManager* weapon;
-		GameManager* gameManager;
+		GameControler* gameManager;
 		std::list<ColliderBase*> collider;
 	};
 

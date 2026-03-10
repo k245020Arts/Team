@@ -3,7 +3,7 @@
 #include "../../../Component/Shaker/Shaker.h"
 #include "../Boss.h"
 #include "../../../Component/Animator/Animator.h"
-#include "../../../GameManager/GameManager.h"
+#include "../../../GameManager/GameControler.h"
 #include "../../../Common/Sound/SoundManager.h"
 #include "../../../Component/Collider/ColliderBase.h"
 #include "../../../Component/ComponentManager.h"
@@ -29,7 +29,7 @@ void BossDie::Update()
 	Boss* b = GetBase<Boss>();
 	if (b->enemyBaseComponent.anim->IsFinish()) {
 		b->enemyBaseComponent.state->SetNoStateChange(false);
-		b->enemyBaseComponent.gameManager->ChangeState(GameManager::GameState::WIN);
+		b->enemyBaseComponent.gameManager->ChangeState(GameControler::GameState::WIN);
 			
 	
 	}

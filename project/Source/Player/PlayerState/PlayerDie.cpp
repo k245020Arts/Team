@@ -1,6 +1,6 @@
 #include "PlayerDie.h"
 #include "../../Component/Animator/Animator.h"
-#include "../../GameManager/GameManager.h"
+#include "../../GameManager/GameControler.h"
 #include "../../Camera/Camera.h"
 #include "../player.h"
 #include "../../Common/Sound/SoundManager.h"
@@ -25,7 +25,7 @@ void PlayerDie::Update()
 	Player* p = GetBase<Player>();
 	if (p->playerCom.anim->IsFinish()) {
 		p->playerCom.stateManager->SetNoStateChange(false);
-		p->playerCom.gameManager->ChangeState(GameManager::GameState::LOSE);
+		p->playerCom.gameManager->ChangeState(GameControler::GameState::LOSE);
 		//p->playerCom.stateManager->ChangeState(StateID::PLAYER_ATTACK1_S);
 	}
 	else {

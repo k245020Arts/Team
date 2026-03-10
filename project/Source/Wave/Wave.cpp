@@ -1,7 +1,7 @@
 #include "Wave.h"
 #include "../Enemy/TrashEnemy/TrashEnemyManager.h"
 #include "../Enemy/EnemyManager.h"
-#include "../GameManager/GameManager.h"
+#include "../GameManager/GameControler.h"
 #include "../Common/Fead/Fead.h"
 
 Wave::Wave()
@@ -31,7 +31,7 @@ void Wave::Update()
 	if (waveNow == 3) {
 		if (bossCreate) {
 			FindGameObject<EnemyManager>()->CreateBoss();
-			FindGameObject<GameManager>()->ChangeState(GameManager::GameState::BOSS_PLAY_BEFORE);
+			FindGameObject<GameControler>()->ChangeState(GameControler::GameState::BOSS_PLAY_BEFORE);
 
 			FindGameObject<Fead>()->FeadIn(1.0f, 0x000000, Easing::EaseIn<int>);
 			bossCreate = false;
