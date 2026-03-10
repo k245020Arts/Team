@@ -335,7 +335,7 @@
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\PlayScene.h" />
     <ClInclude Include="Source\SceneFactory.h" />
-    <ClInclude Include="Source\Stage\SkyManager.h" />
+    <ClInclude Include="Source\Stage\Sky.h" />
     <ClInclude Include="Source\Stage\Stage.h" />
     <ClInclude Include="Source\Stage\StageManager.h" />
     <ClInclude Include="Source\Stage\Wall.h" />
@@ -526,7 +526,7 @@
     <ClCompile Include="Source\PlayScene.cpp" />
     <ClCompile Include="Source\Result\ResultUi.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />
-    <ClCompile Include="Source\Stage\SkyManager.cpp" />
+    <ClCompile Include="Source\Stage\Sky.cpp" />
     <ClCompile Include="Source\Stage\Stage.cpp" />
     <ClCompile Include="Source\Stage\StageManager.cpp" />
     <ClCompile Include="Source\Stage\Wall.cpp" />

@@ -19,7 +19,7 @@
 #include "../Source/Camera/CameraManager.h"
 #include "../Source/Common/Effect/EffectManager.h"
 #include "../Source/Common/Sound/SoundManager.h"
-#include "../Source/Stage/SkyManager.h"
+#include "../Source/Stage/Sky.h"
 #include "../Source/Common/BlurScreen.h"
 #include "../Source/Common/Transitor/FadeTransitor.h"
 #include "../Source/Common/Transitor/PushTransitor.h"
@@ -64,7 +64,7 @@ PlayScene::PlayScene()
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	CameraManager* cameraManager = new CameraManager();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
-	SkyManager* sky = new SkyManager();
+	Sky* sky = new Sky();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	UIManager* uiManager = new UIManager();
 	GameControler* gameManager = new GameControler();

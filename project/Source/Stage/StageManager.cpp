@@ -9,7 +9,7 @@
 #include "../Player/Player.h"
 #include "../Player/PlayerState/PlayerStateManager.h"
 #include "../Component/Object/Object3D.h"
-#include "SkyManager.h"
+#include "Sky.h"
 #include "../Component/Collider/AABBCollider.h"
 
 #define NEW_STAGE

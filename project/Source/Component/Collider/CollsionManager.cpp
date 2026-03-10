@@ -20,10 +20,10 @@ CollsionManager::CollsionManager()
 	using namespace CollsionInformation;
 	//ìñÇΩÇËîªíËÇ≈Ç«ÇÃå`ìØémÇ»ÇÁÇ±ÇÃä÷êîÇ…Ç¢ÇÍÇÈÇ∆Ç¢Ç§ìoò^
 	collsionKind[EnumTag(SPHERE ,SPHERE,SHAPE_MAX)] = &CollsionManager::CollsionSphereToSphere;
-	collsionKind[EnumTag(SPHERE ,MODEL,SHAPE_MAX)] = &CollsionManager::CollsionSphereToModel;
-	collsionKind[EnumTag(SPHERE, DONUT,SHAPE_MAX)] = &CollsionManager::CollsionSphereToDount;
-	collsionKind[EnumTag(MODEL ,RAY,SHAPE_MAX)] = &CollsionManager::CollsionModelToRay;
-	collsionKind[EnumTag(RAY ,AABB,SHAPE_MAX)] = &CollsionManager::CollsionAABBToRay;
+	collsionKind[EnumTag(SPHERE ,MODEL,SHAPE_MAX)]	= &CollsionManager::CollsionSphereToModel;
+	collsionKind[EnumTag(SPHERE, DONUT,SHAPE_MAX)]	= &CollsionManager::CollsionSphereToDount;
+	collsionKind[EnumTag(MODEL ,RAY,SHAPE_MAX)]		= &CollsionManager::CollsionModelToRay;
+	collsionKind[EnumTag(RAY ,AABB,SHAPE_MAX)]		= &CollsionManager::CollsionAABBToRay;
 	collList.clear();
 
 	event = new CollsionEvent();

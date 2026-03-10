@@ -296,7 +296,7 @@
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack1.cpp">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Stage\SkyManager.cpp">
+    <ClCompile Include="Source\Stage\Sky.cpp">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stage\Stage.cpp">
@@ -895,7 +895,7 @@
     <ClInclude Include="Source\Stage\Wall.h">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Stage\SkyManager.h">
+    <ClInclude Include="Source\Stage\Sky.h">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\Stage\Stage.h">
