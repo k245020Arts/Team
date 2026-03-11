@@ -17,14 +17,16 @@ PlayerHeavyAttack::PlayerHeavyAttack()
 	//id = ID::P_ANIM_ATTACK1;
 	nextAttack = false;
 	animId = ID::P_HEAVY_ATTACK;
-	collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
-	nextAttackID = StateID::PLAYER_HEAVY_ATTACK_S;
-	frontSpeed = 4000.0f;
+	playerAttackData.collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
+	playerAttackData.normalAttackNextID = StateID::PLAYER_HEAVY_ATTACK_S;
+	playerAttackData.frontSpeed = 4000.0f;
 	//frontSpeed		= 0.0f;
 	time = 0.0f;
-	hitDamage = 300.0f;
+	playerAttackData.hitDamage = 300.0f;
 	chargeCount = 0.0f;
 	defalutTrail = true;
+
+	playerAttackData.state = StateID::PLAYER_HEAVY_ATTACK_S;
 }
 
 PlayerHeavyAttack::~PlayerHeavyAttack()
@@ -91,18 +93,18 @@ void PlayerHeavyAttack::Start()
 	{
 	case Player::LEVEL1:
 		AgainTimerSet(0.2f, 0);
-		frontSpeed = 1000.0f;
-		hitDamage = 50.0f;
+		playerAttackData.frontSpeed = 1000.0f;
+		playerAttackData.hitDamage = 50.0f;
 		break;
 	case Player::LEVEL2:
 		AgainTimerSet(0.3f, 2);
-		frontSpeed = 2000.0f;
-		hitDamage = 150.0f;
+		playerAttackData.frontSpeed = 2000.0f;
+		playerAttackData.hitDamage = 150.0f;
 		break;
 	case Player::LEVEL3:
 		AgainTimerSet(0.1f, 6);
-		frontSpeed = 4000.0f;
-		hitDamage = 300.0f;
+		playerAttackData.frontSpeed = 4000.0f;
+		playerAttackData.hitDamage = 300.0f;
 		break;
 	default:
 		my_error_assert("チャージ攻撃のレベルがセットされていません");

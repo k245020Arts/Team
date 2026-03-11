@@ -88,3 +88,19 @@ private:
 
 	void Child(Transform* _child){ child.emplace_back(_child); }
 };
+
+inline void from_json(const nlohmann::json& j, Transform& t)
+{
+	j.at("position").get_to(t.position);
+	j.at("rotation").get_to(t.rotation);
+	j.at("scale").get_to(t.scale);
+}
+
+inline void to_json(nlohmann::json& j, const Transform& t)
+{
+	j = {
+		{"position", t.position},
+		{"rotation", t.rotation},
+		{"scale", t.scale}
+	};
+}

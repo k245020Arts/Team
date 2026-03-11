@@ -18,16 +18,18 @@ PlayerHeavyCharge::PlayerHeavyCharge()
 	string			= Function::GetClassNameC<PlayerHeavyCharge>();
 	nextAttack		= false;
 	animId			= ID::P_HEAVY_CHARGE;
-	collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
-	nextAttackID	= StateID::PLAYER_HEAVY_ATTACK_S;
-	frontSpeed		= 5500.0f;
+	playerAttackData.collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
+	playerAttackData.specialAttackNextID = StateID::PLAYER_HEAVY_ATTACK_S;
+	playerAttackData.frontSpeed		= 5500.0f;
 	time			= 0.0f;
-	hitDamage		= 30.0f;
+	playerAttackData.hitDamage		= 30.0f;
 	chargeCount		= 0.0f;
 	defalutTrail	= false;
 	chargeFinish	= false;
 	baseFrequ		= 0;
 	maxCharge		= false;
+
+	playerAttackData.state = StateID::PLAYER_HEAVY_ATTACK_S;
 }
 
 PlayerHeavyCharge::~PlayerHeavyCharge()
@@ -79,7 +81,7 @@ void PlayerHeavyCharge::Update()
 	}
 	if (chargeFinish) {
 		p->HeavyAttackChangeParam(p->attackLevel);
-		p->playerCom.stateManager->ChangeState(nextAttackID);
+		p->playerCom.stateManager->ChangeState(playerAttackData.specialAttackNextID);
 		p->playerCom.shaker->ShakeFinish();
 		InputManager::GetInstance()->GetControllerInput()->StopControlVibrationStartFrame();
 	}

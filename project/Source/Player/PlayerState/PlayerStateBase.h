@@ -28,7 +28,6 @@ protected:
 	ID::IDType animId;
 	bool noStateChange;
 	bool firstColl;
-	Transform collTrans;
 	bool nextAttack;
 	float blendSpeed;
 };

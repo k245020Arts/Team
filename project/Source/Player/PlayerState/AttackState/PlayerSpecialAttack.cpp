@@ -29,9 +29,9 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	animId = ID::P_SPECIAL_ATTACK_ANIM;
 	radius = 2000.0f;
 	//TODO “–‚½‚è”»’è‚ð“®‚©‚È‚¢‚æ‚¤‚ÉV‚µ‚¢“–‚½‚è”»’è‚Ì¶¬
-	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(radius, 0, 0));
+	playerAttackData.collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(radius, 0, 0));
 	//frontSpeed = 1000.0f;
-	hitDamage = 200.0f;
+	playerAttackData.hitDamage = 200.0f;
 	
 
 	moveNum = 0;
@@ -67,6 +67,7 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	beforeWaitCounter = 0.0f;
 	moveStart = false;
 	
+	playerAttackData.state = StateID::PLAYER_SPECIAL_ATTACK_S;
 }
 
 PlayerSpecialAttack::~PlayerSpecialAttack()
@@ -214,7 +215,7 @@ void PlayerSpecialAttack::Start()
 	SoundManager::GetInstance()->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_V);
 	attackDamage = false;
 	moveStart = false;
-	hitDamage = 200.0f;
+	playerAttackData.hitDamage = 200.0f;
 	p->specialAttackGuageMax = false;
 }
 
@@ -490,7 +491,7 @@ void PlayerSpecialAttack::ChargeUpdate()
 		//p->playerCom.anim->SetPlaySpeed(3.0f);
 		p->playerCom.shaker->ShakeFinish();
 		SoundManager::GetInstance()->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_FINAL_ATTACKV);
-		hitDamage = 5000.0f;
+		playerAttackData.hitDamage = 5000.0f;
 	}
 }
 

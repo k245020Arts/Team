@@ -1,6 +1,8 @@
 #pragma once
 #include "../../Library/myDxLib.h"
 #include "../Component/Shaker/Shaker.h"
+#include "../Common/JsonReader.h"
+#include "../Common/ID/StateID.h"
 
 class MeshRenderer;
 class MeshRenderer2D;
@@ -88,6 +90,7 @@ namespace PlayerInformation {
 	struct PlayerReaction
 	{
 		PlayerReaction() {
+			state = StateID::STATE_MAX;
 			shakePower = VZero;
 			shakeTime = 0.0f;
 			cameraShakePower = VZero;
@@ -97,10 +100,11 @@ namespace PlayerInformation {
 			shakerLoop = false;
 			shakePattern = Shaker::NONE;
 		}
-		PlayerReaction(const VECTOR3& _shakePower,float _shakeTime,const VECTOR3& _cameraShakePower,
+		PlayerReaction(StateID::State_ID _state,const VECTOR3& _shakePower,float _shakeTime,const VECTOR3& _cameraShakePower,
 			float _cameraShakeTime,const std::string& _soundName,int _soundKind,bool _shakerLoop,
 			Shaker::ShakePattern _shakePattern)
 		{
+			state = _state;
 			shakePower = _shakePower;
 			shakeTime = _shakeTime;
 			cameraShakePower = _cameraShakePower;
@@ -110,7 +114,8 @@ namespace PlayerInformation {
 			shakerLoop = _shakerLoop;
 			shakePattern = _shakePattern;
 		}
-
+		
+		StateID::State_ID state;
 		VECTOR3 shakePower;
 		float shakeTime;
 		VECTOR3 cameraShakePower;
@@ -120,4 +125,33 @@ namespace PlayerInformation {
 		bool shakerLoop;
 		Shaker::ShakePattern shakePattern;
 	};
+
+
+	
+	inline void to_json(nlohmann::json& j, const PlayerReaction& p) {
+		j = {
+			{"PlayerState", StateID::GetID(p.state)},
+			{"playerShakePower", p.shakePower},
+			{"playerShakeTime", p.shakeTime},
+			{"cameraShakePower", p.cameraShakePower},
+			{"cameraShakeTime", p.cameraShakeTime},
+			{"ShakePattern", p.shakePattern},
+			{"shakerType", p.shakerLoop},
+			{"soundName", p.soundName},
+			{"soundKind", p.soundKind},
+		};
+	}
+
+	inline void from_json(const nlohmann::json& j, PlayerReaction& p) {
+		p.state = StateID::StringToID(j["PlayerState"].get<std::string>());
+		j.at("playerShakePower").get_to(p.shakePower);
+		j.at("playerShakeTime").get_to(p.shakeTime);
+		j.at("cameraShakePower").get_to(p.cameraShakePower);
+		j.at("cameraShakeTime").get_to(p.cameraShakeTime);
+		p.shakePattern = (Shaker::ShakePattern)j.at("ShakePattern").get_to(p.shakePattern);
+		j.at("shakerType").get_to(p.shakerLoop);
+		j.at("soundName").get_to(p.soundName);
+		j.at("soundKind").get_to(p.soundKind);
+	};
+
 }

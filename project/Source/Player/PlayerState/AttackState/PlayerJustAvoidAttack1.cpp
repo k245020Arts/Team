@@ -16,16 +16,18 @@ PlayerJustAvoidAttack1::PlayerJustAvoidAttack1()
 	string = Function::GetClassNameC<PlayerJustAvoidAttack1>();
 	//id =  ID::P_ANIM_JUST_AVOID_ATTACK1;
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK1;
-	collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(300, 0, 0));
+	playerAttackData.collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(300, 0, 0));
 	//nextAttackID = ID::P_ANIM_ATTACK1;
-	nextAttackID = StateID::PLAYER_ATTACK1_S;
-	frontSpeed = 10000.0f;
-	hitDamage = 200.0f;
+	playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK1_S;
+	playerAttackData.frontSpeed = 10000.0f;
+	playerAttackData.hitDamage = 200.0f;
 	defalutTrail = false;
 	attack = false;
 	count = 0;
 	timer = 0.0f;
 	distSize = 0.0f;
+
+	playerAttackData.state = StateID::PLAYER_JUST_AVOID_ATTACK1_S;
 }
 
 PlayerJustAvoidAttack1::~PlayerJustAvoidAttack1()
@@ -60,14 +62,14 @@ void PlayerJustAvoidAttack1::Update()
 		}
 		else {
 			angle = atan2f(dist.x, dist.z);
-			p->playerCom.physics->AddVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle), false);
+			p->playerCom.physics->AddVelocity(VECTOR3(0, 0, playerAttackData.frontSpeed) * MGetRotY(angle), false);
 		}
 		if (p->playerCom.anim->AnimEventCan()) {
 			p->playerCom.anim->SetPlaySpeed(1.6f);
 			beforeAttack = false;
 			rotation = true;
-			frontSpeed = 2000.0f;
-			p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
+			playerAttackData.frontSpeed = 2000.0f;
+			p->playerCom.physics->SetVelocity(VECTOR3(0, 0, playerAttackData.frontSpeed) * MGetRotY(angle));
 
 		}
 		else {
@@ -129,12 +131,12 @@ void PlayerJustAvoidAttack1::Start()
 	if (dist.Size() >= 2500 && p->playerCom.hitObj != nullptr) {
 		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
 		rotation = false;;
-		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));
+		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, playerAttackData.frontSpeed) * MGetRotY(beforeAngle));
 	}
 	else {
 		//‹ß‚¢‚Æ“G‚Ì•ûŒü‚ÉŒü‚©‚Á‚ÄUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
 		rotation = true;
-		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
+		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, playerAttackData.frontSpeed) * MGetRotY(angle));
 	}
 
 

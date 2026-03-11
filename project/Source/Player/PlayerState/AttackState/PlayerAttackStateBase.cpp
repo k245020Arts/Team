@@ -19,8 +19,8 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	angle			= 0.0f;
 	nextAttack		= 0.0f;
 	distSize		= 0.0f;
-	frontSpeed		= 0.0f;
-	nextAttackID	= StateID::PLAYER_ATTACK1_S;
+	playerAttackData.frontSpeed		= 0.0f;
+	playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK1_S;
 	rotation		= 0.0f;
 	runTimer		= 0.0f;
 	time			= 0.0f;
@@ -29,19 +29,19 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	defalutTrail	= true;
 	nextAvoid		= false;
 	rockOn			= false;
-	hitDamage		= 0.0f;
+	playerAttackData.hitDamage		= 0.0f;
 
 	dist			= VZero;
 	norm			= VZero;
 
-	frontSpeed		= 0.0f;
+	playerAttackData.frontSpeed		= 0.0f;
 
 	rotation		= false;
 	defalutTrail	= true;
 	attackAgainStartCounter = 0.0f;
-	attackAgainStartCounterMax = 0.0f;
+	playerAttackData.attackAgainStartCounterMax = 0.0f;
 
-	attackNum = 0;
+	playerAttackData.attackNum = 0;
 	attackCount = 0;
 	collsionCreate = false;
 }
@@ -60,7 +60,7 @@ void PlayerAttackStateBase::Update()
 		}
 		attackAgainStartCounter -= Time::DeltaTimeRate();
 		if (attackAgainStartCounter <= 0.0f) {
-			attackAgainStartCounter = attackAgainStartCounterMax;
+			attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
 			AgainAttackCollsion();
 		}
 		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
@@ -79,7 +79,7 @@ void PlayerAttackStateBase::Update()
 		//å„åÑÇ™èIÇÌÇ¡ÇΩÇÁéüÇÃèÛë‘Ç…ëJà⁄
 		if (runTimer <= 0.0f) {
 			if (nextAttack) {
-				p->playerCom.stateManager->ChangeState(nextAttackID);
+				p->playerCom.stateManager->ChangeState(playerAttackData.normalAttackNextID);
 			}
 			
 			else {
@@ -190,7 +190,7 @@ void PlayerAttackStateBase::AttackMoveStart()
 	//else {
 		//ãﬂÇ¢Ç∆ìGÇÃï˚å¸Ç…å¸Ç©Ç¡ÇƒçUåÇÇÃà⁄ìÆèàóùÇÇ¢ÇÍÇÈ
 		rotation = true;
-		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(angle));
+		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, playerAttackData.frontSpeed) * MGetRotY(angle));
 	//}
 }
 
@@ -235,10 +235,10 @@ void PlayerAttackStateBase::AgainAttackCollsion()
 
 void PlayerAttackStateBase::AgainTimerSet(float _time, int _attackNum)
 {
-	attackNum = _attackNum;
-	attackCount = attackNum;
+	playerAttackData.attackNum = _attackNum;
+	attackCount = playerAttackData.attackNum;
 	attackAgainStartCounter = _time;
-	attackAgainStartCounterMax = attackAgainStartCounter;
+	playerAttackData.attackAgainStartCounterMax = attackAgainStartCounter;
 }
 
 void PlayerAttackStateBase::AttackCollsion()
@@ -270,7 +270,7 @@ void PlayerAttackStateBase::SpecialAttackStart()
 void PlayerAttackStateBase::BaseAttackCollsion()
 {
 	Player* p = GetBase<Player>();
-	p->playerCom.player->CollsionStart<SphereCollider>(&p->attackColl, collTrans);
+	p->playerCom.player->CollsionStart<SphereCollider>(&p->attackColl, playerAttackData.collTrans);
 	p->playerCom.player->SetShape(CollsionInformation::SPHERE, &p->attackColl);
 	
 	collsionCreate = true;

@@ -243,6 +243,28 @@ void StateManager::ImguiDraw()
 		}
 	}
 }
+#include "../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
+void StateManager::DataSaveState()
+{
+	std::string filePath = std::string("data/json/") + "PlayerAttackData" + ".json";
+	JsonReader json;
+	nlohmann::json& root = json.Data();
+	if (!root.contains("PlayerAttackData")) {
+		root["PlayerAttackData"] = nlohmann::json::object();
+	}
+	for (auto& t : stateInfo) {
+		std::shared_ptr<PlayerAttackStateBase>p = std::dynamic_pointer_cast<PlayerAttackStateBase>(t.second);
+		
+		if (p != nullptr) {
+			PlayerAttackStateBase::PlayerAttackData data =  p->GetAttackData();
+			std::string key = StateID::GetID(data.state);
+			root["PlayerAttackData"][key] = data;
+
+			json.Save(filePath, root);
+		}
+	}
+	
+}
 
 void StateManager::Change(StateID::State_ID _id)
 {

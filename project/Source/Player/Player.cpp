@@ -49,16 +49,16 @@
 
 namespace {
 
-	std::unordered_map<StateID::State_ID, PlayerInformation::PlayerReaction> attackEffects = {
-	{ StateID::PLAYER_ATTACK1_S, PlayerInformation::PlayerReaction(VECTOR3(50,50,50), 0.07f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
-	{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, PlayerInformation::PlayerReaction(VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
-	{ StateID::PLAYER_ATTACK2_S, PlayerInformation::PlayerReaction(VECTOR3(50,50,50), 0.1f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
-	{ StateID::PLAYER_ATTACK3_S, PlayerInformation::PlayerReaction(VECTOR3(50,50,50), 0.12f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
-	{ StateID::PLAYER_ATTACK5_S, PlayerInformation::PlayerReaction(VECTOR3(150,100,100), 0.25f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
-	{ StateID::PLAYER_ATTACK4_S, PlayerInformation::PlayerReaction(VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
-	{ StateID::PLAYER_HEAVY_ATTACK_S, PlayerInformation::PlayerReaction(VECTOR3(150,150,150), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	std::unordered_map<StateID::State_ID, PlayerInformation::PlayerReaction> attackEffects; /*= {
+	{ StateID::PLAYER_ATTACK1_S, PlayerInformation::PlayerReaction(StateID::PLAYER_ATTACK1_S,VECTOR3(50,50,50), 0.07f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_JUST_AVOID_ATTACK1_S, PlayerInformation::PlayerReaction(StateID::PLAYER_JUST_AVOID_ATTACK1_S,VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_ATTACK2_S, PlayerInformation::PlayerReaction(StateID::PLAYER_ATTACK2_S,VECTOR3(50,50,50), 0.1f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_ATTACK3_S, PlayerInformation::PlayerReaction(StateID::PLAYER_ATTACK3_S,VECTOR3(50,50,50), 0.12f, VECTOR3(40,40,40), 0.1f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_ATTACK5_S, PlayerInformation::PlayerReaction(StateID::PLAYER_ATTACK5_S,VECTOR3(150,100,100), 0.25f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_ATTACK4_S, PlayerInformation::PlayerReaction(StateID::PLAYER_ATTACK4_S,VECTOR3(100,100,100), 0.15f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
+	{ StateID::PLAYER_HEAVY_ATTACK_S, PlayerInformation::PlayerReaction(StateID::PLAYER_HEAVY_ATTACK_S,VECTOR3(150,150,150), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
 
-	};
+	};*/
 
 
 }
@@ -99,6 +99,8 @@ Player::Player()
 	specialAttackGuageMax		= false;
 	objHit						= false;
 	bossRockManager				= nullptr;
+	
+	
 }
 
 Player::~Player()
@@ -243,6 +245,32 @@ void Player::Start(Object3D* _obj)
 	redCounter = 0.0f;
 	//3DSoundのベースはプレイヤーに持たせる。
 	SoundManager::GetInstance()->Base3DSoundObject(obj);
+
+	std::string filePath = std::string("data/json/") + "PlayerReaction" + ".json";
+	JsonReader json;
+	json.Load(filePath);
+	
+	
+	attackEffects.clear();
+	for (auto& j : json.Data()["PlayerReactions"]) {
+		PlayerInformation::PlayerReaction reaction;
+		j.get_to(reaction);
+		attackEffects[reaction.state] = reaction;
+	}
+
+	playerCom.stateManager->DataSaveState();
+
+	/*if (!root.contains("PlayerReactions")) {
+		root["PlayerReactions"] = nlohmann::json::object();
+	}
+	for (auto& p : attackEffects) {
+
+		std::string key = StateID::GetID(p.second.state);
+		root["PlayerReactions"][key] = p.second;
+
+		json.Save(filePath, root);
+	}*/
+
 }
 
 void Player::Move(float _speed, float _speedMax)

@@ -14,11 +14,12 @@ PlayerAttack2::PlayerAttack2()
 {
 	string			= Function::GetClassNameC<PlayerAttack2>();
 	animId			= ID::P_ANIM_ATTACK2;
-	collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
-	nextAttackID	= StateID::PLAYER_ATTACK3_S;
-	frontSpeed		= 7500.0f;
+	playerAttackData.collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
+	playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK3_S;
+	playerAttackData.frontSpeed		= 7500.0f;
 	//frontSpeed = 0.0f;
-	hitDamage		= 150.0f;
+	playerAttackData.hitDamage		= 150.0f;
+	playerAttackData.state = StateID::PLAYER_ATTACK2_S;
 }
 
 PlayerAttack2::~PlayerAttack2()
