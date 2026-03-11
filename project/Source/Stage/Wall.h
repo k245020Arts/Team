@@ -24,6 +24,6 @@ private:
 	int model;
 	Transform* pTransform;
 	Transform* transform;
-	EffectManager* effect;
+	//EffectManager* effect;
 	int count;
 };

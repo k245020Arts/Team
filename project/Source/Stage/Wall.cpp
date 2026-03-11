@@ -10,7 +10,6 @@ Wall::Wall()
 	debugId = 16;
 	tag = Function::GetClassNameC<Wall>();
 	count = 0;
-	effect = nullptr;
 	model = -1;
 	pTransform = nullptr;
 	transform = nullptr;
@@ -45,9 +44,9 @@ void Wall::Update()
 	}
 	if (fabs(distance) < 4000) {
 		
-		if (!effect->IsPlayIng(Effect_ID::EFFECT_WALL)) {
+		if (!EffectManager::GetInstance()->IsPlayIng(Effect_ID::EFFECT_WALL)) {
 			//エフェクトが再生されていないときに再生
-			effect->CreateEffekseer(Transform(VZero, VZero, VOne * 41.0f), nullptr, Effect_ID::EFFECT_WALL, 1.0f);
+			EffectManager::GetInstance()->CreateEffekseer(Transform(VZero, VZero, VOne * 41.0f), nullptr, Effect_ID::EFFECT_WALL, 1.0f);
 		}
 		else {
 			//距離が離れれば離れるほど半透明度をあげる。
@@ -55,7 +54,7 @@ void Wall::Update()
 			float disRate;
 			disRate = distance / 4000.0f;
 			rgb = Color::Rgb(255.0f, 255.0f, 255.0f, Easing::Lerp(255.0f, 0.0f, disRate));
-			effect->SetColor(Effect_ID::EFFECT_WALL, rgb);
+			EffectManager::GetInstance()->SetColor(Effect_ID::EFFECT_WALL, rgb);
 		}
 		
 	}
@@ -70,7 +69,6 @@ void Wall::ModelSet(int _modelHandle)
 {
 	model = _modelHandle;
 	transform = obj->GetTransform();
-	effect = FindGameObject<EffectManager>();
 }
 
 void Wall::ImguiDraw()

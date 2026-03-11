@@ -16,7 +16,7 @@
 #include "../../Common/ID/ID.h"//
 #include "../../Weapon/WeaponManager.h"
 #include "../../State/StateManager.h"
-#include "../../GameManager/GameManager.h"
+#include "../../GameControler/GameControler.h"
 #include "../../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
 #include "../../Weapon/SwordEffect.h"
 #include "../../Weapon/CharaWeapon.h"

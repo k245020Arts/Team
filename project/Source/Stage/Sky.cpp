@@ -1,30 +1,30 @@
-#include "skyManager.h"
+#include "Sky.h"
 #include "../Component/Object/Object3D.h"
 #include "../Component/MeshRenderer/MeshRenderer.h"
 #include "../Component/ComponentManager.h"
 #include "../Common/LoadManager.h"
 #include "../Component/Transform/Transform.h"
 
-SkyManager::SkyManager()
+Sky::Sky()
 {
 	sky = nullptr;
 }
 
-SkyManager::~SkyManager()
+Sky::~Sky()
 {
 }
 
-void SkyManager::Update()
+void Sky::Update()
 {
 	//‹ó‚ð‰ñ“]
 	sky->GetTransform()->rotation.y += 0.01f * DegToRad;
 }
 
-void SkyManager::Draw()
+void Sky::Draw()
 {
 }
 
-void SkyManager::CreateSky()
+void Sky::CreateSky()
 {
 	sky =  new Object3D();
 

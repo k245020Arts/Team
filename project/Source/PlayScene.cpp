@@ -19,7 +19,7 @@
 #include "../Source/Camera/CameraManager.h"
 #include "../Source/Common/Effect/EffectManager.h"
 #include "../Source/Common/Sound/SoundManager.h"
-#include "../Source/Stage/SkyManager.h"
+#include "../Source/Stage/Sky.h"
 #include "../Source/Common/BlurScreen.h"
 #include "../Source/Common/Transitor/FadeTransitor.h"
 #include "../Source/Common/Transitor/PushTransitor.h"
@@ -27,7 +27,7 @@
 #include "../Source/Common/Transitor/StripTransitor.h"
 #include "../Source/Common/Transitor/TitleTransitor.h"
 #include "../Source/Common/Transitor/IrisTransitor.h"
-#include "../Source/GameManager/GameManager.h"
+#include "../Source/GameControler/GameControler.h"
 #include "../Source/Common/InputManager/inputManager.h"
 #include "../Source/Wave/Wave.h"
 #include "Component/UI/UIManager/UIManager.h"
@@ -64,10 +64,10 @@ PlayScene::PlayScene()
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	CameraManager* cameraManager = new CameraManager();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
-	SkyManager* sky = new SkyManager();
+	Sky* sky = new Sky();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	UIManager* uiManager = new UIManager();
-	GameManager* gameManager = new GameManager();
+	GameControler* gameManager = new GameControler();
 	
 
 	

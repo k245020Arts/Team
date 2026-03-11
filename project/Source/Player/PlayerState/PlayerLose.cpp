@@ -1,6 +1,6 @@
 #include "PlayerLose.h"
 #include "../../Component/Animator/Animator.h"
-#include "../../GameManager/GameManager.h"
+#include "../../GameControler/GameControler.h"
 #include "../../Camera/Camera.h"
 #include "../player.h"
 #include "../../Common/Sound/SoundManager.h"
@@ -26,7 +26,7 @@ void PlayerLose::Update()
 {
 	Player* p = GetBase<Player>();
 	if (!p->playerCom.camera->IsCutScene()) {
-		p->playerCom.gameManager->ChangeState(GameManager::SCENE_CHANGE);
+		p->playerCom.gameManager->ChangeState(GameControler::SCENE_CHANGE);
 	}
 	if (p->playerCom.camera->GetCutNum() == 2) {
 		p->playerCom.gameManager->ResultUiStart(false);

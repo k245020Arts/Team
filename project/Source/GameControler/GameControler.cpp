@@ -1,4 +1,4 @@
-#include "GameManager.h"
+#include "GameControler.h"
 #include "../Common/Transitor/FadeTransitor.h"
 #include "../Component/Object/Object2D.h"
 #include "../Component/MeshRenderer2D/MeshRenderer2D.h"
@@ -25,10 +25,8 @@ namespace {
 
 
 
-GameManager::GameManager()
+GameControler::GameControler()
 {
-	state = MEB(&GameManager::BeforeUpdate);;
-	stateDraw = MEBDraw(&GameManager::BeforeDraw);
 	startCount = 0.0f;
 	SetDrawOrder(-500);
 	//winImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
@@ -41,7 +39,6 @@ GameManager::GameManager()
 	result->SetDrawOrder(-1000);
 	
 	resultCounter = 3.0f;
-	sound = FindGameObject<SoundManager>();
 
 #ifdef STRING_MODE
 	beforeState = "";
@@ -52,15 +49,16 @@ GameManager::GameManager()
 #endif // STRING_MODE
 	
 	changeState = true;
+	obj = nullptr;
 	
 }
 
-GameManager::~GameManager()
+GameControler::~GameControler()
 {
 
 }
 
-void GameManager::Update()
+void GameControler::Update()
 {
 	if (changeState) {
 		changeState = false;
@@ -80,7 +78,30 @@ void GameManager::Update()
 #endif
 
 	}
-	state = state.Act(this);
+	switch (gameState)
+	{
+	case GameControler::NONE:
+		break;
+	case GameControler::BEFORE:
+		BeforeUpdate();
+		break;
+	case GameControler::PLAY:
+		PlayUpdate();
+		break;
+	case GameControler::BOSS_PLAY_BEFORE:
+		break;
+	case GameControler::WIN:
+		WinUpdate();
+		break;
+	case GameControler::LOSE:
+		LoseUpdate();
+		break;
+	case GameControler::SCENE_CHANGE:
+		SceneChangeUpdate();
+		break;
+	default:
+		break;
+	}
 
 #ifdef STRING_MODE
 	if (Debug::GetDebugMode()) {
@@ -122,9 +143,32 @@ void GameManager::Update()
 	
 }
 
-void GameManager::Draw()
+void GameControler::Draw()
 {
-	stateDraw.Act(this);
+	switch (gameState)
+	{
+	case GameControler::NONE:
+		break;
+	case GameControler::BEFORE:
+		BeforeDraw();
+		break;
+	case GameControler::PLAY:
+		PlayDraw();
+		break;
+	case GameControler::BOSS_PLAY_BEFORE:
+		break;
+	case GameControler::WIN:
+		WinDraw();
+		break;
+	case GameControler::LOSE:
+		LoseDraw();
+		break;
+	case GameControler::SCENE_CHANGE:
+		SceneChangeDraw();
+		break;
+	default:
+		break;
+	}
 }
 
 #ifdef STRING_MODE
@@ -195,49 +239,49 @@ std::string GameManager::GetStateName()
 
 #else
 
-void GameManager::ChangeState(GameState _name)
+void GameControler::ChangeState(GameState _name)
 {
 	gameState = _name;
 
 	switch (_name)
 	{
 	case GameState::BEFORE:
-		state = MEB(&GameManager::BeforeUpdate);
-		stateDraw = MEBDraw(&GameManager::BeforeDraw);
+		/*state = MEB(&GameControler::BeforeUpdate);
+		stateDraw = MEBDraw(&GameControler::BeforeDraw);*/
 		break;
 
 	case GameState::PLAY:
-		state = MEB(&GameManager::PlayUpdate);
-		stateDraw = MEBDraw(&GameManager::PlayDraw);
+		/*state = MEB(&GameControler::PlayUpdate);
+		stateDraw = MEBDraw(&GameControler::PlayDraw);*/
 		break;
 
 	case GameState::BOSS_PLAY_BEFORE:
-		state = MEB(&GameManager::BossPlayBeforeUpdate);
-		stateDraw = MEBDraw(&GameManager::BossPlayBeforeDraw);
+		/*state = MEB(&GameControler::BossPlayBeforeUpdate);
+		stateDraw = MEBDraw(&GameControler::BossPlayBeforeDraw);*/
 		break;
 
 	case GameState::WIN:
-		state = MEB(&GameManager::WinUpdate);
-		stateDraw = MEBDraw(&GameManager::WinDraw);
+		/*state = MEB(&GameControler::WinUpdate);
+		stateDraw = MEBDraw(&GameControler::WinDraw);*/
 		
 		break;
 
 	case GameState::LOSE:
-		state = MEB(&GameManager::LoseUpdate);
-		stateDraw = MEBDraw(&GameManager::LoseDraw);
+		/*state = MEB(&GameControler::LoseUpdate);
+		stateDraw = MEBDraw(&GameControler::LoseDraw);*/
 		/*resultUi->GetBaseObject()->SetDraw(true);
 		resultUi->ResultStart(false);*/
 		break;
 	case GameState::SCENE_CHANGE:
-		state = MEB(&GameManager::SceneChangeUpdate);
-		stateDraw = MEBDraw(&GameManager::SceneChangeDraw);
+		/*state = MEB(&GameControler::SceneChangeUpdate);
+		stateDraw = MEBDraw(&GameControler::SceneChangeDraw);*/
 		break;
 	default:
 		break;
 	}
 }
 
-GameManager::GameState GameManager::GetStateNumber()
+GameControler::GameState GameControler::GetStateNumber()
 {
 	return gameState;
 }
@@ -246,24 +290,29 @@ GameManager::GameState GameManager::GetStateNumber()
 
 
 
-void GameManager::SetPointer()
+void GameControler::SetPointer()
 {
 	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
 }
 
-void GameManager::ResultUiStart(bool _win)
+//bool GameControler::GetChangeState()
+//{
+//	return changeState; 
+//}
+
+void GameControler::ResultUiStart(bool _win)
 {
 	resultUi->GetBaseObject()->SetDraw(true);
 	resultUi->ResultStart(_win);
 }
 
-MEB GameManager::BeforeUpdate()
+void GameControler::BeforeUpdate()
 {
 	//startCount -= Time::DeltaTime();
 	//obj->Component()->GetComponent<MeshRenderer2D>()->SetNum((int)startCount);
 	bool isCutScene = (camera->IsCutScene());
 	if (isCutScene) {
-		return &GameManager::BeforeUpdate;
+
 	}
 	else {
 		FindGameObject<Wave>()->FirstRespown();
@@ -274,70 +323,68 @@ MEB GameManager::BeforeUpdate()
 #endif // STRING_MODE
 
 		
-		return &GameManager::PlayUpdate;
 	}
 }
 
-MEB GameManager::BeforeDraw()
+void GameControler::BeforeDraw()
 {
 	//DrawFormatString(1000, 500, 0xffffff, "%d", (int)startCount);
-	return &GameManager::BeforeDraw;
+
 }
 
-MEB GameManager::PlayUpdate()
+void GameControler::PlayUpdate()
 {
 	//obj->Component()->GetComponent<MeshRenderer2D>()->SetDraw(false);
-	return &GameManager::PlayUpdate;
+
 }
 
-MEB GameManager::PlayDraw()
+void GameControler::PlayDraw()
 {
 	//DrawFormatString(1000, 500, 0xffffff, "%d", (int)startCount);
-	return &GameManager::PlayDraw;
+
 }
 
-MEB GameManager::BossPlayBeforeUpdate()
+void GameControler::BossPlayBeforeUpdate()
 {
-	return  &GameManager::BossPlayBeforeUpdate;
+
 }
 
-MEB GameManager::BossPlayBeforeDraw()
+void GameControler::BossPlayBeforeDraw()
 {
-	return &GameManager::BossPlayBeforeDraw;
+
 }
 
-MEB GameManager::WinUpdate()
+void GameControler::WinUpdate()
 {
 
 	//FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
-	return &GameManager::WinUpdate;
 }
 
-MEBDraw GameManager::WinDraw()
+void GameControler::WinDraw()
 {
 	
-	return MEBDraw();
+
 }
 
-MEB GameManager::LoseUpdate()
+void GameControler::LoseUpdate()
 {
-	return &GameManager::LoseUpdate;
+
 }
 
-MEBDraw GameManager::LoseDraw()
+void GameControler::LoseDraw()
 {
 	
 	//DrawGraph(750, 100, loseImage, true);
-	return &GameManager::LoseDraw;
+
 }
 
-MEB GameManager::SceneChangeUpdate()
+void GameControler::SceneChangeUpdate()
 {
 	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
-	return  &GameManager::SceneChangeUpdate;
+	
 }
 
-MEBDraw GameManager::SceneChangeDraw()
+void GameControler::SceneChangeDraw()
 {
-	return  &GameManager::SceneChangeDraw;
+	
 }

@@ -9,7 +9,7 @@ class Camera;
 class EnemyBase;
 class Transform;
 class Boss;
-class GameManager;
+class GameControler;
 
 class EnemyManager : public GameObject
 {
@@ -155,7 +155,7 @@ private:
 	std::list<EnemyBase*> chara;
 	BaseObject* cameraTargetObj;
 	//std::list<Boss> bossList;
-	GameManager* gameManager;
+	GameControler* gameManager;
 	void GameSceneChangeState();
 
 };

@@ -301,7 +301,7 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStatus.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.h" />
-    <ClInclude Include="Source\GameManager\GameManager.h" />
+    <ClInclude Include="Source\GameControler\GameControler.h" />
     <ClInclude Include="Source\Light\Light.h" />
     <ClInclude Include="Source\BootScene.h" />
     <ClInclude Include="Source\Player\Player.h" />
@@ -335,7 +335,7 @@
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\PlayScene.h" />
     <ClInclude Include="Source\SceneFactory.h" />
-    <ClInclude Include="Source\Stage\SkyManager.h" />
+    <ClInclude Include="Source\Stage\Sky.h" />
     <ClInclude Include="Source\Stage\Stage.h" />
     <ClInclude Include="Source\Stage\StageManager.h" />
     <ClInclude Include="Source\Stage\Wall.h" />
@@ -495,7 +495,7 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.cpp" />
-    <ClCompile Include="Source\GameManager\GameManager.cpp" />
+    <ClCompile Include="Source\GameControler\GameControler.cpp" />
     <ClCompile Include="Source\Light\Light.cpp" />
     <ClCompile Include="Source\Player\Player.cpp" />
     <ClCompile Include="Source\Player\PlayerManager.cpp" />
@@ -526,7 +526,7 @@
     <ClCompile Include="Source\PlayScene.cpp" />
     <ClCompile Include="Source\Result\ResultUi.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />
-    <ClCompile Include="Source\Stage\SkyManager.cpp" />
+    <ClCompile Include="Source\Stage\Sky.cpp" />
     <ClCompile Include="Source\Stage\Stage.cpp" />
     <ClCompile Include="Source\Stage\StageManager.cpp" />
     <ClCompile Include="Source\Stage\Wall.cpp" />

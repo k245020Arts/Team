@@ -40,7 +40,7 @@
 #include "../Enemy/TrashEnemy/EnemyState/EnemyStateManager.h"
 //#include "../Enemy/TrashEnemy/EnemyState/AttackState/EnemyAttack1.h"
 #include "../Common/Transitor/FadeTransitor.h"
-#include "../GameManager/GameManager.h"
+#include "../GameControler/GameControler.h"
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/Boss/BossState/Attack/BossAttackBase.h"
@@ -221,7 +221,7 @@ void Player::Start(Object3D* _obj)
 	playerCom.weapon		= FindGameObject<WeaponManager>();
 	playerCom.blur			= obj->Component()->GetComponent<MotionBlur>();
 
-	playerCom.gameManager	= FindGameObject<GameManager>();
+	playerCom.gameManager	= FindGameObject<GameControler>();
 	playerCom.enemyManager	= FindGameObject<EnemyManager>();
 
 	playerCom.specialAttackButton = FindGameObjectWithTag<Object2D>("XButton")->Component()->GetComponent<ButtonUI>();

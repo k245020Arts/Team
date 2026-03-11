@@ -3,15 +3,15 @@
 #include "../Common/MethodExec.h"
 #include "../Component/Object/Object2D.h"
 
-typedef MethodExec<class GameManager> MEB;
-typedef MethodExec<class GameManager> MEBDraw;
+typedef MethodExec<class GameControler> MEB;
+typedef MethodExec<class GameControler> MEBDraw;
 class SoundManager;
 class Camera;
 class ResultUi;
 
 //#define STRING_MODE
 
-class GameManager : public GameObject
+class GameControler : public GameObject
 {
 public:
 
@@ -31,8 +31,8 @@ public:
 	friend class PlayerDie;
 	friend class EnemyDie;
 	
-	GameManager();
-	~GameManager();
+	GameControler();
+	~GameControler();
 
 	void Update()override;
 	void Draw()override;
@@ -55,12 +55,6 @@ public:
 #endif // STRING_MODE
 
 	/// <summary>
-	/// 現在のStateの関数ポインタを取得
-	/// </summary>
-	/// <returns>関数ポインタ</returns>
-	MEB::MethodPtr GetGameState() { return state.GetMethodFunc(); }
-
-	/// <summary>
 	/// カメラのポインタを取得
 	/// </summary>
 	void SetPointer();
@@ -68,49 +62,45 @@ public:
 	/// Stateが1フレーム前にチェンジされたかどうかを取得
 	/// </summary>
 	/// <returns>1フレ前にステートがチェンジされていたらtrue</returns>
-	bool GetChangeState() { return changeState; }
+	bool GetChangeStateNow() const { return changeState; }
 
 	void ResultUiStart(bool _win);
 	
-
-private:
 	
-	MEB state;
-	MEBDraw stateDraw;
+private:
 
-	MEB BeforeUpdate();
-	MEBDraw BeforeDraw();
+	void BeforeUpdate();
+	void BeforeDraw();
 
-	MEB PlayUpdate();
-	MEBDraw PlayDraw();
+	void PlayUpdate();
+	void PlayDraw();
 
-	MEB BossPlayBeforeUpdate();
-	MEB BossPlayBeforeDraw();
+	void BossPlayBeforeUpdate();
+	void BossPlayBeforeDraw();
 
-	MEB WinUpdate();
-	MEBDraw WinDraw();
+	void WinUpdate();
+	void WinDraw();
 
-	MEB LoseUpdate();
-	MEBDraw LoseDraw();
+	void LoseUpdate();
+	void LoseDraw();
 
-	MEB SceneChangeUpdate();
-	MEBDraw SceneChangeDraw();
+	void SceneChangeUpdate();
+	void SceneChangeDraw();
 
 	float startCount;
 	Object2D* obj;
 
-	int winImage;
-	int loseImage;
 	float resultCounter;
-	SoundManager* sound;
 
 	std::string nowState;
 	Camera* camera;
-	bool changeState;
+	
 	std::string beforeState;
 
 	GameState gameState;
 	GameState beforeGameState;
 
 	ResultUi* resultUi;
+
+	bool changeState;
 };

@@ -3,16 +3,16 @@
 /// <summary>
 /// シングルトンのベースクラス
 /// </summary>
-template<typename Derived_Class>
+template<typename DerivedClass>
 class SingletonBase {
 public:
 	/// <summary>
 	/// Instanceの取得
 	/// </summary>
 	/// <returns></returns>
-	static Derived_Class* GetInstance() {
+	static DerivedClass* GetInstance() {
 		if (instance == nullptr) {
-			instance = new Derived_Class();
+			instance = new DerivedClass();
 		}
 		return instance;
 	}
@@ -33,8 +33,8 @@ protected:
 	virtual void Draw() { ; }
 
 private:
-	static Derived_Class* instance;
+	static DerivedClass* instance;
 };
 
-template<typename Derived_Class>
-Derived_Class* SingletonBase<Derived_Class>::instance = nullptr;
+template<typename DerivedClass>
+DerivedClass* SingletonBase<DerivedClass>::instance = nullptr;

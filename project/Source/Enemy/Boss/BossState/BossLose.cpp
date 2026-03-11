@@ -3,7 +3,7 @@
 #include "../../../Component/Shaker/Shaker.h"
 #include "../Boss.h"
 #include "../../../Component/Animator/Animator.h"
-#include "../../../GameManager/GameManager.h"
+#include "../../../GameControler/GameControler.h"
 #include "../../../Common/Sound/SoundManager.h"
 #include "../../../Component/Collider/ColliderBase.h"
 #include "../../../Component/ComponentManager.h"
@@ -28,7 +28,7 @@ void BossLose::Update()
 {
 	Boss* b = GetBase<Boss>();
 	if (!SoundManager::GetInstance()->CheckSe(Sound_ID::WIN)) {
-		b->enemyBaseComponent.gameManager->ChangeState(GameManager::SCENE_CHANGE);
+		b->enemyBaseComponent.gameManager->ChangeState(GameControler::SCENE_CHANGE);
 	}
 }
 

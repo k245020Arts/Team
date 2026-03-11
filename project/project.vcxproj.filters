@@ -239,9 +239,6 @@
     <ClCompile Include="Source\Enemy\EnemyManager.cpp">
       <Filter>PlayScene\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameManager\GameManager.cpp">
-      <Filter>PlayScene\GameManager</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Light\Light.cpp">
       <Filter>PlayScene\Light</Filter>
     </ClCompile>
@@ -296,7 +293,7 @@
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack1.cpp">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Stage\SkyManager.cpp">
+    <ClCompile Include="Source\Stage\Sky.cpp">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stage\Stage.cpp">
@@ -560,6 +557,9 @@
     </ClCompile>
     <ClCompile Include="Source\Common\Singleton\SingleTonUpdater.cpp">
       <Filter>Common\SingleTon</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameControler\GameControler.cpp">
+      <Filter>PlayScene\GameControler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -832,9 +832,6 @@
     <ClInclude Include="Source\Enemy\EnemyManager.h">
       <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameManager\GameManager.h">
-      <Filter>PlayScene\GameManager</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Light\Light.h">
       <Filter>PlayScene\Light</Filter>
     </ClInclude>
@@ -895,7 +892,7 @@
     <ClInclude Include="Source\Stage\Wall.h">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Stage\SkyManager.h">
+    <ClInclude Include="Source\Stage\Sky.h">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\Stage\Stage.h">
@@ -1184,6 +1181,9 @@
     <ClInclude Include="Source\Common\Singleton\SingletonBase.h">
       <Filter>Common\SingleTon</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GameControler\GameControler.h">
+      <Filter>PlayScene\GameControler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1288,9 +1288,6 @@
     <Filter Include="Component\Guage">
       <UniqueIdentifier>{c7bb5854-c5a7-4553-83f1-877e4502c1b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayScene\GameManager">
-      <UniqueIdentifier>{7f46c37e-1f94-43fe-971a-c299f8addbef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PlayScene\Camera">
       <UniqueIdentifier>{16fa929f-7bf0-4fc0-93db-6cbcf5a5b723}</UniqueIdentifier>
     </Filter>
@@ -1392,6 +1389,9 @@
     </Filter>
     <Filter Include="Common\SingleTon">
       <UniqueIdentifier>{36a57967-6922-4469-bdec-9566319a063e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\GameControler">
+      <UniqueIdentifier>{7f46c37e-1f94-43fe-971a-c299f8addbef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

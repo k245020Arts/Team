@@ -14,7 +14,7 @@
 #include "../../../Component/Collider/SphereCollider.h"
 #include "../../../Enemy/EnemyManager.h"
 #include "../../../Camera/Camera.h"
-#include "../../../Stage/SkyManager.h"
+#include "../../../Stage/Sky.h"
 #include "../../../Common/Easing.h"
 #include "../../../Common/Random.h"
 #include "../../../Screen.h"

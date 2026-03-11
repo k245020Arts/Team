@@ -2,7 +2,7 @@
 #include "../Player.h"
 #include "../../Component/Animator/Animator.h"
 #include "../../Camera/Camera.h"
-#include "../../GameManager/GameManager.h"
+#include "../../GameControler/GameControler.h"
 
 PlayerWin::PlayerWin()
 {

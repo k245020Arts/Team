@@ -16,15 +16,13 @@
 #include "../Source/Light/Light.h"
 #include "../Source/Camera/CameraManager.h"
 #include "../Source/Common/Effect/EffectManager.h"
-#include "../Source/Stage/SkyManager.h"
+#include "../Source/Stage/Sky.h"
 #include "TitleControl.h"
 #include "Common/BlurScreen.h"
 
 TitleScene::TitleScene()
 {
 	//hImage = LoadGraph("data/image/SlashLocus.png");
-
-	
 
 	BlurScreen* blur = new BlurScreen();
 
@@ -41,7 +39,7 @@ TitleScene::TitleScene()
 	Light* light = new Light();
 
 	CameraManager* cameraManager = new CameraManager();
-	SkyManager* sky = new SkyManager();
+	Sky* sky = new Sky();
 
 	stageManager->CreateStage();
 	//enemy->CreateEnemy();

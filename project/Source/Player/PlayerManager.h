@@ -2,7 +2,7 @@
 #include "../../Library/GameObject.h"
 
 class Object3D;
-class GameManager;
+class GameControler;
 class StateManager;
 
 class PlayerManager : public GameObject
@@ -27,7 +27,7 @@ private:
 
 	Object3D* playerPointer;
 
-	GameManager* gameManager;
+	GameControler* gameManager;
 	StateManager* stateManager;
 	void GameSceneChangeState();
 };

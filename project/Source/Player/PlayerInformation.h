@@ -19,7 +19,7 @@ class EffectManager;
 class SoundManager;
 class WeaponManager;
 class MotionBlur;
-class GameManager;
+class GameControler;
 class EnemyManager;
 class Anim2D;
 class ButtonUI;
@@ -65,7 +65,7 @@ namespace PlayerInformation {
 		Shaker* shaker;
 		WeaponManager* weapon;
 		MotionBlur* blur;
-		GameManager* gameManager;
+		GameControler* gameManager;
 		EnemyManager* enemyManager;
 		MeshRenderer2D* meshRenderer2D;
 		Anim2D* anim2D;

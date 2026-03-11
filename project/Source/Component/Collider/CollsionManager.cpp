@@ -20,10 +20,10 @@ CollsionManager::CollsionManager()
 	using namespace CollsionInformation;
 	//“–‚½‚è”»’è‚Å‚Ç‚ÌŒ`“¯Žm‚È‚ç‚±‚ÌŠÖ”‚É‚¢‚ê‚é‚Æ‚¢‚¤“o˜^
 	collsionKind[EnumTag(SPHERE ,SPHERE,SHAPE_MAX)] = &CollsionManager::CollsionSphereToSphere;
-	collsionKind[EnumTag(SPHERE ,MODEL,SHAPE_MAX)] = &CollsionManager::CollsionSphereToModel;
-	collsionKind[EnumTag(SPHERE, DONUT,SHAPE_MAX)] = &CollsionManager::CollsionSphereToDount;
-	collsionKind[EnumTag(MODEL ,RAY,SHAPE_MAX)] = &CollsionManager::CollsionModelToRay;
-	collsionKind[EnumTag(RAY ,AABB,SHAPE_MAX)] = &CollsionManager::CollsionAABBToRay;
+	collsionKind[EnumTag(SPHERE ,MODEL,SHAPE_MAX)]	= &CollsionManager::CollsionSphereToModel;
+	collsionKind[EnumTag(SPHERE, DONUT,SHAPE_MAX)]	= &CollsionManager::CollsionSphereToDount;
+	collsionKind[EnumTag(MODEL ,RAY,SHAPE_MAX)]		= &CollsionManager::CollsionModelToRay;
+	collsionKind[EnumTag(RAY ,AABB,SHAPE_MAX)]		= &CollsionManager::CollsionAABBToRay;
 	collList.clear();
 
 	event = new CollsionEvent();
@@ -164,8 +164,12 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 			//Debug::DebugLogPrintf(Debug::printfString("hit = %.3f", p->GetVelocity()));
 		}
 
+		float rayLength = VSize(endPos - startPos);
+		float hitDist = VSize(result.HitPosition - startPos);
+		float penetration = rayLength - hitDist;
+
 		// Y•ûŒü‚Ì‚Ý‰Ÿ‚µ•Ô‚µ
-		resolver.AddPush(VECTOR3(0, 1, 0), push.Size(), CollsionInformation::Shape::RAY,result.HitPosition);
+		resolver.AddPush(VECTOR3(0, 1, 0), penetration, CollsionInformation::Shape::RAY,result.HitPosition);
 
 		if (col2->GetCollTag() == CollsionInformation::SHADOW) {
 			col2->GetBaseObject()->Component()->GetComponent<Shadow>()->ChangeScale(push,result.HitPosition);
@@ -173,7 +177,27 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 50.0f * Time::DeltaTimeRate());
 
 		if (p != nullptr) {
-			p->SetGround(resolver.IsGrounded(0.7f));
+			if (col2->GetCollTag() == CollsionInformation::P_FLOOR) {
+				int a = 0;
+			}
+			bool grounded = resolver.IsGrounded(0.7f);
+
+			if (grounded)
+			{
+				p->SetGround(true);
+			}
+			else
+			{
+				// ­‚µ—P—\
+				static int groundBuffer = 0;
+
+				groundBuffer++;
+
+				if (groundBuffer > 3)
+				{
+					p->SetGround(false);
+				}
+			}
 		}
 	}
 	else {
