@@ -265,7 +265,7 @@ void CameraEditorGui::SavePopUp(bool _using)
 
 void CameraEditorGui::DataSave()
 {
-	std::string filePath = std::string("data/json/") + cutSceneFileName + ".json";
+	std::string filePath = std::string("data/json/CutScene/") + cutSceneFileName + ".json";
 
 	JsonReader json;
 	json.Load(filePath);
@@ -284,7 +284,7 @@ void CameraEditorGui::DataSave()
 
 void CameraEditorGui::LoadCutScene()
 {
-    std::string filePath = "data/json/" + std::string(cutSceneFileName) + ".json";
+    std::string filePath = "data/json/CutScene/" + std::string(cutSceneFileName) + ".json";
 
     JsonReader json;
     json.Load(filePath);

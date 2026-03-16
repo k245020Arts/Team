@@ -342,7 +342,7 @@ void Camera::CutSceneChangeState(std::string _name, bool _cutScene)
 void Camera::CutSceneChangeState(std::string _name, bool _cutScene, int _stop)
 {
 	JsonReader json;
-	std::string name = "data/json/" + _name + ".json";
+	std::string name = "data/json/CutScene/" + _name + ".json";
 	json.Load(name);
 
 	cutSceneData.clear();
