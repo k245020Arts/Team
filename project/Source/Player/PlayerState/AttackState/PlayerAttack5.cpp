@@ -17,16 +17,18 @@ PlayerAttack5::PlayerAttack5()
 	string = Function::GetClassNameC<PlayerAttack5>();
 	//id = ID::P_ANIM_ATTACK_5;
 	animId = ID::P_ANIM_ATTACK_5;
-	playerAttackData.collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
-	playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK1_S;
+	/*playerAttackData.collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
+	playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK1_S;*/
 	//frontSpeed = 500.0f;
-	playerAttackData.frontSpeed = 0.0f;
-	playerAttackData.hitDamage = 150.0f;
+	/*playerAttackData.frontSpeed = 0.0f;
+	playerAttackData.hitDamage = 150.0f;*/
 	defalutTrail = true;
 	timer = 0.0f;
 	avoidReady = false;
 
-	playerAttackData.state = StateID::PLAYER_ATTACK5_S;
+	/*playerAttackData.state = StateID::PLAYER_ATTACK5_S;
+	playerAttackData.attackNum = 4;
+	playerAttackData.attackAgainStartCounterMax = 0.1f;*/
 }
 
 PlayerAttack5::~PlayerAttack5()
@@ -175,7 +177,7 @@ void PlayerAttack5::Start()
 	p->playerCom.physics->SetGravity(VZero);
 	//timer = 2.0f;
 	//count = ATTACK_NUMMAX;
-	AgainTimerSet(0.1f, 4);
+	//AgainTimerSet(0.1f, 4);
 	avoidReady = false;
 
 }

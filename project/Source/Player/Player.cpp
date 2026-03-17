@@ -59,9 +59,14 @@ namespace {
 	{ StateID::PLAYER_HEAVY_ATTACK_S, PlayerInformation::PlayerReaction(StateID::PLAYER_HEAVY_ATTACK_S,VECTOR3(150,150,150), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
 
 	};*/
+	
+	
 
+	
 
 }
+
+
 
 Player::Player()
 {
@@ -95,7 +100,7 @@ Player::Player()
 	specialAttackBarMax			= 100.0f;
 	attackTargetTrans			= Transform();
 	charge						= false;
-	attackLevel					= NONE;
+	attackLevel					= -1;
 	specialAttackGuageMax		= false;
 	objHit						= false;
 	bossRockManager				= nullptr;
@@ -258,9 +263,25 @@ void Player::Start(Object3D* _obj)
 		attackEffects[reaction.state] = reaction;
 	}
 
-	playerCom.stateManager->DataSaveState();
+	
 
-	/*if (!root.contains("PlayerReactions")) {
+	std::string filePathAttack = std::string("data/json/") + "PlayerAttackData" + ".json";
+	JsonReader json2;
+	json2.Load(filePathAttack);
+
+	attackData.clear();
+	for (auto& j : json2.Data()["PlayerAttackData"]) {
+		PlayerAttackStateBase::PlayerAttackData attackD;
+		j.get_to(attackD);
+		attackData[attackD.state] = attackD;
+	}
+
+	playerCom.stateManager->LoadSaveState();
+
+	//playerCom.stateManager->DataSaveState();
+
+	/*nlohmann::json& root = json.Data();
+	if (!root.contains("PlayerReactions")) {
 		root["PlayerReactions"] = nlohmann::json::object();
 	}
 	for (auto& p : attackEffects) {
@@ -270,7 +291,7 @@ void Player::Start(Object3D* _obj)
 
 		json.Save(filePath, root);
 	}*/
-
+	
 }
 
 void Player::Move(float _speed, float _speedMax)
@@ -782,33 +803,17 @@ void Player::JustAvoidCollsionHit(BaseObject* _obj, CollsionInformation::Tag _ta
 	justAvoidColHit = true;
 }
 
-void Player::HeavyAttackChangeParam(HeavyAttackLevel _level)
+void Player::HeavyAttackChangeParam(int _level)
 {
+	// ---- リアクション ----
 	auto& param = attackEffects[StateID::PLAYER_HEAVY_ATTACK_S];
 	attackLevel = _level;
-	switch (attackLevel)
-	{
-	case Player::LEVEL1:
-		param.shakePower = VECTOR3(30, 30, 30);
-		param.shakeTime = 0.05f;
-		param.cameraShakePower = VECTOR3(30, 30, 30);
-		param.cameraShakeTime = 0.1f;
-		break;
-	case Player::LEVEL2:
-		param.shakePower = VECTOR3(50, 50, 50);
-		param.shakeTime = 0.2f;
-		param.cameraShakePower = VECTOR3(50, 50, 50);
-		param.cameraShakeTime = 0.1f;
-		break;
-	case Player::LEVEL3:
-		param.shakePower = VECTOR3(150, 150, 150);
-		param.shakeTime = 0.4f;
-		param.cameraShakePower = VECTOR3(100, 100, 100);
-		param.cameraShakeTime = 0.3f;
-		break;
-	default:
-		my_error_assert("チャージ攻撃のレベルがセットされていません");
-		break;
-	}
-	
+
+	const auto* reactionParam = param.GetChargeLevel(attackLevel);
+	//my_error_assert(reactionParam, "チャージ攻撃のレベルがセットされていません");
+
+	param.shakePower = reactionParam->shakePower;
+	param.shakeTime = reactionParam->shakeTime;
+	param.cameraShakePower = reactionParam->cameraShakePower;
+	param.cameraShakeTime = reactionParam->cameraShakeTime;
 }

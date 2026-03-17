@@ -5,9 +5,11 @@
 #include "../Common/ID/ID.h"
 #include  "../Common/ID/EffectID.h"
 #include "../Common/ID/SoundID.h"
+#include "PlayerState/AttackState/PlayerAttackStateBase.h"
 
 class BossAttackBase;
 class BossRockManager;
+struct PlayerAttackData;
 
 class Player : public CharaBase
 {
@@ -278,16 +280,9 @@ private:
 	Transform attackTargetTrans;
 	bool charge;
 
-	enum HeavyAttackLevel
-	{
-		NONE = -1,
-		LEVEL1,
-		LEVEL2,
-		LEVEL3,
-	};
-	void HeavyAttackChangeParam(HeavyAttackLevel _level);
+	void HeavyAttackChangeParam(int _level);
 
-	HeavyAttackLevel attackLevel;
+	int attackLevel;
 	bool specialAttackGuageMax;
 	bool objHit;
 
@@ -295,4 +290,9 @@ private:
 
 	bool justAvoidCan;
 	bool justAvoidColHit;
+
+	std::unordered_map<StateID::State_ID, PlayerAttackStateBase::PlayerAttackData> attackData;
+
+	PlayerAttackStateBase::PlayerAttackData GetAttackDataMap(StateID::State_ID _data) { return attackData[_data]; }
 };
+

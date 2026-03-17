@@ -29,9 +29,9 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	animId = ID::P_SPECIAL_ATTACK_ANIM;
 	radius = 2000.0f;
 	//TODO ìñÇΩÇËîªíËÇìÆÇ©Ç»Ç¢ÇÊÇ§Ç…êVÇµÇ¢ìñÇΩÇËîªíËÇÃê∂ê¨
-	playerAttackData.collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(radius, 0, 0));
-	//frontSpeed = 1000.0f;
-	playerAttackData.hitDamage = 200.0f;
+	//playerAttackData.collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(radius, 0, 0));
+	////frontSpeed = 1000.0f;
+	//playerAttackData.hitDamage = 200.0f;
 	
 
 	moveNum = 0;
@@ -67,7 +67,7 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 	beforeWaitCounter = 0.0f;
 	moveStart = false;
 	
-	playerAttackData.state = StateID::PLAYER_SPECIAL_ATTACK_S;
+	/*playerAttackData.state = StateID::PLAYER_SPECIAL_ATTACK_S;*/
 }
 
 PlayerSpecialAttack::~PlayerSpecialAttack()

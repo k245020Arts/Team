@@ -44,6 +44,27 @@ public:
 	/// </summary>
 	void SpecialAttackStart();
 
+	struct ChargeAttackLevelData
+	{
+		float againTimer;        // AgainTimerSetの第1引数
+		int   againTimerFlag;    // AgainTimerSetの第2引数
+		float frontSpeed;
+		float hitDamage;
+
+		ChargeAttackLevelData()
+			: againTimer(0.0f), againTimerFlag(0)
+			, frontSpeed(0.0f), hitDamage(0.0f)
+		{
+		}
+
+		ChargeAttackLevelData(float _againTimer, int _againTimerFlag,
+			float _frontSpeed, float _hitDamage)
+			: againTimer(_againTimer), againTimerFlag(_againTimerFlag)
+			, frontSpeed(_frontSpeed), hitDamage(_hitDamage)
+		{
+		}
+	};
+
 	struct PlayerAttackData
 	{
 		StateID::State_ID state;
@@ -63,6 +84,15 @@ public:
 
 		Transform collTrans;
 
+		std::vector<ChargeAttackLevelData> chargeLevels;
+
+		const ChargeAttackLevelData* GetChargeLevel(int level) const
+		{
+			int idx = static_cast<int>(level); // LEVEL1=0, LEVEL2=1, LEVEL3=2
+			if (idx < 0 || idx >= (int)chargeLevels.size()) return nullptr;
+			return &chargeLevels[idx];
+		}
+
 		// デフォルトコンストラクタ
 		PlayerAttackData()
 			: state(StateID::State_ID::STATE_MAX)
@@ -77,6 +107,7 @@ public:
 			, runTimer(0.0f)
 			, frontSpeed(0.0f)
 			, collTrans()
+			, chargeLevels()
 		{
 		}
 
@@ -93,7 +124,8 @@ public:
 			float motionCancelStartTime,
 			float runTimer,
 			float frontSpeed,
-			const Transform& collTrans
+			const Transform& collTrans,
+			const std::vector<ChargeAttackLevelData>& chargeLevels = {}
 		)
 			: state(state)
 			, normalAttackNextID(normalAttackNextID)
@@ -107,11 +139,14 @@ public:
 			, runTimer(runTimer)
 			, frontSpeed(frontSpeed)
 			, collTrans(collTrans)
+			, chargeLevels(chargeLevels)  // 追加
 		{
 		}
 	};
 
 	const PlayerAttackData& GetAttackData()const { return playerAttackData; }
+
+	void SetAttackData();
 
 protected:
 	float easingCount;
@@ -156,44 +191,54 @@ protected:
 	PlayerAttackData playerAttackData;
 };
 
-inline void to_json(nlohmann::json& j, const PlayerAttackStateBase::PlayerAttackData& p)
-{
-	j = {
-		{"PlayerState", StateID::GetID(p.state)},
-		{"normalAttackNextID", StateID::GetID(p.normalAttackNextID)},
-		{"specialAttackNextID", StateID::GetID(p.specialAttackNextID)},
-
-		{"hitDamage", p.hitDamage},
-		{"attackAgainStartCounterMax", p.attackAgainStartCounterMax},
-		{"attackNum", p.attackNum},
-		{"collsionStartTime", p.collsionStartTime},
-		{"collsionFinishTime", p.collsionFinishTime},
-
-		{"motionCancelStartTime", p.motionCancelStartTime},
-		{"runTimer", p.runTimer},
-
-		{"frontSpeed", p.frontSpeed},
-
-		{"collTrans", p.collTrans}
-	};
+inline void to_json(nlohmann::json& j, const PlayerAttackStateBase::ChargeAttackLevelData& p) {
+	j["againTimer"] = p.againTimer;
+	j["againTimerFlag"] = p.againTimerFlag;
+	j["frontSpeed"] = p.frontSpeed;
+	j["hitDamage"] = p.hitDamage;
 }
 
-inline void from_json(const nlohmann::json& j, PlayerAttackStateBase::PlayerAttackData& p)
-{
+inline void from_json(const nlohmann::json& j, PlayerAttackStateBase::ChargeAttackLevelData& p) {
+	j.at("againTimer").get_to(p.againTimer);
+	j.at("againTimerFlag").get_to(p.againTimerFlag);
+	j.at("frontSpeed").get_to(p.frontSpeed);
+	j.at("hitDamage").get_to(p.hitDamage);
+}
+
+inline void to_json(nlohmann::json& j, const PlayerAttackStateBase::PlayerAttackData& p) {
+	j = {
+		{"PlayerState",                StateID::GetID(p.state)},
+		{"normalAttackNextID",         StateID::GetID(p.normalAttackNextID)},
+		{"specialAttackNextID",        StateID::GetID(p.specialAttackNextID)},
+		{"hitDamage",                  p.hitDamage},
+		{"attackAgainStartCounterMax", p.attackAgainStartCounterMax},
+		{"attackNum",                  p.attackNum},
+		{"collsionStartTime",          p.collsionStartTime},
+		{"collsionFinishTime",         p.collsionFinishTime},
+		{"motionCancelStartTime",      p.motionCancelStartTime},
+		{"runTimer",                   p.runTimer},
+		{"frontSpeed",                 p.frontSpeed},
+		{"collTrans",                  p.collTrans},
+		{"chargeLevels",               p.chargeLevels},
+	};
+}
+inline void from_json(const nlohmann::json& j, PlayerAttackStateBase::PlayerAttackData& p) {
 	p.state = StateID::StringToID(j["PlayerState"].get<std::string>());
 	p.normalAttackNextID = StateID::StringToID(j["normalAttackNextID"].get<std::string>());
 	p.specialAttackNextID = StateID::StringToID(j["specialAttackNextID"].get<std::string>());
-
 	j.at("hitDamage").get_to(p.hitDamage);
 	j.at("attackAgainStartCounterMax").get_to(p.attackAgainStartCounterMax);
 	j.at("attackNum").get_to(p.attackNum);
 	j.at("collsionStartTime").get_to(p.collsionStartTime);
 	j.at("collsionFinishTime").get_to(p.collsionFinishTime);
-
 	j.at("motionCancelStartTime").get_to(p.motionCancelStartTime);
 	j.at("runTimer").get_to(p.runTimer);
-
 	j.at("frontSpeed").get_to(p.frontSpeed);
-
 	j.at("collTrans").get_to(p.collTrans);
+
+	// チャージ非対応のStateはキーなしでもOK
+	if (j.contains("chargeLevels")) {
+		j.at("chargeLevels").get_to(p.chargeLevels);
+	}
 }
+

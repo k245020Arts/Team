@@ -17,13 +17,20 @@ PlayerAttack1::PlayerAttack1()
 	//id = ID::P_ANIM_ATTACK1;
 	nextAttack		= false;
 	animId			= ID::P_ANIM_ATTACK1;
-	playerAttackData.collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
+	/*playerAttackData.collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	playerAttackData.normalAttackNextID	= StateID::PLAYER_ATTACK2_S;
-	playerAttackData.frontSpeed		= 5500.0f;
+	playerAttackData.frontSpeed		= 5500.0f;*/
 	//frontSpeed		= 0.0f;
 	time			= 0.0f;
-	playerAttackData.hitDamage		= 150.0f;
+	/*playerAttackData.hitDamage		= 150.0f;
 	playerAttackData.state = StateID::PLAYER_ATTACK1_S;
+	playerAttackData.attackNum = 0;
+	playerAttackData.attackAgainStartCounterMax = 0.0f;*/
+
+	/*playerAttackData.collsionStartTime = 0.0f;
+	playerAttackData.collsionFinishTime = 0.0f;*/
+
+	/*playerAttackData = GetAttackDataMap(StateID::PLAYER_ATTACK1_S);*/
 }
 
 PlayerAttack1::~PlayerAttack1()

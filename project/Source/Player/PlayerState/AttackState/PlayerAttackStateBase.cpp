@@ -44,6 +44,11 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	playerAttackData.attackNum = 0;
 	attackCount = 0;
 	collsionCreate = false;
+
+	playerAttackData.attackNum = 0;
+	playerAttackData.attackAgainStartCounterMax = 0.0f;
+
+	
 }
 
 PlayerAttackStateBase::~PlayerAttackStateBase()
@@ -134,7 +139,7 @@ void PlayerAttackStateBase::Start()
 		p->playerCom.camera->AttackEnemyFovChange(&p->attackTargetTrans,1000.0f);
 	}*/
 	
-	AgainTimerSet(100.0f, 0);
+	//AgainTimerSet(100.0f, 0);
 	//“G‚ÆƒvƒŒƒCƒ„[‚Ì‹——£‚ð‚Æ‚é
 	dist				= p->attackTargetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
 	
@@ -159,8 +164,11 @@ void PlayerAttackStateBase::Start()
 	SoundManager::GetInstance()->RandamSe("P_AttackV", 3);
 	beforeAttack		= true;
 	runTimer			= 0.0f;
-	
-	
+	/*attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
+	attackCount = playerAttackData.attackNum;*/
+	attackCount = playerAttackData.attackNum;
+	attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
+	//AgainTimerSet(playerAttackData.attackAgainStartCounterMax, playerAttackData.attackNum);
 }
 
 void PlayerAttackStateBase::Finish()
@@ -265,6 +273,12 @@ void PlayerAttackStateBase::SpecialAttackStart()
 		}
 
 	}
+}
+
+void PlayerAttackStateBase::SetAttackData()
+{
+	Player* p = GetBase<Player>();
+	playerAttackData = p->GetAttackDataMap(id);
 }
 
 void PlayerAttackStateBase::BaseAttackCollsion()

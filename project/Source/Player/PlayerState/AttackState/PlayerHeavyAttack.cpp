@@ -17,16 +17,25 @@ PlayerHeavyAttack::PlayerHeavyAttack()
 	//id = ID::P_ANIM_ATTACK1;
 	nextAttack = false;
 	animId = ID::P_HEAVY_ATTACK;
-	playerAttackData.collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
+	/*playerAttackData.collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	playerAttackData.normalAttackNextID = StateID::PLAYER_HEAVY_ATTACK_S;
-	playerAttackData.frontSpeed = 4000.0f;
-	//frontSpeed		= 0.0f;
+	playerAttackData.frontSpeed = 4000.0f;*/
 	time = 0.0f;
-	playerAttackData.hitDamage = 300.0f;
+	/*playerAttackData.hitDamage = 300.0f;*/
 	chargeCount = 0.0f;
 	defalutTrail = true;
 
-	playerAttackData.state = StateID::PLAYER_HEAVY_ATTACK_S;
+	//playerAttackData.state = StateID::PLAYER_HEAVY_ATTACK_S;
+
+	//playerAttackData.attackNum = 4;
+	//playerAttackData.attackAgainStartCounterMax = 0.1f;
+
+	//playerAttackData.chargeLevels =
+	//{
+	//	{ 0.2f, 0, 1000.0f,  50.0f },  // LEVEL1
+	//	{ 0.3f, 2, 2000.0f, 150.0f },  // LEVEL2
+	//	{ 0.1f, 6, 4000.0f, 300.0f },  // LEVEL3
+	//};
 }
 
 PlayerHeavyAttack::~PlayerHeavyAttack()
@@ -89,27 +98,15 @@ void PlayerHeavyAttack::Start()
 	Player* p = GetBase<Player>();
 	chargeCount = 1.0f;
 	p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_HEAVY_CHARGE_CAMERA_S);
-	switch (p->attackLevel)
-	{
-	case Player::LEVEL1:
-		AgainTimerSet(0.2f, 0);
-		playerAttackData.frontSpeed = 1000.0f;
-		playerAttackData.hitDamage = 50.0f;
-		break;
-	case Player::LEVEL2:
-		AgainTimerSet(0.3f, 2);
-		playerAttackData.frontSpeed = 2000.0f;
-		playerAttackData.hitDamage = 150.0f;
-		break;
-	case Player::LEVEL3:
-		AgainTimerSet(0.1f, 6);
-		playerAttackData.frontSpeed = 4000.0f;
-		playerAttackData.hitDamage = 300.0f;
-		break;
-	default:
-		my_error_assert("チャージ攻撃のレベルがセットされていません");
-		break;
+	const auto* chargeParam = playerAttackData.GetChargeLevel(p->attackLevel);
+	//my_assert(chargeParam == nullptr,"チャージレベルがセットされていない");
+	if (chargeParam == nullptr) {
+		my_error_assert("チャージレベルがセットされていない");
 	}
+
+	AgainTimerSet(chargeParam->againTimer, chargeParam->againTimerFlag);
+	playerAttackData.frontSpeed = chargeParam->frontSpeed;
+	playerAttackData.hitDamage = chargeParam->hitDamage;
 	
 }
 

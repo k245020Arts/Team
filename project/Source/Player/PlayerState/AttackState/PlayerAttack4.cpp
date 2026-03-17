@@ -14,15 +14,18 @@ PlayerAttack4::PlayerAttack4()
 {
 	string			= Function::GetClassNameC<PlayerAttack4>();
 	animId			= ID::P_ANIM_ATTACK4;
-	playerAttackData.collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
-	playerAttackData.frontSpeed		= 5000.0f;
+	/*playerAttackData.collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
+	playerAttackData.frontSpeed		= 5000.0f;*/
 	//frontSpeed		= 0.0f;
-	playerAttackData.hitDamage		= 200.0f;
-	playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK5_S;
+	/*playerAttackData.hitDamage		= 200.0f;
+	playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK5_S;*/
 
 	avoidReady = false;
 	timer = 0.0f;
-	playerAttackData.state = StateID::PLAYER_ATTACK4_S;
+	/*playerAttackData.state = StateID::PLAYER_ATTACK4_S;
+
+	playerAttackData.attackNum = 3;
+	playerAttackData.attackAgainStartCounterMax = 0.2f;*/
 }
 
 PlayerAttack4::~PlayerAttack4()
@@ -86,7 +89,7 @@ void PlayerAttack4::Start()
 	//p->playerCom.shaker->ShakeStart(VECTOR3(20.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 0.4f);
 	//p->playerCom.controller->ControlVibrationStartFrame(100, 20);
 	p->playerCom.physics->SetGravity(PlayerInformation::BASE_GRAVITY);
-	AgainTimerSet(0.2f, 3);
+	//AgainTimerSet(0.2f, 3);
 	avoidReady = false;
 }
 

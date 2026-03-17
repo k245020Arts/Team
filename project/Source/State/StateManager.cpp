@@ -266,6 +266,17 @@ void StateManager::DataSaveState()
 	
 }
 
+void StateManager::LoadSaveState()
+{
+	for (auto& t : stateInfo) {
+		std::shared_ptr<PlayerAttackStateBase>p = std::dynamic_pointer_cast<PlayerAttackStateBase>(t.second);
+
+		if (p != nullptr) {
+			p->SetAttackData();
+		}
+	}
+}
+
 void StateManager::Change(StateID::State_ID _id)
 {
 	if (stateNoChange) {

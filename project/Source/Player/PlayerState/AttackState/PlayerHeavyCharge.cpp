@@ -29,7 +29,7 @@ PlayerHeavyCharge::PlayerHeavyCharge()
 	baseFrequ		= 0;
 	maxCharge		= false;
 
-	playerAttackData.state = StateID::PLAYER_HEAVY_ATTACK_S;
+	playerAttackData.state = StateID::PLAYER_HEAVY_CHARGE_S;
 }
 
 PlayerHeavyCharge::~PlayerHeavyCharge()
@@ -45,7 +45,7 @@ void PlayerHeavyCharge::Update()
 	if (InputManager::GetInstance()->KeyInput("heavyAttack")) {
 		chargeCount -= Time::DeltaTimeRate();
 		if (chargeCount <= 0.0f) {
-			p->attackLevel = Player::LEVEL3;
+			p->attackLevel = 2;
 			p->playerCom.shaker->SetShakePower(VECTOR3(20, 20, 20));
 			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(150, -1);
 			
@@ -63,7 +63,7 @@ void PlayerHeavyCharge::Update()
 			}
 		}
 		else if (chargeCount <= 1.0f) {
-			p->attackLevel = Player::LEVEL2;
+			p->attackLevel = 1;
 			p->playerCom.shaker->SetShakePower(VECTOR3(10, 10, 10));
 			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(100, -1);
 			if (!EffectManager::GetInstance()->IsPlayIng(Effect_ID::PLAYER_CHARGE_SECOND)) {
@@ -104,7 +104,7 @@ void PlayerHeavyCharge::Start()
 	chargeFinish = false;
 	p->playerCom.shaker->ShakeStart(VECTOR3(5, 5, 5), Shaker::MIX_SHAKE, false, -1);
 	maxCharge = false;
-	p->attackLevel = Player::LEVEL1;
+	p->attackLevel = 0;
 	InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(50, -1);
 	EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FIRST, 1.0f);
 }

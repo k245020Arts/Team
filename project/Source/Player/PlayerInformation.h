@@ -87,6 +87,28 @@ namespace PlayerInformation {
 	/// </summary>
 	static const float JUST_AVOID_ENEMY_TIME_SCALE = 0.3f;
 
+	// チャージレベル1つ分のリアクションパラメータ
+	struct ChargeReactionLevelData
+	{
+		VECTOR3 shakePower;
+		float   shakeTime;
+		VECTOR3 cameraShakePower;
+		float   cameraShakeTime;
+
+		ChargeReactionLevelData()
+			: shakePower(VZero), shakeTime(0.0f)
+			, cameraShakePower(VZero), cameraShakeTime(0.0f)
+		{
+		}
+
+		ChargeReactionLevelData(const VECTOR3& _shakePower, float _shakeTime,
+			const VECTOR3& _cameraShakePower, float _cameraShakeTime)
+			: shakePower(_shakePower), shakeTime(_shakeTime)
+			, cameraShakePower(_cameraShakePower), cameraShakeTime(_cameraShakeTime)
+		{
+		}
+	};
+
 	struct PlayerReaction
 	{
 		PlayerReaction() {
@@ -99,10 +121,12 @@ namespace PlayerInformation {
 			soundKind = 0;
 			shakerLoop = false;
 			shakePattern = Shaker::NONE;
+			//chargeLevels.clear();
 		}
 		PlayerReaction(StateID::State_ID _state,const VECTOR3& _shakePower,float _shakeTime,const VECTOR3& _cameraShakePower,
 			float _cameraShakeTime,const std::string& _soundName,int _soundKind,bool _shakerLoop,
-			Shaker::ShakePattern _shakePattern)
+			Shaker::ShakePattern _shakePattern,
+			const std::vector<ChargeReactionLevelData>& _chargeLevels = {})
 		{
 			state = _state;
 			shakePower = _shakePower;
@@ -113,6 +137,8 @@ namespace PlayerInformation {
 			soundKind = _soundKind;
 			shakerLoop = _shakerLoop;
 			shakePattern = _shakePattern;
+			chargeLevels = _chargeLevels; 
+			
 		}
 		
 		StateID::State_ID state;
@@ -124,24 +150,44 @@ namespace PlayerInformation {
 		int soundKind;
 		bool shakerLoop;
 		Shaker::ShakePattern shakePattern;
+		std::vector<ChargeReactionLevelData> chargeLevels;
+
+		const ChargeReactionLevelData* GetChargeLevel(int level) const
+		{
+			int idx = static_cast<int>(level);
+			if (idx < 0 || idx >= (int)chargeLevels.size()) return nullptr;
+			return &chargeLevels[idx];
+		}
 	};
 
+	inline void to_json(nlohmann::json& j, const ChargeReactionLevelData& p) {
+		j["shakePower"] = p.shakePower;
+		j["shakeTime"] = p.shakeTime;
+		j["cameraShakePower"] = p.cameraShakePower;
+		j["cameraShakeTime"] = p.cameraShakeTime;
+	}
 
+	inline void from_json(const nlohmann::json& j, ChargeReactionLevelData& p) {
+		j.at("shakePower").get_to(p.shakePower);
+		j.at("shakeTime").get_to(p.shakeTime);
+		j.at("cameraShakePower").get_to(p.cameraShakePower);
+		j.at("cameraShakeTime").get_to(p.cameraShakeTime);
+	}
 	
 	inline void to_json(nlohmann::json& j, const PlayerReaction& p) {
 		j = {
-			{"PlayerState", StateID::GetID(p.state)},
+			{"PlayerState",      StateID::GetID(p.state)},
 			{"playerShakePower", p.shakePower},
-			{"playerShakeTime", p.shakeTime},
+			{"playerShakeTime",  p.shakeTime},
 			{"cameraShakePower", p.cameraShakePower},
-			{"cameraShakeTime", p.cameraShakeTime},
-			{"ShakePattern", p.shakePattern},
-			{"shakerType", p.shakerLoop},
-			{"soundName", p.soundName},
-			{"soundKind", p.soundKind},
+			{"cameraShakeTime",  p.cameraShakeTime},
+			{"ShakePattern",     p.shakePattern},
+			{"shakerType",       p.shakerLoop},
+			{"soundName",        p.soundName},
+			{"soundKind",        p.soundKind},
+			{"chargeLevels",     p.chargeLevels},
 		};
 	}
-
 	inline void from_json(const nlohmann::json& j, PlayerReaction& p) {
 		p.state = StateID::StringToID(j["PlayerState"].get<std::string>());
 		j.at("playerShakePower").get_to(p.shakePower);
@@ -152,6 +198,13 @@ namespace PlayerInformation {
 		j.at("shakerType").get_to(p.shakerLoop);
 		j.at("soundName").get_to(p.soundName);
 		j.at("soundKind").get_to(p.soundKind);
-	};
+
+		//// チャージレベルは存在しないStateもあるのでcontains()でチェック
+		if (j.contains("chargeLevels")) {
+			j.at("chargeLevels").get_to(p.chargeLevels);
+		}
+	}
+
+	
 
 }

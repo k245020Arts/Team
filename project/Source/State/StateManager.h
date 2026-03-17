@@ -122,6 +122,7 @@ public:
 	void ImguiDraw();
 
 	void DataSaveState();
+	void LoadSaveState();
 
 protected:
 

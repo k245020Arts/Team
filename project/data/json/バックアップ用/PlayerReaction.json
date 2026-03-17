@@ -9,7 +9,6 @@
         "z": 40.0
       },
       "cameraShakeTime": 0.10000000149011612,
-      "chargeLevels": [],
       "playerShakePower": {
         "x": 50.0,
         "y": 50.0,
@@ -29,7 +28,6 @@
         "z": 40.0
       },
       "cameraShakeTime": 0.10000000149011612,
-      "chargeLevels": [],
       "playerShakePower": {
         "x": 50.0,
         "y": 50.0,
@@ -49,7 +47,6 @@
         "z": 40.0
       },
       "cameraShakeTime": 0.10000000149011612,
-      "chargeLevels": [],
       "playerShakePower": {
         "x": 50.0,
         "y": 50.0,
@@ -69,7 +66,6 @@
         "z": 100.0
       },
       "cameraShakeTime": 0.30000001192092896,
-      "chargeLevels": [],
       "playerShakePower": {
         "x": 100.0,
         "y": 100.0,
@@ -89,7 +85,6 @@
         "z": 100.0
       },
       "cameraShakeTime": 0.30000001192092896,
-      "chargeLevels": [],
       "playerShakePower": {
         "x": 150.0,
         "y": 100.0,
@@ -109,50 +104,6 @@
         "z": 100.0
       },
       "cameraShakeTime": 0.30000001192092896,
-      "chargeLevels": [
-        {
-          "cameraShakePower": {
-            "x": 30.0,
-            "y": 30.0,
-            "z": 30.0
-          },
-          "cameraShakeTime": 0.10000000149011612,
-          "shakePower": {
-            "x": 30.0,
-            "y": 30.0,
-            "z": 30.0
-          },
-          "shakeTime": 0.05000000074505806
-        },
-        {
-          "cameraShakePower": {
-            "x": 50.0,
-            "y": 50.0,
-            "z": 50.0
-          },
-          "cameraShakeTime": 0.10000000149011612,
-          "shakePower": {
-            "x": 50.0,
-            "y": 50.0,
-            "z": 50.0
-          },
-          "shakeTime": 0.20000000298023224
-        },
-        {
-          "cameraShakePower": {
-            "x": 100.0,
-            "y": 100.0,
-            "z": 100.0
-          },
-          "cameraShakeTime": 0.30000001192092896,
-          "shakePower": {
-            "x": 150.0,
-            "y": 150.0,
-            "z": 150.0
-          },
-          "shakeTime": 0.4000000059604645
-        }
-      ],
       "playerShakePower": {
         "x": 150.0,
         "y": 150.0,
@@ -172,7 +123,6 @@
         "z": 100.0
       },
       "cameraShakeTime": 0.30000001192092896,
-      "chargeLevels": [],
       "playerShakePower": {
         "x": 100.0,
         "y": 100.0,

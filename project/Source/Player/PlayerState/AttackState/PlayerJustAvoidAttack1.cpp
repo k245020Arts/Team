@@ -16,18 +16,18 @@ PlayerJustAvoidAttack1::PlayerJustAvoidAttack1()
 	string = Function::GetClassNameC<PlayerJustAvoidAttack1>();
 	//id =  ID::P_ANIM_JUST_AVOID_ATTACK1;
 	animId = ID::P_ANIM_JUST_AVOID_ATTACK1;
-	playerAttackData.collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(300, 0, 0));
-	//nextAttackID = ID::P_ANIM_ATTACK1;
-	playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK1_S;
-	playerAttackData.frontSpeed = 10000.0f;
-	playerAttackData.hitDamage = 200.0f;
+	//playerAttackData.collTrans = Transform(VECTOR3(0, 100, 200), VZero, VECTOR3(300, 0, 0));
+	////nextAttackID = ID::P_ANIM_ATTACK1;
+	//playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK1_S;
+	//playerAttackData.frontSpeed = 10000.0f;
+	//playerAttackData.hitDamage = 200.0f;
 	defalutTrail = false;
 	attack = false;
 	count = 0;
 	timer = 0.0f;
 	distSize = 0.0f;
 
-	playerAttackData.state = StateID::PLAYER_JUST_AVOID_ATTACK1_S;
+	/*playerAttackData.state = StateID::PLAYER_JUST_AVOID_ATTACK1_S;*/
 }
 
 PlayerJustAvoidAttack1::~PlayerJustAvoidAttack1()
