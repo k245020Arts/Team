@@ -151,36 +151,67 @@ void EnemyManager::CreateBoss()
 	Animator* anim = boss->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL), 1);
 
-	anim->AddFile(ID::B_IDOL,				"B_IDLE", true, 1.0f);
-	anim->AddFile(ID::B_COOLTIME,			"B_IDLE2", true, 1.0f);
-	anim->AddFile(ID::B_RUN,				"B_WALK", true, 1.2f, 30.0f, 45.0f);
-	anim->AddFile(ID::B_WAIT_SEE,			"B_WAIT_SEE", true, 0.8f, 30.0f, 45.0f);
-	anim->AddFile(ID::B_N_ATTACK1,			"B_ATTACK1", false, 1.2f, 25.0f, 60.0f);
-	anim->AddFile(ID::B_N_ATTACK2,			"B_ATTACK2", false, 1.2f, 25.0f, 60.0f);
-	anim->AddFile(ID::B_N_ATTACK3,			"B_ATTACK3", false, 1.2f, 40.0f, 55.0f);
-	anim->AddFile(ID::B_N_ATTACK4,			"B_ATTACK4", false, 1.2f, 20.0f, 30.0f);
-	anim->AddFile(ID::B_N_ATTACK5,			"B_ATTACK5", false, 1.2f, 20.0f, 30.0f);
-	anim->AddFile(ID::B_N_ATTACK6,			"B_ATTACK6", false, 1.2f, 50.0f, 65.0f);
-	anim->AddFile(ID::B_N_ATTACK7,			"B_ATTACK7", false, 1.2f, 72.41592f, 85.0f); //31.0f, 75.0f
-	anim->AddFile(ID::B_S_ATTACK1,			"B_SATTACK1", false, 1.0f, 50.0f, 55.0f);
-	anim->AddFile(ID::B_S_ATTACK2,			"B_SATTACK2", true, 1.0f, 0.0f, 100.0f);
-	anim->AddFile(ID::B_S_ATTACK2_STOP,		"B_SATTACK2_STOP", false, 1.0f);
-	anim->AddFile(ID::B_S_ATTACK2_BEFORE,	"B_SATTACK2_BEFORE_2", false, 1.0f, 0.0f, 100.0f);
-	anim->AddFile(ID::B_S_ATTACK1_SMALL,	"B_SATTACK1_SAMLL", false, 1.3f, 40.0f, 55.0f);
-	anim->AddFile(ID::BOSS_DIE,				"B_DIE", false, 1.2f);
-	anim->AddFile(ID::B_ROAR,				"B_ROAR", false, 1.0f, 30.0f, 40.0f);
-	anim->AddFile(ID::B_ROAR_2,				"B_ROAR3", false, 0.6f, 30.0f, 120.0f);
-	anim->AddFile(ID::B_DUSH,				"B_RUN", true, 1.2f, 30.0f, 40.0f);
-	anim->AddFile(ID::B_THREAT,				"B_THREAT", false, 1.2f, 10.0f, 70.0f);
-	anim->AddFile(ID::BOSS_DAMAGE,			"B_DAMAGE", false, 1.8f, 10.0f, 70.0f);
-	anim->AddFile(ID::B_APPEAR_FALL,		"B_APPEAR_FALL", true, 1.0f, 10.0f, 70.0f);
-	anim->AddFile(ID::B_APPEAR_LAND,		"B_APPEAR_LAND", false, 1.5f, 10.0f, 70.0f);
-	anim->AddFile(ID::BOSS_FEAR,			"B_FEAR", true, 1.0f, 10.0f, 70.0f);
-anim->AddFile(ID::B_BACKSTEP,			"B_BACKSTEP", true, 1.0f);
-anim->AddFile(ID::B_WIN,				"B_WIN", true, 1.0f, 10.0f, 70.0f);
-	//anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
+	//anim->AddFile(ID::B_IDOL,				"B_IDLE", true, 1.0f);
+	//anim->AddFile(ID::B_COOLTIME,			"B_IDLE2", true, 1.0f);
+	//anim->AddFile(ID::B_RUN,				"B_WALK", true, 1.2f, 30.0f, 45.0f);
+	//anim->AddFile(ID::B_WAIT_SEE,			"B_WAIT_SEE", true, 0.8f, 30.0f, 45.0f);
+	//anim->AddFile(ID::B_N_ATTACK1,			"B_ATTACK1", false, 1.2f, 25.0f, 60.0f);
+	//anim->AddFile(ID::B_N_ATTACK2,			"B_ATTACK2", false, 1.2f, 25.0f, 60.0f);
+	//anim->AddFile(ID::B_N_ATTACK3,			"B_ATTACK3", false, 1.2f, 40.0f, 55.0f);
+	//anim->AddFile(ID::B_N_ATTACK4,			"B_ATTACK4", false, 1.2f, 20.0f, 30.0f);
+	//anim->AddFile(ID::B_N_ATTACK5,			"B_ATTACK5", false, 1.2f, 20.0f, 30.0f);
+	//anim->AddFile(ID::B_N_ATTACK6,			"B_ATTACK6", false, 1.2f, 50.0f, 65.0f);
+	//anim->AddFile(ID::B_N_ATTACK7,			"B_ATTACK7", false, 1.2f, 72.41592f, 85.0f); //31.0f, 75.0f
+	//anim->AddFile(ID::B_S_ATTACK1,			"B_SATTACK1", false, 1.0f, 50.0f, 55.0f);
+	//anim->AddFile(ID::B_S_ATTACK2,			"B_SATTACK2", true, 1.0f, 0.0f, 100.0f);
+	//anim->AddFile(ID::B_S_ATTACK2_STOP,		"B_SATTACK2_STOP", false, 1.0f);
+	//anim->AddFile(ID::B_S_ATTACK2_BEFORE,	"B_SATTACK2_BEFORE_2", false, 1.0f, 0.0f, 100.0f);
+	//anim->AddFile(ID::B_S_ATTACK1_SMALL,	"B_SATTACK1_SAMLL", false, 1.3f, 40.0f, 55.0f);
+	//anim->AddFile(ID::BOSS_DIE,				"B_DIE", false, 1.2f);
+	//anim->AddFile(ID::B_ROAR_ANIM,			"B_ROAR_ANIM", false, 1.0f, 30.0f, 40.0f);
+	//anim->AddFile(ID::B_ROAR_2,				"B_ROAR3", false, 0.6f, 30.0f, 120.0f);
+	//anim->AddFile(ID::B_DUSH,				"B_RUN", true, 1.2f, 30.0f, 40.0f);
+	//anim->AddFile(ID::B_THREAT,				"B_THREAT", false, 1.2f, 10.0f, 70.0f);
+	//anim->AddFile(ID::BOSS_DAMAGE,			"B_DAMAGE", false, 1.8f, 10.0f, 70.0f);
+	//anim->AddFile(ID::B_APPEAR_FALL,		"B_APPEAR_FALL", true, 1.0f, 10.0f, 70.0f);
+	//anim->AddFile(ID::B_APPEAR_LAND,		"B_APPEAR_LAND", false, 1.5f, 10.0f, 70.0f);
+	//anim->AddFile(ID::BOSS_FEAR,			"B_FEAR", true, 1.0f, 10.0f, 70.0f);
+	//anim->AddFile(ID::B_BACKSTEP,			"B_BACKSTEP", true, 1.0f);
+	//anim->AddFile(ID::B_WIN,				"B_WIN", true, 1.0f, 10.0f, 70.0f);
+	Load::LoadAnim("B_IDLE", ID::B_IDOL);
+	Load::LoadAnim("B_IDLE2", ID::B_COOLTIME);
+	Load::LoadAnim("B_WALK", ID::B_RUN);
+	Load::LoadAnim("B_WAIT_SEE", ID::B_WAIT_SEE);
+	Load::LoadAnim("B_ATTACK1", ID::B_N_ATTACK1);
+	Load::LoadAnim("B_ATTACK2", ID::B_N_ATTACK2);
+	Load::LoadAnim("B_ATTACK3", ID::B_N_ATTACK3);
+	Load::LoadAnim("B_ATTACK4", ID::B_N_ATTACK4);
+	Load::LoadAnim("B_ATTACK5", ID::B_N_ATTACK5);
+	Load::LoadAnim("B_ATTACK6", ID::B_N_ATTACK6);
+	Load::LoadAnim("B_ATTACK7", ID::B_N_ATTACK7);
+	Load::LoadAnim("B_SATTACK1", ID::B_S_ATTACK1);
+	Load::LoadAnim("B_SATTACK2", ID::B_S_ATTACK2);
+	Load::LoadAnim("B_SATTACK2_STOP", ID::B_S_ATTACK2_STOP);
+	Load::LoadAnim("B_SATTACK2_BEFORE_2", ID::B_S_ATTACK2_BEFORE);
+	Load::LoadAnim("B_SATTACK1_SAMLL", ID::B_S_ATTACK1_SMALL);
+	Load::LoadAnim("B_DIE", ID::BOSS_DIE);
+	Load::LoadAnim("B_ROAR_ANIM", ID::B_ROAR_ANIM);
+	Load::LoadAnim("B_ROAR3", ID::B_ROAR_2);
+	Load::LoadAnim("B_RUN", ID::B_DUSH);
+	Load::LoadAnim("B_THREAT", ID::B_THREAT);
+	Load::LoadAnim("B_DAMAGE", ID::BOSS_DAMAGE);
+	Load::LoadAnim("B_APPEAR_FALL", ID::B_APPEAR_FALL);
+	Load::LoadAnim("B_APPEAR_LAND", ID::B_APPEAR_LAND);
+	Load::LoadAnim("B_FEAR", ID::BOSS_FEAR);
+	Load::LoadAnim("B_BACKSTEP", ID::B_BACKSTEP);
+	Load::LoadAnim("B_WIN", ID::B_WIN);
+
+	anim->AnimDataLoad("BossAnimData");
+	anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 
 	b->Start(boss);
+
+	
 
 	Object2D* guage = new Object2D();
 

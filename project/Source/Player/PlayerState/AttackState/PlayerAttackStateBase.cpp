@@ -19,7 +19,6 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	angle			= 0.0f;
 	nextAttack		= 0.0f;
 	distSize		= 0.0f;
-	playerAttackData.frontSpeed		= 0.0f;
 	playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK1_S;
 	rotation		= 0.0f;
 	runTimer		= 0.0f;
@@ -34,7 +33,7 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	dist			= VZero;
 	norm			= VZero;
 
-	playerAttackData.frontSpeed		= 0.0f;
+	playerAttackData.attackMove		= VZero;
 
 	rotation		= false;
 	defalutTrail	= true;
@@ -48,7 +47,9 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	playerAttackData.attackNum = 0;
 	playerAttackData.attackAgainStartCounterMax = 0.0f;
 
-	
+	speedChange = true;
+	normal = false;
+	special = false;
 }
 
 PlayerAttackStateBase::~PlayerAttackStateBase()
@@ -58,18 +59,10 @@ PlayerAttackStateBase::~PlayerAttackStateBase()
 void PlayerAttackStateBase::Update()
 {
 	Player* p = GetBase<Player>();
+	collsionCreate = false;
+	AttackCollsion();
 	SpecialAttackStart();
-	if (p->playerCom.anim->AnimEventCan()) {
-		if (defalutTrail) {
-			p->playerCom.player->DrawTrail();
-		}
-		attackAgainStartCounter -= Time::DeltaTimeRate();
-		if (attackAgainStartCounter <= 0.0f) {
-			attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
-			AgainAttackCollsion();
-		}
-		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
-	}
+	//AttackCommonUpdate();
 	
 	//p->RotationChange(p->GetWalkAngle(), 5.0f);
 	//p->playerCom.player->DrawTrail();
@@ -79,12 +72,29 @@ void PlayerAttackStateBase::Update()
 		noStateChange = true;
 		nextAvoid = false;
 	}
-	if (runTimer > 0.0f) {
+	if (runTimer >= 0.0f) {
 		runTimer -= Time::DeltaTimeRate();
 		//後隙が終わったら次の状態に遷移
 		if (runTimer <= 0.0f) {
 			if (nextAttack) {
-				p->playerCom.stateManager->ChangeState(playerAttackData.normalAttackNextID);
+				if (normal) {
+					if (playerAttackData.normalAttackNextID != StateID::STATE_MAX) {
+						p->playerCom.stateManager->ChangeState(playerAttackData.normalAttackNextID);
+					}
+					else {
+						p->playerCom.player->AvoidFinishState();
+					}
+				}
+				else {
+					if (playerAttackData.specialAttackNextID != StateID::STATE_MAX) {
+						p->playerCom.stateManager->ChangeState(playerAttackData.specialAttackNextID);
+					}
+					else {
+						p->playerCom.player->AvoidFinishState();
+					}
+					
+				}
+				
 			}
 			
 			else {
@@ -168,6 +178,9 @@ void PlayerAttackStateBase::Start()
 	attackCount = playerAttackData.attackNum;*/
 	attackCount = playerAttackData.attackNum;
 	attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
+	runTimer = -1.0f;
+	normal = false;
+	special = false;
 	//AgainTimerSet(playerAttackData.attackAgainStartCounterMax, playerAttackData.attackNum);
 }
 
@@ -198,8 +211,87 @@ void PlayerAttackStateBase::AttackMoveStart()
 	//else {
 		//近いと敵の方向に向かって攻撃の移動処理をいれる
 		rotation = true;
-		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, playerAttackData.frontSpeed) * MGetRotY(angle));
+		p->playerCom.physics->SetVelocity(playerAttackData.attackMove * MGetRotY(angle));
 	//}
+}
+
+void PlayerAttackStateBase::AttackCommonUpdate()
+{
+	if (noStateChange) {
+		return;
+	}
+
+	Player* p = GetBase<Player>();
+	float frame = p->playerCom.anim->GetCurrentFrame();
+	if (InputManager::GetInstance()->KeyInputDown("attack")) {
+		if (playerAttackData.attackInputStartTime <= frame) {
+			nextAttack = true;
+			normal = true;
+			special = false;
+		}
+	}
+	if (InputManager::GetInstance()->KeyInputDown("heavyAttack")) {
+		if (playerAttackData.attackInputStartTime <= frame) {
+			nextAttack = true;
+			special = true;
+			normal = false;
+		}
+	}
+	//攻撃の時に回避行動をいれたら回避状態に移行
+	if (InputManager::GetInstance()->KeyInputDown("avoid")) {
+		if (playerAttackData.motionCancelStartTime <= frame) {
+			nextAvoid = true;
+		}
+	}
+	
+	bool collsion = (playerAttackData.collsionStartTime <= frame && playerAttackData.collsionFinishTime >= frame);
+	if (collsion) {
+		if (defalutTrail) {
+			p->playerCom.player->DrawTrail();
+		}
+		attackAgainStartCounter -= Time::DeltaTimeRate();
+		if (attackAgainStartCounter <= 0.0f) {
+			attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
+			AgainAttackCollsion();
+		}
+		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
+	}
+
+	EnemyRotation();
+	//攻撃の時に次のボタンが押されていたら次の攻撃
+
+	//当たり判定がある間はスピードを早く
+	if (collsion) {
+		if (beforeAttack) {
+			AttackMoveStart();
+		}
+		if (speedChange) {
+			p->playerCom.anim->SetPlaySpeed(4.5f);
+		}
+		beforeAttack = false;
+
+	}
+	else {
+		if (beforeAttack) {
+			//p->playerCom.anim->SetPlaySpeed(1.0f);
+		}
+		else {
+			//p->playerCom.physics->SetVelocity(VZero);
+			p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(40000.0f, 0.0f, 40000.0f));
+			if (nextAttack) {
+				//次の攻撃に行くときの設定
+				runTimer = playerAttackData.nextAttackRunTimer;
+				noStateChange = true;
+				p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
+			}
+			else {
+				//攻撃が終わるときの設定
+				runTimer = playerAttackData.noAttackRunTimer;
+				noStateChange = true;
+				p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
+			}
+		}
+	}
 }
 
 void PlayerAttackStateBase::AgainAttackCollsion()
@@ -253,7 +345,9 @@ void PlayerAttackStateBase::AttackCollsion()
 {
 	Player* p = GetBase<Player>();
 	//アニメーションのイベントが始まったら攻撃の当たり判定を生成する。
-	if (p->playerCom.anim->AnimEventCan()) {
+	float frame = p->playerCom.anim->GetCurrentFrame();
+	bool collsion = (playerAttackData.collsionStartTime <= frame && playerAttackData.collsionFinishTime >= frame);
+	if (collsion) {
 		//最初の一回のみ生成したい
 		if (firstColl) {
 			firstColl = false;

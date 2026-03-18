@@ -561,6 +561,9 @@
     <ClCompile Include="Source\GameControler\GameControler.cpp">
       <Filter>PlayScene\GameControler</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Player\PlayerParamWindow.cpp">
+      <Filter>PlayScene\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1183,6 +1186,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameControler\GameControler.h">
       <Filter>PlayScene\GameControler</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\PlayerParamWindow.h">
+      <Filter>PlayScene\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

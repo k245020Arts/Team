@@ -157,29 +157,31 @@ void PlayerManager::CreatePlayer()
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),		"mixamorig:Hips");
-	anim->AddFile(ID::IDType::P_ANIM_IDOL,					"P_IDOL1", true, 1.0f);
-	anim->AddFile(ID::IDType::P_ANIM_RUN,					"P_RUN_M_1", true, 1.5f);
-	anim->AddFile(ID::IDType::P_ANIM_AVOID,					"P_AVOID_M_1", false, 2.0f,0.0f,5.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID,			"P_JUST_AVOID_M_1", false, 1.5f,10.0f,25.0f);
-	anim->AddFile(ID::IDType::P_DAMAGE,						"P_DAMAGE_M_1", false, 2.0f,0.0f,10.0f);
-	anim->AddFile(ID::IDType::P_FALL,						"P_FALL_M_1", true, 1.0f,0.0f,10.0f);
-	anim->AddFile(ID::IDType::P_GETUP,						"P_GETUP_M_1", false, 1.0f,0.0f,10.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK1,				"P_ATTACK01_M_1", false, 2.3f,19.0f,27.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1,	"P_ATTACK11", false, 9.0f,7.0f,25.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK2,				"P_ATTACK02_M_1", false, 2.1f, 10.0f, 30.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1,	"P_ATTACK11_M_1", false, 0.7f, 4.0f, 21.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK3,				"P_ATTACK03_M_1", false, 2.1f, 14.0f, 19.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK_5,				"P_ATTACK05_M_1", false, 1.5f, 10.0f, 20.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK4,				"P_ATTACK04_M_1", false, 3.1f, 30.0f, 42.0f);
-	anim->AddFile(ID::IDType::P_DIE,						"P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
-	anim->AddFile(ID::IDType::P_TURN_ANIM,					"P_TURN1", false, 1.3f, 10.0f, 21.0f);
-	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM,		"P_SPECIAL_ATTACK_2", false, 1.0f, 7.0f, 39.0f);
-	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM,	"P_SPECIAL_ATTACK_BEFORE", false, 1.2f, 7.0f, 39.0f);
-	anim->AddFile(ID::IDType::P_WIN,						"P_WIN", false, 1.0f, 30.0f, 45.0f);
-	anim->AddFile(ID::IDType::PLAYER_WIN_IDOL,				"P_WINIDOL", true, 1.0f, 0.0f, 50.0f);
-	anim->AddFile(ID::IDType::P_LEG_UP,						"P_LEG_UP", false, 1.0f, 0.0f, 50.0f);
-	anim->AddFile(ID::IDType::P_HEAVY_ATTACK,				"P_HEAVY_ATTACK", false, 1.0f, 5.0f, 20.0f);
-	anim->AddFile(ID::IDType::P_HEAVY_CHARGE,				"P_HEAVY_CHARGE", false, 2.0f, 0.0f, 50.0f);
+	
+	Load::LoadAnim("P_IDOL1", ID::IDType::P_ANIM_IDOL);
+	Load::LoadAnim("P_RUN_M_1", ID::IDType::P_ANIM_RUN);
+	Load::LoadAnim("P_AVOID_M_1", ID::IDType::P_ANIM_AVOID);
+	Load::LoadAnim("P_JUST_AVOID_M_1", ID::IDType::P_ANIM_JUST_AVOID);
+	Load::LoadAnim("P_DAMAGE_M_1", ID::IDType::P_DAMAGE);
+	Load::LoadAnim("P_FALL_M_1", ID::IDType::P_FALL);
+	Load::LoadAnim("P_GETUP_M_1", ID::IDType::P_GETUP);
+	Load::LoadAnim("P_ATTACK01_M_1", ID::IDType::P_ANIM_ATTACK1);
+	Load::LoadAnim("P_ATTACK02_M_1", ID::IDType::P_ANIM_ATTACK2);
+	Load::LoadAnim("P_ATTACK11_M_1", ID::IDType::P_ANIM_JUST_AVOID_ATTACK1);
+	Load::LoadAnim("P_ATTACK03_M_1", ID::IDType::P_ANIM_ATTACK3);
+	Load::LoadAnim("P_ATTACK05_M_1", ID::IDType::P_ANIM_ATTACK_5);
+	Load::LoadAnim("P_ATTACK04_M_1", ID::IDType::P_ANIM_ATTACK4);
+	Load::LoadAnim("P_DIE_M_1", ID::IDType::P_DIE);
+	Load::LoadAnim("P_TURN1", ID::IDType::P_TURN_ANIM);
+	Load::LoadAnim("P_SPECIAL_ATTACK_2", ID::IDType::P_SPECIAL_ATTACK_ANIM);
+	Load::LoadAnim("P_SPECIAL_ATTACK_BEFORE", ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM);
+	Load::LoadAnim("P_WIN", ID::IDType::P_WIN);
+	Load::LoadAnim("P_WINIDOL", ID::IDType::PLAYER_WIN_IDOL);
+	Load::LoadAnim("P_LEG_UP", ID::IDType::P_LEG_UP);
+	Load::LoadAnim("P_HEAVY_ATTACK", ID::IDType::P_HEAVY_ATTACK);
+	Load::LoadAnim("P_HEAVY_CHARGE", ID::IDType::P_HEAVY_CHARGE);
+
+	anim->AnimDataLoad("PlayerAnimData");
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);

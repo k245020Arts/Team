@@ -62,14 +62,14 @@ void PlayerJustAvoidAttack1::Update()
 		}
 		else {
 			angle = atan2f(dist.x, dist.z);
-			p->playerCom.physics->AddVelocity(VECTOR3(0, 0, playerAttackData.frontSpeed) * MGetRotY(angle), false);
+			p->playerCom.physics->AddVelocity(playerAttackData.attackMove * MGetRotY(angle), false);
 		}
 		if (p->playerCom.anim->AnimEventCan()) {
 			p->playerCom.anim->SetPlaySpeed(1.6f);
 			beforeAttack = false;
 			rotation = true;
-			playerAttackData.frontSpeed = 2000.0f;
-			p->playerCom.physics->SetVelocity(VECTOR3(0, 0, playerAttackData.frontSpeed) * MGetRotY(angle));
+			playerAttackData.attackMove = VECTOR3(0,0, 2000.0f);
+			p->playerCom.physics->SetVelocity(playerAttackData.attackMove * MGetRotY(angle));
 
 		}
 		else {
@@ -131,12 +131,12 @@ void PlayerJustAvoidAttack1::Start()
 	if (dist.Size() >= 2500 && p->playerCom.hitObj != nullptr) {
 		//‹——£‚ª‰“‚¢‚Æ‚à‚Æ‚à‚Æ‚ÌŠp“x‚Ô‚ñUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
 		rotation = false;;
-		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, playerAttackData.frontSpeed) * MGetRotY(beforeAngle));
+		p->playerCom.physics->SetVelocity(playerAttackData.attackMove * MGetRotY(beforeAngle));
 	}
 	else {
 		//‹ß‚¢‚Æ“G‚Ì•ûŒü‚ÉŒü‚©‚Á‚ÄUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
 		rotation = true;
-		p->playerCom.physics->SetVelocity(VECTOR3(0, 0, playerAttackData.frontSpeed) * MGetRotY(angle));
+		p->playerCom.physics->SetVelocity(playerAttackData.attackMove * MGetRotY(angle));
 	}
 
 
@@ -153,6 +153,9 @@ void PlayerJustAvoidAttack1::Start()
 			p->playerCom.hitObj->SetObjectTimeRate(PlayerInformation::JUST_AVOID_ENEMY_TIME_SCALE + 0.5f);
 		}
 	}
+	runTimer = -1.0f;
+	normal = false;
+	special = false;
 	/*p->playerCom.anim->SetPlaySpeed(0.1f);
 	timer = 0.5f;
 	p->playerCom.shaker->ShakeStart(VECTOR3(30.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 0.4f);*/

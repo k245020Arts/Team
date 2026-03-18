@@ -24,6 +24,7 @@ PlayerHeavyAttack::PlayerHeavyAttack()
 	/*playerAttackData.hitDamage = 300.0f;*/
 	chargeCount = 0.0f;
 	defalutTrail = true;
+	speedChange = false;
 
 	//playerAttackData.state = StateID::PLAYER_HEAVY_ATTACK_S;
 
@@ -45,46 +46,46 @@ PlayerHeavyAttack::~PlayerHeavyAttack()
 void PlayerHeavyAttack::Update()
 {
 	Player* p = GetBase<Player>();
-	if (p->playerCom.anim->IsFinish()) {
+	/*if (p->playerCom.anim->IsFinish()) {
 		p->AvoidFinishState();
-	}
-	collsionCreate = false;
-	AttackCollsion();
+	}*/
+	/*collsionCreate = false;
+	AttackCollsion();*/
 	PlayerAttackStateBase::Update();
-	
-	if (!noStateChange) {
+	PlayerAttackStateBase::AttackCommonUpdate();
+	//if (!noStateChange) {
 
-		EnemyRotation();
-		//攻撃の時に次のボタンが押されていたら次の攻撃
-		if (InputManager::GetInstance()->KeyInputDown("attack")) {
-			nextAttack = true;
-		}
-		//攻撃の時に回避行動をいれたら回避状態に移行
-		if (InputManager::GetInstance()->KeyInputDown("avoid")) {
-			//p->playerCom.player->AvoidReady();
-			//noStateChange = true;
-		}
-		//当たり判定がある間はスピードを早く
-		if (p->playerCom.anim->AnimEventCan()) {
-			if (beforeAttack) {
-				AttackMoveStart();
-			}
-			//p->playerCom.anim->SetPlaySpeed(4.5f);
-			beforeAttack = false;
+	//	EnemyRotation();
+	//	//攻撃の時に次のボタンが押されていたら次の攻撃
+	//	if (InputManager::GetInstance()->KeyInputDown("attack")) {
+	//		nextAttack = true;
+	//	}
+	//	//攻撃の時に回避行動をいれたら回避状態に移行
+	//	if (InputManager::GetInstance()->KeyInputDown("avoid")) {
+	//		//p->playerCom.player->AvoidReady();
+	//		//noStateChange = true;
+	//	}
+	//	//当たり判定がある間はスピードを早く
+	//	if (p->playerCom.anim->AnimEventCan()) {
+	//		if (beforeAttack) {
+	//			AttackMoveStart();
+	//		}
+	//		//p->playerCom.anim->SetPlaySpeed(4.5f);
+	//		beforeAttack = false;
 
-		}
-		else {
-			if (beforeAttack)
-				p->playerCom.anim->SetPlaySpeed(1.0f);
-			else {
-				if (nextAvoid) {
-					runTimer = 0.05f;
-					noStateChange = true;
-					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-				}
-			}
-		}
-	}
+	//	}
+	//	else {
+	//		if (beforeAttack)
+	//			p->playerCom.anim->SetPlaySpeed(1.0f);
+	//		else {
+	//			if (nextAvoid) {
+	//				runTimer = 0.05f;
+	//				noStateChange = true;
+	//				p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 void PlayerHeavyAttack::Draw()
@@ -105,7 +106,7 @@ void PlayerHeavyAttack::Start()
 	}
 
 	AgainTimerSet(chargeParam->againTimer, chargeParam->againTimerFlag);
-	playerAttackData.frontSpeed = chargeParam->frontSpeed;
+	playerAttackData.attackMove = chargeParam->moveSpeed;
 	playerAttackData.hitDamage = chargeParam->hitDamage;
 	
 }

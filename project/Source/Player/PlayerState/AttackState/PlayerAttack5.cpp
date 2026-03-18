@@ -17,6 +17,7 @@ PlayerAttack5::PlayerAttack5()
 	string = Function::GetClassNameC<PlayerAttack5>();
 	//id = ID::P_ANIM_ATTACK_5;
 	animId = ID::P_ANIM_ATTACK_5;
+	speedChange = false;
 	/*playerAttackData.collTrans = Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK1_S;*/
 	//frontSpeed = 500.0f;
@@ -37,67 +38,12 @@ PlayerAttack5::~PlayerAttack5()
 
 void PlayerAttack5::Update()
 {
-	/*Player* p = GetBase<Player>();
-	AttackCollsion();
-	PlayerAttackStateBase::Update();
-	if (!noStateChange) {
-		if (distSize <= ATTACK_MOVE_DIST) {
-			EnemyRotation();
-		}
-		if (count == 0) {
-			if (!p->playerCom.anim->IsFinish()) {
-
-			}
-			else {
-				if (nextAttack) {
-					runTimer = 0.1f;
-					noStateChange = true;
-					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-				}
-				else {
-					runTimer = 0.2f;
-					noStateChange = true;
-					p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
-					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-				}
-			}
-		}
-		else {
-			if (p->playerCom.anim->GetCurrentFrame() >= 17.0f) {
-				if (nextAttack) {
-					Again();
-					return;
-				}
-				else {
-					runTimer = 0.2f;
-					noStateChange = true;
-					p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
-					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-				}
-			}
-		}
-
-		if (p->playerCom.controller->GetIsButtonPutNow(XINPUT_BUTTON_B)) {
-			nextAttack = true;
-		}
-		if (p->playerCom.InputManager->KeyInputDown("avoid")) {
-			p->playerCom.player->AvoidReady();
-			noStateChange = true;
-		}
-		if (count >= ATTACK_NUMMAX) {
-			dist = targetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
-			if (dist.Size() <= DISTANCE_MOVE) {
-				p->playerCom.anim->SetPlaySpeed(1.0f);
-				p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(40000.0f, 40000.0f, 40000.0f));
-			}
-		}
-	}*/
 
 	Player* p = GetBase<Player>();
 	collsionCreate = false;
 	AttackCollsion();
 	PlayerAttackStateBase::Update();
-
+	//PlayerAttackStateBase::AttackCommonUpdate();
 
 	if (!noStateChange) {
 		EnemyRotation();

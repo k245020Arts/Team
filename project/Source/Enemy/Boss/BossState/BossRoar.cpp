@@ -10,7 +10,7 @@
 
 BossRoar::BossRoar()
 {
-	animId	= ID::B_ROAR;
+	animId	= ID::B_ROAR_ANIM;
 	//id = ID::B_IDOL;
 	string	= Function::GetClassNameC<BossRoar>();
 	first	= false;

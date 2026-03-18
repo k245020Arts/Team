@@ -20,7 +20,7 @@ PlayerHeavyCharge::PlayerHeavyCharge()
 	animId			= ID::P_HEAVY_CHARGE;
 	playerAttackData.collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	playerAttackData.specialAttackNextID = StateID::PLAYER_HEAVY_ATTACK_S;
-	playerAttackData.frontSpeed		= 5500.0f;
+	playerAttackData.attackMove		= VECTOR3(0,0,5500.0f);
 	time			= 0.0f;
 	playerAttackData.hitDamage		= 30.0f;
 	chargeCount		= 0.0f;

@@ -149,20 +149,27 @@ public:
 
 	void ImguiDraw()override;
 
-private:
-	int baseModel;
-	int rootNum;
-	struct FileInfo {
+	void AnimDataSave(const std::string& _path);
+	void AnimDataLoad(const std::string& _path);
+
+	struct AnimFileInfo {
 		int hModel;
 		bool loop;
 		float maxFrame;
 		float playSpeed;
 		float eventStartTime;
 		float eventFinishTime;
-		
-		FileInfo() : hModel(-1), loop(false), maxFrame(1.0f), playSpeed(1.0f), eventFinishTime(-1.0f), eventStartTime(-1.0f){}
+		std::string fileName;
+		std::string id;
+
+		AnimFileInfo() : hModel(-1), loop(false), maxFrame(1.0f), playSpeed(1.0f), eventFinishTime(-1.0f), eventStartTime(-1.0f), fileName(""), id("") {}
 	};
-	std::map<std::string, FileInfo> fileInfos;
+
+private:
+	int baseModel;
+	int rootNum;
+
+	std::map<std::string, AnimFileInfo> fileInfos;
 
 	struct PlayInfo {
 		std::string fileID;
@@ -190,3 +197,30 @@ private:
 
 	
 };
+
+inline void to_json(nlohmann::json& j, const Animator::AnimFileInfo& f)
+{
+	j = {
+		{"loop", f.loop},
+		{"maxFrame", f.maxFrame},
+		{"playSpeed", f.playSpeed},
+		{"eventStartTime", f.eventStartTime},
+		{"eventFinishTime", f.eventFinishTime},
+		{"fileName", f.fileName},
+		{"id", f.id}
+	};
+}
+
+inline void from_json(const nlohmann::json& j, Animator::AnimFileInfo& f)
+{
+	f.loop = j.value("loop", false);
+	f.maxFrame = j.value("maxFrame", 1.0f);
+	f.playSpeed = j.value("playSpeed", 1.0f);
+	f.eventStartTime = j.value("eventStartTime", -1.0f);
+	f.eventFinishTime = j.value("eventFinishTime", -1.0f);
+	f.fileName = j.value("fileName", "");
+	f.id = j.value("id", "");
+
+	// é¿çséûÇæÇØ
+	f.hModel = -1;
+}

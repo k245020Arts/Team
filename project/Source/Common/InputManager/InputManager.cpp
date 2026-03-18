@@ -30,6 +30,7 @@ InputManager::InputManager()
 	CreateInputData(KeyConfigData("SpecialAttack", KEY_INPUT_Q, XINPUT_BUTTON_X, MouseInputManager::MOUSE_NONE));
 	CreateInputData(KeyConfigData("heavyAttack", KEY_INPUT_C, XINPUT_BUTTON_Y, MouseInputManager::MOUSE_NONE));
 	CreateInputData(KeyConfigData("Mouse", KEY_INPUT_F1, -1, MouseInputManager::MOUSE_NONE));
+	CreateInputData(KeyConfigData("playerParam", KEY_INPUT_LCONTROL, -1, MouseInputManager::MOUSE_NONE));
 
 }
 

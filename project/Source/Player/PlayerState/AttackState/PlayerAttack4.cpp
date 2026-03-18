@@ -14,6 +14,7 @@ PlayerAttack4::PlayerAttack4()
 {
 	string			= Function::GetClassNameC<PlayerAttack4>();
 	animId			= ID::P_ANIM_ATTACK4;
+	speedChange = false;
 	/*playerAttackData.collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	playerAttackData.frontSpeed		= 5000.0f;*/
 	//frontSpeed		= 0.0f;
@@ -35,42 +36,43 @@ PlayerAttack4::~PlayerAttack4()
 void PlayerAttack4::Update()
 {
 	Player* p = GetBase<Player>();
-	collsionCreate = false;
-	AttackCollsion();
+	/*collsionCreate = false;
+	AttackCollsion();*/
 	PlayerAttackStateBase::Update();
-	if (!noStateChange) {
-		EnemyRotation();
-		if (InputManager::GetInstance()->KeyInputDown("avoid")) {
-			//p->playerCom.player->AvoidReady();
-			avoidReady = true;
-			//noStateChange = true;
-		}
-		if (InputManager::GetInstance()->KeyInputDown("attack")) {
-			nextAttack = true;
-		}
+	PlayerAttackStateBase::AttackCommonUpdate();
+	//if (!noStateChange) {
+	//	EnemyRotation();
+	//	if (InputManager::GetInstance()->KeyInputDown("avoid")) {
+	//		//p->playerCom.player->AvoidReady();
+	//		avoidReady = true;
+	//		//noStateChange = true;
+	//	}
+	//	if (InputManager::GetInstance()->KeyInputDown("attack")) {
+	//		nextAttack = true;
+	//	}
 		timer -= Time::DeltaTimeRate();
 		if (timer <= 0.0f) {
 			p->playerCom.anim->SetPlaySpeed(1.0f);
 		}
-		if (p->playerCom.anim->AnimEventCan()) {
-			if (beforeAttack) {
-				AttackMoveStart();
-			}
-			beforeAttack = false;
-			//p->playerCom.physics->SetVelocity(VZero);
-			p->playerCom.physics->AddVelocity(VECTOR3(0, 20000, 0), true);
-		}
-		else {
-			if (beforeAttack) {
-				//p->playerCom.anim->SetPlaySpeed(1.5f);
-			}
-			else {
-				runTimer = 0.4f;
-				noStateChange = true;
-				p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-			}
-		}
-	}
+	//	if (p->playerCom.anim->AnimEventCan()) {
+	//		if (beforeAttack) {
+	//			AttackMoveStart();
+	//		}
+	//		beforeAttack = false;
+	//		p->playerCom.physics->SetVelocity(VZero);
+	//		p->playerCom.physics->AddVelocity(VECTOR3(0, 20000, 0), true);
+	//	}
+	//	else {
+	//		if (beforeAttack) {
+	//			//p->playerCom.anim->SetPlaySpeed(1.5f);
+	//		}
+	//		else {
+	//			runTimer = 0.4f;
+	//			noStateChange = true;
+	//			p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
+	//		}
+	//	}
+	//}
 }
 
 void PlayerAttack4::Draw()

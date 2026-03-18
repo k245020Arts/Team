@@ -6,6 +6,7 @@
 #include "../../../ImGui/imgui.h"
 #include "../Transform/Transform.h"
 #include <algorithm> 
+#include "../../Common/JsonReader.h"
 
 Animator::Animator()
 {
@@ -74,7 +75,7 @@ void Animator::Update()
     VECTOR3 beforePos = currentPosition;
     if (current.attachID >= 0)
     { // current
-        const FileInfo& f = fileInfos[current.fileID];
+        const AnimFileInfo& f = fileInfos[current.fileID];
         current.beforeFrame = current.frame;
         current.frame += obj->GetObjectTimeRate() * playSpeed * f.playSpeed * 30.0f;
         if (current.frame >= f.maxFrame)
@@ -132,7 +133,7 @@ void Animator::Update()
             before.fileID = -1;
         }
         else {
-            const FileInfo& f = fileInfos[before.fileID];
+            const AnimFileInfo& f = fileInfos[before.fileID];
             before.frame += obj->GetObjectTimeRate() * playSpeed * f.playSpeed * 30.0f;
             if (before.frame >= f.maxFrame)
             {
@@ -180,14 +181,16 @@ void Animator::Update()
 
 void Animator::AddFile(ID::IDType id, std::string filename, bool loop, float speed, float _eventStart, float _eventFinish)
 {
-    FileInfo inf;
-    inf.hModel = Load::LoadAnim(Load::ANIM_PATH + filename, id);
+    AnimFileInfo inf;
+    inf.hModel = Load::LoadAnim(filename, id);
     std::string str = ID::GetID(id);
+    inf.fileName = filename;
     assert(inf.hModel > 0);
     inf.loop = loop;
     inf.playSpeed = speed;
     inf.eventStartTime = _eventStart;
     inf.eventFinishTime = _eventFinish;
+    inf.id = str;
     if (inf.hModel > 0)
     {
         inf.maxFrame = MV1GetAnimTotalTime(inf.hModel, 0);
@@ -339,6 +342,41 @@ void Animator::ImguiDraw()
             ImGui::Text("%s : %f", file.first.c_str(), file.second.maxFrame);
         }
         ImGui::TreePop();
+    }
+}
+
+void Animator::AnimDataSave(const std::string& _path)
+{
+    nlohmann::json root;
+
+    for (auto& [key, info] : fileInfos)
+    {
+        root["Animator"][key] = info;
+    }
+
+    JsonReader json;
+
+    std::string path = "data/json/Animation/" + _path + ".json";
+
+    json.Save(path, root);
+}
+
+void Animator::AnimDataLoad(const std::string& _path)
+{
+    JsonReader json;
+
+    std::string path = "data/json/Animation/" + _path + ".json";
+
+    json.Load(path);
+
+    for (auto& j: json.Data()["Animator"])
+    {
+
+        AnimFileInfo info ;
+        j.get_to(info);
+        
+        info.hModel = Load::GetHandle(ID::StringToID(info.id));
+        fileInfos[info.id] = info;
     }
 }
 

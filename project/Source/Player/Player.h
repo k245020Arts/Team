@@ -248,6 +248,12 @@ public:
 
 	void JustAvoidCollsionHit(BaseObject* _obj,CollsionInformation::Tag _tag);
 
+	std::unordered_map<StateID::State_ID, PlayerInformation::PlayerReaction>& GetReactionMap();
+	std::unordered_map<StateID::State_ID, PlayerAttackStateBase::PlayerAttackData>& GetAllAttackData();
+
+	void ParamReLoad();
+	void ReactionReLoad();
+
 private:
 	PlayerInformation::CharaComponent playerCom;
 	float size;

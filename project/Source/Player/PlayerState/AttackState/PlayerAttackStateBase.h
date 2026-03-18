@@ -48,19 +48,19 @@ public:
 	{
 		float againTimer;        // AgainTimerSetの第1引数
 		int   againTimerFlag;    // AgainTimerSetの第2引数
-		float frontSpeed;
+		VECTOR3 moveSpeed;
 		float hitDamage;
 
 		ChargeAttackLevelData()
 			: againTimer(0.0f), againTimerFlag(0)
-			, frontSpeed(0.0f), hitDamage(0.0f)
+			, moveSpeed(0.0f), hitDamage(0.0f)
 		{
 		}
 
 		ChargeAttackLevelData(float _againTimer, int _againTimerFlag,
-			float _frontSpeed, float _hitDamage)
+			VECTOR3 _moveSpeed, float _hitDamage)
 			: againTimer(_againTimer), againTimerFlag(_againTimerFlag)
-			, frontSpeed(_frontSpeed), hitDamage(_hitDamage)
+			, moveSpeed(_moveSpeed), hitDamage(_hitDamage)
 		{
 		}
 	};
@@ -78,9 +78,12 @@ public:
 		float collsionFinishTime;
 
 		float motionCancelStartTime;
-		float runTimer;
+		float attackInputStartTime;
+		float nextAttackRunTimer;
+		float noAttackRunTimer;
 
-		float frontSpeed;
+
+		VECTOR3 attackMove;
 
 		Transform collTrans;
 
@@ -104,8 +107,10 @@ public:
 			, collsionStartTime(0.0f)
 			, collsionFinishTime(0.0f)
 			, motionCancelStartTime(0.0f)
-			, runTimer(0.0f)
-			, frontSpeed(0.0f)
+			, attackInputStartTime(0.0f)
+			, nextAttackRunTimer(0.0f)
+			, noAttackRunTimer(0.0f)
+			, attackMove(VZero)
 			, collTrans()
 			, chargeLevels()
 		{
@@ -122,8 +127,10 @@ public:
 			float collsionStartTime,
 			float collsionFinishTime,
 			float motionCancelStartTime,
-			float runTimer,
-			float frontSpeed,
+			float _attackInput,
+			float _nextAttackRunTimer,
+			float _noAttackRunTimer,
+			VECTOR3 _attackMove,
 			const Transform& collTrans,
 			const std::vector<ChargeAttackLevelData>& chargeLevels = {}
 		)
@@ -136,8 +143,10 @@ public:
 			, collsionStartTime(collsionStartTime)
 			, collsionFinishTime(collsionFinishTime)
 			, motionCancelStartTime(motionCancelStartTime)
-			, runTimer(runTimer)
-			, frontSpeed(frontSpeed)
+			, attackInputStartTime(_attackInput)
+			, nextAttackRunTimer(_nextAttackRunTimer)
+			, noAttackRunTimer(_noAttackRunTimer)
+			, attackMove(_attackMove)
 			, collTrans(collTrans)
 			, chargeLevels(chargeLevels)  // 追加
 		{
@@ -164,6 +173,8 @@ protected:
 	const float DISTANCE_MOVE = 800;
 
 	bool beforeAttack;
+	bool normal;
+	bool special;
 
 	float runTimer;
 
@@ -177,6 +188,7 @@ protected:
 	int attackCount;
 
 	float attackAgainStartCounter;
+	bool speedChange;
 	//float attackAgainStartCounterMax;
 
 	
@@ -184,6 +196,7 @@ protected:
 
 	void BaseAttackCollsion();
 	void AttackMoveStart();
+	void AttackCommonUpdate();
 
 	void AgainAttackCollsion();
 	void AgainTimerSet(float _time, int _attackNum);
@@ -194,14 +207,16 @@ protected:
 inline void to_json(nlohmann::json& j, const PlayerAttackStateBase::ChargeAttackLevelData& p) {
 	j["againTimer"] = p.againTimer;
 	j["againTimerFlag"] = p.againTimerFlag;
-	j["frontSpeed"] = p.frontSpeed;
+	j["MoveSpeed"] = p.moveSpeed;
 	j["hitDamage"] = p.hitDamage;
 }
 
 inline void from_json(const nlohmann::json& j, PlayerAttackStateBase::ChargeAttackLevelData& p) {
 	j.at("againTimer").get_to(p.againTimer);
 	j.at("againTimerFlag").get_to(p.againTimerFlag);
-	j.at("frontSpeed").get_to(p.frontSpeed);
+	if (j.contains("MoveSpeed")) {
+		j.at("MoveSpeed").get_to(p.moveSpeed);
+	}
 	j.at("hitDamage").get_to(p.hitDamage);
 }
 
@@ -216,8 +231,10 @@ inline void to_json(nlohmann::json& j, const PlayerAttackStateBase::PlayerAttack
 		{"collsionStartTime",          p.collsionStartTime},
 		{"collsionFinishTime",         p.collsionFinishTime},
 		{"motionCancelStartTime",      p.motionCancelStartTime},
-		{"runTimer",                   p.runTimer},
-		{"frontSpeed",                 p.frontSpeed},
+		{"attackInputStartTime",	   p.attackInputStartTime},
+		{"nextAttackRunTimer",         p.nextAttackRunTimer},
+		{"noAttackRunTimer",           p.noAttackRunTimer},
+		{"AttackMove",                 p.attackMove},
 		{"collTrans",                  p.collTrans},
 		{"chargeLevels",               p.chargeLevels},
 	};
@@ -232,8 +249,18 @@ inline void from_json(const nlohmann::json& j, PlayerAttackStateBase::PlayerAtta
 	j.at("collsionStartTime").get_to(p.collsionStartTime);
 	j.at("collsionFinishTime").get_to(p.collsionFinishTime);
 	j.at("motionCancelStartTime").get_to(p.motionCancelStartTime);
-	j.at("runTimer").get_to(p.runTimer);
-	j.at("frontSpeed").get_to(p.frontSpeed);
+	if (j.contains("attackInputStartTime")) {
+		j.at("attackInputStartTime").get_to(p.attackInputStartTime);
+	}
+	if (j.contains("nextAttackRunTimer")) {
+		j.at("nextAttackRunTimer").get_to(p.nextAttackRunTimer);
+	}
+	if (j.contains("noAttackRunTimer")) {
+		j.at("noAttackRunTimer").get_to(p.noAttackRunTimer);
+	}
+	if (j.contains("AttackMove")) {
+		j.at("AttackMove").get_to(p.attackMove);
+	}
 	j.at("collTrans").get_to(p.collTrans);
 
 	// チャージ非対応のStateはキーなしでもOK

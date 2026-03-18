@@ -175,7 +175,7 @@
         {
           "againTimer": 0.10000000149011612,
           "againTimerFlag": 6,
-          "frontSpeed": 4000.0,
+          "frontSpeed": 10000.0,
           "hitDamage": 300.0
         }
       ],

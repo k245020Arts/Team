@@ -46,6 +46,7 @@
 #include "../Enemy/Boss/BossState/Attack/BossAttackBase.h"
 #include "../Common/Easing.h"
 #include "../Component/UI/ButtonUI.h"
+#include "PlayerParamWindow.h"
 
 namespace {
 
@@ -60,7 +61,7 @@ namespace {
 
 	};*/
 	
-	
+	PlayerParamWindow* paramWindow;
 
 	
 
@@ -104,7 +105,7 @@ Player::Player()
 	specialAttackGuageMax		= false;
 	objHit						= false;
 	bossRockManager				= nullptr;
-	
+	paramWindow					= new PlayerParamWindow(this);
 	
 }
 
@@ -113,6 +114,9 @@ Player::~Player()
 	//delete playerCom.stateManager;
 	/*DeleteGraph(justAvoidBlurImage);*/
 	justAvoidBlurImage = -1;
+	if (paramWindow != nullptr) {
+		delete paramWindow;
+	}
 }
 
 void Player::Update()
@@ -183,6 +187,7 @@ void Player::Update()
 	}
 	justAvoidColHit = false;
 	//playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
+	paramWindow->PlayerParamWindowView();
 }
 
 void Player::Draw()
@@ -801,6 +806,36 @@ void Player::JustAvoidCollsionHit(BaseObject* _obj, CollsionInformation::Tag _ta
 	}
 	
 	justAvoidColHit = true;
+}
+
+std::unordered_map<StateID::State_ID, PlayerInformation::PlayerReaction>& Player::GetReactionMap()
+{
+	return attackEffects;
+}
+
+std::unordered_map<StateID::State_ID, PlayerAttackStateBase::PlayerAttackData>& Player::GetAllAttackData()
+{
+	return attackData;
+}
+
+void Player::ParamReLoad()
+{
+	playerCom.stateManager->LoadSaveState();
+}
+
+void Player::ReactionReLoad()
+{
+	std::string filePath = std::string("data/json/") + "PlayerReaction" + ".json";
+	JsonReader json;
+	json.Load(filePath);
+
+
+	attackEffects.clear();
+	for (auto& j : json.Data()["PlayerReactions"]) {
+		PlayerInformation::PlayerReaction reaction;
+		j.get_to(reaction);
+		attackEffects[reaction.state] = reaction;
+	}
 }
 
 void Player::HeavyAttackChangeParam(int _level)

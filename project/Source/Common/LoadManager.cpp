@@ -185,8 +185,9 @@ int Load::LoadAnim(std::string path, ID::IDType id, bool _common) {
 
     if (targetLoad[name].handle == -1) {
         ID::SetID(path, id);
-        path += ".mv1";
-        targetLoad[name].handle = MV1LoadModel(path.c_str());
+        std::string loadName = Load::ANIM_PATH + path;
+        loadName += ".mv1";
+        targetLoad[name].handle = MV1LoadModel(loadName.c_str());
         targetLoad[name].type = Type::ANIM;
     }
 
