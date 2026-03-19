@@ -198,7 +198,12 @@ void PlayerAttackStateBase::Finish()
 bool PlayerAttackStateBase::IsAttack()
 {
 	Player* p = GetBase<Player>();
-	return p->playerCom.anim->AnimEventCan();
+	float frame = p->playerCom.anim->GetCurrentFrame();
+	bool collsion = (playerAttackData.collsionStartTime <= frame && playerAttackData.collsionFinishTime >= frame);
+	if (id == StateID::PLAYER_ATTACK3_S) {
+		int dljdjlf = 0;
+	}
+	return collsion;
 }
 
 void PlayerAttackStateBase::AttackMoveStart()
