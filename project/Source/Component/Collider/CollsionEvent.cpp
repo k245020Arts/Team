@@ -160,6 +160,9 @@ void CollsionEvent::BossDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2, 
 	Player* player = _coll2->GetObj()->Component()->GetComponent<Player>();
 	Boss* boss = _coll1->GetObj()->Component()->GetComponent<Boss>();
 	//当たり判定に当たっていたら通さない、OneCollをtrueにすると一人の敵にしか当たらなくなるため使用しない
+	if (boss->GetStateState() != nullptr) {
+		int a = 0;
+	}
 	if (boss->GetHit()) {
 		return;
 	}

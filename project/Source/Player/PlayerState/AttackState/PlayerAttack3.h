@@ -12,6 +12,8 @@ public:
 	void Start()override;
 	void Finish()override;
 
+	void StateImguiDraw()override;
+
 private:
 
 };

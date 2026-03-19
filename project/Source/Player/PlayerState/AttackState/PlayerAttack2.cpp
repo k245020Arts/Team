@@ -33,6 +33,7 @@ void PlayerAttack2::Update()
 	Player* p = GetBase<Player>();
 	/*collsionCreate = false;
 	AttackCollsion();*/
+	collsionCreate = false;
 	PlayerAttackStateBase::Update();
 	PlayerAttackStateBase::AttackCommonUpdate();
 	//if (!noStateChange) {

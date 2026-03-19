@@ -51,6 +51,7 @@ void PlayerHeavyAttack::Update()
 	}*/
 	/*collsionCreate = false;
 	AttackCollsion();*/
+	collsionCreate = false;
 	PlayerAttackStateBase::Update();
 	PlayerAttackStateBase::AttackCommonUpdate();
 	//if (!noStateChange) {

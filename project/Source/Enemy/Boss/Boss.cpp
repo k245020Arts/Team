@@ -53,6 +53,8 @@
 #include "../../Component/UI/EnemyDamageUI.h"
 #include "../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
 
+#include "../../Player/PlayerState/AttackState/PlayerAttack2.h"
+
 namespace {
 	std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable;
 }
@@ -432,9 +434,17 @@ void Boss::PlayerHit()
 	}*/
 
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
+	if (pState->GetState<PlayerAttack3>() != nullptr) {
+		int c = 0;
+	}
+
 	float damage = 0;;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
+
 		damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
+
+		
+
 	}
 	else {
 		loopNum = -1;
@@ -459,7 +469,7 @@ void Boss::PlayerHit()
 		switch (e.attackType)
 		{
 		case EnemyInformation::EnemyReaction::Type::Normal:
-			Debug::DebugLog("hitToPlayerBoss");
+			//Debug::DebugLog("hitToPlayerBoss");
 			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
 			EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne *e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
 			EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
@@ -542,7 +552,7 @@ void Boss::PlayerHit()
 	std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();
 	SoundManager::GetInstance()->RandamSe("E_DamageV", 2);
 	enemyBaseComponent.color->setRGB(Color::Rgb(255, 0, 0, 255));
-	damageFlash = 0.5f;
+	damageFlash = 0.25f;
 
 }
 

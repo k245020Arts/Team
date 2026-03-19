@@ -41,7 +41,7 @@ void Shaker::Draw()
 {
 }
 
-void Shaker::ShakeStart(const VECTOR3& _power, ShakePattern _pattern, float rok, float _second)
+void Shaker::ShakeStart(const VECTOR3& _power, ShakePattern _pattern, bool rok, float _second)
 {
 	if (!Debug::ShakeStop()) {
 		return;

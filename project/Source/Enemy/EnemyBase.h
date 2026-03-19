@@ -89,4 +89,6 @@ protected:
 
 	bool specialAttackHit;
 	float justAvoidCollTime;
+	const char* name;
+	
 };

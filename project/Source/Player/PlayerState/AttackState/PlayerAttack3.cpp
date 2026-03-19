@@ -10,10 +10,15 @@
 #include "../../../Common/Function.h"
 #include "../../../Common/InputManager/InputManager.h"
 
+namespace {
+	int createCounter;
+}
+
 PlayerAttack3::PlayerAttack3()
 {
 	string			= Function::GetClassNameC<PlayerAttack3>();
 	animId			= ID::P_ANIM_ATTACK3;
+	createCounter = 0;
 	//playerAttackData.collTrans		= Transform(VECTOR3(0, 80, 100), VZero, VECTOR3(300, 0, 0));
 	//playerAttackData.normalAttackNextID = StateID::PLAYER_ATTACK4_S;
 	//playerAttackData.frontSpeed		= 7500.0f;
@@ -22,6 +27,7 @@ PlayerAttack3::PlayerAttack3()
 	//playerAttackData.state = StateID::PLAYER_ATTACK3_S;
 	//playerAttackData.attackNum = 0;
 	//playerAttackData.attackAgainStartCounterMax = 0.0f;
+	speedChange = false;
 }
 
 PlayerAttack3::~PlayerAttack3()
@@ -31,10 +37,17 @@ PlayerAttack3::~PlayerAttack3()
 void PlayerAttack3::Update()
 {
 	Player* p = GetBase<Player>();
-	/*collsionCreate = false;
-	AttackCollsion();*/
+	//Debug::DebugLogPrintfArgs("Create = %d", (int)collsionCreate);
+	/*if (collsionCreate) {
+		createCounter++;
+		if (createCounter > 18000) {
+			collsionCreate = false;
+		}
+	}*/
+	collsionCreate = false;
 	PlayerAttackStateBase::Update();
 	PlayerAttackStateBase::AttackCommonUpdate();
+	
 	//if (!noStateChange) {
 	//	EnemyRotation();
 	//	//UŒ‚‚ÌŽž‚ÉŽŸ‚Ìƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚çŽŸ‚ÌUŒ‚
@@ -88,6 +101,7 @@ void PlayerAttack3::Start()
 {
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
+	createCounter = 0;
 }
 
 void PlayerAttack3::Finish()
@@ -96,4 +110,11 @@ void PlayerAttack3::Finish()
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.anim->AnimEventReset();
 	PlayerAttackStateBase::Finish();
+}
+
+void PlayerAttack3::StateImguiDraw()
+{
+	if (collsionCreate) {
+		ImGui::Text("collsionCreate = true");
+	}
 }

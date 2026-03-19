@@ -59,7 +59,7 @@ PlayerAttackStateBase::~PlayerAttackStateBase()
 void PlayerAttackStateBase::Update()
 {
 	Player* p = GetBase<Player>();
-	collsionCreate = false;
+	//collsionCreate = false;
 	AttackCollsion();
 	SpecialAttackStart();
 	//AttackCommonUpdate();
@@ -181,6 +181,7 @@ void PlayerAttackStateBase::Start()
 	runTimer = -1.0f;
 	normal = false;
 	special = false;
+	//collsionCreate = false;
 	//AgainTimerSet(playerAttackData.attackAgainStartCounterMax, playerAttackData.attackNum);
 }
 
@@ -220,7 +221,7 @@ void PlayerAttackStateBase::AttackCommonUpdate()
 	if (noStateChange) {
 		return;
 	}
-
+	//collsionCreate = false;
 	Player* p = GetBase<Player>();
 	float frame = p->playerCom.anim->GetCurrentFrame();
 	if (InputManager::GetInstance()->KeyInputDown("attack")) {
@@ -266,7 +267,7 @@ void PlayerAttackStateBase::AttackCommonUpdate()
 			AttackMoveStart();
 		}
 		if (speedChange) {
-			p->playerCom.anim->SetPlaySpeed(4.5f);
+			p->playerCom.anim->SetPlaySpeed(3.5f);
 		}
 		beforeAttack = false;
 

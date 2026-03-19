@@ -41,9 +41,22 @@ void PlayerAttack5::Update()
 
 	Player* p = GetBase<Player>();
 	collsionCreate = false;
-	AttackCollsion();
+	//AttackCollsion();
 	PlayerAttackStateBase::Update();
 	//PlayerAttackStateBase::AttackCommonUpdate();
+	float frame = p->playerCom.anim->GetCurrentFrame();
+	bool collsion = (playerAttackData.collsionStartTime <= frame && playerAttackData.collsionFinishTime >= frame);
+	if (collsion) {
+		if (defalutTrail) {
+			p->playerCom.player->DrawTrail();
+		}
+		attackAgainStartCounter -= Time::DeltaTimeRate();
+		if (attackAgainStartCounter <= 0.0f) {
+			attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
+			AgainAttackCollsion();
+		}
+		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
+	}
 
 	if (!noStateChange) {
 		EnemyRotation();

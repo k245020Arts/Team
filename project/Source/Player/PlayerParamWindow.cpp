@@ -47,6 +47,11 @@ void PlayerParamWindow::PlayerParamWindowView()
 
             ImGui::DragFloat("noAttackRunTimer", &data.noAttackRunTimer, 0.01f);
             ImGui::DragFloat("nextAttackRunTimer", &data.nextAttackRunTimer, 0.01f);
+
+            ImGui::DragInt("attackNum", &data.attackNum, 1);
+            ImGui::DragFloat("attackAgainStartCounterMax", &data.attackAgainStartCounterMax, 1);
+
+
             ImGui::DragFloat("motionCancelTime", &data.motionCancelStartTime, 0.01f);
             ImGui::DragFloat("AttackInputStartTime", &data.attackInputStartTime, 0.01f);
 

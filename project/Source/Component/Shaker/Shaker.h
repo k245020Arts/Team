@@ -29,7 +29,7 @@ public:
 	/// <param name="rok">trueにするとヒットストップになってアニメーションとかも全部止まるようになる。falseにすると普通に動く</param>
 	/// <param name="_second">秒数</param>
 	/// <param name="_baseTransform">自身のtransform(obj->GetTransform())を使うのではなく、別のtransformを使いたいときはこれを書く。</param>
-	void ShakeStart(const VECTOR3& _power,ShakePattern _pattern,float rok,float _second);
+	void ShakeStart(const VECTOR3& _power,ShakePattern _pattern,bool rok,float _second);
 	/// <summary>
 	/// シェイクを始めたいときに呼ぶとshakeが出来る。
 	/// </summary>

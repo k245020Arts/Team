@@ -3,12 +3,15 @@
 #include "../../Component/Object/Object3D.h"
 #include "BossInformation.h"
 #include "../EnemyInformation.h"
+#include "../../Player/PlayerState/AttackState/PlayerAttack3.h"
+#include "../../State/StateManager.h"
 
 class Player;
 class CharaWeapon;
 class BossStatus;
 class BossRockManager;
 //class TrashEnemyManager;
+//class PlayerAttack3;
 
 class PlayerSpecialAttack;
 
@@ -140,6 +143,10 @@ public:
 	/// 突進でダメージを食らった時の処理
 	/// </summary>
 	void RockHitRushDamage();
+
+	std::shared_ptr<PlayerAttack3> GetStateState() {
+		return pState->GetState<PlayerAttack3>();
+	}
 
 private:
 	void PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps,VECTOR3 _randomPos,float _randomAngle);

@@ -38,7 +38,7 @@ void PlayerJustAvoidAttack1::Update()
 {
 	Player* p = GetBase<Player>();
 	collsionCreate = false;
-	AttackCollsion();
+	/*AttackCollsion();*/
 	PlayerAttackStateBase::Update();
 	if (p->playerCom.anim->AnimEventCan()) {
 		p->playerCom.player->DrawTrail(VECTOR3(0, 0, -100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
@@ -182,4 +182,5 @@ void PlayerJustAvoidAttack1::Finish()
 void PlayerJustAvoidAttack1::StateImguiDraw()
 {
 	ImGui::Text("distSize = %.f1", distSize);
+	ImGui::Text("distSize = %d", collsionCreate);
 }

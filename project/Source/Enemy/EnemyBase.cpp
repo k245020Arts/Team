@@ -5,12 +5,18 @@
 #include "../Weapon/WeaponManager.h"
 #include "../Component/Physics/Physics.h"
 #include "../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
+#include "../Player/PlayerState/AttackState/PlayerAttack3.h"
+#include "../Player/PlayerState/AttackState/PlayerAttack2.h"
 #include "../Common/Memory/MemoryCount.h"
 #include "EnemyManager.h"
 #include "../Common/LoadManager.h"
 #include "../Component/UI/EnemyDamageUI.h"
 #include "../Component/ComponentManager.h"
 #include "../Camera/Camera.h"
+
+namespace {
+	std::shared_ptr<PlayerAttackStateBase> pAttack;
+}
 
 EnemyBase::EnemyBase()
 {
@@ -70,10 +76,20 @@ void EnemyBase::Update()
 			PlayerHit();
 		}
 	}
-	if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
-		if (pState->GetState<PlayerAttackStateBase>()->GetCollsionCreate()) {
+	pAttack = pState->GetState<PlayerAttackStateBase>();
+	if (pAttack != nullptr) {
+		if (pAttack->GetCollsionCreate()) {
+			/*name = pAttack->GetString().c_str();*/
+			/*if (pState->GetState<PlayerAttack2>() != nullptr) {
+				Debug::DebugLogPrintfArgs("BossHitAttack2Reset = %s", name);
+			}*/
+			if (pState->GetState<PlayerAttack3>() != nullptr) {
+				Debug::DebugLogPrintfArgs("BossHitAttack3Reset = %s", name);
+			}
+			
 			hit = false;
 		}
+		
 	}
 	/*const Color::Rgb r = enemyBaseComponent.color->GetRgb();
 	enemyBaseComponent.color->setRGB(Color::Rgb(r.r, r.g, r.b, (float)alpha));*/

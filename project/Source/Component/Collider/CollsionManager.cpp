@@ -330,7 +330,7 @@ bool CollsionManager::CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, 
 		hitT = tMax;
 
 	_hitPos = startPos + dir * hitT;
-	Debug::DebugLog("AABBHit");
+	//Debug::DebugLog("AABBHit");
 
 	return true;
 }
