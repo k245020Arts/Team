@@ -7,7 +7,7 @@
 #include "../../Common/Easing.h"
 #include "../../Common/InputManager/ControllerInputManager.h"
 #include "../../Component/Color/Color.h"
-#include "../../Common/LoadManager.h"
+#include "../../Common/ResourceLoader.h"
 #include "../../Common/Function.h"
 #include "../../Common/Sound/SoundManager.h"
 #include "../../Component/MotionBlur/MotionBlur.h"

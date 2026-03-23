@@ -1,6 +1,6 @@
 #include "EffectBase.h"
 #include "../../Component/Object/Object3D.h"
-#include "../LoadManager.h"
+#include "../ResourceLoader.h"
 #include "../Easing.h"
 #include "EffectManager.h"
 
@@ -75,13 +75,13 @@ void EffectBase::EffectInit(Transform _transform, BaseObject* _parent, Effect_ID
 		effectPlay	= &EffectBase::EffectPlay3D;
 		effectStop	= &EffectBase::EffectStop3D;
 		effectColor = &EffectBase::SetColor3D;
-		hPlayHandle = PlayEffekseer3DEffect(Load::GetEffectHandle(id));
+		hPlayHandle = PlayEffekseer3DEffect(ResourceLoad::GetEffectHandle(id));
 	}
 	else {
 		effectPlay	= &EffectBase::EffectPlay2D;
 		effectStop	= &EffectBase::EffectStop2D;
 		effectColor = &EffectBase::SetColor2D;
-		hPlayHandle = PlayEffekseer2DEffect(Load::GetEffectHandle(id));
+		hPlayHandle = PlayEffekseer2DEffect(ResourceLoad::GetEffectHandle(id));
 	}
 	feedInTime		= FEEDIN_TIME;;
 }

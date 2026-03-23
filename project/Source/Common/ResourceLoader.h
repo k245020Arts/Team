@@ -8,7 +8,7 @@
 /// map上で管理されてそこからGetHandleをすることによって画像データを得ることが出来る
 /// </summary>
 
-namespace Load {
+namespace ResourceLoad {
 
 	//ロードを管理しているクラス。
 	//初期化処理

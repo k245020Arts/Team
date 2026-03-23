@@ -13,6 +13,20 @@
       "map" : "stage1.map",
       "bgm" : "titleBGM",
       "bossID" : 1
+    },
+    {
+     "id": 2,
+      "name" : "stage2",
+      "map" : "stage1.map",
+      "bgm" : "titleBGM",
+      "bossID" : 1
+    },
+    {
+     "id": 3,
+      "name" : "stage3",
+      "map" : "stage1.map",
+      "bgm" : "titleBGM",
+      "bossID" : 1
     }
   ]
 }

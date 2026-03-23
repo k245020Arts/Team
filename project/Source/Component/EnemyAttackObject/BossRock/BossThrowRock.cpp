@@ -7,7 +7,7 @@
 #include "../../ComponentManager.h"
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Common/Sound/SoundManager.h"
-#include "../../../Common/LoadManager.h"
+#include "../../../Common/ResourceLoader.h"
 #include "../../Physics/Physics.h"
 #include "BossRockManager.h"
 #include "../../../Common/Random.h"
@@ -84,7 +84,7 @@ void BossThrowRock::CreateThrowRock(VECTOR3& _addPos)
 	nowBlast = false;
 	throwReady = true;
 
-	throwRockBaseModel = Load::GetHandle(ID::B_MODEL);
+	throwRockBaseModel = ResourceLoad::GetHandle(ID::B_MODEL);
 	boneNum = 15;
 	addPos = _addPos;
 }

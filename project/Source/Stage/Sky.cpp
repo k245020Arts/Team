@@ -2,7 +2,7 @@
 #include "../Component/Object/Object3D.h"
 #include "../Component/MeshRenderer/MeshRenderer.h"
 #include "../Component/ComponentManager.h"
-#include "../Common/LoadManager.h"
+#include "../Common/ResourceLoader.h"
 #include "../Component/Transform/Transform.h"
 
 Sky::Sky()
@@ -32,7 +32,7 @@ void Sky::CreateSky()
 	sky->SetDrawOrder(10);
 
 	MeshRenderer* mesh = sky->Component()->AddComponent<MeshRenderer>();
-	mesh->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "sky/sky_2", ID::SKY));
+	mesh->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "sky/sky_2", ID::SKY));
 
 	sky2 = new Object3D();
 
@@ -40,6 +40,6 @@ void Sky::CreateSky()
 	sky2->SetDrawOrder(10);
 
 	MeshRenderer* mesh2 = sky2->Component()->AddComponent<MeshRenderer>();
-	mesh2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "sky/sky_2", ID::SKY));
+	mesh2->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "sky/sky_2", ID::SKY));
 
 }

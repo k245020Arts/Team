@@ -11,7 +11,7 @@
 #include "../Source/Stage/StageManager.h"
 #include "../Source/Player/PlayerManager.h"
 #include "../Source/Enemy/EnemyManager.h"
-#include "../Source/Common/LoadManager.h"
+#include "../Source/Common/ResourceLoader.h"
 #include "../Source/Component/Collider/CollsionManager.h"
 #include "../Source/Common/Debug/Debug.h"
 #include "../Source/Weapon/WeaponManager.h"

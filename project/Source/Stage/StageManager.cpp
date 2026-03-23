@@ -3,7 +3,7 @@
 #include "../Component/MeshRenderer/MeshRenderer.h"
 #include "stage.h"
 #include "../Component/ComponentManager.h"
-#include "../Common/LoadManager.h"
+#include "../Common/ResourceLoader.h"
 #include "Wall.h"
 #include "../Component/Collider/ModelCollider.h"
 #include "../Player/Player.h"
@@ -56,7 +56,7 @@ void StageManager::CreateStage()
 	
 	
 	MeshRenderer* mesh = stage->Component()->AddComponent<MeshRenderer>();
-	mesh->ModelHandle(Load::GetHandle(ID::S_MODEL));
+	mesh->ModelHandle(ResourceLoad::GetHandle(ID::S_MODEL));
 	Stage* stageComp = stage->Component()->AddComponent<Stage>();
 	CreateWall();
 
@@ -106,14 +106,14 @@ void StageManager::CreateWall()
 		mesh->ModelHandle(Load::GetHandle(ID::WALL));
 		mesh->DrawLocalPosition();*/
 		Wall* wall = obj->Component()->AddComponent<Wall>();
-		wall->ModelSet(Load::GetHandle(ID::WALL));
+		wall->ModelSet(ResourceLoad::GetHandle(ID::WALL));
 		ModelCollider* c = obj->Component()->AddComponent<ModelCollider>();
 		CollsionInfo info;
 		info.oneColl = false;
 		info.parentTransfrom = obj->GetTransform();
 		info.shape = CollsionInformation::MODEL;
 		info.tag = CollsionInformation::WALL;
-		c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel( Load::GetHandle(ID::WALL)));
+		c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(ResourceLoad::GetHandle(ID::WALL)));
 		stage->AddChild(obj,false);
 	}
 	/*Object3D* obj = new Object3D();
@@ -145,7 +145,7 @@ void StageManager::CreateFloor()
 	info.parentTransfrom = obj->GetTransform();
 	info.shape = CollsionInformation::MODEL;
 	info.tag = CollsionInformation::FLOOR;
-	c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(Load::GetHandle(ID::WALL)));
+	c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(ResourceLoad::GetHandle(ID::WALL)));
 	stage->AddChild(obj, false);
 	//}
 	

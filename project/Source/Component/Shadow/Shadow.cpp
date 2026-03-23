@@ -1,6 +1,6 @@
 #include "Shadow.h"
 #include "../../Common/ID/ID.h"
-#include "../../Common/LoadManager.h"
+#include "../../Common/ResourceLoader.h"
 #include "../MeshRenderer/MeshRenderer.h"
 #include "../Color/Color.h"
 #include "../ComponentManager.h"
@@ -32,7 +32,7 @@ void Shadow::Draw()
 void Shadow::Start(int _height)  
 {  
 	obj = GetBaseObject();
-    model = Load::LoadModel(Load::MODEL_PATH + "shadow1", ID::SHADOW);  
+    model = ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "shadow1", ID::SHADOW);
     MeshRenderer* mesh = GetBaseObject()->Component()->AddComponent<MeshRenderer>();  
     mesh->ModelHandle(model);  
     mesh->DrawLocalPosition();  

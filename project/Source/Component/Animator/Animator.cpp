@@ -2,7 +2,7 @@
 #include <string>
 #include <assert.h>
 #include "../../../Library/time.h"
-#include "../../Common/LoadManager.h"
+#include "../../Common/ResourceLoader.h"
 #include "../../../ImGui/imgui.h"
 #include "../Transform/Transform.h"
 #include <algorithm> 
@@ -181,7 +181,7 @@ void Animator::Update()
 void Animator::AddFile(ID::IDType id, std::string filename, bool loop, float speed, float _eventStart, float _eventFinish)
 {
     AnimFileInfo inf;
-    inf.hModel = Load::LoadAnim(filename, id);
+    inf.hModel = ResourceLoad::LoadAnim(filename, id);
     std::string str = ID::GetID(id);
     inf.fileName = filename;
     assert(inf.hModel > 0);
@@ -374,7 +374,7 @@ void Animator::AnimDataLoad(const std::string& _path)
         AnimFileInfo info ;
         j.get_to(info);
         
-        info.hModel = Load::GetHandle(ID::StringToID(info.id));
+        info.hModel = ResourceLoad::GetHandle(ID::StringToID(info.id));
         fileInfos[info.id] = info;
     }
 }

@@ -1,6 +1,6 @@
 #include "BootScene.h"
 #include "../Source/Common/InputManager/InputManager.h"
-#include "../Source/Common/LoadManager.h"
+#include "../Source/Common/ResourceLoader.h"
 #include "../Source/Component/Collider/CollsionManager.h"
 #include "../Source/Common/Sound/SoundManager.h"
 #include "../Source/Common/Effect/EffectManager.h"
@@ -13,7 +13,7 @@
 BootScene::BootScene()
 {
 	InputManager* input			= InputManager::GetInstance();
-	Load::Init();
+	ResourceLoad::Init();
 	ID::Init();
 	Sound_ID::InitID();
 	Debug::InitDebug(input);
@@ -24,8 +24,8 @@ BootScene::BootScene()
 	new CollsionManager();
 	new Fead();
 	/*Load::SetAsync(false);*/
-	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL, true);
-	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL, true);
+	ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "stage_s", ID::S_MODEL, true);
+	ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "cube", ID::WALL, true);
 
 }
 

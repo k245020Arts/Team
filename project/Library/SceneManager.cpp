@@ -4,7 +4,7 @@
 #include <DxLib.h>
 #include "../Source/Common/Memory/MemoryCount.h"
 #include "../Source/Common/Debug/Debug.h"
-#include "../Source/Common/LoadManager.h"
+#include "../Source/Common/ResourceLoader.h"
 #include "../Source/Common/ID/EffectID.h"
 #include "../Source/Common/ID/ID.h"
 #include "../Source/Common/ID/SoundID.h"
@@ -41,7 +41,7 @@ void SceneManager::Update()
 			ObjectManager::DeleteAllGameObject();
 			delete m_currentScene;
 			m_currentScene = nullptr;
-			Load::FileLoadClear();
+			ResourceLoad::FileLoadClear();
 		}
 		m_currentScene = m_factory->Create(*m_nextName); // Ÿ‚ÌƒV[ƒ“‚ğì¬
 		*m_currentName = *m_nextName;

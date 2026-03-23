@@ -2,7 +2,7 @@
 #include "../Animator/Animator.h"
 #include "../ComponentManager.h"
 #include "../Transform/Transform.h"
-#include "../../Common/LoadManager.h"
+#include "../../Common/ResourceLoader.h"
 
 MotionBlur::MotionBlur()
 {
@@ -66,7 +66,7 @@ void MotionBlur::MosionStart(float _time, float _alpha,ID::IDType _id, int _mode
 	b.transform				= *obj->GetTransform();
 	b.transform.rotation.y	+= 180.0f * DegToRad;
 	b.matrix				= b.transform.GetMatrix();
-	b.attackID				= MV1AttachAnim(b.baseModel, 0, Load::GetHandle(_id));
+	b.attackID				= MV1AttachAnim(b.baseModel, 0, ResourceLoad::GetHandle(_id));
 
 	MV1SetAttachAnimTime(b.baseModel, b.attackID, b.animFrame);
 	MATRIX identity = MGetIdent();

@@ -26,7 +26,7 @@
 #include "Common/Effect/EffectManager.h"
 #include "Weapon/WeaponManager.h"
 #include "Component/MotionBlur/MotionBlur.h"
-#include "Common/LoadManager.h"
+#include "Common/ResourceLoader.h"
 #include "Common/Transitor/FadeTransitor.h"
 #include "Common/Easing.h"
 

@@ -35,7 +35,7 @@
 #include "../Player/PlayerState/AttackState/playerAttack4.h"
 #include "../Player/PlayerState/AttackState/PlayerAttack5.h"
 #include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
-#include "../Common/LoadManager.h"
+#include "../Common/ResourceLoader.h"
 //#include "../Enemy/TrashEnemy/Enemy.h"
 #include "../Enemy/TrashEnemy/EnemyState/EnemyStateManager.h"
 //#include "../Enemy/TrashEnemy/EnemyState/AttackState/EnemyAttack1.h"
@@ -86,7 +86,7 @@ Player::Player()
 	hp							= MAX_HP;
 	maxHp						= hp;
 	avoidReadyCounter			= 0.0f;
-	justAvoidBlurImage			= Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::JUST_AVOID_BLUR);
+	justAvoidBlurImage			= ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "visionEffect", ID::JUST_AVOID_BLUR);
 	justFeedInTime				= 0.0f;
 	justFeedOutTime				= 0.0f;
 	bossThreat					= false;

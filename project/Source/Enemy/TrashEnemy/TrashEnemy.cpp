@@ -20,7 +20,7 @@
 #include "../../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
 #include "../../Weapon/SwordEffect.h"
 #include "../../Weapon/CharaWeapon.h"
-#include "../../Common/LoadManager.h"
+#include "../../Common/ResourceLoader.h"
 #include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 
 #include "TrashEnemyState/T_EnemyStatus.h"
@@ -297,7 +297,7 @@ void TrashEnemy::Start(Object3D* _obj)
 
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::E_MODEL, -1);
-	chara->SetImage(Load::GetHandle(ID::SWORD_EFFECT_B));
+	chara->SetImage(ResourceLoad::GetHandle(ID::SWORD_EFFECT_B));
 
 	//active = true;
 }

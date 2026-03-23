@@ -1,4 +1,4 @@
-#include "LoadManager.h"
+#include "ResourceLoader.h"
 #include <unordered_map>
 #include <array>
 #include <EffekseerForDXLib.h>
@@ -70,18 +70,18 @@ namespace {
 	
 }
 
-void Load::Init()
+void ResourceLoad::Init()
 {
 	fileLoad.clear();
 }
 
 // 共通データと通常データを管理するLoadクラスの例
 
-int Load::LoadModel(std::string path, ID::IDType id) {
+int ResourceLoad::LoadModel(std::string path, ID::IDType id) {
     return LoadModel(path, id, false);
 }
 
-int Load::LoadModel(std::string path, ID::IDType id, bool _common) {
+int ResourceLoad::LoadModel(std::string path, ID::IDType id, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad;
 
@@ -101,17 +101,17 @@ int Load::LoadModel(std::string path, ID::IDType id, bool _common) {
     return targetLoad[name].handle;
 }
 
-int Load::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id) {
+int ResourceLoad::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id) {
     // 通常版は _common = false
     return LoadSound(path, exten, id, false);
 }
 
-int Load::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id, bool _common) {
+int ResourceLoad::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad;
 
     if (targetLoad[name].handle == -1) {
-        std::string loadName = Load::SOUND_PATH + path + exten;
+        std::string loadName = ResourceLoad::SOUND_PATH + path + exten;
         targetLoad[name].handle = LoadSoundMem(loadName.c_str());
         targetLoad[name].type = Type::SOUND;
         Sound_ID::SetSoundId(path, id);
@@ -126,17 +126,17 @@ int Load::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id, 
     return targetLoad[name].handle;
 }
 
-int Load::LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size) {
+int ResourceLoad::LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size) {
     return LoadEffect(path, _exten, id,size, false);
 }
 
 
-int Load::LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size, bool _common) {
+int ResourceLoad::LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad;
 
     if (targetLoad[name].handle == -1) {
-        std::string loadName = Load::EFFECT_PATH + path + _exten;
+        std::string loadName = ResourceLoad::EFFECT_PATH + path + _exten;
         targetLoad[name].handle = LoadEffekseerEffect(loadName.c_str(), size);
         targetLoad[name].type = Type::EFFECT;
         Effect_ID::SetEffectID(path, id);
@@ -151,11 +151,11 @@ int Load::LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID 
     return targetLoad[name].handle;
 }
 
-int Load::LoadImageGraph(std::string path, ID::IDType id) {
+int ResourceLoad::LoadImageGraph(std::string path, ID::IDType id) {
     return LoadImageGraph(path, id, false);
 }
 
-int Load::LoadImageGraph(std::string path, ID::IDType id, bool _common) {
+int ResourceLoad::LoadImageGraph(std::string path, ID::IDType id, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad;
 
@@ -175,17 +175,17 @@ int Load::LoadImageGraph(std::string path, ID::IDType id, bool _common) {
     return targetLoad[name].handle;
 }
 
-int Load::LoadAnim(std::string path, ID::IDType id) {
+int ResourceLoad::LoadAnim(std::string path, ID::IDType id) {
     return LoadAnim(path, id, false);
 }
 
-int Load::LoadAnim(std::string path, ID::IDType id, bool _common) {
+int ResourceLoad::LoadAnim(std::string path, ID::IDType id, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad;
 
     if (targetLoad[name].handle == -1) {
         ID::SetID(path, id);
-        std::string loadName = Load::ANIM_PATH + path;
+        std::string loadName = ResourceLoad::ANIM_PATH + path;
         loadName += ".mv1";
         targetLoad[name].handle = MV1LoadModel(loadName.c_str());
         targetLoad[name].type = Type::ANIM;
@@ -201,7 +201,7 @@ int Load::LoadAnim(std::string path, ID::IDType id, bool _common) {
 }
 
 // 共通と通常の両方から検索するGetHandle
-int Load::GetHandle(ID::IDType id) {
+int ResourceLoad::GetHandle(ID::IDType id) {
     std::string name = ID::GetID(id);
 
     auto it = fileLoad.find(name);
@@ -218,7 +218,7 @@ int Load::GetHandle(ID::IDType id) {
     return -1;
 }
 
-int Load::GetSoundHandle(Sound_ID::SOUND_ID id) {
+int ResourceLoad::GetSoundHandle(Sound_ID::SOUND_ID id) {
     std::string name = Sound_ID::GetSoundID(id);
 
     auto it = fileLoad.find(name);
@@ -235,7 +235,7 @@ int Load::GetSoundHandle(Sound_ID::SOUND_ID id) {
     return -1;
 }
 
-int Load::GetEffectHandle(Effect_ID::EFFECT_ID id) {
+int ResourceLoad::GetEffectHandle(Effect_ID::EFFECT_ID id) {
     std::string name = Effect_ID::GetEffectID(id);
 
     auto it = fileLoad.find(name);
@@ -253,7 +253,7 @@ int Load::GetEffectHandle(Effect_ID::EFFECT_ID id) {
 }
 
 // DeleteDataで_commonフラグ対応
-void Load::DeleteData(ID::IDType id, bool _common) {
+void ResourceLoad::DeleteData(ID::IDType id, bool _common) {
     std::string name = ID::GetID(id);
     auto& targetLoad = _common ? commonFileLoad : fileLoad;
 
@@ -283,7 +283,7 @@ void Load::DeleteData(ID::IDType id, bool _common) {
 }
 
 // fileLoadのみ全削除
-void Load::FileLoadClear() {
+void ResourceLoad::FileLoadClear() {
     for (auto& f : fileLoad) {
         switch (f.second.type)
         {
@@ -308,7 +308,7 @@ void Load::FileLoadClear() {
 }
 
 // 共通も含めて全削除
-void Load::AllDelete() {
+void ResourceLoad::AllDelete() {
     FileLoadClear();
     for (auto& f : commonFileLoad) {
         switch (f.second.type)
@@ -333,12 +333,12 @@ void Load::AllDelete() {
     commonFileLoad.clear();    
 }
 
-void Load::SetAsync(bool _async)
+void ResourceLoad::SetAsync(bool _async)
 {
 	SetUseASyncLoadFlag(_async);
 }
 
-bool Load::IsLoading()
+bool ResourceLoad::IsLoading()
 {
 	return (GetASyncLoadNum() > 0);
 }

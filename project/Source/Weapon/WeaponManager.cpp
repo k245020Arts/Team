@@ -2,7 +2,7 @@
 #include "../Component/Object/Object3D.h"
 #include "../Component/Transform/transform.h"
 #include "../Component/MeshRenderer/MeshRenderer.h"
-#include "../Common/LoadManager.h"
+#include "../Common/ResourceLoader.h"
 #include "CharaWeapon.h"
 #include "../Component/ComponentManager.h"
 
@@ -29,7 +29,7 @@ void WeaponManager::Draw()
 void WeaponManager::CreatePlayerWeapon()
 {
 	pObj =  new Object3D();
-	pObj->Init((VECTOR3)MV1GetFramePosition(Load::GetHandle(ID::P_MODEL), 73), VZero, VECTOR3(30, 30, 30), "PLAYER_WEAPON");
+	pObj->Init((VECTOR3)MV1GetFramePosition(ResourceLoad::GetHandle(ID::P_MODEL), 73), VZero, VECTOR3(30, 30, 30), "PLAYER_WEAPON");
 
 	Object3D* player = FindGameObjectWithTag<Object3D>("PLAYER");
 	
@@ -38,10 +38,10 @@ void WeaponManager::CreatePlayerWeapon()
 	//CharaWeapon* weaponL = pW->Component()->AddComponent<CharaWeapon>();
 
 	//pWeapon->ObjectPointer(player,57,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword", ID::IDType::P_WEAPON));
-	pWeapon->ObjectPointer(player,73,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword6", ID::IDType::P_WEAPON));
+	pWeapon->ObjectPointer(player,73,ID::P_MODEL, ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "Sword6", ID::IDType::P_WEAPON));
 	//pWeapon->ObjectPointer(player,73,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "New_Sword", ID::IDType::P_WEAPON));
 	//pWeapon->ObjectPointer(player,73,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "New_Sword", ID::IDType::P_WEAPON));
-	pWeapon->SetImage(Load::GetHandle(ID::SWORD_EFFECT));
+	pWeapon->SetImage(ResourceLoad::GetHandle(ID::SWORD_EFFECT));
 	//pWeapon->CreateSwordEffect();
 	//weaponL->ObjectPointer(player,9,ID::P_MODEL, Load::LoadModel(Load::MODEL_PATH + "Sword", ID::IDType::P_WEAPON));
 }
@@ -49,14 +49,14 @@ void WeaponManager::CreatePlayerWeapon()
 void WeaponManager::CreateEnemyWeapon()
 {
 	eObj = new Object3D();
-	eObj->Init((VECTOR3)MV1GetFramePosition(Load::GetHandle(ID::E_MODEL), 28), VECTOR3(0.0f,0.0f,90.0f * DegToRad), VECTOR3(1, 1, 1), "ENEMY_WEAPON");
+	eObj->Init((VECTOR3)MV1GetFramePosition(ResourceLoad::GetHandle(ID::E_MODEL), 28), VECTOR3(0.0f,0.0f,90.0f * DegToRad), VECTOR3(1, 1, 1), "ENEMY_WEAPON");
 
 	Object3D* enemy = FindGameObjectWithTag<Object3D>("ENEMY");
 
 	eWeapon = eObj->Component()->AddComponent<CharaWeapon>();
 
 	eWeapon->ObjectPointer(enemy, 10, ID::E_MODEL, -1);
-	eWeapon->SetImage(Load::GetHandle(ID::SWORD_EFFECT));
+	eWeapon->SetImage(ResourceLoad::GetHandle(ID::SWORD_EFFECT));
 	//wea->CreateSwordEffect();
 }
 

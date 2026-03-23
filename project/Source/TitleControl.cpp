@@ -10,7 +10,7 @@
 #include "../Source/Common/Transitor/IrisTransitor.h"
 #include "../Source/Common/Debug/Debug.h"
 #include "../Source/Common/InputManager/inputManager.h"
-#include "../Source/Common/LoadManager.h"
+#include "../Source/Common/ResourceLoader.h"
 #include "../Source/Common/Sound/SoundManager.h"
 #include "../Source/Common/Easing.h"
 #include "State/StateManager.h"
@@ -20,9 +20,9 @@
 TitleControl::TitleControl()
 {
 
-	hImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Title", ID::TITLE_BACK);
-	titleImage = Load::LoadImageGraph(Load::IMAGE_PATH + "TitleImage", ID::TITLE);
-	keyImage = Load::LoadImageGraph(Load::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
+	hImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Title", ID::TITLE_BACK);
+	titleImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "TitleImage", ID::TITLE);
+	keyImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
 	SoundManager::GetInstance()->AllDeleteSound();
 	SoundManager::GetInstance()->TitleSceneLoad();
 	SoundManager::GetInstance()->PlayBGM(Sound_ID::TITLE_BGM, true, true);
@@ -37,6 +37,8 @@ TitleControl::TitleControl()
 	player = obj->Component()->GetComponent<TitlePlayer>();
 
 	SetDrawOrder(-100);
+	stageID = 0;
+	selectCounter = 0.0f;
 }
 
 TitleControl::~TitleControl()
@@ -65,7 +67,13 @@ void TitleControl::Update()
 		SoundManager::GetInstance()->PlaySe(Sound_ID::V_P_JUST_AVOID);
 
 		player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
-		StageSelectData::GetInstance()->SetStageID(0);
+		StageSelectData::GetInstance()->SetStageID(stageID);
+	}
+
+	StageSelect();
+
+	if (selectCounter >= 0.0f) {
+		selectCounter -= Time::DeltaTimeRate();
 	}
 
 	if (firstCounter > 0.0f) 
@@ -119,6 +127,31 @@ void TitleControl::SetNowProgress(float nowProgress)
 	progress = nowProgress;
 }
 
+void TitleControl::StageSelect()
+{
+	if (selectCounter > 0.0f) {
+		return;
+	}
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x >= 0.5f) {
+		stageID++;
+		int stageMax = StageSelectData::GetInstance()->GetStageMax() - 1;
+		if (stageID >= stageMax) {
+			stageID = stageMax;
+		}
+		StageSelectData::GetInstance()->SetStageID(stageID);
+		selectCounter = 0.5f;
+	}
+
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x <= -0.5f) {
+		stageID--;
+		if (stageID <= 0) {
+			stageID = 0;
+		}
+		StageSelectData::GetInstance()->SetStageID(stageID);
+		selectCounter = 0.5f;
+	}
+}
+
 void TitleControl::Draw()
 {
 	/*DrawGraph(0, 0, hImage, true);*/
@@ -126,5 +159,7 @@ void TitleControl::Draw()
 	if (progress > 0)
 		return;
 	DrawRotaGraph(Screen::WIDTH / 2, 850, (double)exrate * 2,0.0,keyImage, true);
+
+	DrawFormatString(500, 500, 0xffffff, StageSelectData::GetInstance()->GetNowStageData().name.c_str());
 }
 

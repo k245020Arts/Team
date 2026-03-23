@@ -3,7 +3,7 @@
 #include "ObjectManager.h"
 #include "Time.h"
 #include <DxLib.h>
-#include "../Source/Common/LoadManager.h"
+#include "../Source/Common/ResourceLoader.h"
 #include "../Source/Common/Singleton/SingleTonUpdater.h"
 
 void AppInit()
@@ -39,7 +39,7 @@ void AppRelease()
 	SceneManager::Release();
 	ObjectManager::Release();
 	SingleTonUpdater::Release();
-	Load::AllDelete();
+	ResourceLoad::AllDelete();
 
 }
 

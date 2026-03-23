@@ -1,6 +1,6 @@
 #include "BlurScreen.h"
 #include "../../Source/Screen.h"
-#include "LoadManager.h"
+#include "ResourceLoader.h"
 
 #define NEW_VERSION  (0);
 #define OLD_VERSION  (1);
@@ -23,7 +23,7 @@ BlurScreen::BlurScreen()
 	vignetteGraph	= -1;
 
 	
-	vignetteGraph	= Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::SCREEN_BLUR_IMAGE);
+	vignetteGraph	= ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "visionEffect", ID::SCREEN_BLUR_IMAGE);
 	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_DOWN_SCALE, 4);
 	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_GAUSS, 256, 128);
 	
