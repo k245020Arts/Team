@@ -5,11 +5,12 @@
 #include <nlohmann/json.hpp>
 #include "../Common/JsonReader.h"
 
+
 struct StageData
 {
 	int id;
 	std::string name;
-	std::string mapFile;
+    int stageModelID;
 	std::string bgm;
     int bossID;
 };
@@ -41,10 +42,10 @@ public:
 
             stage.id = elem.value("id", -1);
             stage.name = elem.value("name", "");
-            stage.mapFile = elem.value("map", "");
+            stage.stageModelID = elem.value("map", -1);
             stage.bgm = elem.value("bgm", "");
             stage.bossID = elem.value("bossID", -1);
-
+            
             stages.push_back(stage);
         }
 

@@ -111,6 +111,7 @@ namespace ID {
 		BOSS_FEAR,
 		B_BACKSTEP,
 		B_WIN,
+		PLAY_SCENE_BACKGROUND_MODEL,
 		ID_MAX,
 	};
 

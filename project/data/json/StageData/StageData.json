@@ -3,29 +3,29 @@
    {
      "id": 0,
       "name" : "stage0",
-      "map" : "new_Stage6",
+      "map" : 0,
       "bgm" : "PlaySceneBGM",
       "bossID" : 0
    },
    {
      "id": 1,
       "name" : "stage1",
-      "map" : "stage1.map",
-      "bgm" : "titleBGM",
+      "map" : 1,
+      "bgm" : "PlaySceneBGM2",
       "bossID" : 1
     },
     {
      "id": 2,
       "name" : "stage2",
-      "map" : "stage1.map",
-      "bgm" : "titleBGM",
+      "map" : 1,
+      "bgm" : "PlaySceneBGM2",
       "bossID" : 1
     },
     {
      "id": 3,
       "name" : "stage3",
-      "map" : "stage1.map",
-      "bgm" : "titleBGM",
+      "map" : 1,
+      "bgm" : "PlaySceneBGM2",
       "bossID" : 1
     }
   ]

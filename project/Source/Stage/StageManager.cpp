@@ -11,6 +11,7 @@
 #include "../Component/Object/Object3D.h"
 #include "Sky.h"
 #include "../Component/Collider/AABBCollider.h"
+#include "StageSelectData.h"
 
 #define NEW_STAGE
 
@@ -24,7 +25,7 @@ StageManager::StageManager()
 	Load::LoadModel(Load::MODEL_PATH +  "new_Stage6", ID::S_MODEL);
 #endif // NEW_STAGE
 
-	
+	Load("data/json/StageData/StageModelData.json");
 	
 	stage = nullptr;
 	modelHandle = -1;
@@ -48,15 +49,18 @@ void StageManager::CreateStage()
 {
 	
 	stage = new Object3D();
+	
 #ifdef NEW_STAGE
-	stage->Init(VECTOR3(25000, -4000, 20000), VZero, VECTOR3(10, 10, 10), "STAGE");
+	stage->Init(stageModelData[StageSelectData::GetInstance()->GetNowStageData().stageModelID].transform, "STAGE");
 #else
 	stage->Init(VECTOR3(100, 0, 100), VZero, VECTOR3(10, 10, 10), "STAGE");
 #endif
 	
 	
 	MeshRenderer* mesh = stage->Component()->AddComponent<MeshRenderer>();
-	mesh->ModelHandle(ResourceLoad::GetHandle(ID::S_MODEL));
+	std::string mapName = stageModelData[StageSelectData::GetInstance()->GetNowStageData().stageModelID].mapFile;
+	ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH +  mapName, ID::PLAY_SCENE_BACKGROUND_MODEL);
+	mesh->ModelHandle(ResourceLoad::GetHandle(ID::PLAY_SCENE_BACKGROUND_MODEL));
 	Stage* stageComp = stage->Component()->AddComponent<Stage>();
 	CreateWall();
 
