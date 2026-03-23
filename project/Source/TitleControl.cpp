@@ -15,6 +15,7 @@
 #include "../Source/Common/Easing.h"
 #include "State/StateManager.h"
 #include "Screen.h"
+#include "Stage/StageSelectData.h"
 
 TitleControl::TitleControl()
 {
@@ -54,6 +55,7 @@ void TitleControl::Update()
 
 	if (InputManager::GetInstance()->KeyInputDown("SceneChange") && progress == 0) // ‰Ÿ‚µ‚½‚ç
 	{
+		SoundManager::GetInstance()->AllDeleteSound();
 		SoundManager::GetInstance()->TitleSceneLoad();
 
 		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
@@ -63,8 +65,8 @@ void TitleControl::Update()
 		SoundManager::GetInstance()->PlaySe(Sound_ID::V_P_JUST_AVOID);
 
 		player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
+		StageSelectData::GetInstance()->SetStageID(0);
 	}
-
 
 	if (firstCounter > 0.0f) 
 	{

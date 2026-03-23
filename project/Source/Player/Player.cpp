@@ -116,6 +116,7 @@ Player::~Player()
 	justAvoidBlurImage = -1;
 	if (paramWindow != nullptr) {
 		delete paramWindow;
+		paramWindow = nullptr;
 	}
 }
 

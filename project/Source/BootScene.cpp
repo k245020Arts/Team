@@ -23,7 +23,7 @@ BootScene::BootScene()
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();
 	new Fead();
-	//Load::SetAsync(false);
+	/*Load::SetAsync(false);*/
 	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL, true);
 	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL, true);
 
@@ -37,8 +37,8 @@ void BootScene::Update()
 {
 	
 	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
-	SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
-	
+	//SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
+	//SceneManager::Exit();
 }
 
 void BootScene::Draw()

@@ -110,6 +110,7 @@ PlayScene::~PlayScene()
 	//Load::AllDelete();
 	//int i = Load::GetCounter();
 	Debug::ClearLogger();
+	//EffectManager::GetInstance()-> DeleteAllEffect();
 }
 
 void PlayScene::Update()

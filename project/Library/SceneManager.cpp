@@ -49,7 +49,7 @@ void SceneManager::Update()
 	if (m_currentScene != nullptr)
 	{
 		m_currentScene->Update();
-		Debug::DebugUpdate();
+		//Debug::DebugUpdate();
 	}
 }
 

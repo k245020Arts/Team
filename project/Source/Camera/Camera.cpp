@@ -204,7 +204,12 @@ void Camera::PlayerSet(BaseObject* _obj)
 
 	cameraComponent.state->SetComponent<Camera>(this);
 	cameraComponent.state->StartState(StateID::FREE_CAMERA_S);
-	FindGameObject<Hierachy>()->SetCameraEditor(this);
+
+	Hierachy* h = FindGameObject<Hierachy>();
+	if (h != nullptr)
+	{
+		h->SetCameraEditor(this);
+	}
 	CutSceneChangeState("PlayingBefore",true);
 	//CameraRotationSet();
 }

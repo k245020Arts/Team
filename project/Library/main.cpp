@@ -36,7 +36,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 #ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(20813);
+	//_CrtSetBreakAlloc(132931);
 #endif
 	SetGraphMode(Screen::WIDTH, Screen::HEIGHT, 32);
 	SetOutApplicationLogValidFlag(FALSE); // ログを出さない
@@ -224,8 +224,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 #ifdef _CRTDBG_MAP_ALLOC
 #ifdef _DEBUG
 	size_t memorySize2 = GetMemory();
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	//_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+	//_CrtDumpMemoryLeaks();
 	
 #endif
 #endif

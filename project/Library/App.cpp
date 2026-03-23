@@ -30,6 +30,11 @@ void AppDraw()
 
 void AppRelease()
 {
+	// DontDestroyフラグを全解除してから終了
+	/*for (GameObject* obj : ObjectManager::GetAllObject()) {
+		obj->DontDestroyOnSceneChange(false);
+	}*/
+
 	Time::Release();
 	SceneManager::Release();
 	ObjectManager::Release();

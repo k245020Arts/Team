@@ -57,7 +57,6 @@ void Animator::BaseModelSet(int _model, std::string _rootName)
 {
     baseModel = _model;
     rootNum = MV1SearchFrame(_model, _rootName.c_str());
-
 }
 
 void Animator::Update()

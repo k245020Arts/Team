@@ -5,6 +5,7 @@
 #include "../../Component/Object/BaseObject.h"
 #include "../../Component/Transform/Transform.h"
 #include "../Easing.h"
+#include "../../Stage/StageSelectData.h"
 
 SoundManager::SoundManager()
 {
@@ -97,7 +98,8 @@ void SoundManager::PlaySceneLoad()
 
 	SoundLoad(Sound_ID::SOUND_ID::JUST_AVOID_SUCCESS, "success", ".wav", 255);
 
-	SoundLoad(Sound_ID::SOUND_ID::PLAY_BGM, "PlaySceneBGM", ".wav", 150);
+	std::string bgmName = StageSelectData::GetInstance()->GetNowStageData().bgm;
+	SoundLoad(Sound_ID::SOUND_ID::PLAY_BGM, bgmName, ".wav", 150);
 	SoundLoad(Sound_ID::SOUND_ID::WIN, "winSe", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::LOSE, "loseSe", ".mp3", 200);
 

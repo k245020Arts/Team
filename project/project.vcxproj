@@ -339,6 +339,7 @@
     <ClInclude Include="Source\Stage\Sky.h" />
     <ClInclude Include="Source\Stage\Stage.h" />
     <ClInclude Include="Source\Stage\StageManager.h" />
+    <ClInclude Include="Source\Stage\StageSelectData.h" />
     <ClInclude Include="Source\Stage\Wall.h" />
     <ClInclude Include="Source\State\StateBase.h" />
     <ClInclude Include="Source\State\StateManager.h" />
@@ -531,6 +532,7 @@
     <ClCompile Include="Source\Stage\Sky.cpp" />
     <ClCompile Include="Source\Stage\Stage.cpp" />
     <ClCompile Include="Source\Stage\StageManager.cpp" />
+    <ClCompile Include="Source\Stage\StageSelectData.cpp" />
     <ClCompile Include="Source\Stage\Wall.cpp" />
     <ClCompile Include="Source\State\StateManager.cpp" />
     <ClCompile Include="Source\TitleCamera.cpp" />

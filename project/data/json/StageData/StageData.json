@@ -1,0 +1,18 @@
+{
+   "stages": [
+   {
+     "id": 0,
+      "name" : "stage0",
+      "map" : "new_Stage6",
+      "bgm" : "PlaySceneBGM",
+      "bossID" : 0
+   },
+   {
+     "id": 1,
+      "name" : "stage1",
+      "map" : "stage1.map",
+      "bgm" : "titleBGM",
+      "bossID" : 1
+    }
+  ]
+}
