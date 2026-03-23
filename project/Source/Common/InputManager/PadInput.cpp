@@ -1,20 +1,20 @@
-#include "controllerInputManager.h"
+#include "PadInput.h"
 #include "inputManager.h"
 
-ControllerInputManager::ControllerInputManager()
+PadInput::PadInput()
 {
 	playerNumber = PLAYER_1;
 	//DontDestroyOnSceneChange(true);
 }
 
-ControllerInputManager::~ControllerInputManager()
+PadInput::~PadInput()
 {
 	//コントローラーの振動を最後に止める。
 	StopJoypadVibration(playerNumber);
 	input.clear();
 }
 
-void ControllerInputManager::Update()
+void PadInput::Update()
 {
 	GetJoypadXInputState(playerNumber, &inputNow);
 	switch (playerNumber)
@@ -42,7 +42,7 @@ void ControllerInputManager::Update()
 	}
 }
 
-bool ControllerInputManager::GetAnyButtonPush(bool _getStick, int _backFrame)
+bool PadInput::GetAnyButtonPush(bool _getStick, int _backFrame)
 {
 	if (input.size() < 1)
 	{
@@ -87,17 +87,17 @@ bool ControllerInputManager::GetAnyButtonPush(bool _getStick, int _backFrame)
 	return false;
 }
 
-bool ControllerInputManager::GetAnyButtonPush(bool _getStick)
+bool PadInput::GetAnyButtonPush(bool _getStick)
 {
 	return GetAnyButtonPush(_getStick, 0);
 }
 
-bool ControllerInputManager::GetAnyButtonPut(bool _getStick)
+bool PadInput::GetAnyButtonPut(bool _getStick)
 {
 	return (GetAnyButtonPush(_getStick, 0) && !GetAnyButtonPush(_getStick, 1));
 }
 
-bool ControllerInputManager::GetIsButtonPushingNow(int _button)
+bool PadInput::GetIsButtonPushingNow(int _button)
 {
 	if (input.front().Buttons[_button])
 	{
@@ -109,7 +109,7 @@ bool ControllerInputManager::GetIsButtonPushingNow(int _button)
 	}
 }
 
-bool ControllerInputManager::GetIsButtonPutNow(int _button)
+bool PadInput::GetIsButtonPutNow(int _button)
 {
 	if (input.size() > 1)
 	{
@@ -133,7 +133,7 @@ bool ControllerInputManager::GetIsButtonPutNow(int _button)
 	}
 }
 
-bool ControllerInputManager::GetIsButtonReleaseNow(int _button)
+bool PadInput::GetIsButtonReleaseNow(int _button)
 {
 	if (input.size() > 1)
 	{
@@ -157,7 +157,7 @@ bool ControllerInputManager::GetIsButtonReleaseNow(int _button)
 	}
 }
 
-/*bool ControllerInputManager::GetIsButtonPushingPast(int _button, int _frameNum)
+/*bool PadInput::GetIsButtonPushingPast(int _button, int _frameNum)
 {
 	std::list<XINPUT_STATE>::iterator it = input.begin();
 	XINPUT_STATE now = *it;
@@ -179,7 +179,7 @@ bool ControllerInputManager::GetIsButtonReleaseNow(int _button)
 	}
 }
 
-bool ControllerInputManager::GetIsButtonPutPast(int _button, int _frameNum)
+bool PadInput::GetIsButtonPutPast(int _button, int _frameNum)
 {
 	std::list<XINPUT_STATE>::iterator it = input.begin();
 
@@ -204,7 +204,7 @@ bool ControllerInputManager::GetIsButtonPutPast(int _button, int _frameNum)
 	}
 }
 
-bool ControllerInputManager::GetIsButtonReleasePast(int _button, int _frameNum)
+bool PadInput::GetIsButtonReleasePast(int _button, int _frameNum)
 {
 	std::list<XINPUT_STATE>::iterator it = input.begin();
 
@@ -229,7 +229,7 @@ bool ControllerInputManager::GetIsButtonReleasePast(int _button, int _frameNum)
 	}
 }*/
 
-int ControllerInputManager::GetPushButtonTime(int _button)
+int PadInput::GetPushButtonTime(int _button)
 {
 	if (input.size() < _button)
 	{
@@ -258,7 +258,7 @@ int ControllerInputManager::GetPushButtonTime(int _button)
 	return time;
 }
 
-StickInput ControllerInputManager::GetStickInput()
+StickInput PadInput::GetStickInput()
 {
 	StickInput result;
 	result.leftStick = { (float)inputNow.ThumbLX / STICK_INPUT_MAX,(float)inputNow.ThumbLY / STICK_INPUT_MAX };
@@ -267,7 +267,7 @@ StickInput ControllerInputManager::GetStickInput()
 	return result;
 }
 
-StickInput ControllerInputManager::GetStickInput(int _backFrame)
+StickInput PadInput::GetStickInput(int _backFrame)
 {
 	StickInput result;
 	auto it = input.begin();
@@ -283,7 +283,7 @@ StickInput ControllerInputManager::GetStickInput(int _backFrame)
 	return result;
 }
 
-StickDirection ControllerInputManager::GetStickKnocking(float _deadZone)
+StickDirection PadInput::GetStickKnocking(float _deadZone)
 {
 	StickDirection result{ S_NO_DIRECTION };
 	StickFloat stickRot = GetStickRot();
@@ -304,7 +304,7 @@ StickDirection ControllerInputManager::GetStickKnocking(float _deadZone)
 	return result;
 }
 
-StickDirection ControllerInputManager::GetStickKnocking(float _deadZone, int _backFrame)
+StickDirection PadInput::GetStickKnocking(float _deadZone, int _backFrame)
 {
 	StickDirection result{ S_NO_DIRECTION };
 	StickFloat stickRot = GetStickRot(_backFrame);
@@ -325,7 +325,7 @@ StickDirection ControllerInputManager::GetStickKnocking(float _deadZone, int _ba
 	return result;
 }
 
-StickDirection ControllerInputManager::GetStickKnockingReverce(float _deadZone, int _backFrame)
+StickDirection PadInput::GetStickKnockingReverce(float _deadZone, int _backFrame)
 {
 	StickDirection result =  GetStickKnocking(_deadZone, _backFrame);
 	result.leftStick = ReverceDirection(result.leftStick);
@@ -333,7 +333,7 @@ StickDirection ControllerInputManager::GetStickKnockingReverce(float _deadZone, 
 	return result;
 }
 
-StickDirection ControllerInputManager::GetStickKnockingPut(float _deadZone)
+StickDirection PadInput::GetStickKnockingPut(float _deadZone)
 {
 	StickDirection result{ S_NO_DIRECTION,S_NO_DIRECTION };
 
@@ -354,7 +354,7 @@ StickDirection ControllerInputManager::GetStickKnockingPut(float _deadZone)
 	return result;
 }
 
-StickFloat ControllerInputManager::GetStickRot()
+StickFloat PadInput::GetStickRot()
 {
 	StickFloat result{ 0 };
 	StickInput stick = GetStickInput();
@@ -365,7 +365,7 @@ StickFloat ControllerInputManager::GetStickRot()
 	return result;
 }
 
-StickFloat ControllerInputManager::GetStickRot(int _backFrame)
+StickFloat PadInput::GetStickRot(int _backFrame)
 {
 	StickFloat result{ 0 };
 	StickInput stick = GetStickInput(_backFrame);
@@ -376,28 +376,28 @@ StickFloat ControllerInputManager::GetStickRot(int _backFrame)
 	return result;
 }
 
-StickFloat ControllerInputManager::GetTriggerNow()
+StickFloat PadInput::GetTriggerNow()
 {
 	StickFloat trigger{ inputNow.LeftTrigger / 255.0f, inputNow.RightTrigger / 255.0f };
 	return trigger;
 }
 
-void ControllerInputManager::ControlVibrationStartTime(int _power, int _timeSecond)
+void PadInput::ControlVibrationStartTime(int _power, int _timeSecond)
 {
 	StartJoypadVibration(playerNumber, _power, _timeSecond * 1000);
 }
 
-void ControllerInputManager::ControlVibrationStartFrame(int _power, int _timeFrame)
+void PadInput::ControlVibrationStartFrame(int _power, int _timeFrame)
 {
 	StartJoypadVibration(playerNumber, _power, _timeFrame * 1000 / 60);
 }
 
-void ControllerInputManager::StopControlVibrationStartFrame()
+void PadInput::StopControlVibrationStartFrame()
 {
 	StopJoypadVibration(playerNumber);
 }
 
-StickDirections ControllerInputManager::ReverceDirection(StickDirections _direction)
+StickDirections PadInput::ReverceDirection(StickDirections _direction)
 {
 	StickDirections direction = S_NO_DIRECTION;
 	switch (_direction)
@@ -432,7 +432,7 @@ StickDirections ControllerInputManager::ReverceDirection(StickDirections _direct
 	return direction;
 }
 
-StickDirections ControllerInputManager::GetDirection(float _rot)
+StickDirections PadInput::GetDirection(float _rot)
 {
 	_rot += DX_PI_F;//計算しやすい用に整数にする
 

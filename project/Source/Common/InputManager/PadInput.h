@@ -54,11 +54,11 @@ struct StickDirection
 };
 
 
-class ControllerInputManager
+class PadInput
 {
 public:
-	ControllerInputManager();
-	~ControllerInputManager();
+	PadInput();
+	~PadInput();
 	void Update();
 
 	/// <summary>コントローラーのボタンが押されているか確認する</summary>

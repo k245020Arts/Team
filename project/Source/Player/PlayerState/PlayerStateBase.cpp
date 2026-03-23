@@ -5,7 +5,7 @@
 #include "../../Component/Collider/SphereCollider.h"
 #include "../../Common/Debug/Debug.h"
 #include "../../Common/Sound/SoundManager.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/PadInput.h"
 #include "../../Common/InputManager/InputManager.h"
 
 PlayerStateBase::PlayerStateBase()

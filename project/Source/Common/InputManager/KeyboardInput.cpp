@@ -1,16 +1,16 @@
-#include "keyboardInputManager.h"
+#include "KeyboardInput.h"
 
-KeyboardInputManager::KeyboardInputManager()
+KeyboardInput::KeyboardInput()
 {
 	//DontDestroyOnSceneChange(true);
 }
 
-KeyboardInputManager::~KeyboardInputManager()
+KeyboardInput::~KeyboardInput()
 {
 	keyboardInput.clear();
 }
 
-void KeyboardInputManager::Update()
+void KeyboardInput::Update()
 {
 	GetHitKeyStateAll(keyboardInputNow.kInput);
 
@@ -22,7 +22,7 @@ void KeyboardInputManager::Update()
 }
 
 
-bool KeyboardInputManager::GetIsKeyboardPushing(int _keyCode)
+bool KeyboardInput::GetIsKeyboardPushing(int _keyCode)
 {
 	if (keyboardInput.front().kInput[_keyCode])
 	{
@@ -31,14 +31,14 @@ bool KeyboardInputManager::GetIsKeyboardPushing(int _keyCode)
 	return false;
 }
 
-bool KeyboardInputManager::GetIsKeyboardPut(int _keyCode)
+bool KeyboardInput::GetIsKeyboardPut(int _keyCode)
 {
 	if(keyboardInput.size()>1)
 	{
 		auto it = keyboardInput.begin();
-		KeyboardInput now = *it;
+		KeyboardInputData now = *it;
 		std::advance(it, 1);
-		KeyboardInput lastFrame = *it;
+		KeyboardInputData lastFrame = *it;
 
 		if (now.kInput[_keyCode] && !lastFrame.kInput[_keyCode])
 		{
@@ -48,14 +48,14 @@ bool KeyboardInputManager::GetIsKeyboardPut(int _keyCode)
 	return false;
 }
 
-bool KeyboardInputManager::GetIsKeyboardRelease(int _keyCode)
+bool KeyboardInput::GetIsKeyboardRelease(int _keyCode)
 {
 	if (keyboardInput.size() > 1)
 	{
-		std::list<KeyboardInput>::iterator it = keyboardInput.begin();
-		KeyboardInput now = *it;
+		std::list<KeyboardInputData>::iterator it = keyboardInput.begin();
+		KeyboardInputData now = *it;
 		std::advance(it, 1);
-		KeyboardInput lastFrame = *it;
+		KeyboardInputData lastFrame = *it;
 
 		if (!now.kInput[_keyCode] && lastFrame.kInput[_keyCode])
 		{

@@ -8,29 +8,29 @@ InputManager::InputManager()
 	mouse = nullptr;
 	if (controller == nullptr)
 	{
-		controller = new ControllerInputManager();
+		controller = new PadInput();
 	}
 	if (keyboard == nullptr)
 	{
-		keyboard = new KeyboardInputManager();
+		keyboard = new KeyboardInput();
 	}
 	if (mouse == nullptr)
 	{
-		mouse = new MouseInputManager();
+		mouse = new MouseInput();
 	}
 
 	//DontDestroyOnSceneChange(true);
 
-	CreateInputData(KeyConfigData("attack", KEY_INPUT_E, XINPUT_BUTTON_B, MouseInputManager::MOUSE_NONE));
-	CreateInputData(KeyConfigData("avoid", KEY_INPUT_X, XINPUT_BUTTON_A, MouseInputManager::MOUSE_NONE));
-	CreateInputData(KeyConfigData("SceneChange", KEY_INPUT_P, XINPUT_BUTTON_A, MouseInputManager::MOUSE_NONE));
-	CreateInputData(KeyConfigData("debugChange", KEY_INPUT_Z, NOT_INPUT, MouseInputManager::RIGHT_CLICK));
-	CreateInputData(KeyConfigData("camera", KEY_INPUT_SPACE, XINPUT_BUTTON_RIGHT_THUMB, MouseInputManager::MOUSE_NONE));
-	CreateInputData(KeyConfigData("changeMode", KEY_INPUT_TAB, -1, MouseInputManager::MOUSE_NONE));
-	CreateInputData(KeyConfigData("SpecialAttack", KEY_INPUT_Q, XINPUT_BUTTON_X, MouseInputManager::MOUSE_NONE));
-	CreateInputData(KeyConfigData("heavyAttack", KEY_INPUT_C, XINPUT_BUTTON_Y, MouseInputManager::MOUSE_NONE));
-	CreateInputData(KeyConfigData("Mouse", KEY_INPUT_F1, -1, MouseInputManager::MOUSE_NONE));
-	CreateInputData(KeyConfigData("playerParam", KEY_INPUT_LCONTROL, -1, MouseInputManager::MOUSE_NONE));
+	CreateInputData(KeyConfigData("attack", KEY_INPUT_E, XINPUT_BUTTON_B, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("avoid", KEY_INPUT_X, XINPUT_BUTTON_A, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("SceneChange", KEY_INPUT_P, XINPUT_BUTTON_A, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("debugChange", KEY_INPUT_Z, NOT_INPUT, MouseInput::RIGHT_CLICK));
+	CreateInputData(KeyConfigData("camera", KEY_INPUT_SPACE, XINPUT_BUTTON_RIGHT_THUMB, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("changeMode", KEY_INPUT_TAB, -1, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("SpecialAttack", KEY_INPUT_Q, XINPUT_BUTTON_X, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("heavyAttack", KEY_INPUT_C, XINPUT_BUTTON_Y, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("Mouse", KEY_INPUT_F1, -1, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("playerParam", KEY_INPUT_LCONTROL, -1, MouseInput::MOUSE_NONE));
 
 }
 
@@ -68,7 +68,7 @@ void InputManager::Update()
 	}
 }
 
-ControllerInputManager* InputManager::GetControllerInput()
+PadInput* InputManager::GetControllerInput()
 {
 	if (controller != nullptr)
 	{
@@ -77,7 +77,7 @@ ControllerInputManager* InputManager::GetControllerInput()
 	return nullptr;
 }
 
-KeyboardInputManager* InputManager::GetKeyboardInput()
+KeyboardInput* InputManager::GetKeyboardInput()
 {
 	if (keyboard != nullptr)
 	{
@@ -86,7 +86,7 @@ KeyboardInputManager* InputManager::GetKeyboardInput()
 	return nullptr;
 }
 
-MouseInputManager* InputManager::GetMouseInput()
+MouseInput* InputManager::GetMouseInput()
 {
 	if(mouse!=nullptr)
 	{
@@ -114,9 +114,9 @@ bool InputManager::KeyInputDown(std::string _name)
 		Debug::DebugLog("noAction");
 		return false;
 	}
-	ControllerInputManager* c = GetControllerInput();
-	KeyboardInputManager* k = GetKeyboardInput();
-	MouseInputManager* m = GetMouseInput();
+	PadInput* c = GetControllerInput();
+	KeyboardInput* k = GetKeyboardInput();
+	MouseInput* m = GetMouseInput();
 	bool control = false;
 	bool key = false;
 	bool mouse = false;
@@ -143,9 +143,9 @@ bool InputManager::KeyInput(std::string _name)
 		Debug::DebugLog("noAction");
 		return false;
 	}
-	ControllerInputManager* c = GetControllerInput();
-	KeyboardInputManager* k = GetKeyboardInput();
-	MouseInputManager* m = GetMouseInput();
+	PadInput* c = GetControllerInput();
+	KeyboardInput* k = GetKeyboardInput();
+	MouseInput* m = GetMouseInput();
 	bool control = false;
 	bool key = false;
 	bool mouse = false;
@@ -172,9 +172,9 @@ bool InputManager::KeyInputUp(std::string _name)
 		Debug::DebugLog("noAction");
 		return false;
 	}
-	ControllerInputManager* c = GetControllerInput();
-	KeyboardInputManager* k = GetKeyboardInput();
-	MouseInputManager* m = GetMouseInput();
+	PadInput* c = GetControllerInput();
+	KeyboardInput* k = GetKeyboardInput();
+	MouseInput* m = GetMouseInput();
 	bool control = false;
 	bool key = false;
 	bool mouse = false;

@@ -1,6 +1,6 @@
 #include "FreeCamera.h"
 #include "../camera.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/PadInput.h"
 #include "../../Common/InputManager/InputManager.h"
 #include "../../Common/Easing.h"
 #include <algorithm>

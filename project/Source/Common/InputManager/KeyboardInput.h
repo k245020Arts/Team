@@ -9,16 +9,16 @@ namespace
 }
 
 //キーボード入力のリスト用
-struct KeyboardInput
+struct KeyboardInputData
 {
 	char kInput[KEYBOARD_BUF_NUM];
 };
 
-class KeyboardInputManager
+class KeyboardInput
 {
 public:
-	KeyboardInputManager();
-	~KeyboardInputManager();
+	KeyboardInput();
+	~KeyboardInput();
 	void Update();
 
 	///<summary>キーボード用　指定したキーが押されている間trueを返す</summary>
@@ -31,7 +31,7 @@ public:
 	/// <param name="_keyCode">キーの種類</param>
 	bool GetIsKeyboardRelease(int _keyCode);
 private:
-	KeyboardInput keyboardInputNow;
-	std::list<KeyboardInput>keyboardInput;
+	KeyboardInputData keyboardInputNow;
+	std::list<KeyboardInputData>keyboardInput;
 
 };

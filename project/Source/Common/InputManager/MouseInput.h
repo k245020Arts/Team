@@ -4,7 +4,7 @@
 #include <list>
 
 
-class MouseInputManager
+class MouseInput
 {
 public:
 
@@ -28,8 +28,8 @@ public:
 		bool input[BUTTON_NUM];
 	};
 
-	MouseInputManager();
-	~MouseInputManager();
+	MouseInput();
+	~MouseInput();
 	void Update();
 
 	///<summary>マウスカーソルの位置を取得する</summary>

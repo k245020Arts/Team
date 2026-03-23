@@ -1,5 +1,5 @@
 #include "playerjustAvoid.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/PadInput.h"
 #include "playerStateManager.h"
 #include "../../Component/Animator/Animator.h"
 #include "../../Component/Physics/Physics.h"

@@ -5,7 +5,7 @@ class BaseObject;
 class Transform;
 class Camera;
 class StateManager;
-class ControllerInputManager;
+class PadInput;
 class EnemyManager;
 
 enum class EnemyAttackChangeCameraDirection {

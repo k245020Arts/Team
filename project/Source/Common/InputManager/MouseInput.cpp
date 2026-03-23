@@ -1,8 +1,8 @@
-#include "mouseInputManager.h"
+#include "MouseInput.h"
 #include "../../Screen.h"
 #include "inputManager.h"
 
-MouseInputManager::MouseInputManager()
+MouseInput::MouseInput()
 {
 	SetMouseDispFlag(true);
 	//DontDestroyOnSceneChange(true);
@@ -10,19 +10,19 @@ MouseInputManager::MouseInputManager()
 	nowMouseWheelVol = 0;
 }
 
-MouseInputManager::~MouseInputManager()
+MouseInput::~MouseInput()
 {
 	buttonInput.clear();
 }
 
-void MouseInputManager::Update()
+void MouseInput::Update()
 {
 	nowMouseWheelVol = GetMouseWheelRotVol();
 
 	PushInputList();
 }
 
-VECTOR2F MouseInputManager::GetMousePos(bool _canScreenOut)
+VECTOR2F MouseInput::GetMousePos(bool _canScreenOut)
 {
 	int x, y;
 	GetMousePoint(&x,&y);
@@ -51,17 +51,17 @@ VECTOR2F MouseInputManager::GetMousePos(bool _canScreenOut)
 	return result;
 }
 
-void MouseInputManager::SetMousePos(VECTOR2F _pos)
+void MouseInput::SetMousePos(VECTOR2F _pos)
 {
 	SetMousePoint((int)_pos.x, (int)_pos.y);
 }
 
-bool MouseInputManager::GetMousePushing(MouseButton _button)
+bool MouseInput::GetMousePushing(MouseButton _button)
 {
 	return currentButtonInput.input[_button];
 }
 
-bool MouseInputManager::GetMousePut(MouseButton _button)
+bool MouseInput::GetMousePut(MouseButton _button)
 {
 	if(buttonInput.size()>1)
 	{
@@ -75,12 +75,12 @@ bool MouseInputManager::GetMousePut(MouseButton _button)
 	return false;
 }
 
-int MouseInputManager::GetMouseWheelFrame()const
+int MouseInput::GetMouseWheelFrame()const
 {
 	return nowMouseWheelVol;
 }
 
-bool MouseInputManager::IsCursorSquareCollision(VECTOR2F _centerPos, VECTOR2F _size)
+bool MouseInput::IsCursorSquareCollision(VECTOR2F _centerPos, VECTOR2F _size)
 {
 	VECTOR2 leftUpPos = _centerPos - _size;
 	VECTOR2 rightDownPos = _centerPos + _size;
@@ -97,7 +97,7 @@ bool MouseInputManager::IsCursorSquareCollision(VECTOR2F _centerPos, VECTOR2F _s
 	}
 }
 
-void MouseInputManager::SetCurrentButtonInput()
+void MouseInput::SetCurrentButtonInput()
 {
 	int input= GetMouseInput();
 
@@ -111,7 +111,7 @@ void MouseInputManager::SetCurrentButtonInput()
 	currentButtonInput.input[BUTTON_8] = (input & MOUSE_INPUT_8);
 }
 
-void MouseInputManager::PushInputList()
+void MouseInput::PushInputList()
 {
 	SetCurrentButtonInput();
 	buttonInput.push_front(currentButtonInput);

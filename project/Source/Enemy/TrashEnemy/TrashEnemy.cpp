@@ -1,7 +1,7 @@
 #include "TrashEnemy.h"
 #include "../../Component/Animator/Animator.h"
 #include "../../Component/Physics/Physics.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/PadInput.h"
 #include "../../Common/InputManager/InputManager.h"
 #include "../../Component/Collider/SphereCollider.h"
 #include "../../Component/Color/Color.h"

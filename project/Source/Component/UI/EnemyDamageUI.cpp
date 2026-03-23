@@ -1,5 +1,5 @@
 ﻿#include "EnemyDamageUI.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/PadInput.h"
 #include "../../Common/InputManager/InputManager.h"
 #include "../../Component/Transform/Transform.h"
 #include "../../Component/Color/Color.h"

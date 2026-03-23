@@ -115,7 +115,7 @@ namespace CutSceneSpece {
 }
 
 
-class ControllerInputManager;
+class PadInput;
 class InputManager;
 class CameraEditorGui;
 class CutSceneBox;
@@ -267,7 +267,7 @@ private:
 	int cutSceneIndex;
 	bool normalCamera;
 	int targetChangeButton;
-	//ControllerInputManager* control;
+	//PadInput* control;
 	//InputManager* input;
 	bool rockOn;
 	float beforePos;

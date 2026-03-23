@@ -1,14 +1,14 @@
 #pragma once
 #include <list>
 #include "../../../Library/gameObject.h"
-#include "controllerInputManager.h"
-#include "keyboardInputManager.h"
-#include "mouseInputManager.h"
+#include "PadInput.h"
+#include "KeyboardInput.h"
+#include "MouseInput.h"
 #include <unordered_map>
 #include "../Singleton/SingletonBase.h"
 
-class ControllerInputManager;
-class KeyboardInputManager;
+class PadInput;
+class KeyboardInput;
 
 /// <summary>
 /// キーコンフィグ用のデータ
@@ -20,14 +20,14 @@ struct KeyConfigData
 	std::string action;
 	int keyNumber;
 	int padNumber;
-	MouseInputManager::MouseButton mouceNumber;
+	MouseInput::MouseButton mouceNumber;
 
 	KeyConfigData() { 
-		MouseInputManager::MouseButton m = MouseInputManager::MouseButton::MOUSE_NONE;
+		MouseInput::MouseButton m = MouseInput::MouseButton::MOUSE_NONE;
 		KeyConfigData k =  KeyConfigData("", -1, -1, m);
 	}
 
-	KeyConfigData(std::string _act, int _key, int _pad, MouseInputManager::MouseButton _mouce) {
+	KeyConfigData(std::string _act, int _key, int _pad, MouseInput::MouseButton _mouce) {
 		action = _act;
 		keyNumber = _key;
 		padNumber = _pad;
@@ -69,9 +69,9 @@ public:
 	///<summary>指定したキーボードのキーかコントローラーのボタンを押して離し始めた1F目のみTrueを返す</summary>
 	//bool GetIsKeyOrButtonReleaseNow(int _key, int _button);
 
-	ControllerInputManager* GetControllerInput();
-	KeyboardInputManager* GetKeyboardInput();
-	MouseInputManager* GetMouseInput();
+	PadInput* GetControllerInput();
+	KeyboardInput* GetKeyboardInput();
+	MouseInput* GetMouseInput();
 	/// <summary>
 	/// キーコンフィグ用データを生成する。
 	/// </summary>
@@ -96,9 +96,9 @@ private:
 
 	friend class SingletonBase<InputManager>;
 
-	ControllerInputManager* controller;
-	KeyboardInputManager* keyboard;
-	MouseInputManager* mouse;
+	PadInput* controller;
+	KeyboardInput* keyboard;
+	MouseInput* mouse;
 
 	std::unordered_map<std::string, KeyConfigData> inputData;
 };

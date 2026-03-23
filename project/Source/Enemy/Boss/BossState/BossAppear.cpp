@@ -9,7 +9,7 @@
 #include "../../../Common/Fead/Fead.h"
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Common/InputManager/InputManager.h"
-#include "../../../Common/InputManager/ControllerInputManager.h"
+#include "../../../Common/InputManager/PadInput.h"
 #include "../../../Common/Sound/SoundManager.h"
 #include "../../../Component/UI/UIManager/UIManager.h"
 

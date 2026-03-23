@@ -1,7 +1,7 @@
 #include "camera.h"
 #include "../Component/Transform/Transform.h"
 #include "../../ImGui/imgui.h"
-#include "../Common/InputManager/ControllerInputManager.h"
+#include "../Common/InputManager/PadInput.h"
 #include <cmath>
 #include "../Component/ComponentManager.h"
 #include "../Component/Shaker/Shaker.h"

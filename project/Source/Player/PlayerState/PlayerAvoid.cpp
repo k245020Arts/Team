@@ -5,7 +5,7 @@
 #include "../../Component/Animator/Animator.h"
 #include "../../Component/Physics/Physics.h"
 #include "../../Common/Easing.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/PadInput.h"
 #include "../../Component/Color/Color.h"
 #include "../../Common/ResourceLoader.h"
 #include "../../Common/Function.h"
