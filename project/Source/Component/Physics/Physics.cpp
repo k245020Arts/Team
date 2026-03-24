@@ -21,6 +21,7 @@ Physics::Physics()
 	tag = Function::GetClassNameC<Physics>();
 	ground = false;
 	transitor = nullptr;
+	groundMissCount = 0;
 }
 
 Physics::~Physics()
@@ -53,9 +54,17 @@ void Physics::Update()
 		{
 			velocity.y = 0.0f;
 		}
+		//（SetGround(false) はここでのみ行う）
+		groundMissCount++;
+		if (groundMissCount >= GROUND_MISS_THRESHOLD)
+		{
+			ground = false;
+			groundMissCount = 0;
+		}
 	}
 	else
 	{
+		groundMissCount = 0;
 		velocity += gravity * dt;
 	}
 	
@@ -140,5 +149,14 @@ void Physics::ImguiDraw()
 	}
 	if (ImGui::Button("gravityModeChange")) {
 		noGravity = !noGravity;
+	}
+}
+
+void Physics::SetGround(bool _g)
+{
+	if (_g)
+	{
+		ground = true;
+		groundMissCount = 0;  //着地したらカウンタをリセット
 	}
 }

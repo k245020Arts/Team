@@ -120,78 +120,34 @@ bool CollsionManager::CollsionSphereToSphere(ColliderBase* col1, ColliderBase* c
 	return false;
 }
 
-bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
+bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos)
 {
-	//Transform* trans1 = col1->GetTransform();
-	//Transform* trans2 = col2->GetTransform();
-	//Transform* trans3 = dynamic_cast<RayCollider*>(col2)->Get2Transform();
+	Transform* modelTransform = col1->GetTransform();
+	Transform* rayStartTrans = col2->GetTransform();
+	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col2)->Get2Transform();
 
-	//auto ret = MV1CollCheck_Line(dynamic_cast<ModelCollider*>(col1)->GetModel(), -1, trans2->WorldTransform().position, trans3->WorldTransform().position);
-	//VECTOR3 hitPos = ret.HitPosition;
-	//if (ret.HitFlag != 0) {
-	//	if (trans1->position.Size() == 0.0f || trans1->position.Size() > VSize(ret.HitPosition - trans1->position)) {
-	//		VECTOR3 pos  = trans2->WorldTransform().position - hitPos;
-	//		col2->GetObj()->Component()->GetComponent<Physics>()->AddVelocity(pos,false);
-	//	}
-	//	return true;
-	//}
-	////MV1CollResultPolyDimTerminate(ret);
-	//return false;
-
-	Transform* modelTransform = col1->GetTransform(); // 地面など
-	Transform* rayStartTrans = col2->GetTransform();  // レイの始点
-	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col2)->Get2Transform(); // レイの終点
-
-	// ワールド座標
 	VECTOR3 startPos = rayStartTrans->WorldTransform().position;
 	VECTOR3 endPos = rayEndTrans->WorldTransform().position;
 
-	// レイ判定
 	auto result = MV1CollCheck_Line(dynamic_cast<ModelCollider*>(col1)->GetModel(), -1, startPos, endPos);
-
 	Physics* p = col2->GetObj()->Component()->GetComponent<Physics>();
 
 	if (result.HitFlag != 0)
 	{
-		// 法線を取得（最重要）
 		VECTOR3 normal = result.Normal;
-
-		//めり込み量を計算
 		VECTOR3 rayVec = endPos - startPos;
 		float rayLength = VSize(rayVec);
-
 		float hitDist = VSize(result.HitPosition - startPos);
-
-		//レイの残り分を penetration とする
 		float penetration = rayLength - hitDist;
-
 		if (penetration < 0.0f) penetration = 0.0f;
 
-		//法線方向に押し出し登録
 		resolver.AddPush(normal, penetration, CollsionInformation::Shape::RAY, result.HitPosition);
-
 		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 50.0f * Time::DeltaTimeRate());
-
-		//Ground判定（法線ベース）
 
 		if (p != nullptr)
 		{
 			bool grounded = resolver.IsGrounded(0.5f);
-
-			if (grounded)
-			{
-				p->SetGround(true);
-			}
-			else
-			{
-				static int groundBuffer = 0;
-				groundBuffer++;
-
-				if (groundBuffer > 3)
-				{
-					p->SetGround(false);
-				}
-			}
+			p->SetGround(grounded);   // ← ヒット時のみ ground を更新
 		}
 
 		if (col2->GetCollTag() == CollsionInformation::SHADOW)
@@ -205,18 +161,8 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 	else
 	{
 
-		// 非ヒット時もApply（慣性維持）
-		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 50.0f * Time::DeltaTimeRate());
-
-		if (p != nullptr)
-		{
-			p->SetGround(resolver.IsGrounded(0.7f));
-		}
-
 		return false;
 	}
-	return true;
-
 }
 
 bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)

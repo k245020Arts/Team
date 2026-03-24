@@ -84,7 +84,7 @@ public:
 	/// 地面についていたらtrue
 	/// </summary>
 	/// <param name="_g"> 地面についていたらtrue</param>
-	void SetGround(bool _g) { ground = _g; }
+	void SetGround(bool _g);
 	/// <summary>
 	/// 地面についているかどうかの判定
 	/// </summary>
@@ -106,5 +106,8 @@ private:
 	bool ground;
 
 	TransitorManager* transitor; //フェード中に移動をするとなぜかすり抜けてしまうことが多々あるのでそれの防止用
+
+	int groundMissCount;
+	static const int GROUND_MISS_THRESHOLD = 4;
 
 };
