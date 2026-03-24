@@ -220,8 +220,10 @@ void EnemyManager::CreateBoss()
 	boss->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
+	g->DamageGuageDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Boss_HpBar_YellowBack", ID::BOSS_HP_DAMAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 70.0f, 0.0f), VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(1.0f, 1.0f, 1.0f)));
 	g->GuageDrawReady<Boss>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Boss_HpBar_RedBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
 	g->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Boss_HpBar_Frame", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 70.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
+	
 	
 	
 	//bossList.emplace_back(b);
@@ -614,6 +616,9 @@ Transform EnemyManager::NearFovEnemyPos(Transform& _transform, float _angle)
 
 void EnemyManager::SetCameraRockOnObject(EnemyBase* _enemy, Camera* _camera)
 {
+	if (_enemy == nullptr) {
+		return;
+	}
 	_enemy->LastTargetIn();
 	player->Component()->GetComponent<Player>()->TargetObjSet(_enemy->GetBaseObject());
 	_camera->TargetSet(_enemy->GetBaseObject());

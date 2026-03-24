@@ -133,7 +133,7 @@ void StageManager::CreateWall()
 
 void StageManager::CreateFloor()
 {
-	//ToDO ‚È‚º‚©for•¶‚Å‰ñ‚³‚È‚¢‚ÆŠÑ’Ê‚µ‚Ä‚µ‚Ü‚¤‚Ì‚Åfor•¶‚ğg‚í‚È‚­‚Ä‚à‚¢‚¢‚æ‚¤‚É‚·‚éB
+	
 	//for (int i = 0; i < 4; i++) {
 	Transform transform;
 	transform = Transform(VECTOR3(0.0f, -1000.0f, 0.0f), VZero, VOne * VECTOR3(500.0f, 10.0f, 500.0f));

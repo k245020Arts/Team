@@ -46,6 +46,12 @@ public:
 	/// <param name="_transfrom"></param>
 	void EdgeDrawReady(int _image, MeshRenderer2D::GraphMode _mode,Transform _transfrom);
 	/// <summary>
+	/// HPバーのダメージの部分を描画
+	/// </summary>
+	/// <param name="_image"></param>
+	/// <param name="_mode"></param>
+	void DamageGuageDrawReady(int _image, MeshRenderer2D::GraphMode _mode, Transform _transform);
+	/// <summary>
 	/// ゲージを描画する前に設定する
 	/// </summary>
 	/// <typeparam name="T">誰のゲージを生成したいか</typeparam>
@@ -87,6 +93,7 @@ private:
 	float* barValue;
 	float barValueMax;
 	MeshRenderer2D* guage;
+	MeshRenderer2D* damageGuage;
 	MeshRenderer2D* edge;
 	float displayHp;
 	float changeColorCounter;
@@ -94,4 +101,11 @@ private:
 	VECTOR3 plus;
 	bool addMode;
 	CharaBase* chara;
+
+	float displayHpMain = 0.0f;
+	float displayHpDamage = 0.0f;
+
+	float damageDelayTimer = 0.0f;
+	float damageDelay = 2.0f; // 止まる時間（調整ポイント）
+	float prevHp = 0.0f;
 };

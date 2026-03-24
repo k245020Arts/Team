@@ -280,7 +280,7 @@ void PlayerManager::CreateTitlePlayer()
 	RayCollider* collider3 = playerPointer->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::P_FLOOR;
-	collider3->RaySet(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10, 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 1.0f, 1.0f)), Transform(VECTOR3(0, -20, 0), VZero, VECTOR3(1.0f, 1.0f, 1.0f)));
 
 	Shaker* shaker = playerPointer->Component()->AddComponent<Shaker>();
 
@@ -301,7 +301,7 @@ void PlayerManager::CreateTitlePlayer()
 	Physics* physics = playerPointer->Component()->AddComponent<Physics>();
 	TitlePlayer* player = playerPointer->Component()->AddComponent<TitlePlayer>();
 
-	physics->Start(PlayerInformation::BASE_GRAVITY + VECTOR3(0,4900,0), PlayerInformation::BASE_INTERIA);
+	physics->Start(PlayerInformation::BASE_GRAVITY, PlayerInformation::BASE_INTERIA);
 	/*Camera* camera = playerPointer->Component()->AddComponent<Camera>();
 	camera->Start(FindGameObject<EnemyManager>()->GetEnemy());*/
 	//me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "exo_red", ID::P_MODEL));

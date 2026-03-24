@@ -29,6 +29,7 @@ CollsionManager::CollsionManager()
 	event = new CollsionEvent();
 	InitSetPair();
 	//DontDestroyOnSceneChange(true);
+	//SetDrawOrder(0);
 }
 
 CollsionManager::~CollsionManager()
@@ -160,9 +161,13 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 	}
 	else
 	{
-
+		if (p != nullptr)
+		{
+			p->SetGround(false);
+		}
 		return false;
 	}
+	return true;
 }
 
 bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)

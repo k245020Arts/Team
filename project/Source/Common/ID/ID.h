@@ -112,6 +112,7 @@ namespace ID {
 		B_BACKSTEP,
 		B_WIN,
 		PLAY_SCENE_BACKGROUND_MODEL,
+		BOSS_HP_DAMAGE,
 		ID_MAX,
 	};
 

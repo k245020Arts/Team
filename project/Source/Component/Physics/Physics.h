@@ -108,6 +108,6 @@ private:
 	TransitorManager* transitor; //フェード中に移動をするとなぜかすり抜けてしまうことが多々あるのでそれの防止用
 
 	int groundMissCount;
-	static const int GROUND_MISS_THRESHOLD = 4;
+	VECTOR3 baseGravity;
 
 };

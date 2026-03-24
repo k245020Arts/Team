@@ -125,7 +125,7 @@ void Player::Update()
 {
 	//playerCom.stateManager->Update();
 	//‰ñ”ðó‘Ô‚ªŽn‚Ü‚é‚Æ‚«‚É‰ñ“]‚É•â³‚ðŠ|‚¯‚é‚½‚ß‚Ìˆ—
-	//DebugLogTextClass::GetInstance()->Log(LogLevel::INFO, Debug::printfString("playerPositionY = %.3f", playerTransform->position.y));
+	DebugLogTextClass::GetInstance()->Log(LogLevel::INFO, Debug::printfString("playerPositionY = %.3f", playerTransform->position.y));
 	//playerCom.physics->GetVelocity().y)
 	if (justAvoidColHit) {
 		justAvoidCan = true;
