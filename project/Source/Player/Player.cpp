@@ -47,6 +47,7 @@
 #include "../Common/Easing.h"
 #include "../Component/UI/ButtonUI.h"
 #include "PlayerParamWindow.h"
+#include "../Common/Debug/DebugLogText.h"
 
 namespace {
 
@@ -124,6 +125,7 @@ void Player::Update()
 {
 	//playerCom.stateManager->Update();
 	//‰ñ”ðó‘Ô‚ªŽn‚Ü‚é‚Æ‚«‚É‰ñ“]‚É•â³‚ðŠ|‚¯‚é‚½‚ß‚Ìˆ—
+	DebugLogTextClass::GetInstance()->Log(LogLevel::INFO, Debug::printfString("playerVelocityY = %.3f", playerCom.physics->GetVelocity().y));
 	if (justAvoidColHit) {
 		justAvoidCan = true;
 	}

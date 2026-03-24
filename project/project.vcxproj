@@ -185,6 +185,7 @@
     <ClInclude Include="Source\Common\BlurScreen.h" />
     <ClInclude Include="Source\Common\CsvReader.h" />
     <ClInclude Include="Source\Common\Debug\Debug.h" />
+    <ClInclude Include="Source\Common\Debug\DebugLogText.h" />
     <ClInclude Include="Source\Common\Easing.h" />
     <ClInclude Include="Source\Common\Effect\EffectBase.h" />
     <ClInclude Include="Source\Common\Effect\EffectManager.h" />

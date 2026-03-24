@@ -47,7 +47,15 @@ void Physics::Update()
 	float dt = obj->GetObjectTimeRate();
 
 	// ’n–Ê‚É‚¢‚È‚¢ê‡‚Ì‚İd—Í‚ğ‰ÁZ
-	if (!ground) {
+	if (ground)
+	{
+		if (velocity.y < 0.0f)
+		{
+			velocity.y = 0.0f;
+		}
+	}
+	else
+	{
 		velocity += gravity * dt;
 	}
 	

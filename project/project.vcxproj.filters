@@ -1196,6 +1196,9 @@
     <ClInclude Include="Source\Stage\StageSelectData.h">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Common\Debug\DebugLogText.h">
+      <Filter>Common\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
