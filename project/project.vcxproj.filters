@@ -567,6 +567,9 @@
     <ClCompile Include="Source\Stage\StageSelectData.cpp">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\AStar.cpp">
+      <Filter>PlayScene\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1198,6 +1201,9 @@
     </ClInclude>
     <ClInclude Include="Source\Common\Debug\DebugLogText.h">
       <Filter>Common\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\AStar.h">
+      <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
