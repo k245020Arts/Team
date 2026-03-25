@@ -16,6 +16,7 @@ Guage::Guage()
 	changeColorCounter	= 0.0f;
 	screenMode			= false;
 	addMode				= false;
+	damageGuage			= nullptr;
 }
 
 Guage::~Guage()
@@ -27,52 +28,63 @@ Guage::~Guage()
 
 void Guage::Update()
 {
-	if (screenMode) {
-		VECTOR3 worldPos = VECTOR3(
-			obj->GetParent()->GetTransform()->position.x,
-			obj->GetParent()->GetTransform()->position.y,
-			obj->GetParent()->GetTransform()->position.z
-		);
+    if (screenMode) {
+        VECTOR3 worldPos = VECTOR3(
+            obj->GetParent()->GetTransform()->position.x,
+            obj->GetParent()->GetTransform()->position.y,
+            obj->GetParent()->GetTransform()->position.z
+        );
 
-		VECTOR headPos = worldPos + plus;
+        VECTOR headPos = worldPos + plus;
+        VECTOR3 screenPos = ConvWorldPosToScreenPos(headPos);
 
-		VECTOR3 screenPos = VECTOR3(0,0,0);
-		screenPos = ConvWorldPosToScreenPos(headPos);
-		/*obj->GetTransform()->position = headPos;
-		edge->SetPosition(headPos);*/
+        obj->GetTransform()->position = screenPos;
 
-		obj->GetTransform()->position = screenPos;
-		if (screenPos.z > 1.0f){
-			edge->SetDraw(false);
-			guage->SetDraw(false);
-		}
-		else {
-			edge->SetDraw(true);
-			guage->SetDraw(true);
-		}
-		edge->SetPosition(obj->GetTransform()->position);
-	}
-	if (guage != nullptr) {
+        if (screenPos.z > 1.0f) {
+            edge->SetDraw(false);
+            guage->SetDraw(false);
+        }
+        else {
+            edge->SetDraw(true);
+            guage->SetDraw(true);
+        }
+        edge->SetPosition(obj->GetTransform()->position);
+    }
+    
+    if (guage != nullptr) {
 
-		float speed = 3.0f;
-		displayHp += (*barValue - displayHp) * speed * Time::DeltaTimeRate();
+        float dt = Time::DeltaTimeRate();
 
-		displayHp =  std::clamp(displayHp, 0.0f, barValueMax);
+        float speedMain = 10.0f; 
+        float speedDamage = 5.0f; 
 
-		// äÑçáÇ©ÇÁï`âÊà íuÇí≤êÆ
-		float amount = displayHp / barValueMax;
+        
+        if (*barValue < prevHp) {
+            damageDelayTimer = 0.0f;
+        }
+        prevHp = *barValue;
 
-		//float amout = *hp / maxhp;
+        displayHpMain += (*barValue - displayHpMain) * speedMain * dt;
+        displayHpMain = std::clamp(displayHpMain, 0.0f, barValueMax);
 
-		guage->SetDrawImageSize(VECTOR2I(static_cast<int>((amount) * guage->GetImageSize().x), guage->GetImageSize().y));
+        
+        damageDelayTimer += dt;
 
-		if (chara->CanSpecialAttack()) {
-			guage->SetAddMode(true);
-		}
-		else {
-			guage->SetAddMode(false);
-		}
-	}
+        if (damageDelayTimer >= damageDelay) {
+            displayHpDamage += (displayHpMain - displayHpDamage) * speedDamage * dt;
+        }
+
+        // îOÇÃÇΩÇﬂÉNÉâÉìÉv
+        displayHpDamage = std::clamp(displayHpDamage, 0.0f, barValueMax);
+
+        float amountMain = displayHpMain / barValueMax;
+        guage->SetDrawImageSize(VECTOR2I(static_cast<int>(amountMain * guage->GetImageSize().x),guage->GetImageSize().y ));
+
+        if (damageGuage != nullptr) {
+            float amountDamage = displayHpDamage / barValueMax;
+            damageGuage->SetDrawImageSize(VECTOR2I(static_cast<int>(amountDamage * damageGuage->GetImageSize().x),damageGuage->GetImageSize().y));
+        }
+    }
 }
 
 void Guage::Draw()
@@ -84,6 +96,14 @@ void Guage::EdgeDrawReady(int _image, MeshRenderer2D::GraphMode _mode, Transform
 	edge = obj->Component()->AddComponent<MeshRenderer2D>();
 	edge->TextureHandle(_image, _mode);
 	edge->SetTransform(_transfrom);
+}
+
+void Guage::DamageGuageDrawReady(int _image, MeshRenderer2D::GraphMode _mode,Transform _transform)
+{
+	damageGuage = obj->Component()->AddComponent<MeshRenderer2D>();
+	damageGuage->TextureHandle(_image, _mode);
+	Transform transfrom = _transform;
+	damageGuage->SetTransform(transfrom);
 }
 
 void Guage::WorldToScreenMode(bool _mode, VECTOR3 _plusPos)

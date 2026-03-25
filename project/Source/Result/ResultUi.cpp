@@ -16,8 +16,8 @@ ResultUi::ResultUi()
 
 	debugId = 35;
 	tag = Function::GetClassNameC<ResultUi>();
-	Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
-	Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
+	ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Win", ID::WIN);
+	ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Lose", ID::LOSE);
 
 	flashTime = 0.0f;
 }
@@ -92,10 +92,10 @@ void ResultUi::ResultStart(bool _win)
 		return;
 	}
 	if (_win) {
-		hImage = Load::GetHandle(ID::WIN);
+		hImage = ResourceLoad::GetHandle(ID::WIN);
 	}
 	else {
-		hImage = Load::GetHandle(ID::LOSE);
+		hImage = ResourceLoad::GetHandle(ID::LOSE);
 	}
 	
 	win = _win;

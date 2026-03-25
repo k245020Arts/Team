@@ -6,7 +6,7 @@
 #include "../Component/Physics/Physics.h"
 #include "../Camera/Camera.h"
 #include "../Component/Hierarchy/Hierarchy.h"
-#include "../Common/LoadManager.h"
+#include "../Common/ResourceLoader.h"
 #include "../Component/Collider/sphereCollider.h"
 #include "../Component/Animator/Animator.h"
 //#include "TrashEnemy/enemy.h"
@@ -135,13 +135,13 @@ void EnemyManager::CreateBoss()
 	ModelCollider* collider4 = boss->Component()->AddComponent<ModelCollider>();
 	info.shape = CollsionInformation::MODEL;
 	info.tag = CollsionInformation::BOSS_PUSH;
-	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), Load::LoadModel(Load::MODEL_PATH + "wall", ID::BOSS_PUSH));
+	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "wall", ID::BOSS_PUSH));
 
 
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
 
 	MeshRenderer* m = boss->Component()->AddComponent<MeshRenderer>();
-	m->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "BossModel", ID::B_MODEL));
+	m->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "BossModel", ID::B_MODEL));
 	m->RotationMesh(0, 180.0f * DegToRad);
 
 	Boss* b = boss->Component()->AddComponent<Boss>();
@@ -150,7 +150,7 @@ void EnemyManager::CreateBoss()
 	physics->Start(VECTOR3(0.0f, -1500.0f, 0.0f), BossInformation::BASE_FIRCTION);
 
 	Animator* anim = boss->Component()->AddComponent<Animator>();
-	anim->BaseModelSet(Load::GetHandle(ID::B_MODEL), 1);
+	anim->BaseModelSet(ResourceLoad::GetHandle(ID::B_MODEL), 1);
 
 	//anim->AddFile(ID::B_IDOL,				"B_IDLE", true, 1.0f);
 	//anim->AddFile(ID::B_COOLTIME,			"B_IDLE2", true, 1.0f);
@@ -179,33 +179,33 @@ void EnemyManager::CreateBoss()
 	//anim->AddFile(ID::BOSS_FEAR,			"B_FEAR", true, 1.0f, 10.0f, 70.0f);
 	//anim->AddFile(ID::B_BACKSTEP,			"B_BACKSTEP", true, 1.0f);
 	//anim->AddFile(ID::B_WIN,				"B_WIN", true, 1.0f, 10.0f, 70.0f);
-	Load::LoadAnim("B_IDLE", ID::B_IDOL);
-	Load::LoadAnim("B_IDLE2", ID::B_COOLTIME);
-	Load::LoadAnim("B_WALK", ID::B_RUN);
-	Load::LoadAnim("B_WAIT_SEE", ID::B_WAIT_SEE);
-	Load::LoadAnim("B_ATTACK1", ID::B_N_ATTACK1);
-	Load::LoadAnim("B_ATTACK2", ID::B_N_ATTACK2);
-	Load::LoadAnim("B_ATTACK3", ID::B_N_ATTACK3);
-	Load::LoadAnim("B_ATTACK4", ID::B_N_ATTACK4);
-	Load::LoadAnim("B_ATTACK5", ID::B_N_ATTACK5);
-	Load::LoadAnim("B_ATTACK6", ID::B_N_ATTACK6);
-	Load::LoadAnim("B_ATTACK7", ID::B_N_ATTACK7);
-	Load::LoadAnim("B_SATTACK1", ID::B_S_ATTACK1);
-	Load::LoadAnim("B_SATTACK2", ID::B_S_ATTACK2);
-	Load::LoadAnim("B_SATTACK2_STOP", ID::B_S_ATTACK2_STOP);
-	Load::LoadAnim("B_SATTACK2_BEFORE_2", ID::B_S_ATTACK2_BEFORE);
-	Load::LoadAnim("B_SATTACK1_SAMLL", ID::B_S_ATTACK1_SMALL);
-	Load::LoadAnim("B_DIE", ID::BOSS_DIE);
-	Load::LoadAnim("B_ROAR_ANIM", ID::B_ROAR_ANIM);
-	Load::LoadAnim("B_ROAR3", ID::B_ROAR_2);
-	Load::LoadAnim("B_RUN", ID::B_DUSH);
-	Load::LoadAnim("B_THREAT", ID::B_THREAT);
-	Load::LoadAnim("B_DAMAGE", ID::BOSS_DAMAGE);
-	Load::LoadAnim("B_APPEAR_FALL", ID::B_APPEAR_FALL);
-	Load::LoadAnim("B_APPEAR_LAND", ID::B_APPEAR_LAND);
-	Load::LoadAnim("B_FEAR", ID::BOSS_FEAR);
-	Load::LoadAnim("B_BACKSTEP", ID::B_BACKSTEP);
-	Load::LoadAnim("B_WIN", ID::B_WIN);
+	ResourceLoad::LoadAnim("B_IDLE", ID::B_IDOL);
+	ResourceLoad::LoadAnim("B_IDLE2", ID::B_COOLTIME);
+	ResourceLoad::LoadAnim("B_WALK", ID::B_RUN);
+	ResourceLoad::LoadAnim("B_WAIT_SEE", ID::B_WAIT_SEE);
+	ResourceLoad::LoadAnim("B_ATTACK1", ID::B_N_ATTACK1);
+	ResourceLoad::LoadAnim("B_ATTACK2", ID::B_N_ATTACK2);
+	ResourceLoad::LoadAnim("B_ATTACK3", ID::B_N_ATTACK3);
+	ResourceLoad::LoadAnim("B_ATTACK4", ID::B_N_ATTACK4);
+	ResourceLoad::LoadAnim("B_ATTACK5", ID::B_N_ATTACK5);
+	ResourceLoad::LoadAnim("B_ATTACK6", ID::B_N_ATTACK6);
+	ResourceLoad::LoadAnim("B_ATTACK7", ID::B_N_ATTACK7);
+	ResourceLoad::LoadAnim("B_SATTACK1", ID::B_S_ATTACK1);
+	ResourceLoad::LoadAnim("B_SATTACK2", ID::B_S_ATTACK2);
+	ResourceLoad::LoadAnim("B_SATTACK2_STOP", ID::B_S_ATTACK2_STOP);
+	ResourceLoad::LoadAnim("B_SATTACK2_BEFORE_2", ID::B_S_ATTACK2_BEFORE);
+	ResourceLoad::LoadAnim("B_SATTACK1_SAMLL", ID::B_S_ATTACK1_SMALL);
+	ResourceLoad::LoadAnim("B_DIE", ID::BOSS_DIE);
+	ResourceLoad::LoadAnim("B_ROAR_ANIM", ID::B_ROAR_ANIM);
+	ResourceLoad::LoadAnim("B_ROAR3", ID::B_ROAR_2);
+	ResourceLoad::LoadAnim("B_RUN", ID::B_DUSH);
+	ResourceLoad::LoadAnim("B_THREAT", ID::B_THREAT);
+	ResourceLoad::LoadAnim("B_DAMAGE", ID::BOSS_DAMAGE);
+	ResourceLoad::LoadAnim("B_APPEAR_FALL", ID::B_APPEAR_FALL);
+	ResourceLoad::LoadAnim("B_APPEAR_LAND", ID::B_APPEAR_LAND);
+	ResourceLoad::LoadAnim("B_FEAR", ID::BOSS_FEAR);
+	ResourceLoad::LoadAnim("B_BACKSTEP", ID::B_BACKSTEP);
+	ResourceLoad::LoadAnim("B_WIN", ID::B_WIN);
 
 	anim->AnimDataLoad("BossAnimData");
 	anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
@@ -221,8 +221,10 @@ void EnemyManager::CreateBoss()
 	boss->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
-	g->GuageDrawReady<Boss>(Load::LoadImageGraph(Load::IMAGE_PATH + "Boss_HpBar_RedBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
-	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "Boss_HpBar_Frame", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 70.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
+	g->DamageGuageDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Boss_HpBar_YellowBack", ID::BOSS_HP_DAMAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 70.0f, 0.0f), VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(1.0f, 1.0f, 1.0f)));
+	g->GuageDrawReady<Boss>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Boss_HpBar_RedBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
+	g->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Boss_HpBar_Frame", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 70.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
+	
 	
 	
 	//bossList.emplace_back(b);
@@ -615,6 +617,9 @@ Transform EnemyManager::NearFovEnemyPos(Transform& _transform, float _angle)
 
 void EnemyManager::SetCameraRockOnObject(EnemyBase* _enemy, Camera* _camera)
 {
+	if (_enemy == nullptr) {
+		return;
+	}
 	_enemy->LastTargetIn();
 	player->Component()->GetComponent<Player>()->TargetObjSet(_enemy->GetBaseObject());
 	_camera->TargetSet(_enemy->GetBaseObject());

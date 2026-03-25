@@ -123,7 +123,7 @@ public:
 	void AddPush(const VECTOR3& _normal, float _penetration, CollsionInformation::Shape _shape, const VECTOR3& _targetPos);
 
 	// 押し返しベクトルを計算して返す
-	VECTOR3 ResultPushback(float  _maxLength = 5.0f);
+	VECTOR3 ResultPushback(float  _maxLength = 5.0f,VECTOR3 _pos = VZero);
 
 	/// <summary>
 	/// 押し返しを適用

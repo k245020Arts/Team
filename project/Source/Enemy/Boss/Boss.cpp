@@ -1,7 +1,7 @@
 ﻿#include "Boss.h"
 #include "../../Component/Animator/Animator.h"
 #include "../../Component/Physics/Physics.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/PadInput.h"
 #include "../../Common/InputManager/InputManager.h"
 #include "../../Component/Collider/SphereCollider.h"
 #include "../../Component/Color/Color.h"
@@ -35,7 +35,7 @@
 #include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 #include "../../Weapon/SwordEffect.h"
 #include "../../Weapon/CharaWeapon.h"
-#include "../../Common/LoadManager.h"
+#include "../../Common/ResourceLoader.h"
 #include "../Boss/BossState/AttackSorting.h"
 #include "../Boss/BossState/BossCoolTime.h"
 #include "../Boss/BossState/BossStatus.h"
@@ -275,7 +275,7 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::B_MODEL, -1);
-	chara->SetImage(Load::GetHandle(ID::SWORD_EFFECT_B));
+	chara->SetImage(ResourceLoad::GetHandle(ID::SWORD_EFFECT_B));
 
 	JsonReader reader;
 	if (reader.Load("data/json/Boss.json")) {

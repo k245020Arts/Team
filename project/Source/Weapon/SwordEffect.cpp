@@ -1,5 +1,5 @@
 ﻿#include "swordEffect.h"
-#include "../Common/LoadManager.h"
+#include "../Common/ResourceLoader.h"
 #include "CharaWeapon.h"
 #include "../Component/ComponentManager.h"
 #include "../Component/Transform/Transform.h"
@@ -230,8 +230,8 @@ SwordEffect::SwordEffect()
 	points.resize(30);
 	readp = 0;
 	writep = 0;
-	Load::LoadImageGraph(Load::IMAGE_PATH + "zlRYsodZuqpGepk1757160129_1757160135", ID::SWORD_EFFECT_B);
-	Load::LoadImageGraph(Load::IMAGE_PATH + "SlashLocus", ID::SWORD_EFFECT);
+	ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "zlRYsodZuqpGepk1757160129_1757160135", ID::SWORD_EFFECT_B);
+	ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "SlashLocus", ID::SWORD_EFFECT);
 	image = -1;
 	debugId = 18;
 	tag = Function::GetClassNameC<SwordEffect>();

@@ -1,7 +1,7 @@
 #include "playerAttack4.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../playerStateManager.h"
-#include "../../../Common/InputManager/ControllerInputManager.h"
+#include "../../../Common/InputManager/PadInput.h"
 #include "../../Player.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Camera/Camera.h"
@@ -91,7 +91,7 @@ void PlayerAttack4::Start()
 	//UŒ‚‚Ì‘O‚É‚½‚ß‚ð‚¢‚ê‚é‚½‚ß‚Ìshake
 	//p->playerCom.shaker->ShakeStart(VECTOR3(20.0f, 10.0f, 10.0f), Shaker::HORIZONAL_SHAKE, false, 0.4f);
 	//p->playerCom.controller->ControlVibrationStartFrame(100, 20);
-	p->playerCom.physics->SetGravity(PlayerInformation::BASE_GRAVITY);
+	p->playerCom.physics->SetGravity(VECTOR3(0,-5000,0));
 	//AgainTimerSet(0.2f, 3);
 	avoidReady = false;
 }

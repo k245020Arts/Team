@@ -1,6 +1,6 @@
 #include "BootScene.h"
 #include "../Source/Common/InputManager/InputManager.h"
-#include "../Source/Common/LoadManager.h"
+#include "../Source/Common/ResourceLoader.h"
 #include "../Source/Component/Collider/CollsionManager.h"
 #include "../Source/Common/Sound/SoundManager.h"
 #include "../Source/Common/Effect/EffectManager.h"
@@ -13,7 +13,7 @@
 BootScene::BootScene()
 {
 	InputManager* input			= InputManager::GetInstance();
-	Load::Init();
+	ResourceLoad::Init();
 	ID::Init();
 	Sound_ID::InitID();
 	Debug::InitDebug(input);
@@ -23,9 +23,9 @@ BootScene::BootScene()
 	TransitorManager* transitor = new TransitorManager();
 	new CollsionManager();
 	new Fead();
-	//Load::SetAsync(false);
-	Load::LoadModel(Load::MODEL_PATH + "stage_s", ID::S_MODEL, true);
-	Load::LoadModel(Load::MODEL_PATH + "cube", ID::WALL, true);
+	/*Load::SetAsync(false);*/
+	ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "stage_s", ID::S_MODEL, true);
+	ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "cube", ID::WALL, true);
 
 }
 
@@ -37,8 +37,8 @@ void BootScene::Update()
 {
 	
 	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
-	SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
-	
+	//SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
+	//SceneManager::Exit();
 }
 
 void BootScene::Draw()

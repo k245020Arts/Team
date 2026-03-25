@@ -5,7 +5,7 @@ class StateManager;
 class Boss;
 class Animator;
 class Physics;
-class ControllerInputManager;
+class PadInput;
 class Color;
 class Shaker;
 class BaseObject;
@@ -39,7 +39,7 @@ namespace BossInformation {
 		Boss* boss;
 		Physics* physics;
 		Animator* anim;
-		ControllerInputManager* control;
+		PadInput* control;
 		Color* color;
 		Shaker* shaker;
 		BaseObject* playerObj;

@@ -79,7 +79,7 @@ void Pushback::AddPush(const VECTOR3& _normal, float  _penetration, CollsionInfo
     }
 }
 
-VECTOR3 Pushback::ResultPushback(float  _maxLength) {
+VECTOR3 Pushback::ResultPushback(float  _maxLength, VECTOR3 _pos) {
     if (pushes.empty()) {
         return VZero;
     }
@@ -87,6 +87,8 @@ VECTOR3 Pushback::ResultPushback(float  _maxLength) {
     VECTOR3 totalPush = VECTOR3(0, 0, 0);
 
     for (const auto& p : pushes) {
+        VECTOR3 diff = _pos - p.targetPos;
+        float penetration = VDot(p.normal,diff);
         VECTOR3 newPush = p.normal * p.penetration;
 
 		totalPush += newPush;
@@ -116,7 +118,8 @@ VECTOR3 Pushback::ResultPushback(float  _maxLength) {
 }
 
 void Pushback::Apply(Transform* _transform, Physics* _physics, bool  _affectVelocity, float  _maxLength) {
-    VECTOR3 push = ResultPushback(_maxLength);
+    VECTOR3 pos = _transform->position;
+    VECTOR3 push = ResultPushback(_maxLength,pos);
     if (push.Size() < 0.001f) { // ”÷¬‚È‚ç–³Ž‹
         return;
     }

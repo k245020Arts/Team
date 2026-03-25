@@ -74,13 +74,13 @@
     <ClCompile Include="Source\Common\Effect\EffectManager.cpp">
       <Filter>Common\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Common\InputManager\ControllerInputManager.cpp">
-      <Filter>Common\InputManager\Controler</Filter>
+    <ClCompile Include="Source\Common\InputManager\PadInput.cpp">
+      <Filter>Common\InputManager\PadInput</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Common\InputManager\KeyboardInputManager.cpp">
+    <ClCompile Include="Source\Common\InputManager\KeyboardInput.cpp">
       <Filter>Common\InputManager\KeyBord</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Common\InputManager\MouseInputManager.cpp">
+    <ClCompile Include="Source\Common\InputManager\MouseInput.cpp">
       <Filter>Common\InputManager\Mouse</Filter>
     </ClCompile>
     <ClCompile Include="Source\Common\InputManager\InputManager.cpp">
@@ -128,7 +128,7 @@
     <ClCompile Include="Source\Common\CsvReader.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Common\LoadManager.cpp">
+    <ClCompile Include="Source\Common\ResourceLoader.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Source\Common\Random.cpp">
@@ -564,8 +564,8 @@
     <ClCompile Include="Source\Player\PlayerParamWindow.cpp">
       <Filter>PlayScene\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\AStar.cpp">
-      <Filter>PlayScene\Enemy</Filter>
+    <ClCompile Include="Source\Stage\StageSelectData.cpp">
+      <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -658,13 +658,13 @@
     <ClInclude Include="Source\Common\Effect\EffectBase.h">
       <Filter>Common\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Common\InputManager\ControllerInputManager.h">
-      <Filter>Common\InputManager\Controler</Filter>
+    <ClInclude Include="Source\Common\InputManager\PadInput.h">
+      <Filter>Common\InputManager\PadInput</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Common\InputManager\KeyboardInputManager.h">
+    <ClInclude Include="Source\Common\InputManager\KeyboardInput.h">
       <Filter>Common\InputManager\KeyBord</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Common\InputManager\MouseInputManager.h">
+    <ClInclude Include="Source\Common\InputManager\MouseInput.h">
       <Filter>Common\InputManager\Mouse</Filter>
     </ClInclude>
     <ClInclude Include="Source\Common\InputManager\InputManager.h">
@@ -718,7 +718,7 @@
     <ClInclude Include="Source\Common\Function.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Common\LoadManager.h">
+    <ClInclude Include="Source\Common\ResourceLoader.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Source\Common\MethodExec.h">
@@ -1193,8 +1193,11 @@
     <ClInclude Include="Source\Player\PlayerParamWindow.h">
       <Filter>PlayScene\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\AStar.h">
-      <Filter>PlayScene\Enemy</Filter>
+    <ClInclude Include="Source\Stage\StageSelectData.h">
+      <Filter>PlayScene\Player\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Common\Debug\DebugLogText.h">
+      <Filter>Common\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1321,9 +1324,6 @@
     <Filter Include="PlayScene\Camera\CameraManager">
       <UniqueIdentifier>{3f53b35f-708a-486b-841b-fcd4d42fcc5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\InputManager\Controler">
-      <UniqueIdentifier>{59a215e4-309a-49ea-81db-50540a15c9e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\InputManager\KeyBord">
       <UniqueIdentifier>{480737b5-d8a3-4079-9929-46e247026029}</UniqueIdentifier>
     </Filter>
@@ -1404,6 +1404,9 @@
     </Filter>
     <Filter Include="PlayScene\GameControler">
       <UniqueIdentifier>{7f46c37e-1f94-43fe-971a-c299f8addbef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\InputManager\PadInput">
+      <UniqueIdentifier>{59a215e4-309a-49ea-81db-50540a15c9e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

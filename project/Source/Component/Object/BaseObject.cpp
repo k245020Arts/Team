@@ -32,7 +32,12 @@ BaseObject::~BaseObject()
 		int a = 0;
 	}*/
 	delete componentManager;
-	FindGameObject<Hierachy>()->RemoveHierachy(this);
+	// Hierachyが存在する場合のみ呼ぶ（Release中は存在しない）
+	Hierachy* h = FindGameObject<Hierachy>();
+	if (h != nullptr)
+	{
+		h->RemoveHierachy(this);
+	}
 	RemoveParent();
 	DeleteAllChildren();
 }
@@ -98,7 +103,16 @@ void BaseObject::Init(std::string name)
 	componentManager->Init(this);
 	SetTag(name);
 	//デバックウィンドウはここで登録している
-	FindGameObject<Hierachy>()->Start(name, this);
+	//FindGameObject<Hierachy>()->Start(name, this);
+	Hierachy* h = FindGameObject<Hierachy>();
+	if (h != nullptr)
+	{
+		h->Start(name, this);
+	}
+	else {
+		Color* color = Component()->AddComponent<Color>();
+	}
+	
 	transitor = FindGameObject<TransitorManager>();
 }
 

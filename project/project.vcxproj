@@ -185,6 +185,7 @@
     <ClInclude Include="Source\Common\BlurScreen.h" />
     <ClInclude Include="Source\Common\CsvReader.h" />
     <ClInclude Include="Source\Common\Debug\Debug.h" />
+    <ClInclude Include="Source\Common\Debug\DebugLogText.h" />
     <ClInclude Include="Source\Common\Easing.h" />
     <ClInclude Include="Source\Common\Effect\EffectBase.h" />
     <ClInclude Include="Source\Common\Effect\EffectManager.h" />
@@ -194,12 +195,12 @@
     <ClInclude Include="Source\Common\ID\ID.h" />
     <ClInclude Include="Source\Common\ID\SoundID.h" />
     <ClInclude Include="Source\Common\ID\StateID.h" />
-    <ClInclude Include="Source\Common\InputManager\ControllerInputManager.h" />
+    <ClInclude Include="Source\Common\InputManager\PadInput.h" />
     <ClInclude Include="Source\Common\InputManager\InputManager.h" />
-    <ClInclude Include="Source\Common\InputManager\KeyboardInputManager.h" />
-    <ClInclude Include="Source\Common\InputManager\MouseInputManager.h" />
+    <ClInclude Include="Source\Common\InputManager\KeyboardInput.h" />
+    <ClInclude Include="Source\Common\InputManager\MouseInput.h" />
     <ClInclude Include="Source\Common\JsonReader.h" />
-    <ClInclude Include="Source\Common\LoadManager.h" />
+    <ClInclude Include="Source\Common\ResourceLoader.h" />
     <ClInclude Include="Source\Common\Memory\MemoryCount.h" />
     <ClInclude Include="Source\Common\MethodExec.h" />
     <ClInclude Include="Source\Common\MyAssert\MyAssert.h" />
@@ -340,6 +341,7 @@
     <ClInclude Include="Source\Stage\Sky.h" />
     <ClInclude Include="Source\Stage\Stage.h" />
     <ClInclude Include="Source\Stage\StageManager.h" />
+    <ClInclude Include="Source\Stage\StageSelectData.h" />
     <ClInclude Include="Source\Stage\Wall.h" />
     <ClInclude Include="Source\State\StateBase.h" />
     <ClInclude Include="Source\State\StateManager.h" />
@@ -399,12 +401,12 @@
     <ClCompile Include="Source\Common\ID\ID.cpp" />
     <ClCompile Include="Source\Common\ID\SoundID.cpp" />
     <ClCompile Include="Source\Common\ID\StateID.cpp" />
-    <ClCompile Include="Source\Common\InputManager\ControllerInputManager.cpp" />
+    <ClCompile Include="Source\Common\InputManager\PadInput.cpp" />
     <ClCompile Include="Source\Common\InputManager\InputManager.cpp" />
-    <ClCompile Include="Source\Common\InputManager\KeyboardInputManager.cpp" />
-    <ClCompile Include="Source\Common\InputManager\MouseInputManager.cpp" />
+    <ClCompile Include="Source\Common\InputManager\KeyboardInput.cpp" />
+    <ClCompile Include="Source\Common\InputManager\MouseInput.cpp" />
     <ClCompile Include="Source\Common\JsonReader.cpp" />
-    <ClCompile Include="Source\Common\LoadManager.cpp" />
+    <ClCompile Include="Source\Common\ResourceLoader.cpp" />
     <ClCompile Include="Source\Common\Memory\MemoryCount.cpp" />
     <ClCompile Include="Source\Common\MyAssert\MyAssert.cpp" />
     <ClCompile Include="Source\Common\Random.cpp" />
@@ -533,6 +535,7 @@
     <ClCompile Include="Source\Stage\Sky.cpp" />
     <ClCompile Include="Source\Stage\Stage.cpp" />
     <ClCompile Include="Source\Stage\StageManager.cpp" />
+    <ClCompile Include="Source\Stage\StageSelectData.cpp" />
     <ClCompile Include="Source\Stage\Wall.cpp" />
     <ClCompile Include="Source\State\StateManager.cpp" />
     <ClCompile Include="Source\TitleCamera.cpp" />

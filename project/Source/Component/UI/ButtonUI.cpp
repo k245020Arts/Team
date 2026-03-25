@@ -1,5 +1,5 @@
 #include "ButtonUI.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/PadInput.h"
 #include "../../Common/InputManager/InputManager.h"
 #include "../../Component/Transform/Transform.h"
 #include "../ComponentManager.h"

@@ -1,5 +1,5 @@
 #include "playerjustAvoid.h"
-#include "../../Common/InputManager/ControllerInputManager.h"
+#include "../../Common/InputManager/PadInput.h"
 #include "playerStateManager.h"
 #include "../../Component/Animator/Animator.h"
 #include "../../Component/Physics/Physics.h"
@@ -8,7 +8,7 @@
 #include "../../Camera/Camera.h"
 #include "../../Common/Effect/EffectManager.h"
 #include "../../Screen.h"
-#include "../../Common/LoadManager.h"
+#include "../../Common/ResourceLoader.h"
 #include "../../Common/Sound/SoundManager.h"
 #include "../../Component/Color/color.h"
 #include "../../Component/MotionBlur/MotionBlur.h"
@@ -155,7 +155,7 @@ void PlayerJustAvoid::Start()
 
 	//エフェクトの再生
 	EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(Screen::WIDTH / 2.0f , Screen::HEIGHT / 2.0f, 0), VZero, VOne * 3.0f), nullptr, Effect_ID::JUST_AVOID_EFFECT, 1.0f, false);
-	EffectManager::GetInstance()->CreateEffekseer(Transform(MV1GetFramePosition(Load::GetHandle(ID::IDType::P_MODEL), 12), VZero, VOne * 1.0f), nullptr, Effect_ID::PLAYER_FLASH, 1.0f);
+	EffectManager::GetInstance()->CreateEffekseer(Transform(MV1GetFramePosition(ResourceLoad::GetHandle(ID::IDType::P_MODEL), 12), VZero, VOne * 1.0f), nullptr, Effect_ID::PLAYER_FLASH, 1.0f);
 	//p->playerCom.effect->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VZero, VOne), p->playerCom.player->GetPlayerObj(), ID::PLAYER_AURA, 10.0f);
 
 	//プレイヤーを青くする

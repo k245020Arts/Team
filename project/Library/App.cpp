@@ -3,7 +3,7 @@
 #include "ObjectManager.h"
 #include "Time.h"
 #include <DxLib.h>
-#include "../Source/Common/LoadManager.h"
+#include "../Source/Common/ResourceLoader.h"
 #include "../Source/Common/Singleton/SingleTonUpdater.h"
 
 void AppInit()
@@ -30,11 +30,16 @@ void AppDraw()
 
 void AppRelease()
 {
+	// DontDestroyフラグを全解除してから終了
+	/*for (GameObject* obj : ObjectManager::GetAllObject()) {
+		obj->DontDestroyOnSceneChange(false);
+	}*/
+
 	Time::Release();
 	SceneManager::Release();
 	ObjectManager::Release();
 	SingleTonUpdater::Release();
-	Load::AllDelete();
+	ResourceLoad::AllDelete();
 
 }
 

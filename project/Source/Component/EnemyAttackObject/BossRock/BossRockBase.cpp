@@ -2,7 +2,7 @@
 #include "BossRockManager.h"
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Common/Sound/SoundManager.h"
-#include "../../../Common/LoadManager.h"
+#include "../../../Common/ResourceLoader.h"
 #include "../../Collider/SphereCollider.h"
 #include "../../Collider/RayCollider.h"
 #include "../../Collider/ModelCollider.h"
@@ -152,13 +152,13 @@ void BossRockBase::Ground()
 		switch (useHandleNumber)
 		{
 		case 0:
-			pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 4.0f), MV1DuplicateModel(Load::GetHandle(ID::BOSS_PUSH)));
+			pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 4.0f), MV1DuplicateModel(ResourceLoad::GetHandle(ID::BOSS_PUSH)));
 			break;
 		case 1:
-			pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 3.0f), MV1DuplicateModel(Load::GetHandle(ID::BOSS_PUSH)));
+			pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 3.0f), MV1DuplicateModel(ResourceLoad::GetHandle(ID::BOSS_PUSH)));
 			break;
 		case 2:
-			pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 10.0f), MV1DuplicateModel(Load::GetHandle(ID::BOSS_PUSH)));
+			pushColl->ModelColliderSet(info, Transform(VZero, VZero, VOne * 10.0f), MV1DuplicateModel(ResourceLoad::GetHandle(ID::BOSS_PUSH)));
 			break;
 		}
 	}
@@ -228,15 +228,15 @@ void BossRockBase::SetRockModel()
 	switch (random)
 	{
 	case 0:
-		mesh->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "BossAttackRock1", ID::ROCK_1));
+		mesh->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "BossAttackRock1", ID::ROCK_1));
 		obj->GetTransform()->scale = VOne * 1.0f;
 		break;
 	case 1:
-		mesh->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "BossAttackRock2", ID::ROCK_2));
+		mesh->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "BossAttackRock2", ID::ROCK_2));
 		obj->GetTransform()->scale = VOne * 1.0f;
 		break;
 	case 2:
-		mesh->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "BossAttackRock3", ID::ROCK_3));
+		mesh->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "BossAttackRock3", ID::ROCK_3));
 		obj->GetTransform()->scale = VOne * 0.5f;
 		break;
 	default:

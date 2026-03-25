@@ -1,4 +1,4 @@
-#include "CollsionManager.h"
+ï»¿#include "CollsionManager.h"
 #include "colliderBase.h"
 #include "../../Common/Function.h"
 #include "../Transform/Transform.h"
@@ -18,7 +18,7 @@ CollsionManager::CollsionManager()
 {
 	using namespace Function;
 	using namespace CollsionInformation;
-	//“–‚½‚è”»’è‚Å‚Ç‚ÌŒ`“¯m‚È‚ç‚±‚ÌŠÖ”‚É‚¢‚ê‚é‚Æ‚¢‚¤“o˜^
+	//å½“ãŸã‚Šåˆ¤å®šã§ã©ã®å½¢åŒå£«ãªã‚‰ã“ã®é–¢æ•°ã«ã„ã‚Œã‚‹ã¨ã„ã†ç™»éŒ²
 	collsionKind[EnumTag(SPHERE ,SPHERE,SHAPE_MAX)] = &CollsionManager::CollsionSphereToSphere;
 	collsionKind[EnumTag(SPHERE ,MODEL,SHAPE_MAX)]	= &CollsionManager::CollsionSphereToModel;
 	collsionKind[EnumTag(SPHERE, DONUT,SHAPE_MAX)]	= &CollsionManager::CollsionSphereToDount;
@@ -29,6 +29,7 @@ CollsionManager::CollsionManager()
 	event = new CollsionEvent();
 	InitSetPair();
 	//DontDestroyOnSceneChange(true);
+	//SetDrawOrder(0);
 }
 
 CollsionManager::~CollsionManager()
@@ -44,19 +45,19 @@ void CollsionManager::Update()
 			if (itr1 == itr2) {
 				continue;
 			}
-			//“–‚½‚è”»’è‚ª‚Ç‚¿‚ç‚©‚ªI—¹‚µ‚Ä‚¢‚½‚ç–³‹‚·‚é
+			//å½“ãŸã‚Šåˆ¤å®šãŒã©ã¡ã‚‰ã‹ãŒçµ‚äº†ã—ã¦ã„ãŸã‚‰ç„¡è¦–ã™ã‚‹
 			if ((*itr1)->GetFinish() || (*itr2)->GetFinish()) {
 				continue;
 			}
 			CollsionInformation::Tag tag1 = (*itr1)->GetCollTag();
 			CollsionInformation::Tag tag2 = (*itr2)->GetCollTag();
-			//ƒ^ƒO“¯m‚Ì“–‚½‚è”»’è‚É‹–‰Â‚ª‚Å‚Ä‚È‚¯‚ê‚Î–³‹‚·‚éB
+			//ã‚¿ã‚°åŒå£«ã®å½“ãŸã‚Šåˆ¤å®šã«è¨±å¯ãŒã§ã¦ãªã‘ã‚Œã°ç„¡è¦–ã™ã‚‹ã€‚
 			if (!CollsionInformation::IsCollPair(tag1, tag2)) {
 				continue;
 			}
 
 			bool hit = false;
-			//“–‚½‚è”»’è‚ÌŒ`‚ğŒ©‚ÄŠÖ”ƒ|ƒCƒ“ƒ^‚ğ‘ã“ü
+			//å½“ãŸã‚Šåˆ¤å®šã®å½¢ã‚’è¦‹ã¦é–¢æ•°ãƒã‚¤ãƒ³ã‚¿ã‚’ä»£å…¥
 			if ((*itr1)->GetShape() > (*itr2)->GetShape()) {
 				Function::swap(*itr1, *itr2);
 			}
@@ -120,101 +121,53 @@ bool CollsionManager::CollsionSphereToSphere(ColliderBase* col1, ColliderBase* c
 	return false;
 }
 
-bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
+bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos)
 {
-	//Transform* trans1 = col1->GetTransform();
-	//Transform* trans2 = col2->GetTransform();
-	//Transform* trans3 = dynamic_cast<RayCollider*>(col2)->Get2Transform();
+	Transform* modelTransform = col1->GetTransform();
+	Transform* rayStartTrans = col2->GetTransform();
+	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col2)->Get2Transform();
 
-	//auto ret = MV1CollCheck_Line(dynamic_cast<ModelCollider*>(col1)->GetModel(), -1, trans2->WorldTransform().position, trans3->WorldTransform().position);
-	//VECTOR3 hitPos = ret.HitPosition;
-	//if (ret.HitFlag != 0) {
-	//	if (trans1->position.Size() == 0.0f || trans1->position.Size() > VSize(ret.HitPosition - trans1->position)) {
-	//		VECTOR3 pos  = trans2->WorldTransform().position - hitPos;
-	//		col2->GetObj()->Component()->GetComponent<Physics>()->AddVelocity(pos,false);
-	//	}
-	//	return true;
-	//}
-	////MV1CollResultPolyDimTerminate(ret);
-	//return false;
-
-	Transform* modelTransform = col1->GetTransform(); // ’n–Ê‚È‚Ç
-	Transform* rayStartTrans = col2->GetTransform();  // ƒŒƒC‚Ìn“_
-	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col2)->Get2Transform(); // ƒŒƒC‚ÌI“_
-
-	// ƒŒƒC‚ÌŠJn“_‚ÆI—¹“_iƒ[ƒ‹ƒhÀ•Wj
 	VECTOR3 startPos = rayStartTrans->WorldTransform().position;
 	VECTOR3 endPos = rayEndTrans->WorldTransform().position;
 
-	if (col2->GetCollTag() == CollsionInformation::C_FLOOR) {
-		int a = 0;
-	}
-
-	// ƒŒƒC‚É‚æ‚éƒ‚ƒfƒ‹‚Ì“–‚½‚è”»’è
-	auto result = MV1CollCheck_Line(dynamic_cast<ModelCollider*>(col1)->GetModel(),-1,startPos,endPos
-	);
-	
+	auto result = MV1CollCheck_Line(dynamic_cast<ModelCollider*>(col1)->GetModel(), -1, startPos, endPos);
 	Physics* p = col2->GetObj()->Component()->GetComponent<Physics>();
-	
 
-	if (result.HitFlag != 0) {
-		VECTOR3 push = startPos - result.HitPosition;
-
-		if (col2->GetCollTag() == CollsionInformation::P_FLOOR) {
-			//Debug::DebugLogPrintf(Debug::printfString("hit = %.3f", p->GetVelocity()));
-		}
-
-		float rayLength = VSize(endPos - startPos);
+	if (result.HitFlag != 0)
+	{
+		VECTOR3 normal = result.Normal;
+		VECTOR3 rayVec = endPos - startPos;
+		float rayLength = VSize(rayVec);
 		float hitDist = VSize(result.HitPosition - startPos);
 		float penetration = rayLength - hitDist;
+		if (penetration < 0.0f) penetration = 0.0f;
 
-		// Y•ûŒü‚Ì‚İ‰Ÿ‚µ•Ô‚µ
-		resolver.AddPush(VECTOR3(0, 1, 0), penetration, CollsionInformation::Shape::RAY,result.HitPosition);
-
-		if (col2->GetCollTag() == CollsionInformation::SHADOW) {
-			col2->GetBaseObject()->Component()->GetComponent<Shadow>()->ChangeScale(push,result.HitPosition);
-		}
+		resolver.AddPush(normal, penetration, CollsionInformation::Shape::RAY, result.HitPosition);
 		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 50.0f * Time::DeltaTimeRate());
 
-		if (p != nullptr) {
-			if (col2->GetCollTag() == CollsionInformation::P_FLOOR) {
-				int a = 0;
-			}
-			bool grounded = resolver.IsGrounded(0.7f);
-
-			if (grounded)
-			{
-				p->SetGround(true);
-			}
-			else
-			{
-				// ­‚µ—P—\
-				static int groundBuffer = 0;
-
-				groundBuffer++;
-
-				if (groundBuffer > 3)
-				{
-					p->SetGround(false);
-				}
-			}
+		if (p != nullptr)
+		{
+			bool grounded = resolver.IsGrounded(0.5f);
+			p->SetGround(grounded);   // â† ãƒ’ãƒƒãƒˆæ™‚ã®ã¿ ground ã‚’æ›´æ–°
 		}
+
+		if (col2->GetCollTag() == CollsionInformation::SHADOW)
+		{
+			VECTOR3 push = startPos - result.HitPosition;
+			col2->GetBaseObject()->Component()->GetComponent<Shadow>()->ChangeScale(push, result.HitPosition);
+		}
+
+		return true;
 	}
-	else {
-		resolver.Apply(col2->GetObj()->GetTransform(), p, true, 50.0f * Time::DeltaTimeRate());
-
-		if (p != nullptr) {
-			p->SetGround(resolver.IsGrounded(0.7f));
+	else
+	{
+		if (p != nullptr)
+		{
+			p->SetGround(false);
 		}
-		
 		return false;
 	}
-	
-	
-	//’n–Ê‚Ì”»’è‚Í“–‚½‚è”»’è‚©‚çs‚¤
-	
 	return true;
-
 }
 
 bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
@@ -246,7 +199,7 @@ bool CollsionManager::CollsionSphereToModel(ColliderBase* col1, ColliderBase* co
 		resolver.AddPush(pol.Normal, penetration,CollsionInformation::SPHERE, pol.HitPosition);
 	}
 
-	// ‰ğŒˆ
+	// è§£æ±º
 	resolver.Apply(col1->GetObj()->GetTransform(), phy,true,20.0f);
 
 
@@ -263,7 +216,7 @@ bool CollsionManager::CollsionSphereToDount(ColliderBase* col1, ColliderBase* co
 	float outRadius = dynamic_cast<DountCollider*>(col2)->GetOutRadius();
 
 	float dist = VSize(VSub(trans1->WorldTransform().position, trans2->WorldTransform().position));
-	//“à‘¤‚Ì‰~‚Ì“–‚½‚è”»’è‚É“–‚½‚Á‚Ä‚¢‚È‚¢‚©‚ÂŠO‘¤‚Ì‰~‚Ì“–‚½‚è”»’è‚É“–‚½‚Á‚Ä‚¢‚é‚Æ‚«
+	//å†…å´ã®å††ã®å½“ãŸã‚Šåˆ¤å®šã«å½“ãŸã£ã¦ã„ãªã„ã‹ã¤å¤–å´ã®å††ã®å½“ãŸã‚Šåˆ¤å®šã«å½“ãŸã£ã¦ã„ã‚‹ã¨ã
 	if (dist <= trans1->scale.x + outRadius) {
 		if (dist >= trans1->scale.x + trans2->scale.x) {
 			return true;
@@ -275,14 +228,14 @@ bool CollsionManager::CollsionSphereToDount(ColliderBase* col1, ColliderBase* co
 
 bool CollsionManager::CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
 {
-	Transform* rayStartTrans = col1->GetTransform();  // ƒŒƒC‚Ìn“_
-	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col1)->Get2Transform(); // ƒŒƒC‚ÌI“_
+	Transform* rayStartTrans = col1->GetTransform();  // ãƒ¬ã‚¤ã®å§‹ç‚¹
+	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col1)->Get2Transform(); // ãƒ¬ã‚¤ã®çµ‚ç‚¹
 
-	// ƒŒƒC‚ÌŠJn“_‚ÆI—¹“_(ƒ[ƒ‹ƒhÀ•W)
+	// ãƒ¬ã‚¤ã®é–‹å§‹ç‚¹ã¨çµ‚äº†ç‚¹(ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™)
 	VECTOR3 startPos = rayStartTrans->WorldTransform().position;
 	VECTOR3 endPos = rayEndTrans->WorldTransform().position;
 
-	VECTOR3 dir = endPos - startPos; // •ûŒüƒxƒNƒgƒ‹
+	VECTOR3 dir = endPos - startPos; // æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	dir = dir.Normalize();
 
 	AABBCollider::AABBInfo box = dynamic_cast<AABBCollider*>(col2)->GetAABBInfo();
@@ -299,7 +252,7 @@ bool CollsionManager::CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, 
 
 		if (fabs(d) < 0.000001f)
 		{
-			// ƒŒƒC‚ª‚±‚Ì²‚É•½s
+			// ãƒ¬ã‚¤ãŒã“ã®è»¸ã«å¹³è¡Œ
 			if (o < min || o > max)
 				return false;
 		}
@@ -325,7 +278,7 @@ bool CollsionManager::CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, 
 
 	float hitT = tMin;
 
-	//‚à‚µƒŒƒC‚Ìn“_‚ª” ‚Ì’†‚É‚ ‚éê‡
+	//ã‚‚ã—ãƒ¬ã‚¤ã®å§‹ç‚¹ãŒç®±ã®ä¸­ã«ã‚ã‚‹å ´åˆ
 	if (hitT < 0.0f)
 		hitT = tMax;
 

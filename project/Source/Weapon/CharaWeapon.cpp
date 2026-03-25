@@ -1,6 +1,6 @@
 #include "CharaWeapon.h"
 #include "../Component/Transform/Transform.h"
-#include "../Common/LoadManager.h"
+#include "../Common/ResourceLoader.h"
 #include "../../ImGui/imgui.h"
 #include "../Component/ComponentManager.h"
 #include "../Component/MeshRenderer/MeshRenderer.h"
@@ -53,7 +53,7 @@ void CharaWeapon::ObjectPointer(BaseObject* _obj, int _frame, ID::IDType _baseMo
 	anim = chara->Component()->GetComponent<Animator>();
 	anim->SetBoneFrame(frame);
 	frame = _frame;
-	modelHandle = Load::GetHandle(_baseModelName);
+	modelHandle = ResourceLoad::GetHandle(_baseModelName);
 	weaponHandle = _weaponHandle;
 	parent = true;
 	transform = obj->GetTransform();

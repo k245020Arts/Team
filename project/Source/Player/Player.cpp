@@ -7,8 +7,8 @@
 #include "../Component/Physics/Physics.h"
 #include "../Camera/Camera.h"
 #include "../Common/InputManager/InputManager.h"
-#include "../Common/InputManager/controllerInputManager.h"
-#include "../Common/InputManager/keyboardInputManager.h"
+#include "../Common/InputManager/PadInput.h"
+#include "../Common/InputManager/KeyboardInput.h"
 #include "../../ImGui/imgui.h"
 #include "../Component/Transform/Transform.h"
 #include "../Component/Animator/Animator.h"
@@ -35,7 +35,7 @@
 #include "../Player/PlayerState/AttackState/playerAttack4.h"
 #include "../Player/PlayerState/AttackState/PlayerAttack5.h"
 #include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
-#include "../Common/LoadManager.h"
+#include "../Common/ResourceLoader.h"
 //#include "../Enemy/TrashEnemy/Enemy.h"
 #include "../Enemy/TrashEnemy/EnemyState/EnemyStateManager.h"
 //#include "../Enemy/TrashEnemy/EnemyState/AttackState/EnemyAttack1.h"
@@ -47,6 +47,7 @@
 #include "../Common/Easing.h"
 #include "../Component/UI/ButtonUI.h"
 #include "PlayerParamWindow.h"
+#include "../Common/Debug/DebugLogText.h"
 
 namespace {
 
@@ -86,7 +87,7 @@ Player::Player()
 	hp							= MAX_HP;
 	maxHp						= hp;
 	avoidReadyCounter			= 0.0f;
-	justAvoidBlurImage			= Load::LoadImageGraph(Load::IMAGE_PATH + "visionEffect", ID::JUST_AVOID_BLUR);
+	justAvoidBlurImage			= ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "visionEffect", ID::JUST_AVOID_BLUR);
 	justFeedInTime				= 0.0f;
 	justFeedOutTime				= 0.0f;
 	bossThreat					= false;
@@ -116,6 +117,7 @@ Player::~Player()
 	justAvoidBlurImage = -1;
 	if (paramWindow != nullptr) {
 		delete paramWindow;
+		paramWindow = nullptr;
 	}
 }
 
@@ -123,6 +125,8 @@ void Player::Update()
 {
 	//playerCom.stateManager->Update();
 	//‰ñ”ðó‘Ô‚ªŽn‚Ü‚é‚Æ‚«‚É‰ñ“]‚É•â³‚ðŠ|‚¯‚é‚½‚ß‚Ìˆ—
+	DebugLogTextClass::GetInstance()->Log(LogLevel::INFO, Debug::printfString("playerPositionY = %.3f", playerTransform->position.y));
+	//playerCom.physics->GetVelocity().y)
 	if (justAvoidColHit) {
 		justAvoidCan = true;
 	}

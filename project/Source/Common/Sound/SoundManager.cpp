@@ -1,10 +1,11 @@
 #include "SoundManager.h"
 #include "Sound.h"
-#include "../LoadManager.h"
+#include "../ResourceLoader.h"
 #include "../Debug/Debug.h"
 #include "../../Component/Object/BaseObject.h"
 #include "../../Component/Transform/Transform.h"
 #include "../Easing.h"
+#include "../../Stage/StageSelectData.h"
 
 SoundManager::SoundManager()
 {
@@ -36,7 +37,7 @@ void SoundManager::Draw()
 void SoundManager::SoundLoad(Sound_ID::SOUND_ID _type, std::string path, std::string exten, int volume)
 {
 	Sound* soundData = new Sound();
-	soundData->SoundData(Load::LoadSound(path, exten, _type), volume);
+	soundData->SoundData(ResourceLoad::LoadSound(path, exten, _type), volume);
 	sound.emplace(Sound_ID::GetSoundID(_type), soundData);
 }
 
@@ -97,7 +98,8 @@ void SoundManager::PlaySceneLoad()
 
 	SoundLoad(Sound_ID::SOUND_ID::JUST_AVOID_SUCCESS, "success", ".wav", 255);
 
-	SoundLoad(Sound_ID::SOUND_ID::PLAY_BGM, "PlaySceneBGM", ".wav", 150);
+	std::string bgmName = StageSelectData::GetInstance()->GetNowStageData().bgm;
+	SoundLoad(Sound_ID::SOUND_ID::PLAY_BGM, bgmName, ".wav", 150);
 	SoundLoad(Sound_ID::SOUND_ID::WIN, "winSe", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::LOSE, "loseSe", ".mp3", 200);
 
@@ -191,7 +193,7 @@ void SoundManager::RandamSe(std::string _name, int num)
 
 bool SoundManager::CheckSe(Sound_ID::SOUND_ID _id)
 {
-	return CheckSoundMem(Load::GetSoundHandle(_id));
+	return CheckSoundMem(ResourceLoad::GetSoundHandle(_id));
 }
 
 void SoundManager::FeedInStart(Sound_ID::SOUND_ID _id, float _time)

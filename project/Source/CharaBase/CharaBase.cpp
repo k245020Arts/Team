@@ -14,6 +14,8 @@ CharaBase::CharaBase()
 
 CharaBase::~CharaBase()
 {
+	DeleteCollision(&attackColl);
+	DeleteCollision(&justAvoidColl);
 }
 
 void CharaBase::Update()

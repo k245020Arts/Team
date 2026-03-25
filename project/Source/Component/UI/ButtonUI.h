@@ -4,7 +4,7 @@
 #include "../../Component/Color/Color.h"
 
 class InputManager;
-class ControllerInputManager;
+class PadInput;
 struct Color::Rgb;
 
 class ButtonUI : public UIBase

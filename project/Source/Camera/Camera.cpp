@@ -1,7 +1,7 @@
 #include "camera.h"
 #include "../Component/Transform/Transform.h"
 #include "../../ImGui/imgui.h"
-#include "../Common/InputManager/ControllerInputManager.h"
+#include "../Common/InputManager/PadInput.h"
 #include <cmath>
 #include "../Component/ComponentManager.h"
 #include "../Component/Shaker/Shaker.h"
@@ -204,7 +204,12 @@ void Camera::PlayerSet(BaseObject* _obj)
 
 	cameraComponent.state->SetComponent<Camera>(this);
 	cameraComponent.state->StartState(StateID::FREE_CAMERA_S);
-	FindGameObject<Hierachy>()->SetCameraEditor(this);
+
+	Hierachy* h = FindGameObject<Hierachy>();
+	if (h != nullptr)
+	{
+		h->SetCameraEditor(this);
+	}
 	CutSceneChangeState("PlayingBefore",true);
 	//CameraRotationSet();
 }

@@ -19,6 +19,9 @@ public:
 	float GetNowProgress();
 	void SetNowProgress(float nowProgress);
 	float progress;
+
+	void StageSelect();
+
 private:
 	int hImage;
 	int keyImage;
@@ -29,4 +32,6 @@ private:
 	float moveButton;
 
 	TitlePlayer* player;
+	int stageID;
+	float selectCounter;
 };

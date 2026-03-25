@@ -7,7 +7,7 @@
 #include "../../ComponentManager.h"
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Common/Sound/SoundManager.h"
-#include "../../../Common/LoadManager.h"
+#include "../../../Common/ResourceLoader.h"
 #include "../../Physics/Physics.h"
 #include "BossRockManager.h"
 
@@ -20,7 +20,7 @@ BossRock::BossRock()
 
 	preDraw = false;
 	preTransform = Transform();
-	preModel = Load::LoadModel(Load::MODEL_PATH + "BossRockPre",ID::BOSS_PRE_MODEL);
+	preModel = ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "BossRockPre",ID::BOSS_PRE_MODEL);
 	
 	
 }
@@ -78,7 +78,7 @@ void BossRock::StartCollAdd(CollsionInformation::Tag _tag, const Transform& _tra
 	colltag = _tag;
 	time = 5.0f;
 	preDraw = false;
-	preModel = Load::GetHandle(ID::BOSS_PRE_MODEL);
+	preModel = ResourceLoad::GetHandle(ID::BOSS_PRE_MODEL);
 	groundInit = false;
 
 	physics = obj->Component()->GetComponent<Physics>();

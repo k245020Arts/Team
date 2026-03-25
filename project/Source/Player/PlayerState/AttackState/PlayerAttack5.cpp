@@ -2,7 +2,7 @@
 #include "../../../Component/Animator/Animator.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../playerStateManager.h"
-#include "../../../Common/InputManager/ControllerInputManager.h"
+#include "../../../Common/InputManager/PadInput.h"
 #include "../../player.h"
 #include "../../../Common/function.h"
 #include "../../../Component/Shaker/Shaker.h"

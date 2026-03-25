@@ -13,8 +13,8 @@
 #include "Component/Physics/Physics.h"
 #include "Camera/Camera.h"
 #include "Common/InputManager/InputManager.h"
-#include "Common/InputManager/controllerInputManager.h"
-#include "Common/InputManager/keyboardInputManager.h"
+#include "Common/InputManager/PadInput.h"
+#include "Common/InputManager/KeyboardInput.h"
 #include "../ImGui/imgui.h"
 #include "Component/Transform/Transform.h"
 #include "Component/Animator/Animator.h"
@@ -26,7 +26,7 @@
 #include "Common/Effect/EffectManager.h"
 #include "Weapon/WeaponManager.h"
 #include "Component/MotionBlur/MotionBlur.h"
-#include "Common/LoadManager.h"
+#include "Common/ResourceLoader.h"
 #include "Common/Transitor/FadeTransitor.h"
 #include "Common/Easing.h"
 
@@ -73,7 +73,7 @@ void TitlePlayer::Start(Object3D* _obj) {
 
 	camera = FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<TitleCamera>();
 
-	//playerCom.keyboard = FindGameObject<KeyboardInputManager>();
+	//playerCom.keyboard = FindGameObject<KeyboardInput>();
 	playerCom.weapon = FindGameObject<WeaponManager>(); //
 
 	//èdóÕÇ0Ç…ïœçX

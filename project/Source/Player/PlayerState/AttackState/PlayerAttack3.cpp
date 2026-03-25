@@ -1,7 +1,7 @@
 #include "playerAttack3.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../playerStateManager.h"
-#include "../../../Common/InputManager/ControllerInputManager.h"
+#include "../../../Common/InputManager/PadInput.h"
 #include "../../Player.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Camera/Camera.h"

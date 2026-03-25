@@ -9,7 +9,7 @@
 #include "../Player/PlayerState/AttackState/PlayerAttack2.h"
 #include "../Common/Memory/MemoryCount.h"
 #include "EnemyManager.h"
-#include "../Common/LoadManager.h"
+#include "../Common/ResourceLoader.h"
 #include "../Component/UI/EnemyDamageUI.h"
 #include "../Component/ComponentManager.h"
 #include "../Camera/Camera.h"
@@ -125,7 +125,7 @@ float EnemyBase::DamageCalculation(const VECTOR3& _pos, float _damage,float _def
 	damageNum->Component()->AddComponent<EnemyDamageUI>()->
 		SetInformation(_pos,
 		(int)damage + GetRand((int)deviation), VECTOR3(0.0f, -0.4f, 0.0f), 0.5f,
-		Load::GetHandle(ID::DAMAGE_UI_BUTTON), GetEnemyObj()->GetTransform(), VECTOR2I(81, 90));
+		ResourceLoad::GetHandle(ID::DAMAGE_UI_BUTTON), GetEnemyObj()->GetTransform(), VECTOR2I(81, 90));
 	
 	return damage;
 }

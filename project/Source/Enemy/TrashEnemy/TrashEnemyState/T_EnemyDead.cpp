@@ -6,6 +6,7 @@
 #include "../../../Component/Collider/SphereCollider.h"
 #include "../../../Common/Easing.h"
 #include "../../../Component/Color/Color.h"
+#include "../../EnemyManager.h"
 
 T_EnemyDead::T_EnemyDead()
 {
@@ -68,6 +69,7 @@ void T_EnemyDead::Start()
 	
 	motionSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
 	counter = 0;
+	FindGameObject<EnemyManager>()->RemoveList(e, obj);
 }
 
 void T_EnemyDead::Finish()

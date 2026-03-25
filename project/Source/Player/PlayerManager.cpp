@@ -10,7 +10,7 @@
 #include "../Component/Hierarchy/Hierarchy.h"
 #include "../State/StateManager.h"
 #include "../Enemy/EnemyManager.h"
-#include "../Common/LoadManager.h"
+#include "../Common/ResourceLoader.h"
 #include "../Component/Collider/SphereCollider.h"
 #include "../Component/Animator/Animator.h"
 #include "../Component/Light/ComponentLight.h"
@@ -114,7 +114,7 @@ void PlayerManager::CreatePlayer()
 	me2D->SetTransform(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VECTOR3(192.0f, 1.0f,0)));
 	//me2D->SetTransform(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VECTOR3(0.1f,1,0) * 10.0f));
 
-	me2D->TextureHandle(Load::LoadImageGraph(Load::IMAGE_PATH + "speicialAttackBackSide4", ID::PLAYER_SPECIAL_ATTACK_BACK), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+	me2D->TextureHandle(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "speicialAttackBackSide4", ID::PLAYER_SPECIAL_ATTACK_BACK), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 
 	Anim2D* anim2D = playerPointer->Component()->AddComponent<Anim2D>();
 	anim2D->AnimSetting(400.0f, 192);
@@ -128,7 +128,7 @@ void PlayerManager::CreatePlayer()
 	/*Camera* camera = playerPointer->Component()->AddComponent<Camera>();
 	camera->Start(FindGameObject<EnemyManager>()->GetEnemy());*/
 	//me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "exo_red", ID::P_MODEL));
-	me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Player4", ID::P_MODEL));
+	me2->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "Player4", ID::P_MODEL));
 	me2->RotationMesh(0, 180.0f * DegToRad);
 
 	stateManager = playerPointer->Component()->AddComponent<StateManager>();
@@ -156,30 +156,30 @@ void PlayerManager::CreatePlayer()
 	stateManager->CreateState<PlayerLose>("PlayerLose", StateID::PLAYER_LOSE_S);
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
-	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL),		"mixamorig:Hips");
+	anim->BaseModelSet(ResourceLoad::GetHandle(ID::P_MODEL),		"mixamorig:Hips");
 	
-	Load::LoadAnim("P_IDOL1", ID::IDType::P_ANIM_IDOL);
-	Load::LoadAnim("P_RUN_M_1", ID::IDType::P_ANIM_RUN);
-	Load::LoadAnim("P_AVOID_M_1", ID::IDType::P_ANIM_AVOID);
-	Load::LoadAnim("P_JUST_AVOID_M_1", ID::IDType::P_ANIM_JUST_AVOID);
-	Load::LoadAnim("P_DAMAGE_M_1", ID::IDType::P_DAMAGE);
-	Load::LoadAnim("P_FALL_M_1", ID::IDType::P_FALL);
-	Load::LoadAnim("P_GETUP_M_1", ID::IDType::P_GETUP);
-	Load::LoadAnim("P_ATTACK01_M_1", ID::IDType::P_ANIM_ATTACK1);
-	Load::LoadAnim("P_ATTACK02_M_1", ID::IDType::P_ANIM_ATTACK2);
-	Load::LoadAnim("P_ATTACK11_M_1", ID::IDType::P_ANIM_JUST_AVOID_ATTACK1);
-	Load::LoadAnim("P_ATTACK03_M_1", ID::IDType::P_ANIM_ATTACK3);
-	Load::LoadAnim("P_ATTACK05_M_1", ID::IDType::P_ANIM_ATTACK_5);
-	Load::LoadAnim("P_ATTACK04_M_1", ID::IDType::P_ANIM_ATTACK4);
-	Load::LoadAnim("P_DIE_M_1", ID::IDType::P_DIE);
-	Load::LoadAnim("P_TURN1", ID::IDType::P_TURN_ANIM);
-	Load::LoadAnim("P_SPECIAL_ATTACK_2", ID::IDType::P_SPECIAL_ATTACK_ANIM);
-	Load::LoadAnim("P_SPECIAL_ATTACK_BEFORE", ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM);
-	Load::LoadAnim("P_WIN", ID::IDType::P_WIN);
-	Load::LoadAnim("P_WINIDOL", ID::IDType::PLAYER_WIN_IDOL);
-	Load::LoadAnim("P_LEG_UP", ID::IDType::P_LEG_UP);
-	Load::LoadAnim("P_HEAVY_ATTACK", ID::IDType::P_HEAVY_ATTACK);
-	Load::LoadAnim("P_HEAVY_CHARGE", ID::IDType::P_HEAVY_CHARGE);
+	ResourceLoad::LoadAnim("P_IDOL1", ID::IDType::P_ANIM_IDOL);
+	ResourceLoad::LoadAnim("P_RUN_M_1", ID::IDType::P_ANIM_RUN);
+	ResourceLoad::LoadAnim("P_AVOID_M_1", ID::IDType::P_ANIM_AVOID);
+	ResourceLoad::LoadAnim("P_JUST_AVOID_M_1", ID::IDType::P_ANIM_JUST_AVOID);
+	ResourceLoad::LoadAnim("P_DAMAGE_M_1", ID::IDType::P_DAMAGE);
+	ResourceLoad::LoadAnim("P_FALL_M_1", ID::IDType::P_FALL);
+	ResourceLoad::LoadAnim("P_GETUP_M_1", ID::IDType::P_GETUP);
+	ResourceLoad::LoadAnim("P_ATTACK01_M_1", ID::IDType::P_ANIM_ATTACK1);
+	ResourceLoad::LoadAnim("P_ATTACK02_M_1", ID::IDType::P_ANIM_ATTACK2);
+	ResourceLoad::LoadAnim("P_ATTACK11_M_1", ID::IDType::P_ANIM_JUST_AVOID_ATTACK1);
+	ResourceLoad::LoadAnim("P_ATTACK03_M_1", ID::IDType::P_ANIM_ATTACK3);
+	ResourceLoad::LoadAnim("P_ATTACK05_M_1", ID::IDType::P_ANIM_ATTACK_5);
+	ResourceLoad::LoadAnim("P_ATTACK04_M_1", ID::IDType::P_ANIM_ATTACK4);
+	ResourceLoad::LoadAnim("P_DIE_M_1", ID::IDType::P_DIE);
+	ResourceLoad::LoadAnim("P_TURN1", ID::IDType::P_TURN_ANIM);
+	ResourceLoad::LoadAnim("P_SPECIAL_ATTACK_2", ID::IDType::P_SPECIAL_ATTACK_ANIM);
+	ResourceLoad::LoadAnim("P_SPECIAL_ATTACK_BEFORE", ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM);
+	ResourceLoad::LoadAnim("P_WIN", ID::IDType::P_WIN);
+	ResourceLoad::LoadAnim("P_WINIDOL", ID::IDType::PLAYER_WIN_IDOL);
+	ResourceLoad::LoadAnim("P_LEG_UP", ID::IDType::P_LEG_UP);
+	ResourceLoad::LoadAnim("P_HEAVY_ATTACK", ID::IDType::P_HEAVY_ATTACK);
+	ResourceLoad::LoadAnim("P_HEAVY_CHARGE", ID::IDType::P_HEAVY_CHARGE);
 
 	anim->AnimDataLoad("PlayerAnimData");
 
@@ -188,7 +188,7 @@ void PlayerManager::CreatePlayer()
 	
 	MotionBlur* blur = playerPointer->Component()->AddComponent<MotionBlur>();
 
-	blur->Start(Load::GetHandle(ID::P_MODEL));
+	blur->Start(ResourceLoad::GetHandle(ID::P_MODEL));
 
 	/*ComponentLight* componentLoght = playerPointer->Component()->AddComponent<ComponentLight>();
 	componentLoght->SpotLightHandleStart(VECTOR3(0, 0, 0), VECTOR3(0.0f, 0.0f, 0.0f), DX_PI_F, DX_PI_F / 2, 4000, 0.0f, 0.002f, 0.0f);*/
@@ -213,16 +213,16 @@ void PlayerManager::CreatePlayer()
 	playerPointer->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
-	g->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_GreenBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Guage::BAR_MODE::HP);
-	g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_Frame", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(915.0f,950.0f,0.0f),VZero,VECTOR3(1.0f,1.0f,0.0f)));
+	g->GuageDrawReady<Player>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Player_HpBar_GreenBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Guage::BAR_MODE::HP);
+	g->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Player_HpBar_Frame", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(915.0f,950.0f,0.0f),VZero,VECTOR3(1.0f,1.0f,0.0f)));
 
 	Object2D* SpecialGuage = new Object2D();
 	SpecialGuage->Init(VECTOR2F(915.0f, 1050.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "playerSpecialGuage");
 	playerPointer->AddChild(SpecialGuage);
 
 	Guage* specialG = SpecialGuage->Component()->AddComponent<Guage>();
-	specialG->GuageDrawReady<Player>(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_YellowBack", ID::P_SPECIAL_ATTACK_BAR), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::SPECIAL_ATTACK);
-	specialG->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "Player_HpBar_Frame", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 1050.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
+	specialG->GuageDrawReady<Player>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Player_HpBar_YellowBack", ID::P_SPECIAL_ATTACK_BAR), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::SPECIAL_ATTACK);
+	specialG->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Player_HpBar_Frame", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 1050.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
 
 }
 
@@ -280,7 +280,7 @@ void PlayerManager::CreateTitlePlayer()
 	RayCollider* collider3 = playerPointer->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::P_FLOOR;
-	collider3->RaySet(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10, 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 1.0f, 1.0f)), Transform(VECTOR3(0, -20, 0), VZero, VECTOR3(1.0f, 1.0f, 1.0f)));
 
 	Shaker* shaker = playerPointer->Component()->AddComponent<Shaker>();
 
@@ -291,7 +291,7 @@ void PlayerManager::CreateTitlePlayer()
 	me2D->SetTransform(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VECTOR3(192.0f, 1.0f, 0)));
 	//me2D->SetTransform(Transform(VECTOR3(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0.0f), VZero, VECTOR3(0.1f,1,0) * 10.0f));
 
-	me2D->TextureHandle(Load::LoadImageGraph(Load::IMAGE_PATH + "speicialAttackBackSide4", ID::PLAYER_SPECIAL_ATTACK_BACK), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+	me2D->TextureHandle(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "speicialAttackBackSide4", ID::PLAYER_SPECIAL_ATTACK_BACK), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 
 	Anim2D* anim2D = playerPointer->Component()->AddComponent<Anim2D>();
 	anim2D->AnimSetting(400.0f, 192);
@@ -301,11 +301,11 @@ void PlayerManager::CreateTitlePlayer()
 	Physics* physics = playerPointer->Component()->AddComponent<Physics>();
 	TitlePlayer* player = playerPointer->Component()->AddComponent<TitlePlayer>();
 
-	physics->Start(PlayerInformation::BASE_GRAVITY + VECTOR3(0,4900,0), PlayerInformation::BASE_INTERIA);
+	physics->Start(PlayerInformation::BASE_GRAVITY, PlayerInformation::BASE_INTERIA);
 	/*Camera* camera = playerPointer->Component()->AddComponent<Camera>();
 	camera->Start(FindGameObject<EnemyManager>()->GetEnemy());*/
 	//me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "exo_red", ID::P_MODEL));
-	me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "Player4", ID::P_MODEL));
+	me2->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "Player4", ID::P_MODEL));
 	me2->RotationMesh(0, 180.0f * DegToRad);
 
 	stateManager = playerPointer->Component()->AddComponent<StateManager>();
@@ -332,7 +332,7 @@ void PlayerManager::CreateTitlePlayer()
 	stateManager->CreateState<PlayerBefore>("_PlayerBefore", StateID::PLAYER_BEFORE_S);*/
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
-	anim->BaseModelSet(Load::GetHandle(ID::P_MODEL), "mixamorig:Hips");
+	anim->BaseModelSet(ResourceLoad::GetHandle(ID::P_MODEL), "mixamorig:Hips");
 	anim->AddFile(ID::IDType::P_ANIM_IDOL, "P_IDOL1", true, 1.0f);
 	anim->AddFile(ID::IDType::P_ANIM_RUN, "P_RUN_M_1", true, 1.5f);
 	anim->AddFile(ID::IDType::P_ANIM_AVOID, "P_AVOID_M_1", false, 2.0f, 0.0f, 5.0f);
@@ -361,7 +361,7 @@ void PlayerManager::CreateTitlePlayer()
 
 	MotionBlur* blur = playerPointer->Component()->AddComponent<MotionBlur>();
 
-	blur->Start(Load::GetHandle(ID::P_MODEL));
+	blur->Start(ResourceLoad::GetHandle(ID::P_MODEL));
 
 	/*ComponentLight* componentLoght = playerPointer->Component()->AddComponent<ComponentLight>();
 	componentLoght->SpotLightHandleStart(VECTOR3(0, 0, 0), VECTOR3(0.0f, 0.0f, 0.0f), DX_PI_F, DX_PI_F / 2, 4000, 0.0f, 0.002f, 0.0f);*/

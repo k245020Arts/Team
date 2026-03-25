@@ -5,7 +5,7 @@
 #include "../../../Component/Collider/sphereCollider.h"
 #include "../../EnemyBase.h"
 #include "../../Boss/Boss.h"
-#include "../../../Common/LoadManager.h"
+#include "../../../Common/ResourceLoader.h"
 #include "EnemyStateManager.h"
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Common/Sound/SoundManager.h"
@@ -128,9 +128,9 @@ void EnemyStateBase::AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std
 	EnemyBase* e = GetBase<EnemyBase>();
 	if (sound) {
 
-		MATRIX matrixWorld = MV1GetFrameLocalWorldMatrix(Load::GetHandle(_modelId), _modelFrame);
+		MATRIX matrixWorld = MV1GetFrameLocalWorldMatrix(ResourceLoad::GetHandle(_modelId), _modelFrame);
 		// WORLDÀ•W‚ðŽæ“¾
-		VECTOR3 frameWorldPos = MV1GetFramePosition(Load::GetHandle(_modelId), _modelFrame);
+		VECTOR3 frameWorldPos = MV1GetFramePosition(ResourceLoad::GetHandle(_modelId), _modelFrame);
 
 		
 		MATRIX objWorldMat = obj->GetTransform()->WorldTransform().GetMatrix();
