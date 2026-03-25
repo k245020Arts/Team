@@ -254,6 +254,7 @@
     <ClInclude Include="Source\Component\UI\EnemyDamageUI.h" />
     <ClInclude Include="Source\Component\UI\UIBase.h" />
     <ClInclude Include="Source\Component\UI\UIManager\UIManager.h" />
+    <ClInclude Include="Source\Enemy\AStar.h" />
     <ClInclude Include="Source\Enemy\Boss\Boss.h" />
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\AttackSorting.h" />
@@ -455,6 +456,7 @@
     <ClCompile Include="Source\Component\UI\EnemyDamageUI.cpp" />
     <ClCompile Include="Source\Component\UI\UIBase.cpp" />
     <ClCompile Include="Source\Component\UI\UIManager\UIManager.cpp" />
+    <ClCompile Include="Source\Enemy\AStar.cpp" />
     <ClCompile Include="Source\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.cpp" />

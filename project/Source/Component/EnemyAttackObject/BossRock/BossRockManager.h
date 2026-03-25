@@ -31,6 +31,10 @@ public:
 	void CreateThrow(VECTOR3& _addPos);
 	void DropRockStart();
 
+	//指定されたポジションから一番近い岩のポジションを返す
+	VECTOR3 GetRockPos(VECTOR3 _pos);
+	std::list<VECTOR3> GetAllRockPos();
+
 private:
 	std::list<BossRockBase*> rocks;
 	Boss* boss;

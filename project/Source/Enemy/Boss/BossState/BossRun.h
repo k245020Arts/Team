@@ -20,5 +20,12 @@ private:
 	BossStatus* bs;
 	VECTOR3 velocity;
 	VECTOR3 rotation;
+
+	VECTOR3 targetPos;
+	void HitLine();
+	std::list<VECTOR3> RayCastHits();
 	float speed;
+
+	bool islooping;
+
 };

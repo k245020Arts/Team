@@ -564,6 +564,9 @@
     <ClCompile Include="Source\Player\PlayerParamWindow.cpp">
       <Filter>PlayScene\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\AStar.cpp">
+      <Filter>PlayScene\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1189,6 +1192,9 @@
     </ClInclude>
     <ClInclude Include="Source\Player\PlayerParamWindow.h">
       <Filter>PlayScene\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\AStar.h">
+      <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

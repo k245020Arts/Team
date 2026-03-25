@@ -196,6 +196,29 @@ void BossRockManager::DropRockStart()
 	}
 }
 
+VECTOR3 BossRockManager::GetRockPos(VECTOR3 _pos)
+{
+	VECTOR3 pos = VECTOR3(INFINITY, INFINITY, INFINITY);
+
+	for (auto rock : rocks)
+	{
+		VECTOR3 vec = rock->GetBaseObject()->GetTransform()->position - _pos;
+		if (pos.Size() > vec.Size())
+			pos = rock->GetBaseObject()->GetTransform()->position;
+	}
+
+	return pos;
+}
+
+std::list<VECTOR3> BossRockManager::GetAllRockPos()
+{
+	std::list<VECTOR3> _pos;
+
+	for (auto rock : rocks)
+		_pos.push_back(rock->GetBaseObject()->GetTransform()->position);
+	return _pos;
+}
+
 void BossRockManager::SetRockComponent(BaseObject* _base, const VECTOR3& _gravity, const VECTOR3& _fir)
 {
 	BossRock* bossRock = _base->Component()->AddComponent<BossRock>();

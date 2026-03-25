@@ -83,6 +83,8 @@ public:
 	/// <param name="speed">振り向くスピード</param>
 	void LookPlayer(float speed);
 
+	void LookPlayer(VECTOR3 _target,float speed);
+
 	/// <summary>
 	/// 攻撃の当たり判定の開始
 	/// </summary>
