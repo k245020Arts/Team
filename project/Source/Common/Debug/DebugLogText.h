@@ -13,7 +13,7 @@ enum class LogLevel {
     ERROR_LOG,
 };
 
-class DebugLogTextClass  : public SingletonBase<DebugLogTextClass>
+class DebugLogText  : public SingletonBase<DebugLogText>
 {
 public:
    
@@ -51,15 +51,15 @@ private:
 
     const size_t BUFFER_LIMIT = 100; // ó≠Ç‹Ç¡ÇΩÇÁèëÇ´èoÇ∑
 
-    DebugLogTextClass() {
+    DebugLogText() {
         file.open("debug.txt", std::ios::app);
     }
 
-    DebugLogTextClass(const std::string& filename) {
+    DebugLogText(const std::string& filename) {
         file.open(filename, std::ios::app);
     }
 
-    ~DebugLogTextClass() {
+    ~DebugLogText() {
         Flush(); // èIóπéûÇ…ëSïîìfÇ≠
         if (file.is_open()) file.close();
     }
@@ -84,6 +84,6 @@ private:
         }
         return "";
     }
-    friend class SingletonBase<DebugLogTextClass>;
+    friend class SingletonBase<DebugLogText>;
    
 };

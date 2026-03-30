@@ -8,10 +8,11 @@ CooperateAttack1::CooperateAttack1()
 {
 	string = Function::GetClassNameC<CooperateAttack1>();
 	animId = ID::TE_ATTACK2;
+	attackParam.animID = ID::TE_ATTACK2;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
-	damage.damagePattern = BossAttackBase::BACK;
+	attackParam.damagePattern = BossAttackBase::BACK;
 
-	damage.hitDamage = 30;
+	attackParam.hitDamage = 30;
 	time = 0;
 }
 

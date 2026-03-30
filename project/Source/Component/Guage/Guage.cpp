@@ -17,6 +17,12 @@ Guage::Guage()
 	screenMode			= false;
 	addMode				= false;
 	damageGuage			= nullptr;
+    displayHpMain = 0.0f;
+    displayHpDamage = 0.0f;
+
+    damageDelayTimer = 0.0f;
+    damageDelay = 1.2f;
+    prevHp = 0.0f;
 }
 
 Guage::~Guage()

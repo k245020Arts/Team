@@ -11,10 +11,10 @@ BossSpecialAttack2::BossSpecialAttack2()
 {
 	//id = ID::B_S_ATTACK2;
 	string = Function::GetClassNameC<BossSpecialAttack2>();
-	animId = ID::B_S_ATTACK2_BEFORE;
-	collTrans = Transform(VECTOR3(0, 0, -50), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
-	damage.damagePattern = BossAttackBase::BLOW_AWAY;
-	damage.hitDamage = 50.0f;
+	//attackParam.animID = ID::B_S_ATTACK2_BEFORE;
+	//attackParam.attackCollTransform = Transform(VECTOR3(0, 0, -50), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
+	////damage.damagePattern = BossAttackBase::BLOW_AWAY;
+	//attackParam.hitDamage = 50.0f;
 
 	attackCount = 0.0f;
 	rotation = VZero;
@@ -28,6 +28,7 @@ BossSpecialAttack2::BossSpecialAttack2()
 	secondOnes = false;
 
 	rockColl = nullptr;
+	LoadAttackParam();
 }
 
 BossSpecialAttack2::~BossSpecialAttack2()
@@ -37,7 +38,7 @@ BossSpecialAttack2::~BossSpecialAttack2()
 void BossSpecialAttack2::Update()
 {
 	Boss* b = GetBase<Boss>();
-	EnemyStateBase::Update();
+	BossAttackBase::Update();
 	if (b->enemyBaseComponent.anim->IsFinish()) {
 		if (b->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(ID::B_S_ATTACK2_STOP)) {
 			b->BossAttackStateChange();
@@ -109,7 +110,7 @@ void BossSpecialAttack2::Draw()
 void BossSpecialAttack2::Start()
 {
 	Boss* b = GetBase<Boss>();
-	EnemyStateBase::Start();
+	//EnemyStateBase::Start();
 	BossAttackBase::BossStart();
 	
 	if (!b->comboFirstAttack) {
@@ -123,7 +124,10 @@ void BossSpecialAttack2::Start()
 
 void BossSpecialAttack2::Finish()
 {
-	EnemyStateBase::Start();
+#ifdef DataSave
+	DataSaveAll();
+#endif // DataSave
+	//EnemyStateBase::Finish();
 	Boss* b = GetBase<Boss>();
 	BossAttackBase::BossFinish();
 	if (b->maxAttack > 0) {
@@ -195,8 +199,8 @@ void BossSpecialAttack2::AttackStart()
 	rockColl->CollsionAdd(info, rushColl,"Rush");
 
 	if (b->maxAttack <= 0) {
-		AttackBeforeFrash(ID::B_MODEL, 36, "E_AttackV");
-		damage.flash = true;
+		AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
+		//attackParam.flash = true;
 		attackCount = 1.0f;
 		b->enemyBaseComponent.anim->SetPlaySpeed(2.0f);
 	}

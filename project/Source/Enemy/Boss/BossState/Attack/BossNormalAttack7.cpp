@@ -10,9 +10,10 @@
 BossNormalAttack7::BossNormalAttack7()
 {
 	string = Function::GetClassNameC<BossNormalAttack7>();
-	animId = ID::B_N_ATTACK7;
+	//attackParam.animID = ID::B_N_ATTACK7;
 	throwRock = false;
 	rockGet = false;
+	LoadAttackParam();
 }
 
 BossNormalAttack7::~BossNormalAttack7()
@@ -22,7 +23,7 @@ BossNormalAttack7::~BossNormalAttack7()
 void BossNormalAttack7::Update()
 {
 	Boss* boss = GetBase<Boss>();
-	EnemyStateBase::Update();
+	BossAttackBase::Update();
 	if (boss->enemyBaseComponent.anim->IsFinish()){
 		boss->BossAttackStateChange();
 	}
@@ -34,7 +35,7 @@ void BossNormalAttack7::Update()
 	}
 
 	AttackSound();
-	AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
+	AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
 	if (boss->enemyBaseComponent.anim->GetCurrentFrame() >= 31.58683f) {
 		if (!rockGet) {
 			VECTOR3 vzero = VECTOR3(VZero);
@@ -43,7 +44,7 @@ void BossNormalAttack7::Update()
 		}
 	}
 
-	if (boss->enemyBaseComponent.anim->GetCurrentFrame() >= 54.475f && boss->enemyBaseComponent.anim->GetCurrentFrame() <= boss->enemyBaseComponent.anim->EventStartTime(animId)) {
+	if (boss->enemyBaseComponent.anim->GetCurrentFrame() >= 54.475f && boss->enemyBaseComponent.anim->GetCurrentFrame() <= boss->enemyBaseComponent.anim->EventStartTime(attackParam.animID)) {
 		boss->LookPlayer();
 	}
 }
@@ -55,7 +56,7 @@ void BossNormalAttack7::Draw()
 void BossNormalAttack7::Start()
 {
 	Boss* boss = GetBase<Boss>();
-	EnemyStateBase::Start();
+	//EnemyStateBase::Start();
 	BossAttackBase::BossStart();
 	throwRock = false;
 	rockGet = false;
@@ -63,6 +64,9 @@ void BossNormalAttack7::Start()
 
 void BossNormalAttack7::Finish()
 {
+#ifdef DataSave
+	DataSaveAll();
+#endif // DataSave
 	Boss* boss = GetBase<Boss>();
 	BossAttackBase::BossFinish();
 	boss->enemyBaseComponent.anim->AnimEventReset();

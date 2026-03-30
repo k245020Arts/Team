@@ -81,7 +81,7 @@ namespace PlayerInformation {
 	/// <summary>
 	/// 基準の重力値
 	/// </summary>
-	static const VECTOR3 BASE_GRAVITY = VECTOR3(0.0f, 0.0f, 0.0f);
+	static const VECTOR3 BASE_GRAVITY = VECTOR3(0.0f, -4000.0f, 0.0f);
 	/// <summary>
 	/// ジャスト回避をした時にどれくらい敵をスローさせるか
 	/// </summary>

@@ -16,11 +16,11 @@ BossSpecialAttack1::BossSpecialAttack1()
 
 	string = Function::GetClassNameC<BossSpecialAttack1>();
 	counter = 0;
-	animId = ID::B_S_ATTACK1;
+	/*attackParam.animID = ID::B_S_ATTACK1;
 
-	collTrans = Transform(VECTOR3(0, -50, 0), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
-	damage.damagePattern = BossAttackBase::BLOW_AWAY;
-	damage.hitDamage = 50.0f;
+	attackParam.attackCollTransform = Transform(VECTOR3(0, -50, 0), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
+	attackParam.damagePattern = BossAttackBase::BLOW_AWAY;
+	attackParam.hitDamage = 50.0f;*/
 
 	velocity = VZero;
 	rotation = VZero;
@@ -31,6 +31,7 @@ BossSpecialAttack1::BossSpecialAttack1()
 	attackStart = 0.0f;
 	firstCount = false;
 	effect = false;
+	LoadAttackParam();
 }
 
 BossSpecialAttack1::~BossSpecialAttack1()
@@ -40,7 +41,7 @@ BossSpecialAttack1::~BossSpecialAttack1()
 void BossSpecialAttack1::Update()
 {
 	Boss* b = GetBase<Boss>();
-	EnemyStateBase::Update();
+	BossAttackBase::Update();
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= attackStart) {
 		return;
 	}
@@ -80,7 +81,7 @@ void BossSpecialAttack1::Update()
 			b->BossAttackStateChange();
 		}
 	}
-	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= b->enemyBaseComponent.anim->EventFinishTime(animId)) {
+	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= b->enemyBaseComponent.anim->EventFinishTime(attackParam.animID)) {
 		VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
 		VECTOR3 sub = pos - b->GetBaseObject()->GetTransform()->position;
 		VECTOR3 ynotPos = sub * VECTOR3(1, 0, 1);	
@@ -97,8 +98,8 @@ void BossSpecialAttack1::Update()
 	
 	BossAttackCollsion();
 	BossJustAvoidCollsion();
-	AttackFlash (ID::B_MODEL, 36, "E_AttackV");
-	damage.flash = true;
+	AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
+	//damage.flash = true;
 }
 
 void BossSpecialAttack1::Draw()
@@ -107,7 +108,7 @@ void BossSpecialAttack1::Draw()
 
 void BossSpecialAttack1::Start()
 {
-	EnemyStateBase::Start();
+	//EnemyStateBase::Start();
 	Boss* b = GetBase<Boss>();
 	BossAttackBase::BossStart();
 	
@@ -121,6 +122,9 @@ void BossSpecialAttack1::Start()
 
 void BossSpecialAttack1::Finish()
 {
+#ifdef DataSave
+	DataSaveAll();
+#endif // DataSave
 	Boss* b = GetBase<Boss>();
 	BossAttackBase::BossFinish();
 	b->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));

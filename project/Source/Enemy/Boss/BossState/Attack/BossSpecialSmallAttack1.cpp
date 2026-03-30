@@ -13,17 +13,17 @@ BossSpecialSmallAttack1::BossSpecialSmallAttack1()
 {
 	//id = ID::B_S_ATTACK1_SMALL;
 	string					= Function::GetClassNameC<BossSpecialSmallAttack1>();
-	animId					= ID::B_S_ATTACK1_SMALL;
+	/*attackParam.animID = ID::B_S_ATTACK1_SMALL;
 
-	collTrans				= Transform(VECTOR3(0, -50, 0), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
-	damage.damagePattern	= BossAttackBase::BACK;
-	damage.hitDamage		= 50.0f;
+	attackParam.attackCollTransform = Transform(VECTOR3(0, -50, 0), VZero, VECTOR3(500.0f, 0.0f, 0.0f));
+	attackParam.damagePattern	= BossAttackBase::BACK;
+	attackParam.hitDamage		= 50.0f;*/
 
 	subSpeed				= 0.0f;
 	attackStart				= 0.0f;
 	firstCount				= false;
 	effect					= false;
-
+	LoadAttackParam();
 }
 
 BossSpecialSmallAttack1::~BossSpecialSmallAttack1()
@@ -34,7 +34,7 @@ void BossSpecialSmallAttack1::Update()
 {
 	Boss* b = GetBase<Boss>();
 
-	EnemyStateBase::Update();
+	BossAttackBase::Update();
 
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= attackStart) {
 		return;
@@ -76,7 +76,7 @@ void BossSpecialSmallAttack1::Update()
 			b->BossAttackStateChange();
 		}
 	}
-	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= b->enemyBaseComponent.anim->EventFinishTime(animId)) {
+	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= b->enemyBaseComponent.anim->EventFinishTime(attackParam.animID)) {
 
 		VECTOR3 pos		= b->enemyBaseComponent.playerObj->GetTransform()->position;
 		VECTOR3 sub		= pos - b->GetBaseObject()->GetTransform()->position;
@@ -103,7 +103,7 @@ void BossSpecialSmallAttack1::Draw()
 
 void BossSpecialSmallAttack1::Start()
 {
-	EnemyStateBase::Start();
+	BossAttackBase::BossStart();
 	Boss* b = GetBase<Boss>();
 
 	b->enemyBaseComponent.anim->AnimEventReset();
@@ -112,7 +112,7 @@ void BossSpecialSmallAttack1::Start()
 	firstCount	= true;
 	effect		= true;
 	//ポンポン攻撃を繰り出したいので、最後の隙をなくすために最終フレームを変更
-	b->enemyBaseComponent.anim->SetMaxFrame(animId, 60.0f);
+	b->enemyBaseComponent.anim->SetMaxFrame(attackParam.animID, 60.0f);
 
 	if (b->comboFirstAttack)
 		b->enemyBaseComponent.anim->SetFrame(0.0f);
@@ -123,6 +123,9 @@ void BossSpecialSmallAttack1::Start()
 
 void BossSpecialSmallAttack1::Finish()
 {
+#ifdef DataSave
+	DataSaveAll();
+#endif // DataSave
 	Boss* b = GetBase<Boss>();
 	b->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));
 	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);

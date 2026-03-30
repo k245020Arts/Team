@@ -3,6 +3,7 @@
 #include "../Effect/EffectManager.h"
 #include "../InputManager/InputManager.h"
 #include "../../Stage/StageSelectData.h"
+#include "../Debug/DebugLogText.h"
 
 SingleTonUpdater::SingleTonUpdater()
 {
@@ -34,4 +35,5 @@ void SingleTonUpdater::Release()
 	EffectManager::Destroy();
 	InputManager::Destroy();
 	StageSelectData::Destroy();
+	DebugLogText::Destroy();
 }

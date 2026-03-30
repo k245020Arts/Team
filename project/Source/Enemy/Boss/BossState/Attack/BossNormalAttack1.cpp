@@ -9,11 +9,11 @@ BossNormalAttack1::BossNormalAttack1()
 {
 	//id = ID::B_N_ATTACK1;
 	string					= Function::GetClassNameC<BossNormalAttack1>();
-	animId					= ID::B_N_ATTACK1;
-	collTrans				= Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
-	damage.damagePattern	= BossAttackBase::NO_BACK;
+	/*attackParam.animID					= ID::B_N_ATTACK1;
+	attackParam.attackCollTransform				= Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
+	attackParam.damagePattern	= BossAttackBase::NO_BACK;*/
 	averageSpeed			= 0.0f;
-
+	LoadAttackParam();
 }
 
 BossNormalAttack1::~BossNormalAttack1()
@@ -22,9 +22,9 @@ BossNormalAttack1::~BossNormalAttack1()
 
 void BossNormalAttack1::Update()
 {
-	EnemyStateBase::Update();
+	BossAttackBase::Update();
 	Boss* boss = GetBase<Boss>();
-	if (boss->enemyBaseComponent.anim->GetMaxFrame() - fallFrame <= boss->enemyBaseComponent.anim->GetCurrentFrame())
+	if (boss->enemyBaseComponent.anim->IsFinish())
 	{
 		boss->BossAttackStateChange();
 	}
@@ -40,8 +40,8 @@ void BossNormalAttack1::Update()
 	AttackSound();
 	if (boss->maxAttack <= 0) {
 		//ŽO’iUŒ‚‚Ìˆê”ÔÅŒã‚ÌŽž‚¾‚¯Œõ‚éB
-		AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
-		damage.flash = true;
+		AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum,attackParam.voiceName);
+		//attackParam.flash = true;
 	}
 	
 	BossTrail(true);
@@ -55,11 +55,11 @@ void BossNormalAttack1::Draw()
 void BossNormalAttack1::Start()
 {
 	Boss* boss = GetBase<Boss>();
-	EnemyStateBase::Start();
+	//EnemyStateBase::Start();
 	BossAttackBase::BossStart();
 	firstColl = true;
 	boss->enemyBaseComponent.anim->AnimEventReset();
-	damage.hitDamage = boss->bs->GetStatus().normalAttack1;
+	//attackParam.hitDamage = boss->bs->GetStatus().normalAttack1;
 	boss->enemyBaseComponent.anim->SetFrame(5.0f);
 	fallFrame = boss->bs->GetStatus().fallFrame;
 
@@ -67,6 +67,9 @@ void BossNormalAttack1::Start()
 
 void BossNormalAttack1::Finish()
 {
+#ifdef DataSave
+	DataSaveAll();
+#endif // DataSave
 	Boss* boss = GetBase<Boss>();
 	boss->DeleteCollision(&boss->attackColl);
 	BossAttackBase::BossFinish();

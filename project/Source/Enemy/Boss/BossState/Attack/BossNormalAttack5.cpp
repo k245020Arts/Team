@@ -10,13 +10,14 @@ BossNormalAttack5::BossNormalAttack5()
 {
 	//id = ID::B_N_ATTACK1;
 	string					= Function::GetClassNameC<BossNormalAttack5>();
-	animId					= ID::B_N_ATTACK5;
-	collTrans				= Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
-	damage.damagePattern	= BossAttackBase::NO_BACK;
+	/*attackParam.animID = ID::B_N_ATTACK5;
+	attackParam.attackCollTransform = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
+	attackParam.damagePattern	= BossAttackBase::NO_BACK;*/
 	averageSpeed			= 0.0f;
 	keepPlayerPosition		= VZero;
 	normal					= VZero;
 	oneMove					= false;
+	LoadAttackParam();
 }
 
 BossNormalAttack5::~BossNormalAttack5()
@@ -26,7 +27,7 @@ BossNormalAttack5::~BossNormalAttack5()
 void BossNormalAttack5::Update()
 {
 	Boss* boss = GetBase<Boss>();
-	EnemyStateBase::Update();
+	BossAttackBase::Update();
 	if (boss->enemyBaseComponent.anim->GetMaxFrame() - fallFrame <= boss->enemyBaseComponent.anim->GetCurrentFrame())
 	{
 		boss->BossAttackStateChange();
@@ -58,8 +59,8 @@ void BossNormalAttack5::Update()
 	}
 	AttackSound();
 	if (boss->maxAttack <= 0) {
-		AttackFlash(ID::B_MODEL, boss->BOSS_RIGHT_HAND_FRAME, "E_AttackV");
-		damage.flash = true;
+		AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
+		//damage.flash = true;
 	}
 	BossTrail(true);
 }
@@ -71,13 +72,13 @@ void BossNormalAttack5::Draw()
 void BossNormalAttack5::Start()
 {
 	Boss* boss = GetBase<Boss>();
-	EnemyStateBase::Start();
+	//EnemyStateBase::Start();
 	BossAttackBase::BossStart();
 	firstColl = true;
 	boss->enemyBaseComponent.anim->AnimEventReset();
-	damage.hitDamage	= boss->bs->GetStatus().normalAttack1;
+	//attackParam.hitDamage	= boss->bs->GetStatus().normalAttack1;
 	keepPlayerPosition	= boss->enemyBaseComponent.playerObj->GetTransform()->position;
-	damage.hitDamage	= boss->bs->GetStatus().normalAttack1;
+	//damage.hitDamage	= boss->bs->GetStatus().normalAttack1;
 	/*VECTOR3 dis = keepPlayerPosition - boss->bossTransform->position;
 	normal = dis.Normalize();
 	boss->enemyBaseComponent.physics->AddVelocity(normal * 2500.0f, false);*/
@@ -92,6 +93,9 @@ void BossNormalAttack5::Start()
 
 void BossNormalAttack5::Finish()
 {
+#ifdef DataSave
+	DataSaveAll();
+#endif // DataSave
 	Boss* boss = GetBase<Boss>();
 	boss->DeleteCollision(&boss->attackColl);
 	BossAttackBase::BossFinish();

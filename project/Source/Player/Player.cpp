@@ -125,7 +125,7 @@ void Player::Update()
 {
 	//playerCom.stateManager->Update();
 	//回避状態が始まるときに回転に補正を掛けるための処理
-	DebugLogTextClass::GetInstance()->Log(LogLevel::INFO, Debug::printfString("playerPositionY = %.3f", playerTransform->position.y));
+	//DebugLogText::GetInstance()->Log(LogLevel::INFO, Debug::printfString("playerPositionY = %.3f", playerTransform->position.y));
 	//playerCom.physics->GetVelocity().y)
 	if (justAvoidColHit) {
 		justAvoidCan = true;
@@ -535,7 +535,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	if (attack == nullptr)
 		return true;
 
-	BossAttackBase::DamagePattern param = attack->GetDamageParam();
+	BossAttackBase::BossAttackParam param = attack->GetDamageParam();
 	//ジャスト回避が出来る処理
 	//if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 	//	if (enemyAnim->GetCurrentFrame() <= startTime + 8.0f || startTime >= 0.0f) {
@@ -766,7 +766,7 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 
 bool Player::LargeJustAvoid(std::shared_ptr<BossAttackBase> _attack)
 {
-	if (_attack->GetDamageParam().flash) {
+	if (_attack->GetDamageParam().useFlash) {
 		largeJustAvoid = true;
 	}
 	else {

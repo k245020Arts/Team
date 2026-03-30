@@ -1205,6 +1205,9 @@
     <ClInclude Include="Source\Enemy\AStar.h">
       <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Common\Debug\DebugNew.h">
+      <Filter>Common\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">

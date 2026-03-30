@@ -10,9 +10,10 @@ T_EnemyAttack::T_EnemyAttack()
 {
 	string = Function::GetClassNameC<T_EnemyAttack>();
 	animId = ID::TE_ATTACK;
+	attackParam.animID = ID::TE_ATTACK;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 
-	damage.damagePattern = BossAttackBase::NO_BACK;
+	attackParam.damagePattern = BossAttackBase::NO_BACK;
 
 	mSpeed = 0;
 	mMaxFrame = 0;
@@ -67,7 +68,7 @@ void T_EnemyAttack::Start()
 	EnemyStateBase::Start();
 	firstColl = true;
 	//e->enemyBaseComponent.anim->SetFrame(5.0f);
-	damage.hitDamage = e->eStatus->GetStatus().normalAttack1;
+	attackParam.hitDamage = e->eStatus->GetStatus().normalAttack1;
 	counter = 0;
 	//e->isAttack = false;
 	mMaxFrame = e->enemyBaseComponent.anim->GetMaxFrame();

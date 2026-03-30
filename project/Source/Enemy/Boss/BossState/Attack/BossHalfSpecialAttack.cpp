@@ -10,7 +10,7 @@
 
 BossHalfSpecialAttack::BossHalfSpecialAttack()
 {
-	animId = ID::B_IDOL;
+    attackParam.animID = ID::B_IDOL;
 	string = Function::GetClassNameC<BossHalfSpecialAttack>();
 	rockCreateCounter = 0.0f;
 	oneCreate = false;
@@ -74,8 +74,8 @@ void BossHalfSpecialAttack::Draw()
 
 void BossHalfSpecialAttack::Start()
 {
-	BossAttackBase::Start();
-	EnemyStateBase::Start();
+	BossAttackBase::BossStart();
+	//EnemyStateBase::Start();
 
     totalRocks = 12;
     rocksDropped = 0;
@@ -91,4 +91,9 @@ void BossHalfSpecialAttack::Start()
 
 void BossHalfSpecialAttack::Finish()
 {
+#ifdef DataSave
+    DataSaveAll();
+#endif // DataSave
+
+  
 }

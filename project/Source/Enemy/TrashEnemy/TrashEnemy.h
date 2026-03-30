@@ -36,6 +36,7 @@ public:
 	friend class CooperateAttack1;
 	friend class T_EnemyDamage;
 	friend class EnemyStateBase;
+	friend class BossAttackBase;
 
 	TrashEnemy();
 	~TrashEnemy();

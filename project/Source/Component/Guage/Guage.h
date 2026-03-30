@@ -102,10 +102,10 @@ private:
 	bool addMode;
 	CharaBase* chara;
 
-	float displayHpMain = 0.0f;
-	float displayHpDamage = 0.0f;
+	float displayHpMain;
+	float displayHpDamage;
 
-	float damageDelayTimer = 0.0f;
-	float damageDelay = 2.0f; // 止まる時間（調整ポイント）
-	float prevHp = 0.0f;
+	float damageDelayTimer;
+	float damageDelay;
+	float prevHp;
 };

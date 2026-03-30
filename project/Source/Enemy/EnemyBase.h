@@ -8,6 +8,7 @@ class EnemyBase : public CharaBase
 {
 public:
 	friend class EnemyStateBase;
+	friend class BossAttackBase;
 	EnemyBase();
 	virtual ~EnemyBase();
 

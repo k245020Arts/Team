@@ -1,0 +1,55 @@
+{
+  "BossHalfSpecialAttack": {
+    "animID": "B_IDLE",
+    "attackCollTransform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      }
+    },
+    "attackCollsionEndTime": -1.0,
+    "attackCollsionStartTime": -1.0,
+    "attackFlashStartTime": 2.2420775429197073e-44,
+    "attackID": "BossHalfSpecialAttack",
+    "attackPositionFrameNum": 16,
+    "attackSoundStartTime": -87.59027099609375,
+    "bossID": "",
+    "damagePattern": "NONE",
+    "hitDamage": 0.0,
+    "justAvoidCollTransform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      }
+    },
+    "justAvoidCollsionEndTime": 6.0,
+    "justAvoidCollsionStartTime": 5.0,
+    "slowAmout": 2.2420775429197073e-44,
+    "slowTime": 1.2167590450180892e+27,
+    "speedUpMotionSpeed": -3.74531738918305e+23,
+    "useFlash": true,
+    "voiceName": ""
+  }
+}
