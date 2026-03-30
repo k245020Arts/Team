@@ -81,6 +81,8 @@ public:
 	bool GetStandby() { return isStandby; }
 	//生きてるかどうか
 	bool GetActive() { return active; }
+	//連携攻撃を取得する
+	const StateID::State_ID GetNextCooperateID() { return nextCooperateID; };
 
 	//セッター
 	//加速移動
@@ -140,4 +142,6 @@ private:
 	float slowCounter;
 	//モーションが止まる速度
 	float mStopCounter;
+
+	StateID::State_ID nextCooperateID;
 };

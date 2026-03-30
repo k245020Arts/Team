@@ -56,6 +56,16 @@ private:
 			active = _active;
 		}
 	};
+
+	enum CooperateData
+	{
+		Cooperate1,
+		Cooperate2,
+
+		CooperateMax
+	};
+	CooperateData cooperateDate;
+
 	//ウェイポイントの元を保管する変数
 	std::list<VECTOR3> wayPointOffsets;
 	//ウェイポイントを保管する変数

@@ -226,6 +226,8 @@ TrashEnemy::TrashEnemy()
 	active = true;
 
 	deadPreset = deadPresets[0];
+
+	nextCooperateID = StateID::State_ID::STATE_MAX;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -522,7 +524,7 @@ void TrashEnemy::GetWayPoint(VECTOR3 _pos, StateID::State_ID _id)
 		return;
 
 	wayPoint = _pos;
-
+	nextCooperateID = _id;
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 	
 	isCooperateAtk = true;

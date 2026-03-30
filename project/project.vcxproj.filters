@@ -461,7 +461,6 @@
     <ClCompile Include="Source\Component\UI\UIManager\UIManager.cpp">
       <Filter>Component\UI\UIManager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.cpp" />
     <ClCompile Include="Source\Component\UI\EnemyDamageUI.cpp">
       <Filter>Component\UI</Filter>
     </ClCompile>
@@ -569,6 +568,9 @@
     </ClCompile>
     <ClCompile Include="Source\Enemy\AStar.cpp">
       <Filter>PlayScene\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1087,7 +1089,6 @@
     <ClInclude Include="Source\Component\UI\UIManager\UIManager.h">
       <Filter>Component\UI\UIManager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h" />
     <ClInclude Include="Source\Component\UI\EnemyDamageUI.h">
       <Filter>Component\UI</Filter>
     </ClInclude>
@@ -1204,6 +1205,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\AStar.h">
       <Filter>PlayScene\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

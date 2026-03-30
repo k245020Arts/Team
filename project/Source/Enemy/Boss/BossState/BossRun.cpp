@@ -15,6 +15,8 @@ BossRun::BossRun()
 	islooping = true;
 
 	targetPos = VZero;
+
+	counter = 0;
 }
 
 BossRun::~BossRun()
@@ -24,7 +26,7 @@ BossRun::~BossRun()
 void BossRun::Update()
 {
 	Boss* b = GetBase<Boss>();
-	b->LookPlayer(targetPos, 0.7);
+	b->LookPlayer(targetPos, 0.1);
 	HitLine();
 
 	if (bs == nullptr)
@@ -97,11 +99,13 @@ void BossRun::HitLine()
 	VECTOR3 rockPos = VECTOR3(INFINITY, INFINITY, INFINITY);
 	VECTOR3 pPos = b->enemyBaseComponent.playerObj->GetTransform()->position;
 	float size = 1500;
+	counter += Time::DeltaTimeRate();
 
-	if (VSize(targetPos - b->GetEnemyObj()->GetTransform()->position) < 400)
+	if (VSize(targetPos - b->GetEnemyObj()->GetTransform()->position) < 400 || counter >= 1.0f)
 	{
 		islooping = true;
 		targetPos = pPos;
+		counter = 0.0f;
 	}
 		
 	if (!islooping)
