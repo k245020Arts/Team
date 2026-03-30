@@ -1209,6 +1209,9 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Common\Debug\DebugNew.h">
+      <Filter>Common\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
