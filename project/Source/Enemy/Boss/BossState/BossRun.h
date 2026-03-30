@@ -27,5 +27,6 @@ private:
 	float speed;
 
 	bool islooping;
+	float counter;
 
 };

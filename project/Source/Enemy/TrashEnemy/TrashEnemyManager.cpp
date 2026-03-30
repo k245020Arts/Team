@@ -217,6 +217,8 @@ void TrashEnemyManager::ImguiDraw()
 		CreateEnemy(VZero, 1);
 	if (ImGui::Button("ack1"))
 		Cooperate(StateID::COOPERATEATTACK1);
+	if (ImGui::Button("ack2"))
+		Cooperate(StateID::COOPERATEATTACK1);
 
 	for (auto& itr : enemies)
 	{
@@ -357,18 +359,16 @@ void TrashEnemyManager::CloseWayPoint()
 				//カメラに写ってなかったら
 				else
 					itr.active = false;
-
-				/*counter = 1;*/
 			}
 			//一番近いウェイポイントを探す
 			if (itr.active)
 			{
 				VECTOR3 vec = itr.position - enemy->GetPos();
 				if (savePos.Size() > vec.Size())
-					savePos = itr.position/*vec*/;
+					savePos = itr.position;
 			}
 		}
-		enemy->GetWayPoint(savePos, StateID::T_ENEMY_RUN_S);
+		enemy->GetWayPoint(savePos, StateID::COOPERATEATTACK1);
 		counter = 1;
 	}
 }

@@ -48,7 +48,7 @@ void T_EnemyRun::Update()
 		if (!e->IsMovingToPlayer())
 			e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
 		else 
-			e->enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK1);
+			e->enemyBaseComponent.state->ChangeState(e->GetNextCooperateID());
 	}
 }
 
