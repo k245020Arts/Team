@@ -13,6 +13,7 @@ Fead::Fead()
 	SetDrawOrder(-10000);
 
 	feadIn = Fead::NONE;;
+	easingFunc = nullptr;
 }
 
 Fead::~Fead()
@@ -42,7 +43,10 @@ void Fead::Draw()
 	else {
 		rate = 1 - (feedTime / feedCountMax);
 	}
-	alpha = easingFunc(255, 0, rate);
+	if (easingFunc != nullptr) {
+		alpha = easingFunc(255, 0, rate);
+	}
+	
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	DrawBoxAA(0, 0, Screen::WIDTH, Screen::HEIGHT, color, true);

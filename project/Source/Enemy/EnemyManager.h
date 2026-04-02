@@ -148,6 +148,7 @@ public:
 
 	bool ObjectIsEnemy(BaseObject* _base);
 
+	int GetEnemySize() { return (int)enemy.size(); }
 private:
 	
 	std::list<BaseObject*> enemy;

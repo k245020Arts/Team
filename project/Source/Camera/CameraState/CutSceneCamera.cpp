@@ -425,6 +425,7 @@ void CutSceneCamera::Finish()
         camera->cutSceneBox->FinishBox(1.0f, 0x00000, Easing::EaseInOut<int>);
         camera->uiManager->SetUIDraw(true);
     }
+    
 }
 
 Transform* CutSceneCamera::PlayerEnemyWorldToPos(std::string _name)

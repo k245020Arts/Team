@@ -12,6 +12,8 @@ Shadow::Shadow()
 	model		= -1;
 	debugId		= 24;
 	tag			= Function::GetClassNameC<Shadow>();
+	height = -1;
+	obj = nullptr;
 }
 
 Shadow::~Shadow()
@@ -29,7 +31,7 @@ void Shadow::Draw()
 
 }
 
-void Shadow::Start(int _height)  
+void Shadow::Start(float _height)  
 {  
 	obj = GetBaseObject();
     model = ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "shadow1", ID::SHADOW);

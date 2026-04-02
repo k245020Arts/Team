@@ -46,8 +46,8 @@ void EnemyManager::Update()
 	if (gameManager == nullptr) {
 		gameManager = FindGameObject<GameControler>();
 	}
-
-	if (gameManager != nullptr && gameManager->GetChangeStateNow()) {
+	
+	if (gameManager != nullptr && gameManager->GetChangeStateOneFrame()) {
 		GameSceneChangeState();
 	}
 }
@@ -702,8 +702,8 @@ void EnemyManager::GameSceneChangeState()
 				break;
 
 			case GameControler::GameState::BOSS_PLAY_BEFORE:
-				// stateManager->ChangeState(StateID::BOSS_APPEAR_S);
-				// stateManager->SetNoStateChange(true);
+				 stateManager->ChangeState(StateID::BOSS_APPEAR_S);
+				 //stateManager->SetNoStateChange(true);
 				break;
 
 			case GameControler::GameState::WIN:

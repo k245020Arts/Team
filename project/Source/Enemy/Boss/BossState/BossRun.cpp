@@ -16,7 +16,8 @@ BossRun::BossRun()
 
 	targetPos = VZero;
 
-	counter = 0;
+	counter = 0.0f;
+	speed = 0.0f;
 }
 
 BossRun::~BossRun()
@@ -26,7 +27,7 @@ BossRun::~BossRun()
 void BossRun::Update()
 {
 	Boss* b = GetBase<Boss>();
-	b->LookPlayer(targetPos, 0.1);
+	b->LookPlayer(targetPos, 0.1f);
 	HitLine();
 
 	if (bs == nullptr)

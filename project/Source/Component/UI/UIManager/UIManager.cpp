@@ -5,7 +5,10 @@
 #include "../../ComponentManager.h"
 #include "../../../Common/ResourceLoader.h"
 #include "../../../Common/Debug/Debug.h"
+#include "../../../Common/Debug/DebugLogText.h"
 #include "../../Color/Color.h"
+#include "../../../Enemy/EnemyManager.h"
+#include "../../../Camera/Camera.h"
 
 UIManager::UIManager()
 {
@@ -25,6 +28,9 @@ UIManager::~UIManager()
 
 void UIManager::Update()
 {
+	/*if (!FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>()->IsCutScene()) {
+		assert(false);
+	}*/
 }
 
 void UIManager::Draw()
@@ -32,13 +38,21 @@ void UIManager::Draw()
 	if (!draw || !Debug::UIDraw()) {
 		return;
 	}
-	
+
 	for (auto itr = uiObjects.begin(); itr != uiObjects.end(); itr++) {
 		
 		(*itr)->SetDraw(true);
+		
 		(*itr)->Draw();
+		
 		(*itr)->SetDraw(false);
 	}
+	/*if (FindGameObject<EnemyManager>()->GetEnemySize() >= 1) {
+		assert(false);
+	}*/
+	
+	
+
 }
 
 void UIManager::ButtonUISet()

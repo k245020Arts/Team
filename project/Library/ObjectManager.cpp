@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include <algorithm>
 #include <assert.h>
-
+#include "../Source/Common/Debug/DebugLogText.h"
 
 namespace
 {
@@ -31,6 +31,7 @@ void ObjectManager::Update()
 		{
 			running = obj;
 			obj->Update();
+			//DebugLogText::GetInstance()->Log(LogLevel::INFO, obj->GetTag() + "Update");
 			running = nullptr;
 		}
 		if (obj->DestroyRequested())
@@ -64,6 +65,7 @@ void ObjectManager::Draw()
 		if (obj == nullptr || obj->DestroyRequested())
 			continue;
 		obj->Draw();
+		//DebugLogText::GetInstance()->Log(LogLevel::INFO, obj->GetTag() + "Draw");
 	}
 }
 
