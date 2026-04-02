@@ -4,6 +4,7 @@
 #include "../../Common/InputManager/InputManager.h"
 #include "../../Common/Easing.h"
 #include <algorithm>
+#include "../../GameControler/GameControler.h"
 
 FreeCamera::FreeCamera()
 {
@@ -21,6 +22,7 @@ void FreeCamera::Update()
 {
 	Camera* c = GetBase<Camera>();
 
+	
 	//ŠŠ‚ç‚©‚É‘¼‚Ìstate‚©‚çˆÚs‚µ‚½Žž‚ÉˆÚ“®‚·‚é‚æ‚¤‚É‚µ‚Ä‚¢‚éB
 	if (backCounter >= 0.0f) {
 		float t = 1.0f - backCounter / TIMER_MAX;
@@ -67,6 +69,7 @@ void FreeCamera::Start()
 	backCounter		= TIMER_MAX;
 	currentTarget	= c->target;
 	beforeTarget	= c->cameraComponent.player.transform->position.y;
+	
 }
 
 void FreeCamera::Finish()

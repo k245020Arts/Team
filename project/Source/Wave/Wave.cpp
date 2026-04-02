@@ -26,8 +26,11 @@ void Wave::Update()
 	if (!first) {
 		return;
 	}
+	
 	EnemySpawn();
+	
 	CooperateAttack();
+	
 	if (waveNow == 3) {
 		if (bossCreate) {
 			FindGameObject<EnemyManager>()->CreateBoss();
@@ -46,7 +49,8 @@ void Wave::Draw()
 
 void Wave::FirstRespown()
 {
-	tEnemyManager->CreateEnemy(SPWNPOS, 5.0f);
+	
+	tEnemyManager->CreateEnemy(SPWNPOS, 5);
 	first = true;
 }
 
@@ -68,7 +72,7 @@ void Wave::EnemySpawn()
 		spawn--;
 		battleCounter = 0;
 	}
-
+	
 	if (tEnemyManager->EnemyList().size() <= 0)
 	{
 		if (waveNow < WAVE_MAX) {
@@ -86,7 +90,7 @@ void Wave::CooperateAttack()
 {
 	if (tEnemyManager->GetActiveEnemy() > 4 || isCooperate)
 		return;
-
+	
 	tEnemyManager->Cooperate(StateID::COOPERATEATTACK1);
 	isCooperate = true;
 }

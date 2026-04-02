@@ -51,6 +51,7 @@ PlayerManager::PlayerManager()
 {
 	playerPointer = nullptr;
 	gameManager = nullptr;
+	stateManager = nullptr;
 }
 
 PlayerManager::~PlayerManager()
@@ -67,12 +68,15 @@ void PlayerManager::Update()
 	if (GetScene<PlayScene>() != nullptr) {
 		int a = 0;
 	}
-
+	
 	if (gameManager != nullptr) {
 		//bool isChange = ;
-		if (gameManager->GetChangeStateNow()) {
+		
+		if (gameManager->GetChangeStateOneFrame()) {
+			
 			GameSceneChangeState();
 		}
+		
 	}
 }
 
@@ -228,6 +232,11 @@ void PlayerManager::CreatePlayer()
 
 void PlayerManager::GameSceneChangeState()
 {
+	
+	if (stateManager == nullptr) {
+		return;
+	}
+	
 	switch (gameManager->GetStateNumber())
 	{
 	case GameControler::GameState::BEFORE:
@@ -236,6 +245,7 @@ void PlayerManager::GameSceneChangeState()
 
 	case GameControler::GameState::PLAY:
 		stateManager->ChangeState(StateID::PLAYER_WAIT_S);
+		
 		break;
 
 	case GameControler::GameState::BOSS_PLAY_BEFORE:

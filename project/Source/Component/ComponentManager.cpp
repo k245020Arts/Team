@@ -1,4 +1,6 @@
 #include "ComponentManager.h"
+#include "../Common/Debug/DebugLogText.h"
+#include "../GameControler/GameControler.h"
 
 ComponentManager::~ComponentManager()
 {
@@ -29,6 +31,7 @@ void ComponentManager::Draw()
 	//とうろくしたコンポーネントを回している。
 	for (auto c = component.begin(); c != component.end();) {
 		(*c)->Draw();
+		//DebugLogText::GetInstance()->Log(LogLevel::INFO, (*c)->GetTag() + "Draw" + obj->GetTag());
 		c++;
 	}
 }

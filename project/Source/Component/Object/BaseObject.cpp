@@ -8,6 +8,7 @@
 #include "../../Common/Memory/MemoryCount.h"
 #include "../../Common/Debug/Debug.h"
 #include "../../PlayScene.h"
+#include "../../GameControler/GameControler.h"
 
 int BaseObject::idPlus = 0;
 
@@ -62,8 +63,14 @@ void BaseObject::Update()
 			return;
 		}
 	}
+
+	
+
 	//コンポーネントで回している
 	componentManager->Update();
+
+	
+	
 	//子供のオブジェクトをまわす
 	for (auto itr = children.begin(); itr != children.end(); )
 	{

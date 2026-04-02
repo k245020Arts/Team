@@ -62,7 +62,7 @@ public:
 	/// Stateが1フレーム前にチェンジされたかどうかを取得
 	/// </summary>
 	/// <returns>1フレ前にステートがチェンジされていたらtrue</returns>
-	bool GetChangeStateNow() const { return changeState; }
+	bool GetChangeStateOneFrame() const { return changeState; }
 
 	void ResultUiStart(bool _win);
 	

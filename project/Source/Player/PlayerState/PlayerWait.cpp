@@ -4,6 +4,8 @@
 #include ".../../../../Component/Animator/Animator.h"
 #include "../../GameControler/GameControler.h"
 #include "../player.h"
+#include "../../Camera/Camera.h"
+#include "../../Common/Debug/DebugLogText.h"
 
 PlayerWait::PlayerWait()
 {
@@ -24,7 +26,11 @@ void PlayerWait::Update()
 	if (CheckHitKey(KEY_INPUT_0)) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 	}
-
+	if (!p->playerCom.camera->IsCutScene()) {
+		DebugLogText::GetInstance()->Log(LogLevel::INFO,"pass");
+		//assert(false);
+	}
+	
 	DefalutWalk();
 }
 

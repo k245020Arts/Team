@@ -34,6 +34,7 @@ void PlayerBossAppear::Update()
 		p->playerCom.enemyManager->CameraRockOnStart(p->playerCom.camera);
 		obj->GetTransform()->position = VECTOR3(300, 0, -2000);
 		obj->GetTransform()->rotation = VZero;
+		
 	}
 	if (p->playerCom.camera->GetCutNum() == 2) { //カット割りが2のときは違うアニメーションの再生
 		p->playerCom.anim->Play(ID::P_LEG_UP);
@@ -52,6 +53,7 @@ void PlayerBossAppear::Start()
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
 	feadOut = false;
+	
 }
 
 void PlayerBossAppear::Finish()

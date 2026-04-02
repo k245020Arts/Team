@@ -95,6 +95,7 @@ void Hierachy::Update()
 		camera->CameraEditor();
 	}
 #endif // _DEBUG
+	
 }
 	
 
