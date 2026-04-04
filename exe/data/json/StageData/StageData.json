@@ -1,0 +1,32 @@
+{
+   "stages": [
+   {
+     "id": 0,
+      "name" : "stage0",
+      "map" : 0,
+      "bgm" : "PlaySceneBGM",
+      "bossID" : 0
+   },
+   {
+     "id": 1,
+      "name" : "stage1",
+      "map" : 1,
+      "bgm" : "PlaySceneBGM2",
+      "bossID" : 1
+    },
+    {
+     "id": 2,
+      "name" : "stage2",
+      "map" : 1,
+      "bgm" : "PlaySceneBGM2",
+      "bossID" : 1
+    },
+    {
+     "id": 3,
+      "name" : "stage3",
+      "map" : 1,
+      "bgm" : "PlaySceneBGM2",
+      "bossID" : 1
+    }
+  ]
+}
