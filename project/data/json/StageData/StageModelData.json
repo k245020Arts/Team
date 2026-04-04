@@ -1,9 +1,9 @@
 {
    "stageModelDatas": [
    {
-     "id": 0,                    //マップID
-      "map" : "stage_s",        //マップのファイル名
-       "Transform": {           //マップのトランスフォーム 
+     "id": 0,
+      "map" : "stage_s",
+       "Transform": {
         "position": {
           "x": 25000.0,
           "y": -4000,

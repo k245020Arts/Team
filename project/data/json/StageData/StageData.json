@@ -1,11 +1,11 @@
 {
    "stages": [
    {
-     "id": 0,                   //ステージID
-      "name" : "stage0",        //ステージの名前
-      "map" : 0,                //マップのモデルID
-      "bgm" : "PlaySceneBGM",   //BGMの名前
-      "bossID" : 0              //登場するボスのID
+     "id": 0,
+      "name" : "stage0",
+      "map" : 0,
+      "bgm" : "PlaySceneBGM",
+      "bossID" : 0
    },
    {
      "id": 1,
