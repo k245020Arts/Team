@@ -1,17 +1,17 @@
 {
   "PlayerAttackData": {
     "PlayerAttack1": {
-      "AttackMove": {                       //攻撃時にどれくらい移動するか
+      "AttackMove": {                       
         "x": 0.0,
         "y": 0.0,
         "z": 5500.0
       },
-      "PlayerState": "PlayerAttack1",       //ステートのID
-      "attackAgainStartCounterMax": 0.0,    //多段ヒットするときの攻撃間隔
-      "attackInputStartTime": 5.0,          //先行入力の開始時間
-      "attackNum": 0,                       //何回多段ヒットするか
-      "chargeLevels": [],                   //チャージするときにおけるチャージによってのパラメータ変更
-      "collTrans": {                        //当たり判定のトランスフォーム
+      "PlayerState": "PlayerAttack1",       
+      "attackAgainStartCounterMax": 0.0,    
+      "attackInputStartTime": 5.0,          
+      "attackNum": 0,                       
+      "chargeLevels": [],                   
+      "collTrans": {                        
         "position": {
           "x": 0.0,
           "y": 80.0,
@@ -28,14 +28,14 @@
           "z": 0.0
         }
       },
-      "collsionFinishTime": 27.0,       //攻撃当たり判定終了フレーム
-      "collsionStartTime": 19.0,        //攻撃当たり判定開始フレーム
-      "hitDamage": 500.0,               //ダメージ量
-      "motionCancelStartTime": 0.0,     //モーションキャンセルを何フレーム目から出来るか
-      "nextAttackRunTimer": 0.10000000149011612,    //攻撃の後隙(次に攻撃するときの)
-      "noAttackRunTimer": 0.05000000074505806,      //攻撃の後隙(次に攻撃しないときの)
-      "normalAttackNextID": "PlayerAttack2",        //次の攻撃用ID(通常攻撃ボタンを押したときの)
-      "specialAttackNextID": "PlayerAttack4"        //次の攻撃用ID(強攻撃ボタンを押したときの)
+      "collsionFinishTime": 27.0,       
+      "collsionStartTime": 19.0,        
+      "hitDamage": 500.0,               
+      "motionCancelStartTime": 0.0,    
+      "nextAttackRunTimer": 0.10000000149011612,    
+      "noAttackRunTimer": 0.05000000074505806,     
+      "normalAttackNextID": "PlayerAttack2",        
+      "specialAttackNextID": "PlayerAttack4"        
     },
     "PlayerAttack2": {
       "AttackMove": {
