@@ -14,13 +14,6 @@ struct DeadData
 	float gravity;		//落下の強さ（重力）
 	float timeToPeak;	//最高点までの時間
 	float maxHeight;	//吹き飛びの高さ
-	/*DeadData()
-	{
-		gravity		= 0;
-		timeToPeak	= 0;
-		maxHeight	= 0;
-		maxVelocity = 0;
-	}*/
 };
 
 class TrashEnemy : public EnemyBase
@@ -102,6 +95,18 @@ public:
 		};
 		return static_cast<T*>(_set->instance);
 	}
+
+	enum EnemyType
+	{
+		MELEE,			//近距離
+		RANGED_LEADER,	//遠距離のリーダ
+		RANGED,			//遠距離
+
+		MAX,
+	};
+
+	void SetEnemyType(EnemyType type);
+
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
@@ -146,4 +151,6 @@ private:
 	float mStopCounter;
 
 	StateID::State_ID nextCooperateID;
+
+	EnemyType enemyType;
 };

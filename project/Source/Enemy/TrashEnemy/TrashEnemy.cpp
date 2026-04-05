@@ -338,6 +338,11 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
 	}
 }
 
+void TrashEnemy::SetEnemyType(EnemyType type)
+{
+	enemyType = type;
+}
+
 void TrashEnemy::LookTarget(VECTOR3 _pos)
 {
 	VECTOR3 distance = _pos - obj->GetTransform()->position;
