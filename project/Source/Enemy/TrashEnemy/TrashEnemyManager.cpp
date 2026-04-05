@@ -216,9 +216,9 @@ void TrashEnemyManager::ImguiDraw()
 	if (ImGui::Button("enemySpwn"))
 		CreateEnemy(VZero, 1);
 	if (ImGui::Button("ack1"))
-		Cooperate(StateID::COOPERATEATTACK1);
+		Cooperate(CooperateData::Cooperate1);
 	if (ImGui::Button("ack2"))
-		Cooperate(StateID::COOPERATEATTACK1);
+		Cooperate((CooperateData::Cooperate2));
 
 	for (auto& itr : enemies)
 	{
@@ -242,9 +242,16 @@ void TrashEnemyManager::ImguiDraw()
     ImGui::End();
 }
 
-void TrashEnemyManager::Cooperate(StateID::State_ID _id)
+void TrashEnemyManager::Cooperate(CooperateData cooperateDate)
 {
-	CloseWayPoint();
+	switch (cooperateDate)
+	{
+	case Cooperate1:
+		CloseWayPoint();
+		break;
+	case Cooperate2:
+		break;
+	}
 }
 
 void TrashEnemyManager::AllChangeState(StateID::State_ID _id)
@@ -319,10 +326,6 @@ void TrashEnemyManager::WayPointOffset()
 
 void TrashEnemyManager::PlayerWayPoint()
 {
-	/*searchCounter += Time::DeltaTimeRate();
-	if (searchCounter < 1)
-		return;*/
-
 	searchCounter = 0;
 	wayPoint.clear();
 
@@ -419,4 +422,9 @@ void TrashEnemyManager::Separation()
 			}
 		}
 	}
+}
+
+void TrashEnemyManager::Cooperate2Move()
+{
+
 }

@@ -566,11 +566,11 @@
     <ClCompile Include="Source\Stage\StageSelectData.cpp">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\AStar.cpp">
-      <Filter>PlayScene\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyGroup.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1203,14 +1203,14 @@
     <ClInclude Include="Source\Common\Debug\DebugLogText.h">
       <Filter>Common\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\AStar.h">
-      <Filter>PlayScene\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\Common\Debug\DebugNew.h">
       <Filter>Common\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyGroup.h">
+      <Filter>PlayScene\Enemy\TrashEnemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

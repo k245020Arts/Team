@@ -7,6 +7,14 @@ class TrashEnemy;
 class Object3D;
 class Camera;
 
+enum CooperateData
+{
+	Cooperate1,
+	Cooperate2,
+
+	CooperateMax
+};
+
 class TrashEnemyManager : public GameObject
 {
 public:
@@ -29,11 +37,13 @@ public:
 	void ImguiDraw();
 
 	//連携攻撃
-	void Cooperate(StateID::State_ID _id);
+	void Cooperate(CooperateData cooperateDate);
 	//敵のステートを強制的に全員変える
 	void AllChangeState(StateID::State_ID _id);
 	//雑魚的どうしであたった時の押し返し
 	void Separation();
+
+	void Cooperate2Move();
 
 private:
 	std::list<TrashEnemy*> enemies;
@@ -57,14 +67,7 @@ private:
 		}
 	};
 
-	enum CooperateData
-	{
-		Cooperate1,
-		Cooperate2,
-
-		CooperateMax
-	};
-	CooperateData cooperateDate;
+	//CooperateData cooperateDate;
 
 	//ウェイポイントの元を保管する変数
 	std::list<VECTOR3> wayPointOffsets;

@@ -87,6 +87,6 @@ void Wave::CooperateAttack()
 	if (tEnemyManager->GetActiveEnemy() > 4 || isCooperate)
 		return;
 
-	tEnemyManager->Cooperate(StateID::COOPERATEATTACK1);
+	tEnemyManager->Cooperate((CooperateData::Cooperate1));
 	isCooperate = true;
 }

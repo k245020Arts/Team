@@ -34,6 +34,7 @@ public:
 	friend class Standby;
 	friend class T_EnemyJump;
 	friend class CooperateAttack1;
+	friend class CooperateAttack2;
 	friend class T_EnemyDamage;
 	friend class EnemyStateBase;
 	friend class BossAttackBase;
