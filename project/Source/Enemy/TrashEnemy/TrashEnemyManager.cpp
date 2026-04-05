@@ -22,6 +22,7 @@
 #include "../../Component/Collider/ModelCollider.h"
 #include "../../Common/Random.h"
 #include "../../Common/Debug/Debug.h"
+#include "../../GameControler/GameControler.h"
 
 TrashEnemyManager::TrashEnemyManager()
 {
@@ -52,6 +53,7 @@ TrashEnemyManager::~TrashEnemyManager()
 
 void TrashEnemyManager::Update()
 {
+	
 	if (enemies.empty())
 		return;
 	Separation();
@@ -75,6 +77,7 @@ void TrashEnemyManager::Update()
 		else
 			++itr;
 	}
+	
 }
 
 void TrashEnemyManager::Draw()
@@ -328,9 +331,9 @@ void TrashEnemyManager::PlayerWayPoint()
 {
 	searchCounter = 0;
 	wayPoint.clear();
-
+	
 	VECTOR3 playerPos = player->GetTransform()->position;
-
+	
 	for (auto& itr : wayPointOffsets)
 	{
 		wayPoint.emplace_back(WayPoint(itr + playerPos, true));

@@ -1,4 +1,5 @@
 #include "StateManager.h"
+#include "../GameControler/GameControler.h"
 
 StateManager::StateManager()
 {
@@ -34,7 +35,9 @@ void StateManager::Update()
 		currentId = nextId;
 		Change(currentId);
 	}
-	state->Update();
+	if (state != nullptr) {
+		state->Update();
+	}
 }
 
 void StateManager::Draw() 

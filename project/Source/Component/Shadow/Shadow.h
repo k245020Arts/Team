@@ -13,7 +13,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void Start(int _height);
+	void Start(float _height);
 
 	/// <summary>
 	/// ‰e‚Ì‘å‚«‚³‚ğƒZƒbƒg‚·‚éŠÖ”

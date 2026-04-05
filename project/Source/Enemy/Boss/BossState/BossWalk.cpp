@@ -23,8 +23,8 @@ void BossWalk::Update()
 
 	if (isRedefinition)
 	{
-		float _rangeX = MAX * Random::GetReal() - MAX * Random::GetReal();
-		float _rangeZ = MAX * Random::GetReal() - MAX * Random::GetReal();
+		float _rangeX = MAX * (float)Random::GetReal() - MAX * (float)Random::GetReal();
+		float _rangeZ = MAX * (float)Random::GetReal() - MAX * (float)Random::GetReal();
 		newPos = VECTOR3(_rangeX, 0, _rangeZ);
 		isRedefinition = false;
 	}

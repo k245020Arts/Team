@@ -133,7 +133,7 @@ void Player::Update()
 	else {
 		justAvoidCan = false;
 	}
-	playerTransform->position = playerCom.anim->BoneMovePositionAdd(playerTransform->position);
+	//playerTransform->position = playerCom.anim->BoneMovePositionAdd(playerTransform->position);
 	if (avoidReady) {
 		AvoidRotationChange();
 	}
@@ -191,7 +191,9 @@ void Player::Update()
 	}
 	justAvoidColHit = false;
 	//playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
+	
 	paramWindow->PlayerParamWindowView();
+	
 }
 
 void Player::Draw()

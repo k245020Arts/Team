@@ -1,0 +1,247 @@
+{
+  "Animator": {
+    "B_APPEAR_FALL": {
+      "eventFinishTime": 70.0,
+      "eventStartTime": 10.0,
+      "fileName": "B_APPEAR_FALL",
+      "id": "B_APPEAR_FALL",
+      "loop": true,
+      "maxFrame": 60.0,
+      "playSpeed": 1.0
+    },
+    "B_APPEAR_LAND": {
+      "eventFinishTime": 70.0,
+      "eventStartTime": 10.0,
+      "fileName": "B_APPEAR_LAND",
+      "id": "B_APPEAR_LAND",
+      "loop": false,
+      "maxFrame": 70.0,
+      "playSpeed": 1.5
+    },
+    "B_ATTACK1": {
+      "eventFinishTime": 60.0,
+      "eventStartTime": 25.0,
+      "fileName": "B_ATTACK1",
+      "id": "B_ATTACK1",
+      "loop": false,
+      "maxFrame": 95.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_ATTACK2": {
+      "eventFinishTime": 60.0,
+      "eventStartTime": 25.0,
+      "fileName": "B_ATTACK2",
+      "id": "B_ATTACK2",
+      "loop": false,
+      "maxFrame": 95.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_ATTACK3": {
+      "eventFinishTime": 55.0,
+      "eventStartTime": 40.0,
+      "fileName": "B_ATTACK3",
+      "id": "B_ATTACK3",
+      "loop": false,
+      "maxFrame": 80.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_ATTACK4": {
+      "eventFinishTime": 30.0,
+      "eventStartTime": 20.0,
+      "fileName": "B_ATTACK4",
+      "id": "B_ATTACK4",
+      "loop": false,
+      "maxFrame": 39.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_ATTACK5": {
+      "eventFinishTime": 30.0,
+      "eventStartTime": 20.0,
+      "fileName": "B_ATTACK5",
+      "id": "B_ATTACK5",
+      "loop": false,
+      "maxFrame": 39.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_ATTACK6": {
+      "eventFinishTime": 65.0,
+      "eventStartTime": 50.0,
+      "fileName": "B_ATTACK6",
+      "id": "B_ATTACK6",
+      "loop": false,
+      "maxFrame": 110.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_ATTACK7": {
+      "eventFinishTime": 85.0,
+      "eventStartTime": 72.4159164428711,
+      "fileName": "B_ATTACK7",
+      "id": "B_ATTACK7",
+      "loop": false,
+      "maxFrame": 146.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_BACKSTEP": {
+      "eventFinishTime": -1.0,
+      "eventStartTime": -1.0,
+      "fileName": "B_BACKSTEP",
+      "id": "B_BACKSTEP",
+      "loop": true,
+      "maxFrame": 49.0,
+      "playSpeed": 1.0
+    },
+    "B_DAMAGE": {
+      "eventFinishTime": 70.0,
+      "eventStartTime": 10.0,
+      "fileName": "B_DAMAGE",
+      "id": "B_DAMAGE",
+      "loop": false,
+      "maxFrame": 65.0,
+      "playSpeed": 1.7999999523162842
+    },
+    "B_DIE": {
+      "eventFinishTime": -1.0,
+      "eventStartTime": -1.0,
+      "fileName": "B_DIE",
+      "id": "B_DIE",
+      "loop": false,
+      "maxFrame": 138.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_FEAR": {
+      "eventFinishTime": 70.0,
+      "eventStartTime": 10.0,
+      "fileName": "B_FEAR",
+      "id": "B_FEAR",
+      "loop": true,
+      "maxFrame": 60.0,
+      "playSpeed": 1.0
+    },
+    "B_IDLE": {
+      "eventFinishTime": -1.0,
+      "eventStartTime": -1.0,
+      "fileName": "B_IDLE",
+      "id": "B_IDLE",
+      "loop": true,
+      "maxFrame": 160.0,
+      "playSpeed": 1.0
+    },
+    "B_IDLE2": {
+      "eventFinishTime": -1.0,
+      "eventStartTime": -1.0,
+      "fileName": "B_IDLE2",
+      "id": "B_IDLE2",
+      "loop": true,
+      "maxFrame": 121.0,
+      "playSpeed": 1.0
+    },
+    "B_ROAR3": {
+      "eventFinishTime": 120.0,
+      "eventStartTime": 30.0,
+      "fileName": "B_ROAR3",
+      "id": "B_ROAR3",
+      "loop": false,
+      "maxFrame": 67.5,
+      "playSpeed": 0.6000000238418579
+    },
+    "B_ROAR_ANIM": {
+      "eventFinishTime": 40.0,
+      "eventStartTime": 30.0,
+      "fileName": "B_ROAR_ANIM",
+      "id": "B_ROAR_ANIM",
+      "loop": false,
+      "maxFrame": 162.0,
+      "playSpeed": 1.0
+    },
+    "B_RUN": {
+      "eventFinishTime": 40.0,
+      "eventStartTime": 30.0,
+      "fileName": "B_RUN",
+      "id": "B_RUN",
+      "loop": true,
+      "maxFrame": 26.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_SATTACK1": {
+      "eventFinishTime": 55.0,
+      "eventStartTime": 50.0,
+      "fileName": "B_SATTACK1",
+      "id": "B_SATTACK1",
+      "loop": false,
+      "maxFrame": 97.0,
+      "playSpeed": 1.0
+    },
+    "B_SATTACK1_SAMLL": {
+      "eventFinishTime": 55.0,
+      "eventStartTime": 40.0,
+      "fileName": "B_SATTACK1_SAMLL",
+      "id": "B_SATTACK1_SAMLL",
+      "loop": false,
+      "maxFrame": 95.0,
+      "playSpeed": 1.2999999523162842
+    },
+    "B_SATTACK2": {
+      "eventFinishTime": 100.0,
+      "eventStartTime": 0.0,
+      "fileName": "B_SATTACK2",
+      "id": "B_SATTACK2",
+      "loop": true,
+      "maxFrame": 19.0,
+      "playSpeed": 1.0
+    },
+    "B_SATTACK2_BEFORE_2": {
+      "eventFinishTime": 100.0,
+      "eventStartTime": 0.0,
+      "fileName": "B_SATTACK2_BEFORE_2",
+      "id": "B_SATTACK2_BEFORE_2",
+      "loop": false,
+      "maxFrame": 30.0,
+      "playSpeed": 1.0
+    },
+    "B_SATTACK2_STOP": {
+      "eventFinishTime": -1.0,
+      "eventStartTime": -1.0,
+      "fileName": "B_SATTACK2_STOP",
+      "id": "B_SATTACK2_STOP",
+      "loop": false,
+      "maxFrame": 61.0,
+      "playSpeed": 1.0
+    },
+    "B_THREAT": {
+      "eventFinishTime": 70.0,
+      "eventStartTime": 10.0,
+      "fileName": "B_THREAT",
+      "id": "B_THREAT",
+      "loop": false,
+      "maxFrame": 85.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_WAIT_SEE": {
+      "eventFinishTime": 45.0,
+      "eventStartTime": 30.0,
+      "fileName": "B_WAIT_SEE",
+      "id": "B_WAIT_SEE",
+      "loop": true,
+      "maxFrame": 36.0,
+      "playSpeed": 0.800000011920929
+    },
+    "B_WALK": {
+      "eventFinishTime": 45.0,
+      "eventStartTime": 30.0,
+      "fileName": "B_WALK",
+      "id": "B_WALK",
+      "loop": true,
+      "maxFrame": 42.0,
+      "playSpeed": 1.2000000476837158
+    },
+    "B_WIN": {
+      "eventFinishTime": 70.0,
+      "eventStartTime": 10.0,
+      "fileName": "B_WIN",
+      "id": "B_WIN",
+      "loop": true,
+      "maxFrame": 85.0,
+      "playSpeed": 1.0
+    }
+  }
+}

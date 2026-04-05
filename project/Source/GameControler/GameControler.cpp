@@ -60,8 +60,12 @@ GameControler::~GameControler()
 
 void GameControler::Update()
 {
+	/*if (gameState != GameState::BEFORE) {
+		assert(false);
+	}*/
 	if (changeState) {
 		changeState = false;
+		
 	}
 	else {
 
@@ -74,6 +78,7 @@ void GameControler::Update()
 		if (gameState != beforeGameState) {
 			beforeGameState = gameState;
 			changeState = true;
+			
 		}
 #endif
 
@@ -84,9 +89,11 @@ void GameControler::Update()
 		break;
 	case GameControler::BEFORE:
 		BeforeUpdate();
+		
 		break;
 	case GameControler::PLAY:
 		PlayUpdate();
+		
 		break;
 	case GameControler::BOSS_PLAY_BEFORE:
 		break;

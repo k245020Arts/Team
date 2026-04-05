@@ -300,7 +300,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::E_MODEL, -1);
 	chara->SetImage(ResourceLoad::GetHandle(ID::SWORD_EFFECT_B));
-
+	
 	//active = true;
 }
 

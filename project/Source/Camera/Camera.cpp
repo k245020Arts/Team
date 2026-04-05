@@ -22,6 +22,7 @@
 #include "../Component/UI/UIManager/UIManager.h"
 #include "CameraState/PlayerHeavyAttackCamera.h"
 #include "../Common/Random.h"
+#include "../GameControler/GameControler.h"
 
 Camera::Camera()
 {
@@ -78,7 +79,11 @@ Camera::~Camera()
 
 void Camera::Update()
 {
+	
+
 	cameraComponent.enemyManager->NearEnemyAlpha(cameraComponent.cameraTransform->position);
+	
+	
 	//if (hit) {
 	//	hit = false;
 	//	//cameraComponent.cameraTransform->position.y += moveAmout;

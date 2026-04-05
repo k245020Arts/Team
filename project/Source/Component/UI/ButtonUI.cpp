@@ -22,11 +22,16 @@ ButtonUI::ButtonUI()
 	r = 0.0f;
 	g = 0.0f;
 	b = 0.0f;
+	backImage = -1;
+	scale = 0;
 
 }
 
 ButtonUI::~ButtonUI()
 {
+	if (backImage <= 0) {
+		DeleteGraph(backImage);
+	}
 }
 
 void ButtonUI::Update()
@@ -67,8 +72,8 @@ void ButtonUI::Draw()
 		SetDrawBright(50, 50, 50);
 	}
 	else {
-		SetDrawBright(rgbColor.r, rgbColor.g, rgbColor.b);
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, rgbColor.a);
+		SetDrawBright((int)rgbColor.r, (int)rgbColor.g, (int)rgbColor.b);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)rgbColor.a);
 	}
 	//‰ÁŽZ‡¬ƒ‚[ƒh‚È‚ç‰ÁŽZ‡¬‚ðŠ|‚¯‚é
 	if (gradeMode) {

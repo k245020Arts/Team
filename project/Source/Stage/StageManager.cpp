@@ -12,6 +12,7 @@
 #include "Sky.h"
 #include "../Component/Collider/AABBCollider.h"
 #include "StageSelectData.h"
+#include "../GameControler/GameControler.h"
 
 #define NEW_STAGE
 
@@ -38,7 +39,14 @@ StageManager::~StageManager()
 
 void StageManager::Update()
 {
-
+	/*GameControler* gameControler = FindGameObject<GameControler>();
+	if (gameControler != nullptr) {
+		if (gameControler->GetStateNumber() != GameControler::GameState::BEFORE) {
+			assert(false);
+		}
+	}*/
+	
+	
 }
 
 void StageManager::Draw()

@@ -33,8 +33,8 @@ void ResultUi::Update()
 	}
 	addCount = max(addCount - Time::DeltaTimeRate() * 1.0f, 0.0f);
 	scaleCount = max(scaleCount - Time::DeltaTimeRate() * 1.5f, 0.0f);
-	normalExrate = Easing::EaseInBack(1.0f, 0.0f, scaleCount);
-	addDrawValue = Easing::EaseIn(0, 30, addCount);
+	normalExrate = Easing::EaseInBack<float>(1.0f, 0.0f, scaleCount);
+	addDrawValue = Easing::EaseIn<int>(0, 30, addCount);
 	addExrate += 1.0f;
 }
 
@@ -68,7 +68,7 @@ void ResultUi::Draw()
 		}
 	}
 	else {
-		float t = min(1.0 - addCount, 1.0f);
+		float t = min(1.0f - addCount, 1.0f);
 
 		// 画面暗転
 		int fade = (int)(t * 180);
@@ -81,7 +81,7 @@ void ResultUi::Draw()
 
 		// 少し暗めに描画
 		SetDrawBright(180, 180, 180);
-		DrawRotaGraph((int)transform->position.x, (int)transform->position.y + offsetY, normalExrate, 0.0, hImage, true);
+		DrawRotaGraph((int)transform->position.x, (int)transform->position.y + (int)offsetY, normalExrate, 0.0, hImage, true);
 		SetDrawBright(255, 255, 255);
 	}
 }
