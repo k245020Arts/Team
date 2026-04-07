@@ -12,8 +12,9 @@ BossNormalAttack2::BossNormalAttack2()
 	/*attackParam.animID = ID::B_N_ATTACK2;
 	attackParam.attackCollTransform				= Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	attackParam.damagePattern	= BossAttackBase::NO_BACK;*/
-	averageSpeed			= 0.0f;
 	LoadAttackParam();
+	attackParam.rotateMove = true;
+	attackParam.angleMoveAmout = -90.0f;
 }
 
 BossNormalAttack2::~BossNormalAttack2()
@@ -30,13 +31,7 @@ void BossNormalAttack2::Update()
 	}
 	BossAttackCollsion();
 	BossJustAvoidCollsion();
-	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
-		//UŒ‚‚É‚©‚©‚éŽžŠÔ‚Å90‹‰ñ‚µ‚½‚¢‚Ì‚Å‚PƒtƒŒ[ƒ€‚²‚Æ‚Éi‚ÞŠp“x‚ð‹‚ß‚Ä‚¢‚éB
-		averageSpeed = 90.0f / attackTime;
-		averageSpeed *= boss->obj->GetObjectTimeRate();
-
-		boss->bossTransform->rotation.y -= averageSpeed * DegToRad;
-	}
+	RotateEvent();
 	AttackSound();
 	if (boss->maxAttack <= 0) {
 		//ŽO’iUŒ‚‚Ìˆê”ÔÅŒã‚ÌŽž‚¾‚¯Œõ‚éB

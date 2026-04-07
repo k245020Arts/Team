@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "../../../TrashEnemy/EnemyState/EnemyStateBase.h"
-
+#include "../../../../Common/ID/EffectID.h"
 //#define DataSave
 
 class BossAttackBase:public EnemyStateBase
@@ -40,9 +40,71 @@ public:
 
 	struct BossAttackParam
 	{
-		BossAttackParam() {
+		BossAttackParam()
+		{
+			bossID = "";
+			attackID = "";
+
+			useFlash = false;
+			attackFlashStartTime = 0.0f;
+
+			slowTime = 0.0f;
+			slowAmout = 0.0f;
+
+			speedUpMotionSpeed = 0.0f;
+
+			attackCollsionStartTime = 0.0f;
+			attackCollsionEndTime = 0.0f;
+
+			justAvoidCollsionStartTime = 0.0f;
+			justAvoidCollsionEndTime = 0.0f;
+
+			attackPositionFrameNum = 0;
+
+			attackSoundStartTime = 0.0f;
+
+			attackCollTransform = Transform();
+			justAvoidCollTransform = Transform();
+
+			animID = ID::IDType();
+
 			hitDamage = 0.0f;
 			damagePattern = NONE;
+
+			voiceName = "";
+
+			// 移動イベント
+			frontMove = false;
+			moveSpeed = 0.0f;
+
+			// プレイヤー追従イベント
+			playerAloowMove = false;
+			baseSpeed = 0.0f;
+			playerNearStop = false;
+			playerNearAloowStop = false;
+			playerBaseNear = 0.0f;
+			maxMoveSpeed = 0.0f;
+			minMoveSpeed = 0.0f;
+
+			// 突進イベント
+			rushMove = false;
+			rushBeforeAnimID = ID::IDType();
+			rushAfterAnimID = ID::IDType();
+			rushSoundRightFoot = 0.0f;
+			rushSoundLeftFoot = 0.0f;
+
+			// 回転イベント
+			rotateMove = false;
+			angleMoveAmout = 0.0f;
+
+			// ジャンプイベント
+			jump = false;
+			addGravity = 0.0f;
+
+			// 衝撃波イベント
+			shockWave = false;
+			shockMoveEffect = Effect_ID::EFFECT_ID(); // デフォルト
+			shockWaveSpeed = 0.0f;
 		}
 
 		std::string bossID;
@@ -75,6 +137,55 @@ public:
 
 		PlayerDamagePattern damagePattern;
 		std::string voiceName;
+
+		//移動イベント
+		bool frontMove;
+		float moveSpeed;
+		
+
+		//プレイヤー追従イベント
+		bool playerAloowMove;
+		float baseSpeed;
+		bool playerNearStop;
+		bool playerNearAloowStop;
+		bool addVelocity;
+		float playerBaseNear;
+		float maxMoveSpeed;
+		float minMoveSpeed;
+		float moveStartTime;
+		float moveFinishTime;
+
+		//突進イベント
+		bool rushMove;
+		ID::IDType rushBeforeAnimID;
+		ID::IDType rushAfterAnimID;
+		float rushSoundRightFoot;
+		float rushSoundLeftFoot;
+
+		//回転イベント
+		bool rotateMove;
+		float angleMoveAmout;
+
+		//ジャンプイベント
+		bool jump;
+		float addGravity;
+		float jumpSpeed;
+		float jumpStartTime;
+		float groundEffectStartTime;
+		Effect_ID::EFFECT_ID jumpGroundEffect;
+		float groundShakeCamera;
+		float groundShakeTime;
+
+		//衝撃波イベント
+		bool shockWave;
+		Effect_ID::EFFECT_ID shockMoveEffect;
+		float shockWaveSpeed;
+		float startRange;
+
+		//プレイヤー見るイベント
+		bool lookPlayer;
+		int lookNum;
+		float lookMaxCounter;
 	};
 
 	
@@ -114,8 +225,22 @@ public:
 
 	void LoadAttackParam();
 
+	void RotateEvent();
+	void LookEvent();
+	void MoveEvent();
+	void JumpEvent();
+	void ShackWaveEvent();
+	void CreateWave();
+
 protected:
 	BossAttackParam attackParam;
+private:
+	float averageSpeed;
+	bool aloowStop;
+	VECTOR3 normal;
+	bool firstJump;
+	float gravitySpeed;
+	bool groundEffect;
 };
 
 inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
@@ -140,12 +265,44 @@ inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
 		{"animID", ID::GetID(p.animID)},
 
 		{"hitDamage", p.hitDamage},
-
 		{"damagePattern", BossAttackBase::ToString(p.damagePattern)},
+		{"voiceName", p.voiceName},
 
-		{"voiceName", p.voiceName}
+		// 移動イベント
+		{"frontMove", p.frontMove},
+		{"moveSpeed", p.moveSpeed},
+
+		// プレイヤー追従イベント
+		{"playerAloowMove", p.playerAloowMove},
+		{"baseSpeed", p.baseSpeed},
+		{"playerNearStop", p.playerNearStop},
+		{"playerNearAloowStop", p.playerNearAloowStop},
+		{"playerBaseNear", p.playerBaseNear},
+		{"maxMoveSpeed", p.maxMoveSpeed},
+		{"minMoveSpeed", p.minMoveSpeed},
+
+		// 突進イベント
+		{"rushMove", p.rushMove},
+		{"rushBeforeAnimID", ID::GetID(p.rushBeforeAnimID)},
+		{"rushAfterAnimID", ID::GetID(p.rushAfterAnimID)},
+		{"rushSoundRightFoot", p.rushSoundRightFoot},
+		{"rushSoundLeftFoot", p.rushSoundLeftFoot},
+
+		// 回転イベント
+		{"rotateMove", p.rotateMove},
+		{"angleMoveAmout", p.angleMoveAmout},
+
+		// ジャンプイベント
+		{"jamp", p.jump},
+		{"addGravity", p.addGravity},
+
+		// 衝撃波イベント
+		{"shockWave", p.shockWave},
+		{"shockMoveEffect", static_cast<int>(p.shockMoveEffect)},
+		{"shockWaveSpeed", p.shockWaveSpeed}
 	};
 }
+
 // from_json
 inline void from_json(const JSON& j, BossAttackBase::BossAttackParam& p)
 {
@@ -176,4 +333,46 @@ inline void from_json(const JSON& j, BossAttackBase::BossAttackParam& p)
 	p.damagePattern = BossAttackBase::FromString(pattern);
 
 	j.at("voiceName").get_to(p.voiceName);
+
+	//// 移動イベント
+	//j.at("frontMove").get_to(p.frontMove);
+	//j.at("moveSpeed").get_to(p.moveSpeed);
+
+	//// プレイヤー追従イベント
+	//j.at("playerAloowMove").get_to(p.playerAloowMove);
+	//j.at("baseSpeed").get_to(p.baseSpeed);
+	//j.at("playerNearStop").get_to(p.playerNearStop);
+	//j.at("playerNearAloowStop").get_to(p.playerNearAloowStop);
+	//j.at("playerBaseNear").get_to(p.playerBaseNear);
+	//j.at("maxMoveSpeed").get_to(p.maxMoveSpeed);
+	//j.at("minMoveSpeed").get_to(p.minMoveSpeed);
+
+	//// 突進イベント
+	//j.at("rushMove").get_to(p.rushMove);
+
+	//std::string rushBefore, rushAfter;
+	//j.at("rushBeforeAnimID").get_to(rushBefore);
+	//j.at("rushAfterAnimID").get_to(rushAfter);
+	//p.rushBeforeAnimID = ID::StringToID(rushBefore);
+	//p.rushAfterAnimID = ID::StringToID(rushAfter);
+
+	//j.at("rushSoundRightFoot").get_to(p.rushSoundRightFoot);
+	//j.at("rushSoundLeftFoot").get_to(p.rushSoundLeftFoot);
+
+	//// 回転イベント
+	//j.at("rotateMove").get_to(p.rotateMove);
+	//j.at("angleMoveAmout").get_to(p.angleMoveAmout);
+
+	//// ジャンプイベント
+	//j.at("jamp").get_to(p.jamp);
+	//j.at("addGravity").get_to(p.addGravity);
+
+	//// 衝撃波イベント
+	//j.at("shockWave").get_to(p.shockWave);
+
+	//std::string effect;
+	//j.at("shockMoveEffect").get_to(effect);
+	//p.shockMoveEffect = Effect_ID::StringToID(effect);
+
+	//j.at("shockWaveSpeed").get_to(p.shockWaveSpeed);
 }

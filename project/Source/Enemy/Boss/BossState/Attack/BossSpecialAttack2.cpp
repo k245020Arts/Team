@@ -29,6 +29,18 @@ BossSpecialAttack2::BossSpecialAttack2()
 
 	rockColl = nullptr;
 	LoadAttackParam();
+	attackParam.playerAloowMove = true;
+	attackParam.playerNearAloowStop = true;
+	attackParam.maxMoveSpeed = 15000.0f;
+	attackParam.minMoveSpeed = 15000.0f;
+	attackParam.playerBaseNear = 2000.0f;
+	attackParam.baseSpeed = 15000.0f;
+	attackParam.lookPlayer = true;
+	attackParam.lookNum = 1;
+	attackParam.lookMaxCounter = 200.0f;
+	attackParam.moveStartTime = 00.0f;
+	attackParam.moveFinishTime = 500.0f;
+	attackParam.addVelocity = true;
 }
 
 BossSpecialAttack2::~BossSpecialAttack2()
@@ -80,8 +92,8 @@ void BossSpecialAttack2::Update()
 	//b->enemyBaseComponent.physics->AddVelocity(rotation * 10000.0f, true);
 	BossAttackCollsion();
 	BossJustAvoidCollsion();
-	
-	VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
+	MoveEvent();
+	/*VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
 	VECTOR3 angle = pos - b->GetBaseObject()->GetTransform()->position;
 	distance = angle.Size();
 	if (b->maxAttack <= 0) {
@@ -98,7 +110,7 @@ void BossSpecialAttack2::Update()
 	}
 	else {
 		look = false;
-	}
+	}*/
 
 }
 
@@ -141,6 +153,7 @@ void BossSpecialAttack2::Finish()
 		rockColl->GetBaseObject()->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("Rush");
 		rockColl = nullptr;
 	}
+	b->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
 }
 
 void BossSpecialAttack2::BossDushSound()

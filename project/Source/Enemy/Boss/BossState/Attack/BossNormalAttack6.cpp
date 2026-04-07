@@ -17,6 +17,17 @@ BossNormalAttack6::BossNormalAttack6()
 	keepPlayerPosition		= VZero;
 	normal					= VZero;
 	LoadAttackParam();
+	attackParam.playerAloowMove = true;
+	attackParam.playerNearStop = true;
+	attackParam.maxMoveSpeed = 7000.0f;
+	attackParam.minMoveSpeed = 3000.0f;
+	attackParam.playerBaseNear = 1000.0f;
+	attackParam.lookPlayer = true;
+	attackParam.lookNum = 3;
+	attackParam.lookMaxCounter = 90.0f;
+	attackParam.moveStartTime = 0.0f;
+	attackParam.moveFinishTime = 90.0f;
+	attackParam.addVelocity = false;
 }
 
 BossNormalAttack6::~BossNormalAttack6()
@@ -33,7 +44,7 @@ void BossNormalAttack6::Update()
 	}
 	BossAttackCollsion();
 	BossJustAvoidCollsion();
-	if (!boss->enemyBaseComponent.anim->AnimEventCan()) {
+	/*if (!boss->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
 			for (int i = 0; i < 3; i++) {
 				boss->LookPlayer();
@@ -70,7 +81,8 @@ void BossNormalAttack6::Update()
 			boss->enemyBaseComponent.physics->SetVelocity(normal * -speed);
 		}
 		
-	}
+	}*/
+	MoveEvent();
 	/*if (boss->enemyBaseComponent.anim->EventFinishTime(animId) - boss->enemyBaseComponent.anim->GetCurrentFrame() <= 5.0f) {
 		boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
 	}*/

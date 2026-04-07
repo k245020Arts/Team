@@ -15,6 +15,9 @@ BossNormalAttack3::BossNormalAttack3()
 	attackParam.damagePattern	= BossAttackBase::BACK;*/
 	counter					= 0;
 	LoadAttackParam();
+	attackParam.lookPlayer = true;
+	attackParam.lookNum = 1;
+	attackParam.lookMaxCounter = 40.0f;
 }
 
 BossNormalAttack3::~BossNormalAttack3()
@@ -29,8 +32,7 @@ void BossNormalAttack3::Update()
 	BossAttackBase::Update();
 
 	//どこまでプレイヤーの方を見るか(今後回避行動取るまでに変更)
-	if (counter <= 50)
-		b->LookPlayer();
+	LookEvent();
 
 	//b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionSpeed);
 
@@ -84,5 +86,6 @@ void BossNormalAttack3::Finish()
 	if (boss->maxAttack == 0)
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.2f);
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	
 	//boss->threat = true;
 }
