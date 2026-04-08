@@ -18,6 +18,17 @@ BossNormalAttack5::BossNormalAttack5()
 	normal					= VZero;
 	oneMove					= false;
 	LoadAttackParam();
+	attackParam.playerAloowMove = true;
+	attackParam.playerNearStop = true;
+	attackParam.maxMoveSpeed = 7000.0f;
+	attackParam.minMoveSpeed = 3000.0f;
+	attackParam.playerBaseNear = 1000.0f;
+	attackParam.lookPlayer = true;
+	attackParam.lookNum = 1;
+	attackParam.lookMaxCounter = 40.0f;
+	attackParam.moveStartTime = 10.0f;
+	attackParam.moveFinishTime = 50.0f;
+	attackParam.addVelocity = false;
 }
 
 BossNormalAttack5::~BossNormalAttack5()
@@ -34,29 +45,30 @@ void BossNormalAttack5::Update()
 	}
 	BossAttackCollsion();
 	BossJustAvoidCollsion();
-	boss->LookPlayer();
-	//攻撃の少し前になったら移動し始める
-	if (boss->enemyBaseComponent.anim->EventStartTime(animId) - boss->enemyBaseComponent.anim->GetCurrentFrame() <= 6.0f) {
-		//if (oneMove) {
-			VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
-			normal = dis.Normalize();
-			//y座標をいじりたくないので0にする。
-			normal.y = 0.0f;
-			if (dis.Size() <= 1000.0f) {
-				boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
-			}
-			else {
-				float speed = dis.Size();
-				speed = std::clamp(speed, 4000.0f, 7000.0f);
-				boss->enemyBaseComponent.physics->SetVelocity(normal * speed);
-				oneMove = false;
-			}
-			
-		//}
-	}
-	if (boss->enemyBaseComponent.anim->EventFinishTime(animId) <= boss->enemyBaseComponent.anim->GetCurrentFrame()) {
-		boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
-	}
+	//boss->LookPlayer();
+	////攻撃の少し前になったら移動し始める
+	//if (boss->enemyBaseComponent.anim->EventStartTime(animId) - boss->enemyBaseComponent.anim->GetCurrentFrame() <= 6.0f) {
+	//	//if (oneMove) {
+	//		VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
+	//		normal = dis.Normalize();
+	//		//y座標をいじりたくないので0にする。
+	//		normal.y = 0.0f;
+	//		if (dis.Size() <= 1000.0f) {
+	//			boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
+	//		}
+	//		else {
+	//			float speed = dis.Size();
+	//			speed = std::clamp(speed, 4000.0f, 7000.0f);
+	//			boss->enemyBaseComponent.physics->SetVelocity(normal * speed);
+	//			oneMove = false;
+	//		}
+	//		
+	//	//}
+	//}
+	//if (boss->enemyBaseComponent.anim->EventFinishTime(animId) <= boss->enemyBaseComponent.anim->GetCurrentFrame()) {
+	//	boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 8.0f);
+	//}
+	MoveEvent();
 	AttackSound();
 	if (boss->maxAttack <= 0) {
 		AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);

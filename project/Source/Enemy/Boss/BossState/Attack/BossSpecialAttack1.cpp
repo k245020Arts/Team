@@ -32,6 +32,30 @@ BossSpecialAttack1::BossSpecialAttack1()
 	firstCount = false;
 	effect = false;
 	LoadAttackParam();
+	attackParam.playerAloowMove = true;
+	attackParam.playerNearStop = true;
+	attackParam.maxMoveSpeed = 30000.0f;
+	attackParam.minMoveSpeed = 12000.0f;
+	attackParam.playerBaseNear = 1000.0f;
+	attackParam.lookPlayer = true;
+	attackParam.lookNum = 1;
+	attackParam.lookMaxCounter = 50.0f;
+	attackParam.moveStartTime = 15.0f;
+	attackParam.moveFinishTime = 45.0f;
+	attackParam.addVelocity = true;
+
+	attackParam.addGravity = -5.0f;
+	attackParam.jump = true;
+	attackParam.jumpGroundEffect = Effect_ID::BOSS_GROUND;
+	attackParam.jumpSpeed = 3000.0f;
+	attackParam.jumpStartTime = 15.0f;
+	attackParam.groundEffectStartTime = 40.0f;
+	attackParam.shockWave = true;
+	attackParam.shockWaveSpeed = 50.0f;
+	attackParam.startRange = 50.0f;
+	attackParam.shockMoveEffect = Effect_ID::BOSS_WAVE;
+	attackParam.groundShakeTime = 0.3f;
+	attackParam.groundShakeCamera = 3.0f;
 }
 
 BossSpecialAttack1::~BossSpecialAttack1()
@@ -42,7 +66,7 @@ void BossSpecialAttack1::Update()
 {
 	Boss* b = GetBase<Boss>();
 	BossAttackBase::Update();
-	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= attackStart) {
+	/*if (b->enemyBaseComponent.anim->GetCurrentFrame() <= attackStart) {
 		return;
 	}
 	else {
@@ -57,13 +81,12 @@ void BossSpecialAttack1::Update()
 			b->enemyBaseComponent.physics->AddVelocity(sub, false);
 			
 		}
-	}
+	}*/
 
-	b->enemyBaseComponent.physics->AddGravity(VECTOR3(0, -subSpeed, 0));
-	subSpeed += 8.0f;
+	JumpEvent();
 	
 	if (b->enemyBaseComponent.physics->GetGround()) {
-		if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 40) {
+		/*if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 40) {
 			if (effect) {
 				effect = false;
 				BaseObject* obj1 = EffectManager::GetInstance()->CreateEffekseer(*b->GetBaseObject()->GetTransform(), b->GetBaseObject(), Effect_ID::BOSS_WAVE, 1.0f);
@@ -75,13 +98,13 @@ void BossSpecialAttack1::Update()
 				SoundManager::GetInstance()->PlaySe(Sound_ID::GROUND);
 				b->enemyBaseComponent.camera->CameraPerspectiveShakeStart(3.0f, 0.4f);
 			}
-		}
+		}*/
 		
 		if (b->enemyBaseComponent.anim->IsFinish()) {
 			b->BossAttackStateChange();
 		}
 	}
-	if (b->enemyBaseComponent.anim->GetCurrentFrame() <= b->enemyBaseComponent.anim->EventFinishTime(attackParam.animID)) {
+	/*if (b->enemyBaseComponent.anim->GetCurrentFrame() <= b->enemyBaseComponent.anim->EventFinishTime(attackParam.animID)) {
 		VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
 		VECTOR3 sub = pos - b->GetBaseObject()->GetTransform()->position;
 		VECTOR3 ynotPos = sub * VECTOR3(1, 0, 1);	
@@ -93,8 +116,8 @@ void BossSpecialAttack1::Update()
 	}
 	else {
 		b->enemyBaseComponent.physics->SetVelocity(VZero);
-	}
-	
+	}*/
+	MoveEvent();
 	
 	BossAttackCollsion();
 	BossJustAvoidCollsion();
@@ -125,9 +148,10 @@ void BossSpecialAttack1::Finish()
 #ifdef DataSave
 	DataSaveAll();
 #endif // DataSave
-	Boss* b = GetBase<Boss>();
+	Boss* boss = GetBase<Boss>();
 	BossAttackBase::BossFinish();
-	b->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));
-	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	boss->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));
+	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
 	//b->threat = false;
 }

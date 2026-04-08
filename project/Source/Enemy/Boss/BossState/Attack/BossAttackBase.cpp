@@ -2,7 +2,6 @@
 #include "../../Boss.h"
 #include "../../../../Component/Animator/Animator.h"
 #include "../../../../CharaBase/CharaBase.h"
-#include "../../../../Component/Animator/Animator.h"
 //#include "../Enemy.h"
 #include "../../../../Component/Transform/transform.h"
 #include "../../../../Component/Collider/sphereCollider.h"
@@ -16,13 +15,24 @@
 #include "../../../../Camera/Camera.h"
 #include "../../../TrashEnemy/TrashEnemy.h"
 #include "../../../../Common/Debug/DebugLogText.h"
+#include "../../../../State/StateManager.h"
+#include "../../../../Common/Easing.h"
+#include "../BossStatus.h"
+#include "../../../../Component/Physics/Physics.h"
+#include "../../../../Component/Collider/DountCollider.h"
+#include "../../../../Component/EnemyAttackObject/ShockWave/ShockWave.h"
 
 #define PATTERN2
 
 BossAttackBase::BossAttackBase()
 {
 	attackParam = BossAttackParam();
-	
+	averageSpeed = 0.0f;
+	normal = VZero;
+	aloowStop = false;
+	firstJump = false;
+	gravitySpeed = false;
+	groundEffect = false;
 }
 
 BossAttackBase::~BossAttackBase()
@@ -69,6 +79,10 @@ void BossAttackBase::BossStart()
 	sound = true;
 	boss->enemyBaseComponent.anim->AnimEventReset();
 	slowMode = false;
+	aloowStop = false;
+	firstJump = true;
+	gravitySpeed = false;
+	groundEffect = true;
 }
 
 void BossAttackBase::BossFinish()
@@ -78,6 +92,7 @@ void BossAttackBase::BossFinish()
 		boss->threat = true;
 	}
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
 }
 
 
@@ -269,4 +284,152 @@ void BossAttackBase::LoadAttackParam()
 	{
 		attackParam.attackID = string;
 	}
+}
+
+void BossAttackBase::RotateEvent()
+{
+	Boss* boss = GetBase<Boss>();
+	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
+		//攻撃にかかる時間で90°回したいので１フレームごとに進む角度を求めている。
+		averageSpeed = 90.0f / attackTime;
+		averageSpeed *= boss->obj->GetObjectTimeRate();
+
+		boss->bossTransform->rotation.y += averageSpeed * DegToRad;
+	}
+}
+
+void BossAttackBase::LookEvent()
+{
+	Boss* boss = GetBase<Boss>();
+
+	if (attackParam.lookMaxCounter <= boss->enemyBaseComponent.anim->GetCurrentFrame()) {
+		return;
+	}
+
+	for (int i = 0; i < attackParam.lookNum; i++) {
+		boss->LookPlayer();
+	}
+}
+
+void BossAttackBase::MoveEvent()
+{
+	Boss* boss = GetBase<Boss>();
+
+	float animFrame = boss->enemyBaseComponent.anim->GetCurrentFrame();
+	if (attackParam.moveStartTime <= animFrame && attackParam.moveFinishTime >= animFrame) {
+		if (attackParam.playerAloowMove) {
+			if (aloowStop) {
+				VECTOR3 dis = boss->bossTransform->Forward() * -1.0f;
+				normal = dis.Normalize();
+				normal.y = 0.0f;
+				float speed = attackParam.baseSpeed;
+				if (attackParam.addVelocity) {
+					boss->enemyBaseComponent.physics->AddVelocity(normal * speed, true);
+				}
+				else {
+					boss->enemyBaseComponent.physics->SetVelocity(normal * speed);
+				}
+				return;
+			}
+			VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
+			normal = dis.Normalize();
+			//y座標をいじりたくないので0にする。
+			normal.y = 0.0f;
+			bool move = true;
+			if (dis.Size() <= attackParam.playerBaseNear) {
+				if (attackParam.playerNearStop) {
+					boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 24.0f);
+					move = false;
+				}
+				else if (attackParam.playerNearAloowStop) {
+					//move = false;
+					aloowStop = true;
+				}
+
+			}
+			if (move) {
+				float speed = dis.Size();
+				speed = std::clamp(speed, attackParam.minMoveSpeed, attackParam.maxMoveSpeed);
+				if (attackParam.addVelocity) {
+					boss->enemyBaseComponent.physics->AddVelocity(normal * speed,true);
+				}
+				else {
+					boss->enemyBaseComponent.physics->SetVelocity(normal * speed);
+				}
+				
+			}
+			LookEvent();
+		}
+		if (attackParam.frontMove) {
+			VECTOR3 dis = boss->bossTransform->Forward() * 1.0f;
+			normal = dis.Normalize();
+			normal.y = 0.0f;
+			float speed = attackParam.baseSpeed;
+			if (attackParam.addVelocity) {
+				boss->enemyBaseComponent.physics->AddVelocity(normal * speed, true);
+			}
+			else {
+				boss->enemyBaseComponent.physics->SetVelocity(normal * speed);
+			}
+		}
+
+	}
+	if (animFrame > attackParam.moveFinishTime) {
+		boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 24.0f);
+	}
+}
+
+void BossAttackBase::JumpEvent()
+{
+	
+	Boss* boss = GetBase<Boss>();
+	if (boss->enemyBaseComponent.anim->GetCurrentFrame() <= attackParam.jumpStartTime) {
+		return;
+	}
+	if (firstJump) {
+		firstJump = false;
+		boss->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, attackParam.jumpSpeed/*3000.0f*/, 0), false);
+	}
+
+	boss->enemyBaseComponent.physics->AddGravity(VECTOR3(0, gravitySpeed, 0));
+	gravitySpeed += attackParam.addGravity;
+
+	if (boss->enemyBaseComponent.physics->GetGround()) {
+		if (boss->enemyBaseComponent.anim->GetCurrentFrame() >= attackParam.groundEffectStartTime) {
+			if (groundEffect) {
+				groundEffect = false;
+				
+				BaseObject* obj2 = EffectManager::GetInstance()->CreateEffekseer(*boss->GetBaseObject()->GetTransform(), boss->GetBaseObject(), attackParam.jumpGroundEffect, 1.0f);
+			
+				
+				EffectManager::GetInstance()->ParentTransformRemove(obj2);
+				
+				SoundManager::GetInstance()->PlaySe(Sound_ID::GROUND);
+				boss->enemyBaseComponent.camera->CameraPerspectiveShakeStart(/*3.0f, 0.4f*/ attackParam.groundShakeCamera,attackParam.groundShakeTime);
+				CreateWave();
+			}
+		}
+
+		/*if (b->enemyBaseComponent.anim->IsFinish()) {
+			b->BossAttackStateChange();
+		}*/
+	}
+}
+
+void BossAttackBase::ShackWaveEvent()
+{
+
+}
+
+void BossAttackBase::CreateWave()
+{
+	if (!attackParam.shockWave) {
+		return;
+	}
+	Boss* boss = GetBase<Boss>();
+	BaseObject* obj1 = EffectManager::GetInstance()->CreateEffekseer(*boss->GetBaseObject()->GetTransform(), boss->GetBaseObject(), /*Effect_ID::BOSS_WAVE*/attackParam.shockMoveEffect, 1.0f);
+	EffectManager::GetInstance()->ParentTransformRemove(obj1);
+	ShockWave* w = obj1->Component()->AddComponent<ShockWave>();
+	w->CreateWave(CollsionInformation::B_E_ATTACK, Transform(VZero, VZero, VOne), /*50.0f, 50.0f*/attackParam.startRange,attackParam.shockWaveSpeed);
+
 }

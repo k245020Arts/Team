@@ -25,8 +25,8 @@
     "attackPositionFrameNum": 36,
     "attackSoundStartTime": 1.0,
     "bossID": "",
-    "damagePattern": "NONE",
-    "hitDamage": 50.0,
+    "damagePattern": "BLOW_AWAY",
+    "hitDamage": 150.0,
     "justAvoidCollTransform": {
       "position": {
         "x": 0.0,
