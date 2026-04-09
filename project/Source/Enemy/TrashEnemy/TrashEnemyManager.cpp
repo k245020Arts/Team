@@ -123,15 +123,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 		info.tag = CollsionInformation::Tag::ENEMY;
 		info.size = 1.0f;//
 		collider->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
-		//“–‚½‚è”»’è‚ð¶¬i‚â‚ç‚ê”»’èj
-		/*SphereCollider* collider2 = e->Component()->AddComponent<SphereCollider>();
-		CollsionInfo info2;
-		info2.parentTransfrom = e->GetTransform();
-		info2.shape = CollsionInformation::SPHERE;
-		info2.oneColl = false;
-		info2.tag = CollsionInformation::Tag::ENEMY;
-		info.size = 1.0f;
-		collider2->CollsionAdd(info2, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(250.0f, 1.0f, 1.0f)));*/
+		
 		RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
 		info.shape = CollsionInformation::RAY;
 		info.tag = CollsionInformation::E_FLOOR;
