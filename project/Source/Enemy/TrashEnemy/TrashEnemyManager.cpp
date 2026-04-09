@@ -140,7 +140,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 		Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
 		MeshRenderer* me = e->Component()->AddComponent<MeshRenderer>();
-		int handle = MV1DuplicateModel(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "Ch45_nonPBR", ID::IDType::E_MODEL));
+		int handle = MV1DuplicateModel(ResourceLoad::LoadModel("Ch45_nonPBR", ID::IDType::E_MODEL));
 		me->ModelHandle(handle,true);
 		me->RotationMesh(1, DX_PI_F);
 

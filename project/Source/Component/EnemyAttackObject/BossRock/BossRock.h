@@ -22,7 +22,7 @@ public:
 	/// <param name="_name">“–‚½‚è”»’è‚Ìƒ^ƒO///</param>
 	void RemoveCollider(std::string _name);
 
-	void SetPreInfo(const VECTOR3& _pos);
+	
 
 	void Ground()override;
 

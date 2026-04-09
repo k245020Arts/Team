@@ -15,7 +15,7 @@ public:
 
 
 private:
-	float rockCreateCounter;
+	/*float rockCreateCounter;
 	bool oneCreate;
 	int totalRocks;
 	int rocksDropped;
@@ -27,5 +27,5 @@ private:
 	float rotateSpeed;
 
 	bool chargingLast;
-	float chargeTimer;
+	float chargeTimer;*/
 };

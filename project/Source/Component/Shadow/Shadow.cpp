@@ -34,7 +34,7 @@ void Shadow::Draw()
 void Shadow::Start(float _height)  
 {  
 	obj = GetBaseObject();
-    model = ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "shadow1", ID::SHADOW);
+    model = ResourceLoad::LoadModel("shadow1", ID::SHADOW);
     MeshRenderer* mesh = GetBaseObject()->Component()->AddComponent<MeshRenderer>();  
     mesh->ModelHandle(model);  
     mesh->DrawLocalPosition();  

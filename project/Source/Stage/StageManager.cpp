@@ -67,7 +67,7 @@ void StageManager::CreateStage()
 	
 	MeshRenderer* mesh = stage->Component()->AddComponent<MeshRenderer>();
 	std::string mapName = stageModelData[StageSelectData::GetInstance()->GetNowStageData().stageModelID].mapFile;
-	ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH +  mapName, ID::PLAY_SCENE_BACKGROUND_MODEL);
+	ResourceLoad::LoadModel(mapName, ID::PLAY_SCENE_BACKGROUND_MODEL);
 	mesh->ModelHandle(ResourceLoad::GetHandle(ID::PLAY_SCENE_BACKGROUND_MODEL));
 	Stage* stageComp = stage->Component()->AddComponent<Stage>();
 	CreateWall();

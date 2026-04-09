@@ -20,7 +20,7 @@ BossRock::BossRock()
 
 	preDraw = false;
 	preTransform = Transform();
-	preModel = ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "BossRockPre",ID::BOSS_PRE_MODEL);
+	preModel = ResourceLoad::LoadModel("BossRockPre",ID::BOSS_PRE_MODEL);
 	
 	
 }
@@ -100,11 +100,7 @@ void BossRock::RemoveCollider(std::string _name)
 
 }
 
-void BossRock::SetPreInfo(const VECTOR3& _pos)
-{
-	preTransform = Transform(_pos,VZero,VECTOR3(5.0f,0.1f,5.0f));
-	preDraw = true;
-}
+
 
 void BossRock::Ground()
 {

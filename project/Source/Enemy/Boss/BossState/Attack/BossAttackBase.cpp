@@ -21,6 +21,7 @@
 #include "../../../../Component/Physics/Physics.h"
 #include "../../../../Component/Collider/DountCollider.h"
 #include "../../../../Component/EnemyAttackObject/ShockWave/ShockWave.h"
+#include "../../../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
 
 #define PATTERN2
 
@@ -33,6 +34,8 @@ BossAttackBase::BossAttackBase()
 	firstJump = false;
 	gravitySpeed = false;
 	groundEffect = false;
+	rockGet = false;
+	throwRock = false;
 }
 
 BossAttackBase::~BossAttackBase()
@@ -83,6 +86,10 @@ void BossAttackBase::BossStart()
 	firstJump = true;
 	gravitySpeed = false;
 	groundEffect = true;
+	rockGet = false;
+	throwRock = false;
+	throwObjectAppearTime = attackParam.intervalTime;
+	throwObjectNumNow = 0;
 }
 
 void BossAttackBase::BossFinish()
@@ -432,4 +439,54 @@ void BossAttackBase::CreateWave()
 	ShockWave* w = obj1->Component()->AddComponent<ShockWave>();
 	w->CreateWave(CollsionInformation::B_E_ATTACK, Transform(VZero, VZero, VOne), /*50.0f, 50.0f*/attackParam.startRange,attackParam.shockWaveSpeed);
 
+}
+
+void BossAttackBase::ThrowObjectsEvent()
+{
+	if (!attackParam.throwObject) {
+		return;
+	}
+	Boss* boss = GetBase<Boss>();
+	if (attackParam.armThrow) {
+		float animFrame = boss->enemyBaseComponent.anim->GetCurrentFrame();
+		if (attackParam.throwStartTime <= animFrame) {
+			if (!throwRock) {
+				boss->rockManager->ThrowStart();
+				throwRock = true;
+			}
+		}
+		if (animFrame >= attackParam.throwObjectApperaTime) {
+			if (!rockGet) {
+				VECTOR3 vzero = VECTOR3(VZero);
+				boss->rockManager->CreateThrowObject(attackParam.throwAttackData, 0.0f, 0.0f, 0.0f);
+				rockGet = true;
+			}
+		}
+	}
+	else {
+		throwObjectAppearTime -= Time::DeltaTimeRate();
+
+		if (throwObjectAppearTime <= 0.0f && throwObjectNumNow < attackParam.throwObjectNum)
+		{
+			boss->rockManager->CreateThrowObject(attackParam.throwAttackData,throwObjectNumNow, attackParam.throwObjectNum, 0.0f);
+
+			throwObjectNumNow++;
+
+			// ™X‚É‰Á‘¬
+			if (attackParam.intervalTimeSub) {
+				float t = (float)throwObjectNumNow / (float)attackParam.throwObjectNum;
+				throwObjectAppearTime = Easing::Lerp(/*0.45f, 0.15f*/attackParam.maxIntervalTime, attackParam.minIntervalTime, t);
+			}
+			else {
+				throwObjectAppearTime = attackParam.intervalTime;
+			}
+			
+		}
+
+		if (throwObjectNumNow >= attackParam.throwObjectNum)
+		{
+			boss->rockManager->ShakeCamera();
+			boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_IDOL_S);
+		}
+	}
 }

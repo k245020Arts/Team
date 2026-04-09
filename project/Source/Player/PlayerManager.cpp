@@ -132,7 +132,7 @@ void PlayerManager::CreatePlayer()
 	/*Camera* camera = playerPointer->Component()->AddComponent<Camera>();
 	camera->Start(FindGameObject<EnemyManager>()->GetEnemy());*/
 	//me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "exo_red", ID::P_MODEL));
-	me2->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "Player4", ID::P_MODEL));
+	me2->ModelHandle(ResourceLoad::LoadModel("Player4", ID::P_MODEL));
 	me2->RotationMesh(0, 180.0f * DegToRad);
 
 	stateManager = playerPointer->Component()->AddComponent<StateManager>();
@@ -315,7 +315,7 @@ void PlayerManager::CreateTitlePlayer()
 	/*Camera* camera = playerPointer->Component()->AddComponent<Camera>();
 	camera->Start(FindGameObject<EnemyManager>()->GetEnemy());*/
 	//me2->ModelHandle(Load::LoadModel(Load::MODEL_PATH + "exo_red", ID::P_MODEL));
-	me2->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "Player4", ID::P_MODEL));
+	me2->ModelHandle(ResourceLoad::LoadModel("Player4", ID::P_MODEL));
 	me2->RotationMesh(0, 180.0f * DegToRad);
 
 	stateManager = playerPointer->Component()->AddComponent<StateManager>();

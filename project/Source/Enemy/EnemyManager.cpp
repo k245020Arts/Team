@@ -135,13 +135,13 @@ void EnemyManager::CreateBoss()
 	ModelCollider* collider4 = boss->Component()->AddComponent<ModelCollider>();
 	info.shape = CollsionInformation::MODEL;
 	info.tag = CollsionInformation::BOSS_PUSH;
-	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "wall", ID::BOSS_PUSH));
+	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), ResourceLoad::LoadModel("wall", ID::BOSS_PUSH));
 
 
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
 
 	MeshRenderer* m = boss->Component()->AddComponent<MeshRenderer>();
-	m->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "BossModel", ID::B_MODEL));
+	m->ModelHandle(ResourceLoad::LoadModel("BossModel", ID::B_MODEL));
 	m->RotationMesh(0, 180.0f * DegToRad);
 
 	Boss* b = boss->Component()->AddComponent<Boss>();

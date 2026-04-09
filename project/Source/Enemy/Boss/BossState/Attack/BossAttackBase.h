@@ -2,10 +2,165 @@
 #include "../../../TrashEnemy/EnemyState/EnemyStateBase.h"
 #include "../../../../Common/ID/EffectID.h"
 //#define DataSave
+#include "../../../../Component/Collider/CollsionInformation.h"
 
 class BossAttackBase:public EnemyStateBase
 {
 public:
+
+	struct RayColliderInfo
+	{
+		float rayStartPos;
+		float rayFinishPos;
+	};
+
+	struct DountColliderInfo
+	{
+		float inRadius;
+		float outRadius;
+	};
+
+	struct ThrowObjectAttackData
+	{
+		std::string throwObjectID;
+		VECTOR3 baseGravity;
+		VECTOR3 baseFirction;
+
+		bool pushCollCan;
+		Transform pushCollTransform;
+
+		bool randCan;
+		RayColliderInfo randCollInfo;
+		float randTime;
+
+		bool playerHit;
+		float playerHitCollRadius;
+		float playerHitJustAvoidCollRadius;
+
+		bool playerGroundHit;
+		float playerGroundCollRadius;
+
+		bool bossHit;
+		float bossHitCollRadius;
+
+		bool playerAttackFlying;
+		float playerAttackFlyingCollRadius;
+		float flyingSpeed;
+		float flyingHeight;
+		float maxRadius;
+		float waveSpeed;
+
+		bool bossRushHit;
+		float bossRushHitCollRadius;
+
+		bool blastCan;
+		DountColliderInfo blastColliderInfo;
+		DountColliderInfo blastJustAvoidColliderInfo;
+		float blastBlinkMaxCounter;
+		bool randomBlast;
+		float randomBlastRate;
+		bool randomHeight;
+		float minHeight;
+		float maxHeight;
+		bool randomSpeed;
+		float minSpeed;
+		float maxSpeed;
+
+
+		bool predictionCicleCan;
+		RayColliderInfo predictionCicleColliderInfo;
+
+		bool armThrow;
+		int armFrameNum;
+		VECTOR3 armAddPos;
+		bool throwToPlayer;
+		bool thorwToFront;
+		float throwSpeed;
+		float upSpeed;
+		float throwFirstSpeed;
+		VECTOR3 diffusionAngle;
+		bool throwToFall;
+		float throwHeight;
+		float throwFallGravity;
+		bool throwToFallToPlayer;
+		bool freeDir;
+		VECTOR3 thorwStartPos;
+		VECTOR3 thorwVelocity;
+
+		bool groundDelete;
+
+		bool playerAttackObjectDrop;
+
+		ThrowObjectAttackData()
+		{
+			throwObjectID = "";
+
+			baseGravity = VECTOR3();
+			baseFirction = VECTOR3();
+
+			pushCollCan = false;
+			pushCollTransform = Transform();
+
+			randCan = false;
+			randCollInfo = RayColliderInfo();
+			randTime = 0.0f;
+
+			playerHit = false;
+			playerHitCollRadius = 0.0f;
+			playerHitJustAvoidCollRadius = 0.0f;
+
+			playerGroundHit = false;
+			playerGroundCollRadius = 0.0f;
+
+			bossHit = false;
+			bossHitCollRadius = 0.0f;
+
+			playerAttackFlying = false;
+			playerAttackFlyingCollRadius = 0.0f;
+			flyingSpeed = 0.0f;
+			flyingHeight = 0.0f;
+			maxRadius = 0.0f;
+			waveSpeed = 0.0f;
+
+			bossRushHit = false;
+			bossRushHitCollRadius = 0.0f;
+
+			blastCan = false;
+			blastColliderInfo = DountColliderInfo();
+			blastJustAvoidColliderInfo = DountColliderInfo();
+			blastBlinkMaxCounter = 0.0f;
+			randomBlast = false;
+			randomBlastRate = 0.0f;
+			randomHeight = false;
+			minHeight = 0.0f;
+			maxHeight = 0.0f;
+			randomSpeed = false;
+			minSpeed = 0.0f;
+			maxSpeed = 0.0f;
+
+			predictionCicleCan = false;
+			predictionCicleColliderInfo = RayColliderInfo();
+
+			armThrow = false;
+			armFrameNum = 0;
+			armAddPos = VECTOR3();
+			throwToPlayer = false;
+			thorwToFront = false;
+			throwSpeed = 0.0f;
+			diffusionAngle = VECTOR3();
+			throwToFall = false;
+			throwHeight = 0.0f;
+			throwFallGravity = 0.0f;
+			throwToFallToPlayer = false;
+			freeDir = false;
+			thorwStartPos = VECTOR3();
+			thorwVelocity = VECTOR3();
+
+			groundDelete = false;
+
+			playerAttackObjectDrop = false;
+		}
+	};
 
 	enum PlayerDamagePattern
 	{
@@ -105,6 +260,8 @@ public:
 			shockWave = false;
 			shockMoveEffect = Effect_ID::EFFECT_ID(); // デフォルト
 			shockWaveSpeed = 0.0f;
+
+			throwAttackData = ThrowObjectAttackData();
 		}
 
 		std::string bossID;
@@ -186,7 +343,26 @@ public:
 		bool lookPlayer;
 		int lookNum;
 		float lookMaxCounter;
+
+		//投擲イベント
+		bool throwObject;
+		/*std::string throwObjectID;*/
+		ThrowObjectAttackData throwAttackData;
+		bool armThrow;
+		int armFrameNum;
+		float throwStartTime;
+		float throwObjectApperaTime;
+
+		int throwObjectNum;
+		VECTOR3 objectApperaPosition;
+		float intervalTime;
+		bool intervalTimeSub;
+		float maxIntervalTime;
+		float minIntervalTime;
+
 	};
+
+	
 
 	
 	
@@ -231,6 +407,7 @@ public:
 	void JumpEvent();
 	void ShackWaveEvent();
 	void CreateWave();
+	void ThrowObjectsEvent();
 
 protected:
 	BossAttackParam attackParam;
@@ -241,6 +418,10 @@ private:
 	bool firstJump;
 	float gravitySpeed;
 	bool groundEffect;
+	bool throwRock;
+	bool rockGet;
+	float throwObjectAppearTime;
+	int throwObjectNumNow;
 };
 
 inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)

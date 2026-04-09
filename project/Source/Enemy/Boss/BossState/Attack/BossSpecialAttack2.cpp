@@ -56,7 +56,6 @@ void BossSpecialAttack2::Update()
 			b->BossAttackStateChange();
 		}
 		else {
-			
 			AttackStart();
 		}
 	}
