@@ -25,7 +25,7 @@ BossSpecialAttack2::BossSpecialAttack2()
 
 	
 	LoadAttackParam();
-	attackParam.playerAloowMove = true;
+	/*attackParam.playerAloowMove = true;
 	attackParam.playerNearAloowStop = true;
 	attackParam.maxMoveSpeed = 15000.0f;
 	attackParam.minMoveSpeed = 15000.0f;
@@ -49,7 +49,7 @@ BossSpecialAttack2::BossSpecialAttack2()
 	attackParam.rushTime = 1.0f;
 
 	attackParam.attackCameraBossLook = true;
-	attackParam.cameraChangeSpeed = 1000.0f;
+	attackParam.cameraChangeSpeed = 1000.0f;*/
 
 }
 

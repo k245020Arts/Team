@@ -18,7 +18,7 @@ BossNormalAttack4::BossNormalAttack4()
 	
 	oneMove					= false;
 	LoadAttackParam();
-	attackParam.playerAloowMove = true;
+	/*attackParam.playerAloowMove = true;
 	attackParam.playerNearStop = true;
 	attackParam.maxMoveSpeed = 7000.0f;
 	attackParam.minMoveSpeed = 3000.0f;
@@ -32,7 +32,7 @@ BossNormalAttack4::BossNormalAttack4()
 	attackParam.addVelocity = false;
 
 	attackParam.useTrail = true;
-	attackParam.trailRightHand = true;
+	attackParam.trailRightHand = true;*/
 }
 
 BossNormalAttack4::~BossNormalAttack4()

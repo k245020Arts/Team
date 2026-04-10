@@ -1,6 +1,8 @@
 {
   "BossNormalAttack2": {
+    "angleMoveAmout": -90.0,
     "animID": "B_ATTACK2",
+    "attackBeforeAnimID": "",
     "attackCollTransform": {
       "position": {
         "x": 0.0,
@@ -46,10 +48,13 @@
     },
     "justAvoidCollsionEndTime": 6.0,
     "justAvoidCollsionStartTime": 5.0,
+    "rotateMove": true,
     "slowAmout": 0.10000000149011612,
     "slowTime": 0.30000001192092896,
     "speedUpMotionSpeed": 0.30000001192092896,
+    "trailRightHand": false,
     "useFlash": true,
+    "useTrail": true,
     "voiceName": "E_AttackV"
   }
 }

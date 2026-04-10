@@ -4,6 +4,8 @@
 /// <summary>
 /// ファイル、ディレクトリの操作をする
 /// </summary>
+
+//君嶋作
 class FileSystemUtils
 {
 public:

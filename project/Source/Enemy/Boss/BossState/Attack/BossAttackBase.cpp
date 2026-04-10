@@ -136,9 +136,12 @@ void BossAttackBase::BossFinish()
 		rockColl->GetBaseObject()->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("Rush");
 		rockColl = nullptr;
 	}
-	if (attackParam.throwAttackData.playerAttackObjectDrop) {
-		boss->rockManager->DropRockStart();
+	for (auto data : attackParam.throwAttackData) {
+		if (data.playerAttackObjectDrop) {
+			boss->rockManager->DropRockStart();
+		}
 	}
+	
 }
 
 
@@ -587,6 +590,18 @@ bool BossAttackBase::CurrentAttackAnim()
 	return ID::GetID(attackParam.animID) == boss->enemyBaseComponent.anim->GetCurrentID();
 }
 
+void BossAttackBase::AttackFinish()
+{
+	Boss* boss = GetBase<Boss>();
+	if (!CurrentAttackAnim()) {
+		return;
+	}
+	if (boss->enemyBaseComponent.anim->IsFinish())
+	{
+		boss->BossAttackStateChange();
+	}
+}
+
 
 void BossAttackBase::BossDushSound()
 {
@@ -628,10 +643,7 @@ void BossAttackBase::BossUpdate()
 	if (boss == nullptr) {
 		return;
 	}
-	if (boss->enemyBaseComponent.anim->IsFinish())
-	{
-		boss->BossAttackStateChange();
-	}
+	AttackFinish();
 	AttackSound();
 	BossAttackCollsion();
 	BossJustAvoidCollsion();

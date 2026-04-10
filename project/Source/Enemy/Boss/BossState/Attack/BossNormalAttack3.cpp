@@ -15,14 +15,14 @@ BossNormalAttack3::BossNormalAttack3()
 	attackParam.damagePattern	= BossAttackBase::BACK;*/
 	counter					= 0;
 	LoadAttackParam();
-	attackParam.lookPlayer = true;
+	/*attackParam.lookPlayer = true;
 	attackParam.lookNum = 1;
 	attackParam.lookMaxCounter = 40.0f;
 	attackParam.attackCameraBossLook = true;
 	attackParam.cameraChangeSpeed = 1000.0f;
 
 	attackParam.useTrail = true;
-	attackParam.trailRightHand = false;
+	attackParam.trailRightHand = false;*/
 }
 
 BossNormalAttack3::~BossNormalAttack3()

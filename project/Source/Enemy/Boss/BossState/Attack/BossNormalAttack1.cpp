@@ -14,11 +14,11 @@ BossNormalAttack1::BossNormalAttack1()
 	attackParam.damagePattern	= BossAttackBase::NO_BACK;*/
 	
 	LoadAttackParam();
-	attackParam.rotateMove = true;
+	/*attackParam.rotateMove = true;
 	attackParam.angleMoveAmout = 90.0f;
 
 	attackParam.useTrail = true;
-	attackParam.trailRightHand = true;
+	attackParam.trailRightHand = true;*/
 }
 
 BossNormalAttack1::~BossNormalAttack1()

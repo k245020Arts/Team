@@ -13,11 +13,11 @@ BossNormalAttack2::BossNormalAttack2()
 	attackParam.attackCollTransform				= Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	attackParam.damagePattern	= BossAttackBase::NO_BACK;*/
 	LoadAttackParam();
-	attackParam.rotateMove = true;
+	/*attackParam.rotateMove = true;
 	attackParam.angleMoveAmout = -90.0f;
 
 	attackParam.useTrail = true;
-	attackParam.trailRightHand = false;
+	attackParam.trailRightHand = false;*/
 }
 
 BossNormalAttack2::~BossNormalAttack2()

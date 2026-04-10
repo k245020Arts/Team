@@ -1,6 +1,8 @@
 {
   "BossNormalAttack6": {
+    "addVelocity": false,
     "animID": "B_ATTACK6",
+    "attackBeforeAnimID": "",
     "attackCollTransform": {
       "position": {
         "x": 0.0,
@@ -24,6 +26,7 @@
     "attackID": "BossNormalAttack6",
     "attackPositionFrameNum": 15,
     "attackSoundStartTime": 1.0,
+    "baseSpeed": 0.0,
     "bossID": "",
     "damagePattern": "BACK",
     "hitDamage": 50.0,
@@ -46,10 +49,23 @@
     },
     "justAvoidCollsionEndTime": 6.0,
     "justAvoidCollsionStartTime": 5.0,
+    "lookMaxCounter": 90.0,
+    "lookNum": 3,
+    "lookPlayer": true,
+    "maxMoveSpeed": 7000.0,
+    "minMoveSpeed": 3000.0,
+    "moveFinishTime": 90.0,
+    "moveStartTime": 0.0,
+    "playerAloowMove": true,
+    "playerBaseNear": 1000.0,
+    "playerNearAloowStop": false,
+    "playerNearStop": true,
     "slowAmout": 0.10000000149011612,
     "slowTime": 0.30000001192092896,
     "speedUpMotionSpeed": 0.30000001192092896,
+    "trailRightHand": true,
     "useFlash": true,
+    "useTrail": true,
     "voiceName": "E_AttackV"
   }
 }

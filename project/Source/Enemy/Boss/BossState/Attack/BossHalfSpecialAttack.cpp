@@ -25,58 +25,58 @@ BossHalfSpecialAttack::BossHalfSpecialAttack()
     chargingLast = false;
     chargeTimer = 1.2f;*/
     LoadAttackParam();
-    attackParam.throwObject = true;
+   /* attackParam.throwObject = true;
     attackParam.armThrow = false;
     attackParam.throwObjectNum = 18;
     attackParam.maxIntervalTime = 0.45f;
     attackParam.minIntervalTime = 0.15f;
     attackParam.intervalTime = 0.3f;
+    attackParam.throwAttackData.resize(1);
+    attackParam.throwAttackData[0].armThrow = false;
+    attackParam.throwAttackData[0].throwToFallToPlayer = true;
+    attackParam.throwAttackData[0].randomHeight = true;
+    attackParam.throwAttackData[0].minHeight = 9000.0f;
+    attackParam.throwAttackData[0].maxHeight = 12000.0f;
+    attackParam.throwAttackData[0].randomSpeed = true;
+    attackParam.throwAttackData[0].minSpeed = 1500.0f;
+    attackParam.throwAttackData[0].maxSpeed = 3000.0f;
+    attackParam.throwAttackData[0].randomBlast = true;
+    attackParam.throwAttackData[0].randomBlastRate = 0.1f;
+    attackParam.throwAttackData[0].playerAttackObjectDrop = false;
+    attackParam.throwAttackData[0].blastBlinkMaxCounter = 0.5f;
+    attackParam.throwAttackData[0].blastCan = true;
+    attackParam.throwAttackData[0].blastColliderInfo.inRadius = 50.0f;
+    attackParam.throwAttackData[0].blastColliderInfo.outRadius = 100.0f;
+    attackParam.throwAttackData[0].blastJustAvoidColliderInfo.inRadius = 300;
+    attackParam.throwAttackData[0].blastJustAvoidColliderInfo.outRadius = 950.0f;
+    attackParam.throwAttackData[0].randCan = true;
+    attackParam.throwAttackData[0].randCollInfo.rayStartPos = 300;
+    attackParam.throwAttackData[0].randCollInfo.rayFinishPos = -300;
 
-    attackParam.throwAttackData.armThrow = false;
-    attackParam.throwAttackData.throwToFallToPlayer = true;
-    attackParam.throwAttackData.randomHeight = true;
-    attackParam.throwAttackData.minHeight = 9000.0f;
-    attackParam.throwAttackData.maxHeight = 12000.0f;
-    attackParam.throwAttackData.randomSpeed = true;
-    attackParam.throwAttackData.minSpeed = 1500.0f;
-    attackParam.throwAttackData.maxSpeed = 3000.0f;
-    attackParam.throwAttackData.randomBlast = true;
-    attackParam.throwAttackData.randomBlastRate = 0.1f;
-    attackParam.throwAttackData.playerAttackObjectDrop = false;
-    attackParam.throwAttackData.blastBlinkMaxCounter = 0.5f;
-    attackParam.throwAttackData.blastCan = true;
-    attackParam.throwAttackData.blastColliderInfo.inRadius = 50.0f;
-    attackParam.throwAttackData.blastColliderInfo.outRadius = 100.0f;
-    attackParam.throwAttackData.blastJustAvoidColliderInfo.inRadius = 300;
-    attackParam.throwAttackData.blastJustAvoidColliderInfo.outRadius = 950.0f;
-    attackParam.throwAttackData.randCan = true;
-    attackParam.throwAttackData.randCollInfo.rayStartPos = 300;
-    attackParam.throwAttackData.randCollInfo.rayFinishPos = -300;
+    attackParam.throwAttackData[0].playerHit = true;
+    attackParam.throwAttackData[0].playerGroundHit = false;
+    attackParam.throwAttackData[0].playerHitCollRadius = 200.0f;
+    attackParam.throwAttackData[0].playerHitJustAvoidCollRadius = 300.0f;
 
-    attackParam.throwAttackData.playerHit = true;
-    attackParam.throwAttackData.playerGroundHit = false;
-    attackParam.throwAttackData.playerHitCollRadius = 200.0f;
-    attackParam.throwAttackData.playerHitJustAvoidCollRadius = 300.0f;
-
-    attackParam.throwAttackData.playerAttackFlying = true;
-    attackParam.throwAttackData.playerAttackFlyingCollRadius = 200.0f;
+    attackParam.throwAttackData[0].playerAttackFlying = true;
+    attackParam.throwAttackData[0].playerAttackFlyingCollRadius = 200.0f;
     
-    attackParam.throwAttackData.predictionCicleCan = true;
-    attackParam.throwAttackData.predictionCicleColliderInfo.rayStartPos = 10000;
-    attackParam.throwAttackData.predictionCicleColliderInfo.rayFinishPos = -10000;
+    attackParam.throwAttackData[0].predictionCicleCan = true;
+    attackParam.throwAttackData[0].predictionCicleColliderInfo.rayStartPos = 10000;
+    attackParam.throwAttackData[0].predictionCicleColliderInfo.rayFinishPos = -10000;
 
-    attackParam.throwAttackData.bossHit = true;
-    attackParam.throwAttackData.bossHitCollRadius = 200.0f;
+    attackParam.throwAttackData[0].bossHit = true;
+    attackParam.throwAttackData[0].bossHitCollRadius = 200.0f;
 
-    attackParam.throwAttackData.bossRushHit = true;
-    attackParam.throwAttackData.bossRushHit = 200.0f;
-    attackParam.throwAttackData.throwObjectID = "BossAttackRock1";
+    attackParam.throwAttackData[0].bossRushHit = true;
+    attackParam.throwAttackData[0].bossRushHit = 200.0f;
+    attackParam.throwAttackData[0].throwObjectID = "BossAttackRock1";
 
-    attackParam.throwAttackData.randTime = 100.0f;
-    attackParam.throwAttackData.flyingSpeed = 10000.0f;
-    attackParam.throwAttackData.flyingHeight = 1500.0f;
+    attackParam.throwAttackData[0].randTime = 100.0f;
+    attackParam.throwAttackData[0].flyingSpeed = 10000.0f;
+    attackParam.throwAttackData[0].flyingHeight = 1500.0f;
 
-    attackParam.throwAttackData.pushCollCan = true;
+    attackParam.throwAttackData[0].pushCollCan = true;*/
 }
 
 BossHalfSpecialAttack::~BossHalfSpecialAttack()

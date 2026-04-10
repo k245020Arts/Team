@@ -18,7 +18,7 @@ BossNormalAttack5::BossNormalAttack5()
 	normal					= VZero;
 	oneMove					= false;
 	LoadAttackParam();
-	attackParam.playerAloowMove = true;
+	/*attackParam.playerAloowMove = true;
 	attackParam.playerNearStop = true;
 	attackParam.maxMoveSpeed = 7000.0f;
 	attackParam.minMoveSpeed = 3000.0f;
@@ -31,7 +31,7 @@ BossNormalAttack5::BossNormalAttack5()
 	attackParam.addVelocity = false;
 
 	attackParam.useTrail = true;
-	attackParam.trailRightHand = true;
+	attackParam.trailRightHand = true;*/
 }
 
 BossNormalAttack5::~BossNormalAttack5()

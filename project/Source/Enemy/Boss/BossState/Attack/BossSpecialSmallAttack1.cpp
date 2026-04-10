@@ -25,7 +25,7 @@ BossSpecialSmallAttack1::BossSpecialSmallAttack1()
 	effect					= false;
 	LoadAttackParam();
 
-	attackParam.playerAloowMove = true;
+	/*attackParam.playerAloowMove = true;
 	attackParam.playerNearStop = true;
 	attackParam.maxMoveSpeed = 30000.0f;
 	attackParam.minMoveSpeed = 12000.0f;
@@ -48,7 +48,7 @@ BossSpecialSmallAttack1::BossSpecialSmallAttack1()
 	attackParam.startRange = 50.0f;
 	attackParam.shockMoveEffect = Effect_ID::BOSS_WAVE;
 	attackParam.groundShakeTime = 0.3f;
-	attackParam.groundShakeCamera = 3.0f;
+	attackParam.groundShakeCamera = 3.0f;*/
 }
 
 BossSpecialSmallAttack1::~BossSpecialSmallAttack1()

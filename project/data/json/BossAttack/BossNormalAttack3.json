@@ -1,6 +1,8 @@
 {
   "BossNormalAttack3": {
     "animID": "B_ATTACK3",
+    "attackBeforeAnimID": "",
+    "attackCameraBossLook": true,
     "attackCollTransform": {
       "position": {
         "x": 0.0,
@@ -25,6 +27,7 @@
     "attackPositionFrameNum": 15,
     "attackSoundStartTime": 1.0,
     "bossID": "",
+    "cameraChangeSpeed": 1000.0,
     "damagePattern": "BACK",
     "hitDamage": 80.0,
     "justAvoidCollTransform": {
@@ -46,10 +49,15 @@
     },
     "justAvoidCollsionEndTime": 6.0,
     "justAvoidCollsionStartTime": 5.0,
+    "lookMaxCounter": 40.0,
+    "lookNum": 1,
+    "lookPlayer": true,
     "slowAmout": 0.10000000149011612,
     "slowTime": 0.30000001192092896,
     "speedUpMotionSpeed": 0.30000001192092896,
+    "trailRightHand": false,
     "useFlash": true,
+    "useTrail": true,
     "voiceName": "E_AttackV"
   }
 }
