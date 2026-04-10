@@ -4,6 +4,8 @@
 //#define DataSave
 #include "../../../../Component/Collider/CollsionInformation.h"
 
+class SphereCollider;
+
 class BossAttackBase:public EnemyStateBase
 {
 public:
@@ -222,6 +224,7 @@ public:
 			justAvoidCollTransform = Transform();
 
 			animID = ID::IDType();
+			attackBeforeAnimID = ID::ID_MAX;
 
 			hitDamage = 0.0f;
 			damagePattern = NONE;
@@ -243,8 +246,8 @@ public:
 
 			// 突進イベント
 			rushMove = false;
-			rushBeforeAnimID = ID::IDType();
-			rushAfterAnimID = ID::IDType();
+			//rushAnimID = ID::ID_MAX;
+			rushAfterAnimID = ID::ID_MAX;
 			rushSoundRightFoot = 0.0f;
 			rushSoundLeftFoot = 0.0f;
 
@@ -262,10 +265,17 @@ public:
 			shockWaveSpeed = 0.0f;
 
 			throwAttackData = ThrowObjectAttackData();
+
+			attackCameraBossLook = false;
+			cameraChangeSpeed = 0.0f;
+
+			useTrail = false;;
+			trailRightHand = false;
 		}
 
 		std::string bossID;
 		std::string attackID;
+
 
 		bool useFlash;
 		float attackFlashStartTime;
@@ -289,6 +299,7 @@ public:
 		Transform justAvoidCollTransform;
 
 		ID::IDType animID;
+		ID::IDType attackBeforeAnimID;
 
 		float hitDamage;
 
@@ -314,10 +325,13 @@ public:
 
 		//突進イベント
 		bool rushMove;
-		ID::IDType rushBeforeAnimID;
 		ID::IDType rushAfterAnimID;
+		float rushAfterSpeed;
 		float rushSoundRightFoot;
 		float rushSoundLeftFoot;
+		float rushTime;
+		bool rushColl;
+		float addRushCollScale;
 
 		//回転イベント
 		bool rotateMove;
@@ -359,6 +373,12 @@ public:
 		bool intervalTimeSub;
 		float maxIntervalTime;
 		float minIntervalTime;
+
+		bool attackCameraBossLook;
+		float cameraChangeSpeed;
+
+		bool useTrail;
+		bool trailRightHand;
 
 	};
 
@@ -408,6 +428,9 @@ public:
 	void ShackWaveEvent();
 	void CreateWave();
 	void ThrowObjectsEvent();
+	void RushEvent();
+
+	bool CurrentAttackAnim();
 
 protected:
 	BossAttackParam attackParam;
@@ -422,6 +445,16 @@ private:
 	bool rockGet;
 	float throwObjectAppearTime;
 	int throwObjectNumNow;
+	float rushAttackCount;
+	bool rushSound;
+	bool firstOnes;
+	bool secondOnes;
+
+	SphereCollider* rockColl;
+
+	void AttackStart();
+	void BossDushSound();
+	void BossUpdate();
 };
 
 inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
@@ -464,7 +497,6 @@ inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
 
 		// 突進イベント
 		{"rushMove", p.rushMove},
-		{"rushBeforeAnimID", ID::GetID(p.rushBeforeAnimID)},
 		{"rushAfterAnimID", ID::GetID(p.rushAfterAnimID)},
 		{"rushSoundRightFoot", p.rushSoundRightFoot},
 		{"rushSoundLeftFoot", p.rushSoundLeftFoot},

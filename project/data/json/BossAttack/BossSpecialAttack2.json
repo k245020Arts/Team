@@ -1,6 +1,6 @@
 {
   "BossSpecialAttack2": {
-    "animID": "B_SATTACK2_BEFORE_2",
+    "animID": "B_SATTACK2",
     "attackCollTransform": {
       "position": {
         "x": 0.0,

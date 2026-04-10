@@ -36,6 +36,12 @@ BossAttackBase::BossAttackBase()
 	groundEffect = false;
 	rockGet = false;
 	throwRock = false;
+
+	rushSound = false;
+	firstOnes = false;
+	secondOnes = false;
+
+	rockColl = nullptr;
 }
 
 BossAttackBase::~BossAttackBase()
@@ -69,6 +75,8 @@ void BossAttackBase::Update()
 			slowMode = false;
 		}
 	}
+	BossUpdate();
+
 }
 
 void BossAttackBase::BossStart()
@@ -77,7 +85,14 @@ void BossAttackBase::BossStart()
 	boss->threat	= false;
 	//attackParam.flash	= false;
 	DebugLogText::GetInstance()->Log(LogLevel::INFO, string + "攻撃が開始しました");
-	boss->enemyBaseComponent.anim->Play(attackParam.animID);
+	if (attackParam.attackBeforeAnimID == ID::ID_MAX) {
+		boss->enemyBaseComponent.anim->Play(attackParam.animID);
+	}
+	else {
+		boss->enemyBaseComponent.anim->Play(attackParam.attackBeforeAnimID);
+	}
+
+	firstColl = true;
 	attackTime = boss->enemyBaseComponent.anim->EventFinishTime(attackParam.animID) - boss->enemyBaseComponent.anim->EventStartTime(attackParam.animID);
 	sound = true;
 	boss->enemyBaseComponent.anim->AnimEventReset();
@@ -90,6 +105,17 @@ void BossAttackBase::BossStart()
 	throwRock = false;
 	throwObjectAppearTime = attackParam.intervalTime;
 	throwObjectNumNow = 0;
+
+	rushSound = false;
+	firstOnes = false;
+	secondOnes = false;
+
+	rockColl = nullptr;
+	boss->threat = false;
+
+	if (attackParam.attackCameraBossLook) {
+		boss->enemyBaseComponent.camera->AttackEnemyFovChange(boss->bossTransform, attackParam.cameraChangeSpeed);
+	}
 }
 
 void BossAttackBase::BossFinish()
@@ -100,6 +126,19 @@ void BossAttackBase::BossFinish()
 	}
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
+	boss->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));
+
+	if (boss->attackColl.instance != nullptr) {
+		boss->DeleteCollision(&boss->attackColl);
+	}
+	boss->enemyBaseComponent.anim->AnimEventReset();
+	if (rockColl != nullptr) {
+		rockColl->GetBaseObject()->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("Rush");
+		rockColl = nullptr;
+	}
+	if (attackParam.throwAttackData.playerAttackObjectDrop) {
+		boss->rockManager->DropRockStart();
+	}
 }
 
 
@@ -135,6 +174,9 @@ void BossAttackBase::AttackCollsion()
 
 void BossAttackBase::BossAttackCollsion()
 {
+	if (!CurrentAttackAnim()) {
+		return;
+	}
 	Boss* b = GetBase<Boss>();
 	//敵の攻撃判定の生成クラス
 	if (b->enemyBaseComponent.anim->AnimEventCan()) {
@@ -164,6 +206,9 @@ void BossAttackBase::AttackFlash(ID::IDType _modelId, int _modelFrame, std::stri
 	EnemyBase* e = GetBase<EnemyBase>();
 	float time = e->enemyBaseComponent.anim->EventStartTime(attackParam.animID);
 	if (!attackParam.useFlash) {
+		return;
+	}
+	if (!CurrentAttackAnim()) {
 		return;
 	}
 	//敵の剣回りを光らせていることへの設定
@@ -235,6 +280,9 @@ void BossAttackBase::BossTrail(bool _right)
 
 void BossAttackBase::BossJustAvoidCollsion()
 {
+	if (!CurrentAttackAnim()) {
+		return;
+	}
 	Boss* e = GetBase<Boss>();
 	float time = e->enemyBaseComponent.anim->EventStartTime(attackParam.animID);
 	//ジャスト回避判定の作成
@@ -296,6 +344,9 @@ void BossAttackBase::LoadAttackParam()
 void BossAttackBase::RotateEvent()
 {
 	Boss* boss = GetBase<Boss>();
+	if (!attackParam.rotateMove) {
+		return;
+	}
 	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
 		//攻撃にかかる時間で90°回したいので１フレームごとに進む角度を求めている。
 		averageSpeed = 90.0f / attackTime;
@@ -308,7 +359,9 @@ void BossAttackBase::RotateEvent()
 void BossAttackBase::LookEvent()
 {
 	Boss* boss = GetBase<Boss>();
-
+	if (!attackParam.lookPlayer) {
+		return;
+	}
 	if (attackParam.lookMaxCounter <= boss->enemyBaseComponent.anim->GetCurrentFrame()) {
 		return;
 	}
@@ -321,7 +374,12 @@ void BossAttackBase::LookEvent()
 void BossAttackBase::MoveEvent()
 {
 	Boss* boss = GetBase<Boss>();
-
+	if (!CurrentAttackAnim()) {
+		return;
+	}
+	if (!attackParam.playerAloowMove && !attackParam.frontMove) {
+		return;
+	}
 	float animFrame = boss->enemyBaseComponent.anim->GetCurrentFrame();
 	if (attackParam.moveStartTime <= animFrame && attackParam.moveFinishTime >= animFrame) {
 		if (attackParam.playerAloowMove) {
@@ -388,7 +446,9 @@ void BossAttackBase::MoveEvent()
 
 void BossAttackBase::JumpEvent()
 {
-	
+	if (!attackParam.jump) {
+		return;
+	}
 	Boss* boss = GetBase<Boss>();
 	if (boss->enemyBaseComponent.anim->GetCurrentFrame() <= attackParam.jumpStartTime) {
 		return;
@@ -489,4 +549,139 @@ void BossAttackBase::ThrowObjectsEvent()
 			boss->enemyBaseComponent.state->ChangeState(StateID::BOSS_IDOL_S);
 		}
 	}
+}
+
+void BossAttackBase::RushEvent()
+{
+	if (!attackParam.rushMove) {
+		return;
+	}
+	Boss* boss = GetBase<Boss>();
+	//後隙
+	if (boss->enemyBaseComponent.anim->IsFinish()) {
+		if (boss->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(attackParam.rushAfterAnimID)) {
+			boss->BossAttackStateChange();
+		}
+		else {
+			AttackStart();
+		}
+	}
+	//前隙
+	if (boss->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(attackParam.attackBeforeAnimID)) {
+		boss->LookPlayer(0.09f);
+		return;
+	}
+	BossDushSound();
+
+	rushAttackCount -= obj->GetObjectTimeRate();
+	if (rushAttackCount <= 0.0f) {
+		boss->enemyBaseComponent.anim->Play(attackParam.rushAfterAnimID);
+		VECTOR3 p = boss->enemyBaseComponent.physics->GetVelocity().Normalize();
+		boss->enemyBaseComponent.physics->AddVelocity(p * -attackParam.rushAfterSpeed/*5000*/, true);
+	}
+}
+
+bool BossAttackBase::CurrentAttackAnim()
+{
+	Boss* boss = GetBase<Boss>();
+	return ID::GetID(attackParam.animID) == boss->enemyBaseComponent.anim->GetCurrentID();
+}
+
+
+void BossAttackBase::BossDushSound()
+{
+	Boss* b = GetBase<Boss>();
+	SoundManager::GetInstance()->Play3DSound(Sound_ID::BOSS_WALK, obj, 200000, 30000);
+	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= /*6.0f*/attackParam.rushSoundLeftFoot && b->enemyBaseComponent.anim->GetCurrentFrame() <= attackParam.rushSoundLeftFoot + 1.0f) {
+		if (firstOnes) {
+			rushSound = true;
+		}
+		firstOnes = false;
+	}
+	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= /*16.0f*/attackParam.rushSoundRightFoot && b->enemyBaseComponent.anim->GetCurrentFrame() <= attackParam.rushSoundRightFoot + 1.0f) {
+		if (secondOnes) {
+			rushSound = true;
+		}
+		secondOnes = false;
+	}
+	if (rushSound) {
+		SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::BOSS_WALK, 30000, 1000);
+		rushSound = false;
+		//Debug::DebugLog("bossDushSound");
+	}
+	float resetTime = 0.0f;
+	if (attackParam.rushSoundRightFoot > attackParam.rushSoundLeftFoot) {
+		resetTime = attackParam.rushSoundRightFoot;
+	}
+	else {
+		resetTime = attackParam.rushSoundLeftFoot;
+	}
+	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= resetTime + 2.0f) {
+		firstOnes = true;
+		secondOnes = true;
+	}
+}
+
+void BossAttackBase::BossUpdate()
+{
+	Boss* boss = GetBase<Boss>();
+	if (boss == nullptr) {
+		return;
+	}
+	if (boss->enemyBaseComponent.anim->IsFinish())
+	{
+		boss->BossAttackStateChange();
+	}
+	AttackSound();
+	BossAttackCollsion();
+	BossJustAvoidCollsion();
+	RotateEvent();
+	LookEvent();
+	MoveEvent();
+	RushEvent();
+	JumpEvent();
+	ThrowObjectsEvent();
+	if (attackParam.useTrail) {
+		BossTrail(attackParam.trailRightHand);
+	}
+	AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
+}
+
+void BossAttackBase::AttackStart()
+{
+	Boss* b = GetBase<Boss>();
+	b->enemyBaseComponent.anim->Play(attackParam.animID);
+
+	VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
+
+	VECTOR3 angle = pos - b->GetBaseObject()->GetTransform()->position;
+	//rotation = angle.Normalize();
+	firstColl = true;
+	//look = true;
+	//distance = pos.Size();
+
+	if (attackParam.rushColl) {
+		CollsionInfo info;
+		info.parentTransfrom = obj->GetTransform();
+		info.shape = CollsionInformation::SPHERE;
+		info.oneColl = true;
+		info.tag = CollsionInformation::BOSS_RUSH;
+
+		rockColl = obj->Component()->AddComponent<SphereCollider>();
+		Transform rushColl = collTrans;
+		rushColl.scale.x += attackParam.addRushCollScale;
+		rockColl->CollsionAdd(info, rushColl, "Rush");
+	}
+	if (b->maxAttack <= 0) {
+		AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
+		//attackParam.flash = true;
+		rushAttackCount = attackParam.rushTime;
+		b->enemyBaseComponent.anim->SetPlaySpeed(2.0f);
+	}
+	else {
+		rushAttackCount = attackParam.rushTime;
+		b->enemyBaseComponent.anim->SetPlaySpeed(2.0f);
+	}
+	firstOnes = true;
+	secondOnes = true;
 }

@@ -30,8 +30,8 @@ BossNormalAttack7::BossNormalAttack7()
 	attackParam.throwAttackData.throwToPlayer = false;
 	attackParam.throwAttackData.thorwToFront = true;
 	attackParam.throwAttackData.throwSpeed = 20000.0f;
-	attackParam.throwAttackData.throwFirstSpeed = 5000.0f;
-	attackParam.throwAttackData.diffusionAngle = VECTOR3(0.0f,0.0f, 30.0f * DegToRad);
+	attackParam.throwAttackData.throwFirstSpeed = 20000.0f;
+	attackParam.throwAttackData.diffusionAngle = VECTOR3(0.0f,0.0f, 0.0f);
 	attackParam.throwAttackData.upSpeed = 0.0f;
 	attackParam.throwAttackData.throwFallGravity = 0.0f;
 
@@ -74,30 +74,30 @@ BossNormalAttack7::~BossNormalAttack7()
 
 void BossNormalAttack7::Update()
 {
-	Boss* boss = GetBase<Boss>();
+	//Boss* boss = GetBase<Boss>();
 	BossAttackBase::Update();
-	if (boss->enemyBaseComponent.anim->IsFinish()){
-		boss->BossAttackStateChange();
-	}
-	/*if (boss->enemyBaseComponent.anim->AnimEventCan()) {
-		if (!throwRock) {
-			boss->rockManager->ThrowStart();
-			throwRock = true;
-		}
-	}*/
+	//if (boss->enemyBaseComponent.anim->IsFinish()){
+	//	boss->BossAttackStateChange();
+	//}
+	///*if (boss->enemyBaseComponent.anim->AnimEventCan()) {
+	//	if (!throwRock) {
+	//		boss->rockManager->ThrowStart();
+	//		throwRock = true;
+	//	}
+	//}*/
 
-	AttackSound();
-	AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
-	/*if (boss->enemyBaseComponent.anim->GetCurrentFrame() >= 31.58683f) {
-		if (!rockGet) {
-			VECTOR3 vzero = VECTOR3(VZero);
-			boss->rockManager->CreateThrow(vzero);
-			rockGet = true;
-		}
-	}*/
+	//AttackSound();
+	//AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
+	///*if (boss->enemyBaseComponent.anim->GetCurrentFrame() >= 31.58683f) {
+	//	if (!rockGet) {
+	//		VECTOR3 vzero = VECTOR3(VZero);
+	//		boss->rockManager->CreateThrow(vzero);
+	//		rockGet = true;
+	//	}
+	//}*/
 
-	ThrowObjectsEvent();
-	LookEvent();
+	//ThrowObjectsEvent();
+	//LookEvent();
 
 	/*if (boss->enemyBaseComponent.anim->GetCurrentFrame() >= 54.475f && boss->enemyBaseComponent.anim->GetCurrentFrame() <= boss->enemyBaseComponent.anim->EventStartTime(attackParam.animID)) {
 		boss->LookPlayer();
@@ -113,8 +113,8 @@ void BossNormalAttack7::Start()
 	Boss* boss = GetBase<Boss>();
 	//EnemyStateBase::Start();
 	BossAttackBase::BossStart();
-	throwRock = false;
-	rockGet = false;
+	/*throwRock = false;
+	rockGet = false;*/
 }
 
 void BossNormalAttack7::Finish()
@@ -124,7 +124,7 @@ void BossNormalAttack7::Finish()
 #endif // DataSave
 	Boss* boss = GetBase<Boss>();
 	BossAttackBase::BossFinish();
-	boss->enemyBaseComponent.anim->AnimEventReset();
-	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	boss->rockManager->DropRockStart();
+	/*boss->enemyBaseComponent.anim->AnimEventReset();
+	boss->enemyBaseComponent.anim->
+	SetPlaySpeed(1.0f);*/
 }

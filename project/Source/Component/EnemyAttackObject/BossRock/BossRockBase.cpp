@@ -160,21 +160,7 @@ void BossRockBase::Update()
 			}
 			if (blinkBaseMax <= 0.01f) {
 				BlastCollsionCreate();
-				/*blastColl = obj->Component()->AddComponent<DountCollider>();
-				blastJustAvoidColl = obj->Component()->AddComponent<DountCollider>();
-				nowBlast = true;
-				CollsionInfo info;
-				info.parentTransfrom = obj->GetTransform();
-				info.shape = CollsionInformation::DONUT;
-				info.oneColl = false;
-				info.tag = CollsionInformation::ROCK_BLAST_DAMAGE;
-				blastColl->DountSet(info, Transform(VZero, VZero, VOne * 50.0f), 100.0f);
-				info.oneColl = false;
-				info.tag = CollsionInformation::JUST_AVOID;
-				blastJustAvoidColl->DountSet(info, Transform(VZero, VZero, VOne * 300.0f), 950.0f);
-				SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BLAST);
-				SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BLAST);
-				EffectManager::GetInstance()->CreateEffekseer(Transform(obj->GetTransform()->position, VZero, VOne * 3.0f), nullptr, Effect_ID::ROCK_BLAST, 1.0f);*/
+				
 			}
 		}
 	}

@@ -23,11 +23,7 @@ BossSpecialAttack2::BossSpecialAttack2()
 
 	turningTime = 0.0f;
 
-	sound = false;
-	firstOnes = false;
-	secondOnes = false;
-
-	rockColl = nullptr;
+	
 	LoadAttackParam();
 	attackParam.playerAloowMove = true;
 	attackParam.playerNearAloowStop = true;
@@ -41,6 +37,20 @@ BossSpecialAttack2::BossSpecialAttack2()
 	attackParam.moveStartTime = 00.0f;
 	attackParam.moveFinishTime = 500.0f;
 	attackParam.addVelocity = true;
+
+	attackParam.rushMove = true;
+	attackParam.rushAfterAnimID = ID::B_S_ATTACK2_STOP;
+	attackParam.attackBeforeAnimID = ID::B_S_ATTACK2_BEFORE;
+	attackParam.rushAfterSpeed = 5000.0f;
+	attackParam.rushColl = true;
+	attackParam.addRushCollScale = 50.0f;
+	attackParam.rushSoundRightFoot = 16.0f;
+	attackParam.rushSoundLeftFoot = 6.0f;
+	attackParam.rushTime = 1.0f;
+
+	attackParam.attackCameraBossLook = true;
+	attackParam.cameraChangeSpeed = 1000.0f;
+
 }
 
 BossSpecialAttack2::~BossSpecialAttack2()
@@ -51,47 +61,11 @@ void BossSpecialAttack2::Update()
 {
 	Boss* b = GetBase<Boss>();
 	BossAttackBase::Update();
-	if (b->enemyBaseComponent.anim->IsFinish()) {
-		if (b->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(ID::B_S_ATTACK2_STOP)) {
-			b->BossAttackStateChange();
-		}
-		else {
-			AttackStart();
-		}
-	}
-	if (b->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(ID::B_S_ATTACK2_BEFORE)) {
-		b->LookPlayer(0.09f);
-		return;
-	}
-	BossDushSound();
-	if (turningTime > 0.0f) {
-		turningTime -= obj->GetObjectTimeRate();
-		if (turningTime <= 0.0f) {
-			turningTime = 0.0f;
-			b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
-		}
-		b->LookPlayer(0.2f);
-		b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 0, -11000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix(), true);
-		return;
-	}
-	
-	attackCount -= obj->GetObjectTimeRate();
-	if (attackCount <= 0.0f) {
-		if (b->maxAttack > 0) {
-			
-			//look = true;
-			turningTime = 1.0f;
-			return;
-		}
-		b->enemyBaseComponent.anim->Play(ID::B_S_ATTACK2_STOP);
-		VECTOR3 p = b->enemyBaseComponent.physics->GetVelocity().Normalize();
-		b->enemyBaseComponent.physics->AddVelocity(p * -5000.0f, true);
-		return;
-	}
-	//b->enemyBaseComponent.physics->AddVelocity(rotation * 10000.0f, true);
-	BossAttackCollsion();
-	BossJustAvoidCollsion();
-	MoveEvent();
+	//RushEvent();
+	////b->enemyBaseComponent.physics->AddVelocity(rotation * 10000.0f, true);
+	//BossAttackCollsion();
+	//BossJustAvoidCollsion();
+	//MoveEvent();
 	/*VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
 	VECTOR3 angle = pos - b->GetBaseObject()->GetTransform()->position;
 	distance = angle.Size();
@@ -124,12 +98,8 @@ void BossSpecialAttack2::Start()
 	//EnemyStateBase::Start();
 	BossAttackBase::BossStart();
 	
-	if (!b->comboFirstAttack) {
-		//b->enemyBaseComponent.anim->SetPlaySpeed(3.0f);
-		AttackStart();
-	}
 	
-	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform, 1000.0f);
+	
 
 }
 
@@ -141,85 +111,13 @@ void BossSpecialAttack2::Finish()
 	//EnemyStateBase::Finish();
 	Boss* b = GetBase<Boss>();
 	BossAttackBase::BossFinish();
-	if (b->maxAttack > 0) {
-		b->LookPlayer(1.0f);
-		//前進
-		b->enemyBaseComponent.physics->SetVelocity(VECTOR3(0, 0, -1000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix());
-		
-	}
-	b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	if (rockColl != nullptr) {
-		rockColl->GetBaseObject()->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("Rush");
-		rockColl = nullptr;
-	}
-	b->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
-}
-
-void BossSpecialAttack2::BossDushSound()
-{
-	Boss* b = GetBase<Boss>();
-	SoundManager::GetInstance()->Play3DSound(Sound_ID::BOSS_WALK, obj, 200000, 30000);
-	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 6.0f && b->enemyBaseComponent.anim->GetCurrentFrame() <= 7.0f) {
-		if (firstOnes) {
-			sound = true;
-		}
-		firstOnes = false;
-	}
-	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 16.0f && b->enemyBaseComponent.anim->GetCurrentFrame() <= 17.0f) {
-		if (secondOnes) {
-			sound = true;
-		}
-		secondOnes = false;
-	}
-	if (sound) {
-		SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::BOSS_WALK,30000,1000);
-		sound = false;
-		Debug::DebugLog("bossDushSound");
-	}
-	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= 18.0f) {
-		firstOnes = true;
-		secondOnes = true;
-	}
-}
-
-void BossSpecialAttack2::AttackStart()
-{
-	Boss* b = GetBase<Boss>();
-	b->enemyBaseComponent.anim->Play(ID::B_S_ATTACK2);
-	
-	
+	//if (b->maxAttack > 0) {
+	//	b->LookPlayer(1.0f);
+	//	//前進
+	//	b->enemyBaseComponent.physics->SetVelocity(VECTOR3(0, 0, -1000) * b->GetEnemyObj()->GetTransform()->GetRotationMatrix());
+	//	
+	//}
 	//b->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-	
-	//b->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, 3000, 0), false);
-	VECTOR3 pos = b->enemyBaseComponent.playerObj->GetTransform()->position;
-
-	VECTOR3 angle = pos - b->GetBaseObject()->GetTransform()->position;
-	rotation = angle.Normalize();
-	firstColl = true;
-	look = true;
-	distance = pos.Size();
-
-	CollsionInfo info;
-	info.parentTransfrom = obj->GetTransform();
-	info.shape = CollsionInformation::SPHERE;
-	info.oneColl = true;
-	info.tag = CollsionInformation::BOSS_RUSH;
-
-	rockColl = obj->Component()->AddComponent<SphereCollider>();
-	Transform rushColl = collTrans;
-	rushColl.scale.x += 50.0f;
-	rockColl->CollsionAdd(info, rushColl,"Rush");
-
-	if (b->maxAttack <= 0) {
-		AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
-		//attackParam.flash = true;
-		attackCount = 1.0f;
-		b->enemyBaseComponent.anim->SetPlaySpeed(2.0f);
-	}
-	else {
-		attackCount = 1.0f;
-		b->enemyBaseComponent.anim->SetPlaySpeed(2.0f);
-	}
-	firstOnes = true;
-	secondOnes = true;
+	//
+	//b->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
 }

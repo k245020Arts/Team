@@ -18,6 +18,11 @@ BossNormalAttack3::BossNormalAttack3()
 	attackParam.lookPlayer = true;
 	attackParam.lookNum = 1;
 	attackParam.lookMaxCounter = 40.0f;
+	attackParam.attackCameraBossLook = true;
+	attackParam.cameraChangeSpeed = 1000.0f;
+
+	attackParam.useTrail = true;
+	attackParam.trailRightHand = false;
 }
 
 BossNormalAttack3::~BossNormalAttack3()
@@ -27,27 +32,27 @@ BossNormalAttack3::~BossNormalAttack3()
 void BossNormalAttack3::Update()
 {
 	Boss* b = GetBase<Boss>();
-	const float MSPEED = 60.0f;//モーションの速度調整
+	//const float MSPEED = 60.0f;//モーションの速度調整
 
 	BossAttackBase::Update();
 
-	//どこまでプレイヤーの方を見るか(今後回避行動取るまでに変更)
-	LookEvent();
+	////どこまでプレイヤーの方を見るか(今後回避行動取るまでに変更)
+	//LookEvent();
 
-	//b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionSpeed);
+	////b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionSpeed);
 
-	if (b->enemyBaseComponent.anim->IsFinish())
-		b->BossAttackStateChange();
+	//if (b->enemyBaseComponent.anim->IsFinish())
+	//	b->BossAttackStateChange();
 
-	BossAttackCollsion();
-	BossJustAvoidCollsion();
-	AttackSound();
-	if (b->maxAttack <= 0) {
-		AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
-		//attackParam.damage = true;
-	}
+	//BossAttackCollsion();
+	//BossJustAvoidCollsion();
+	//AttackSound();
+	//if (b->maxAttack <= 0) {
+	//	AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
+	//	//attackParam.damage = true;
+	//}
 
-	BossTrail(false);
+	//BossTrail(false);
 }
 
 void BossNormalAttack3::Draw()
@@ -60,18 +65,18 @@ void BossNormalAttack3::Start()
 	//EnemyStateBase::Start();
 	BossAttackBase::BossStart();
 
-	firstColl				= true;
-	counter					= 0;
-	//attackParam.hitDamage		= b->bs->GetStatus().normalAttack3;
-	b->enemyBaseComponent.anim->AnimEventReset();
+	//firstColl				= true;
+	//counter					= 0;
+	////attackParam.hitDamage		= b->bs->GetStatus().normalAttack3;
+	//b->enemyBaseComponent.anim->AnimEventReset();
 
-	//damage.motionMaxSpeed	=;
+	////damage.motionMaxSpeed	=;
 
-	//b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionMaxSpeed);
-	//damage.motionSpeed		= b->bs->GetStatus().motionSpeed;
-	b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform,1000.0f);
+	////b->enemyBaseComponent.anim->SetPlaySpeed(damage.motionMaxSpeed);
+	////damage.motionSpeed		= b->bs->GetStatus().motionSpeed;
+	////b->enemyBaseComponent.camera->AttackEnemyFovChange(b->bossTransform,1000.0f);
 
-	b->threat				= false;
+	//b->threat				= false;
 }
 
 void BossNormalAttack3::Finish()
@@ -80,12 +85,12 @@ void BossNormalAttack3::Finish()
 	DataSaveAll();
 #endif // DataSave
 	Boss* boss = GetBase<Boss>();
-	boss->DeleteCollision(&boss->attackColl);
+	/*boss->DeleteCollision(&boss->attackColl);*/
 	BossAttackBase::BossFinish();
-	boss->enemyBaseComponent.anim->AnimEventReset();
+	/*boss->enemyBaseComponent.anim->AnimEventReset();
 	if (boss->maxAttack == 0)
 		boss->enemyBaseComponent.anim->SetPlaySpeed(1.2f);
-	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);*/
 	
 	//boss->threat = true;
 }

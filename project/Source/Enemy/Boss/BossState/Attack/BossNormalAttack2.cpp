@@ -15,6 +15,9 @@ BossNormalAttack2::BossNormalAttack2()
 	LoadAttackParam();
 	attackParam.rotateMove = true;
 	attackParam.angleMoveAmout = -90.0f;
+
+	attackParam.useTrail = true;
+	attackParam.trailRightHand = false;
 }
 
 BossNormalAttack2::~BossNormalAttack2()
@@ -24,22 +27,22 @@ BossNormalAttack2::~BossNormalAttack2()
 void BossNormalAttack2::Update()
 {
 	BossAttackBase::Update();
-	Boss* boss = GetBase<Boss>();
-	if (boss->enemyBaseComponent.anim->IsFinish())
-	{
-		boss->BossAttackStateChange();
-	}
-	BossAttackCollsion();
-	BossJustAvoidCollsion();
-	RotateEvent();
-	AttackSound();
-	if (boss->maxAttack <= 0) {
-		//三段攻撃の一番最後の時だけ光る。
-		AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
-		//attackParam.flash = true;
-	}
+	//Boss* boss = GetBase<Boss>();
+	//if (boss->enemyBaseComponent.anim->IsFinish())
+	//{
+	//	boss->BossAttackStateChange();
+	//}
+	//BossAttackCollsion();
+	//BossJustAvoidCollsion();
+	//RotateEvent();
+	//AttackSound();
+	//if (boss->maxAttack <= 0) {
+	//	//三段攻撃の一番最後の時だけ光る。
+	//	AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
+	//	//attackParam.flash = true;
+	//}
 
-	BossTrail(false);
+	//BossTrail(false);
 }
 
 void BossNormalAttack2::Draw()
@@ -51,12 +54,12 @@ void BossNormalAttack2::Start()
 	Boss* boss			= GetBase<Boss>();
 	//EnemyStateBase::Start();
 	BossAttackBase::BossStart();
-	firstColl			= true;
-	//attackParam.hitDamage	= boss->bs->GetStatus().normalAttack1;
+	//firstColl			= true;
+	////attackParam.hitDamage	= boss->bs->GetStatus().normalAttack1;
 
-	fallFrame			= boss->bs->GetStatus().fallFrame;
-	boss->enemyBaseComponent.anim->SetFrame(5.0f);
-	boss->threat		= false;
+	//fallFrame			= boss->bs->GetStatus().fallFrame;
+	//boss->enemyBaseComponent.anim->SetFrame(5.0f);
+	//boss->threat		= false;
 }
 
 void BossNormalAttack2::Finish()
@@ -65,9 +68,9 @@ void BossNormalAttack2::Finish()
 	DataSaveAll();
 #endif // DataSave
 	Boss* boss = GetBase<Boss>();
-	boss->DeleteCollision(&boss->attackColl);
+	/*boss->DeleteCollision(&boss->attackColl);*/
 	BossAttackBase::BossFinish();
-	boss->enemyBaseComponent.anim->AnimEventReset();
-	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	/*boss->enemyBaseComponent.anim->AnimEventReset();
+	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);*/
 	//boss->threat = true;
 }
