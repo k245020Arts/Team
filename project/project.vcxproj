@@ -191,6 +191,7 @@
     <ClInclude Include="Source\Common\Effect\EffectBase.h" />
     <ClInclude Include="Source\Common\Effect\EffectManager.h" />
     <ClInclude Include="Source\Common\Fead\Fead.h" />
+    <ClInclude Include="Source\Common\FileSystemUtils\FileSystemUtils.h" />
     <ClInclude Include="Source\Common\Function.h" />
     <ClInclude Include="Source\Common\ID\EffectID.h" />
     <ClInclude Include="Source\Common\ID\ID.h" />
@@ -398,6 +399,7 @@
     <ClCompile Include="Source\Common\Effect\EffectBase.cpp" />
     <ClCompile Include="Source\Common\Effect\EffectManager.cpp" />
     <ClCompile Include="Source\Common\Fead\Fead.cpp" />
+    <ClCompile Include="Source\Common\FileSystemUtils\FileSystemUtils.cpp" />
     <ClCompile Include="Source\Common\ID\EffectID.cpp" />
     <ClCompile Include="Source\Common\ID\ID.cpp" />
     <ClCompile Include="Source\Common\ID\SoundID.cpp" />
