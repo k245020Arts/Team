@@ -1,7 +1,7 @@
 #pragma once
 #include "BossAttackBase.h"
 
-class SphereCollider;
+
 
 class BossSpecialAttack2 : public BossAttackBase
 {
@@ -25,12 +25,7 @@ private:
 
 	float turningTime;
 
-	void AttackStart();
-	void BossDushSound();
+	
 
-	bool sound;
-	bool firstOnes;
-	bool secondOnes;
-
-	SphereCollider* rockColl;
+	
 };

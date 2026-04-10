@@ -16,6 +16,9 @@ BossNormalAttack1::BossNormalAttack1()
 	LoadAttackParam();
 	attackParam.rotateMove = true;
 	attackParam.angleMoveAmout = 90.0f;
+
+	attackParam.useTrail = true;
+	attackParam.trailRightHand = true;
 }
 
 BossNormalAttack1::~BossNormalAttack1()
@@ -25,22 +28,22 @@ BossNormalAttack1::~BossNormalAttack1()
 void BossNormalAttack1::Update()
 {
 	BossAttackBase::Update();
-	Boss* boss = GetBase<Boss>();
-	if (boss->enemyBaseComponent.anim->IsFinish())
-	{
-		boss->BossAttackStateChange();
-	}
-	BossAttackCollsion();
-	BossJustAvoidCollsion();
-	RotateEvent();
-	AttackSound();
-	if (boss->maxAttack <= 0) {
-		//三段攻撃の一番最後の時だけ光る。
-		AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum,attackParam.voiceName);
-		//attackParam.flash = true;
-	}
-	
-	BossTrail(true);
+	//Boss* boss = GetBase<Boss>();
+	//if (boss->enemyBaseComponent.anim->IsFinish())
+	//{
+	//	boss->BossAttackStateChange();
+	//}
+	//BossAttackCollsion();
+	//BossJustAvoidCollsion();
+	//RotateEvent();
+	//AttackSound();
+	//if (boss->maxAttack <= 0) {
+	//	//三段攻撃の一番最後の時だけ光る。
+	//	AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum,attackParam.voiceName);
+	//	//attackParam.flash = true;
+	//}
+	//
+	//BossTrail(true);
 	
 }
 
@@ -67,9 +70,9 @@ void BossNormalAttack1::Finish()
 	DataSaveAll();
 #endif // DataSave
 	Boss* boss = GetBase<Boss>();
-	boss->DeleteCollision(&boss->attackColl);
+	/*boss->DeleteCollision(&boss->attackColl);*/
 	BossAttackBase::BossFinish();
-	boss->enemyBaseComponent.anim->AnimEventReset();
-	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	/*boss->enemyBaseComponent.anim->AnimEventReset();
+	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);*/
 	//boss->threat = true;
 }

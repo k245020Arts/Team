@@ -190,7 +190,7 @@ void CollsionEvent::PlayerDamageBossChildEvent(ColliderBase* _coll1, ColliderBas
 
 void CollsionEvent::BossRockPrePosition(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
 {
-	BossRock* rock = _coll1->GetObj()->Component()->GetComponent<BossRock>();
+	BossRockBase* rock = _coll1->GetObj()->Component()->GetComponent<BossRockBase>();
 
 	rock->SetPreInfo(_hitPos);
 	
@@ -198,122 +198,72 @@ void CollsionEvent::BossRockPrePosition(ColliderBase* _coll1, ColliderBase* _col
 
 void CollsionEvent::BossRockGround(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
 {
-	BossRock* rock = _coll2->GetObj()->Component()->GetComponent<BossRock>();
-	BossThrowRock* throwRock = _coll2->GetObj()->Component()->GetComponent<BossThrowRock>();
-	if (rock != nullptr) {
-		rock->Ground();
-	}
-	else {
-		throwRock->Ground();
-	}
+	BossRockBase* throwRock = _coll2->GetObj()->Component()->GetComponent<BossRockBase>();
+	
+	throwRock->Ground();
 	
 }
 
 void CollsionEvent::PlayerAttackRock(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
 {
 	Player* player = _coll2->GetObj()->Component()->GetComponent<Player>();
-	BossRock* rock = _coll1->GetObj()->Component()->GetComponent<BossRock>();
-	BossThrowRock* throwRock = _coll1->GetObj()->Component()->GetComponent<BossThrowRock>();
-	if (rock != nullptr) {
-		rock->PlayerAttackRockFlyAway(*player->GetPlayerTransform());
-	}
-	else {
-		throwRock->PlayerAttackRockFlyAway(*player->GetPlayerTransform());
-	}
+	BossRockBase* throwRock = _coll1->GetObj()->Component()->GetComponent<BossRockBase>();
+	throwRock->PlayerAttackRockFlyAway(*player->GetPlayerTransform());
+
 	player->AttackRockHit();
 }
 
 void CollsionEvent::BossRockDamage(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
 {
 	Boss* boss = _coll1->GetObj()->Component()->GetComponent<Boss>();
-	BossRock* rock = _coll2->GetObj()->Component()->GetComponent<BossRock>();
 	Physics* physics = _coll2->GetObj()->Component()->GetComponent<Physics>();
 
 	boss->RockHitDamage(physics);
 	
 
-	BossThrowRock* throwRock = _coll2->GetObj()->Component()->GetComponent<BossThrowRock>();
-	if (rock != nullptr) {
-		rock->RockBossHit();
-	}
-	else {
-		throwRock->RockBossHit();
-	}
+	BossRockBase* throwRock = _coll2->GetObj()->Component()->GetComponent<BossRockBase>();
+	throwRock->RockBossHit();
+	
 }
 
 void CollsionEvent::BossRockRush(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
 {
 	Boss* boss = _coll2->GetObj()->Component()->GetComponent<Boss>();
-	BossRock* rock = _coll1->GetObj()->Component()->GetComponent<BossRock>();
-	
 
 	boss->RockHitRushDamage();
-	BossThrowRock* throwRock = _coll1->GetObj()->Component()->GetComponent<BossThrowRock>();
-	if (rock != nullptr) {
-		rock->GetBaseObject()->DestroyMe();
-	}
-	else {
-		throwRock->GetBaseObject()->DestroyMe();
-	}
+	BossRockBase* throwRock = _coll1->GetObj()->Component()->GetComponent<BossRockBase>();
+	throwRock->GetBaseObject()->DestroyMe();
 }
 
 void CollsionEvent::BossRockBlastDamagePlayer(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
 {
-	BossRock* rock = _coll2->GetObj()->Component()->GetComponent<BossRock>();
 	Player* player = _coll1->GetObj()->Component()->GetComponent<Player>();
-	BossThrowRock* throwRock = _coll2->GetObj()->Component()->GetComponent<BossThrowRock>();
+	BossRockBase* throwRock = _coll2->GetObj()->Component()->GetComponent<BossRockBase>();
 
-	if (rock != nullptr) {
-		if (rock->HitObjects(player->GetPlayerObj())) {
-			return;
-		}
-	}
-	else {
-		if (throwRock->HitObjects(player->GetPlayerObj())) {
-			return;
-		}
+
+	if (throwRock->HitObjects(player->GetPlayerObj())) {
+		return;
 	}
 
 	bool damage = player->EnemyAttackObjectHitIsPlayer(_coll2->GetBaseObject(),_coll2->GetCollTag());
 	if (!damage) {
 		_coll2->CollsionRespown();
 	}
-
-	if (rock != nullptr) {
-		rock->AddHitObj(player->GetPlayerObj());
-	}
-	else {
-		throwRock->AddHitObj(player->GetPlayerObj());
-	}
-
+	throwRock->AddHitObj(player->GetPlayerObj());
 }
 
 void CollsionEvent::BossRockBlastDamageBoss(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
 {
-	BossRock* rock = _coll2->GetObj()->Component()->GetComponent<BossRock>();
-	BossThrowRock* throwRock = _coll2->GetObj()->Component()->GetComponent<BossThrowRock>();
+	BossRockBase* throwRock = _coll2->GetObj()->Component()->GetComponent<BossRockBase>();
 	Boss* boss = _coll1->GetObj()->Component()->GetComponent<Boss>();
-	if (rock != nullptr) {
-		if (rock->HitObjects(boss->GetEnemyObj())) {
-			return;
-		}
-	}
-	else {
-		if (throwRock->HitObjects(boss->GetEnemyObj())) {
-			return;
-		}
+	if (throwRock->HitObjects(boss->GetEnemyObj())) {
+		return;
 	}
 	
 	Physics* physics = _coll2->GetObj()->Component()->GetComponent<Physics>();
 
 	boss->RockHitDamage(physics);
-	
-	if (rock != nullptr) {
-		rock->AddHitObj(boss->GetEnemyObj());
-	}
-	else {
-		throwRock->AddHitObj(boss->GetEnemyObj());
-	}
+	throwRock->AddHitObj(boss->GetEnemyObj());
 }
 
 void CollsionEvent::JustAvoidEnemy(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)

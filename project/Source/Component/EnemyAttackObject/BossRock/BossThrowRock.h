@@ -13,7 +13,7 @@ public:
 	void Ground()override;
 
 	void CreateThrowRock(VECTOR3& _addPos);
-	void ThrowRockStart(BaseObject* _player);
+	
 
 	void DropRock();
 

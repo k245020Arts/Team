@@ -572,6 +572,9 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyGroup.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Common\FileSystemUtils\FileSystemUtils.cpp">
+      <Filter>Common\FileSystemUtils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1212,6 +1215,9 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyGroup.h">
       <Filter>PlayScene\Enemy\TrashEnemy</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Common\FileSystemUtils\FileSystemUtils.h">
+      <Filter>Common\FileSystemUtils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1420,6 +1426,9 @@
     </Filter>
     <Filter Include="Common\InputManager\PadInput">
       <UniqueIdentifier>{59a215e4-309a-49ea-81db-50540a15c9e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\FileSystemUtils">
+      <UniqueIdentifier>{493f6fb2-12a0-4be1-899b-325debdd4801}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

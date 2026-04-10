@@ -24,8 +24,8 @@ BootScene::BootScene()
 	new CollsionManager();
 	new Fead();
 	/*Load::SetAsync(false);*/
-	ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "stage_s", ID::S_MODEL, true);
-	ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "cube", ID::WALL, true);
+	ResourceLoad::LoadModel("stage_s", ID::S_MODEL, true);
+	ResourceLoad::LoadModel("cube", ID::WALL, true);
 
 }
 
