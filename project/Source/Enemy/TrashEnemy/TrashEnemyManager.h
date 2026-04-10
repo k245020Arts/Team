@@ -5,7 +5,7 @@
 
 class TrashEnemy;
 class Object3D;
-class Camera;
+class TrashEnemyGroup;
 
 enum CooperateData
 {
@@ -13,6 +13,22 @@ enum CooperateData
 	Cooperate2,
 
 	CooperateMax
+};
+
+struct WayPoint
+{
+	VECTOR3 position;
+	bool active;
+	WayPoint()
+	{
+		position = VZero;
+		active = false;
+	}
+	WayPoint(VECTOR3 _pos, bool _active)
+	{
+		position = _pos;
+		active = _active;
+	}
 };
 
 class TrashEnemyManager : public GameObject
@@ -30,45 +46,26 @@ public:
 	/// <param name="enemySpawnCounter">何体生成するか</param>
 	void CreateEnemy(VECTOR3 _pos,int enemySpawnCounter);
 	//敵のリストの取得
-	std::list<TrashEnemy*>& EnemyList(){ return enemies; }
+	//std::list<TrashEnemy*>& EnemyList(){ return enemies; }///
+	int GetEnemySize() const;
 	//敵が何人生きているかわかる関数
-	int GetActiveEnemy();
+	int GetActiveEnemy()const;
 
 	void ImguiDraw();
 
 	//連携攻撃
 	void Cooperate(CooperateData cooperateDate);
-	//敵のステートを強制的に全員変える
-	void AllChangeState(StateID::State_ID _id);
-	//雑魚的どうしであたった時の押し返し
-	void Separation();
-
+	
 	void Cooperate2Move();
 
 private:
-	std::list<TrashEnemy*> enemies;
+	//std::list<TrashEnemy*> enemies;
 	const int ENEMIESMAX = 30;
 	const int ATK_COUNTER_MIN = 1;
 	const float ATK_COUNTER_MAX = 3;
+
+	TrashEnemyGroup* enemyGroup;
 	
-	struct WayPoint
-	{
-		VECTOR3 position;
-		bool active;
-		WayPoint()
-		{
-			position = VZero;
-			active = false;
-		}
-		WayPoint(VECTOR3 _pos, bool _active)
-		{
-			position = _pos;
-			active = _active;
-		}
-	};
-
-	//CooperateData cooperateDate;
-
 	//ウェイポイントの元を保管する変数
 	std::list<VECTOR3> wayPointOffsets;
 	//ウェイポイントを保管する変数
@@ -77,28 +74,23 @@ private:
 	Object3D* player;
 	//std::list<Object3D*> stage;
 	Object3D* stage[4];
-	Camera* camera;
-	//雑魚敵の通常攻撃の処理
-	void NormalAttackMove(TrashEnemy* _enemy);
-	//連携攻撃の処理
-	void CooperateAttackMove(TrashEnemy* _enemy);
+	//Camera* camera;
+	
 	//ウェイポイントを最初に作る
 	void WayPointOffset();
 	//プレイヤーの周りにポイントを作る
 	void PlayerWayPoint();
-	//一番近いウェイポイントを計算する
-	void CloseWayPoint();
+	
 	//壁の外にあるウェイポイントを探す
 	bool StageWall(VECTOR3 _pos);
 
 	bool comboRequest;
 	//int counter;
-	float attackCounter;
+	
 	float maxAttackCounter;//
 	int standbyCounter;
 
 	float searchCounter;
-	//連携攻撃でこのカウントが一定の値を超えると強制的に攻撃し始める
-	float cooperateCounter;
+	
 	bool debugWaypoint;
 };

@@ -73,7 +73,7 @@ void Wave::EnemySpawn()
 		battleCounter = 0;
 	}
 	
-	if (tEnemyManager->EnemyList().size() <= 0)
+	if (tEnemyManager->GetActiveEnemy() <= 0)
 	{
 		if (waveNow < WAVE_MAX) {
 			tEnemyManager->CreateEnemy(SPWNPOS, spawn);
