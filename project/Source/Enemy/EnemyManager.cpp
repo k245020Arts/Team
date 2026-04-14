@@ -183,18 +183,20 @@ void EnemyManager::CreateBoss()
 	ResourceLoad::LoadAnim("B_IDLE2", ID::B_COOLTIME);
 	ResourceLoad::LoadAnim("B_WALK", ID::B_RUN);
 	ResourceLoad::LoadAnim("B_WAIT_SEE", ID::B_WAIT_SEE);
-	ResourceLoad::LoadAnim("B_ATTACK1", ID::B_N_ATTACK1);
+	
+	ResourceLoad::LoadAnim("B_SATTACK2_STOP", ID::B_S_ATTACK2_STOP);
+	ResourceLoad::LoadAnim("B_SATTACK2_BEFORE_2", ID::B_S_ATTACK2_BEFORE);
+	/*ResourceLoad::LoadAnim("B_ATTACK1", ID::B_N_ATTACK1);
 	ResourceLoad::LoadAnim("B_ATTACK2", ID::B_N_ATTACK2);
 	ResourceLoad::LoadAnim("B_ATTACK3", ID::B_N_ATTACK3);
 	ResourceLoad::LoadAnim("B_ATTACK4", ID::B_N_ATTACK4);
 	ResourceLoad::LoadAnim("B_ATTACK5", ID::B_N_ATTACK5);
 	ResourceLoad::LoadAnim("B_ATTACK6", ID::B_N_ATTACK6);
 	ResourceLoad::LoadAnim("B_ATTACK7", ID::B_N_ATTACK7);
-	ResourceLoad::LoadAnim("B_SATTACK1", ID::B_S_ATTACK1);
-	ResourceLoad::LoadAnim("B_SATTACK2", ID::B_S_ATTACK2);
-	ResourceLoad::LoadAnim("B_SATTACK2_STOP", ID::B_S_ATTACK2_STOP);
-	ResourceLoad::LoadAnim("B_SATTACK2_BEFORE_2", ID::B_S_ATTACK2_BEFORE);
-	ResourceLoad::LoadAnim("B_SATTACK1_SAMLL", ID::B_S_ATTACK1_SMALL);
+	ResourceLoad::LoadAnim("B_SATTACK1", ID::B_N_ATTACK8);
+	ResourceLoad::LoadAnim("B_SATTACK2", ID::B_N_ATTACK9);
+	ResourceLoad::LoadAnim("B_SATTACK1_SAMLL", ID::B_N_ATTACK10);
+	ResourceLoad::LoadAnim("B_ATTACK_IDOL", ID::B_N_ATTACK11);*/
 	ResourceLoad::LoadAnim("B_DIE", ID::BOSS_DIE);
 	ResourceLoad::LoadAnim("B_ROAR_ANIM", ID::B_ROAR_ANIM);
 	ResourceLoad::LoadAnim("B_ROAR3", ID::B_ROAR_2);
@@ -207,12 +209,10 @@ void EnemyManager::CreateBoss()
 	ResourceLoad::LoadAnim("B_BACKSTEP", ID::B_BACKSTEP);
 	ResourceLoad::LoadAnim("B_WIN", ID::B_WIN);
 
-	anim->AnimDataLoad("BossAnimData");
-	anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
-
 	b->Start(boss);
 
-	
+	anim->AnimDataLoad("BossAnimData");
+	anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 
 	Object2D* guage = new Object2D();
 

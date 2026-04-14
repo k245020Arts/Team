@@ -34,7 +34,8 @@ void BossRoar::Update()
 	}
 	if (b->enemyBaseComponent.anim->IsFinish()) {
 		b->enemyBaseComponent.state->SetNoStateChange(false);
-		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_HALF_ATTACK_S);
+		b->enemyBaseComponent.state->NowChangeState(StateID::ATTACK_SORTING_S);
+		b->enemyBaseComponent.state->GetState<AttackSorting>()->ForcedAttackStart("BossHalfSpecialAttack");
 	}
 }
 

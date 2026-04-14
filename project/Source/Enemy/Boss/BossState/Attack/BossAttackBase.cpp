@@ -22,6 +22,7 @@
 #include "../../../../Component/Collider/DountCollider.h"
 #include "../../../../Component/EnemyAttackObject/ShockWave/ShockWave.h"
 #include "../../../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
+#include "../AttackSorting.h"
 
 #define PATTERN2
 
@@ -141,7 +142,7 @@ void BossAttackBase::BossFinish()
 			boss->rockManager->DropRockStart();
 		}
 	}
-	
+	firstColl = false;
 }
 
 
@@ -342,6 +343,11 @@ void BossAttackBase::LoadAttackParam()
 	{
 		attackParam.attackID = string;
 	}
+}
+
+void BossAttackBase::SetAttackParam(BossAttackParam _param)
+{
+	attackParam = _param;
 }
 
 void BossAttackBase::RotateEvent()
@@ -599,6 +605,7 @@ void BossAttackBase::AttackFinish()
 	if (boss->enemyBaseComponent.anim->IsFinish())
 	{
 		boss->BossAttackStateChange();
+		boss->GetStateManager()->GetState<AttackSorting>()->AttackFinish();
 	}
 }
 

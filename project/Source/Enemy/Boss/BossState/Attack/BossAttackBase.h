@@ -6,7 +6,7 @@
 
 class SphereCollider;
 
-class BossAttackBase:public EnemyStateBase
+class BossAttackBase: public EnemyStateBase
 {
 public:
 
@@ -49,8 +49,7 @@ public:
 		float playerAttackFlyingCollRadius;
 		float flyingSpeed;
 		float flyingHeight;
-		float maxRadius;
-		float waveSpeed;
+		
 
 		bool bossRushHit;
 		float bossRushHitCollRadius;
@@ -67,6 +66,8 @@ public:
 		bool randomSpeed;
 		float minSpeed;
 		float maxSpeed;
+		float maxRadius;
+		float waveSpeed;
 
 
 		bool predictionCicleCan;
@@ -203,6 +204,8 @@ public:
 		{
 			bossID = "";
 			attackID = "";
+			animNum = 0;
+			animFileName = "";
 
 			useFlash = false;
 			attackFlashStartTime = 0.0f;
@@ -310,6 +313,8 @@ public:
 		//基本データ
 		std::string bossID;
 		std::string attackID;
+		std::string animFileName;
+		int animNum;
 		bool useFlash;
 		float attackFlashStartTime;
 		float slowTime;
@@ -441,6 +446,7 @@ public:
 	void EnemyJustAvoidCollsion();
 
 	void LoadAttackParam();
+	void SetAttackParam(BossAttackParam _param);
 
 	void RotateEvent();
 	void LookEvent();
@@ -559,8 +565,7 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 		j["playerAttackFlyingCollRadius"] = p.playerAttackFlyingCollRadius;
 		j["flyingSpeed"] = p.flyingSpeed;
 		j["flyingHeight"] = p.flyingHeight;
-		j["maxRadius"] = p.maxRadius;
-		j["waveSpeed"] = p.waveSpeed;
+		
 	}
 
 	// 突進ヒット
@@ -585,6 +590,8 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 		j["randomSpeed"] = p.randomSpeed;
 		j["minSpeed"] = p.minSpeed;
 		j["maxSpeed"] = p.maxSpeed;
+		j["maxRadius"] = p.maxRadius;
+		j["waveSpeed"] = p.waveSpeed;
 	}
 
 	// 予測円
@@ -611,6 +618,24 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 		j["throwFallGravity"] = p.throwFallGravity;
 		j["throwToFallToPlayer"] = p.throwToFallToPlayer;
 		j["freeDir"] = p.freeDir;
+		j["thorwStartPos"] = p.thorwStartPos;
+		j["thorwVelocity"] = p.thorwVelocity;
+	}
+
+	j["throwToFall"] = p.throwToFall;
+	if (p.throwToFall)
+	{
+		j["throwHeight"] = p.throwHeight;
+		j["throwFallGravity"] = p.throwFallGravity;
+	}
+
+	// --- プレイヤー追尾落下 ---
+	j["throwToFallToPlayer"] = p.throwToFallToPlayer;
+
+	// --- 自由方向系 ---
+	j["freeDir"] = p.freeDir;
+	if (p.freeDir)
+	{
 		j["thorwStartPos"] = p.thorwStartPos;
 		j["thorwVelocity"] = p.thorwVelocity;
 	}
@@ -706,8 +731,7 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 			if (j.contains("playerAttackFlyingCollRadius")) j.at("playerAttackFlyingCollRadius").get_to(p.playerAttackFlyingCollRadius);
 			if (j.contains("flyingSpeed")) j.at("flyingSpeed").get_to(p.flyingSpeed);
 			if (j.contains("flyingHeight")) j.at("flyingHeight").get_to(p.flyingHeight);
-			if (j.contains("maxRadius")) j.at("maxRadius").get_to(p.maxRadius);
-			if (j.contains("waveSpeed")) j.at("waveSpeed").get_to(p.waveSpeed);
+			
 		}
 	}
 	else p.playerAttackFlying = false;
@@ -742,6 +766,8 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 			if (j.contains("randomSpeed")) j.at("randomSpeed").get_to(p.randomSpeed);
 			if (j.contains("minSpeed")) j.at("minSpeed").get_to(p.minSpeed);
 			if (j.contains("maxSpeed")) j.at("maxSpeed").get_to(p.maxSpeed);
+			if (j.contains("maxRadius")) j.at("maxRadius").get_to(p.maxRadius);
+			if (j.contains("waveSpeed")) j.at("waveSpeed").get_to(p.waveSpeed);
 		}
 	}
 	else p.blastCan = false;
@@ -784,6 +810,36 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 	}
 	else p.armThrow = false;
 
+	// --- 落下関連 ---
+	if (j.contains("throwToFall"))
+	{
+		j.at("throwToFall").get_to(p.throwToFall);
+
+		if (p.throwToFall)
+		{
+			if (j.contains("throwHeight")) j.at("throwHeight").get_to(p.throwHeight);
+			if (j.contains("throwFallGravity")) j.at("throwFallGravity").get_to(p.throwFallGravity);
+		}
+	}
+
+	// --- プレイヤー追尾落下 ---
+	if (j.contains("throwToFallToPlayer"))
+	{
+		j.at("throwToFallToPlayer").get_to(p.throwToFallToPlayer);
+	}
+
+	// --- 自由方向系 ---
+	if (j.contains("freeDir"))
+	{
+		j.at("freeDir").get_to(p.freeDir);
+
+		if (p.freeDir)
+		{
+			if (j.contains("thorwStartPos")) j.at("thorwStartPos").get_to(p.thorwStartPos);
+			if (j.contains("thorwVelocity")) j.at("thorwVelocity").get_to(p.thorwVelocity);
+		}
+	}
+
 	// groundDelete
 	if (j.contains("groundDelete"))
 	{
@@ -803,7 +859,7 @@ inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
 {
 	j = JSON{
 		{"bossID", p.bossID},
-		{"attackID", p.attackID},
+		{"animNum", p.animNum},
 		{"useFlash", p.useFlash},
 		{"attackFlashStartTime", p.attackFlashStartTime},
 		{"slowTime", p.slowTime},
@@ -938,9 +994,7 @@ inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
 		j["cameraChangeSpeed"] = p.cameraChangeSpeed;
 	}
 
-	// =========================
 	// トレイル
-	// =========================
 	if (p.useTrail)
 	{
 		j["useTrail"] = p.useTrail;
@@ -953,6 +1007,7 @@ inline void from_json(const JSON& j, BossAttackBase::BossAttackParam& p)
 	// 基本
 	if (j.contains("bossID")) j.at("bossID").get_to(p.bossID);
 	if (j.contains("attackID")) j.at("attackID").get_to(p.attackID);
+	if (j.contains("animNum")) j.at("animNum").get_to(p.animNum);
 	if (j.contains("useFlash")) j.at("useFlash").get_to(p.useFlash);
 	if (j.contains("attackFlashStartTime")) j.at("attackFlashStartTime").get_to(p.attackFlashStartTime);
 	if (j.contains("slowTime")) j.at("slowTime").get_to(p.slowTime);
@@ -972,6 +1027,7 @@ inline void from_json(const JSON& j, BossAttackBase::BossAttackParam& p)
 		std::string s;
 		j.at("animID").get_to(s);
 		p.animID = ID::StringToID(s);
+		p.animFileName = s;
 	}
 
 	if (j.contains("attackBeforeAnimID"))

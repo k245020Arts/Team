@@ -2,6 +2,8 @@
 #include "../../TrashEnemy/EnemyState/EnemyStateBase.h"
 #include "../Boss.h"
 
+class BossAttackBase;
+
 class AttackSorting :public EnemyStateBase
 {
 public:
@@ -13,10 +15,18 @@ public:
 	void Start()override;
 	void Finish()override;
 
+	void ForcedAttackStart(std::string _attackID);
+
+	void Load(std::string _bossName, Boss* _boss);
+	void AttackFinish();
+	BossAttackBase* GetNowAttackState();
+
 private:
 	const float COOLTIME = 0.5f;
 
 	void NormalAttackSelect();
+	void AttackStart();
+	
 	//int AttackPriority();
 	
 	/// <summary>
@@ -34,6 +44,7 @@ private:
 	bool jump;
 	int kind;
 	int attackNum;
+	bool nextAttack;
 
 	/*struct ActionRange
 	{
@@ -45,11 +56,13 @@ private:
 	std::vector<ActionRange> table;*/
 
 	int bossPriority;//
-	StateID::State_ID nextState;
-	StateID::State_ID copyState;
+	std::string nextState;
+	std::string copyState;
 
 	int copyPriority;
 	int moveCounter;
+	bool forceAttack;
 
 	VECTOR3 vec;
+	std::unordered_map<std::string, BossAttackBase*> attacks;
 };

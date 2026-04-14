@@ -3,6 +3,7 @@
     "addRushCollScale": 50.0,
     "addVelocity": true,
     "animID": "B_SATTACK2",
+    "animNum": 8,
     "attackBeforeAnimID": "B_SATTACK2_BEFORE_2",
     "attackCameraBossLook": true,
     "attackCollTransform": {

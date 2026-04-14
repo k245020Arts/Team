@@ -80,86 +80,86 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 	//その種類の敵が何体スポーンしたか
 	int spawnCounter = 0;
 
-    for (int i = 0; i < enemySpawnCounter; i++)
-    {
-		
-		// 個別のenemyを作る
-		Object3D* e;
-		e = new Object3D();
-		e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(2.5f, 2.5f, 2.5f), "ENEMY" + std::to_string(i));
-		//当たり判定を生成（やられ判定）
-		SphereCollider* collider = e->Component()->AddComponent<SphereCollider>();
-		CollsionInfo info;
-		info.parentTransfrom = e->GetTransform();
-		info.shape = CollsionInformation::SPHERE;
-		info.oneColl = false;
-		info.tag = CollsionInformation::Tag::ENEMY;
-		info.size = 1.0f;//
-		collider->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
-		
-		RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
-		info.shape = CollsionInformation::RAY;
-		info.tag = CollsionInformation::E_FLOOR;
-		collider3->RaySet(info, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, 1/*-100*/, 0), VZero, VECTOR3(1.0f, 1, 1)));
+  //  for (int i = 0; i < enemySpawnCounter; i++)
+  //  {
+		//
+		//// 個別のenemyを作る
+		//Object3D* e;
+		//e = new Object3D();
+		//e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(2.5f, 2.5f, 2.5f), "ENEMY" + std::to_string(i));
+		////当たり判定を生成（やられ判定）
+		//SphereCollider* collider = e->Component()->AddComponent<SphereCollider>();
+		//CollsionInfo info;
+		//info.parentTransfrom = e->GetTransform();
+		//info.shape = CollsionInformation::SPHERE;
+		//info.oneColl = false;
+		//info.tag = CollsionInformation::Tag::ENEMY;
+		//info.size = 1.0f;//
+		//collider->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
+		//
+		//RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
+		//info.shape = CollsionInformation::RAY;
+		//info.tag = CollsionInformation::E_FLOOR;
+		//collider3->RaySet(info, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, 1/*-100*/, 0), VZero, VECTOR3(1.0f, 1, 1)));
 
-		Shaker* shaker = e->Component()->AddComponent<Shaker>();
+		//Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
-		MeshRenderer* me = e->Component()->AddComponent<MeshRenderer>();
-		int handle = MV1DuplicateModel(ResourceLoad::LoadModel("Ch45_nonPBR", ID::IDType::E_MODEL));
-		me->ModelHandle(handle,true);
-		me->RotationMesh(1, DX_PI_F);
+		//MeshRenderer* me = e->Component()->AddComponent<MeshRenderer>();
+		//int handle = MV1DuplicateModel(ResourceLoad::LoadModel("Ch45_nonPBR", ID::IDType::E_MODEL));
+		//me->ModelHandle(handle,true);
+		//me->RotationMesh(1, DX_PI_F);
 
-		Animator* anim = e->Component()->AddComponent<Animator>();
-		anim->BaseModelSet(handle, 1);
-		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
-		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
-		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 0.8f, 20.0f, 30.0f);
-		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 1.0f, 25.0f, 35.0f);
-		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
-		anim->AddFile(ID::E_DIE, "E_DEAD", false, 2.0f);
-		
-		anim->Play(ID::TE_IDOL);
+		//Animator* anim = e->Component()->AddComponent<Animator>();
+		//anim->BaseModelSet(handle, 1);
+		//anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
+		//anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
+		//anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 0.8f, 20.0f, 30.0f);
+		//anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 1.0f, 25.0f, 35.0f);
+		//anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
+		//anim->AddFile(ID::E_DIE, "E_DEAD", false, 2.0f);
+		//
+		//anim->Play(ID::TE_IDOL);
 
-		Physics* physics = e->Component()->AddComponent<Physics>();
-		physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));
+		//Physics* physics = e->Component()->AddComponent<Physics>();
+		//physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));
 
-        // 個別のTrashEnemyを追加
-        TrashEnemy* t = e->Component()->AddComponent<TrashEnemy>();
-		t->Start(e);
-       
-        // 位置を決める
-        const int R_MAX = 2000;
-        float rangeX = (float)GetRand(R_MAX * 2) - R_MAX;
-		float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
-        VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
+  //      // 個別のTrashEnemyを追加
+  //      TrashEnemy* t = e->Component()->AddComponent<TrashEnemy>();
+		//t->Start(e);
+  //     
+  //      // 位置を決める
+  //      const int R_MAX = 2000;
+  //      float rangeX = (float)GetRand(R_MAX * 2) - R_MAX;
+		//float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
+  //      VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
 
-		//敵の種類の数ができるだけ均等にするための処理
-		if (spawnCounter >= kindsCounter)
-		{
-			numCounter++;
-			spawnCounter = 0;
-		}
-		//ポジションをセット
-		t->CreateTrashEnemy(_pos + pos, numCounter);
-		spawnCounter++;
-		//hp表示
-		Object2D* guage = new Object2D();
+		////敵の種類の数ができるだけ均等にするための処理
+		//if (spawnCounter >= kindsCounter)
+		//{
+		//	numCounter++;
+		//	spawnCounter = 0;
+		//}
+		////ポジションをセット
+		//t->CreateTrashEnemy(_pos + pos, numCounter);
+		//spawnCounter++;
+		////hp表示
+		//Object2D* guage = new Object2D();
 
-		guage->Init(VECTOR2F(150, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.2f, 0.2f), "TrashEnemyHpGuage");
+		//guage->Init(VECTOR2F(150, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.2f, 0.2f), "TrashEnemyHpGuage");
 
-		e->AddChild(guage);
+		//e->AddChild(guage);
 
-		Guage* g = guage->Component()->AddComponent<Guage>();
-		/*g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_BILLBOARD, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
-		g->GuageDrawReady<TrashEnemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_BILLBOARD,Guage::BAR_MODE::HP);*/
-		g->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
-		g->GuageDrawReady<TrashEnemy>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
-		g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
+		//Guage* g = guage->Component()->AddComponent<Guage>();
+		///*g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_BILLBOARD, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
+		//g->GuageDrawReady<TrashEnemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_BILLBOARD,Guage::BAR_MODE::HP);*/
+		//g->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
+		//g->GuageDrawReady<TrashEnemy>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
+		//g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
 
-		// enemiesに登録（個別インスタンス）
-		//enemies.emplace_back(t);
-		enemyGroup->SetMeleeEnemy(t);
-    }
+		//// enemiesに登録（個別インスタンス）
+		////enemies.emplace_back(t);
+		//enemyGroup->SetMeleeEnemy(t);
+  //  }
 }
 
 int TrashEnemyManager::GetEnemySize() const

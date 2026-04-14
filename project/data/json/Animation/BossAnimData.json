@@ -126,6 +126,15 @@
       "maxFrame": 160.0,
       "playSpeed": 1.0
     },
+    "B_ATTACK_IDOL": {
+      "eventFinishTime": -1.0,
+      "eventStartTime": -1.0,
+      "fileName": "B_ATTACK_IDOL",
+      "id": "B_ATTACK_IDOL",
+      "loop": true,
+      "maxFrame": 160.0,
+      "playSpeed": 1.0
+    },
     "B_IDLE2": {
       "eventFinishTime": -1.0,
       "eventStartTime": -1.0,

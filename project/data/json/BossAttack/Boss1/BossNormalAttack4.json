@@ -1,7 +1,8 @@
 {
-  "BossNormalAttack1": {
-    "angleMoveAmout": 90.0,
-    "animID": "B_ATTACK1",
+  "BossNormalAttack4": {
+    "addVelocity": false,
+    "animID": "B_ATTACK4",
+    "animNum": 3,
     "attackBeforeAnimID": "",
     "attackCollTransform": {
       "position": {
@@ -20,12 +21,13 @@
         "z": 0.0
       }
     },
-    "attackCollsionEndTime": 60.0,
-    "attackCollsionStartTime": 25.0,
+    "attackCollsionEndTime": 30.0,
+    "attackCollsionStartTime": 20.0,
     "attackFlashStartTime": 7.0,
-    "attackID": "BossNormalAttack1",
+    "attackID": "BossNormalAttack4",
     "attackPositionFrameNum": 15,
     "attackSoundStartTime": 1.0,
+    "baseSpeed": 3000.0,
     "bossID": "",
     "damagePattern": "NO_BACK",
     "hitDamage": 50.0,
@@ -48,7 +50,17 @@
     },
     "justAvoidCollsionEndTime": 6.0,
     "justAvoidCollsionStartTime": 5.0,
-    "rotateMove": true,
+    "lookMaxCounter": 40.0,
+    "lookNum": 1,
+    "lookPlayer": true,
+    "maxMoveSpeed": 7000.0,
+    "minMoveSpeed": 3000.0,
+    "moveFinishTime": 50.0,
+    "moveStartTime": 10.0,
+    "playerAloowMove": true,
+    "playerBaseNear": 1000.0,
+    "playerNearAloowStop": false,
+    "playerNearStop": true,
     "slowAmout": 0.10000000149011612,
     "slowTime": 0.30000001192092896,
     "speedUpMotionSpeed": 0.30000001192092896,
