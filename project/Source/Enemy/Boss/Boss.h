@@ -14,6 +14,7 @@ class BossRockManager;
 //class PlayerAttack3;
 
 class PlayerSpecialAttack;
+class BossAttackDataSerializer;
 
 class Boss : public EnemyBase
 {
@@ -52,6 +53,14 @@ public:
 		EIGHT,
 		FIVE,
 		THREE,
+	};
+
+	struct BossParam
+	{
+		int bossID;
+		std::string bossName;
+		float hp;
+		float defense;
 	};
 
 	Boss();
@@ -180,4 +189,5 @@ private:
 	bool oneDie;
 
 	BossRockManager* rockManager;
+	std::unique_ptr<BossAttackDataSerializer> bossAttackDataSerializer;
 };

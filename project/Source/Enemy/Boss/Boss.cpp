@@ -41,8 +41,8 @@
 #include "../../Common/Random.h"
 #include "../../Component/UI/EnemyDamageUI.h"
 #include "../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
-
 #include "../../Player/PlayerState/AttackState/PlayerAttack2.h"
+#include "BossAttackDataSerializer.h"
 
 namespace {
 	std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable;
@@ -154,6 +154,7 @@ void Boss::Update()
 	if (noAttackChangeCounter > 0.0f) {
 		noAttackChangeCounter -= Time::DeltaTimeRate();
 	}
+	bossAttackDataSerializer->Update();
 }
 
 void Boss::Draw()
@@ -200,7 +201,6 @@ EnemyInformation::EnemyReaction Boss::JsonRead(const JSON& j)
 
 	return r;
 }
-
 
 void Boss::Start(Object3D* _obj) 
 {
@@ -279,6 +279,8 @@ void Boss::Start(Object3D* _obj)
 			enemyTable[r.attackID] = r;
 		}
 	}
+
+	bossAttackDataSerializer =  std::make_unique<BossAttackDataSerializer>("Boss1");
 }
 
 void Boss::ImguiDraw()
