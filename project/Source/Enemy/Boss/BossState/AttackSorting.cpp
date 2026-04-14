@@ -38,16 +38,49 @@ namespace {
 	struct ActionParam
 	{
 		std::string id;
-		bool attackState; //攻撃のStateか
-		int priority;	//プライオリティ
-		int weight;		//重さ
-		int maxAction;	//連続で何回行動できるか
+		bool attackState; // 攻撃のStateか
+		int priority;     // プライオリティ
+		int weight;       // 重さ
+		int maxAction;    // 連続で何回行動できるか
 
-		float distance = 0;//距離によってその技が出やすいかどうか
-		int addWeight = 0;//数字変動
+		float distance = 0; // 距離によってその技が出やすいかどうか
+		int addWeight = 0;  // 数字変動
 	};
-	std::vector<ActionParam> actions 
+
+	// to_json
+	void to_json(JSON& j, const ActionParam& p)
 	{
+		j = JSON{
+			{"id", p.id},
+			{"attackState", p.attackState},
+			{"priority", p.priority},
+			{"weight", p.weight},
+			{"maxAction", p.maxAction},
+			{"distance", p.distance},
+			{"addWeight", p.addWeight}
+		};
+	}
+
+	// from_json
+	void from_json(const JSON& j, ActionParam& p)
+	{
+		j.at("id").get_to(p.id);
+		j.at("attackState").get_to(p.attackState);
+		j.at("priority").get_to(p.priority);
+		j.at("weight").get_to(p.weight);
+		j.at("maxAction").get_to(p.maxAction);
+
+		// optional扱い（デフォルト値あり）
+		if (j.contains("distance"))
+			j.at("distance").get_to(p.distance);
+
+		if (j.contains("addWeight"))
+			j.at("addWeight").get_to(p.addWeight);
+	}
+
+
+	std::vector<ActionParam> actions;
+	/*{
 		{"BossWalk",				false,10, 40, 0},
 		{"BossNormalAttack1",		true,10, 10, 1},
 		{"BossNormalAttack2",		true,10, 10, 1},
@@ -60,7 +93,7 @@ namespace {
 		{"BossSpecialSmallAttack1",	true,50, 30, 1},
 		{"BossSpecialAttack2",		true,50, 0,  1, 2000},
 		{"BossBackStep",			false,50, 30, 0},
-	};
+	};*/
 
 	//通常攻撃の重み
 	const std::vector<std::vector<double>> normalAttackParam{
@@ -100,7 +133,11 @@ AttackSorting::AttackSorting()
 
 	copyState = StateID::STATE_MAX;
 
+	
+
 	vec = VZero;
+	forceAttack = false;
+	nextAttack = false;
 }
 
 AttackSorting::~AttackSorting()
@@ -348,13 +385,17 @@ void AttackSorting::Load(std::string _bossName,Boss* _boss)
 	std::string filePath = "data/json/BossAttack/" + _bossName;
 
 	for (const auto& entry : std::filesystem::directory_iterator(filePath)) {
+		//フォルダだったらスルー
+		if (entry.is_directory()) {
+			break;
+		}
 		std::string fileName = entry.path().filename().string();
 		std::string key = entry.path().stem().string();
 		JsonReader jsonReader;
 		JSON root;
 		if (!jsonReader.Load(filePath + "/" + fileName))
 		{
-			return;
+			break;
 		}
 
 		root = jsonReader.Data();
@@ -393,6 +434,9 @@ void AttackSorting::Load(std::string _bossName,Boss* _boss)
 		t.second->SetComponent<Boss>(_boss);
 	}
 
+	//Save(_bossName);
+	LoadSorting(_bossName);
+
 }
 
 void AttackSorting::AttackStart() 
@@ -416,4 +460,41 @@ void AttackSorting::AttackFinish()
 BossAttackBase* AttackSorting::GetNowAttackState()
 {
 	return attacks[nextState];
+}
+
+void AttackSorting::Save(std::string _bossName)
+{
+	std::string filePath = std::string("data/json/BossAttack/" + _bossName + "/Sorting") + "/AttackSort" + ".json";
+
+	JsonReader json;
+	json.Load(filePath);
+
+	nlohmann::json& root = json.Data();
+
+	if (!root.contains("AttackSort")) {
+		root["AttackSort"] = nlohmann::json::object();
+	}
+	for (auto& attack : actions) {
+		std::string key = attack.id;
+		root["AttackSort"][key] = attack;
+	}
+	
+
+	json.Save(filePath, root);
+}
+
+void AttackSorting::LoadSorting(std::string _bossName)
+{
+	JsonReader json;
+	std::string filePath = std::string("data/json/BossAttack/" + _bossName + "/Sorting") + "/AttackSort" + ".json";
+	json.Load(filePath);
+
+	actions.clear();
+	for (auto& j : json.Data()["AttackSort"]) {
+		ActionParam action;
+		j.get_to(action);
+		actions.push_back(action);
+	}
+
+	
 }

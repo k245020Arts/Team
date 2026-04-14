@@ -31,6 +31,7 @@ InputManager::InputManager()
 	CreateInputData(KeyConfigData("heavyAttack", KEY_INPUT_C, XINPUT_BUTTON_Y, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("Mouse", KEY_INPUT_F1, -1, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("playerParam", KEY_INPUT_LCONTROL, -1, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("BossParamWindow", KEY_INPUT_F2, -1, MouseInput::MOUSE_NONE));
 
 }
 

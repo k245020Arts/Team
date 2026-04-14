@@ -26,6 +26,9 @@ private:
 
 	void NormalAttackSelect();
 	void AttackStart();
+
+	void Save(std::string _bossName);
+	void LoadSorting(std::string _bossName);
 	
 	//int AttackPriority();
 	
