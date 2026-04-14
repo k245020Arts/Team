@@ -68,7 +68,7 @@ BOSS_BACKSTEP_S,
         COOPERATEATTACK1,
         T_ENEMY_STANDBY,
         T_ENEMY_DAMAGE,
-
+        T_ENEMY_WAITSEE,
 
 
         STATE_MAX,

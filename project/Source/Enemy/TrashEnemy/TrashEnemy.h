@@ -25,6 +25,7 @@ public:
 	friend class T_EnemyAttack;
 	friend class T_EnemyDead;
 	friend class Standby;
+	friend class WaitSee;
 	friend class T_EnemyJump;
 	friend class CooperateAttack1;
 	friend class CooperateAttack2;
