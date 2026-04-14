@@ -1,8 +1,51 @@
 #pragma once
 #include "../../TrashEnemy/EnemyState/EnemyStateBase.h"
 #include "../Boss.h"
+#include "Attack/BossAttackBase.h"
 
-class BossAttackBase;
+struct ActionParam
+{
+	std::string id;
+	bool attackState; // 攻撃のStateか
+	int priority;     // プライオリティ
+	int weight;       // 重さ
+	int maxAction;    // 連続で何回行動できるか
+
+	float distance = 0; // 距離によってその技が出やすいかどうか
+	int addWeight = 0;  // 数字変動
+};
+
+// to_json
+inline void to_json(JSON& j, const ActionParam& p)
+{
+	j = JSON{
+		{"id", p.id},
+		{"attackState", p.attackState},
+		{"priority", p.priority},
+		{"weight", p.weight},
+		{"maxAction", p.maxAction},
+		{"distance", p.distance},
+		{"addWeight", p.addWeight}
+	};
+}
+
+// from_json
+inline void from_json(const JSON& j, ActionParam& p)
+{
+	j.at("id").get_to(p.id);
+	j.at("attackState").get_to(p.attackState);
+	j.at("priority").get_to(p.priority);
+	j.at("weight").get_to(p.weight);
+	j.at("maxAction").get_to(p.maxAction);
+
+	// optional扱い（デフォルト値あり）
+	if (j.contains("distance"))
+		j.at("distance").get_to(p.distance);
+
+	if (j.contains("addWeight"))
+		j.at("addWeight").get_to(p.addWeight);
+}
+
 
 class AttackSorting :public EnemyStateBase
 {
@@ -21,14 +64,19 @@ public:
 	void AttackFinish();
 	BossAttackBase* GetNowAttackState();
 
+	void SaveSorthing(std::string _bossName);
+	void LoadSorting(std::string _bossName);
+
+	std::vector<ActionParam> GetActionParam();
+	std::unordered_map<std::string, BossAttackBase::BossAttackParam> GetAttackParam();
+
 private:
 	const float COOLTIME = 0.5f;
 
 	void NormalAttackSelect();
 	void AttackStart();
 
-	void Save(std::string _bossName);
-	void LoadSorting(std::string _bossName);
+	
 	
 	//int AttackPriority();
 	
@@ -68,4 +116,5 @@ private:
 
 	VECTOR3 vec;
 	std::unordered_map<std::string, BossAttackBase*> attacks;
+	std::unordered_map<std::string, BossAttackBase::BossAttackParam> attackParam;
 };

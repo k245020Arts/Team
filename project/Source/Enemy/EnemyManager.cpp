@@ -21,8 +21,13 @@
 #include "../Common/Easing.h"
 #include "../GameControler/GameControler.h"
 #include "../State/StateManager.h"
+#include "../Stage/StageSelectData.h"
 //#define VERSION2D
 //#define DOT_MODE
+
+namespace {
+	std::vector<Boss::BossParam> bossParams;
+}
 
 EnemyManager::EnemyManager()
 {
@@ -32,7 +37,7 @@ EnemyManager::EnemyManager()
 	SetDrawOrder(-10);
 	cameraTargetObj = nullptr;
 	gameManager = nullptr;
-
+	LoadBossParam("data/json/BossAttack/BossParam.json");
 }
 
 EnemyManager::~EnemyManager()
@@ -98,6 +103,15 @@ void EnemyManager::CreateBoss()
 {
 	/*Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
 	player = obj;*/
+	Boss::BossParam bossParam;
+	int currentBossID = StageSelectData::GetInstance()->GetNowStageData().bossID;
+	//ステージに登場するボスのパラメーターをセット
+	for (auto& param : bossParams) {
+		if (currentBossID == param.bossID) {
+			bossParam = param;
+			break;
+		}
+	}
 	Object3D* boss;
 	boss = new Object3D();
 	float bSize = 8.0f;
@@ -141,7 +155,7 @@ void EnemyManager::CreateBoss()
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
 
 	MeshRenderer* m = boss->Component()->AddComponent<MeshRenderer>();
-	m->ModelHandle(ResourceLoad::LoadModel("BossModel", ID::B_MODEL));
+	m->ModelHandle(ResourceLoad::LoadModel(bossParam.modelName, ID::B_MODEL));
 	m->RotationMesh(0, 180.0f * DegToRad);
 
 	Boss* b = boss->Component()->AddComponent<Boss>();
@@ -209,7 +223,7 @@ void EnemyManager::CreateBoss()
 	ResourceLoad::LoadAnim("B_BACKSTEP", ID::B_BACKSTEP);
 	ResourceLoad::LoadAnim("B_WIN", ID::B_WIN);
 
-	b->Start(boss);
+	b->Start(boss,bossParam);
 
 	anim->AnimDataLoad("BossAnimData");
 	anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
@@ -723,6 +737,25 @@ void EnemyManager::GameSceneChangeState()
 		}
 	}
 	
+}
+
+bool EnemyManager::LoadBossParam(std::string _fileName)
+{
+	JsonReader jsonReader;
+	if (!jsonReader.Load(_fileName)) {
+		return false;
+	}
+
+	auto& json = jsonReader.Data();
+
+	for (const auto& elem : json["Boss"])
+	{
+		Boss::BossParam boss;
+
+		boss = elem;
+		bossParams.push_back(boss);
+	}
+	return true;
 }
 
 int EnemyManager::PlayerFovEnemyNum(Transform* _pTransform, float _angle)

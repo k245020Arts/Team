@@ -59,9 +59,19 @@ public:
 	{
 		int bossID;
 		std::string bossName;
+		std::string	modelName;
 		float hp;
 		float defense;
+
+		BossParam(){
+			bossID = 0;
+			bossName = "";
+			modelName = "";
+			hp = 0.0f;
+			defense = 0.0f;
+		}
 	};
+	
 
 	Boss();
 	~Boss();
@@ -77,7 +87,7 @@ public:
 	/// ボスの開始
 	/// </summary>
 	/// <param name="_obj"></param>
-	void Start(Object3D* _obj);
+	void Start(Object3D* _obj, const BossParam& _param);
 	
 	void ImguiDraw()override;
 	
@@ -190,4 +200,30 @@ private:
 
 	BossRockManager* rockManager;
 	std::unique_ptr<BossAttackDataSerializer> bossAttackDataSerializer;
+
+	BossParam bossParam;
+	float defense;
 };
+
+// to_json
+inline void to_json(JSON& j, const Boss::BossParam& p)
+{
+	j = JSON{
+		{"bossID", p.bossID},
+		{"bossName", p.bossName},
+		{"modelName", p.modelName},
+		{"hp", p.hp},
+		{"defense", p.defense}
+	};
+}
+
+// from_json
+inline void from_json(const JSON& j, Boss::BossParam& p)
+{
+	// 必須扱い
+	j.at("bossID").get_to(p.bossID);
+	j.at("bossName").get_to(p.bossName);
+	j.at("modelName").get_to(p.modelName);
+	j.at("hp").get_to(p.hp);
+	j.at("defense").get_to(p.defense);
+}

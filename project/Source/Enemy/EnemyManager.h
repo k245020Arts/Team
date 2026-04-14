@@ -159,4 +159,6 @@ private:
 	GameControler* gameManager;
 	void GameSceneChangeState();
 
+	bool LoadBossParam(std::string _fileName);
+
 };

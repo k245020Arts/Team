@@ -4,7 +4,6 @@
 #include "BossStatus.h"
 #include "../../../Common/Random.h"
 #include "../../../Common/FileSystemUtils/FileSystemUtils.h"
-#include "Attack/BossAttackBase.h"
 #include "../../../Common/ResourceLoader.h"
 
 namespace {
@@ -35,48 +34,8 @@ namespace {
 		{StateID::BOSS_NORMAL_ATTACK5_S},
 		{StateID::BOSS_NORMAL_ATTACK6_S},
 	};
-	struct ActionParam
-	{
-		std::string id;
-		bool attackState; // 攻撃のStateか
-		int priority;     // プライオリティ
-		int weight;       // 重さ
-		int maxAction;    // 連続で何回行動できるか
-
-		float distance = 0; // 距離によってその技が出やすいかどうか
-		int addWeight = 0;  // 数字変動
-	};
-
-	// to_json
-	void to_json(JSON& j, const ActionParam& p)
-	{
-		j = JSON{
-			{"id", p.id},
-			{"attackState", p.attackState},
-			{"priority", p.priority},
-			{"weight", p.weight},
-			{"maxAction", p.maxAction},
-			{"distance", p.distance},
-			{"addWeight", p.addWeight}
-		};
-	}
-
-	// from_json
-	void from_json(const JSON& j, ActionParam& p)
-	{
-		j.at("id").get_to(p.id);
-		j.at("attackState").get_to(p.attackState);
-		j.at("priority").get_to(p.priority);
-		j.at("weight").get_to(p.weight);
-		j.at("maxAction").get_to(p.maxAction);
-
-		// optional扱い（デフォルト値あり）
-		if (j.contains("distance"))
-			j.at("distance").get_to(p.distance);
-
-		if (j.contains("addWeight"))
-			j.at("addWeight").get_to(p.addWeight);
-	}
+	
+	
 
 
 	std::vector<ActionParam> actions;
@@ -377,7 +336,7 @@ void AttackSorting::AllAddWeightZero()
 void AttackSorting::Load(std::string _bossName,Boss* _boss) 
 {
 
-	std::unordered_map<std::string, BossAttackBase::BossAttackParam> attackParam;
+	
 	
 	
 	//int attackNum = FileSystemUtils::GetDirectoryCount("data/json/BossAttack/" + _bossName);
@@ -462,7 +421,7 @@ BossAttackBase* AttackSorting::GetNowAttackState()
 	return attacks[nextState];
 }
 
-void AttackSorting::Save(std::string _bossName)
+void AttackSorting::SaveSorthing(std::string _bossName)
 {
 	std::string filePath = std::string("data/json/BossAttack/" + _bossName + "/Sorting") + "/AttackSort" + ".json";
 
@@ -478,7 +437,7 @@ void AttackSorting::Save(std::string _bossName)
 		std::string key = attack.id;
 		root["AttackSort"][key] = attack;
 	}
-	
+
 
 	json.Save(filePath, root);
 }
@@ -497,4 +456,14 @@ void AttackSorting::LoadSorting(std::string _bossName)
 	}
 
 	
+}
+
+std::vector<ActionParam> AttackSorting::GetActionParam()
+{
+	return actions;
+}
+
+std::unordered_map<std::string, BossAttackBase::BossAttackParam> AttackSorting::GetAttackParam()
+{
+	return attackParam;
 }

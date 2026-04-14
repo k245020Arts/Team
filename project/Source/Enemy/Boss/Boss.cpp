@@ -77,6 +77,7 @@ Boss::Boss()
 	bs = new BossStatus;
 
 	hp = bs->GetStatus().maxHp;
+	defense = 500.0f;
 	maxHp = hp;
 	//trashEnemy = FindGameObject< TrashEnemyManager>();
 	maxAttack = -1;
@@ -202,7 +203,7 @@ EnemyInformation::EnemyReaction Boss::JsonRead(const JSON& j)
 	return r;
 }
 
-void Boss::Start(Object3D* _obj) 
+void Boss::Start(Object3D* _obj,const BossParam& _param) 
 {
 	enemyBaseComponent.state = obj->Component()->AddComponent<StateManager>();
 	enemyBaseComponent.playerObj = FindGameObjectWithTag<Object3D>("PLAYER");
@@ -280,7 +281,20 @@ void Boss::Start(Object3D* _obj)
 		}
 	}
 
-	bossAttackDataSerializer =  std::make_unique<BossAttackDataSerializer>("Boss1");
+	bossAttackDataSerializer =  std::make_unique<BossAttackDataSerializer>(attackSorting,"Boss1");
+
+	bossParam = _param;
+	hp = bossParam.hp;
+	defense = bossParam.defense;
+	/*JsonReader json;
+	std::string filePath = std::string("data/json/BossAttack");
+
+	JSON root = nlohmann::json::object();
+
+	root["Boss"] = nlohmann::json::array();
+	root["Boss"].push_back(bossParam);
+	
+	json.Save(filePath + "/BossParam.json", root);*/
 }
 
 void Boss::ImguiDraw()
