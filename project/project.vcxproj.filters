@@ -575,6 +575,9 @@
     <ClCompile Include="Source\Common\FileSystemUtils\FileSystemUtils.cpp">
       <Filter>Common\FileSystemUtils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1217,6 +1220,9 @@
     </ClInclude>
     <ClInclude Include="Source\Common\FileSystemUtils\FileSystemUtils.h">
       <Filter>Common\FileSystemUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
