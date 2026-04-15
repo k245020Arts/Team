@@ -32,4 +32,6 @@ private:
 	void AttackSave(std::string _attackID);
 	Animator* bossAnim;
 	Animator::AnimFileInfo currentSelectAnimInfos;
+
+	std::vector<std::string> animFileName;
 };

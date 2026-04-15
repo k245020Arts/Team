@@ -347,7 +347,7 @@ void AttackSorting::Load(std::string _bossName,Boss* _boss)
 	for (const auto& entry : std::filesystem::directory_iterator(filePath)) {
 		//フォルダだったらスルー
 		if (entry.is_directory()) {
-			break;
+			continue;
 		}
 		std::string fileName = entry.path().filename().string();
 		std::string key = entry.path().stem().string();

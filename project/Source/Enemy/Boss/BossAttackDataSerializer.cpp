@@ -6,6 +6,7 @@
 #include "../../../Source/Common/FileSystemUtils/FileSystemUtils.h"
 #include "../../Common/ResourceLoader.h"
 
+#define ANIM_FILE
 
 BossAttackDataSerializer::BossAttackDataSerializer() : BossAttackDataSerializer(nullptr,"")
 {
@@ -24,6 +25,20 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 	}
 	bossAnim = nullptr;
 	currentSelectAnimInfos = Animator::AnimFileInfo();
+
+
+	std::string filePath = "data/model/animation";
+
+	for (const auto& entry : std::filesystem::directory_iterator(filePath)) {
+		// フォルダはスキップ
+		if (entry.is_directory()) {
+			continue;
+		}
+
+		std::string name = entry.path().stem().string();
+		animFileName.push_back(name);
+	}
+
 }
 
 BossAttackDataSerializer::~BossAttackDataSerializer()
@@ -161,7 +176,66 @@ void BossAttackDataSerializer::Update()
 
 	// 入力欄
 	ImGui::InputText("AttackID (FileName)", newAttackID, 64);
+#ifdef ANIM_FILE
 	ImGui::InputText("AnimFileName", newAnimFile, 128);
+
+	std::vector<const char*> animItems;
+	animItems.clear();
+
+	for (auto& fileName : animFileName) {
+		animItems.push_back(fileName.c_str());
+	}
+
+
+	static int animFileIndex = 0;
+
+	if (!animItems.empty())
+	{
+		if (ImGui::Combo("AnimationFile", &animFileIndex, animItems.data(), (int)animItems.size()))
+		{
+			// 選択された瞬間だけ反映
+			strcpy_s(newAnimFile, sizeof(newAnimFile), animFileName[animFileIndex].c_str());
+			newAnimFile[sizeof(newAnimFile) - 1] = '\0';
+		}
+	}
+#else
+	static char inputBuf[128] = "";
+	static int selectedIndex = -1;
+
+	// 入力欄
+	if (ImGui::InputText("AnimSearch", inputBuf, sizeof(inputBuf)))
+	{
+		selectedIndex = -1; // 入力変わったらリセット
+	}
+
+	//========================
+	// ■ 候補生成（フィルタ）
+	//========================
+	std::vector<std::string> filtered;
+	std::vector<const char*> items;
+
+	for (auto& name : animFileName) // ← さっき作った一覧
+	{
+		// 部分一致検索
+		if (std::string(name).find(inputBuf) != std::string::npos)
+		{
+			filtered.push_back(name);
+			items.push_back(filtered.back().c_str());
+		}
+	}
+
+	//========================
+	// ■ Combo表示
+	//========================
+	if (!items.empty())
+	{
+		if (ImGui::Combo("Candidates", &selectedIndex, items.data(), (int)items.size()))
+		{
+			// 選択したら入力欄に反映
+			strcpy_s(inputBuf, sizeof(inputBuf), filtered[selectedIndex].c_str());
+		}
+	}
+#endif // ANIM_FILE
 
 	//バリデーション
 	bool canAdd = true;
@@ -221,7 +295,7 @@ void BossAttackDataSerializer::Update()
 		ActionParam newAction;
 		newAction.id = newID;
 		newAction.attackState = true;
-		newAction.priority = 0;
+		newAction.priority = 1;
 		newAction.weight = 0;
 		newAction.maxAction = 1;
 		newAction.distance = 0.0f;

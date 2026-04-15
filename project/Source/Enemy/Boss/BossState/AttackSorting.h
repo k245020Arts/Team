@@ -13,6 +13,16 @@ struct ActionParam
 
 	float distance = 0; // ‹——£‚É‚æ‚Á‚Ä‚»‚Ì‹Z‚ªo‚â‚·‚¢‚©‚Ç‚¤‚©
 	int addWeight = 0;  // ”š•Ï“®
+
+	ActionParam() {
+		id = "";
+		attackState = false;
+		priority = 1;
+		weight = 0;
+		maxAction = 1;
+		distance = 0;
+		addWeight = 0;
+	}
 };
 
 // to_json
