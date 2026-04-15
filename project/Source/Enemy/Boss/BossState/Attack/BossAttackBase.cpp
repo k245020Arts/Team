@@ -393,7 +393,7 @@ void BossAttackBase::MoveEvent()
 	if (attackParam.moveStartTime <= animFrame && attackParam.moveFinishTime >= animFrame) {
 		if (attackParam.playerAloowMove) {
 			if (aloowStop) {
-				VECTOR3 dis = boss->bossTransform->Forward() * -1.0f;
+				VECTOR3 dis = boss->bossTransform->Forward() * 1.0f;
 				normal = dis.Normalize();
 				normal.y = 0.0f;
 				float speed = attackParam.baseSpeed;

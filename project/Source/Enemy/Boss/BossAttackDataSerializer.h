@@ -30,6 +30,12 @@ private:
 
 	void ActionsSave();
 	void AttackSave(std::string _attackID);
+	void DrawAttackParamEditor(std::string _selectID);
+	void DrawTransform(const char* label, Transform& t);
+	void CopyParam(std::string _selectID);
+	void DrawThrowObjectEditor(std::vector<BossAttackBase::ThrowObjectAttackData>& list);
+	void DrawRayColliderInfo(const char* label, BossAttackBase::RayColliderInfo& r);
+	void DrawDountColliderInfo(const char* label, BossAttackBase::DountColliderInfo& d);
 	Animator* bossAnim;
 	Animator::AnimFileInfo currentSelectAnimInfos;
 

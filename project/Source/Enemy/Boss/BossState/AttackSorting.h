@@ -83,6 +83,8 @@ public:
 	void AddAttack(BossAttackBase::BossAttackParam _param);
 	void AddAttack(BossAttackBase::BossAttackParam _param,std::string _attackID);
 
+	void ReloadParam(BossAttackBase::BossAttackParam _param,std::string _reLoadID);
+
 	//void StateImguiDraw()override;
 
 private:

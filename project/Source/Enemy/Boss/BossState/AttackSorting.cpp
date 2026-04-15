@@ -484,6 +484,12 @@ void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, std::strin
 	attacks[key]->SetAttackParam(attackParam[key]);
 }
 
+void AttackSorting::ReloadParam(BossAttackBase::BossAttackParam _param,std::string _reLoadID)
+{
+	attackParam[_reLoadID] = _param;
+	attacks[_reLoadID]->SetAttackParam(attackParam[_reLoadID]);
+}
+
 //void AttackSorting::StateImguiDraw()
 //{
 //	/*ImGui::Text(nextState.c_str());*/

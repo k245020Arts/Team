@@ -1,10 +1,11 @@
-#include "BossAttackDataSerializer.h"
+Ôªø#include "BossAttackDataSerializer.h"
 #include "../../Common/InputManager/InputManager.h"
 #include "../../../ImGui/imgui.h"
 #include "BossState/AttackSorting.h"
 #include <iostream>
 #include "../../../Source/Common/FileSystemUtils/FileSystemUtils.h"
 #include "../../Common/ResourceLoader.h"
+#include "../../../Source/Component/EnemyAttackObject/BossRock/BossRockBase.h"
 
 #define ANIM_FILE
 
@@ -30,7 +31,7 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 	std::string filePath = "data/model/animation";
 
 	for (const auto& entry : std::filesystem::directory_iterator(filePath)) {
-		// ÉtÉHÉãÉ_ÇÕÉXÉLÉbÉv
+		// „Éï„Ç©„É´„ÉÄ„ÅØ„Çπ„Ç≠„ÉÉ„Éó
 		if (entry.is_directory()) {
 			continue;
 		}
@@ -61,7 +62,7 @@ void BossAttackDataSerializer::Update()
 
 	ImGui::Begin("BossAttackSerialize");
 
-	//çUåÇÉäÉXÉgçÏê¨
+	//ÊîªÊíÉ„É™„Çπ„Éà‰ΩúÊàê
 	static int currentIndex = 0;
 
 	std::vector<const char*> items;
@@ -77,17 +78,17 @@ void BossAttackDataSerializer::Update()
 		auto& param = attackParam[selectedID];
 		currentSelectAnimInfos = bossAnim->GetSelectFileInfo(param.animFileName);
 	}
-	//ëIëíÜÇÃçUåÇéÊìæ
+	//ÈÅ∏Êäû‰∏≠„ÅÆÊîªÊíÉÂèñÂæó
 	if (!attackKeys.empty())
 	{
 		std::string selectedID = attackKeys[currentIndex];
 		if (ImGui::BeginTabBar("EditTabs")) {
 
-			if (ImGui::BeginTabItem("Attack")) {
+			if (ImGui::BeginTabItem("AttackSort")) {
 
 				auto& param = attackParam[selectedID];
 
-				// ActionParamÇIDÇ≈íTÇ∑
+				// ActionParam„ÇíID„ÅßÊé¢„Åô
 				ActionParam* actionPtr = nullptr;
 
 				for (auto& a : actions) {
@@ -97,15 +98,15 @@ void BossAttackDataSerializer::Update()
 					}
 				}
 
-				//ï\é¶
+				//Ë°®Á§∫
 				ImGui::Separator();
 				ImGui::Text("AttackID : %s", selectedID.c_str());
 
-				//AttackParamÅiçUåÇÉfÅ[É^Åj
+				//AttackParamÔºàÊîªÊíÉ„Éá„Éº„ÇøÔºâ
 				/*ImGui::DragInt("AnimNum", &param.animNum);
 				ImGui::DragText("AnimFile", (char*)param.animFileName.c_str(), 256);*/
 
-				//ActionParamï“èW
+				//ActionParamÁ∑®ÈõÜ
 				if (actionPtr) {
 					ImGui::DragInt("Priority", &actionPtr->priority);
 					ImGui::DragInt("Weight", &actionPtr->weight);
@@ -115,12 +116,8 @@ void BossAttackDataSerializer::Update()
 					ImGui::Checkbox("IsAttack", &actionPtr->attackState);
 				}
 
-				// ï€ë∂
+				// ‰øùÂ≠ò
 				if (ImGui::Button("ActionsSave")) {
-					//sorting->SaveSorthing(BossName);
-
-					/*AttackSave(newID);
-					sorting->AddAttack(newParam, newID);*/
 
 					ActionsSave();
 
@@ -129,8 +126,14 @@ void BossAttackDataSerializer::Update()
 				ImGui::EndTabItem();
 			}
 
+			if (ImGui::BeginTabItem("AttackParam"))
+			{
+				DrawAttackParamEditor(selectedID);
+				ImGui::EndTabItem();
+			}
+
 			if (ImGui::BeginTabItem("Animation")) {
-				// ÉAÉjÉÅï“èW
+				// „Ç¢„Éã„É°Á∑®ÈõÜ
 				ImGui::Separator();
 				ImGui::Text("Anim : %s", currentSelectAnimInfos.fileName.c_str());
 
@@ -143,7 +146,7 @@ void BossAttackDataSerializer::Update()
 				ImGui::InputFloat("EventStart", &currentSelectAnimInfos.eventStartTime);
 				ImGui::InputFloat("EventEnd", &currentSelectAnimInfos.eventFinishTime);
 
-				// fileNameÇÕà¿ëSÇ…ï“èW
+				// fileName„ÅØÂÆâÂÖ®„Å´Á∑®ÈõÜ
 				static char fileBuffer[256];
 				strcpy_s(fileBuffer, currentSelectAnimInfos.fileName.c_str());
 
@@ -170,11 +173,11 @@ void BossAttackDataSerializer::Update()
 
 	ImGui::Separator();
 
-	//çUåÇÇÃí«â¡
+	//ÊîªÊíÉ„ÅÆËøΩÂä†
 	ImGui::Separator();
 	ImGui::Text("Add New Attack");
 
-	// ì¸óÕóì
+	// ÂÖ•ÂäõÊ¨Ñ
 	ImGui::InputText("AttackID (FileName)", newAttackID, 64);
 #ifdef ANIM_FILE
 	ImGui::InputText("AnimFileName", newAnimFile, 128);
@@ -193,7 +196,7 @@ void BossAttackDataSerializer::Update()
 	{
 		if (ImGui::Combo("AnimationFile", &animFileIndex, animItems.data(), (int)animItems.size()))
 		{
-			// ëIëÇ≥ÇÍÇΩèuä‘ÇæÇØîΩâf
+			// ÈÅ∏Êäû„Åï„Çå„ÅüÁû¨Èñì„Å†„ÅëÂèçÊò†
 			strcpy_s(newAnimFile, sizeof(newAnimFile), animFileName[animFileIndex].c_str());
 			newAnimFile[sizeof(newAnimFile) - 1] = '\0';
 		}
@@ -202,21 +205,21 @@ void BossAttackDataSerializer::Update()
 	static char inputBuf[128] = "";
 	static int selectedIndex = -1;
 
-	// ì¸óÕóì
+	// ÂÖ•ÂäõÊ¨Ñ
 	if (ImGui::InputText("AnimSearch", inputBuf, sizeof(inputBuf)))
 	{
-		selectedIndex = -1; // ì¸óÕïœÇÌÇ¡ÇΩÇÁÉäÉZÉbÉg
+		selectedIndex = -1; // ÂÖ•ÂäõÂ§â„Çè„Å£„Åü„Çâ„É™„Çª„ÉÉ„Éà
 	}
 
 	//========================
-	// Å° åÛï‚ê∂ê¨ÅiÉtÉBÉãÉ^Åj
+	// ‚ñ† ÂÄôË£úÁîüÊàêÔºà„Éï„Ç£„É´„ÇøÔºâ
 	//========================
 	std::vector<std::string> filtered;
 	std::vector<const char*> items;
 
-	for (auto& name : animFileName) // Å© Ç≥Ç¡Ç´çÏÇ¡ÇΩàÍóó
+	for (auto& name : animFileName) // ‚Üê „Åï„Å£„Åç‰Ωú„Å£„Åü‰∏ÄË¶ß
 	{
-		// ïîï™àÍívåüçı
+		// ÈÉ®ÂàÜ‰∏ÄËá¥Ê§úÁ¥¢
 		if (std::string(name).find(inputBuf) != std::string::npos)
 		{
 			filtered.push_back(name);
@@ -225,47 +228,47 @@ void BossAttackDataSerializer::Update()
 	}
 
 	//========================
-	// Å° Comboï\é¶
+	// ‚ñ† ComboË°®Á§∫
 	//========================
 	if (!items.empty())
 	{
 		if (ImGui::Combo("Candidates", &selectedIndex, items.data(), (int)items.size()))
 		{
-			// ëIëÇµÇΩÇÁì¸óÕóìÇ…îΩâf
+			// ÈÅ∏Êäû„Åó„Åü„ÇâÂÖ•ÂäõÊ¨Ñ„Å´ÂèçÊò†
 			strcpy_s(inputBuf, sizeof(inputBuf), filtered[selectedIndex].c_str());
 		}
 	}
 #endif // ANIM_FILE
 
-	//ÉoÉäÉfÅ[ÉVÉáÉì
+	//„Éê„É™„Éá„Éº„Ç∑„Éß„É≥
 	bool canAdd = true;
 	std::string idStr = newAttackID;
 
-	// ãÛÉ`ÉFÉbÉN
+	// Á©∫„ÉÅ„Çß„ÉÉ„ÇØ
 	if (idStr.empty()) {
 		canAdd = false;
 		ImGui::TextColored(ImVec4(1, 0, 0, 1), "ID is empty");
 	}
 
-	// èdï°É`ÉFÉbÉN
+	// ÈáçË§á„ÉÅ„Çß„ÉÉ„ÇØ
 	else if (attackParam.find(idStr) != attackParam.end()) {
 		canAdd = false;
 		ImGui::TextColored(ImVec4(1, 0, 0, 1), "ID already exists");
 	}
 
-	// ÉAÉjÉÅÅ[ÉVÉáÉìñ¢ì¸óÕ
+	// „Ç¢„Éã„É°„Éº„Ç∑„Éß„É≥Êú™ÂÖ•Âäõ
 	else if (strlen(newAnimFile) == 0) {
 		canAdd = false;
 		ImGui::TextColored(ImVec4(1, 0, 0, 1), "AnimFile is empty");
 	}
-	//ÉtÉ@ÉCÉãë∂ç›É`ÉFÉbÉN
+	//„Éï„Ç°„Ç§„É´Â≠òÂú®„ÉÅ„Çß„ÉÉ„ÇØ
 	else if (!std::filesystem::exists(ResourceLoad::ANIM_PATH + std::string(newAnimFile) + ".mv1")) {
 		canAdd = false;
 		ImGui::TextColored(ImVec4(1,0,0,1), "Anim file not found");
 	}
 	
 
-	//AddAttackÉ{É^Éì
+	//AddAttack„Éú„Çø„É≥
 	if (!canAdd) {
 		ImGui::BeginDisabled();
 	}
@@ -274,7 +277,7 @@ void BossAttackDataSerializer::Update()
 	{
 		std::string newID = newAttackID;
 
-		// AttackParamí«â¡ÅiÉçÅ[ÉJÉãÅj
+		// AttackParamËøΩÂä†Ôºà„É≠„Éº„Ç´„É´Ôºâ
 		BossAttackBase::BossAttackParam newParam;
 		newParam.attackID = newID;
 		newParam.animFileName = newAnimFile;
@@ -291,7 +294,7 @@ void BossAttackDataSerializer::Update()
 		AttackSave(newID);
 		sorting->AddAttack(newParam, newID);
 
-		// ActionParamí«â¡ÅiÉçÅ[ÉJÉãÅj
+		// ActionParamËøΩÂä†Ôºà„É≠„Éº„Ç´„É´Ôºâ
 		ActionParam newAction;
 		newAction.id = newID;
 		newAction.attackState = true;
@@ -319,7 +322,7 @@ void BossAttackDataSerializer::Update()
 		bossAnim->AnimDataSave("BossAnimData");
 		bossAnim->AnimDataLoad("BossAnimData");
 
-		// ì¸óÕÉäÉZÉbÉg
+		// ÂÖ•Âäõ„É™„Çª„ÉÉ„Éà
 		newAttackID[0] = '\0';
 		newAnimFile[0] = '\0';
 
@@ -366,4 +369,711 @@ void BossAttackDataSerializer::AttackSave(std::string _attackID)
 	JsonReader jsonReader;
 
 	jsonReader.Save("data/json/BossAttack/" + BossName + "/" + _attackID + ".json", root);
+}
+
+void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
+{
+	auto& param = attackParam[_selectID];
+
+	//========================
+	// ‚ñ† Âü∫Êú¨
+	//========================
+	if (ImGui::CollapsingHeader("Basic", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::DragFloat("HitDamage", &param.hitDamage, 0.1f);
+		ImGui::DragFloat("SlowTime", &param.slowTime, 0.01f);
+		ImGui::DragFloat("SlowAmount", &param.slowAmout, 0.01f);
+		ImGui::DragFloat("SpeedUp", &param.speedUpMotionSpeed, 0.01f);
+
+		ImGui::DragFloat("AttackStart##Basic", &param.attackCollsionStartTime, 0.01f);
+		ImGui::DragFloat("AttackEnd##Basic", &param.attackCollsionEndTime, 0.01f);
+
+		ImGui::DragFloat("JustAvoidStart##Basic", &param.justAvoidCollsionStartTime, 0.01f);
+		ImGui::DragFloat("JustAvoidEnd##Basic", &param.justAvoidCollsionEndTime, 0.01f);
+
+		ImGui::DragInt("AttackFrame", &param.attackPositionFrameNum, 1);
+		ImGui::DragFloat("SoundTime", &param.attackSoundStartTime, 0.01f);
+
+		DrawTransform("AttackCollTransform", param.attackCollTransform);
+		DrawTransform("JustAvoidTransform", param.justAvoidCollTransform);
+
+		ImGui::Checkbox("UseFlash", &param.useFlash);
+		ImGui::DragFloat("FlashStartTime", &param.attackFlashStartTime, 0.01f);
+	}
+
+	//========================
+	// ‚ñ† ÁßªÂãï
+	//========================
+	if (ImGui::CollapsingHeader("Move Event"))
+	{
+		ImGui::Checkbox("FrontMove", &param.frontMove);
+		if (param.frontMove)
+		{
+			ImGui::DragFloat("MoveSpeed##Move", &param.baseSpeed, 0.1f);
+			ImGui::DragFloat("StartTime##Move", &param.moveStartTime, 0.01f);
+			ImGui::DragFloat("EndTime##Move", &param.moveFinishTime, 0.01f);
+			ImGui::Checkbox("AddVelocity##Move", &param.addVelocity);
+		}
+	}
+
+	//========================
+	// ‚ñ† „Éó„É¨„Ç§„É§„ÉºËøΩÂæì
+	//========================
+	if (ImGui::CollapsingHeader("Player Follow"))
+	{
+		ImGui::Checkbox("Enable##Follow", &param.playerAloowMove);
+
+		if (param.playerAloowMove)
+		{
+			ImGui::DragFloat("BaseSpeed##Follow", &param.baseSpeed, 0.1f);
+			ImGui::Checkbox("NearBossSpeedStop", &param.playerNearStop);
+			ImGui::Checkbox("AllowPlayerStop", &param.playerNearAloowStop);
+			ImGui::Checkbox("AddVelocity##Follow", &param.addVelocity);
+
+			ImGui::DragFloat("NearDist", &param.playerBaseNear, 0.1f);
+			ImGui::DragFloat("MaxSpeed", &param.maxMoveSpeed, 0.1f);
+			ImGui::DragFloat("MinSpeed", &param.minMoveSpeed, 0.1f);
+
+			ImGui::DragFloat("StartTime##Follow", &param.moveStartTime, 0.01f);
+			ImGui::DragFloat("EndTime##Follow", &param.moveFinishTime, 0.01f);
+		}
+	}
+
+	//========================
+	// ‚ñ† Á™ÅÈÄ≤
+	//========================
+	if (ImGui::CollapsingHeader("Rush Event"))
+	{
+		ImGui::Checkbox("Enable##Rush", &param.rushMove);
+
+		if (param.rushMove)
+		{
+			ImGui::DragFloat("Speed##Rush", &param.rushAfterSpeed, 0.1f);
+			ImGui::DragFloat("Time##Rush", &param.rushTime, 0.01f);
+
+			ImGui::Checkbox("Collision", &param.rushColl);
+			ImGui::DragFloat("CollScale", &param.addRushCollScale, 0.1f);
+
+			ImGui::DragFloat("RightFootSE", &param.rushSoundRightFoot, 0.01f);
+			ImGui::DragFloat("LeftFootSE", &param.rushSoundLeftFoot, 0.01f);
+		}
+	}
+
+	//========================
+	// ‚ñ† ÂõûËª¢
+	//========================
+	if (ImGui::CollapsingHeader("Rotate Event"))
+	{
+		ImGui::Checkbox("Enable##Rotate", &param.rotateMove);
+
+		if (param.rotateMove)
+		{
+			ImGui::DragFloat("Angle", &param.angleMoveAmout, 0.1f);
+		}
+	}
+
+	//========================
+	// ‚ñ† „Ç∏„É£„É≥„Éó
+	//========================
+	if (ImGui::CollapsingHeader("Jump Event"))
+	{
+		ImGui::Checkbox("Enable##Jump", &param.jump);
+
+		if (param.jump)
+		{
+			ImGui::DragFloat("JumpSpeed", &param.jumpSpeed, 0.1f);
+			ImGui::DragFloat("Gravity", &param.addGravity, 0.1f);
+
+			ImGui::DragFloat("StartTime##Jump", &param.jumpStartTime, 0.01f);
+			ImGui::DragFloat("EffectTime", &param.groundEffectStartTime, 0.01f);
+
+			ImGui::DragFloat("ShakePower", &param.groundShakeCamera, 0.1f);
+			ImGui::DragFloat("ShakeTime", &param.groundShakeTime, 0.01f);
+		}
+	}
+
+	//========================
+	// ‚ñ† Ë°ùÊíÉÊ≥¢
+	//========================
+	if (ImGui::CollapsingHeader("ShockWave"))
+	{
+		ImGui::Checkbox("Enable##Shock", &param.shockWave);
+
+		if (param.shockWave)
+		{
+			ImGui::DragFloat("Speed", &param.shockWaveSpeed, 0.1f);
+			ImGui::DragFloat("StartRange", &param.startRange, 0.1f);
+		}
+	}
+
+	//========================
+	// ‚ñ† ÊäïÊì≤
+	//========================
+	if (ImGui::CollapsingHeader("Throw Event"))
+	{
+		ImGui::Checkbox("Enable##Throw", &param.throwObject);
+
+		if (param.throwObject)
+		{
+			ImGui::Checkbox("ArmThrow", &param.armThrow);
+			ImGui::DragInt("ArmFrame", &param.armFrameNum, 1);
+
+			ImGui::DragFloat("StartTime", &param.throwStartTime, 0.01f);
+			ImGui::DragFloat("AppearTime", &param.throwObjectApperaTime, 0.01f);
+
+			ImGui::DragInt("ThrowNum", &param.throwObjectNum, 1);
+			ImGui::DragFloat3("SpawnPos", &param.objectApperaPosition.x, 0.1f);
+
+			ImGui::DragFloat("Interval", &param.intervalTime, 0.01f);
+			ImGui::Checkbox("IntervalSub", &param.intervalTimeSub);
+			ImGui::DragFloat("MaxInterval", &param.maxIntervalTime, 0.01f);
+			ImGui::DragFloat("MinInterval", &param.minIntervalTime, 0.01f);
+
+			ImGui::Separator();
+
+			DrawThrowObjectEditor(param.throwAttackData);
+		}
+	}
+
+	//========================
+	// ‚ñ† „Ç´„É°„É©
+	//========================
+	if (ImGui::CollapsingHeader("Camera"))
+	{
+		ImGui::Checkbox("BossLook", &param.attackCameraBossLook);
+		ImGui::DragFloat("ChangeSpeed", &param.cameraChangeSpeed, 0.1f);
+	}
+
+	//========================
+	// ‚ñ† „Éà„É¨„Ç§„É´
+	//========================
+	if (ImGui::CollapsingHeader("Trail"))
+	{
+		ImGui::Checkbox("UseTrail", &param.useTrail);
+
+		if (param.useTrail)
+		{
+			ImGui::Checkbox("RightHand", &param.trailRightHand);
+		}
+	}
+
+	CopyParam(_selectID);
+
+	//========================
+	// ‚ñ† ‰øùÂ≠ò
+	//========================
+	if (ImGui::Button("ParamSave")) {
+		AttackSave(_selectID);
+		sorting->ReloadParam(param, _selectID);
+	}
+}
+
+void BossAttackDataSerializer::DrawTransform(const char* label, Transform& t)
+{
+	if (ImGui::TreeNode(label))
+	{
+		ImGui::DragFloat3("Position", &t.position.x, 0.1f);
+		ImGui::DragFloat3("Rotation", &t.rotation.x, 0.1f);
+		ImGui::DragFloat3("Scale", &t.scale.x, 0.1f);
+		ImGui::TreePop();
+	}
+}
+
+void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase::ThrowObjectAttackData>& list)
+{
+	static int selectIndex = -1;
+
+	ImGui::Separator();
+	ImGui::Text("Throw Object List");
+
+	// ‚ñ† „É™„Çπ„Éà
+	for (int i = 0; i < list.size(); i++)
+	{
+		std::string label = std::to_string(i) + " : " + list[i].throwObjectID;
+
+		if (ImGui::Selectable(label.c_str(), selectIndex == i))
+		{
+			selectIndex = i;
+		}
+	}
+
+	// ‚ñ† ËøΩÂä†
+	if (ImGui::Button("Add Empty"))
+	{
+		list.push_back(BossAttackBase::ThrowObjectAttackData());
+		selectIndex = (int)list.size() - 1;
+	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Add Copy") && selectIndex >= 0)
+	{
+		auto copy = list[selectIndex];
+
+		list.push_back(copy);
+		selectIndex = (int)list.size() - 1;
+	}
+
+	ImGui::SameLine();
+
+
+	if (ImGui::Button("Delete") && selectIndex >= 0)
+	{
+		list.erase(list.begin() + selectIndex);
+		selectIndex = -1;
+	}
+
+	if (selectIndex < 0 || selectIndex >= list.size()) return;
+
+	auto& t = list[selectIndex];
+
+	ImGui::Separator();
+	ImGui::Text("Edit Throw Data");
+
+	//------------------------------------
+	// ‚ñ† IDÔºà„ÉÜ„Ç≠„Çπ„ÉàÁ∑®ÈõÜÔºâ
+	//------------------------------------
+	char idBuf[128];
+	strcpy_s(idBuf, t.throwObjectID.c_str());
+	if (ImGui::InputText("ID", idBuf, sizeof(idBuf)))
+	{
+		t.throwObjectID = idBuf;
+	}
+
+	//------------------------------------
+	// ‚ñ† Âü∫Êú¨
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Base"))
+	{
+		ImGui::DragFloat3("Gravity", &t.baseGravity.x, 0.1f);
+		ImGui::DragFloat3("Friction", &t.baseFirction.x, 0.1f);
+	}
+
+	//------------------------------------
+	// ‚ñ† Push Collision
+	//------------------------------------
+	if (ImGui::CollapsingHeader("PushCollision"))
+	{
+		ImGui::Checkbox("Enable##Push", &t.pushCollCan);
+
+		if (t.pushCollCan)
+		{
+			DrawTransform("PushTransform", t.pushCollTransform);
+		}
+	}
+
+	//------------------------------------
+	// ‚ñ† GroundÔºàRayÔºâ
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Ground"))
+	{
+		ImGui::Checkbox("Enable##Ground", &t.randCan);
+
+		if (t.randCan)
+		{
+			DrawRayColliderInfo("RandCollider", t.randCollInfo);
+
+			// ÂÆâÂÖ®Âá¶ÁêÜ
+			if (t.randCollInfo.rayStartPos > t.randCollInfo.rayFinishPos)
+				std::swap(t.randCollInfo.rayStartPos, t.randCollInfo.rayFinishPos);
+		}
+
+		ImGui::DragFloat("LifeTime", &t.randTime, 0.1f);
+	}
+
+	//------------------------------------
+	// ‚ñ† Player Hit
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Player Hit"))
+	{
+		ImGui::Checkbox("Enable##PlayerHit", &t.playerHit);
+
+		if (t.playerHit)
+		{
+			ImGui::DragFloat("Radius", &t.playerHitCollRadius, 0.1f);
+			ImGui::DragFloat("JustAvoidRadius", &t.playerHitJustAvoidCollRadius, 0.1f);
+		}
+	}
+
+	//------------------------------------
+	// ‚ñ† Ground Hit
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Ground Hit"))
+	{
+		ImGui::Checkbox("Enable##GroundHit", &t.playerGroundHit);
+
+		if (t.playerGroundHit)
+		{
+			ImGui::DragFloat("Radius", &t.playerGroundCollRadius, 0.1f);
+		}
+	}
+
+	//------------------------------------
+	// ‚ñ† Boss Hit
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Boss Hit"))
+	{
+		ImGui::Checkbox("Enable##BossHit", &t.bossHit);
+
+		if (t.bossHit)
+		{
+			ImGui::DragFloat("Radius", &t.bossHitCollRadius, 0.1f);
+		}
+	}
+
+	//------------------------------------
+	// ‚ñ† Player Attack Flying
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Player Attack Flying"))
+	{
+		ImGui::Checkbox("Enable##Flying", &t.playerAttackFlying);
+
+		if (t.playerAttackFlying)
+		{
+			ImGui::DragFloat("Radius", &t.playerAttackFlyingCollRadius, 0.1f);
+			ImGui::DragFloat("Speed", &t.flyingSpeed, 0.1f);
+			ImGui::DragFloat("Height", &t.flyingHeight, 0.1f);
+		}
+	}
+
+	//------------------------------------
+	// ‚ñ† Boss Rush Hit
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Boss Rush Hit"))
+	{
+		ImGui::Checkbox("Enable##RushHit", &t.bossRushHit);
+
+		if (t.bossRushHit)
+		{
+			ImGui::DragFloat("Radius", &t.bossRushHitCollRadius, 0.1f);
+		}
+	}
+
+	//------------------------------------
+	// ‚ñ† BlastÔºàDountÔºâ
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Blast"))
+	{
+		ImGui::Checkbox("Enable##Blast", &t.blastCan);
+
+		if (t.blastCan)
+		{
+			DrawDountColliderInfo("BlastCollider", t.blastColliderInfo);
+			DrawDountColliderInfo("JustAvoidCollider", t.blastJustAvoidColliderInfo);
+
+			// ÂÆâÂÖ®Âá¶ÁêÜ
+			t.blastColliderInfo.outRadius = max(t.blastColliderInfo.outRadius, t.blastColliderInfo.inRadius);
+
+			ImGui::DragFloat("BlinkTime", &t.blastBlinkMaxCounter, 0.1f);
+			ImGui::Checkbox("RandomBlast", &t.randomBlast);
+			ImGui::DragFloat("Rate", &t.randomBlastRate, 0.1f);
+
+			ImGui::DragFloat("MaxRadius", &t.maxRadius, 0.1f);
+			ImGui::DragFloat("WaveSpeed", &t.waveSpeed, 0.1f);
+		}
+	}
+
+	//------------------------------------
+	// ‚ñ† PredictionÔºàRayÔºâ
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Prediction"))
+	{
+		ImGui::Checkbox("Enable##Prediction", &t.predictionCicleCan);
+
+		if (t.predictionCicleCan)
+		{
+			DrawRayColliderInfo("PredictionCollider", t.predictionCicleColliderInfo);
+		}
+	}
+
+	//------------------------------------
+	// ‚ñ† Throw
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Throw"))
+	{
+		ImGui::Checkbox("ArmThrow", &t.armThrow);
+		ImGui::DragInt("ArmFrame", &t.armFrameNum, 1);
+		ImGui::DragFloat3("ArmOffset", &t.armAddPos.x, 0.1f);
+
+		ImGui::Checkbox("ToPlayer", &t.throwToPlayer);
+		ImGui::Checkbox("ToFront", &t.thorwToFront);
+
+		ImGui::DragFloat("Speed", &t.throwSpeed, 0.1f);
+		ImGui::DragFloat("UpSpeed", &t.upSpeed, 0.1f);
+		ImGui::DragFloat("FirstSpeed", &t.throwFirstSpeed, 0.1f);
+
+		ImGui::DragFloat3("Diffusion", &t.diffusionAngle.x, 0.1f);
+	}
+
+	//------------------------------------
+	// ‚ñ† Fall
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Fall"))
+	{
+		ImGui::Checkbox("Enable##Fall", &t.throwToFall);
+
+		if (t.throwToFall)
+		{
+			ImGui::DragFloat("Height", &t.throwHeight, 0.1f);
+			ImGui::DragFloat("Gravity", &t.throwFallGravity, 0.1f);
+			ImGui::Checkbox("ToPlayer", &t.throwToFallToPlayer);
+		}
+	}
+
+	//------------------------------------
+	// ‚ñ† „Åù„ÅÆ‰ªñ
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Other"))
+	{
+		ImGui::Checkbox("GroundDelete", &t.groundDelete);
+		ImGui::Checkbox("PlayerAttackDrop", &t.playerAttackObjectDrop);
+	}
+}
+
+void BossAttackDataSerializer::CopyParam(std::string _selectID)
+{
+	//========================
+	// ‚ñ† „Ç≥„Éî„ÉºÊ©üËÉΩ
+	//========================
+	auto& param = attackParam[_selectID];
+
+	ImGui::Separator();
+	ImGui::Text("Copy");
+
+	static int copyIndex = 0;
+	std::vector<std::string> keys;
+
+	for (auto& a : attackParam) {
+		keys.push_back(a.first);
+	}
+
+	std::sort(keys.begin(), keys.end());
+
+	std::vector<const char*> items;
+	for (auto& k : keys) {
+		items.push_back(k.c_str());
+	}
+
+	ImGui::Combo("Source", &copyIndex, items.data(), (int)items.size());
+
+	auto& src = attackParam[keys[copyIndex]];
+
+	if (ImGui::Button("Copy ALL"))
+	{
+		param = src;
+	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Copy Basic"))
+	{
+		param.hitDamage = src.hitDamage;
+		param.slowTime = src.slowTime;
+		param.slowAmout = src.slowAmout;
+		param.speedUpMotionSpeed = src.speedUpMotionSpeed;
+
+		param.attackCollsionStartTime = src.attackCollsionStartTime;
+		param.attackCollsionEndTime = src.attackCollsionEndTime;
+
+		param.justAvoidCollsionStartTime = src.justAvoidCollsionStartTime;
+		param.justAvoidCollsionEndTime = src.justAvoidCollsionEndTime;
+
+		param.attackPositionFrameNum = src.attackPositionFrameNum;
+		param.attackSoundStartTime = src.attackSoundStartTime;
+
+		param.attackCollTransform = src.attackCollTransform;
+		param.justAvoidCollTransform = src.justAvoidCollTransform;
+
+		param.useFlash = src.useFlash;
+		param.attackFlashStartTime = src.attackFlashStartTime;
+	}
+	//========================
+	// ‚ñ† „Ç§„Éô„É≥„ÉàÂçò‰Ωç„Ç≥„Éî„Éº
+	//========================
+	ImGui::Separator();
+	ImGui::Text("Event Copy");
+
+	// „ÉÅ„Çß„ÉÉ„ÇØÁä∂ÊÖã
+	static bool copyMove = false;
+	static bool copyFollow = false;
+	static bool copyRush = false;
+	static bool copyRotate = false;
+	static bool copyJump = false;
+	static bool copyShock = false;
+	static bool copyThrow = false;
+	static bool copyCamera = false;
+	static bool copyTrail = false;
+
+	// „ÉÅ„Çß„ÉÉ„ÇØ„Éú„ÉÉ„ÇØ„Çπ
+	ImGui::Checkbox("Move", &copyMove);
+	ImGui::SameLine();
+	ImGui::Checkbox("Follow", &copyFollow);
+	ImGui::SameLine();
+	ImGui::Checkbox("Rush", &copyRush);
+
+	ImGui::Checkbox("Rotate", &copyRotate);
+	ImGui::SameLine();
+	ImGui::Checkbox("Jump", &copyJump);
+	ImGui::SameLine();
+	ImGui::Checkbox("Shock", &copyShock);
+
+	ImGui::Checkbox("Throw", &copyThrow);
+	ImGui::SameLine();
+	ImGui::Checkbox("Camera", &copyCamera);
+	ImGui::SameLine();
+	ImGui::Checkbox("Trail", &copyTrail);
+
+	// ‰∏ÄÊã¨ON/OFF
+	if (ImGui::Button("All ON"))
+	{
+		copyMove = copyFollow = copyRush = copyRotate =
+			copyJump = copyShock = copyThrow = copyCamera = copyTrail = true;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("All OFF"))
+	{
+		copyMove = copyFollow = copyRush = copyRotate =
+			copyJump = copyShock = copyThrow = copyCamera = copyTrail = false;
+	}
+
+	//========================
+	// ‚ñ† „Ç≥„Éî„ÉºÂÆüË°å
+	//========================
+	if (ImGui::Button("Copy Selected Events"))
+	{
+		//------------------------
+		// Move
+		//------------------------
+		if (copyMove)
+		{
+			param.frontMove = src.frontMove;
+			param.baseSpeed = src.baseSpeed;
+			param.moveStartTime = src.moveStartTime;
+			param.moveFinishTime = src.moveFinishTime;
+			param.addVelocity = src.addVelocity;
+		}
+
+		//------------------------
+		// Follow
+		//------------------------
+		if (copyFollow)
+		{
+			param.playerAloowMove = src.playerAloowMove;
+			param.baseSpeed = src.baseSpeed;
+			param.playerNearStop = src.playerNearStop;
+			param.playerNearAloowStop = src.playerNearAloowStop;
+			param.addVelocity = src.addVelocity;
+			param.playerBaseNear = src.playerBaseNear;
+			param.maxMoveSpeed = src.maxMoveSpeed;
+			param.minMoveSpeed = src.minMoveSpeed;
+			param.moveStartTime = src.moveStartTime;
+			param.moveFinishTime = src.moveFinishTime;
+		}
+
+		//------------------------
+		// Rush
+		//------------------------
+		if (copyRush)
+		{
+			param.rushMove = src.rushMove;
+			param.rushAfterSpeed = src.rushAfterSpeed;
+			param.rushTime = src.rushTime;
+			param.rushColl = src.rushColl;
+			param.addRushCollScale = src.addRushCollScale;
+			param.rushSoundRightFoot = src.rushSoundRightFoot;
+			param.rushSoundLeftFoot = src.rushSoundLeftFoot;
+		}
+
+		//------------------------
+		// Rotate
+		//------------------------
+		if (copyRotate)
+		{
+			param.rotateMove = src.rotateMove;
+			param.angleMoveAmout = src.angleMoveAmout;
+		}
+
+		//------------------------
+		// Jump
+		//------------------------
+		if (copyJump)
+		{
+			param.jump = src.jump;
+			param.jumpSpeed = src.jumpSpeed;
+			param.addGravity = src.addGravity;
+			param.jumpStartTime = src.jumpStartTime;
+			param.groundEffectStartTime = src.groundEffectStartTime;
+			param.groundShakeCamera = src.groundShakeCamera;
+			param.groundShakeTime = src.groundShakeTime;
+		}
+
+		//------------------------
+		// ShockWave
+		//------------------------
+		if (copyShock)
+		{
+			param.shockWave = src.shockWave;
+			param.shockWaveSpeed = src.shockWaveSpeed;
+			param.startRange = src.startRange;
+		}
+
+		//------------------------
+		// Throw
+		//------------------------
+		if (copyThrow)
+		{
+			param.throwObject = src.throwObject;
+			param.throwAttackData = src.throwAttackData;
+			param.armThrow = src.armThrow;
+			param.armFrameNum = src.armFrameNum;
+			param.throwStartTime = src.throwStartTime;
+			param.throwObjectApperaTime = src.throwObjectApperaTime;
+			param.throwObjectNum = src.throwObjectNum;
+			param.objectApperaPosition = src.objectApperaPosition;
+			param.intervalTime = src.intervalTime;
+			param.intervalTimeSub = src.intervalTimeSub;
+			param.maxIntervalTime = src.maxIntervalTime;
+			param.minIntervalTime = src.minIntervalTime;
+		}
+
+		//------------------------
+		// Camera
+		//------------------------
+		if (copyCamera)
+		{
+			param.attackCameraBossLook = src.attackCameraBossLook;
+			param.cameraChangeSpeed = src.cameraChangeSpeed;
+		}
+
+		//------------------------
+		// Trail
+		//------------------------
+		if (copyTrail)
+		{
+			param.useTrail = src.useTrail;
+			param.trailRightHand = src.trailRightHand;
+		}
+	}
+}
+
+void BossAttackDataSerializer::DrawRayColliderInfo(const char* label, BossAttackBase::RayColliderInfo& r)
+{
+	if (ImGui::TreeNode(label))
+	{
+		ImGui::DragFloat("StartPos", &r.rayStartPos, 0.1f);
+		ImGui::DragFloat("FinishPos", &r.rayFinishPos, 0.1f);
+
+		ImGui::TreePop();
+	}
+}
+
+void BossAttackDataSerializer::DrawDountColliderInfo(const char* label, BossAttackBase::DountColliderInfo& d)
+{
+	if (ImGui::TreeNode(label))
+	{
+		ImGui::DragFloat("InnerRadius", &d.inRadius, 0.1f);
+		ImGui::DragFloat("OuterRadius", &d.outRadius, 0.1f);
+
+		ImGui::TreePop();
+	}
 }

@@ -24,55 +24,67 @@ public:
 
 	struct ThrowObjectAttackData
 	{
+		//基本データ
 		std::string throwObjectID;
 		VECTOR3 baseGravity;
 		VECTOR3 baseFirction;
 
+		//押し返し当たり判定
 		bool pushCollCan;
 		Transform pushCollTransform;
 
+		//地面に着地するか
 		bool randCan;
 		RayColliderInfo randCollInfo;
+		//消える時間
 		float randTime;
 
+		//投擲物がプレイヤーに当たるか
 		bool playerHit;
 		float playerHitCollRadius;
 		float playerHitJustAvoidCollRadius;
 
+		//地面についた後にプレイヤーに当たり判定がつくか
 		bool playerGroundHit;
 		float playerGroundCollRadius;
 
+		//ボスにダメージを食らうか
 		bool bossHit;
 		float bossHitCollRadius;
 
+		//残留した投擲物にプレイヤーの攻撃ではじき返せるか
 		bool playerAttackFlying;
 		float playerAttackFlyingCollRadius;
 		float flyingSpeed;
 		float flyingHeight;
 		
-
+		//ボスが突進攻撃をしてきたときに当たったらひるむ当たり判定
 		bool bossRushHit;
 		float bossRushHitCollRadius;
 
+		//爆発するか
 		bool blastCan;
 		DountColliderInfo blastColliderInfo;
 		DountColliderInfo blastJustAvoidColliderInfo;
 		float blastBlinkMaxCounter;
 		bool randomBlast;
 		float randomBlastRate;
+		float maxRadius;
+		float waveSpeed;;
+		//ランダムに出現する高さを変えるか
 		bool randomHeight;
 		float minHeight;
 		float maxHeight;
+		//ランダムに出現するスピードを変えるか
 		bool randomSpeed;
 		float minSpeed;
 		float maxSpeed;
-		float maxRadius;
-		float waveSpeed;
+		
 
-
+		//予測線を出すか
 		bool predictionCicleCan;
 		RayColliderInfo predictionCicleColliderInfo;
-
+		//腕で投げるか
 		bool armThrow;
 		int armFrameNum;
 		VECTOR3 armAddPos;
@@ -82,6 +94,7 @@ public:
 		float upSpeed;
 		float throwFirstSpeed;
 		VECTOR3 diffusionAngle;
+		//落ちるか
 		bool throwToFall;
 		float throwHeight;
 		float throwFallGravity;
@@ -89,9 +102,9 @@ public:
 		bool freeDir;
 		VECTOR3 thorwStartPos;
 		VECTOR3 thorwVelocity;
-
+		//地面についた後に消えるか
 		bool groundDelete;
-
+		//ダメージを受けた時にオブジェクトを落とすかどうか
 		bool playerAttackObjectDrop;
 
 		ThrowObjectAttackData()
@@ -584,14 +597,20 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 		j["blastBlinkMaxCounter"] = p.blastBlinkMaxCounter;
 		j["randomBlast"] = p.randomBlast;
 		j["randomBlastRate"] = p.randomBlastRate;
+		j["maxRadius"] = p.maxRadius;
+		j["waveSpeed"] = p.waveSpeed;
+	}
+	
+	if (p.randomHeight) {
 		j["randomHeight"] = p.randomHeight;
 		j["minHeight"] = p.minHeight;
 		j["maxHeight"] = p.maxHeight;
+	}
+
+	if (p.randomSpeed) {
 		j["randomSpeed"] = p.randomSpeed;
 		j["minSpeed"] = p.minSpeed;
 		j["maxSpeed"] = p.maxSpeed;
-		j["maxRadius"] = p.maxRadius;
-		j["waveSpeed"] = p.waveSpeed;
 	}
 
 	// 予測円
@@ -627,6 +646,8 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 	{
 		j["throwHeight"] = p.throwHeight;
 		j["throwFallGravity"] = p.throwFallGravity;
+		j["thorwStartPos"] = p.thorwStartPos;
+		j["thorwVelocity"] = p.thorwVelocity;
 	}
 
 	// --- プレイヤー追尾落下 ---
@@ -760,17 +781,27 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 			if (j.contains("blastBlinkMaxCounter")) j.at("blastBlinkMaxCounter").get_to(p.blastBlinkMaxCounter);
 			if (j.contains("randomBlast")) j.at("randomBlast").get_to(p.randomBlast);
 			if (j.contains("randomBlastRate")) j.at("randomBlastRate").get_to(p.randomBlastRate);
-			if (j.contains("randomHeight")) j.at("randomHeight").get_to(p.randomHeight);
-			if (j.contains("minHeight")) j.at("minHeight").get_to(p.minHeight);
-			if (j.contains("maxHeight")) j.at("maxHeight").get_to(p.maxHeight);
-			if (j.contains("randomSpeed")) j.at("randomSpeed").get_to(p.randomSpeed);
-			if (j.contains("minSpeed")) j.at("minSpeed").get_to(p.minSpeed);
-			if (j.contains("maxSpeed")) j.at("maxSpeed").get_to(p.maxSpeed);
 			if (j.contains("maxRadius")) j.at("maxRadius").get_to(p.maxRadius);
 			if (j.contains("waveSpeed")) j.at("waveSpeed").get_to(p.waveSpeed);
 		}
 	}
 	else p.blastCan = false;
+
+	if (j.contains("randomHeight")) {
+		j.at("randomHeight").get_to(p.randomHeight);
+		if (p.randomHeight) {
+			if (j.contains("minHeight")) j.at("minHeight").get_to(p.minHeight);
+			if (j.contains("maxHeight")) j.at("maxHeight").get_to(p.maxHeight);
+		}
+	}
+	
+	if (j.contains("randomSpeed")) {
+		j.at("randomSpeed").get_to(p.randomSpeed);
+		if (p.randomSpeed) {
+			if (j.contains("minSpeed")) j.at("minSpeed").get_to(p.minSpeed);
+			if (j.contains("maxSpeed")) j.at("maxSpeed").get_to(p.maxSpeed);
+		}
+	}
 
 	// predictionCicle
 	if (j.contains("predictionCicleCan"))
