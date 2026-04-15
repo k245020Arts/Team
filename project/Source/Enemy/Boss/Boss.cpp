@@ -282,7 +282,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	}
 
 	bossAttackDataSerializer =  std::make_unique<BossAttackDataSerializer>(attackSorting,"Boss1");
-
+	bossAttackDataSerializer->SetAnim(enemyBaseComponent.anim);
 	bossParam = _param;
 	hp = bossParam.hp;
 	defense = bossParam.defense;

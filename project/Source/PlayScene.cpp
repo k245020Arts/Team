@@ -136,7 +136,7 @@ void PlayScene::Update()
 	}
 #endif // _DEBUG
 
-	if (CheckHitKey(KEY_INPUT_T)) {
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_T)) {
 		FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
 	}
 	if (CheckHitKey(KEY_INPUT_ESCAPE)) {

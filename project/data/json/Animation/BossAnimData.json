@@ -24,7 +24,7 @@
       "fileName": "B_ATTACK1",
       "id": "B_ATTACK1",
       "loop": false,
-      "maxFrame": 95.0,
+      "maxFrame": 50.0,
       "playSpeed": 1.2000000476837158
     },
     "B_ATTACK2": {
@@ -81,6 +81,24 @@
       "maxFrame": 146.0,
       "playSpeed": 1.2000000476837158
     },
+    "B_ATTACK8": {
+      "eventFinishTime": 90.0,
+      "eventStartTime": 50.0,
+      "fileName": "B_ATTACK8",
+      "id": "B_ATTACK8",
+      "loop": false,
+      "maxFrame": 110.0,
+      "playSpeed": 1.0
+    },
+    "B_ATTACK_IDOL": {
+      "eventFinishTime": -1.0,
+      "eventStartTime": -1.0,
+      "fileName": "B_ATTACK_IDOL",
+      "id": "B_ATTACK_IDOL",
+      "loop": true,
+      "maxFrame": 160.0,
+      "playSpeed": 1.0
+    },
     "B_BACKSTEP": {
       "eventFinishTime": -1.0,
       "eventStartTime": -1.0,
@@ -122,15 +140,6 @@
       "eventStartTime": -1.0,
       "fileName": "B_IDLE",
       "id": "B_IDLE",
-      "loop": true,
-      "maxFrame": 160.0,
-      "playSpeed": 1.0
-    },
-    "B_ATTACK_IDOL": {
-      "eventFinishTime": -1.0,
-      "eventStartTime": -1.0,
-      "fileName": "B_ATTACK_IDOL",
-      "id": "B_ATTACK_IDOL",
       "loop": true,
       "maxFrame": 160.0,
       "playSpeed": 1.0

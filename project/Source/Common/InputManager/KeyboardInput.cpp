@@ -1,4 +1,5 @@
 #include "KeyboardInput.h"
+#include "../../../ImGui/imgui.h"
 
 KeyboardInput::KeyboardInput()
 {
@@ -24,6 +25,9 @@ void KeyboardInput::Update()
 
 bool KeyboardInput::GetIsKeyboardPushing(int _keyCode)
 {
+	if (!IsInputCan()) {
+		return false;
+	}
 	if (keyboardInput.front().kInput[_keyCode])
 	{
 		return true;
@@ -33,6 +37,9 @@ bool KeyboardInput::GetIsKeyboardPushing(int _keyCode)
 
 bool KeyboardInput::GetIsKeyboardPut(int _keyCode)
 {
+	if (!IsInputCan()) {
+		return false;
+	}
 	if(keyboardInput.size()>1)
 	{
 		auto it = keyboardInput.begin();
@@ -50,6 +57,9 @@ bool KeyboardInput::GetIsKeyboardPut(int _keyCode)
 
 bool KeyboardInput::GetIsKeyboardRelease(int _keyCode)
 {
+	if (!IsInputCan()) {
+		return false;
+	}
 	if (keyboardInput.size() > 1)
 	{
 		std::list<KeyboardInputData>::iterator it = keyboardInput.begin();
@@ -68,4 +78,10 @@ bool KeyboardInput::GetIsKeyboardRelease(int _keyCode)
 
 	}
 	return false;
+}
+
+bool KeyboardInput::IsInputCan()
+{
+	ImGuiIO& io = ImGui::GetIO();
+	return !io.WantCaptureKeyboard;
 }

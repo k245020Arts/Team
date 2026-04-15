@@ -1,0 +1,18 @@
+{
+  "Boss": [
+    {
+      "bossID": 0,
+      "bossName": "",
+      "defense": 500.0,
+      "hp": 30000.0,
+      "modelName": "BossModel"
+    },
+    {
+      "bossID": 1,
+      "bossName": "",
+      "defense": 500.0,
+      "hp": 30000.0,
+      "modelName": "Ch46_nonPBR"
+    }
+  ]
+}

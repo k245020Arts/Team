@@ -5,6 +5,7 @@
 #include "../../../Common/Random.h"
 #include "../../../Common/FileSystemUtils/FileSystemUtils.h"
 #include "../../../Common/ResourceLoader.h"
+#include "../../../../ImGui/imgui.h"
 
 namespace {
 	const int ATTACK_KIND_MAX		= 6;
@@ -132,6 +133,10 @@ void AttackSorting::Update()
 			attacks[nextState]->Update();
 		}
 		else {
+			if (nextState == "") {
+				BuildTable(bossPriority);
+				return;
+			}
 			b->enemyBaseComponent.state->ChangeState(StateID::StringToID(nextState));
 		}
 	
@@ -335,10 +340,6 @@ void AttackSorting::AllAddWeightZero()
 
 void AttackSorting::Load(std::string _bossName,Boss* _boss) 
 {
-
-	
-	
-	
 	//int attackNum = FileSystemUtils::GetDirectoryCount("data/json/BossAttack/" + _bossName);
 
 	std::string filePath = "data/json/BossAttack/" + _bossName;
@@ -467,3 +468,23 @@ std::unordered_map<std::string, BossAttackBase::BossAttackParam> AttackSorting::
 {
 	return attackParam;
 }
+
+void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param)
+{
+	AddAttack(_param, _param.attackID);
+}
+
+void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, std::string _attackID)
+{
+	std::string key = _attackID;
+	attacks[key] = new BossAttackBase();
+
+	attacks[key]->Init(obj, StateID::StringToID(key));
+
+	attacks[key]->SetAttackParam(attackParam[key]);
+}
+
+//void AttackSorting::StateImguiDraw()
+//{
+//	/*ImGui::Text(nextState.c_str());*/
+//}

@@ -70,6 +70,11 @@ public:
 	std::vector<ActionParam> GetActionParam();
 	std::unordered_map<std::string, BossAttackBase::BossAttackParam> GetAttackParam();
 
+	void AddAttack(BossAttackBase::BossAttackParam _param);
+	void AddAttack(BossAttackBase::BossAttackParam _param,std::string _attackID);
+
+	//void StateImguiDraw()override;
+
 private:
 	const float COOLTIME = 0.5f;
 
