@@ -9,11 +9,11 @@
 
 #define ANIM_FILE
 
-BossAttackDataSerializer::BossAttackDataSerializer() : BossAttackDataSerializer(nullptr,"")
+BossAttackDataSerializer::BossAttackDataSerializer() : BossAttackDataSerializer(nullptr,nullptr,"")
 {
 }
 
-BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting> _sort, std::string _bossName)
+BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting> _sort, Boss* _boss, std::string _bossName)
 {
 	windowMode = false;
 	BossName = _bossName;
@@ -39,7 +39,15 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 		std::string name = entry.path().stem().string();
 		animFileName.push_back(name);
 	}
-
+	for (char& c : newAnimFile) {
+		c = '\0';
+	}
+	for (char& c : newAttackID) {
+		c = '\0';
+	}
+	rockManager = nullptr;
+	boss = _boss;
+	isEffect = false;
 }
 
 BossAttackDataSerializer::~BossAttackDataSerializer()
@@ -51,10 +59,22 @@ void BossAttackDataSerializer::SetAnim(Animator* anim)
 	bossAnim = anim;
 }
 
+void BossAttackDataSerializer::SetThrowManager(BossRockManager* _data)
+{
+	rockManager = _data;
+	throwObjectsData = rockManager->GetThrowObjectsData();
+}
+
 void BossAttackDataSerializer::Update()
 {
 	if (InputManager::GetInstance()->KeyInputDown("BossParamWindow")) {
 		windowMode = !windowMode;
+		if (windowMode) {
+			boss->GetBaseObject()->SetObjectTimeRate(0.0f);
+		}
+		else {
+			boss->GetBaseObject()->SetObjectTimeRate(1.0f);
+		}
 	}
 	if (!windowMode) {
 		return;
@@ -83,7 +103,7 @@ void BossAttackDataSerializer::Update()
 	{
 		std::string selectedID = attackKeys[currentIndex];
 		if (ImGui::BeginTabBar("EditTabs")) {
-
+			//攻撃のソートの調整
 			if (ImGui::BeginTabItem("AttackSort")) {
 
 				auto& param = attackParam[selectedID];
@@ -125,7 +145,7 @@ void BossAttackDataSerializer::Update()
 				}
 				ImGui::EndTabItem();
 			}
-
+			//攻撃のイベントパラメータの追加
 			if (ImGui::BeginTabItem("AttackParam"))
 			{
 				DrawAttackParamEditor(selectedID);
@@ -162,6 +182,12 @@ void BossAttackDataSerializer::Update()
 					bossAnim->AnimDataLoad("BossAnimData");
 
 				}
+				ImGui::EndTabItem();
+			}
+			//投擲物の追加
+			if (ImGui::BeginTabItem("ThrowObjectAdd"))
+			{
+				DrawAddThrowObjects(throwObjectsData);
 				ImGui::EndTabItem();
 			}
 
@@ -635,6 +661,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	//------------------------------------
 	char idBuf[128];
 	strcpy_s(idBuf, t.throwObjectID.c_str());
+	std::string idNum = std::to_string(selectIndex);
 	if (ImGui::InputText("ID", idBuf, sizeof(idBuf)))
 	{
 		t.throwObjectID = idBuf;
@@ -705,6 +732,8 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		if (t.playerGroundHit)
 		{
 			ImGui::DragFloat("Radius", &t.playerGroundCollRadius, 0.1f);
+			ImGui::Checkbox("playerGroundNoDamageReactionHit", &t.playerGroundNoDamageReactionHit);
+			ImGui::Checkbox("playerGroundOneHit", &t.playerGroundOneHit);
 		}
 	}
 
@@ -817,6 +846,8 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 			ImGui::DragFloat("Height", &t.throwHeight, 0.1f);
 			ImGui::DragFloat("Gravity", &t.throwFallGravity, 0.1f);
 			ImGui::Checkbox("ToPlayer", &t.throwToFallToPlayer);
+			ImGui::DragFloat3("ThrowStartPos", &t.thorwStartPos.x, 0.1f);
+			ImGui::DragFloat("ThrowVelocity", &t.thorwVelocity.x, 0.1f);
 		}
 	}
 
@@ -1076,4 +1107,119 @@ void BossAttackDataSerializer::DrawDountColliderInfo(const char* label, BossAtta
 
 		ImGui::TreePop();
 	}
+}
+
+void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData)
+{
+	//------------------------------------
+	// ■ 選択用
+	//------------------------------------
+	static int selectIndex = -1;
+	static std::vector<std::string> keys;
+
+	keys.clear();
+	for (auto& [key, _] : throwObjectsData)
+	{
+		keys.push_back(key);
+	}
+
+	//------------------------------------
+	// ■ Combo（選択）
+	//------------------------------------
+	if (!keys.empty())
+	{
+		std::vector<const char*> items;
+		for (auto& k : keys) items.push_back(k.c_str());
+
+		ImGui::Combo("ThrowObject Select", &selectIndex, items.data(), (int)items.size());
+	}
+	else
+	{
+		ImGui::Text("No Data");
+	}
+
+	static char newID[128] = "";
+
+	ImGui::InputText("New ID", newID, sizeof(newID));
+	ImGui::Checkbox("Effect", &isEffect);
+
+	if (ImGui::Button("Add ThrowObject"))
+	{
+		std::string id = newID;
+
+		if (!id.empty() && throwObjectsData.count(id) == 0)
+		{
+			BossRockManager::BossThrowObjectData data;
+
+			data.id = id;
+			data.modelName = id;
+			data.isEffect = isEffect;
+
+			throwObjectsData[id] = data;
+
+			rockManager->AddJsonData(data);
+
+			selectIndex = (int)throwObjectsData.size() - 1;
+
+			newID[0] = '\0';
+			throwObjectsData = rockManager->GetThrowObjectsData();
+		}
+	}
+
+	//------------------------------------
+	// ■ 編集
+	//------------------------------------
+	if (selectIndex < 0 || selectIndex >= keys.size())
+		return;
+
+	std::string key = keys[selectIndex];
+	auto t = throwObjectsData[key];
+
+	ImGui::Separator();
+	ImGui::Text("Edit : %s", key.c_str());
+
+	char idBuf[128];
+	strcpy_s(idBuf, t.id.c_str());
+
+	if (ImGui::InputText("ID##Edit", idBuf, sizeof(idBuf)))
+	{
+		std::string newKey = idBuf;
+
+		if (newKey != key && throwObjectsData.count(newKey) == 0)
+		{
+			auto node = throwObjectsData.extract(key);
+			node.key() = newKey;
+			throwObjectsData.insert(std::move(node));
+			//rockManager->ChangeJsonData();
+			selectIndex = -1;
+			return;
+		}
+
+		t.id = newKey;
+		t.modelName = newKey;
+	}
+
+	//------------------------------------
+	// ■ モデル
+	//------------------------------------
+	char modelBuf[128];
+	strcpy_s(modelBuf, t.modelName.c_str());
+
+	if (ImGui::InputText("ModelName", modelBuf, sizeof(modelBuf)))
+	{
+		t.modelName = modelBuf;
+	}
+
+	ImGui::DragInt("ModelData", &t.modelData, 1);
+
+	//------------------------------------
+	// ■ Transform
+	//------------------------------------
+	DrawTransform("ModelTransform", t.modelTransform);
+	DrawTransform("PushTransform", t.pushTransform);
+
+	//------------------------------------
+	// ■ その他
+	//------------------------------------
+	ImGui::Checkbox("IsEffect", &t.isEffect);
 }

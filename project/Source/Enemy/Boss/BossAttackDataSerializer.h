@@ -3,6 +3,7 @@
 #include <memory>
 #include "BossState/Attack/BossAttackBase.h"
 #include "../../Component/Animator/Animator.h"
+#include "../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
 
 class AttackSorting;
 struct ActionParam;
@@ -11,10 +12,11 @@ class BossAttackDataSerializer
 {
 public:
 	BossAttackDataSerializer();
-	BossAttackDataSerializer(std::shared_ptr<AttackSorting> _sort,std::string _bossName);
+	BossAttackDataSerializer(std::shared_ptr<AttackSorting> _sort,Boss* _boss,std::string _bossName);
 	~BossAttackDataSerializer();
 
 	void SetAnim(Animator* anim);
+	void SetThrowManager(BossRockManager* _data);
 
 	void Update();
 
@@ -36,8 +38,13 @@ private:
 	void DrawThrowObjectEditor(std::vector<BossAttackBase::ThrowObjectAttackData>& list);
 	void DrawRayColliderInfo(const char* label, BossAttackBase::RayColliderInfo& r);
 	void DrawDountColliderInfo(const char* label, BossAttackBase::DountColliderInfo& d);
+	void DrawAddThrowObjects(std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData);
 	Animator* bossAnim;
 	Animator::AnimFileInfo currentSelectAnimInfos;
 
 	std::vector<std::string> animFileName;
+	std::map<std::string, BossRockManager::BossThrowObjectData> throwObjectsData;
+	BossRockManager* rockManager;
+	Boss* boss;
+	bool isEffect;
 };

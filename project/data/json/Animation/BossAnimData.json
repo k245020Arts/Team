@@ -208,11 +208,11 @@
       "playSpeed": 1.2999999523162842
     },
     "B_SATTACK2": {
-      "eventFinishTime": -1.0,
-      "eventStartTime": -1.0,
+      "eventFinishTime": 150.0,
+      "eventStartTime": 0.0,
       "fileName": "B_SATTACK2",
       "id": "B_SATTACK2",
-      "loop": false,
+      "loop": true,
       "maxFrame": 19.0,
       "playSpeed": 1.0
     },

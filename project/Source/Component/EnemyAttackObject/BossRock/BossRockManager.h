@@ -47,7 +47,22 @@ public:
 		int modelData;
 		Transform modelTransform;
 		Transform pushTransform;
+		bool isEffect;
+
+		BossThrowObjectData() {
+			id = "";
+			modelName = "";
+			modelData = -1;
+			modelTransform = Transform();
+			pushTransform = Transform();
+			isEffect = false;
+		}
 	};
+
+	std::map<std::string, BossThrowObjectData> GetThrowObjectsData() { return throwObjectsData; }
+
+	void AddJsonData(BossThrowObjectData _data);
+	void ChangeJsonData(std::string _oldKey, std::string _newKey);
 
 private:
 
@@ -56,7 +71,14 @@ private:
 	std::list<BossRockBase*> rocks;
 	Boss* boss;
 
+	int modelNum;
+	int effectNum;
+
+
 	void SetRockComponent(Object3D* _base,const VECTOR3& _gravity, const VECTOR3& _fir,const BossAttackBase::ThrowObjectAttackData& _data);
+
+	void LoadEffect(BossThrowObjectData& _data);
+	void LoadModel(BossThrowObjectData& _data);
 };
 
 inline void to_json(JSON& j, const BossRockManager::BossThrowObjectData& data)
@@ -66,7 +88,8 @@ inline void to_json(JSON& j, const BossRockManager::BossThrowObjectData& data)
 		{"modelName", data.modelName},
 		{"modelData", data.modelData},
 		{"modelTransform", data.modelTransform},
-		{"pushTransform", data.pushTransform}
+		{"pushTransform", data.pushTransform},
+		{"isEffect", data.isEffect}
 	};
 }
 
@@ -78,4 +101,6 @@ inline void from_json(const JSON& j, BossRockManager::BossThrowObjectData& data)
 	j.at("modelData").get_to(data.modelData);
 	j.at("modelTransform").get_to(data.modelTransform);
 	j.at("pushTransform").get_to(data.pushTransform);
+	if(j.contains("isEffect")) j.at("isEffect").get_to(data.isEffect);
+
 }

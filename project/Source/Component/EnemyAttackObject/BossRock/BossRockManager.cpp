@@ -14,6 +14,7 @@
 #include "../../../Common/Random.h"
 #include "../../MeshRenderer/MeshRenderer.h"
 #include "../../../Common/ResourceLoader.h"
+#include "../../../Common/Effect/EffectManager.h"
 
 BossRockManager::BossRockManager() :  BossRockManager(nullptr)
 {
@@ -32,6 +33,8 @@ BossRockManager::BossRockManager(Boss* _boss)
 	json.Load("data/json/ThrowObject/ThrowObjects.json");
 	auto j = json.Data();
 
+	modelNum = static_cast<int>(ID::THROW_OBJECT_1);
+	effectNum = static_cast<int>(Effect_ID::THROW_EFFECT1);
 	for (const auto& elem : j["ThrowObjectsData"])
 	{
 		BossThrowObjectData data = elem.get<BossThrowObjectData>();
@@ -41,10 +44,13 @@ BossRockManager::BossRockManager(Boss* _boss)
 		}
 
 		throwObjectsData[data.id] = data;
+		if (data.isEffect) {
+			LoadEffect(data);
+		}
+		else {
+			LoadModel(data);
+		}
 	}
-	ResourceLoad::LoadModel("BossAttackRock1",ID::ROCK_1);
-	ResourceLoad::LoadModel("BossAttackRock2",ID::ROCK_2);
-	ResourceLoad::LoadModel("BossAttackRock3",ID::ROCK_3);
 }
 
 BossRockManager::~BossRockManager()
@@ -283,6 +289,60 @@ std::list<VECTOR3> BossRockManager::GetAllRockPos()
 	return _pos;
 }
 
+void BossRockManager::AddJsonData(BossThrowObjectData _data)
+{
+	throwObjectsData[_data.id] = _data;
+
+	JsonReader json;
+	std::string fileName = "data/json/ThrowObject/ThrowObjects.json";
+
+	nlohmann::json& root = json.Data();
+
+	if (!root.contains("ThrowObjectsData")) {
+		root["ThrowObjectsData"] = nlohmann::json::object();
+	}
+	for (auto& throwObject : throwObjectsData) {
+		std::string key = throwObject.second.id;
+		root["ThrowObjectsData"][key] = throwObject;
+	}
+
+	if (_data.isEffect) {
+		LoadEffect(_data);
+	}
+	else {
+		LoadModel(_data);
+	}
+
+	json.Save(fileName, root);
+
+}
+
+void BossRockManager::ChangeJsonData(std::string _oldKey, std::string _newKey)
+{
+	//throwObjectsData = _data;
+
+	JsonReader json;
+	std::string fileName = "data/json/ThrowObject/ThrowObjects.json";
+
+	nlohmann::json& root = json.Data();
+
+	if (!root.contains("ThrowObjectsData")) {
+		root["ThrowObjectsData"] = nlohmann::json::object();
+	}
+	for (auto& throwObject : throwObjectsData) {
+		root["ThrowObjectsData"] = throwObject;
+	}
+
+	/*if (_data.isEffect) {
+		LoadEffect(_data.modelName);
+	}
+	else {
+		LoadModel(_data.modelName);
+	}*/
+
+	json.Save(fileName, root);
+}
+
 void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity, const VECTOR3& _fir, const BossAttackBase::ThrowObjectAttackData& _data)
 {
 	_base->Init(Transform(),"bossThrowObject");
@@ -293,15 +353,36 @@ void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity,
 	//bossRock->StartCollAdd(CollsionInformation::BOSS_ROCK_ATTACK, Transform());;
 	Shaker* shaker = _base->Component()->AddComponent<Shaker>();
 	//bossRock->SetRockModel();
-	MeshRenderer* mesh = _base->Component()->AddComponent<MeshRenderer>();
-	mesh->ModelHandle(ResourceLoad::GetHandle(ID::StringToID(throwObjectsData[_data.throwObjectID].modelName)));
-	_base->GetTransform()->scale = throwObjectsData[_data.throwObjectID].modelTransform.scale;
+	if (throwObjectsData[_data.throwObjectID].isEffect) {
+		
+		EffectManager::GetInstance()->CreateEffekseer(Transform(), _base, Effect_ID::StringToID(throwObjectsData[_data.throwObjectID].modelName), 100.0f);
+		//ResourceLoad::GetHandle(ID::StringToID(throwObjectsData[_data.throwObjectID].modelName)
+		_base->GetTransform()->scale = throwObjectsData[_data.throwObjectID].modelTransform.scale;
+	}
+	else {
+		MeshRenderer* mesh = _base->Component()->AddComponent<MeshRenderer>();
+		mesh->ModelHandle(ResourceLoad::GetHandle(ID::StringToID(throwObjectsData[_data.throwObjectID].modelName)));
+		_base->GetTransform()->scale = throwObjectsData[_data.throwObjectID].modelTransform.scale;
+	}
+	
 	//Shadow* shadow = _base->Component()->AddComponent<Shadow>();
 	/*Object3D* shadow = new Object3D();
 	shadow->Init(Transform(VECTOR3(0.0f, -20.0f, 0.0f), VZero, VECTOR3(_base->GetTransform()->scale.x + 4.0f, 0.1f, _base->GetTransform()->scale.z + 4.0f)), "BossShadow");
 	Shadow* s = shadow->Component()->AddComponent<Shadow>();
 	s->Start();*/
 	boss->obj->AddChild(_base, false);
+}
+
+void BossRockManager::LoadEffect(BossThrowObjectData& _data)
+{
+	_data.modelData = ResourceLoad::LoadEffect(_data.modelName, ".efkefc", static_cast<Effect_ID::EFFECT_ID>(effectNum), 50.0f);
+	effectNum++;
+}
+
+void BossRockManager::LoadModel(BossThrowObjectData& _data)
+{
+	_data.modelData = ResourceLoad::LoadModel(_data.modelName, static_cast<ID::IDType>(modelNum));
+	modelNum++;
 }
 
 //void BossRockManager::SetRockComponent(BaseObject* _base, const VECTOR3& _gravity, const VECTOR3& _fir)

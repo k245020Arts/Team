@@ -93,12 +93,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib_VC;$(ProjectDir)./</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib;$(ProjectDir)./</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib_VC;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)./</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)./</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -128,7 +128,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib_VC;$(ProjectDir)./</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib;$(ProjectDir)./</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -136,7 +136,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib_VC;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)./</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)./</AdditionalLibraryDirectories>
       <OutputFile>SKY WARS.exe</OutputFile>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>

@@ -25,14 +25,13 @@
     "attackCollsionEndTime": 85.0,
     "attackCollsionStartTime": 72.4159164428711,
     "attackFlashStartTime": 7.0,
-    "attackID": "BossNormalAttack7",
     "attackPositionFrameNum": 15,
     "attackSoundStartTime": 1.0,
     "bossID": "",
     "damagePattern": "NONE",
     "hitDamage": 0.0,
-    "intervalTime": 0.0,
-    "intervalTimeSub": false,
+    "intervalTime": 0.20000000298023224,
+    "intervalTimeSub": true,
     "justAvoidCollTransform": {
       "position": {
         "x": 0.0,
@@ -55,8 +54,8 @@
     "lookMaxCounter": 72.4159164428711,
     "lookNum": 1,
     "lookPlayer": true,
-    "maxIntervalTime": 0.0,
-    "minIntervalTime": 0.0,
+    "maxIntervalTime": 0.30000001192092896,
+    "minIntervalTime": 0.10000000149011612,
     "objectApperaPosition": {
       "x": 0.0,
       "y": 0.0,
@@ -106,11 +105,7 @@
         "flyingHeight": 1500.0,
         "flyingSpeed": 10000.0,
         "freeDir": false,
-        "maxHeight": 0.0,
         "maxRadius": 3000.0,
-        "maxSpeed": 0.0,
-        "minHeight": 0.0,
-        "minSpeed": 0.0,
         "playerAttackFlying": true,
         "playerAttackFlyingCollRadius": 200.0,
         "playerAttackObjectDrop": true,
@@ -137,14 +132,12 @@
         },
         "randCan": true,
         "randCollInfo": {
-          "rayFinishPos": -300.0,
-          "rayStartPos": 300.0
+          "rayFinishPos": 300.0,
+          "rayStartPos": -300.0
         },
         "randTime": 100.0,
         "randomBlast": false,
         "randomBlastRate": 0.0,
-        "randomHeight": false,
-        "randomSpeed": false,
         "thorwStartPos": {
           "x": 0.0,
           "y": 0.0,
@@ -170,7 +163,7 @@
     ],
     "throwObject": true,
     "throwObjectApperaTime": 31.586830139160156,
-    "throwObjectNum": 0,
+    "throwObjectNum": 5,
     "throwStartTime": 72.4159164428711,
     "useFlash": true,
     "voiceName": "E_AttackV"

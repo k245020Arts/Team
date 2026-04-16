@@ -10,9 +10,9 @@
     {
       "bossID": 1,
       "bossName": "",
-      "defense": 500.0,
+      "defense": 1000.0,
       "hp": 30000.0,
-      "modelName": "Ch46_nonPBR"
+      "modelName": "BossModel2"
     }
   ]
 }

@@ -262,10 +262,8 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	enemyBaseComponent.state->CreateState<BossWin>("BossWin", StateID::BOSS_WIN_S);
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
-	
-
 	// 初期ステート
-	enemyBaseComponent.state->StartState(StateID::BOSS_APPEAR_S);
+	enemyBaseComponent.state->StartState(StateID::BOSS_IDOL_S);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::B_MODEL, -1);
@@ -281,8 +279,9 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 		}
 	}
 
-	bossAttackDataSerializer =  std::make_unique<BossAttackDataSerializer>(attackSorting,"Boss1");
+	bossAttackDataSerializer =  std::make_unique<BossAttackDataSerializer>(attackSorting,this,"Boss1");
 	bossAttackDataSerializer->SetAnim(enemyBaseComponent.anim);
+	bossAttackDataSerializer->SetThrowManager(rockManager);
 	bossParam = _param;
 	hp = bossParam.hp;
 	defense = bossParam.defense;
