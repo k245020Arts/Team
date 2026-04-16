@@ -56,6 +56,9 @@ BossRockBase::BossRockBase()
 
 	debugId = 34;
 	tag = Function::GetClassNameC<BossRockBase>();
+	groundTime = 0.0f;
+	playerAttackHit = false;
+	velocityAdd = false;
 }
 
 BossRockBase::~BossRockBase()
@@ -196,9 +199,27 @@ void BossRockBase::Ground()
 	EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0,-100,0), VZero, VOne * 4.0f), obj, Effect_ID::BOSS_GROUND, 1.0f);
 	//effectManager->StopEffekseer(Effect_ID::ROCK_FALL);
 	groundInit = true;
-	if (!attackData.playerGroundHit) {
-		obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("_rockAttack");
-		playerHitColl = nullptr;
+	obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("_rockAttack");
+	playerHitColl = nullptr;
+	if (attackData.playerGroundHit) {
+		CollsionInfo info;
+		info.parentTransfrom = obj->GetTransform();
+		info.shape = CollsionInformation::SPHERE;
+		info.oneColl = false;
+		if (attackData.playerGroundOneHit) {
+			info.oneColl = true;
+			info.tag = CollsionInformation::THROW_OBJECT_GROUND_ONE_HIT;
+		}
+		else if (attackData.playerGroundNoDamageReactionHit) {
+			info.tag = CollsionInformation::THROW_OBJECT_GROUND_NO_DAMAGE_REACTION;
+		}
+		else {
+			info.tag = CollsionInformation::THROW_OBJECT_GROUND;
+		}
+		
+		playerHitColl = obj->Component()->AddComponent<SphereCollider>();
+		//200
+		playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerGroundCollRadius, 1.0f, 1.0f)), "_rockGroundAttack");
 	}
 	
 	obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("justAvoid_rock");
@@ -390,7 +411,7 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack)
 		info.tag = CollsionInformation::BOSS_ROCK_ATTACK;
 		playerHitColl = obj->Component()->AddComponent<SphereCollider>();
 		//200
-		playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitCollRadius, 1.0f, 1.0f)), "_rockAttack");
+		playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitCollRadius, 1.0f, 1.0f)), "_rockGroundAttack");
 
 		info.oneColl = false;
 		info.tag = CollsionInformation::JUST_AVOID;

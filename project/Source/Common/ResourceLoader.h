@@ -99,6 +99,7 @@ namespace ResourceLoad {
 	/// <param name="id">指定したID</param>
 	/// <param name="id">commoonフォルダを検索するかどうか</param>
 	void DeleteData(ID::IDType id,bool _common);
+	void DeleteEffectData(Effect_ID::EFFECT_ID id,bool _common);
 
 	/// <summary>
 	/// すべてのデータを削除

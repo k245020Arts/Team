@@ -46,6 +46,8 @@ public:
 
 		//地面についた後にプレイヤーに当たり判定がつくか
 		bool playerGroundHit;
+		bool playerGroundOneHit;
+		bool playerGroundNoDamageReactionHit;
 		float playerGroundCollRadius;
 
 		//ボスにダメージを食らうか
@@ -562,6 +564,8 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 	{
 		j["playerGroundHit"] = p.playerGroundHit;
 		j["playerGroundCollRadius"] = p.playerGroundCollRadius;
+		j["playerGroundOneHit"] = p.playerGroundOneHit;
+		j["playerGroundNoDamageReactionHit"] = p.playerGroundNoDamageReactionHit;
 	}
 
 	// bossHit
@@ -726,6 +730,9 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 		if (p.playerGroundHit)
 		{
 			if (j.contains("playerGroundCollRadius")) j.at("playerGroundCollRadius").get_to(p.playerGroundCollRadius);
+			if (j.contains("playerGroundOneHit")) j.at("playerGroundOneHit").get_to(p.playerGroundOneHit);
+			if (j.contains("playerGroundNoDamageReactionHit")) j.at("playerGroundNoDamageReactionHit").get_to(p.playerGroundNoDamageReactionHit);
+			
 		}
 	}
 	else p.playerGroundHit = false;
@@ -850,6 +857,8 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 		{
 			if (j.contains("throwHeight")) j.at("throwHeight").get_to(p.throwHeight);
 			if (j.contains("throwFallGravity")) j.at("throwFallGravity").get_to(p.throwFallGravity);
+			if (j.contains("thorwStartPos")) j.at("thorwStartPos").get_to(p.thorwStartPos);
+			if (j.contains("thorwVelocity")) j.at("thorwVelocity").get_to(p.thorwVelocity);
 		}
 	}
 

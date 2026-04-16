@@ -45,7 +45,9 @@ CollsionEvent::CollsionEvent()
 
 	// Player Å© BossRock attack
 	eventTable[MakeKey(PLAYER, BOSS_ROCK_ATTACK)] = (EventFunc)&CollsionEvent::PlayerDamageBossChildEvent;
-
+	eventTable[MakeKey(PLAYER, THROW_OBJECT_GROUND)] = (EventFunc)&CollsionEvent::PlayerDamageBossChildEvent;
+	eventTable[MakeKey(PLAYER, THROW_OBJECT_GROUND_ONE_HIT)] = (EventFunc)&CollsionEvent::PlayerDamageBossChildEvent;
+	eventTable[MakeKey(PLAYER, THROW_OBJECT_GROUND_NO_DAMAGE_REACTION)] = (EventFunc)&CollsionEvent::PlayerDamageBossChildEvent;
 
 	// BossRock UI Å® floor
 	eventTable[MakeKey(BOSS_ROCK_UI, FLOOR_AABB)] = (EventFunc)&CollsionEvent::BossRockPrePosition;

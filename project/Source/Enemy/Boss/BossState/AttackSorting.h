@@ -12,7 +12,7 @@ struct ActionParam
 	int maxAction;    // 連続で何回行動できるか
 
 	float distance = 0; // 距離によってその技が出やすいかどうか
-	int addWeight = 0;  // 技を出やすくするときにweightにプラスして出しやすくさせてる
+	int addWeight = 0;  // 数字変動
 
 	ActionParam() {
 		id = "";

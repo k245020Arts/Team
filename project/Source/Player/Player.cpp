@@ -701,15 +701,19 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 			changeID = _id;
 			moveAdd = _move;
 		}
-		float damage;
-		StateID::State_ID changeID;
-		VECTOR3 moveAdd;
+		float damage; //ダメージ
+		StateID::State_ID changeID; //ダメージを食らった時になるステート
+		VECTOR3 moveAdd; //仰け反り量
 	};
-	std::map< CollsionInformation::Tag, PlayerDamage> damageParam
+	//当たり判定の情報を記述
+	std::unordered_map< CollsionInformation::Tag, PlayerDamage> damageParam
 	{
 		{CollsionInformation::ROCK_BLAST_DAMAGE, { PlayerDamage(100.0f,StateID::PLAYER_BLOW_AWAY_S,VECTOR3(0,0,-1000)) } },
 		{ CollsionInformation::B_E_ATTACK,{PlayerDamage(50.0f,StateID::PLAYER_DAMAGE_S,VECTOR3(0,0,-1000))} },
 		{ CollsionInformation::BOSS_ROCK_ATTACK,{PlayerDamage(20.0f,StateID::PLAYER_DAMAGE_S,VECTOR3(0,0,-1000))} },
+		{ CollsionInformation::THROW_OBJECT_GROUND,{PlayerDamage(20.0f,StateID::PLAYER_DAMAGE_S,VECTOR3(0,0,-1000))} },
+		{ CollsionInformation::THROW_OBJECT_GROUND_ONE_HIT,{PlayerDamage(20.0f,StateID::PLAYER_DAMAGE_S,VECTOR3(0,0,-1000))} },
+		{ CollsionInformation::THROW_OBJECT_GROUND_NO_DAMAGE_REACTION,{PlayerDamage(0.1f,StateID::STATE_MAX,VECTOR3(0,0,0))} },
 
 	};
 
@@ -755,7 +759,10 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 	if (damage) {
 		if (pB->GetID() != StateID::PLAYER_AVOID_S) {
 			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(80, 30);
-			playerCom.stateManager->ChangeState(param.changeID);
+			if (param.changeID != StateID::STATE_MAX) {
+				playerCom.stateManager->ChangeState(param.changeID);
+			}
+			
 			playerCom.physics->AddVelocity(param.moveAdd,false);
 			hp -= param.damage;
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();

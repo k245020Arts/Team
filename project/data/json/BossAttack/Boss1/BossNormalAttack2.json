@@ -1,6 +1,9 @@
 {
-  "BossNormalAttack1": {
-    "animID": "B_ATTACK1",
+  "BossNormalAttack2": {
+    "angleMoveAmout": -90.0,
+    "animID": "B_ATTACK2",
+    "animNum": 1,
+    "attackBeforeAnimID": "",
     "attackCollTransform": {
       "position": {
         "x": 0.0,
@@ -21,7 +24,7 @@
     "attackCollsionEndTime": 60.0,
     "attackCollsionStartTime": 25.0,
     "attackFlashStartTime": 7.0,
-    "attackID": "BossNormalAttack1",
+    "attackID": "BossNormalAttack2",
     "attackPositionFrameNum": 15,
     "attackSoundStartTime": 1.0,
     "bossID": "",
@@ -46,10 +49,13 @@
     },
     "justAvoidCollsionEndTime": 6.0,
     "justAvoidCollsionStartTime": 5.0,
+    "rotateMove": true,
     "slowAmout": 0.10000000149011612,
     "slowTime": 0.30000001192092896,
     "speedUpMotionSpeed": 0.30000001192092896,
+    "trailRightHand": false,
     "useFlash": true,
+    "useTrail": true,
     "voiceName": "E_AttackV"
   }
 }

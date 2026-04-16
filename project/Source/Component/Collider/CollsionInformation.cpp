@@ -49,6 +49,9 @@ void CollsionInformation::InitSetPair()
     SetPair(PLAYER, JUST_AVOID);
     SetPair(PLAYER, JUST_AVOID_ENEMY);
     SetPair(PLAYER, JUST_AVOID_BOSS);
+    SetPair(PLAYER, THROW_OBJECT_GROUND);
+    SetPair(PLAYER, THROW_OBJECT_GROUND_ONE_HIT);
+    SetPair(PLAYER, THROW_OBJECT_GROUND_NO_DAMAGE_REACTION);
 }
 
 bool CollsionInformation::IsCollPair(Tag tag1, Tag tag2)

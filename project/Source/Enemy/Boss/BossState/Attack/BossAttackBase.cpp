@@ -77,7 +77,7 @@ void BossAttackBase::Update()
 		}
 	}
 	BossUpdate();
-
+	
 }
 
 void BossAttackBase::BossStart()
@@ -687,7 +687,7 @@ void BossAttackBase::AttackStart()
 		info.tag = CollsionInformation::BOSS_RUSH;
 
 		rockColl = obj->Component()->AddComponent<SphereCollider>();
-		Transform rushColl = collTrans;
+		Transform rushColl = attackParam.attackCollTransform;
 		rushColl.scale.x += attackParam.addRushCollScale;
 		rockColl->CollsionAdd(info, rushColl, "Rush");
 	}

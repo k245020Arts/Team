@@ -548,6 +548,9 @@
     <ClCompile Include="Source\Enemy\Boss\BossAttackDataSerializer.cpp">
       <Filter>PlayScene\Enemy\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossCreater.cpp">
+      <Filter>PlayScene\Enemy\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1162,6 +1165,9 @@
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossAttackDataSerializer.h">
+      <Filter>PlayScene\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossCreater.h">
       <Filter>PlayScene\Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>

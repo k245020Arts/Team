@@ -28,6 +28,7 @@ void PlayerDamage::Update()
 	if (p->playerCom.anim->IsFinish()) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 	}
+	
 }
 
 void PlayerDamage::Draw()
@@ -56,6 +57,7 @@ void PlayerDamage::Start()
 	if (!p->playerCom.enemyManager->CameraInEnemy()) {
 		
 	}
+	p->noDamage = true;
 }
 
 void PlayerDamage::Finish()
@@ -64,4 +66,5 @@ void PlayerDamage::Finish()
 	p->playerCom.color->setRGB(Color::Rgb(255.0f, 255.0f, 255.0f, 255.0f));
 	p->playerCom.shaker->ShakeFinish();
 	//p->playerCom.physics->SetGravity(VECTOR3(0, -150, 0));
+	p->noDamage = false;
 }
