@@ -63,6 +63,13 @@ void BossAttackDataSerializer::SetThrowManager(BossRockManager* _data)
 {
 	rockManager = _data;
 	throwObjectsData = rockManager->GetThrowObjectsData();
+
+	throwObjectKeys.clear();
+	for (auto& [key, _] : throwObjectsData)
+	{
+		throwObjectKeys.push_back(key);
+	}
+	throwKeyReset = false;
 }
 
 void BossAttackDataSerializer::Update()
@@ -557,7 +564,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 
 			ImGui::Separator();
 
-			DrawThrowObjectEditor(param.throwAttackData);
+			DrawThrowObjectEditor(param.throwAttackData,throwObjectsData);
 		}
 	}
 
@@ -605,14 +612,23 @@ void BossAttackDataSerializer::DrawTransform(const char* label, Transform& t)
 	}
 }
 
-void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase::ThrowObjectAttackData>& list)
+const char* BossAttackDataSerializer::MakeLabel(const char* label, const char* category, int index)
+{
+	static char buf[256];
+	sprintf_s(buf, "%s##%s_%d", label, category, index);
+	return buf;
+}
+
+void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase::ThrowObjectAttackData>& list,const std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData)
 {
 	static int selectIndex = -1;
 
 	ImGui::Separator();
 	ImGui::Text("Throw Object List");
 
+	//------------------------------------
 	// ■ リスト
+	//------------------------------------
 	for (int i = 0; i < list.size(); i++)
 	{
 		std::string label = std::to_string(i) + " : " + list[i].throwObjectID;
@@ -623,7 +639,9 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	// ■ 追加
+	//------------------------------------
+	// ■ 追加・削除
+	//------------------------------------
 	if (ImGui::Button("Add Empty"))
 	{
 		list.push_back(BossAttackBase::ThrowObjectAttackData());
@@ -634,14 +652,11 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 
 	if (ImGui::Button("Add Copy") && selectIndex >= 0)
 	{
-		auto copy = list[selectIndex];
-
-		list.push_back(copy);
+		list.push_back(list[selectIndex]);
 		selectIndex = (int)list.size() - 1;
 	}
 
 	ImGui::SameLine();
-
 
 	if (ImGui::Button("Delete") && selectIndex >= 0)
 	{
@@ -657,55 +672,73 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	ImGui::Text("Edit Throw Data");
 
 	//------------------------------------
-	// ■ ID（テキスト編集）
+	// ■ ThrowObjectID（Combo）
 	//------------------------------------
-	char idBuf[128];
-	strcpy_s(idBuf, t.throwObjectID.c_str());
-	std::string idNum = std::to_string(selectIndex);
-	if (ImGui::InputText("ID", idBuf, sizeof(idBuf)))
+	if (!throwObjectsData.empty())
 	{
-		t.throwObjectID = idBuf;
-	}
+		static std::vector<const char*> throwObjectitems;
 
-	//------------------------------------
-	// ■ 基本
-	//------------------------------------
-	if (ImGui::CollapsingHeader("Base"))
-	{
-		ImGui::DragFloat3("Gravity", &t.baseGravity.x, 0.1f);
-		ImGui::DragFloat3("Friction", &t.baseFirction.x, 0.1f);
-	}
+		throwObjectitems.clear();
 
-	//------------------------------------
-	// ■ Push Collision
-	//------------------------------------
-	if (ImGui::CollapsingHeader("PushCollision"))
-	{
-		ImGui::Checkbox("Enable##Push", &t.pushCollCan);
-
-		if (t.pushCollCan)
+		for (auto& k : throwObjectKeys)
 		{
-			DrawTransform("PushTransform", t.pushCollTransform);
+			throwObjectitems.push_back(k.c_str());
+		}
+
+		int currentIndex = 0;
+		for (int i = 0; i < throwObjectKeys.size(); i++)
+		{
+			if (throwObjectKeys[i] == t.throwObjectID)
+			{
+				currentIndex = i;
+				break;
+			}
+		}
+
+		if (ImGui::Combo(MakeLabel("ThrowObjectID", "Combo", selectIndex),&currentIndex,throwObjectitems.data(),(int)throwObjectitems.size()))
+		{
+			t.throwObjectID = throwObjectKeys[currentIndex];
 		}
 	}
 
 	//------------------------------------
-	// ■ Ground（Ray）
+	// ■ Base
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Base"))
+	{
+		ImGui::DragFloat3("Gravity##Base_", &t.baseGravity.x, 0.1f);
+		ImGui::DragFloat3("Friction##Base_", &t.baseFirction.x, 0.1f);
+	}
+
+	//------------------------------------
+	// ■ Push
+	//------------------------------------
+	if (ImGui::CollapsingHeader("PushCollision"))
+	{
+		ImGui::Checkbox("Enable##Push_", &t.pushCollCan);
+
+		if (t.pushCollCan)
+		{
+			DrawTransform("PushTransform##Push_", t.pushCollTransform);
+		}
+	}
+
+	//------------------------------------
+	// ■ Ground
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Ground"))
 	{
-		ImGui::Checkbox("Enable##Ground", &t.randCan);
+		ImGui::Checkbox("Enable##Ground_", &t.randCan);
 
 		if (t.randCan)
 		{
-			DrawRayColliderInfo("RandCollider", t.randCollInfo);
+			DrawRayColliderInfo("Collider##Ground_", t.randCollInfo);
 
-			// 安全処理
 			if (t.randCollInfo.rayStartPos > t.randCollInfo.rayFinishPos)
 				std::swap(t.randCollInfo.rayStartPos, t.randCollInfo.rayFinishPos);
 		}
 
-		ImGui::DragFloat("LifeTime", &t.randTime, 0.1f);
+		ImGui::DragFloat("LifeTime##Ground_", &t.randTime, 0.1f);
 	}
 
 	//------------------------------------
@@ -713,12 +746,12 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Player Hit"))
 	{
-		ImGui::Checkbox("Enable##PlayerHit", &t.playerHit);
+		ImGui::Checkbox("Enable##PlayerHit_", &t.playerHit);
 
 		if (t.playerHit)
 		{
-			ImGui::DragFloat("Radius", &t.playerHitCollRadius, 0.1f);
-			ImGui::DragFloat("JustAvoidRadius", &t.playerHitJustAvoidCollRadius, 0.1f);
+			ImGui::DragFloat("Radius##PlayerHit_", &t.playerHitCollRadius, 0.1f);
+			ImGui::DragFloat("JustAvoidRadius##PlayerHit_", &t.playerHitJustAvoidCollRadius, 0.1f);
 		}
 	}
 
@@ -727,13 +760,13 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Ground Hit"))
 	{
-		ImGui::Checkbox("Enable##GroundHit", &t.playerGroundHit);
+		ImGui::Checkbox("Enable##GroundHit_", &t.playerGroundHit);
 
 		if (t.playerGroundHit)
 		{
-			ImGui::DragFloat("Radius", &t.playerGroundCollRadius, 0.1f);
-			ImGui::Checkbox("playerGroundNoDamageReactionHit", &t.playerGroundNoDamageReactionHit);
-			ImGui::Checkbox("playerGroundOneHit", &t.playerGroundOneHit);
+			ImGui::DragFloat("Radius##GroundHit_", &t.playerGroundCollRadius, 0.1f);
+			ImGui::Checkbox("OneHit##GroundHit_", &t.playerGroundOneHit);
+			ImGui::Checkbox("NoReaction##GroundHit_", &t.playerGroundNoDamageReactionHit);
 		}
 	}
 
@@ -742,76 +775,95 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Boss Hit"))
 	{
-		ImGui::Checkbox("Enable##BossHit", &t.bossHit);
+		ImGui::Checkbox("Enable##BossHit_", &t.bossHit);
 
 		if (t.bossHit)
 		{
-			ImGui::DragFloat("Radius", &t.bossHitCollRadius, 0.1f);
+			ImGui::DragFloat("Radius##BossHit_", &t.bossHitCollRadius, 0.1f);
 		}
 	}
 
 	//------------------------------------
-	// ■ Player Attack Flying
+	// ■ Flying
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Player Attack Flying"))
 	{
-		ImGui::Checkbox("Enable##Flying", &t.playerAttackFlying);
+		ImGui::Checkbox("Enable##Flying_", &t.playerAttackFlying);
 
 		if (t.playerAttackFlying)
 		{
-			ImGui::DragFloat("Radius", &t.playerAttackFlyingCollRadius, 0.1f);
-			ImGui::DragFloat("Speed", &t.flyingSpeed, 0.1f);
-			ImGui::DragFloat("Height", &t.flyingHeight, 0.1f);
+			ImGui::DragFloat("Radius##Flying_", &t.playerAttackFlyingCollRadius, 0.1f);
+			ImGui::DragFloat("Speed##Flying_", &t.flyingSpeed, 0.1f);
+			ImGui::DragFloat("Height##Flying_", &t.flyingHeight, 0.1f);
 		}
 	}
 
 	//------------------------------------
-	// ■ Boss Rush Hit
+	// ■ Rush Hit
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Boss Rush Hit"))
 	{
-		ImGui::Checkbox("Enable##RushHit", &t.bossRushHit);
+		ImGui::Checkbox("Enable##RushHit_", &t.bossRushHit);
 
 		if (t.bossRushHit)
 		{
-			ImGui::DragFloat("Radius", &t.bossRushHitCollRadius, 0.1f);
+			ImGui::DragFloat("Radius##RushHit_", &t.bossRushHitCollRadius, 0.1f);
 		}
 	}
 
 	//------------------------------------
-	// ■ Blast（Dount）
+	// ■ Blast
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Blast"))
 	{
-		ImGui::Checkbox("Enable##Blast", &t.blastCan);
+		ImGui::Checkbox("Enable##Blast_", &t.blastCan);
 
 		if (t.blastCan)
 		{
-			DrawDountColliderInfo("BlastCollider", t.blastColliderInfo);
-			DrawDountColliderInfo("JustAvoidCollider", t.blastJustAvoidColliderInfo);
+			DrawDountColliderInfo("Blast##Blast_", t.blastColliderInfo);
+			DrawDountColliderInfo("JustAvoid##Blast_", t.blastJustAvoidColliderInfo);
 
-			// 安全処理
 			t.blastColliderInfo.outRadius = max(t.blastColliderInfo.outRadius, t.blastColliderInfo.inRadius);
 
-			ImGui::DragFloat("BlinkTime", &t.blastBlinkMaxCounter, 0.1f);
-			ImGui::Checkbox("RandomBlast", &t.randomBlast);
-			ImGui::DragFloat("Rate", &t.randomBlastRate, 0.1f);
+			ImGui::DragFloat("Blink##Blast_", &t.blastBlinkMaxCounter, 0.1f);
+			ImGui::Checkbox("Random##Blast_", &t.randomBlast);
+			ImGui::DragFloat("Rate##Blast_", &t.randomBlastRate, 0.1f);
 
-			ImGui::DragFloat("MaxRadius", &t.maxRadius, 0.1f);
-			ImGui::DragFloat("WaveSpeed", &t.waveSpeed, 0.1f);
+			ImGui::DragFloat("MaxRadius##Blast_", &t.maxRadius, 0.1f);
+			ImGui::DragFloat("WaveSpeed##Blast_", &t.waveSpeed, 0.1f);
 		}
 	}
 
 	//------------------------------------
-	// ■ Prediction（Ray）
+	// ■ Random
+	//------------------------------------
+	if (ImGui::CollapsingHeader("Random"))
+	{
+		ImGui::Checkbox("Height##Random_", &t.randomHeight);
+		if (t.randomHeight)
+		{
+			ImGui::DragFloat("MinH##Random_", &t.minHeight, 0.1f);
+			ImGui::DragFloat("MaxH##Random_", &t.maxHeight, 0.1f);
+		}
+
+		ImGui::Checkbox("Speed##Random_", &t.randomSpeed);
+		if (t.randomSpeed)
+		{
+			ImGui::DragFloat("MinS##Random_", &t.minSpeed, 0.1f);
+			ImGui::DragFloat("MaxS##Random_", &t.maxSpeed, 0.1f);
+		}
+	}
+
+	//------------------------------------
+	// ■ Prediction
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Prediction"))
 	{
-		ImGui::Checkbox("Enable##Prediction", &t.predictionCicleCan);
+		ImGui::Checkbox("Enable##Prediction_", &t.predictionCicleCan);
 
 		if (t.predictionCicleCan)
 		{
-			DrawRayColliderInfo("PredictionCollider", t.predictionCicleColliderInfo);
+			DrawRayColliderInfo("Collider##Prediction_", t.predictionCicleColliderInfo);
 		}
 	}
 
@@ -820,18 +872,21 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Throw"))
 	{
-		ImGui::Checkbox("ArmThrow", &t.armThrow);
-		ImGui::DragInt("ArmFrame", &t.armFrameNum, 1);
-		ImGui::DragFloat3("ArmOffset", &t.armAddPos.x, 0.1f);
+		ImGui::Checkbox("ArmThrow##Throw_", &t.armThrow);
+		ImGui::DragInt("ArmFrame##Throw_", &t.armFrameNum, 1);
+		ImGui::DragFloat3("ArmOffset##Throw_", &t.armAddPos.x, 0.1f);
 
-		ImGui::Checkbox("ToPlayer", &t.throwToPlayer);
-		ImGui::Checkbox("ToFront", &t.thorwToFront);
+		ImGui::Checkbox("ToPlayer##Throw_", &t.throwToPlayer);
+		ImGui::Checkbox("ToFront##Throw_", &t.thorwToFront);
 
-		ImGui::DragFloat("Speed", &t.throwSpeed, 0.1f);
-		ImGui::DragFloat("UpSpeed", &t.upSpeed, 0.1f);
-		ImGui::DragFloat("FirstSpeed", &t.throwFirstSpeed, 0.1f);
+		ImGui::DragFloat("Speed##Throw_", &t.throwSpeed, 0.1f);
+		ImGui::DragFloat("UpSpeed##Throw_", &t.upSpeed, 0.1f);
+		ImGui::DragFloat("FirstSpeed##Throw_", &t.throwFirstSpeed, 0.1f);
 
-		ImGui::DragFloat3("Diffusion", &t.diffusionAngle.x, 0.1f);
+		ImGui::DragFloat3("Diffusion##Throw_", &t.diffusionAngle.x, 0.1f);
+
+		ImGui::Checkbox("FreeDir##Throw_", &t.freeDir);
+		ImGui::DragFloat3("Velocity##Throw_", &t.thorwVelocity.x, 0.1f);
 	}
 
 	//------------------------------------
@@ -839,25 +894,26 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Fall"))
 	{
-		ImGui::Checkbox("Enable##Fall", &t.throwToFall);
+		ImGui::Checkbox("Enable##Fall_", &t.throwToFall);
 
 		if (t.throwToFall)
 		{
-			ImGui::DragFloat("Height", &t.throwHeight, 0.1f);
-			ImGui::DragFloat("Gravity", &t.throwFallGravity, 0.1f);
-			ImGui::Checkbox("ToPlayer", &t.throwToFallToPlayer);
-			ImGui::DragFloat3("ThrowStartPos", &t.thorwStartPos.x, 0.1f);
-			ImGui::DragFloat("ThrowVelocity", &t.thorwVelocity.x, 0.1f);
+			ImGui::DragFloat("Height##Fall_", &t.throwHeight, 0.1f);
+			ImGui::DragFloat("Gravity##Fall_", &t.throwFallGravity, 0.1f);
+
+			ImGui::Checkbox("ToPlayer##Fall_", &t.throwToFallToPlayer);
+
+			ImGui::DragFloat3("StartPos##Fall_", &t.thorwStartPos.x, 0.1f);
 		}
 	}
 
 	//------------------------------------
-	// ■ その他
+	// ■ Other
 	//------------------------------------
 	if (ImGui::CollapsingHeader("Other"))
 	{
-		ImGui::Checkbox("GroundDelete", &t.groundDelete);
-		ImGui::Checkbox("PlayerAttackDrop", &t.playerAttackObjectDrop);
+		ImGui::Checkbox("GroundDelete##Other_", &t.groundDelete);
+		ImGui::Checkbox("Drop##Other_", &t.playerAttackObjectDrop);
 	}
 }
 
@@ -1108,38 +1164,54 @@ void BossAttackDataSerializer::DrawDountColliderInfo(const char* label, BossAtta
 		ImGui::TreePop();
 	}
 }
-
 void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData)
 {
 	//------------------------------------
-	// ■ 選択用
+	// ■ 状態保持
 	//------------------------------------
 	static int selectIndex = -1;
-	static std::vector<std::string> keys;
 
-	keys.clear();
-	for (auto& [key, _] : throwObjectsData)
+	static BossRockManager::BossThrowObjectData editData;
+	static std::string editKey = "";
+	static bool isEditing = false;
+
+	//------------------------------------
+	// ■ keys更新（必要な時だけ）
+	//------------------------------------
+	if (throwKeyReset)
 	{
-		keys.push_back(key);
+		throwObjectKeys.clear();
+		for (auto& [key, _] : throwObjectsData)
+		{
+			throwObjectKeys.push_back(key);
+		}
+		throwKeyReset = false;
 	}
 
 	//------------------------------------
-	// ■ Combo（選択）
+	// ■ Combo
 	//------------------------------------
-	if (!keys.empty())
+	if (!throwObjectKeys.empty())
 	{
 		std::vector<const char*> items;
-		for (auto& k : keys) items.push_back(k.c_str());
+		for (auto& k : throwObjectKeys) items.push_back(k.c_str());
 
-		ImGui::Combo("ThrowObject Select", &selectIndex, items.data(), (int)items.size());
+		if (ImGui::Combo("ThrowObject Select", &selectIndex, items.data(), (int)items.size()))
+		{
+			editKey = throwObjectKeys[selectIndex];
+			editData = throwObjectsData[editKey];
+			isEditing = true;
+		}
 	}
 	else
 	{
 		ImGui::Text("No Data");
 	}
 
+	//------------------------------------
+	// ■ 追加
+	//------------------------------------
 	static char newID[128] = "";
-
 	ImGui::InputText("New ID", newID, sizeof(newID));
 	ImGui::Checkbox("Effect", &isEffect);
 
@@ -1150,34 +1222,33 @@ void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRoc
 		if (!id.empty() && throwObjectsData.count(id) == 0)
 		{
 			BossRockManager::BossThrowObjectData data;
-
 			data.id = id;
 			data.modelName = id;
 			data.isEffect = isEffect;
 
 			throwObjectsData[id] = data;
-
 			rockManager->AddJsonData(data);
 
-			selectIndex = (int)throwObjectsData.size() - 1;
+			//再構築
+			throwKeyReset = true;
 
 			newID[0] = '\0';
-			throwObjectsData = rockManager->GetThrowObjectsData();
 		}
 	}
 
 	//------------------------------------
 	// ■ 編集
 	//------------------------------------
-	if (selectIndex < 0 || selectIndex >= keys.size())
-		return;
+	if (!isEditing) return;
 
-	std::string key = keys[selectIndex];
-	auto t = throwObjectsData[key];
+	auto& t = editData;
 
 	ImGui::Separator();
-	ImGui::Text("Edit : %s", key.c_str());
+	ImGui::Text("Edit : %s", editKey.c_str());
 
+	//------------------------------------
+	// ■ ID変更
+	//------------------------------------
 	char idBuf[128];
 	strcpy_s(idBuf, t.id.c_str());
 
@@ -1185,30 +1256,15 @@ void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRoc
 	{
 		std::string newKey = idBuf;
 
-		if (newKey != key && throwObjectsData.count(newKey) == 0)
+		if (newKey != editKey && throwObjectsData.count(newKey) == 0)
 		{
-			auto node = throwObjectsData.extract(key);
-			node.key() = newKey;
-			throwObjectsData.insert(std::move(node));
-			//rockManager->ChangeJsonData();
-			selectIndex = -1;
-			return;
+			t.id = newKey;
+			t.modelName = newKey;
 		}
-
-		t.id = newKey;
-		t.modelName = newKey;
 	}
 
-	//------------------------------------
-	// ■ モデル
-	//------------------------------------
-	char modelBuf[128];
-	strcpy_s(modelBuf, t.modelName.c_str());
-
-	if (ImGui::InputText("ModelName", modelBuf, sizeof(modelBuf)))
-	{
-		t.modelName = modelBuf;
-	}
+	//モデル
+	ImGui::Text("ModelName : %s", t.modelName.c_str());
 
 	ImGui::DragInt("ModelData", &t.modelData, 1);
 
@@ -1222,4 +1278,41 @@ void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRoc
 	// ■ その他
 	//------------------------------------
 	ImGui::Checkbox("IsEffect", &t.isEffect);
+
+	//------------------------------------
+	// ■ Save
+	//------------------------------------
+	if (ImGui::Button("Save"))
+	{
+		// キー変更対応
+		if (editKey != t.id && throwObjectsData.count(t.id) == 0)
+		{
+			throwObjectsData.erase(editKey);
+			throwObjectsData[t.id] = t;
+		}
+		else
+		{
+			throwObjectsData[editKey] = t;
+		}
+
+		// JSON反映
+		rockManager->ChangeJsonData(editData, editKey, editData.id);
+
+		//再構築
+		throwKeyReset = true;
+		isEditing = false;
+		selectIndex = -1;
+	}
+
+	ImGui::SameLine();
+
+	//------------------------------------
+	// ■ Cancel
+	//------------------------------------
+	if (ImGui::Button("Cancel"))
+	{
+		isEditing = false;
+		selectIndex = -1;
+	}
 }
+

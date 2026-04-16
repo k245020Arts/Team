@@ -1,10 +1,11 @@
 {
-   "ThrowObjectsData": [
-   {
-     "id": "BossAttackRock1",
-      "modelName" : "BossAttackRock1",
-       "modelData" : 0,
-       "modelTransform": {
+  "ThrowObjectsData": {
+    "BossAttackRock1": {
+      "id": "BossAttackRock1",
+      "isEffect": false,
+      "modelData": 0,
+      "modelName": "BossAttackRock1",
+      "modelTransform": {
         "position": {
           "x": 0.0,
           "y": 0.0,
@@ -20,8 +21,8 @@
           "y": 1.0,
           "z": 1.0
         }
-       },
-        "pushTransform": {
+      },
+      "pushTransform": {
         "position": {
           "x": 0.0,
           "y": 0.0,
@@ -37,13 +38,14 @@
           "y": 4.0,
           "z": 4.0
         }
-     }
-   },
-   {
-     "id": "BossAttackRock2",
-      "modelName" : "BossAttackRock2",
-       "modelData" : 0,
-       "modelTransform": {
+      }
+    },
+    "BossAttackRock2": {
+      "id": "BossAttackRock2",
+      "isEffect": false,
+      "modelData": 0,
+      "modelName": "BossAttackRock2",
+      "modelTransform": {
         "position": {
           "x": 0.0,
           "y": 0.0,
@@ -59,8 +61,8 @@
           "y": 1.0,
           "z": 1.0
         }
-       },
-        "pushTransform": {
+      },
+      "pushTransform": {
         "position": {
           "x": 0.0,
           "y": 0.0,
@@ -76,13 +78,14 @@
           "y": 3.0,
           "z": 3.0
         }
-     }
-   },
-   {
-     "id": "BossAttackRock3",
-      "modelName" : "BossAttackRock3",
-       "modelData" : 0,
-       "modelTransform": {
+      }
+    },
+    "BossAttackRock3": {
+      "id": "BossAttackRock3",
+      "isEffect": false,
+      "modelData": 0,
+      "modelName": "BossAttackRock3",
+      "modelTransform": {
         "position": {
           "x": 0.0,
           "y": 0.0,
@@ -98,8 +101,8 @@
           "y": 0.5,
           "z": 0.5
         }
-       },
-        "pushTransform": {
+      },
+      "pushTransform": {
         "position": {
           "x": 0.0,
           "y": 0.0,
@@ -116,6 +119,46 @@
           "z": 10.0
         }
       }
+    },
+    "BossShot": {
+      "id": "BossShot",
+      "isEffect": true,
+      "modelData": 29,
+      "modelName": "BossShot",
+      "modelTransform": {
+        "position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 5.0,
+          "y": 5.0,
+          "z": 5.0
+        }
+      },
+      "pushTransform": {
+        "position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
     }
-  ]
+  }
 }

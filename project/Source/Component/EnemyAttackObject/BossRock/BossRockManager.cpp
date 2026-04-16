@@ -303,7 +303,7 @@ void BossRockManager::AddJsonData(BossThrowObjectData _data)
 	}
 	for (auto& throwObject : throwObjectsData) {
 		std::string key = throwObject.second.id;
-		root["ThrowObjectsData"][key] = throwObject;
+		root["ThrowObjectsData"][key] = throwObject.second;
 	}
 
 	if (_data.isEffect) {
@@ -317,12 +317,39 @@ void BossRockManager::AddJsonData(BossThrowObjectData _data)
 
 }
 
-void BossRockManager::ChangeJsonData(std::string _oldKey, std::string _newKey)
+void BossRockManager::ChangeJsonData(const BossThrowObjectData& _data,const std::string& _oldKey,const std::string& _newKey)
 {
-	//throwObjectsData = _data;
-
 	JsonReader json;
 	std::string fileName = "data/json/ThrowObject/ThrowObjects.json";
+
+	auto& table = throwObjectsData;
+
+	if (table[_oldKey].isEffect) {
+		ResourceLoad::DeleteData(ID::StringToID(table[_oldKey].modelName), false);
+	}
+	else {
+		ResourceLoad::DeleteEffectData(Effect_ID::StringToID(table[_oldKey].modelName), false);
+	}
+
+	//------------------------------------
+	// ■ キー変更（リネーム）
+	//------------------------------------
+	if (_oldKey != _newKey)
+	{
+		table.erase(_oldKey);
+	}
+
+	//------------------------------------
+	// ■ 更新
+	//------------------------------------
+	table[_newKey] = _data;
+
+	if (table[_newKey].isEffect) {
+		LoadEffect(table[_newKey]);
+	}
+	else {
+		LoadModel(table[_newKey]);
+	}
 
 	nlohmann::json& root = json.Data();
 
@@ -330,16 +357,9 @@ void BossRockManager::ChangeJsonData(std::string _oldKey, std::string _newKey)
 		root["ThrowObjectsData"] = nlohmann::json::object();
 	}
 	for (auto& throwObject : throwObjectsData) {
-		root["ThrowObjectsData"] = throwObject;
+		std::string key = throwObject.second.id;
+		root["ThrowObjectsData"][key] = throwObject.second;
 	}
-
-	/*if (_data.isEffect) {
-		LoadEffect(_data.modelName);
-	}
-	else {
-		LoadModel(_data.modelName);
-	}*/
-
 	json.Save(fileName, root);
 }
 

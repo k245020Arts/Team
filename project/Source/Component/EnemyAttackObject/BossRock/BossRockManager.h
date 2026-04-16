@@ -62,7 +62,7 @@ public:
 	std::map<std::string, BossThrowObjectData> GetThrowObjectsData() { return throwObjectsData; }
 
 	void AddJsonData(BossThrowObjectData _data);
-	void ChangeJsonData(std::string _oldKey, std::string _newKey);
+	void ChangeJsonData(const BossThrowObjectData& _data, const std::string& _oldKey, const std::string& _newKey);
 
 private:
 

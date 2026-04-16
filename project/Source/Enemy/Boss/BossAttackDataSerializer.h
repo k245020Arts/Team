@@ -35,10 +35,11 @@ private:
 	void DrawAttackParamEditor(std::string _selectID);
 	void DrawTransform(const char* label, Transform& t);
 	void CopyParam(std::string _selectID);
-	void DrawThrowObjectEditor(std::vector<BossAttackBase::ThrowObjectAttackData>& list);
+	void DrawThrowObjectEditor(std::vector<BossAttackBase::ThrowObjectAttackData>& list, const std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData);
 	void DrawRayColliderInfo(const char* label, BossAttackBase::RayColliderInfo& r);
 	void DrawDountColliderInfo(const char* label, BossAttackBase::DountColliderInfo& d);
 	void DrawAddThrowObjects(std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData);
+	const char* MakeLabel(const char* label, const char* category, int index);
 	Animator* bossAnim;
 	Animator::AnimFileInfo currentSelectAnimInfos;
 
@@ -47,4 +48,6 @@ private:
 	BossRockManager* rockManager;
 	Boss* boss;
 	bool isEffect;
+	std::vector<std::string> throwObjectKeys;
+	bool throwKeyReset;
 };

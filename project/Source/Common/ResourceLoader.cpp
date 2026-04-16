@@ -283,6 +283,36 @@ void ResourceLoad::DeleteData(ID::IDType id, bool _common) {
     targetLoad.erase(itr);
 }
 
+void ResourceLoad::DeleteEffectData(Effect_ID::EFFECT_ID id, bool _common)
+{
+    std::string name = Effect_ID::GetEffectID(id);
+    auto& targetLoad = _common ? commonFileLoad : fileLoad;
+
+    auto itr = targetLoad.find(name);
+    if (itr == targetLoad.end()) {
+        Debug::CreateMessageBox("データが存在しない", "削除ミス");
+        return;
+    }
+
+    switch (itr->second.type)
+    {
+    case Type::MODEL:
+    case Type::ANIM:
+        MV1DeleteModel(itr->second.handle);
+        break;
+    case Type::SOUND:
+        DeleteSoundMem(itr->second.handle);
+        break;
+    case Type::EFFECT:
+        DeleteEffekseerEffect(itr->second.handle);
+        break;
+    case Type::IMAGE:
+        DeleteGraph(itr->second.handle);
+        break;
+    }
+    targetLoad.erase(itr);
+}
+
 // fileLoadのみ全削除
 void ResourceLoad::FileLoadClear() {
     for (auto& f : fileLoad) {

@@ -28,10 +28,7 @@ public:
 	/// プレイヤーのポインタのセット
 	/// </summary>
 	void PlayerObjPointer();
-	/// <summary>
-	/// ボスの生成
-	/// </summary>
-	void CreateBoss();
+	
 	/// <summary>
 	/// プレイヤーを探す
 	/// </summary>
@@ -149,6 +146,7 @@ public:
 	bool ObjectIsEnemy(BaseObject* _base);
 
 	int GetEnemySize() { return (int)enemy.size(); }
+
 private:
 	
 	std::list<BaseObject*> enemy;
@@ -159,6 +157,6 @@ private:
 	GameControler* gameManager;
 	void GameSceneChangeState();
 
-	bool LoadBossParam(std::string _fileName);
+	
 
 };
