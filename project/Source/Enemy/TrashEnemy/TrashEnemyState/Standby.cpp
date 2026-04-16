@@ -12,10 +12,12 @@ Standby::Standby()
 	string = Function::GetClassNameC<Standby>();
 	counter = 0;
 
-	range = 0;
-	randomSpeed = 0;
-	redefinitionCounter = 0;
+	range = 0.0f;
+	randomSpeed = 0.0f;
+	redefinitionCounter = 0.0f;
 	isRedefinition = true;
+
+	runTime = 0.0f;
 }
 
 Standby::~Standby()
@@ -55,8 +57,13 @@ void Standby::Update()
 			}
 		}
 
-		if (vec.Size() >= e->eStatus->GetStatus().chaseRange)
-			e->ChangeState(StateID::T_ENEMY_RUN_S);
+			if (vec.Size() >= e->eStatus->GetStatus().chaseRange)
+				runTime += Time::DeltaTimeRate();
+			else
+				runTime = 0.0f;
+
+			if (runTime >= 0.5f)
+				e->ChangeState(StateID::T_ENEMY_RUN_S);
 	}
 	else
 	{
@@ -91,6 +98,9 @@ void Standby::Start()
 	pPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 
 	randomSpeed = (float)Random::GetReal();
+
+	runTime = 0.0f;
+
 	EnemyStateBase::Start();
 }
 

@@ -22,6 +22,7 @@
 #include "../../../../Component/Collider/DountCollider.h"
 #include "../../../../Component/EnemyAttackObject/ShockWave/ShockWave.h"
 #include "../../../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
+#include "../AttackSorting.h"
 
 #define PATTERN2
 
@@ -136,9 +137,12 @@ void BossAttackBase::BossFinish()
 		rockColl->GetBaseObject()->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("Rush");
 		rockColl = nullptr;
 	}
-	if (attackParam.throwAttackData.playerAttackObjectDrop) {
-		boss->rockManager->DropRockStart();
+	for (auto data : attackParam.throwAttackData) {
+		if (data.playerAttackObjectDrop) {
+			boss->rockManager->DropRockStart();
+		}
 	}
+	firstColl = false;
 }
 
 
@@ -341,6 +345,11 @@ void BossAttackBase::LoadAttackParam()
 	}
 }
 
+void BossAttackBase::SetAttackParam(BossAttackParam _param)
+{
+	attackParam = _param;
+}
+
 void BossAttackBase::RotateEvent()
 {
 	Boss* boss = GetBase<Boss>();
@@ -384,7 +393,7 @@ void BossAttackBase::MoveEvent()
 	if (attackParam.moveStartTime <= animFrame && attackParam.moveFinishTime >= animFrame) {
 		if (attackParam.playerAloowMove) {
 			if (aloowStop) {
-				VECTOR3 dis = boss->bossTransform->Forward() * -1.0f;
+				VECTOR3 dis = boss->bossTransform->Forward() * 1.0f;
 				normal = dis.Normalize();
 				normal.y = 0.0f;
 				float speed = attackParam.baseSpeed;
@@ -587,6 +596,19 @@ bool BossAttackBase::CurrentAttackAnim()
 	return ID::GetID(attackParam.animID) == boss->enemyBaseComponent.anim->GetCurrentID();
 }
 
+void BossAttackBase::AttackFinish()
+{
+	Boss* boss = GetBase<Boss>();
+	if (!CurrentAttackAnim()) {
+		return;
+	}
+	if (boss->enemyBaseComponent.anim->IsFinish())
+	{
+		boss->BossAttackStateChange();
+		boss->GetStateManager()->GetState<AttackSorting>()->AttackFinish();
+	}
+}
+
 
 void BossAttackBase::BossDushSound()
 {
@@ -628,10 +650,7 @@ void BossAttackBase::BossUpdate()
 	if (boss == nullptr) {
 		return;
 	}
-	if (boss->enemyBaseComponent.anim->IsFinish())
-	{
-		boss->BossAttackStateChange();
-	}
+	AttackFinish();
 	AttackSound();
 	BossAttackCollsion();
 	BossJustAvoidCollsion();

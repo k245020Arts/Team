@@ -22,12 +22,12 @@ private:
 	//どこに移動するかわかる
 	VECTOR3 newPos;
 
-	//int aiMove;
 	float counter;
-	//float angle;
 	float range;
 	float randomSpeed;
 	float redefinitionCounter;
 	//次のポジションを再定義する
 	bool isRedefinition;
+
+	float runTime;
 };

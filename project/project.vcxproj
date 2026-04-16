@@ -93,12 +93,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib_VC;$(ProjectDir)./</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib;$(ProjectDir)./</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib_VC;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)./</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)./</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -128,7 +128,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib_VC;$(ProjectDir)./</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLibEffekseer;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\DxLib;$(ProjectDir)./</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -136,7 +136,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib_VC;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)./</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\DxLibEffekseer;C:\DxLib;C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)./</AdditionalLibraryDirectories>
       <OutputFile>SKY WARS.exe</OutputFile>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -258,20 +258,10 @@
     <ClInclude Include="Source\Component\UI\UIBase.h" />
     <ClInclude Include="Source\Component\UI\UIManager\UIManager.h" />
     <ClInclude Include="Source\Enemy\Boss\Boss.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossAttackDataSerializer.h" />
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\AttackSorting.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossHalfSpecialAttack.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack1.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack2.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack3.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack4.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack5.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack6.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack7.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack1.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossSpecialSmallAttack1.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossAppear.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossBackStep.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossCoolTime.h" />
@@ -305,6 +295,7 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStatus.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.h" />
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.h" />
     <ClInclude Include="Source\GameControler\GameControler.h" />
     <ClInclude Include="Source\Light\Light.h" />
     <ClInclude Include="Source\BootScene.h" />
@@ -462,19 +453,9 @@
     <ClCompile Include="Source\Component\UI\UIBase.cpp" />
     <ClCompile Include="Source\Component\UI\UIManager\UIManager.cpp" />
     <ClCompile Include="Source\Enemy\Boss\Boss.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossAttackDataSerializer.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossHalfSpecialAttack.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack1.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack2.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack3.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack4.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack5.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack6.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossNormalAttack7.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack1.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialAttack2.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossSpecialSmallAttack1.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossAppear.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossBackStep.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossCoolTime.cpp" />
@@ -503,6 +484,7 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyIdol.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.cpp" />
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.cpp" />
     <ClCompile Include="Source\GameControler\GameControler.cpp" />
     <ClCompile Include="Source\Light\Light.cpp" />
     <ClCompile Include="Source\Player\Player.cpp" />

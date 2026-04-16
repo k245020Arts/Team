@@ -55,6 +55,9 @@ void StateManager::StartState(StateID::State_ID _id)
 
 void StateManager::ChangeState(StateID::State_ID _id)
 {
+	if (obj->GetTag() == "Boss") {
+		int a = 0;
+	}
 	if (currentId == _id) {
 		return;
 	}

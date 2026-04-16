@@ -126,7 +126,7 @@ void BossRockBase::Update()
 
 		flyCounter -= Time::DeltaTimeRate();
 		if (flyCounter <= 0.0f) {
-			fly = false;
+			fly = true;
 		}
 	}
 	if (nowBlast) {
@@ -567,6 +567,9 @@ void BossRockBase::ThrowRockStart(BaseObject* _player)
 
 void BossRockBase::BlastCollsionCreate()
 {
+	if (blastColl != nullptr) {
+		return;
+	}
 	CollsionInfo info;
 	blastColl = obj->Component()->AddComponent<DountCollider>();
 	blastJustAvoidColl = obj->Component()->AddComponent<DountCollider>();

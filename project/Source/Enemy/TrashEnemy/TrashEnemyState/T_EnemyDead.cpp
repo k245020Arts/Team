@@ -33,10 +33,6 @@ void T_EnemyDead::Update()
 	else
 		e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
-	//float a = -1000.0f;  //落下の強さ（重力）
-	//float h = 0.5f;		 //最高点までの時間
-	//float k = 800.0f;    //吹き飛びの高さ
-	
 	KnockbackMove(e, e->deadPreset);
 
 	if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)

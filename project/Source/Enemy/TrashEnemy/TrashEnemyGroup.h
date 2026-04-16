@@ -3,6 +3,7 @@
 #include <list>
 #include "TrashEnemyManager.h"
 
+class TrashEnemyManager;
 class TrashEnemy;
 class Camera;
 
@@ -32,6 +33,8 @@ public:
 
 public:
 	Camera* camera;
+	TrashEnemyManager* trashEnemyManager;
+
 	//近距離の敵
 	std::list<TrashEnemy*> meleeEnemies;
 	//遠距離の敵
@@ -39,7 +42,10 @@ public:
 
 	const int ATK_COUNTER_MIN = 1;
 	const float ATK_COUNTER_MAX = 3;
-	
+	/// <summary>
+	/// 指定した敵のリストの中身を見て敵がやられてたらリストから削除する
+	/// </summary>
+	/// <param name="enemies">敵のリスト</param>
 	void EnemyDeaad(std::list<TrashEnemy*>& enemies);
 	//雑魚的どうしであたった時の押し返し
 	void Separation();
@@ -51,6 +57,8 @@ public:
 	//近距離の敵で使う----------
 	//敵の攻撃
 	void MeleeEnemyAttack(TrashEnemy* _enemy);
+	//
+	void EnemiesRun(TrashEnemy* _enemy);
 	//近距離の敵の連携攻撃
 	void CooperateAttackMove(TrashEnemy* _enemy);
 	//近距離の敵のステートを強制的に全員変える
@@ -62,6 +70,7 @@ public:
 	//連携攻撃でこのカウントが一定の値を超えると強制的に攻撃し始める
 	float cooperateCounter;
 
+	int enemiesRunCounter;
 	//--------------------------
 
 	//遠距離の敵の攻撃

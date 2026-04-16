@@ -31,6 +31,7 @@
 #include "TrashEnemyState/CooperateAttack1.h"
 #include "TrashEnemyState/Standby.h"
 #include "TrashEnemyState/T_EnemyDamage.h"
+#include "TrashEnemyState/T_EnemyWaitSee.h"
 
 namespace
 {
@@ -213,9 +214,9 @@ TrashEnemy::TrashEnemy()
 	isStandby = false;
 	isCooperateAtk = false;
 
-	isEnemyFollow = false;
+	//isEnemyFollow = false;
 
-	wayPoint = VZero;
+	cooperateWayPoint = VZero;
 
 	isMovingToPlayer = false;
 
@@ -228,6 +229,10 @@ TrashEnemy::TrashEnemy()
 	deadPreset = deadPresets[0];
 
 	nextCooperateID = StateID::State_ID::STATE_MAX;
+
+	isRunState = false;
+
+	pointNumber = 0;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -290,6 +295,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<CooperateAttack1>("_CooperateAttack1", StateID::COOPERATEATTACK1);
 	enemyBaseComponent.state->CreateState<Standby>("_Standby", StateID::T_ENEMY_STANDBY);
 	enemyBaseComponent.state->CreateState<T_EnemyDamage>("_T_EnemyDamage", StateID::T_ENEMY_DAMAGE);
+	enemyBaseComponent.state->CreateState<T_EnemyWaitSee>("_T_EnemyWaitSee", StateID::T_ENEMY_WAITSEE);
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
@@ -304,9 +310,10 @@ void TrashEnemy::Start(Object3D* _obj)
 	//active = true;
 }
 
-void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds)
+void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds, int _number)
 {
 	obj->GetTransform()->position = _pos;
+	pointNumber = _number;
 
 	const float MAX = 1.5f;
 	const float MID = 1.25f;
@@ -523,12 +530,17 @@ void TrashEnemy::PlayerHit()
 	damageFlash = 0.5f;
 }
 
-void TrashEnemy::GetWayPoint(VECTOR3 _pos, StateID::State_ID _id)
+void TrashEnemy::SetWayPoint(VECTOR3 _wayPoint)
+{
+	wayPoint = _wayPoint;
+}
+
+void TrashEnemy::SetCooperateWayPoint(VECTOR3 _pos, StateID::State_ID _id)
 {
 	if (hp <= 0)
 		return;
 
-	wayPoint = _pos;
+	cooperateWayPoint = _pos;
 	nextCooperateID = _id;
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 	

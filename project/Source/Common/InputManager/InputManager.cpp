@@ -1,5 +1,6 @@
 #include "inputManager.h"
 #include "../Debug/Debug.h"
+#include "../../../ImGui/imgui.h"
 
 InputManager::InputManager()
 {
@@ -31,6 +32,7 @@ InputManager::InputManager()
 	CreateInputData(KeyConfigData("heavyAttack", KEY_INPUT_C, XINPUT_BUTTON_Y, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("Mouse", KEY_INPUT_F1, -1, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("playerParam", KEY_INPUT_LCONTROL, -1, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("BossParamWindow", KEY_INPUT_F2, -1, MouseInput::MOUSE_NONE));
 
 }
 
@@ -109,6 +111,10 @@ void InputManager::CreateInputData(const KeyConfigData& _data)
 
 bool InputManager::KeyInputDown(std::string _name)
 {
+	//Imguiで入力中なら入力を無視する
+	if (!IsInputCan()) {
+		return false;
+	}
 	bool data = IsData(_name);
 	if (!data) {//データが存在していないならキーを入力をしていないものとして返す
 		Debug::DebugLog("noAction");
@@ -138,6 +144,10 @@ bool InputManager::KeyInputDown(std::string _name)
 
 bool InputManager::KeyInput(std::string _name)
 {
+	//Imguiで入力中なら入力を無視する
+	if (!IsInputCan()) {
+		return false;
+	}
 	bool data = IsData(_name);
 	if (!data) { //データが存在していないならキーを入力をしていないものとして返す
 		Debug::DebugLog("noAction");
@@ -167,6 +177,10 @@ bool InputManager::KeyInput(std::string _name)
 
 bool InputManager::KeyInputUp(std::string _name)
 {
+	//Imguiで入力中なら入力を無視する
+	if (!IsInputCan()) {
+		return false;
+	}
 	bool data = IsData(_name);
 	if (!data) {//データが存在していないならキーを入力をしていないものとして返す
 		Debug::DebugLog("noAction");
@@ -203,6 +217,12 @@ bool InputManager::IsData(std::string _name)
 	else {
 		return true;
 	}
+}
+
+bool InputManager::IsInputCan()
+{
+	ImGuiIO& io = ImGui::GetIO();
+	return !io.WantCaptureKeyboard;
 }
 
 /*bool InputManager::GetIsKeyOrButtonPushingNow(int _key, int _button)

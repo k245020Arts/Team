@@ -6,9 +6,12 @@
 TrashEnemyGroup::TrashEnemyGroup()
 {
 	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
+	trashEnemyManager = FindGameObject<TrashEnemyManager>();
 
 	hasLeader = false;
 	attackCounter = 0;
+
+	enemiesRunCounter = 0;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -23,6 +26,7 @@ void TrashEnemyGroup::Update()
 	//‹ß‹——£‚Ì“GŠÖ˜A
 	for (auto melee : meleeEnemies)
 	{
+		EnemiesRun(melee);
 		MeleeEnemyAttack(melee);
 		CooperateAttackMove(melee);
 	}
@@ -51,7 +55,7 @@ void TrashEnemyGroup::SettingGroup(TrashEnemy* _enemy, int _index)
 
 void TrashEnemyGroup::SetMeleeEnemy(TrashEnemy* _enemy)
 {
-	_enemy->SetEnemyType(_enemy->EnemyType::RANGED);
+	_enemy->SetEnemyType(_enemy->EnemyType::MELEE);
 	meleeEnemies.push_back(_enemy);
 }
 
@@ -160,6 +164,21 @@ void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 		_enemy->AttackCoolTimeReset();
 }
 
+void TrashEnemyGroup::EnemiesRun(TrashEnemy* _enemy)
+{
+	if (!_enemy->GetIsRunState())
+		return;
+	
+	VECTOR3 _pos = VZero;
+
+	if (_enemy->GetPointNumber() != 0)
+		_pos = trashEnemyManager->GetWayPointPosition()[_enemy->GetPointNumber() - 1];
+	else
+		_pos = trashEnemyManager->GetPlayerPos();
+
+	_enemy->SetWayPoint(_pos);
+}
+
 void TrashEnemyGroup::CooperateAttackMove(TrashEnemy* _enemy)
 {
 	if (!_enemy->IsCooperateAtk())
@@ -180,6 +199,7 @@ void TrashEnemyGroup::CooperateAttackMove(TrashEnemy* _enemy)
 		cooperateCounter = 0;
 	}
 }
+
 void TrashEnemyGroup::AllChangeState(StateID::State_ID _id)
 {
 	if (GetActiveEnemy() == 0)
@@ -226,12 +246,12 @@ void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 					savePos = itr.position;
 			}
 		}
-		enemy->GetWayPoint(savePos, StateID::COOPERATEATTACK1);
+		enemy->SetCooperateWayPoint(savePos, StateID::COOPERATEATTACK1);
 		counter = 1;
 	}
 }
 
 void TrashEnemyGroup::RangedEnemyAttack(TrashEnemy* _enemy)
 {
-
+	
 }

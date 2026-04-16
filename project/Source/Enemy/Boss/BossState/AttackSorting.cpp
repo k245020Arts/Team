@@ -3,7 +3,9 @@
 #include "../../../State/StateManager.h"
 #include "BossStatus.h"
 #include "../../../Common/Random.h"
-#include "../../../Common/Random.h"
+#include "../../../Common/FileSystemUtils/FileSystemUtils.h"
+#include "../../../Common/ResourceLoader.h"
+#include "../../../../ImGui/imgui.h"
 
 namespace {
 	const int ATTACK_KIND_MAX		= 6;
@@ -33,31 +35,25 @@ namespace {
 		{StateID::BOSS_NORMAL_ATTACK5_S},
 		{StateID::BOSS_NORMAL_ATTACK6_S},
 	};
-	struct ActionParam
-	{
-		StateID::State_ID id;
-		int priority;	//プライオリティ
-		int weight;		//重さ
-		int maxAction;	//連続で何回行動できるか
+	
+	
 
-		float distance = 0;//距離によってその技が出やすいかどうか
-		int addWeight = 0;//数字変動
-	};
-	std::vector<ActionParam> actions 
-	{
-		{StateID::BOSS_WALK,					10, 40, 0},
-		{StateID::BOSS_NORMAL_ATTACK1_S,		10, 10, 1},
-		{StateID::BOSS_NORMAL_ATTACK2_S,		10, 10, 1},
-		{StateID::BOSS_NORMAL_ATTACK3_S,		10, 10, 1},
-		{StateID::BOSS_NORMAL_ATTACK4_S,		10, 10, 1},
-		{StateID::BOSS_NORMAL_ATTACK5_S,		30, 10, 1},
-		{StateID::BOSS_NORMAL_ATTACK6_S,		30, 10, 1},
-		{StateID::BOSS_NORMAL_ATTACK7_S,		10, 10, 0, 2000},
-		{StateID::BOSS_SPECIAL_ATTACK1_S,		50, 30, 1},
-		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	50, 30, 1},
-		{StateID::BOSS_SPECIAL_ATTACK2_S,		50, 0,  1, 2000},
-		{StateID::BOSS_BACKSTEP_S,				50, 30, 0},	
-	};
+
+	std::vector<ActionParam> actions;
+	/*{
+		{"BossWalk",				false,10, 40, 0},
+		{"BossNormalAttack1",		true,10, 10, 1},
+		{"BossNormalAttack2",		true,10, 10, 1},
+		{"BossNormalAttack3",		true,10, 10, 1},
+		{"BossNormalAttack4",		true,10, 10, 1},
+		{"BossNormalAttack5",		true,30, 10, 1},
+		{"BossNormalAttack6",		true,30, 10, 1},
+		{"BossNormalAttack7",		true,10, 10, 0, 2000},
+		{"BossSpecialAttack1",		true,50, 30, 1},
+		{"BossSpecialSmallAttack1",	true,50, 30, 1},
+		{"BossSpecialAttack2",		true,50, 0,  1, 2000},
+		{"BossBackStep",			false,50, 30, 0},
+	};*/
 
 	//通常攻撃の重み
 	const std::vector<std::vector<double>> normalAttackParam{
@@ -97,13 +93,22 @@ AttackSorting::AttackSorting()
 
 	copyState = StateID::STATE_MAX;
 
+	
+
 	vec = VZero;
+	forceAttack = false;
+	nextAttack = false;
 }
 
 AttackSorting::~AttackSorting()
 {
-
+	for (auto& attack : attacks) {
+		delete attack.second;
+	}
+	attacks.clear();
 }
+
+//#define NORMAL_MODE
 
 void AttackSorting::Update()
 {
@@ -114,8 +119,30 @@ void AttackSorting::Update()
 
 	if (b->maxAttack != -1)
 		b->enemyBaseComponent.state->ChangeState(comboOrder[kind][attackNum - b->maxAttack]);
+#ifdef NORMAL_MODE
 	else 
 		b->enemyBaseComponent.state->ChangeState(nextState/*attackKind[kind]*/);
+
+#else
+	else {
+		if (nextAttack) {
+			if (attacks[nextState] == nullptr) {
+				b->BossAttackStateChange();
+				return;
+			}
+			attacks[nextState]->Update();
+		}
+		else {
+			if (nextState == "") {
+				BuildTable(bossPriority);
+				return;
+			}
+			b->enemyBaseComponent.state->ChangeState(StateID::StringToID(nextState));
+		}
+	
+	}
+
+#endif
 }
 
 void AttackSorting::Start()
@@ -184,6 +211,17 @@ void AttackSorting::Finish()
 {
 	copyState = nextState;
 	moveCounter++;
+	AttackFinish();
+	forceAttack = false;
+}
+
+void AttackSorting::ForcedAttackStart(std::string _attackID)
+{
+	nextState = _attackID;
+	nextAttack = true;
+	AllAddWeightZero();
+	AttackStart();
+	forceAttack = true;
 }
 
 void AttackSorting::NormalAttackSelect()
@@ -230,6 +268,9 @@ void AttackSorting::NormalAttackSelect()
 
 void AttackSorting::BuildTable(int _priority)
 {
+	if (forceAttack) {
+		return;
+	}
 	int totalWeight = 0;
 	
 	for (auto& itr : actions)
@@ -275,8 +316,11 @@ void AttackSorting::BuildTable(int _priority)
 	
 		if (r < 0)
 		{
+			//AttackFinish();
 			nextState = itr.id;
+			nextAttack = itr.attackState;
 			AllAddWeightZero();
+			AttackStart();
 			break;
 		}
 	}
@@ -292,3 +336,161 @@ void AttackSorting::AllAddWeightZero()
 		itr.addWeight = 0;
 	}
 }
+
+
+void AttackSorting::Load(std::string _bossName,Boss* _boss) 
+{
+	//int attackNum = FileSystemUtils::GetDirectoryCount("data/json/BossAttack/" + _bossName);
+
+	std::string filePath = "data/json/BossAttack/" + _bossName;
+
+	for (const auto& entry : std::filesystem::directory_iterator(filePath)) {
+		//フォルダだったらスルー
+		if (entry.is_directory()) {
+			continue;
+		}
+		std::string fileName = entry.path().filename().string();
+		std::string key = entry.path().stem().string();
+		JsonReader jsonReader;
+		JSON root;
+		if (!jsonReader.Load(filePath + "/" + fileName))
+		{
+			break;
+		}
+
+		root = jsonReader.Data();
+
+		if (root.contains(key))
+		{
+			attackParam[key] = root[key].get<BossAttackBase::BossAttackParam>();
+		}
+		else if (!root.empty())
+		{
+			// フォールバック
+			attackParam[key] = root.begin().value().get<BossAttackBase::BossAttackParam>();
+		}
+
+		// 念のためID補完
+		if (attackParam[key].attackID.empty())
+		{
+			attackParam[key].attackID = key;
+		}
+
+
+		ID::IDType bossAttackAnimID = static_cast<ID::IDType>(attackParam[key].animNum);
+
+		ResourceLoad::LoadAnim(attackParam[key].animFileName, bossAttackAnimID);
+
+		attackParam[key].animID = ID::StringToID(attackParam[key].animFileName);
+
+		attacks[key] = new BossAttackBase();
+
+		attacks[key]->Init(obj,StateID::StringToID(key));
+
+		attacks[key]->SetAttackParam(attackParam[key]);
+		
+	}
+	for (auto& t : attacks) {
+		t.second->SetComponent<Boss>(_boss);
+	}
+
+	//Save(_bossName);
+	LoadSorting(_bossName);
+
+}
+
+void AttackSorting::AttackStart() 
+{
+	if (attacks[nextState] == nullptr) {
+		Debug::DebugLog("ボスの攻撃がスタートできません");
+		return;
+	}
+	attacks[nextState]->BossStart();
+}
+
+void AttackSorting::AttackFinish() 
+{
+	if (attacks[nextState] == nullptr) {
+		Debug::DebugLog("ボスの攻撃が終了できません");
+		return;
+	}
+	attacks[nextState]->BossFinish();
+}
+
+BossAttackBase* AttackSorting::GetNowAttackState()
+{
+	return attacks[nextState];
+}
+
+void AttackSorting::SaveSorthing(std::string _bossName)
+{
+	std::string filePath = std::string("data/json/BossAttack/" + _bossName + "/Sorting") + "/AttackSort" + ".json";
+
+	JsonReader json;
+	json.Load(filePath);
+
+	nlohmann::json& root = json.Data();
+
+	if (!root.contains("AttackSort")) {
+		root["AttackSort"] = nlohmann::json::object();
+	}
+	for (auto& attack : actions) {
+		std::string key = attack.id;
+		root["AttackSort"][key] = attack;
+	}
+
+
+	json.Save(filePath, root);
+}
+
+void AttackSorting::LoadSorting(std::string _bossName)
+{
+	JsonReader json;
+	std::string filePath = std::string("data/json/BossAttack/" + _bossName + "/Sorting") + "/AttackSort" + ".json";
+	json.Load(filePath);
+
+	actions.clear();
+	for (auto& j : json.Data()["AttackSort"]) {
+		ActionParam action;
+		j.get_to(action);
+		actions.push_back(action);
+	}
+
+	
+}
+
+std::vector<ActionParam> AttackSorting::GetActionParam()
+{
+	return actions;
+}
+
+std::unordered_map<std::string, BossAttackBase::BossAttackParam> AttackSorting::GetAttackParam()
+{
+	return attackParam;
+}
+
+void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param)
+{
+	AddAttack(_param, _param.attackID);
+}
+
+void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, std::string _attackID)
+{
+	std::string key = _attackID;
+	attacks[key] = new BossAttackBase();
+
+	attacks[key]->Init(obj, StateID::StringToID(key));
+
+	attacks[key]->SetAttackParam(attackParam[key]);
+}
+
+void AttackSorting::ReloadParam(BossAttackBase::BossAttackParam _param,std::string _reLoadID)
+{
+	attackParam[_reLoadID] = _param;
+	attacks[_reLoadID]->SetAttackParam(attackParam[_reLoadID]);
+}
+
+//void AttackSorting::StateImguiDraw()
+//{
+//	/*ImGui::Text(nextState.c_str());*/
+//}

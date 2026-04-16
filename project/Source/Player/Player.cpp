@@ -44,6 +44,7 @@
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Enemy/EnemyManager.h"
 #include "../Enemy/Boss/BossState/Attack/BossAttackBase.h"
+#include "../Enemy/Boss/BossState/AttackSorting.h"
 #include "../Common/Easing.h"
 #include "../Component/UI/ButtonUI.h"
 #include "PlayerParamWindow.h"
@@ -524,7 +525,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	//“G‚ÌUŒ‚‚ª“–‚½‚Á‚½‚Ìˆ—
 	std::shared_ptr<StateBase> pB	= playerCom.stateManager->GetState<StateBase>();
 	Animator* enemyAnim				= _obj->Component()->GetComponent<Animator>();
-	std::shared_ptr<BossAttackBase> attack = _obj->Component()->GetComponent<StateManager>()->GetState<BossAttackBase>();
+	BossAttackBase* attack = _obj->Component()->GetComponent<StateManager>()->GetState<AttackSorting>()->GetNowAttackState();
 	float startTime					= enemyAnim->EventStartTime(_attackId);
 	bool damage						= false;
 	StateID::State_ID state = pB->GetID();

@@ -30,6 +30,9 @@ public:
 	///<summary>キーボード用　指定したキーを押して離した1Fのみ間trueを返す</summary>
 	/// <param name="_keyCode">キーの種類</param>
 	bool GetIsKeyboardRelease(int _keyCode);
+
+	bool IsInputCan();
+
 private:
 	KeyboardInputData keyboardInputNow;
 	std::list<KeyboardInputData>keyboardInput;

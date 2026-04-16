@@ -40,21 +40,13 @@ void T_EnemyAttack::Update()
 		e->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 	}
 
-	const float M_FRAME_SPEED = mMaxFrame *0.5f;
+	const float M_FRAME_SPEED = mMaxFrame * 0.5f;
 
 	if (mSpeed > 0 && isDecel)
 		mSpeed = Easing::EaseOut(mMaxFrame, 0.0f, M_FRAME_SPEED);
-	/*else
-	{
-		isDecel = false;
-		mSpeed = Easing::EaseIn(mSpeed, mMaxFrame, M_FRAME_SPEED);
-	}*/
 
 	e->enemyBaseComponent.anim->SetPlaySpeed(mSpeed);
 	
-	/*if (e->enemyBaseComponent.anim->IsFinish())
-		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);*/
-
 	AttackInformation(e);
 }
 

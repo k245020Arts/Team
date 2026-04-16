@@ -7,13 +7,13 @@ class TrashEnemy;
 class Object3D;
 class TrashEnemyGroup;
 
-enum CooperateData
-{
-	Cooperate1,
-	Cooperate2,
-
-	CooperateMax
-};
+//enum CooperateData
+//{
+//	Cooperate1,
+//	Cooperate2,
+//
+//	CooperateMax
+//};
 
 struct WayPoint
 {
@@ -54,10 +54,12 @@ public:
 	void ImguiDraw();
 
 	//˜AŒgUŒ‚
-	void Cooperate(CooperateData cooperateDate);
+	void Cooperate();
 	
 	void Cooperate2Move();
 
+	VECTOR3 GetPlayerPos() { return player->GetTransform()->position; }
+	std::vector<VECTOR3> GetWayPointPosition();
 private:
 	//std::list<TrashEnemy*> enemies;
 	const int ENEMIESMAX = 30;

@@ -24,7 +24,7 @@
       "fileName": "B_ATTACK1",
       "id": "B_ATTACK1",
       "loop": false,
-      "maxFrame": 95.0,
+      "maxFrame": 50.0,
       "playSpeed": 1.2000000476837158
     },
     "B_ATTACK2": {
@@ -80,6 +80,33 @@
       "loop": false,
       "maxFrame": 146.0,
       "playSpeed": 1.2000000476837158
+    },
+    "B_ATTACK8": {
+      "eventFinishTime": 90.0,
+      "eventStartTime": 50.0,
+      "fileName": "B_ATTACK8",
+      "id": "B_ATTACK8",
+      "loop": false,
+      "maxFrame": 110.0,
+      "playSpeed": 1.0
+    },
+    "B_ATTACK9": {
+      "eventFinishTime": -1.0,
+      "eventStartTime": -1.0,
+      "fileName": "B_ATTACK9",
+      "id": "B_ATTACK9",
+      "loop": false,
+      "maxFrame": 110.0,
+      "playSpeed": 1.0
+    },
+    "B_ATTACK_IDOL": {
+      "eventFinishTime": -1.0,
+      "eventStartTime": -1.0,
+      "fileName": "B_ATTACK_IDOL",
+      "id": "B_ATTACK_IDOL",
+      "loop": true,
+      "maxFrame": 160.0,
+      "playSpeed": 1.0
     },
     "B_BACKSTEP": {
       "eventFinishTime": -1.0,
@@ -181,11 +208,11 @@
       "playSpeed": 1.2999999523162842
     },
     "B_SATTACK2": {
-      "eventFinishTime": 100.0,
-      "eventStartTime": 0.0,
+      "eventFinishTime": -1.0,
+      "eventStartTime": -1.0,
       "fileName": "B_SATTACK2",
       "id": "B_SATTACK2",
-      "loop": true,
+      "loop": false,
       "maxFrame": 19.0,
       "playSpeed": 1.0
     },

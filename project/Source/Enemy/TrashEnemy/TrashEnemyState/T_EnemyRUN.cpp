@@ -31,7 +31,7 @@ void T_EnemyRun::Update()
 		e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
 	if (!e->isCooperateAtk || e->isMovingToPlayer)
-		targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
+		targetPos = e->wayPoint;//e->enemyBaseComponent.playerObj->GetTransform()->position;
 
 	rotation = e->obj->GetTransform()->rotation;
 	e->LookTarget(targetPos);
@@ -56,12 +56,22 @@ void T_EnemyRun::Start()
 {
 	EnemyStateBase::Start();
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	if (!e->isCooperateAtk|| e->isMovingToPlayer)
-		targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
+
+	if (e->enemyType == e->EnemyType::MELEE)
+	{
+		if (!e->isCooperateAtk || e->isMovingToPlayer)
+			targetPos = e->wayPoint;
+		else
+			targetPos = e->cooperateWayPoint;
+	}
 	else
-		targetPos = e->wayPoint;
+	{
+		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_WAITSEE);
+	}
 
 	motionSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
+
+	e->isRunState = true;
 }
 
 void T_EnemyRun::Finish()
@@ -69,4 +79,6 @@ void T_EnemyRun::Finish()
 	TrashEnemy* e = GetBase<TrashEnemy>();
 	/*if (!e->isCooperateAtk)
 		e->isAttack = true;*/
+
+	e->isRunState = false;
 }

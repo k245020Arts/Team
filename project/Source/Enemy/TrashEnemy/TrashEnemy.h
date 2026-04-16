@@ -25,6 +25,7 @@ public:
 	friend class T_EnemyAttack;
 	friend class T_EnemyDead;
 	friend class Standby;
+	friend class T_EnemyWaitSee;
 	friend class T_EnemyJump;
 	friend class CooperateAttack1;
 	friend class CooperateAttack2;
@@ -44,24 +45,27 @@ public:
 	/// </summary>
 	/// <param name="_pos">ポジションの指定</param>
 	/// <param name="kinds">敵の強さの種類(０なら軽い,1ならデフォルト,それ以外は重い敵)</param>
-	void CreateTrashEnemy(VECTOR3 _pos,int kinds);
+	void CreateTrashEnemy(VECTOR3 _pos,int kinds,int _number);
 
 	void Trail();
 
 	void PlayerHit()override;
 
-	//ウェイポイントを取得して連携攻撃に切り替わる関数
-	void GetWayPoint(VECTOR3 _pos, StateID::State_ID _id);
-	//敵のステートを変える関数
-	void ChangeState(StateID::State_ID _id);
-	//void isStandbyF() { isStandby = false; }
-
 	//攻撃命令
 	void AttackCommand();
 	//攻撃クールタイムリセット
 	void AttackCoolTimeReset() { isAttack = true; }
-	//
+	//連携攻撃を終わらせた後の処理
 	void CooperateAtkFinish();
+
+	enum EnemyType
+	{
+		MELEE,			//近距離
+		RANGED_LEADER,	//遠距離のリーダ
+		RANGED,			//遠距離
+
+		MAX,
+	};
 
 	//ゲッター
 	VECTOR3 GetPos() { return obj->GetTransform()->position; }
@@ -78,11 +82,24 @@ public:
 	bool GetActive() { return active; }
 	//連携攻撃を取得する
 	const StateID::State_ID GetNextCooperateID() { return nextCooperateID; };
+	//近距離か遠距離の敵か分かる関数
+	EnemyType GetEnemyType()const { return enemyType; }
+	//runステートか分かる関数
+	bool GetIsRunState() { return isRunState; }
+	//追いかける時にどのポイントを追いかけるか決める
+	int GetPointNumber() { return pointNumber; }
 
 	//セッター
+	void SetWayPoint(VECTOR3 _wayPoint);
+	// //ウェイポイントを取得して連携攻撃に切り替わる関数
+	void SetCooperateWayPoint(VECTOR3 _pos, StateID::State_ID _id);
+	//敵のステートを変える関数
+	void ChangeState(StateID::State_ID _id);
 	//加速移動
 	void Move(float _speed, float _max);
 	void AddPos(VECTOR3 _pos);
+	//近距離か遠距離の敵かを指定する関数
+	void SetEnemyType(EnemyType type);
 
 	template<typename T>
 	T* CollsionStart(CollsionSet* _set, const Transform& _trans)
@@ -95,17 +112,6 @@ public:
 		};
 		return static_cast<T*>(_set->instance);
 	}
-
-	enum EnemyType
-	{
-		MELEE,			//近距離
-		RANGED_LEADER,	//遠距離のリーダ
-		RANGED,			//遠距離
-
-		MAX,
-	};
-
-	void SetEnemyType(EnemyType type);
 
 private:
 	CharaWeapon* chara;
@@ -128,7 +134,6 @@ private:
 	
 	//通常攻撃をしてもよいか
 	bool isAttack;
-
 	//連携攻撃中
 	bool isCooperateAtk;
 	//プレイヤーのほうに向かうかどうか
@@ -142,8 +147,10 @@ private:
 	float defense;
 
 	//強めの味方についていくか
-	bool isEnemyFollow;
+	//bool isEnemyFollow;
+	
 	VECTOR3 wayPoint;
+	VECTOR3 cooperateWayPoint;
 
 	//必殺技を食らったときに敵をスローにする
 	float slowCounter;
@@ -153,4 +160,8 @@ private:
 	StateID::State_ID nextCooperateID;
 
 	EnemyType enemyType;
+
+	bool isRunState;
+
+	int pointNumber;
 };

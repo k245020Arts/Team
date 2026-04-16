@@ -17,7 +17,7 @@ public:
 	void Update()override;
 	void Draw() override;
 
-	void CreateThrowObject(const BossAttackBase::ThrowObjectAttackData& _data, int _index, int _total, float _rotateAngle);
+	void CreateThrowObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle);
 	VECTOR3 GetPushCollSize(BossAttackBase::ThrowObjectAttackData _data);
 
 	void CreateRock(int _index, int _total, float _rotateAngle);

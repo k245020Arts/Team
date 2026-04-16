@@ -379,6 +379,16 @@ void Animator::AnimDataLoad(const std::string& _path)
     }
 }
 
+Animator::AnimFileInfo Animator::GetSelectFileInfo(std::string _fileName)
+{
+    return fileInfos[_fileName];
+}
+
+void Animator::SetSelectFileInfo(AnimFileInfo _animFileInfo)
+{
+    fileInfos[_animFileInfo.fileName] = _animFileInfo;
+}
+
 VECTOR3 Animator::BoneMovePositionAdd()
 {
     return subPosition;

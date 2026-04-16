@@ -19,17 +19,6 @@
 #include "../Boss/BossState/BossIdol.h"
 #include "../Boss/BossState/BossRun.h"
 #include "../Boss/BossState/BossWalk.h"
-#include "../Boss/BossState/Attack/BossNormalAttack1.h"
-#include "../Boss/BossState/Attack/BossNormalAttack2.h"
-#include "../Boss/BossState/Attack/BossNormalAttack3.h"
-#include "../Boss/BossState/Attack/BossNormalAttack4.h"
-#include "../Boss/BossState/Attack/BossNormalAttack5.h"
-#include "../Boss/BossState/Attack/BossNormalAttack6.h"
-#include "../Boss/BossState/Attack/BossNormalAttack7.h"
-#include  "../Boss/BossState/Attack/BossSpecialAttack1.h"
-#include  "../Boss/BossState/Attack/BossSpecialSmallAttack1.h"
-#include  "../Boss/BossState/Attack/BossSpecialAttack2.h"
-#include  "../Boss/BossState/Attack/BossHalfSpecialAttack.h"
 #include "../TrashEnemy/EnemyState/EnemyDamage.h"
 #include "../../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
 #include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
@@ -52,8 +41,8 @@
 #include "../../Common/Random.h"
 #include "../../Component/UI/EnemyDamageUI.h"
 #include "../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
-
 #include "../../Player/PlayerState/AttackState/PlayerAttack2.h"
+#include "BossAttackDataSerializer.h"
 
 namespace {
 	std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable;
@@ -88,6 +77,7 @@ Boss::Boss()
 	bs = new BossStatus;
 
 	hp = bs->GetStatus().maxHp;
+	defense = 500.0f;
 	maxHp = hp;
 	//trashEnemy = FindGameObject< TrashEnemyManager>();
 	maxAttack = -1;
@@ -165,6 +155,7 @@ void Boss::Update()
 	if (noAttackChangeCounter > 0.0f) {
 		noAttackChangeCounter -= Time::DeltaTimeRate();
 	}
+	bossAttackDataSerializer->Update();
 }
 
 void Boss::Draw()
@@ -212,8 +203,7 @@ EnemyInformation::EnemyReaction Boss::JsonRead(const JSON& j)
 	return r;
 }
 
-
-void Boss::Start(Object3D* _obj) 
+void Boss::Start(Object3D* _obj,const BossParam& _param) 
 {
 	enemyBaseComponent.state = obj->Component()->AddComponent<StateManager>();
 	enemyBaseComponent.playerObj = FindGameObjectWithTag<Object3D>("PLAYER");
@@ -246,9 +236,11 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossIdol>("BossIdol", StateID::BOSS_IDOL_S);
 	enemyBaseComponent.state->CreateState<BossRun>("BossRun", StateID::BOSS_RUN_S);
 	enemyBaseComponent.state->CreateState<BossCoolTime>("BossCoolTime", StateID::BOSS_COOL_TIME_S);
-	enemyBaseComponent.state->CreateState<AttackSorting>("AttackSorting", StateID::ATTACK_SORTING_S);
+	std::shared_ptr<AttackSorting> attackSorting =  enemyBaseComponent.state->CreateState<AttackSorting>("AttackSorting", StateID::ATTACK_SORTING_S);
+	attackSorting->Load("Boss1",this);
+
 	enemyBaseComponent.state->CreateState<BossWalk>("BossWalk", StateID::BOSS_WALK);
-	enemyBaseComponent.state->CreateState<BossNormalAttack1>("BossNormalAttack1", StateID::BOSS_NORMAL_ATTACK1_S);
+	/*enemyBaseComponent.state->CreateState<BossNormalAttack1>("BossNormalAttack1", StateID::BOSS_NORMAL_ATTACK1_S);
 	enemyBaseComponent.state->CreateState<BossNormalAttack2>("BossNormalAttack2", StateID::BOSS_NORMAL_ATTACK2_S);
 	enemyBaseComponent.state->CreateState<BossNormalAttack3>("BossNormalAttack3", StateID::BOSS_NORMAL_ATTACK3_S);
 	enemyBaseComponent.state->CreateState<BossNormalAttack4>("BossNormalAttack4", StateID::BOSS_NORMAL_ATTACK4_S);
@@ -257,18 +249,20 @@ void Boss::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<BossNormalAttack7>("BossNormalAttack7", StateID::BOSS_NORMAL_ATTACK7_S);
 	enemyBaseComponent.state->CreateState<BossSpecialAttack1>("BossSpecialAttack1", StateID::BOSS_SPECIAL_ATTACK1_S);
 	enemyBaseComponent.state->CreateState<BossSpecialSmallAttack1>("BossSpecialSmallAttack1", StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
-	enemyBaseComponent.state->CreateState<BossSpecialAttack2>("BossSpecialAttack2", StateID::BOSS_SPECIAL_ATTACK2_S);
+	enemyBaseComponent.state->CreateState<BossSpecialAttack2>("BossSpecialAttack2", StateID::BOSS_SPECIAL_ATTACK2_S);*/
 	enemyBaseComponent.state->CreateState<BossDie>("BossDie", StateID::BOSS_DIE_S);
 	enemyBaseComponent.state->CreateState<BossRoar>("BossRoar", StateID::B_ROAR_S);
 	enemyBaseComponent.state->CreateState<BossThreat>("BossThreat", StateID::B_THREAT_S);
 	enemyBaseComponent.state->CreateState<BossDamage>("BossDamage", StateID::BOSS_DAMAGE_S);
 	enemyBaseComponent.state->CreateState<BossAppear>("BossAppear", StateID::BOSS_APPEAR_S);
 	enemyBaseComponent.state->CreateState<BossLose>("BossLose", StateID::BOSS_LOSE_S);
-	enemyBaseComponent.state->CreateState<BossHalfSpecialAttack>("BossHalfAttack", StateID::BOSS_HALF_ATTACK_S);
+	//enemyBaseComponent.state->CreateState<BossHalfSpecialAttack>("BossHalfAttack", StateID::BOSS_HALF_ATTACK_S);
 	enemyBaseComponent.state->CreateState<BossFear>("BossFear", StateID::BOSS_FEAR_S);
 	enemyBaseComponent.state->CreateState<BossBackStep>("BossBackStep", StateID::BOSS_BACKSTEP_S);
 	enemyBaseComponent.state->CreateState<BossWin>("BossWin", StateID::BOSS_WIN_S);
 	enemyBaseComponent.state->SetComponent<Boss>(this);
+
+	
 
 	// 初期ステート
 	enemyBaseComponent.state->StartState(StateID::BOSS_APPEAR_S);
@@ -286,6 +280,21 @@ void Boss::Start(Object3D* _obj)
 			enemyTable[r.attackID] = r;
 		}
 	}
+
+	bossAttackDataSerializer =  std::make_unique<BossAttackDataSerializer>(attackSorting,"Boss1");
+	bossAttackDataSerializer->SetAnim(enemyBaseComponent.anim);
+	bossParam = _param;
+	hp = bossParam.hp;
+	defense = bossParam.defense;
+	/*JsonReader json;
+	std::string filePath = std::string("data/json/BossAttack");
+
+	JSON root = nlohmann::json::object();
+
+	root["Boss"] = nlohmann::json::array();
+	root["Boss"].push_back(bossParam);
+	
+	json.Save(filePath + "/BossParam.json", root);*/
 }
 
 void Boss::ImguiDraw()

@@ -80,9 +80,10 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 	//その種類の敵が何体スポーンしたか
 	int spawnCounter = 0;
 
+	int number = 0;
+
     for (int i = 0; i < enemySpawnCounter; i++)
     {
-		
 		// 個別のenemyを作る
 		Object3D* e;
 		e = new Object3D();
@@ -139,8 +140,13 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 			numCounter++;
 			spawnCounter = 0;
 		}
+		//
+		number++;
+		if (number >= wayPointOffsets.size())
+			number = 0;
+
 		//ポジションをセット
-		t->CreateTrashEnemy(_pos + pos, numCounter);
+		t->CreateTrashEnemy(_pos + pos, numCounter, number);
 		spawnCounter++;
 		//hp表示
 		Object2D* guage = new Object2D();
@@ -156,8 +162,6 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 		g->GuageDrawReady<TrashEnemy>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
 		g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
 
-		// enemiesに登録（個別インスタンス）
-		//enemies.emplace_back(t);
 		enemyGroup->SetMeleeEnemy(t);
     }
 }
@@ -181,9 +185,7 @@ void TrashEnemyManager::ImguiDraw()
 	if (ImGui::Button("enemySpwn"))
 		CreateEnemy(VZero, 1);
 	if (ImGui::Button("ack1"))
-		Cooperate(CooperateData::Cooperate1);
-	if (ImGui::Button("ack2"))
-		Cooperate((CooperateData::Cooperate2));
+		Cooperate();
 
 	if (ImGui::Button("waypoint"))
 	{
@@ -201,16 +203,11 @@ void TrashEnemyManager::ImguiDraw()
     ImGui::End();
 }
 
-void TrashEnemyManager::Cooperate(CooperateData cooperateDate)
+void TrashEnemyManager::Cooperate()
 {
-	switch (cooperateDate)
-	{
-	case Cooperate1:
-		PlayerWayPoint();
-		break;
-	case Cooperate2:
-		break;
-	}
+	PlayerWayPoint();
+
+	enemyGroup->CloseWayPoint(wayPoint);
 }
 
 void TrashEnemyManager::WayPointOffset()
@@ -245,7 +242,7 @@ void TrashEnemyManager::PlayerWayPoint()
 		wayPoint.emplace_back(WayPoint(itr + playerPos, true));
 	}
 
-	enemyGroup->CloseWayPoint(wayPoint);
+	//enemyGroup->CloseWayPoint(wayPoint);
 }
 
 bool TrashEnemyManager::StageWall(VECTOR3 _pos)
@@ -269,4 +266,17 @@ bool TrashEnemyManager::StageWall(VECTOR3 _pos)
 void TrashEnemyManager::Cooperate2Move()
 {
 
+}
+
+std::vector<VECTOR3> TrashEnemyManager::GetWayPointPosition()
+{
+	std::vector<VECTOR3> _pos;
+	PlayerWayPoint();
+
+	for (auto itr : wayPoint)
+	{
+		_pos.push_back(itr.position);
+	}
+
+	return _pos;
 }

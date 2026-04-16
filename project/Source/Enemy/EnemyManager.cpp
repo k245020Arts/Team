@@ -21,8 +21,13 @@
 #include "../Common/Easing.h"
 #include "../GameControler/GameControler.h"
 #include "../State/StateManager.h"
+#include "../Stage/StageSelectData.h"
 //#define VERSION2D
 //#define DOT_MODE
+
+namespace {
+	std::vector<Boss::BossParam> bossParams;
+}
 
 EnemyManager::EnemyManager()
 {
@@ -32,7 +37,7 @@ EnemyManager::EnemyManager()
 	SetDrawOrder(-10);
 	cameraTargetObj = nullptr;
 	gameManager = nullptr;
-
+	LoadBossParam("data/json/BossAttack/BossParam.json");
 }
 
 EnemyManager::~EnemyManager()
@@ -98,6 +103,15 @@ void EnemyManager::CreateBoss()
 {
 	/*Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
 	player = obj;*/
+	Boss::BossParam bossParam;
+	int currentBossID = StageSelectData::GetInstance()->GetNowStageData().bossID;
+	//ステージに登場するボスのパラメーターをセット
+	for (auto& param : bossParams) {
+		if (currentBossID == param.bossID) {
+			bossParam = param;
+			break;
+		}
+	}
 	Object3D* boss;
 	boss = new Object3D();
 	float bSize = 8.0f;
@@ -141,7 +155,7 @@ void EnemyManager::CreateBoss()
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
 
 	MeshRenderer* m = boss->Component()->AddComponent<MeshRenderer>();
-	m->ModelHandle(ResourceLoad::LoadModel("BossModel", ID::B_MODEL));
+	m->ModelHandle(ResourceLoad::LoadModel(bossParam.modelName, ID::B_MODEL));
 	m->RotationMesh(0, 180.0f * DegToRad);
 
 	Boss* b = boss->Component()->AddComponent<Boss>();
@@ -183,18 +197,20 @@ void EnemyManager::CreateBoss()
 	ResourceLoad::LoadAnim("B_IDLE2", ID::B_COOLTIME);
 	ResourceLoad::LoadAnim("B_WALK", ID::B_RUN);
 	ResourceLoad::LoadAnim("B_WAIT_SEE", ID::B_WAIT_SEE);
-	ResourceLoad::LoadAnim("B_ATTACK1", ID::B_N_ATTACK1);
+	
+	ResourceLoad::LoadAnim("B_SATTACK2_STOP", ID::B_S_ATTACK2_STOP);
+	ResourceLoad::LoadAnim("B_SATTACK2_BEFORE_2", ID::B_S_ATTACK2_BEFORE);
+	/*ResourceLoad::LoadAnim("B_ATTACK1", ID::B_N_ATTACK1);
 	ResourceLoad::LoadAnim("B_ATTACK2", ID::B_N_ATTACK2);
 	ResourceLoad::LoadAnim("B_ATTACK3", ID::B_N_ATTACK3);
 	ResourceLoad::LoadAnim("B_ATTACK4", ID::B_N_ATTACK4);
 	ResourceLoad::LoadAnim("B_ATTACK5", ID::B_N_ATTACK5);
 	ResourceLoad::LoadAnim("B_ATTACK6", ID::B_N_ATTACK6);
 	ResourceLoad::LoadAnim("B_ATTACK7", ID::B_N_ATTACK7);
-	ResourceLoad::LoadAnim("B_SATTACK1", ID::B_S_ATTACK1);
-	ResourceLoad::LoadAnim("B_SATTACK2", ID::B_S_ATTACK2);
-	ResourceLoad::LoadAnim("B_SATTACK2_STOP", ID::B_S_ATTACK2_STOP);
-	ResourceLoad::LoadAnim("B_SATTACK2_BEFORE_2", ID::B_S_ATTACK2_BEFORE);
-	ResourceLoad::LoadAnim("B_SATTACK1_SAMLL", ID::B_S_ATTACK1_SMALL);
+	ResourceLoad::LoadAnim("B_SATTACK1", ID::B_N_ATTACK8);
+	ResourceLoad::LoadAnim("B_SATTACK2", ID::B_N_ATTACK9);
+	ResourceLoad::LoadAnim("B_SATTACK1_SAMLL", ID::B_N_ATTACK10);
+	ResourceLoad::LoadAnim("B_ATTACK_IDOL", ID::B_N_ATTACK11);*/
 	ResourceLoad::LoadAnim("B_DIE", ID::BOSS_DIE);
 	ResourceLoad::LoadAnim("B_ROAR_ANIM", ID::B_ROAR_ANIM);
 	ResourceLoad::LoadAnim("B_ROAR3", ID::B_ROAR_2);
@@ -207,12 +223,10 @@ void EnemyManager::CreateBoss()
 	ResourceLoad::LoadAnim("B_BACKSTEP", ID::B_BACKSTEP);
 	ResourceLoad::LoadAnim("B_WIN", ID::B_WIN);
 
+	b->Start(boss,bossParam);
+
 	anim->AnimDataLoad("BossAnimData");
 	anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
-
-	b->Start(boss);
-
-	
 
 	Object2D* guage = new Object2D();
 
@@ -723,6 +737,25 @@ void EnemyManager::GameSceneChangeState()
 		}
 	}
 	
+}
+
+bool EnemyManager::LoadBossParam(std::string _fileName)
+{
+	JsonReader jsonReader;
+	if (!jsonReader.Load(_fileName)) {
+		return false;
+	}
+
+	auto& json = jsonReader.Data();
+
+	for (const auto& elem : json["Boss"])
+	{
+		Boss::BossParam boss;
+
+		boss = elem;
+		bossParams.push_back(boss);
+	}
+	return true;
 }
 
 int EnemyManager::PlayerFovEnemyNum(Transform* _pTransform, float _angle)

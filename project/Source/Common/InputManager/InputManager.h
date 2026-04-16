@@ -89,6 +89,8 @@ public:
 	/// <returns>“o˜^‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©</returns>
 	bool IsData(std::string _name);
 
+	bool IsInputCan();
+
 private:
 
 	InputManager();
