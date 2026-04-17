@@ -7,6 +7,7 @@
 #include "../Transform/Transform.h"
 #include <algorithm> 
 #include "../../Common/JsonReader.h"
+#include "../../Common/FileSystemUtils/FileSystemUtils.h"
 
 Animator::Animator()
 {
@@ -24,6 +25,7 @@ Animator::Animator()
 
 Animator::~Animator()
 {
+    AnimDataSaveAll();
     if (before.attachID >= 0)
     {
         MV1DetachAnim(baseModel, before.attachID);
@@ -344,21 +346,75 @@ void Animator::ImguiDraw()
     }
 }
 
-void Animator::AnimDataSave(const std::string& _path)
+void Animator::AnimDataSaveAll()
+{
+    for (auto& [key, info] : fileInfos)
+    {
+        nlohmann::json root;
+        root["Animator"] = info;
+
+        JsonReader json;
+
+        std::string path = "data/model/animation/" + info.id + ".json";
+
+        json.Save(path, root);
+    }
+}
+
+void Animator::AnimDataReSave(std::string _fileName)
 {
     nlohmann::json root;
 
-    for (auto& [key, info] : fileInfos)
-    {
-        root["Animator"][key] = info;
-    }
+    root["Animator"] = fileInfos[_fileName];
 
     JsonReader json;
 
-    std::string path = "data/json/Animation/" + _path + ".json";
+    std::string path = "data/model/animation/" + fileInfos[_fileName].id + ".json";
 
     json.Save(path, root);
 }
+
+void Animator::AnimDataLoad(const std::string& _charaID, const std::string _typeID)
+{
+
+    std::string charaID = _charaID;
+    std::string charaTypeID = charaID + _typeID;
+
+    std::string animFolderPath = "data/model/animation";
+    std::vector <std::string> allAnimFolderFileName;
+
+    allAnimFolderFileName = FileSystemUtils::GetFilesStartsWith(animFolderPath, charaTypeID);
+
+    
+    for (auto& fileInfo : allAnimFolderFileName) {
+        JsonReader json;
+
+        std::string fileName = fileInfo;
+        std::string path = "data/model/animation/" + fileName + ".json";
+
+        if (!json.Load(path))
+        {
+            continue;
+        }
+
+        auto& data = json.Data();
+
+        if (!data.contains("Animator"))
+        {
+            continue;
+        }
+
+        AnimFileInfo info;
+        data["Animator"].get_to(info);
+
+        // モデル取得
+        info.hModel = ResourceLoad::GetHandle(ID::StringToID(info.id));
+
+        // 登録
+        fileInfos[info.id] = info;
+    }
+}
+
 
 void Animator::AnimDataLoad(const std::string& _path)
 {

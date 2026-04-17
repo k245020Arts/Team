@@ -1,6 +1,6 @@
 {
   "BossHalfSpecialAttack": {
-    "animID": "B_ATTACK_IDOL",
+    "animID": "2000_ATTACK_IDOL",
     "animNum": 10,
     "armFrameNum": 0,
     "armThrow": false,

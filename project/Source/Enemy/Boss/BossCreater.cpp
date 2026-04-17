@@ -10,7 +10,6 @@
 #include "../../Common/ResourceLoader.h"
 #include "../../Component/Collider/sphereCollider.h"
 #include "../../Component/Animator/Animator.h"
-//#include "T../rashEnemy/enemy.h"
 #include "../../Weapon/WeaponManager.h"
 #include "../../Component/Shaker/Shaker.h"
 #include "../../Component/Object/Object2D.h"
@@ -23,25 +22,61 @@
 #include "../../GameControler/GameControler.h"
 #include "../../State/StateManager.h"
 #include "../../Stage/StageSelectData.h"
-#include <string>
-#include <optional>
+#include "../../Common/FileSystemUtils/FileSystemUtils.h"
 
 namespace {
 	std::vector<Boss::BossParam> bossParams;
 
-	/*std::map<std::string, ID::IDType> IDNameStateLink{
-		{"IDOL",ID::B_IDOL},
-
-
-	}*/
+	std::unordered_map<std::string, ID::IDType> animMap = {
+	{ "IDLE", ID::B_IDOL },
+	{ "IDLE2", ID::B_COOLTIME },
+	{ "WALK", ID::B_RUN },
+	{ "WAIT_SEE", ID::B_WAIT_SEE },
+	{ "SATTACK2_STOP", ID::B_S_ATTACK2_STOP },
+	{ "SATTACK2_BEFORE_2", ID::B_S_ATTACK2_BEFORE },
+	{ "DIE", ID::BOSS_DIE },
+	{ "ROAR_ANIM", ID::B_ROAR_ANIM },
+	{ "ROAR3", ID::B_ROAR_2 },
+	{ "RUN", ID::B_DUSH },
+	{ "THREAT", ID::B_THREAT },
+	{ "DAMAGE", ID::BOSS_DAMAGE },
+	{ "APPEAR_FALL", ID::B_APPEAR_FALL },
+	{ "APPEAR_LAND", ID::B_APPEAR_LAND },
+	{ "FEAR", ID::BOSS_FEAR },
+	{ "BACKSTEP", ID::B_BACKSTEP },
+	{ "WIN", ID::B_WIN }
+	};
 }
 
 BossCreater::BossCreater()
 {
 	LoadBossParam("data/json/BossAttack/BossParam.json");
-	bossAnimFileName = GetFilesStartsWith("data/model/animation", "B_");
-	int a = 0;
-	std::string name = FindAfterAndMatch(bossAnimFileName, "IDOL", "_");
+
+	const StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
+
+	std::string charaID = "2";
+
+	int num = stageData.bossID;
+	std::ostringstream oss;
+	// 3桁、空きは'0'で埋める
+	oss << std::setfill('0') << std::setw(3) << num;
+	std::string str = charaID + oss.str();
+	
+
+	//ボスIDからそのボスのアニメーションデータを取得する
+	bossAnimFileName = FileSystemUtils::GetFilesStartsWith("data/model/animation", str);
+
+	//対応する文字列にenumをリンクさせてLoadをする
+	for (auto& fileInfo : animMap) {
+		//_から後ろの文字列を取得
+		std::string name = FileSystemUtils::FindAfterAndMatchFileName(bossAnimFileName, fileInfo.first, "_");
+		if (name == "") { //_の後の文字列にに対応する文字列がなかったら
+			continue;
+		}
+		ResourceLoad::LoadAnim(name, fileInfo.second);
+	}
+
+	
 }
 
 BossCreater::~BossCreater()
@@ -144,13 +179,13 @@ void BossCreater::CreateBoss()
 	//anim->AddFile(ID::BOSS_FEAR,			"B_FEAR", true, 1.0f, 10.0f, 70.0f);
 	//anim->AddFile(ID::B_BACKSTEP,			"B_BACKSTEP", true, 1.0f);
 	//anim->AddFile(ID::B_WIN,				"B_WIN", true, 1.0f, 10.0f, 70.0f);
-	ResourceLoad::LoadAnim("B_IDLE", ID::B_IDOL);
+	/*ResourceLoad::LoadAnim("B_IDLE", ID::B_IDOL);
 	ResourceLoad::LoadAnim("B_IDLE2", ID::B_COOLTIME);
 	ResourceLoad::LoadAnim("B_WALK", ID::B_RUN);
 	ResourceLoad::LoadAnim("B_WAIT_SEE", ID::B_WAIT_SEE);
 
 	ResourceLoad::LoadAnim("B_SATTACK2_STOP", ID::B_S_ATTACK2_STOP);
-	ResourceLoad::LoadAnim("B_SATTACK2_BEFORE_2", ID::B_S_ATTACK2_BEFORE);
+	ResourceLoad::LoadAnim("B_SATTACK2_BEFORE_2", ID::B_S_ATTACK2_BEFORE);*/
 	/*ResourceLoad::LoadAnim("B_ATTACK1", ID::B_N_ATTACK1);
 	ResourceLoad::LoadAnim("B_ATTACK2", ID::B_N_ATTACK2);
 	ResourceLoad::LoadAnim("B_ATTACK3", ID::B_N_ATTACK3);
@@ -162,7 +197,7 @@ void BossCreater::CreateBoss()
 	ResourceLoad::LoadAnim("B_SATTACK2", ID::B_N_ATTACK9);
 	ResourceLoad::LoadAnim("B_SATTACK1_SAMLL", ID::B_N_ATTACK10);
 	ResourceLoad::LoadAnim("B_ATTACK_IDOL", ID::B_N_ATTACK11);*/
-	ResourceLoad::LoadAnim("B_DIE", ID::BOSS_DIE);
+	/*ResourceLoad::LoadAnim("B_DIE", ID::BOSS_DIE);
 	ResourceLoad::LoadAnim("B_ROAR_ANIM", ID::B_ROAR_ANIM);
 	ResourceLoad::LoadAnim("B_ROAR3", ID::B_ROAR_2);
 	ResourceLoad::LoadAnim("B_RUN", ID::B_DUSH);
@@ -172,11 +207,21 @@ void BossCreater::CreateBoss()
 	ResourceLoad::LoadAnim("B_APPEAR_LAND", ID::B_APPEAR_LAND);
 	ResourceLoad::LoadAnim("B_FEAR", ID::BOSS_FEAR);
 	ResourceLoad::LoadAnim("B_BACKSTEP", ID::B_BACKSTEP);
-	ResourceLoad::LoadAnim("B_WIN", ID::B_WIN);
+	ResourceLoad::LoadAnim("B_WIN", ID::B_WIN);*/
 
 	b->Start(boss, bossParam);
 
-	anim->AnimDataLoad("BossAnimData");
+	//const StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
+
+	//std::string charaID = "2";
+
+	//int num = stageData.bossID;
+	//std::ostringstream oss;
+	//// 3桁、空きは'0'で埋める
+	//oss << std::setfill('0') << std::setw(3) << num;
+	//std::string typeID = oss.str();
+
+	//anim->AnimDataLoad(charaID,typeID);
 	anim->SetMaxFrame(ID::B_N_ATTACK1, 50.0f);
 
 	Object2D* guage = new Object2D();
@@ -227,46 +272,4 @@ bool BossCreater::LoadBossParam(std::string _fileName)
 		bossParams.push_back(boss);
 	}
 	return true;
-}
-
-std::vector<std::string> BossCreater::GetFilesStartsWith(const std::string& folderPath,const std::string& prefix)
-{
-	std::vector<std::string> result;
-
-	for (const auto& entry : std::filesystem::directory_iterator(folderPath))
-	{
-		if (entry.is_directory()) continue;
-
-		std::string fileName = entry.path().stem().string();
-
-		// 先頭一致チェック
-		if (fileName.rfind(prefix, 0) == 0)
-		{
-			result.push_back(fileName);
-		}
-	}
-
-	return result;
-}
-
-std::string BossCreater::FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword)
-{
-	// 「after」の位置を探す
-	for (auto& s : str) {
-		size_t pos = s.find(after);
-		if (pos == std::string::npos)
-			return "";
-
-		// 「after」の後ろを切り出す
-		std::string afterStr = s.substr(pos + after.length());
-
-		// keywordが含まれているか
-		if (afterStr.find(keyword) != std::string::npos)
-		{
-			return afterStr; // マッチしたので返す
-		}
-	}
-
-	return "";
-
 }

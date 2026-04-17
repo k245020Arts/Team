@@ -78,8 +78,8 @@
       "distance": 0.0,
       "id": "BossNormalAttack8",
       "maxAction": 1,
-      "priority": 10,
-      "weight": 50
+      "priority": 50,
+      "weight": 30
     },
     "BossSpecialAttack1": {
       "addWeight": 0,

@@ -43,6 +43,8 @@
 #include "../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
 #include "../../Player/PlayerState/AttackState/PlayerAttack2.h"
 #include "BossAttackDataSerializer.h"
+#include "../../Stage/StageSelectData.h"
+#include "../../Common/FileSystemUtils/FileSystemUtils.h"
 
 namespace {
 	std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable;
@@ -262,8 +264,21 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	enemyBaseComponent.state->CreateState<BossWin>("BossWin", StateID::BOSS_WIN_S);
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
+	const StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
+
+	std::string charaID = "2";
+
+	int num = stageData.bossID;
+	std::ostringstream oss;
+	// 3桁、空きは'0'で埋める
+	oss << std::setfill('0') << std::setw(3) << num;
+	std::string typeID = oss.str();
+
+	enemyBaseComponent.anim->AnimDataLoad(charaID, typeID);
+	//enemyBaseComponent.anim->AnimDataLoad("BossAnimData");
+
 	// 初期ステート
-	enemyBaseComponent.state->StartState(StateID::BOSS_IDOL_S);
+	enemyBaseComponent.state->StartState(StateID::BOSS_APPEAR_S);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::B_MODEL, -1);

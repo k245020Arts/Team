@@ -1,7 +1,7 @@
 {
   "BossNormalAttack8": {
     "addVelocity": false,
-    "animID": "B_ATTACK6",
+    "animID": "2000_ATTACK6",
     "animNum": 5,
     "armFrameNum": 15,
     "armThrow": true,

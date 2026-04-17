@@ -2,7 +2,7 @@
   "BossSpecialSmallAttack1": {
     "addGravity": -10.0,
     "addVelocity": true,
-    "animID": "B_SATTACK1_SAMLL",
+    "animID": "2000_SATTACK1_SAMLL",
     "animNum": 9,
     "attackBeforeAnimID": "",
     "attackCollTransform": {

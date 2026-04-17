@@ -161,31 +161,36 @@ void PlayerManager::CreatePlayer()
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(ResourceLoad::GetHandle(ID::P_MODEL),		"mixamorig:Hips");
-	
-	ResourceLoad::LoadAnim("P_IDOL1", ID::IDType::P_ANIM_IDOL);
-	ResourceLoad::LoadAnim("P_RUN_M_1", ID::IDType::P_ANIM_RUN);
-	ResourceLoad::LoadAnim("P_AVOID_M_1", ID::IDType::P_ANIM_AVOID);
-	ResourceLoad::LoadAnim("P_JUST_AVOID_M_1", ID::IDType::P_ANIM_JUST_AVOID);
-	ResourceLoad::LoadAnim("P_DAMAGE_M_1", ID::IDType::P_DAMAGE);
-	ResourceLoad::LoadAnim("P_FALL_M_1", ID::IDType::P_FALL);
-	ResourceLoad::LoadAnim("P_GETUP_M_1", ID::IDType::P_GETUP);
-	ResourceLoad::LoadAnim("P_ATTACK01_M_1", ID::IDType::P_ANIM_ATTACK1);
-	ResourceLoad::LoadAnim("P_ATTACK02_M_1", ID::IDType::P_ANIM_ATTACK2);
-	ResourceLoad::LoadAnim("P_ATTACK11_M_1", ID::IDType::P_ANIM_JUST_AVOID_ATTACK1);
-	ResourceLoad::LoadAnim("P_ATTACK03_M_1", ID::IDType::P_ANIM_ATTACK3);
-	ResourceLoad::LoadAnim("P_ATTACK05_M_1", ID::IDType::P_ANIM_ATTACK_5);
-	ResourceLoad::LoadAnim("P_ATTACK04_M_1", ID::IDType::P_ANIM_ATTACK4);
-	ResourceLoad::LoadAnim("P_DIE_M_1", ID::IDType::P_DIE);
-	ResourceLoad::LoadAnim("P_TURN1", ID::IDType::P_TURN_ANIM);
-	ResourceLoad::LoadAnim("P_SPECIAL_ATTACK_2", ID::IDType::P_SPECIAL_ATTACK_ANIM);
-	ResourceLoad::LoadAnim("P_SPECIAL_ATTACK_BEFORE", ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM);
-	ResourceLoad::LoadAnim("P_WIN", ID::IDType::P_WIN);
-	ResourceLoad::LoadAnim("P_WINIDOL", ID::IDType::PLAYER_WIN_IDOL);
-	ResourceLoad::LoadAnim("P_LEG_UP", ID::IDType::P_LEG_UP);
-	ResourceLoad::LoadAnim("P_HEAVY_ATTACK", ID::IDType::P_HEAVY_ATTACK);
-	ResourceLoad::LoadAnim("P_HEAVY_CHARGE", ID::IDType::P_HEAVY_CHARGE);
 
-	anim->AnimDataLoad("PlayerAnimData");
+	std::string charaID = "3";
+	std::string typeID = "000";
+	
+	ResourceLoad::LoadAnim(charaID + typeID + "_IDOL1", ID::IDType::P_ANIM_IDOL);
+	ResourceLoad::LoadAnim(charaID + typeID + "_RUN_M_1", ID::IDType::P_ANIM_RUN);
+	ResourceLoad::LoadAnim(charaID + typeID + "_AVOID_M_1", ID::IDType::P_ANIM_AVOID);
+	ResourceLoad::LoadAnim(charaID + typeID + "_JUST_AVOID_M_1", ID::IDType::P_ANIM_JUST_AVOID);
+	ResourceLoad::LoadAnim(charaID + typeID + "_DAMAGE_M_1", ID::IDType::P_DAMAGE);
+	ResourceLoad::LoadAnim(charaID + typeID + "_FALL_M_1", ID::IDType::P_FALL);
+	ResourceLoad::LoadAnim(charaID + typeID + "_GETUP_M_1", ID::IDType::P_GETUP);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK01_M_1", ID::IDType::P_ANIM_ATTACK1);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK02_M_1", ID::IDType::P_ANIM_ATTACK2);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK11_M_1", ID::IDType::P_ANIM_JUST_AVOID_ATTACK1);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK03_M_1", ID::IDType::P_ANIM_ATTACK3);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK05_M_1", ID::IDType::P_ANIM_ATTACK_5);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK04_M_1", ID::IDType::P_ANIM_ATTACK4);
+	ResourceLoad::LoadAnim(charaID + typeID + "_DIE_M_1", ID::IDType::P_DIE);
+	ResourceLoad::LoadAnim(charaID + typeID + "_TURN1", ID::IDType::P_TURN_ANIM);
+	ResourceLoad::LoadAnim(charaID + typeID + "_SPECIAL_ATTACK_2", ID::IDType::P_SPECIAL_ATTACK_ANIM);
+	ResourceLoad::LoadAnim(charaID + typeID + "_SPECIAL_ATTACK_BEFORE", ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM);
+	ResourceLoad::LoadAnim(charaID + typeID + "_WIN", ID::IDType::P_WIN);
+	ResourceLoad::LoadAnim(charaID + typeID + "_WINIDOL", ID::IDType::PLAYER_WIN_IDOL);
+	ResourceLoad::LoadAnim(charaID + typeID + "_LEG_UP", ID::IDType::P_LEG_UP);
+	ResourceLoad::LoadAnim(charaID + typeID + "_HEAVY_ATTACK", ID::IDType::P_HEAVY_ATTACK);
+	ResourceLoad::LoadAnim(charaID + typeID + "_HEAVY_CHARGE", ID::IDType::P_HEAVY_CHARGE);
+
+
+
+	anim->AnimDataLoad(charaID, typeID);;
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);
@@ -343,31 +348,38 @@ void PlayerManager::CreateTitlePlayer()
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(ResourceLoad::GetHandle(ID::P_MODEL), "mixamorig:Hips");
-	anim->AddFile(ID::IDType::P_ANIM_IDOL, "P_IDOL1", true, 1.0f);
-	anim->AddFile(ID::IDType::P_ANIM_RUN, "P_RUN_M_1", true, 1.5f);
-	anim->AddFile(ID::IDType::P_ANIM_AVOID, "P_AVOID_M_1", false, 2.0f, 0.0f, 5.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID, "P_JUST_AVOID_M_1", false, 1.5f, 10.0f, 25.0f);
-	anim->AddFile(ID::IDType::P_DAMAGE, "P_DAMAGE_M_1", false, 2.0f, 0.0f, 10.0f);
-	anim->AddFile(ID::IDType::P_FALL, "P_FALL_M_1", true, 1.0f, 0.0f, 10.0f);
-	anim->AddFile(ID::IDType::P_GETUP, "P_GETUP_M_1", false, 1.0f, 0.0f, 10.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK1, "P_ATTACK01_M_1", false, 2.3f, 19.0f, 27.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1, "P_ATTACK11", false, 9.0f, 7.0f, 25.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK2, "P_ATTACK02_M_1", false, 2.1f, 10.0f, 30.0f);
-	anim->AddFile(ID::IDType::P_ANIM_JUST_AVOID_ATTACK1, "P_ATTACK11_M_1", false, 0.7f, 4.0f, 21.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK3, "P_ATTACK03_M_1", false, 2.1f, 14.0f, 19.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK_5, "P_ATTACK05_M_1", false, 1.5f, 5.0f, 25.0f);
-	anim->AddFile(ID::IDType::P_ANIM_ATTACK4, "P_ATTACK04_M_1", false, 3.1f, 20.0f, 48.0f);
-	anim->AddFile(ID::IDType::P_DIE, "P_DIE_M_1", false, 0.5f, 9.0f, 12.0f);
-	anim->AddFile(ID::IDType::P_TURN_ANIM, "P_TURN1", false, 1.3f, 10.0f, 21.0f);
-	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_ANIM, "P_SPECIAL_ATTACK_2", false, 1.0f, 7.0f, 39.0f);
-	anim->AddFile(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, "P_SPECIAL_ATTACK_BEFORE", false, 1.2f, 7.0f, 39.0f);
-	anim->AddFile(ID::IDType::P_WIN, "P_WIN", false, 1.0f, 30.0f, 45.0f);
-	anim->AddFile(ID::IDType::PLAYER_WIN_IDOL, "P_WINIDOL", true, 1.0f, 0.0f, 100.0f);
-	anim->AddFile(ID::IDType::P_HEAVY_ATTACK, "P_HEAVY_ATTACK", false, 1.0f, 0.0f, 100.0f);
-	anim->AddFile(ID::IDType::P_HEAVY_CHARGE, "P_HEAVY_CHARGE", false, 1.0f, 0.0f, 100.0f);
+	std::string charaID = "3";
+	std::string typeID = "000";
+
+	ResourceLoad::LoadAnim(charaID + typeID + "_IDOL1", ID::IDType::P_ANIM_IDOL);
+	ResourceLoad::LoadAnim(charaID + typeID + "_RUN_M_1", ID::IDType::P_ANIM_RUN);
+	ResourceLoad::LoadAnim(charaID + typeID + "_AVOID_M_1", ID::IDType::P_ANIM_AVOID);
+	ResourceLoad::LoadAnim(charaID + typeID + "_JUST_AVOID_M_1", ID::IDType::P_ANIM_JUST_AVOID);
+	ResourceLoad::LoadAnim(charaID + typeID + "_DAMAGE_M_1", ID::IDType::P_DAMAGE);
+	ResourceLoad::LoadAnim(charaID + typeID + "_FALL_M_1", ID::IDType::P_FALL);
+	ResourceLoad::LoadAnim(charaID + typeID + "_GETUP_M_1", ID::IDType::P_GETUP);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK01_M_1", ID::IDType::P_ANIM_ATTACK1);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK02_M_1", ID::IDType::P_ANIM_ATTACK2);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK11_M_1", ID::IDType::P_ANIM_JUST_AVOID_ATTACK1);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK03_M_1", ID::IDType::P_ANIM_ATTACK3);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK05_M_1", ID::IDType::P_ANIM_ATTACK_5);
+	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK04_M_1", ID::IDType::P_ANIM_ATTACK4);
+	ResourceLoad::LoadAnim(charaID + typeID + "_DIE_M_1", ID::IDType::P_DIE);
+	ResourceLoad::LoadAnim(charaID + typeID + "_TURN1", ID::IDType::P_TURN_ANIM);
+	ResourceLoad::LoadAnim(charaID + typeID + "_SPECIAL_ATTACK_2", ID::IDType::P_SPECIAL_ATTACK_ANIM);
+	ResourceLoad::LoadAnim(charaID + typeID + "_SPECIAL_ATTACK_BEFORE", ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM);
+	ResourceLoad::LoadAnim(charaID + typeID + "_WIN", ID::IDType::P_WIN);
+	ResourceLoad::LoadAnim(charaID + typeID + "_WINIDOL", ID::IDType::PLAYER_WIN_IDOL);
+	ResourceLoad::LoadAnim(charaID + typeID + "_LEG_UP", ID::IDType::P_LEG_UP);
+	ResourceLoad::LoadAnim(charaID + typeID + "_HEAVY_ATTACK", ID::IDType::P_HEAVY_ATTACK);
+	ResourceLoad::LoadAnim(charaID + typeID + "_HEAVY_CHARGE", ID::IDType::P_HEAVY_CHARGE);
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);
+
+	anim->AnimDataLoad(charaID, typeID);;
+	//anim->AnimDataLoad("PlayerAnimData");;
+
 
 	MotionBlur* blur = playerPointer->Component()->AddComponent<MotionBlur>();
 

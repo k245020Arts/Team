@@ -113,6 +113,77 @@ bool FileSystemUtils::CreateEntryFile(std::string_view _filePath)
 	return CreateEntry("", _filePath, ENTRY_TYPE::FILE);
 }
 
+// 以下、自身で追加した関数 -----------------------------------------------------------------------
+
+std::vector<std::string> FileSystemUtils::GetFilesStartsWith(const std::string& folderPath, const std::string& prefix)
+{
+	std::vector<std::string> result;
+
+	for (const auto& entry : std::filesystem::directory_iterator(folderPath))
+	{
+		if (entry.is_directory()) continue;
+
+		std::string fileName = entry.path().stem().string();
+
+		// 先頭一致チェック
+		if (fileName.rfind(prefix, 0) == 0)
+		{
+			result.push_back(fileName);
+		}
+	}
+
+	return result;
+}
+
+std::string FileSystemUtils::FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword)
+{
+	return FindAfterAndMatch(str, after, keyword, after.length());
+}
+
+std::string FileSystemUtils::FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword, int _cutNum)
+{
+	// 「after」の位置を探す
+	for (auto& s : str) {
+		size_t pos = s.find(after);
+		if (pos == std::string::npos)
+			return "";
+
+		// 「after」の後ろを切り出す
+		std::string afterStr = s.substr(pos);
+
+		// keywordが含まれているか
+		if (afterStr.find(keyword) != std::string::npos)
+		{
+			return afterStr; // マッチしたので返す
+		}
+	}
+
+	return "";
+}
+
+std::string FileSystemUtils::FindAfterAndMatchFileName(const std::vector<std::string> str, const std::string& after, const std::string& keyword)
+{
+	// 「after」の位置を探す
+	for (auto& s : str) {
+		size_t pos = s.find(after);
+		if (pos == std::string::npos)
+			continue;
+
+		// 「after」の後ろを切り出す
+		std::string afterStr = s.substr(pos - 1);
+
+		// keywordが含まれているか
+		if (afterStr.find(keyword) != std::string::npos)
+		{
+			return s; // マッチしたので返す
+		}
+	}
+
+	return "";
+}
+
+// -------------------------------------------------------------------------------------------
+
 bool FileSystemUtils::CreateEntry(std::string_view _DirectoryPath, std::string_view _fileName, const ENTRY_TYPE _type)
 {
 	// ファイルを作成するタイプでなかったら
