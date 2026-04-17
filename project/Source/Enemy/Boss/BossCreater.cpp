@@ -28,6 +28,12 @@
 
 namespace {
 	std::vector<Boss::BossParam> bossParams;
+
+	/*std::map<std::string, ID::IDType> IDNameStateLink{
+		{"IDOL",ID::B_IDOL},
+
+
+	}*/
 }
 
 BossCreater::BossCreater()
