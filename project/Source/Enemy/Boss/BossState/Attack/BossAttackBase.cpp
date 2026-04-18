@@ -255,6 +255,7 @@ void BossAttackBase::AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std
 		sound = false;
 		keepAnimSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
 		//attackParam.slowAmout = 0.1f;
+		//attackParam.slowTime = 0.3f;
 		e->enemyBaseComponent.anim->SetPlaySpeed(attackParam.slowAmout);
 		//attackParam.slowTime = 0.3f;
 		animSlowCounter = attackParam.slowTime;

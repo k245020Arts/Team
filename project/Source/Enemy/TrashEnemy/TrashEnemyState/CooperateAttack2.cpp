@@ -9,6 +9,11 @@ CooperateAttack2::CooperateAttack2()
 	attackParam.animID = ID::TE_ATTACK2;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	attackParam.damagePattern = BossAttackBase::BACK;
+	attackParam.useFlash = true;
+	attackParam.attackFlashStartTime = 0.7f;
+	attackParam.slowAmout = 0.1f;
+	attackParam.slowTime = 0.3f;
+	attackParam.speedUpMotionSpeed = 0.3f;
 }
 
 CooperateAttack2::~CooperateAttack2()
