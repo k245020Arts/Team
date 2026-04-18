@@ -21,7 +21,7 @@ private:
 	std::vector<std::string> bossAnimFileName;
 	bool LoadBossParam(std::string _fileName);
 
-	std::vector<std::string> GetFilesStartsWith(const std::string& folderPath, const std::string& prefix);
-	std::string FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword);
+	/*std::vector<std::string> GetFilesStartsWith(const std::string& folderPath, const std::string& prefix);
+	std::string FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword);*/
 	
 };

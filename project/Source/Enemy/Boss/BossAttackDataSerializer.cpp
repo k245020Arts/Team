@@ -185,8 +185,8 @@ void BossAttackDataSerializer::Update()
 
 					bossAnim->SetSelectFileInfo(currentSelectAnimInfos);
 
-					bossAnim->AnimDataSave("BossAnimData");
-					bossAnim->AnimDataLoad("BossAnimData");
+					bossAnim->AnimDataReSave(currentSelectAnimInfos.id);
+					//bossAnim->AnimDataLoad("BossAnimData");
 
 				}
 				ImGui::EndTabItem();
@@ -352,8 +352,8 @@ void BossAttackDataSerializer::Update()
 
 		bossAnim->SetSelectFileInfo(animInfos);
 
-		bossAnim->AnimDataSave("BossAnimData");
-		bossAnim->AnimDataLoad("BossAnimData");
+		bossAnim->AnimDataReSave(animInfos.id);
+		//bossAnim->AnimDataLoad("BossAnimData");
 
 		// 入力リセット
 		newAttackID[0] = '\0';

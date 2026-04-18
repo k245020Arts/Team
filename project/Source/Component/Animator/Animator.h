@@ -149,11 +149,6 @@ public:
 
 	void ImguiDraw()override;
 
-	void AnimDataSave(const std::string& _path);
-	void AnimDataLoad(const std::string& _path);
-
-	
-
 	struct AnimFileInfo {
 		int hModel;
 		bool loop;
@@ -166,6 +161,11 @@ public:
 
 		AnimFileInfo() : hModel(-1), loop(false), maxFrame(1.0f), playSpeed(1.0f), eventFinishTime(-1.0f), eventStartTime(-1.0f), fileName(""), id("") {}
 	};
+
+	void AnimDataSaveAll();
+	void AnimDataReSave(std::string _fileName);
+	void AnimDataLoad(const std::string& _charaID,const std::string _typeID);
+	void AnimDataLoad(const std::string& _path);
 
 	AnimFileInfo GetSelectFileInfo(std::string _fileName);
 	void SetSelectFileInfo(AnimFileInfo _animFileInfo);

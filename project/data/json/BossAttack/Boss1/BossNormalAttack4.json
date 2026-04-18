@@ -1,7 +1,7 @@
 {
   "BossNormalAttack4": {
     "addVelocity": false,
-    "animID": "B_ATTACK4",
+    "animID": "2000_ATTACK4",
     "animNum": 3,
     "attackBeforeAnimID": "",
     "attackCollTransform": {

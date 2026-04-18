@@ -1,7 +1,7 @@
 {
   "BossNormalAttack1": {
     "angleMoveAmout": 90.0,
-    "animID": "B_ATTACK1",
+    "animID": "2000_ATTACK1",
     "animNum": 0,
     "attackBeforeAnimID": "",
     "attackCollTransform": {

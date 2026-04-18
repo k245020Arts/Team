@@ -22,6 +22,7 @@
 #include "../../Common/Debug/Debug.h"
 #include "../../GameControler/GameControler.h"
 #include "TrashEnemyGroup.h"
+#include "../../Common/ResourceLoader.h"
 
 TrashEnemyManager::TrashEnemyManager()
 {
@@ -110,14 +111,25 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 		me->ModelHandle(handle,true);
 		me->RotationMesh(1, DX_PI_F);
 
+		std::string charaID = "1";
+		std::string typeID = "000";
+
 		Animator* anim = e->Component()->AddComponent<Animator>();
 		anim->BaseModelSet(handle, 1);
-		anim->AddFile(ID::TE_IDOL, "E_IDOL", true, 1.0f);
-		anim->AddFile(ID::TE_RUN, "E_RUN", true, 1.0f);
-		anim->AddFile(ID::TE_ATTACK, "E_ATTACK1", false, 0.8f, 20.0f, 30.0f);
-		anim->AddFile(ID::TE_ATTACK2, "E_ATTACK2", false, 1.0f, 25.0f, 35.0f);
-		anim->AddFile(ID::E_DAMAGE, "E_DAMAGE", false, 1.0f);
-		anim->AddFile(ID::E_DIE, "E_DEAD", false, 2.0f);
+		/*anim->AddFile(ID::TE_IDOL, charaID + typeID + "_IDOL", true, 1.0f);
+		anim->AddFile(ID::TE_RUN, charaID + typeID + "_RUN", true, 1.0f);
+		anim->AddFile(ID::TE_ATTACK, charaID + typeID + "_ATTACK1", false, 0.8f, 20.0f, 30.0f);
+		anim->AddFile(ID::TE_ATTACK2, charaID + typeID + "_ATTACK2", false, 1.0f, 25.0f, 35.0f);
+		anim->AddFile(ID::E_DAMAGE, charaID + typeID + "_DAMAGE", false, 1.0f);
+		anim->AddFile(ID::E_DIE, charaID + typeID + "_DEAD", false, 2.0f);*/
+		ResourceLoad::LoadAnim(charaID + typeID + "_IDOL", ID::TE_IDOL);
+		ResourceLoad::LoadAnim(charaID + typeID + "_RUN", ID::TE_RUN);
+		ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK1", ID::TE_ATTACK);
+		ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK2", ID::TE_ATTACK2);
+		ResourceLoad::LoadAnim(charaID + typeID + "_DAMAGE", ID::E_DAMAGE);
+		ResourceLoad::LoadAnim(charaID + typeID + "_DEAD", ID::E_DIE);
+
+		anim->AnimDataLoad(charaID, typeID);;
 		
 		anim->Play(ID::TE_IDOL);
 

@@ -6,6 +6,9 @@
 #include "../../../Common/FileSystemUtils/FileSystemUtils.h"
 #include "../../../Common/ResourceLoader.h"
 #include "../../../../ImGui/imgui.h"
+#include "../../../Stage/StageSelectData.h"
+#include "../../../Component/Animator/Animator.h"
+
 
 namespace {
 	const int ATTACK_KIND_MAX		= 6;

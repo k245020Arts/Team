@@ -1,6 +1,6 @@
 {
   "BossNormalAttack7": {
-    "animID": "B_ATTACK7",
+    "animID": "2000_ATTACK7",
     "animNum": 6,
     "armFrameNum": 15,
     "armThrow": true,

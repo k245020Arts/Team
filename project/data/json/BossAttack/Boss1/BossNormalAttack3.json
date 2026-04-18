@@ -1,6 +1,6 @@
 {
   "BossNormalAttack3": {
-    "animID": "B_ATTACK3",
+    "animID": "2000_ATTACK3",
     "animNum": 2,
     "attackBeforeAnimID": "",
     "attackCameraBossLook": true,
