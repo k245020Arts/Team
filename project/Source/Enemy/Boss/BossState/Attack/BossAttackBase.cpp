@@ -85,7 +85,7 @@ void BossAttackBase::BossStart()
 	Boss* boss		= GetBase<Boss>();
 	boss->threat	= false;
 	//attackParam.flash	= false;
-	DebugLogText::GetInstance()->Log(LogLevel::INFO, string + "UŒ‚‚ªŠJŽn‚µ‚Ü‚µ‚½");
+	//DebugLogText::GetInstance()->Log(LogLevel::INFO, string + "UŒ‚‚ªŠJŽn‚µ‚Ü‚µ‚½");
 	if (attackParam.attackBeforeAnimID == ID::ID_MAX) {
 		boss->enemyBaseComponent.anim->Play(attackParam.animID);
 	}

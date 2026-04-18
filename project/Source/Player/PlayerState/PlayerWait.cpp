@@ -27,7 +27,7 @@ void PlayerWait::Update()
 		//p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 	}
 	if (!p->playerCom.camera->IsCutScene()) {
-		DebugLogText::GetInstance()->Log(LogLevel::INFO,"pass");
+		//DebugLogText::GetInstance()->Log(LogLevel::INFO,"pass");
 		//assert(false);
 	}
 	
