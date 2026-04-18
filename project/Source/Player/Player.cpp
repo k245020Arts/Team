@@ -525,7 +525,15 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	//“G‚ÌUŒ‚‚ª“–‚½‚Á‚½‚Ìˆ—
 	std::shared_ptr<StateBase> pB	= playerCom.stateManager->GetState<StateBase>();
 	Animator* enemyAnim				= _obj->Component()->GetComponent<Animator>();
-	BossAttackBase* attack = _obj->Component()->GetComponent<StateManager>()->GetState<AttackSorting>()->GetNowAttackState();
+	std::shared_ptr<AttackSorting> sorthing = _obj->Component()->GetComponent<StateManager>()->GetState<AttackSorting>();
+	std::shared_ptr<BossAttackBase> attack;
+	if (sorthing != nullptr) {
+		attack = sorthing->GetNowAttackState();
+	}
+	else {
+		attack = _obj->Component()->GetComponent<StateManager>()->GetState<BossAttackBase>();
+	}
+	
 	float startTime					= enemyAnim->EventStartTime(_attackId);
 	bool damage						= false;
 	StateID::State_ID state = pB->GetID();

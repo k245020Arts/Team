@@ -72,7 +72,7 @@ public:
 
 	void Load(std::string _bossName, Boss* _boss);
 	void AttackFinish();
-	BossAttackBase* GetNowAttackState();
+	std::shared_ptr<BossAttackBase> GetNowAttackState();
 
 	void SaveSorthing(std::string _bossName);
 	void LoadSorting(std::string _bossName);
@@ -132,6 +132,6 @@ private:
 	bool forceAttack;
 
 	VECTOR3 vec;
-	std::unordered_map<std::string, BossAttackBase*> attacks;
+	std::unordered_map<std::string, std::shared_ptr<BossAttackBase>> attacks;
 	std::unordered_map<std::string, BossAttackBase::BossAttackParam> attackParam;
 };

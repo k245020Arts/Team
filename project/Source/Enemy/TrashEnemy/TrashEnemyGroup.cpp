@@ -12,6 +12,8 @@ TrashEnemyGroup::TrashEnemyGroup()
 	attackCounter = 0;
 
 	enemiesRunCounter = 0;
+
+	separationTime = 0.0f;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -23,6 +25,7 @@ void TrashEnemyGroup::Update()
 	Separation();
 	EnemyDeaad(meleeEnemies);
 	EnemyDeaad(rangedEnemies);
+	
 	//近距離の敵関連
 	for (auto melee : meleeEnemies)
 	{
@@ -97,33 +100,69 @@ void TrashEnemyGroup::EnemyDeaad(std::list<TrashEnemy*>& enemies)
 
 void TrashEnemyGroup::Separation()
 {
+	separationTime += Time::DeltaTimeRate();
+
+	if (separationTime <= 0.5f)
+		return;
+
+	separationTime = 0.0f;
+
 	VECTOR pos1 = { 0,0,0 };
 	VECTOR pos2 = { 0,0,0 };
 	const float E_SIZE = 500;
 
-	//for (auto& itr1 : enemies)
-	//{
-	//	for (auto& itr2 : enemies)
-	//	{
-	//		if (itr1 == itr2)
-	//			continue;
+	allEnemy.clear();
 
-	//		pos1 = itr1->GetPos();
-	//		pos2 = itr2->GetPos();
-	//		VECTOR3 vec = pos1 - pos2;
-	//		VECTOR3 vec2 = pos2 - pos1;
+	for (auto& melee : meleeEnemies)
+	{
+		allEnemy.push_back(melee);
+	}
+	for (auto& ranged : rangedEnemies)
+	{
+		allEnemy.push_back(ranged);
+	}
 
-	//		vec.y = 0;
-	//		vec2.y = 0;
+	for (auto& itr1 : allEnemy)
+	{
+		for (auto& itr2 : allEnemy)
+		{
+			if (itr1 == itr2)
+				continue;
 
-	//		//エネミーの分散
-	//		if (vec.Size() <= E_SIZE)
-	//		{
-	//			itr1->AddPos(vec.Normalize());
-	//			itr2->AddPos(vec2.Normalize());
-	//		}
-	//	}
-	//}
+			pos1 = itr1->GetPos();
+			pos2 = itr2->GetPos();
+			VECTOR3 vec = pos1 - pos2;
+			VECTOR3 vec2 = pos2 - pos1;
+
+			vec.y = 0;
+			vec2.y = 0;
+
+			//エネミーの分散
+			if (vec.Size() <= E_SIZE)
+			{
+				itr1->AddPos(vec.Normalize());
+				itr2->AddPos(vec2.Normalize());
+			}
+		}
+	}
+}
+
+void TrashEnemyGroup::InCameraWayPoint(WayPoint& _wayPoint)
+{
+	VECTOR3 position = camera->GetCameraTransform()->position;
+	position.y = 0;
+	//正面べく
+	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(camera->GetCameraTransform()->rotation.y);
+	VECTOR3 vec = _wayPoint.position - position;
+
+	//内積
+	float dotProduct = VDot(frontVec, vec.Normalize());
+	//カメラに写ってるか
+	if (dotProduct > cosf(45 * DegToRad))
+		_wayPoint.active = true;
+	//カメラに写ってなかったら
+	else
+		_wayPoint.active = false;
 }
 
 int TrashEnemyGroup::GetActiveEnemy()
@@ -194,13 +233,13 @@ void TrashEnemyGroup::CooperateAttackMove(TrashEnemy* _enemy)
 	//敵全員が準備完了するか時間経過で攻撃に移る
 	if (standbyCounter == enemiesMax || cooperateCounter >= 3)
 	{
-		AllChangeState(StateID::T_ENEMY_RUN_S);
+		AllChangeMeleeState(StateID::T_ENEMY_RUN_S);
 		standbyCounter = 0;
 		cooperateCounter = 0;
 	}
 }
 
-void TrashEnemyGroup::AllChangeState(StateID::State_ID _id)
+void TrashEnemyGroup::AllChangeMeleeState(StateID::State_ID _id)
 {
 	if (GetActiveEnemy() == 0)
 		return;
@@ -213,6 +252,7 @@ void TrashEnemyGroup::AllChangeState(StateID::State_ID _id)
 			itr->CooperateAtkFinish();
 	}
 }
+
 void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 {
 	VECTOR3 position = camera->GetCameraTransform()->position;
@@ -228,15 +268,16 @@ void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 			//使っていいウェイポイントを一回だけ探す
 			if (counter == 0)
 			{
-				VECTOR3 vec = itr.position - position;
-				//内積
-				float dotProduct = VDot(frontVec, vec.Normalize());
-				//カメラに写ってるか
-				if (dotProduct > cosf(45 * DegToRad))
-					itr.active = true;
-				//カメラに写ってなかったら
-				else
-					itr.active = false;
+				InCameraWayPoint(itr);
+				//VECTOR3 vec = itr.position - position;
+				////内積
+				//float dotProduct = VDot(frontVec, vec.Normalize());
+				////カメラに写ってるか
+				//if (dotProduct > cosf(45 * DegToRad))
+				//	itr.active = true;
+				////カメラに写ってなかったら
+				//else
+				//	itr.active = false;
 			}
 			//一番近いウェイポイントを探す
 			if (itr.active)

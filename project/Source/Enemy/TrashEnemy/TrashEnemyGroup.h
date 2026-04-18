@@ -39,6 +39,8 @@ public:
 	std::list<TrashEnemy*> meleeEnemies;
 	//‰“‹——£‚Ì“G
 	std::list<TrashEnemy*> rangedEnemies;
+	//
+	std::list<TrashEnemy*> allEnemy;
 
 	const int ATK_COUNTER_MIN = 1;
 	const float ATK_COUNTER_MAX = 3;
@@ -49,10 +51,14 @@ public:
 	void EnemyDeaad(std::list<TrashEnemy*>& enemies);
 	//G‹›“I‚Ç‚¤‚µ‚Å‚ ‚½‚Á‚½‚Ì‰Ÿ‚µ•Ô‚µ
 	void Separation();
+
+	void InCameraWayPoint(WayPoint& _wayPoint);
 	//¶‚«‚Ä‚é“G‚ğ”‚¦‚éŠÖ”
 	int GetActiveEnemy();
 
 	bool hasLeader;
+
+	float separationTime;
 
 	//‹ß‹——£‚Ì“G‚Åg‚¤----------
 	//“G‚ÌUŒ‚
@@ -62,7 +68,7 @@ public:
 	//‹ß‹——£‚Ì“G‚Ì˜AŒgUŒ‚
 	void CooperateAttackMove(TrashEnemy* _enemy);
 	//‹ß‹——£‚Ì“G‚ÌƒXƒe[ƒg‚ğ‹­§“I‚É‘Sˆõ•Ï‚¦‚é
-	void AllChangeState(StateID::State_ID _id);
+	void AllChangeMeleeState(StateID::State_ID _id);
 	
 	float attackCounter;
 	float maxAttackCounter;

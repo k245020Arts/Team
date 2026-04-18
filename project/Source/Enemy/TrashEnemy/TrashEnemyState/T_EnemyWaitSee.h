@@ -12,8 +12,9 @@ public:
 	void Start()override;
 	void Finish()override;
 
+	bool IsLeader() { return isLeader; }
 private:
 	VECTOR3 targetPos;
-
+	bool isLeader;
 	float attackCounter;
 };

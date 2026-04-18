@@ -249,9 +249,6 @@ void TrashEnemy::Update()
 	if (hp <= 0)
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 
-	/*if (!isCooperateAtk)
-		targetPos = enemyBaseComponent.playerObj->GetTransform()->position;*/
-
 	if (CheckHitKey(KEY_INPUT_9))
 		hp -= maxHp;
 }

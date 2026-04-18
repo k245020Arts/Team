@@ -152,7 +152,7 @@
         "throwFallGravity": 0.0,
         "throwFirstSpeed": 0.0,
         "throwHeight": 0.0,
-        "throwObjectID": "BossAttackRock1",
+        "throwObjectID": "BossShot",
         "throwSpeed": 0.0,
         "throwToFall": false,
         "throwToFallToPlayer": false,

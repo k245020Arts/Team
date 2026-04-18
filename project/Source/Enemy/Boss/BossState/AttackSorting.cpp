@@ -102,10 +102,7 @@ AttackSorting::AttackSorting()
 
 AttackSorting::~AttackSorting()
 {
-	for (auto& attack : attacks) {
-		delete attack.second;
-	}
-	attacks.clear();
+
 }
 
 //#define NORMAL_MODE
@@ -383,7 +380,7 @@ void AttackSorting::Load(std::string _bossName,Boss* _boss)
 
 		attackParam[key].animID = ID::StringToID(attackParam[key].animFileName);
 
-		attacks[key] = new BossAttackBase();
+		attacks[key] =  std::make_shared<BossAttackBase>();
 
 		attacks[key]->Init(obj,StateID::StringToID(key));
 
@@ -417,7 +414,7 @@ void AttackSorting::AttackFinish()
 	attacks[nextState]->BossFinish();
 }
 
-BossAttackBase* AttackSorting::GetNowAttackState()
+std::shared_ptr<BossAttackBase> AttackSorting::GetNowAttackState()
 {
 	return attacks[nextState];
 }
@@ -477,7 +474,7 @@ void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param)
 void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, std::string _attackID)
 {
 	std::string key = _attackID;
-	attacks[key] = new BossAttackBase();
+	attacks[key] = std::make_shared<BossAttackBase>();
 
 	attacks[key]->Init(obj, StateID::StringToID(key));
 
