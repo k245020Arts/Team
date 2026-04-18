@@ -112,12 +112,13 @@ void BossRockBase::Update()
 		if (velocityAdd) {
 			VECTOR3 direction = dir + attackData.diffusionAngle;
 			physics->AddVelocity(direction * attackData.throwSpeed, true);
-			VECTOR3 dist = obj->GetTransform()->position - obj->GetParent()->GetTransform()->position;
-			if (dist.Size() >= 50000.0f) {
-				obj->DestroyMe();
-			}
+			
+			
 		}
-		
+		VECTOR3 dist = obj->GetTransform()->position - obj->GetParent()->GetTransform()->position;
+		if (dist.Size() >= 50000.0f) {
+			obj->DestroyMe();
+		}
 	}
 	if (attackData.freeDir) {
 		//VECTOR3 direction = dir + attackData.diffusionAngle;
@@ -330,7 +331,7 @@ void BossRockBase::PlayerAttackRockFlyAway(Transform& _playerTransform)
 	obj->Component()->GetComponent<Shaker>()->ShakeStart(VOne * 50.0f, Shaker::MIX_SHAKE, true, 0.3f);
 	
 	playerAttackHit = true;
-
+	velocityAdd = false;
 	if (playerHitColl != nullptr) {
 		playerHitColl = nullptr;
 		obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("_rockAttack");

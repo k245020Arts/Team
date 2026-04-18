@@ -3,6 +3,7 @@
 #include "../../Component/Physics/Physics.h"
 #include "../../Common/InputManager/PadInput.h"
 #include "../../Common/InputManager/InputManager.h"
+#include "../../Common/InputManager/KeyboardInput.h"
 #include "../../Component/Collider/SphereCollider.h"
 #include "../../Component/Color/Color.h"
 #include "../../Component/Shaker/Shaker.h"
@@ -123,17 +124,17 @@ void Boss::Update()
 	//	enemyBaseComponent.state->SetNoStateChange(true);
 	//}
 
-	if (CheckHitKey(KEY_INPUT_NUMPAD0)) {
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_NUMPAD0)) {
 		hp -= 200.0f;
 	}
 
-	if (CheckHitKey(KEY_INPUT_1)) {
+	/*if (CheckHitKey(KEY_INPUT_1)) {
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_SMALL_ATTACK1_S);
 	}
 
 	if (CheckHitKey(KEY_INPUT_3)) {
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_SPECIAL_ATTACK2_S);
-	}
+	}*/
 
 	if (Hp() == FIVE) {
 		if (!roaf) {

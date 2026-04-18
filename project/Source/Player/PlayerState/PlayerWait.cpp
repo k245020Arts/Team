@@ -24,7 +24,7 @@ void PlayerWait::Update()
 {
 	Player* p = GetBase<Player>();
 	if (CheckHitKey(KEY_INPUT_0)) {
-		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
+		//p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 	}
 	if (!p->playerCom.camera->IsCutScene()) {
 		DebugLogText::GetInstance()->Log(LogLevel::INFO,"pass");

@@ -548,8 +548,10 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 	{
 		j["randCan"] = p.randCan;
 		j["randCollInfo"] = p.randCollInfo;
-		j["randTime"] = p.randTime;
+		
 	}
+
+	j["randTime"] = p.randTime;
 
 	// playerHit
 	if (p.playerHit)
@@ -704,10 +706,12 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 		if (p.randCan)
 		{
 			if (j.contains("randCollInfo")) j.at("randCollInfo").get_to(p.randCollInfo);
-			if (j.contains("randTime")) j.at("randTime").get_to(p.randTime);
+			
 		}
 	}
 	else p.randCan = false;
+
+	if (j.contains("randTime")) j.at("randTime").get_to(p.randTime);
 
 	// playerHit
 	if (j.contains("playerHit"))

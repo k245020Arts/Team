@@ -947,6 +947,11 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 
 	if (ImGui::Button("Copy ALL"))
 	{
+		src.attackID = param.attackID;
+		src.animID = param.animID;
+		src.animNum = param.animNum;
+		src.animFileName = param.animFileName;
+
 		param = src;
 	}
 

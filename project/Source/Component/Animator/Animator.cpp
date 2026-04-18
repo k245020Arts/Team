@@ -25,7 +25,7 @@ Animator::Animator()
 
 Animator::~Animator()
 {
-    AnimDataSaveAll();
+    //AnimDataSaveAll();
     if (before.attachID >= 0)
     {
         MV1DetachAnim(baseModel, before.attachID);
@@ -415,25 +415,25 @@ void Animator::AnimDataLoad(const std::string& _charaID, const std::string _type
     }
 }
 
-
-void Animator::AnimDataLoad(const std::string& _path)
-{
-    JsonReader json;
-
-    std::string path = "data/json/Animation/" + _path + ".json";
-
-    json.Load(path);
-
-    for (auto& j: json.Data()["Animator"])
-    {
-
-        AnimFileInfo info ;
-        j.get_to(info);
-        
-        info.hModel = ResourceLoad::GetHandle(ID::StringToID(info.id));
-        fileInfos[info.id] = info;
-    }
-}
+//
+//void Animator::AnimDataLoad(const std::string& _path)
+//{
+//    JsonReader json;
+//
+//    std::string path = "data/json/Animation/" + _path + ".json";
+//
+//    json.Load(path);
+//
+//    for (auto& j: json.Data()["Animator"])
+//    {
+//
+//        AnimFileInfo info ;
+//        j.get_to(info);
+//        
+//        info.hModel = ResourceLoad::GetHandle(ID::StringToID(info.id));
+//        fileInfos[info.id] = info;
+//    }
+//}
 
 Animator::AnimFileInfo Animator::GetSelectFileInfo(std::string _fileName)
 {
