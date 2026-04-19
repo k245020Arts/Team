@@ -19,6 +19,11 @@ T_EnemyAttack::T_EnemyAttack()
 	mMaxFrame = 0;
 
 	isDecel = true;
+	attackParam.useFlash = true;
+	attackParam.attackFlashStartTime = 0.7f;
+	attackParam.slowAmout = 0.1f;
+	attackParam.slowTime = 0.3f;
+	attackParam.speedUpMotionSpeed = 0.3f;
 }
 
 T_EnemyAttack::~T_EnemyAttack()

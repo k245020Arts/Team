@@ -132,7 +132,7 @@ void TitleControl::StageSelect()
 	if (selectCounter > 0.0f) {
 		return;
 	}
-	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x >= 0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_LEFT)) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x >= 0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_RIGHT)) {
 		stageID++;
 		int stageMax = StageSelectData::GetInstance()->GetStageMax() - 1;
 		if (stageID >= stageMax) {
@@ -142,7 +142,7 @@ void TitleControl::StageSelect()
 		selectCounter = 0.5f;
 	}
 
-	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x <= -0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_RIGHT)) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x <= -0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_LEFT)) {
 		stageID--;
 		if (stageID <= 0) {
 			stageID = 0;

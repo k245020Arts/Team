@@ -165,7 +165,7 @@ public:
 	void AnimDataSaveAll();
 	void AnimDataReSave(std::string _fileName);
 	void AnimDataLoad(const std::string& _charaID,const std::string _typeID);
-	void AnimDataLoad(const std::string& _path);
+	//void AnimDataLoad(const std::string& _path);
 
 	AnimFileInfo GetSelectFileInfo(std::string _fileName);
 	void SetSelectFileInfo(AnimFileInfo _animFileInfo);

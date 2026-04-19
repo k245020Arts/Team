@@ -1,0 +1,13 @@
+{
+  "Animator": {
+    "P_GETUP_M_1": {
+      "eventFinishTime": 10.0,
+      "eventStartTime": 0.0,
+      "fileName": "P_GETUP_M_1",
+      "id": "P_GETUP_M_1",
+      "loop": false,
+      "maxFrame": 53.0,
+      "playSpeed": 1.0
+    }
+  }
+}

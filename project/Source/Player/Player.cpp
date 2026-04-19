@@ -315,20 +315,20 @@ void Player::Move(float _speed, float _speedMax)
 	//	//}
 
 	//}
-	PlayerStickInput();
-	if (CheckHitKey(KEY_INPUT_A)) {
+	PlayerStickInput(); //InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_LEFT)
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_A)) {
 		//VECTOR3 power = com.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
 		//if (power.Size() >= -1.0f) {
 		walkAngle.x = -1.0f;
 		//}
 	}
-	else if (CheckHitKey(KEY_INPUT_W)) {
+	else if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_W)) {
 		walkAngle.z = 1.0f;
 	}
-	else if (CheckHitKey(KEY_INPUT_S)) {
+	else if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_S)) {
 		walkAngle.z = -1.0f;
 	}
-	else if (CheckHitKey(KEY_INPUT_D)) {
+	else if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_D)) {
 		walkAngle.x = 1.0f;
 	}
 
