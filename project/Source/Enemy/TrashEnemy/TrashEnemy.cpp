@@ -529,7 +529,7 @@ void TrashEnemy::PlayerHit()
 
 void TrashEnemy::SetWayPoint(VECTOR3 _wayPoint)
 {
-	wayPoint = _wayPoint;
+	targetPoint = _wayPoint;
 }
 
 void TrashEnemy::SetCooperateWayPoint(VECTOR3 _pos, StateID::State_ID _id)

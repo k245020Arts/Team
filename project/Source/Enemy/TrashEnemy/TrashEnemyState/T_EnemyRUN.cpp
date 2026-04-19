@@ -31,7 +31,7 @@ void T_EnemyRun::Update()
 		e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
 	if (!e->isCooperateAtk )
-		targetPos = e->wayPoint;
+		targetPos = e->targetPoint;
 	else if(e->isMovingToPlayer)
 		e->enemyBaseComponent.playerObj->GetTransform()->position;
 
@@ -62,7 +62,7 @@ void T_EnemyRun::Start()
 	if (e->enemyType == e->EnemyType::MELEE)
 	{
 		if (!e->isCooperateAtk /*|| e->isMovingToPlayer*/)
-			targetPos = e->wayPoint;
+			targetPos = e->targetPoint;
 		else if (e->isMovingToPlayer)
 			targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
 		else

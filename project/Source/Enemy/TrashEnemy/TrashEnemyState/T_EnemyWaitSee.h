@@ -1,6 +1,8 @@
 #pragma once
 #include "../EnemyState/EnemyStateBase.h"
 
+class TrashEnemy;
+
 class T_EnemyWaitSee : public EnemyStateBase
 {
 public:
@@ -14,6 +16,9 @@ public:
 
 	bool IsLeader() { return isLeader; }
 private:
+	void ReaderMove(TrashEnemy* _enemy);
+	void NormalMove(TrashEnemy* _enemy);
+
 	VECTOR3 targetPos;
 	bool isLeader;
 	float attackCounter;

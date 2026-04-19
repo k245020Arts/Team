@@ -89,6 +89,8 @@ public:
 	//追いかける時にどのポイントを追いかけるか決める
 	int GetPointNumber() { return pointNumber; }
 
+	VECTOR3 TargetPoint()const { return targetPoint; }
+
 	//セッター
 	void SetWayPoint(VECTOR3 _wayPoint);
 	// //ウェイポイントを取得して連携攻撃に切り替わる関数
@@ -149,7 +151,7 @@ private:
 	//強めの味方についていくか
 	//bool isEnemyFollow;
 	
-	VECTOR3 wayPoint;
+	VECTOR3 targetPoint;
 	VECTOR3 cooperateWayPoint;
 
 	//必殺技を食らったときに敵をスローにする
