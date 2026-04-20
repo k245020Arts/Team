@@ -225,18 +225,18 @@ void TrashEnemyManager::Cooperate()
 
 void TrashEnemyManager::WayPointOffset()
 {
-	const int waypointMax = 8;
-	const float RANGE = 1500.0f;// プレイヤー中心の半径
+	const int WaypointMax = 8;
+	const float Range = 1500.0f;// プレイヤー中心の半径
 
-	for (int i = 0; i < waypointMax; i++)
+	for (int i = 0; i < WaypointMax; i++)
 	{
 		//均等に割って円形に配置
-		float angle = (2.0f * DX_PI_F) * (float)i / (float)waypointMax;
+		float angle = (2.0f * DX_PI_F) * (float)i / (float)WaypointMax;
 
 		//回転を反映した方向
 		VECTOR3 rotatedDir = VECTOR3(cosf(angle), 0, sinf(angle));
 		//プレイヤーからの絶対座標
-		VECTOR3 target = rotatedDir * RANGE;
+		VECTOR3 target = rotatedDir * Range;
 		target.y = 0;
 
 		wayPointOffsets.emplace_back(target);

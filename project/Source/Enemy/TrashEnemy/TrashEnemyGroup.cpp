@@ -13,8 +13,6 @@ TrashEnemyGroup::TrashEnemyGroup()
 
 	enemiesRunCounter = 0;
 
-	separationTime = 0.0f;
-
 	leaderPos = VZero;
 }
 
@@ -24,9 +22,9 @@ TrashEnemyGroup::~TrashEnemyGroup()
 
 void TrashEnemyGroup::Update()
 {
-	Separation();
 	EnemyDeaad(meleeEnemies);
 	EnemyDeaad(rangedEnemies);
+	Separation();
 	
 	//‹ß‹——£‚Ì“GŠÖ˜A
 	for (auto melee : meleeEnemies)
@@ -106,16 +104,9 @@ void TrashEnemyGroup::EnemyDeaad(std::list<TrashEnemy*>& enemies)
 
 void TrashEnemyGroup::Separation()
 {
-	separationTime += Time::DeltaTimeRate();
-
-	if (separationTime <= 0.5f)
-		return;
-
-	separationTime = 0.0f;
-
 	VECTOR pos1 = { 0,0,0 };
 	VECTOR pos2 = { 0,0,0 };
-	const float E_SIZE = 500;
+	const float E_SIZE = 600;
 
 	allEnemy.clear();
 
@@ -302,23 +293,21 @@ void TrashEnemyGroup::RangedEnemyAttack(TrashEnemy* _enemy)
 {
 	if (_enemy->GetEnemyType() == _enemy->EnemyType::RANGED)
 	{
-
+		_enemy->SetWayPoint(leaderPos);
 	}
 	else
 	{
-		const VECTOR3 cameraPos = camera->GetCameraTransform()->position;
-		const float camRotY = camera->GetCameraTransform()->rotation.y;
-		const VECTOR3 forward = VECTOR3(sinf(camRotY), 0, cosf(camRotY));
-		const float distance = 5000;
+		const VECTOR3 CameraPos = camera->GetCameraTransform()->position;
+		const float CamRotY = camera->GetCameraTransform()->rotation.y;
+		const VECTOR3 Forward = VECTOR3(sinf(CamRotY), 0, cosf(CamRotY));
+		const float Distance = 5000;
 
-		VECTOR3 _wayPointPos = cameraPos + forward * distance;
+		VECTOR3 _wayPointPos = CameraPos + Forward * Distance;
 
 		_wayPointPos.y = 0;
 		
 		_enemy->SetWayPoint(_wayPointPos);
 
 		leaderPos = _enemy->GetPos();
-	}
-	
-	
+	}	
 }
