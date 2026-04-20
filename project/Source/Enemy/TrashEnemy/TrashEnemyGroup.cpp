@@ -14,6 +14,8 @@ TrashEnemyGroup::TrashEnemyGroup()
 	enemiesRunCounter = 0;
 
 	separationTime = 0.0f;
+
+	leaderPos = VZero;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -33,7 +35,11 @@ void TrashEnemyGroup::Update()
 		MeleeEnemyAttack(melee);
 		CooperateAttackMove(melee);
 	}
-	
+
+	for (auto ranged : rangedEnemies)
+	{
+		RangedEnemyAttack(ranged);
+	}
 }
 
 void TrashEnemyGroup::SettingGroup(TrashEnemy* _enemy, int _index)
@@ -294,5 +300,25 @@ void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 
 void TrashEnemyGroup::RangedEnemyAttack(TrashEnemy* _enemy)
 {
+	if (_enemy->GetEnemyType() == _enemy->EnemyType::RANGED)
+	{
+
+	}
+	else
+	{
+		const VECTOR3 cameraPos = camera->GetCameraTransform()->position;
+		const float camRotY = camera->GetCameraTransform()->rotation.y;
+		const VECTOR3 forward = VECTOR3(sinf(camRotY), 0, cosf(camRotY));
+		const float distance = 5000;
+
+		VECTOR3 _wayPointPos = cameraPos + forward * distance;
+
+		_wayPointPos.y = 0;
+		
+		_enemy->SetWayPoint(_wayPointPos);
+
+		leaderPos = _enemy->GetPos();
+	}
+	
 	
 }

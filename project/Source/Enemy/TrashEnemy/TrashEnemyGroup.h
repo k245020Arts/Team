@@ -79,6 +79,10 @@ public:
 	int enemiesRunCounter;
 	//--------------------------
 
-	//‰“‹——£‚Ì“G‚ÌUŒ‚
+	//‰“‹——£‚Ì“G----------------
 	void RangedEnemyAttack(TrashEnemy* _enemy);
+
+	//WayPoint RangedEnemyPoint;
+	VECTOR3 leaderPos;
+	//--------------------------
 };
