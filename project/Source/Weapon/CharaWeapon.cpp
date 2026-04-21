@@ -40,9 +40,11 @@ void CharaWeapon::Draw()
 	if (parent) {
 		//VECTOR3 framePos = MV1GetFramePosition(modelHandle,frame);
 		matrix = MV1GetFrameLocalWorldMatrix(modelHandle, frame);//くっつけたいモデルのマトリックスをとる。
-		MATRIX matri = MGetRotElem(matrix);
-		//MATRIX mGetScale = MGetScale(VECTOR3(10.0f, 10.0f, 10.0f));
-		MV1SetMatrix(weaponHandle, matrix); //そのマトリックスを剣のモデルにセットしてあげる
+		MATRIX scaleMat = MGetScale(transform->scale);
+		// 元の行列にスケールを掛ける
+		MATRIX result = scaleMat * matrix;
+		// 剣に適用
+		MV1SetMatrix(weaponHandle, result);
 		MV1DrawModel(weaponHandle);
 	}
 }
@@ -51,7 +53,10 @@ void CharaWeapon::ObjectPointer(BaseObject* _obj, int _frame, ID::IDType _baseMo
 {
 	chara = _obj;
 	anim = chara->Component()->GetComponent<Animator>();
-	anim->SetBoneFrame(frame);
+	if (anim != nullptr) {
+		anim->SetBoneFrame(frame);
+	}
+	
 	frame = _frame;
 	modelHandle = ResourceLoad::GetHandle(_baseModelName);
 	weaponHandle = _weaponHandle;

@@ -92,7 +92,7 @@ void BossRockBase::Awake()
 
 void BossRockBase::Update()
 {
-	if (throwReady) {
+	if (throwReady && !attackData.armSwordHand) {
 		Transform* transform = obj->GetTransform();
 		MATRIX matrixWorld = MV1GetFrameLocalWorldMatrix(throwRockBaseModel, boneNum);
 		// WORLDÀ•W‚ðŽæ“¾
@@ -419,7 +419,7 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack)
 		if (justAvoidCollider == nullptr) {
 			justAvoidCollider = obj->Component()->AddComponent<SphereCollider>();
 			//450
-			justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitCollRadius, 1.0f, 1.0f)), "justAvoid_rock");
+			justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitJustAvoidCollRadius, 1.0f, 1.0f)), "justAvoid_rock");
 		}
 	}
 

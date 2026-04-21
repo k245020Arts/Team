@@ -300,7 +300,7 @@ void AttackSorting::BuildTable(int _priority)
 	}
 
 	//打てる技の合計からランダムな数字をだす
-	int r = GetRand(totalWeight - 1);
+	int rand = GetRand(totalWeight - 1);
 
 	for (auto& itr : actions)
 	{
@@ -312,9 +312,9 @@ void AttackSorting::BuildTable(int _priority)
 		else if(itr.priority > _priority)//プライオリティを超えてるとき
 			continue;
 
-		r -= itr.weight + itr.addWeight;
+		rand -= itr.weight + itr.addWeight;
 	
-		if (r < 0)
+		if (rand < 0)
 		{
 			//AttackFinish();
 			nextState = itr.id;
@@ -353,9 +353,9 @@ void AttackSorting::Load(std::string _bossName,Boss* _boss)
 		std::string key = entry.path().stem().string();
 		JsonReader jsonReader;
 		JSON root;
-		if (!jsonReader.Load(filePath + "/" + fileName))
-		{
-			break;
+		//ロードできなかった時
+		if (!jsonReader.Load(filePath + "/" + fileName)){
+			continue;
 		}
 
 		root = jsonReader.Data();
@@ -376,14 +376,14 @@ void AttackSorting::Load(std::string _bossName,Boss* _boss)
 			attackParam[key].attackID = key;
 		}
 
-
+		
 		ID::IDType bossAttackAnimID = static_cast<ID::IDType>(attackParam[key].animNum);
 
 		ResourceLoad::LoadAnim(attackParam[key].animFileName, bossAttackAnimID);
-
+		//StringからIDに変換
 		attackParam[key].animID = ID::StringToID(attackParam[key].animFileName);
 
-		attacks[key] =  std::make_shared<BossAttackBase>();
+		attacks[key] = std::make_shared<BossAttackBase>();
 
 		attacks[key]->Init(obj,StateID::StringToID(key));
 
@@ -469,18 +469,19 @@ std::unordered_map<std::string, BossAttackBase::BossAttackParam> AttackSorting::
 	return attackParam;
 }
 
-void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param)
+void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, Boss* _boss)
 {
-	AddAttack(_param, _param.attackID);
+	AddAttack(_param,_boss, _param.attackID);
 }
 
-void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, std::string _attackID)
+void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, Boss* _boss, std::string _attackID)
 {
 	std::string key = _attackID;
 	attacks[key] = std::make_shared<BossAttackBase>();
 
 	attacks[key]->Init(obj, StateID::StringToID(key));
 
+	attacks[key]->SetComponent<Boss>(_boss);
 	attacks[key]->SetAttackParam(attackParam[key]);
 }
 

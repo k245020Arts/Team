@@ -88,6 +88,7 @@ public:
 		RayColliderInfo predictionCicleColliderInfo;
 		//腕で投げるか
 		bool armThrow;
+		bool armSwordHand;
 		int armFrameNum;
 		VECTOR3 armAddPos;
 		bool throwToPlayer;
@@ -179,6 +180,7 @@ public:
 			groundDelete = false;
 
 			playerAttackObjectDrop = false;
+			armSwordHand = false;
 		}
 	};
 
@@ -463,16 +465,43 @@ public:
 	void LoadAttackParam();
 	void SetAttackParam(BossAttackParam _param);
 
+	/// <summary>
+	/// 回転イベント
+	/// </summary>
 	void RotateEvent();
+	/// <summary>
+	/// プレイヤーを見るイベント
+	/// </summary>
 	void LookEvent();
+	/// <summary>
+	/// 移動イベント
+	/// </summary>
 	void MoveEvent();
+	/// <summary>
+	/// ジャンプイベント
+	/// </summary>
 	void JumpEvent();
+	/// <summary>
+	/// 衝撃波イベント
+	/// </summary>
 	void ShackWaveEvent();
 	void CreateWave();
+	/// <summary>
+	/// 投擲物イベント
+	/// </summary>
 	void ThrowObjectsEvent();
+	/// <summary>
+	/// 突進イベント
+	/// </summary>
 	void RushEvent();
-
+	/// <summary>
+	/// 今再生されてるアニメーションが攻撃アニメーションかどうかを判定する
+	/// </summary>
+	/// <returns></returns>
 	bool CurrentAttackAnim();
+	/// <summary>
+	/// 攻撃後の終了判定
+	/// </summary>
 	void AttackFinish();
 
 protected:
@@ -630,6 +659,7 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 	if (p.armThrow)
 	{
 		j["armThrow"] = p.armThrow;
+		j["armSwordHand"] = p.armSwordHand;
 		j["armFrameNum"] = p.armFrameNum;
 		j["armAddPos"] = p.armAddPos;
 		j["throwToPlayer"] = p.throwToPlayer;
@@ -834,6 +864,7 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 		if (p.armThrow)
 		{
 			if (j.contains("armFrameNum")) j.at("armFrameNum").get_to(p.armFrameNum);
+			if (j.contains("armSwordHand")) j.at("armSwordHand").get_to(p.armSwordHand);
 			if (j.contains("armAddPos")) j.at("armAddPos").get_to(p.armAddPos);
 			if (j.contains("throwToPlayer")) j.at("throwToPlayer").get_to(p.throwToPlayer);
 			if (j.contains("thorwToFront")) j.at("thorwToFront").get_to(p.thorwToFront);

@@ -60,16 +60,13 @@ void EnemyBase::Update()
 	if (damageFlash > 0.0f) {
 		damageFlash -= Time::DeltaTimeRate();
 		if (damageFlash < 0.0f) {
-			enemyBaseComponent.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));
+			enemyBaseComponent.color->setRGB(Color::Rgb(255.0f, 255.0f, 255.0f, 255.0f));
 		}
 	}
 	if (CheckHitKey(KEY_INPUT_G)) {
 		obj->GetTransform()->position = EnemyInformation::BASE_POS;
 	}
-	//if (hp <= 0.0f && enemyBaseComponent.state->GetState<StateBase>()->GetID() == StateID::E_ANIM_IDOL) {
-	//	//enemyBaseComponent.state->NowChangeState(ID::E_DIE);
-	//	enemyBaseComponent.state->SetNoStateChange(true);
-	//}
+	//‘½’iƒqƒbƒg‚Ìˆ—
 	if (loopNum >= 0) {
 		hitCounter -= Time::DeltaTimeRate();
 		if (hitCounter <= 0.0f) {

@@ -108,6 +108,8 @@ Player::Player()
 	objHit						= false;
 	bossRockManager				= nullptr;
 	paramWindow					= new PlayerParamWindow(this);
+	justAvoidCan				= false;
+	justAvoidColHit				= false;
 	
 }
 
@@ -316,20 +318,21 @@ void Player::Move(float _speed, float _speedMax)
 
 	//}
 	PlayerStickInput(); //InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_LEFT)
+	const float LEFT_MOVE_ROTATE = -1.0f;
+	const float RIGHT_MOVE_ROTATE = 1.0f;
+	const float FRONT_MOVE_ROTATE = 1.0f;
+	const float BACK_MOVE_ROTATE = -1.0f;
 	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_A)) {
-		//VECTOR3 power = com.physics->GetVelocity() * VECTOR3(1.0f, 0.0f, 1.0f);
-		//if (power.Size() >= -1.0f) {
-		walkAngle.x = -1.0f;
-		//}
+		walkAngle.x = LEFT_MOVE_ROTATE;
 	}
 	else if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_W)) {
-		walkAngle.z = 1.0f;
+		walkAngle.z = FRONT_MOVE_ROTATE;
 	}
 	else if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_S)) {
-		walkAngle.z = -1.0f;
+		walkAngle.z = BACK_MOVE_ROTATE;
 	}
 	else if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_D)) {
-		walkAngle.x = 1.0f;
+		walkAngle.x = RIGHT_MOVE_ROTATE;
 	}
 
 	
@@ -358,6 +361,7 @@ void Player::Move(float _speed, float _speedMax)
 		//最大速度までいったらスピードマックスに補正
 		if (moveVelo.SquareSize() >= max * max) {
 			moveVelo = moveVelo.Normalize() * _speedMax;
+			//上でYのvelocityを0にしているので元のvelocity.yを代入
 			moveVelo.y = playerCom.physics->GetVelocity().y;
 			playerCom.physics->SetVelocity(moveVelo);
 		}
@@ -408,10 +412,7 @@ void Player::Avoid(float _speed, float _speedMax, float cameraAngle, float _upSp
 	//回避の共通処理
 	VECTOR dir	= VZero;
 	dir			= VECTOR3(0.0f, 0.0f, _speed) * MGetRotY(playerTransform->rotation.y);
-	/*dir.x = playerTransform->rotation.y * 1.0f * _speed;
-	dir.z = playerTransform->rotation.y * 1.0f * _speed;*/
-	dir.y		*= 0.0f;
-	//dir = dir * MGetRotY(cameraAngle);
+	//回避の時に空中に浮かせるためにyの値をプラス
 	dir.y		+= _upSpeed;
 	playerCom.physics->SetVelocity(dir);
 
@@ -527,6 +528,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	Animator* enemyAnim				= _obj->Component()->GetComponent<Animator>();
 	std::shared_ptr<AttackSorting> sorthing = _obj->Component()->GetComponent<StateManager>()->GetState<AttackSorting>();
 	std::shared_ptr<BossAttackBase> attack;
+	//AttackSorthingがあるならAttackSorthingの中から攻撃を取得
 	if (sorthing != nullptr) {
 		attack = sorthing->GetNowAttackState();
 	}
@@ -540,9 +542,10 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	if (state == StateID::PLAYER_JUST_AVOID_ATTACK1_S && playerCom.hitObj == _obj) {
 		return true;
 	}
+	//ジャスト回避が出来るならスルーして敵の攻撃が当たっていない返り値で返す
 	if (justAvoid)
 		return true;
-	
+	//敵が攻撃をしてなかったらスルーして敵の攻撃が当たっていない返り値で返す
 	if (attack == nullptr)
 		return true;
 
@@ -796,6 +799,7 @@ bool Player::LargeJustAvoid(std::shared_ptr<BossAttackBase> _attack)
 void Player::SpecialVarAdd(float _add)
 {
 	float add = specialAttackBar + _add;
+	//必殺技ゲージがMaxより小さいと進む
 	if (add >= specialAttackBarMax) {
 		if (!specialAttackGuageMax) {
 			specialAttackGuageMax = true;
@@ -808,15 +812,17 @@ void Player::SpecialVarAdd(float _add)
 
 void Player::AttackRockHit()
 {
-	playerCom.shaker->ShakeStart(VOne * 50.0f, Shaker::MIX_SHAKE, true, 0.35f);
-	playerCom.camera->CameraPerspectiveShakeStart(5.0f, 0.35f);
-	InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(80, 30);
+	const float shakeTime = 0.35f;
+	playerCom.shaker->ShakeStart(VOne * 50.0f/*power*/, Shaker::MIX_SHAKE, true, shakeTime/*time*/);
+	playerCom.camera->CameraPerspectiveShakeStart(5.0f/*power*/, shakeTime/*time*/);
+	InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(80/*power*/, 30/*time*/);
 }
 
 void Player::JustAvoidCollsionHit(BaseObject* _obj, CollsionInformation::Tag _tag)
 {
 	std::shared_ptr<StateBase> pB = playerCom.stateManager->GetState<StateBase>();
 	StateID::State_ID state = pB->GetID();
+	//ジャスト回避状態ならジャスト回避判定をスルー
 	if (state == StateID::PLAYER_JUST_AVOID_S) {
 		return;
 	}

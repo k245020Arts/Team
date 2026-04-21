@@ -410,8 +410,14 @@ void Animator::AnimDataLoad(const std::string& _charaID, const std::string _type
         // モデル取得
         info.hModel = ResourceLoad::GetHandle(ID::StringToID(info.id));
 
+        if (info.maxFrame <= -1.0f) {
+            info.maxFrame = MV1GetAnimTotalTime(info.hModel, 0);
+        }
+       
+
         // 登録
         fileInfos[info.id] = info;
+
     }
 }
 

@@ -29,7 +29,7 @@ void WeaponManager::Draw()
 void WeaponManager::CreatePlayerWeapon()
 {
 	pObj =  new Object3D();
-	pObj->Init((VECTOR3)MV1GetFramePosition(ResourceLoad::GetHandle(ID::P_MODEL), 73), VZero, VECTOR3(30, 30, 30), "PLAYER_WEAPON");
+	pObj->Init((VECTOR3)MV1GetFramePosition(ResourceLoad::GetHandle(ID::P_MODEL), 73), VZero, VECTOR3(1, 1, 1), "PLAYER_WEAPON");
 
 	Object3D* player = FindGameObjectWithTag<Object3D>("PLAYER");
 	

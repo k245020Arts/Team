@@ -216,6 +216,12 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 
 	enemyBaseComponent.collider = FindGameObjects<ColliderBase>();
 
+	const StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
+
+	std::string charaID = "2";
+
+	int num = stageData.bossID;
+
 	//enemyBaseComponent.boss = this;
 	enemyBaseComponent.anim = obj->Component()->GetComponent<Animator>();
 	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
@@ -240,7 +246,8 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	enemyBaseComponent.state->CreateState<BossRun>("BossRun", StateID::BOSS_RUN_S);
 	enemyBaseComponent.state->CreateState<BossCoolTime>("BossCoolTime", StateID::BOSS_COOL_TIME_S);
 	std::shared_ptr<AttackSorting> attackSorting =  enemyBaseComponent.state->CreateState<AttackSorting>("AttackSorting", StateID::ATTACK_SORTING_S);
-	attackSorting->Load("Boss1",this);
+	std::string folderName = "Boss" + std::to_string(num);
+	attackSorting->Load(folderName,this);
 
 	enemyBaseComponent.state->CreateState<BossWalk>("BossWalk", StateID::BOSS_WALK);
 	/*enemyBaseComponent.state->CreateState<BossNormalAttack1>("BossNormalAttack1", StateID::BOSS_NORMAL_ATTACK1_S);
@@ -265,11 +272,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	enemyBaseComponent.state->CreateState<BossWin>("BossWin", StateID::BOSS_WIN_S);
 	enemyBaseComponent.state->SetComponent<Boss>(this);
 
-	const StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
-
-	std::string charaID = "2";
-
-	int num = stageData.bossID;
+	
 	std::ostringstream oss;
 	// 3桁、空きは'0'で埋める
 	oss << std::setfill('0') << std::setw(3) << num;
@@ -301,6 +304,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	bossParam = _param;
 	hp = bossParam.hp;
 	defense = bossParam.defense;
+	enemyBaseComponent.color->setRGB(Color::Rgb(255, 255, 255, 255));
 	/*JsonReader json;
 	std::string filePath = std::string("data/json/BossAttack");
 

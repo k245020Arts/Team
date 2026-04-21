@@ -495,7 +495,17 @@ void BossAttackBase::JumpEvent()
 
 void BossAttackBase::ShackWaveEvent()
 {
-
+	if (!attackParam.shockWave) {
+		return;
+	}
+	Boss* boss = GetBase<Boss>();
+	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
+		if (groundEffect) {
+			CreateWave();
+			groundEffect = false;
+		}
+		
+	}
 }
 
 void BossAttackBase::CreateWave()
@@ -513,21 +523,24 @@ void BossAttackBase::CreateWave()
 
 void BossAttackBase::ThrowObjectsEvent()
 {
+	//投擲物イベントがないなら
 	if (!attackParam.throwObject) {
 		return;
 	}
 	Boss* boss = GetBase<Boss>();
+	//腕で投げるなら
 	if (attackParam.armThrow) {
 		float animFrame = boss->enemyBaseComponent.anim->GetCurrentFrame();
+		//投げるの開始
 		if (attackParam.throwStartTime <= animFrame) {
 			if (!throwRock) {
 				boss->rockManager->ThrowStart();
 				throwRock = true;
 			}
 		}
+		//投擲物が登場するタイミング
 		if (animFrame >= attackParam.throwObjectApperaTime) {
 			if (!rockGet) {
-				VECTOR3 vzero = VECTOR3(VZero);
 				boss->rockManager->CreateThrowObject(attackParam.throwAttackData, 0.0f, 0.0f, 0.0f);
 				rockGet = true;
 			}
@@ -535,24 +548,24 @@ void BossAttackBase::ThrowObjectsEvent()
 	}
 	else {
 		throwObjectAppearTime -= Time::DeltaTimeRate();
-
+		//岩が登場する時間が0になっているときかつ、MAXの値まで出てないときは登場
 		if (throwObjectAppearTime <= 0.0f && throwObjectNumNow < attackParam.throwObjectNum)
 		{
 			boss->rockManager->CreateThrowObject(attackParam.throwAttackData,throwObjectNumNow, attackParam.throwObjectNum, 0.0f);
 
 			throwObjectNumNow++;
 
-			// 徐々に加速
+			// 徐々に出るスピードが早くなる
 			if (attackParam.intervalTimeSub) {
-				float t = (float)throwObjectNumNow / (float)attackParam.throwObjectNum;
-				throwObjectAppearTime = Easing::Lerp(/*0.45f, 0.15f*/attackParam.maxIntervalTime, attackParam.minIntervalTime, t);
+				float rate = (float)throwObjectNumNow / (float)attackParam.throwObjectNum;
+				throwObjectAppearTime = Easing::Lerp(/*0.45f, 0.15f*/attackParam.maxIntervalTime, attackParam.minIntervalTime, rate);
 			}
 			else {
 				throwObjectAppearTime = attackParam.intervalTime;
 			}
 			
 		}
-
+		//投擲物が全部出きったら
 		if (throwObjectNumNow >= attackParam.throwObjectNum)
 		{
 			boss->rockManager->ShakeCamera();
@@ -563,11 +576,12 @@ void BossAttackBase::ThrowObjectsEvent()
 
 void BossAttackBase::RushEvent()
 {
+	//突進イベントがないなら
 	if (!attackParam.rushMove) {
 		return;
 	}
 	Boss* boss = GetBase<Boss>();
-	//後隙
+	//後隙の時にアニメーションの再生が終わったら終了
 	if (boss->enemyBaseComponent.anim->IsFinish()) {
 		if (boss->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(attackParam.rushAfterAnimID)) {
 			boss->BossAttackStateChange();
@@ -576,14 +590,15 @@ void BossAttackBase::RushEvent()
 			AttackStart();
 		}
 	}
-	//前隙
+	//前隙の時にプレイヤーを見る
 	if (boss->enemyBaseComponent.anim->GetCurrentID() == ID::GetID(attackParam.attackBeforeAnimID)) {
 		boss->LookPlayer(0.09f);
-		return;
+		return;//前隙の時に後ろの処理に行かないように
 	}
 	BossDushSound();
 
 	rushAttackCount -= obj->GetObjectTimeRate();
+	//突進時間が過ぎたなら後隙へと移行
 	if (rushAttackCount <= 0.0f) {
 		boss->enemyBaseComponent.anim->Play(attackParam.rushAfterAnimID);
 		VECTOR3 p = boss->enemyBaseComponent.physics->GetVelocity().Normalize();
@@ -594,12 +609,14 @@ void BossAttackBase::RushEvent()
 bool BossAttackBase::CurrentAttackAnim()
 {
 	Boss* boss = GetBase<Boss>();
+	//攻撃のフレームならTrueを返す(前隙、後隙はfalse)
 	return ID::GetID(attackParam.animID) == boss->enemyBaseComponent.anim->GetCurrentID();
 }
 
 void BossAttackBase::AttackFinish()
 {
 	Boss* boss = GetBase<Boss>();
+	//攻撃のアニメーションじゃなかったらリターン
 	if (!CurrentAttackAnim()) {
 		return;
 	}
@@ -615,30 +632,39 @@ void BossAttackBase::BossDushSound()
 {
 	Boss* b = GetBase<Boss>();
 	SoundManager::GetInstance()->Play3DSound(Sound_ID::BOSS_WALK, obj, 200000, 30000);
-	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= /*6.0f*/attackParam.rushSoundLeftFoot && b->enemyBaseComponent.anim->GetCurrentFrame() <= attackParam.rushSoundLeftFoot + 1.0f) {
+	//突進時の足跡の音(アニメーションフレームで再生)
+	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= attackParam.rushSoundLeftFoot &&
+		b->enemyBaseComponent.anim->GetCurrentFrame() <= attackParam.rushSoundLeftFoot + 1.0f) {
+		//一回だけ鳴らす
 		if (firstOnes) {
 			rushSound = true;
 		}
 		firstOnes = false;
 	}
-	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= /*16.0f*/attackParam.rushSoundRightFoot && b->enemyBaseComponent.anim->GetCurrentFrame() <= attackParam.rushSoundRightFoot + 1.0f) {
+	//突進時の足跡の音(アニメーションフレームで再生)
+	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= attackParam.rushSoundRightFoot &&
+		b->enemyBaseComponent.anim->GetCurrentFrame() <= attackParam.rushSoundRightFoot + 1.0f) {
+		//一回だけ鳴らす
 		if (secondOnes) {
 			rushSound = true;
 		}
 		secondOnes = false;
 	}
+	//音がなった時に周波数を変える
 	if (rushSound) {
 		SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::BOSS_WALK, 30000, 1000);
 		rushSound = false;
 		//Debug::DebugLog("bossDushSound");
 	}
 	float resetTime = 0.0f;
+	//右のタイムと左のタイムで比較をして大きい方をResetTimeとする
 	if (attackParam.rushSoundRightFoot > attackParam.rushSoundLeftFoot) {
 		resetTime = attackParam.rushSoundRightFoot;
 	}
 	else {
 		resetTime = attackParam.rushSoundLeftFoot;
 	}
+	//最後に音がなった時からしばらくたったら
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= resetTime + 2.0f) {
 		firstOnes = true;
 		secondOnes = true;
@@ -648,6 +674,7 @@ void BossAttackBase::BossDushSound()
 void BossAttackBase::BossUpdate()
 {
 	Boss* boss = GetBase<Boss>();
+	//ボスのポインタが取得できなければイベントを走らせない
 	if (boss == nullptr) {
 		return;
 	}
@@ -657,6 +684,7 @@ void BossAttackBase::BossUpdate()
 	BossJustAvoidCollsion();
 	RotateEvent();
 	LookEvent();
+	ShackWaveEvent();
 	MoveEvent();
 	RushEvent();
 	JumpEvent();
@@ -679,7 +707,9 @@ void BossAttackBase::AttackStart()
 	firstColl = true;
 	//look = true;
 	//distance = pos.Size();
+	
 
+	//突進した時専用の当たり判定を付けるか
 	if (attackParam.rushColl) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -692,6 +722,7 @@ void BossAttackBase::AttackStart()
 		rushColl.scale.x += attackParam.addRushCollScale;
 		rockColl->CollsionAdd(info, rushColl, "Rush");
 	}
+	//連続攻撃をしないなら
 	if (b->maxAttack <= 0) {
 		AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
 		//attackParam.flash = true;

@@ -28,7 +28,7 @@ namespace {
 	std::vector<Boss::BossParam> bossParams;
 
 	std::unordered_map<std::string, ID::IDType> animMap = {
-	{ "IDLE", ID::B_IDOL },
+	{ "IDOL", ID::B_IDOL },
 	{ "IDLE2", ID::B_COOLTIME },
 	{ "WALK", ID::B_RUN },
 	{ "WAIT_SEE", ID::B_WAIT_SEE },

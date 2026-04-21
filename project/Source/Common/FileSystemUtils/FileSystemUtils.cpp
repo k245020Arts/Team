@@ -166,7 +166,7 @@ std::string FileSystemUtils::FindAfterAndMatchFileName(const std::vector<std::st
 	// 「after」の位置を探す
 	for (auto& s : str) {
 		size_t pos = s.find(after);
-		if (pos == std::string::npos)
+		if (pos == std::string::npos)//文字列が含まれてなかったら
 			continue;
 
 		// 「after」の後ろを切り出す

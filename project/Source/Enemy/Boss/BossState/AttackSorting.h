@@ -80,8 +80,8 @@ public:
 	std::vector<ActionParam> GetActionParam();
 	std::unordered_map<std::string, BossAttackBase::BossAttackParam> GetAttackParam();
 
-	void AddAttack(BossAttackBase::BossAttackParam _param);
-	void AddAttack(BossAttackBase::BossAttackParam _param,std::string _attackID);
+	void AddAttack(BossAttackBase::BossAttackParam _param, Boss* _boss);
+	void AddAttack(BossAttackBase::BossAttackParam _param,Boss* _boss,std::string _attackID);
 
 	void ReloadParam(BossAttackBase::BossAttackParam _param,std::string _reLoadID);
 

@@ -325,7 +325,7 @@ void BossAttackDataSerializer::Update()
 		attackParam[newID].animID = ID::StringToID(attackParam[newID].animFileName);
 
 		AttackSave(newID);
-		sorting->AddAttack(newParam, newID);
+		sorting->AddAttack(newParam,boss, newID);
 
 		// ActionParam追加（ローカル）
 		ActionParam newAction;
@@ -522,6 +522,18 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 
 			ImGui::DragFloat("ShakePower", &param.groundShakeCamera, 0.1f);
 			ImGui::DragFloat("ShakeTime", &param.groundShakeTime, 0.01f);
+		}
+	}
+
+	///プレイヤー見るイベント
+	if (ImGui::CollapsingHeader("PlayerLook Event"))
+	{
+		ImGui::Checkbox("Enable##PlayerLook", &param.lookPlayer);
+
+		if (param.lookPlayer)
+		{
+			ImGui::DragInt("lookNum", &param.lookNum, 0.1f);
+			ImGui::DragFloat("lookMaxCounter", &param.lookMaxCounter, 0.1f);
 		}
 	}
 
@@ -873,6 +885,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	if (ImGui::CollapsingHeader("Throw"))
 	{
 		ImGui::Checkbox("ArmThrow##Throw_", &t.armThrow);
+		ImGui::Checkbox("armSwordHand##Throw_", &t.armSwordHand);
 		ImGui::DragInt("ArmFrame##Throw_", &t.armFrameNum, 1);
 		ImGui::DragFloat3("ArmOffset##Throw_", &t.armAddPos.x, 0.1f);
 

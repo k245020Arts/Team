@@ -137,6 +137,7 @@ void PlayerManager::CreatePlayer()
 
 	stateManager = playerPointer->Component()->AddComponent<StateManager>();
 
+	//Stateの追加--------------------------------------------------------------
 	stateManager->CreateState<PlayerWait>("PlayerWait", StateID::PLAYER_WAIT_S);
 	stateManager->CreateState<PlayerWalk>("PlayerWalk", StateID::PLAYER_WALK_S);
 	stateManager->CreateState<PlayerAvoid>("PlayerAvoid", StateID::PLAYER_AVOID_S);
@@ -158,13 +159,14 @@ void PlayerManager::CreatePlayer()
 	stateManager->CreateState<PlayerHeavyCharge>("PlayerHeavyCharge", StateID::PLAYER_HEAVY_CHARGE_S);
 	stateManager->CreateState<PlayerHeavyAttack>("PlayerHeavyAttack", StateID::PLAYER_HEAVY_ATTACK_S);
 	stateManager->CreateState<PlayerLose>("PlayerLose", StateID::PLAYER_LOSE_S);
+	//--------------------------------------------------------------------------
 
 	Animator* anim = playerPointer->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(ResourceLoad::GetHandle(ID::P_MODEL),		"mixamorig:Hips");
 
 	std::string charaID = "3";
 	std::string typeID = "000";
-	
+	//キャラIDとプレイヤーの種類IDをセットしてロード
 	ResourceLoad::LoadAnim(charaID + typeID + "_IDOL1", ID::IDType::P_ANIM_IDOL);
 	ResourceLoad::LoadAnim(charaID + typeID + "_RUN_M_1", ID::IDType::P_ANIM_RUN);
 	ResourceLoad::LoadAnim(charaID + typeID + "_AVOID_M_1", ID::IDType::P_ANIM_AVOID);

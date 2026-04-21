@@ -15,6 +15,7 @@
 #include "../../MeshRenderer/MeshRenderer.h"
 #include "../../../Common/ResourceLoader.h"
 #include "../../../Common/Effect/EffectManager.h"
+#include "../../../Weapon/CharaWeapon.h"
 
 BossRockManager::BossRockManager() :  BossRockManager(nullptr)
 {
@@ -380,10 +381,20 @@ void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity,
 		_base->GetTransform()->scale = throwObjectsData[_data.throwObjectID].modelTransform.scale;
 	}
 	else {
-		MeshRenderer* mesh = _base->Component()->AddComponent<MeshRenderer>();
-		mesh->ModelHandle(ResourceLoad::GetHandle(ID::StringToID(throwObjectsData[_data.throwObjectID].modelName)));
-		_base->GetTransform()->scale = throwObjectsData[_data.throwObjectID].modelTransform.scale;
+		if (_data.armSwordHand) {
+			CharaWeapon* weapon = _base->Component()->AddComponent<CharaWeapon>();
+			weapon->ObjectPointer(_base, _data.armFrameNum, ID::B_MODEL, ResourceLoad::GetHandle(ID::StringToID(throwObjectsData[_data.throwObjectID].modelName)));
+			_base->GetTransform()->scale = throwObjectsData[_data.throwObjectID].modelTransform.scale;
+		}
+		else {
+			MeshRenderer* mesh = _base->Component()->AddComponent<MeshRenderer>();
+			mesh->ModelHandle(ResourceLoad::GetHandle(ID::StringToID(throwObjectsData[_data.throwObjectID].modelName)));
+			_base->GetTransform()->scale = throwObjectsData[_data.throwObjectID].modelTransform.scale;
+		}
+		
 	}
+
+	
 	
 	//Shadow* shadow = _base->Component()->AddComponent<Shadow>();
 	/*Object3D* shadow = new Object3D();
