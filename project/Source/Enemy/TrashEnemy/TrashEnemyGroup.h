@@ -58,7 +58,7 @@ public:
 
 	bool hasLeader;
 
-	float separationTime;
+	//float separationTime;
 
 	//‹ß‹——£‚Ì“G‚Åg‚¤----------
 	//“G‚ÌUŒ‚

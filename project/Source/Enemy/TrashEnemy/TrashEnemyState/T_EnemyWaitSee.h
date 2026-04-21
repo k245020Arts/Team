@@ -22,4 +22,10 @@ private:
 	VECTOR3 targetPos;
 	bool isLeader;
 	float attackCounter;
+
+	float moveSpeed;
+	const float LeaderMoveSpeed = 10.0f;
+	const float NormalMoveSpeed = 6.0f;
+
+	float pointRange;
 };

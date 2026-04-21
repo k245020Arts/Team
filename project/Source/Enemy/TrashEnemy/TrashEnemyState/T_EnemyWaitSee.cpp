@@ -2,6 +2,7 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
+#include "../../../Common/Random.h"
 
 T_EnemyWaitSee::T_EnemyWaitSee()
 {
@@ -10,6 +11,10 @@ T_EnemyWaitSee::T_EnemyWaitSee()
 	attackCounter = 0.0f;
 	targetPos = VZero;
 	isLeader = false;
+
+	moveSpeed = 0;
+
+	pointRange = 0.0f;
 }
 
 T_EnemyWaitSee::~T_EnemyWaitSee()
@@ -21,9 +26,9 @@ void T_EnemyWaitSee::Update()
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 	enemy->LookTarget(enemy->enemyBaseComponent.playerObj->GetTransform()->position);
 
-	if (!isLeader)
+	/*if (!isLeader)
 		NormalMove(enemy);
-	else
+	else*/
 		ReaderMove(enemy);
 }
 
@@ -32,13 +37,18 @@ void T_EnemyWaitSee::Start()
 	EnemyStateBase::Start();
 	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 	
+	targetPos = enemy->TargetPoint();
+
 	switch (enemy->enemyType)
 	{
 	case enemy->EnemyType::RANGED:
-		
+		moveSpeed = NormalMoveSpeed;
+		pointRange = 400 + 200 * Random::GetReal();
 		break;
 	case enemy->EnemyType::RANGED_LEADER:
-		targetPos = enemy->TargetPoint();
+		pointRange = 400;
+		/*targetPos = enemy->TargetPoint();*/
+		moveSpeed = LeaderMoveSpeed;
 		isLeader = true;
 		break;
 	default:
@@ -52,15 +62,15 @@ void T_EnemyWaitSee::Finish()
 
 void T_EnemyWaitSee::ReaderMove(TrashEnemy* _enemy)
 {
-	float speed = 10.0f;
+	//float speed = 10.0f;
 	targetPos = _enemy->TargetPoint();
 	const VECTOR3 enePos = _enemy->GetPos();
 
-	if (VSize(targetPos - enePos) < 400.0f)
+	if (VSize(targetPos - enePos) < pointRange)
 		return;
 
 	VECTOR3 dir = VNorm(targetPos - enePos);
-	_enemy->GetEnemyObj()->GetTransform()->position+= dir * speed;
+	_enemy->GetEnemyObj()->GetTransform()->position+= dir * moveSpeed;
 
 }
 
