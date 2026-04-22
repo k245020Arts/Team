@@ -43,6 +43,9 @@ public:
 		bool playerHit;
 		float playerHitCollRadius;
 		float playerHitJustAvoidCollRadius;
+		bool capsule;
+		VECTOR3 capselBackPos;
+		VECTOR3 capselFrontPos;
 
 		//地面についた後にプレイヤーに当たり判定がつくか
 		bool playerGroundHit;
@@ -259,6 +262,7 @@ public:
 
 			// プレイヤー追従イベント
 			playerAloowMove = false;
+			baseFirstSpeed = 0.0f;
 			baseSpeed = 0.0f;
 			playerNearStop = false;
 			playerNearAloowStop = false;
@@ -359,6 +363,7 @@ public:
 		//プレイヤー追従イベント
 		bool playerAloowMove;
 		float baseSpeed;
+		float baseFirstSpeed;
 		bool playerNearStop;
 		bool playerNearAloowStop;
 		bool addVelocity;
@@ -521,6 +526,7 @@ private:
 	bool rushSound;
 	bool firstOnes;
 	bool secondOnes;
+	bool firstMove;
 
 	SphereCollider* rockColl;
 
@@ -971,6 +977,7 @@ inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
 	{
 		j["playerAloowMove"] = p.playerAloowMove;
 		j["baseSpeed"] = p.baseSpeed;
+		j["baseFirstSpeed"] = p.baseFirstSpeed;
 		j["playerNearStop"] = p.playerNearStop;
 		j["playerNearAloowStop"] = p.playerNearAloowStop;
 		j["addVelocity"] = p.addVelocity;
@@ -1142,6 +1149,7 @@ inline void from_json(const JSON& j, BossAttackBase::BossAttackParam& p)
 		if (p.playerAloowMove)
 		{
 			if (j.contains("baseSpeed")) j.at("baseSpeed").get_to(p.baseSpeed);
+			if (j.contains("baseFirstSpeed")) j.at("baseFirstSpeed").get_to(p.baseFirstSpeed);
 			if (j.contains("playerNearStop")) j.at("playerNearStop").get_to(p.playerNearStop);
 			if (j.contains("playerNearAloowStop")) j.at("playerNearAloowStop").get_to(p.playerNearAloowStop);
 			if (j.contains("addVelocity")) j.at("addVelocity").get_to(p.addVelocity);

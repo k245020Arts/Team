@@ -11,6 +11,7 @@
 #include "DountCollider.h"
 #include "AABBCollider.h"
 #include "../Shadow/Shadow.h"
+#include "CapsuleCollider.h"
 
 static int plus = 0;
 
@@ -19,11 +20,12 @@ CollsionManager::CollsionManager()
 	using namespace Function;
 	using namespace CollsionInformation;
 	//当たり判定でどの形同士ならこの関数にいれるという登録
-	collsionKind[EnumTag(SPHERE ,SPHERE,SHAPE_MAX)] = &CollsionManager::CollsionSphereToSphere;
-	collsionKind[EnumTag(SPHERE ,MODEL,SHAPE_MAX)]	= &CollsionManager::CollsionSphereToModel;
-	collsionKind[EnumTag(SPHERE, DONUT,SHAPE_MAX)]	= &CollsionManager::CollsionSphereToDount;
-	collsionKind[EnumTag(MODEL ,RAY,SHAPE_MAX)]		= &CollsionManager::CollsionModelToRay;
-	collsionKind[EnumTag(RAY ,AABB,SHAPE_MAX)]		= &CollsionManager::CollsionAABBToRay;
+	collsionKind[EnumTag(SPHERE ,SPHERE,SHAPE_MAX)]			= &CollsionManager::CollsionSphereToSphere;
+	collsionKind[EnumTag(SPHERE ,MODEL,SHAPE_MAX)]			= &CollsionManager::CollsionSphereToModel;
+	collsionKind[EnumTag(SPHERE, DONUT,SHAPE_MAX)]			= &CollsionManager::CollsionSphereToDount;
+	collsionKind[EnumTag(MODEL ,RAY,SHAPE_MAX)]				= &CollsionManager::CollsionModelToRay;
+	collsionKind[EnumTag(RAY ,AABB,SHAPE_MAX)]				= &CollsionManager::CollsionAABBToRay;
+	collsionKind[EnumTag(SPHERE, CAPSULE,SHAPE_MAX)]		= &CollsionManager::CollsionSphereToCapsule;
 	collList.clear();
 
 	event = new CollsionEvent();
@@ -287,3 +289,16 @@ bool CollsionManager::CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, 
 
 	return true;
 }
+
+//bool CollsionManager::CollsionSphereToCapsule(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos)
+//{
+//	Transform* modelTransform = col1->GetTransform();
+//	Transform* capsuleStartTransform = col2->GetTransform();
+//	Transform* capsuleTransformEnd = dynamic_cast<CapsuleCollider*>(col2)->CapselBackPosTransform();
+//
+//	VECTOR3 startPos = capsuleStartTransform->WorldTransform().position;
+//	VECTOR3 endPos = capsuleTransformEnd->WorldTransform().position;
+//
+//	auto result = MV1CollCheck_Capsule(dynamic_cast<ModelCollider*>(col1)->GetModel(), -1, startPos, endPos);
+//	return false;
+//}

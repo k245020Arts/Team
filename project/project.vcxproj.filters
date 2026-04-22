@@ -551,6 +551,9 @@
     <ClCompile Include="Source\Enemy\Boss\BossCreater.cpp">
       <Filter>PlayScene\Enemy\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Component\Collider\CapsuleCollider.cpp">
+      <Filter>Component\Collider\Capsule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1170,6 +1173,9 @@
     <ClInclude Include="Source\Enemy\Boss\BossCreater.h">
       <Filter>PlayScene\Enemy\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\Collider\CapsuleCollider.h">
+      <Filter>Component\Collider\Capsule</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1381,6 +1387,9 @@
     </Filter>
     <Filter Include="Common\FileSystemUtils">
       <UniqueIdentifier>{493f6fb2-12a0-4be1-899b-325debdd4801}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Collider\Capsule">
+      <UniqueIdentifier>{b031a996-fc87-4da8-921b-b486cd05b250}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

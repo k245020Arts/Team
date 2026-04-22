@@ -14,6 +14,7 @@ namespace CollsionInformation {
 		RAY,
 		AABB,
 		DONUT,
+		CAPSULE,
 		SHAPE_MAX,
 	};
 	//“–‚½‚è”»’è‚ÌŽí—Þ

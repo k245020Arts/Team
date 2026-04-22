@@ -443,6 +443,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		if (param.frontMove)
 		{
 			ImGui::DragFloat("MoveSpeed##Move", &param.baseSpeed, 0.1f);
+			ImGui::DragFloat("BaseFirstSpeed##Follow", &param.baseFirstSpeed, 0.1f);
 			ImGui::DragFloat("StartTime##Move", &param.moveStartTime, 0.01f);
 			ImGui::DragFloat("EndTime##Move", &param.moveFinishTime, 0.01f);
 			ImGui::Checkbox("AddVelocity##Move", &param.addVelocity);
@@ -459,6 +460,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		if (param.playerAloowMove)
 		{
 			ImGui::DragFloat("BaseSpeed##Follow", &param.baseSpeed, 0.1f);
+			ImGui::DragFloat("BaseFirstSpeed##Follow", &param.baseFirstSpeed, 0.1f);
 			ImGui::Checkbox("NearBossSpeedStop", &param.playerNearStop);
 			ImGui::Checkbox("AllowPlayerStop", &param.playerNearAloowStop);
 			ImGui::Checkbox("AddVelocity##Follow", &param.addVelocity);

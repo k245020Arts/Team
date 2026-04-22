@@ -52,7 +52,7 @@
       "id": "BossAttack6",
       "maxAction": 1,
       "priority": 1,
-      "weight": 300
+      "weight": 20
     }
   }
 }

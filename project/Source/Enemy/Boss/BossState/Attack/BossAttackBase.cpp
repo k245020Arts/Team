@@ -41,6 +41,7 @@ BossAttackBase::BossAttackBase()
 	rushSound = false;
 	firstOnes = false;
 	secondOnes = false;
+	firstMove = false;
 
 	rockColl = nullptr;
 	rushAttackCount = 0.0f;
@@ -113,6 +114,7 @@ void BossAttackBase::BossStart()
 	rushSound = false;
 	firstOnes = false;
 	secondOnes = false;
+	firstMove = true;
 
 	rockColl = nullptr;
 	boss->threat = false;
@@ -396,6 +398,13 @@ void BossAttackBase::MoveEvent()
 	float animFrame = boss->enemyBaseComponent.anim->GetCurrentFrame();
 	if (attackParam.moveStartTime <= animFrame && attackParam.moveFinishTime >= animFrame) {
 		if (attackParam.playerAloowMove) {
+			if (firstMove) {
+				VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
+				normal = dis.Normalize();
+				boss->enemyBaseComponent.physics->AddVelocity(normal * attackParam.baseFirstSpeed, false);
+				firstMove = false;
+				return;//Å‰‚ÌˆÚ“®‚ÌŽž‚Í•Ô‚·
+			}
 			if (aloowStop) {
 				VECTOR3 dis = boss->bossTransform->Forward() * 1.0f;
 				normal = dis.Normalize();
@@ -439,6 +448,13 @@ void BossAttackBase::MoveEvent()
 			LookEvent();
 		}
 		if (attackParam.frontMove) {
+			if (firstMove) {
+				VECTOR3 dis = boss->bossTransform->Forward() * 1.0f;
+				normal = dis.Normalize();
+				boss->enemyBaseComponent.physics->AddVelocity(normal * attackParam.baseFirstSpeed, false);
+				firstMove = false;
+				return;//Å‰‚ÌˆÚ“®‚ÌŽž‚Í•Ô‚·
+			}
 			VECTOR3 dis = boss->bossTransform->Forward() * 1.0f;
 			normal = dis.Normalize();
 			normal.y = 0.0f;

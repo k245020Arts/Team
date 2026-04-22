@@ -39,5 +39,6 @@ private:
 	bool CollsionSphereToModel(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos);
 	bool CollsionSphereToDount(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos);
 	bool CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos);
+	bool CollsionSphereToCapsule(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos);
 	CollsionEvent* event;
 };
