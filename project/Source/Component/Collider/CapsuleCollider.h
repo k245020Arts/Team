@@ -21,8 +21,8 @@ public:
 	/// <param name="_transform2">ê¸ÇÃññí[</param>
 	void CapsuleSet(const CollsionInfo& _info, const Transform& _backTransform, const Transform& _frontTransform,float _sphere);
 	void CapsuleSet(const CollsionInfo& _info, const Transform& _backTransform, const Transform& _frontTransform, float _sphere, std::string _tag);
-	Transform* CapselBackPosTransform() { return capsuleFrontTransform; }const
-	float GetRadius() { return radius; }const
+	Transform* CapselBackPosTransform() { return capsuleFrontTransform; }
+	float GetRadius() { return radius; }
 
 private:
 	Transform* capsuleFrontTransform;

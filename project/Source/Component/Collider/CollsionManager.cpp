@@ -290,15 +290,37 @@ bool CollsionManager::CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, 
 	return true;
 }
 
-//bool CollsionManager::CollsionSphereToCapsule(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos)
-//{
-//	Transform* modelTransform = col1->GetTransform();
-//	Transform* capsuleStartTransform = col2->GetTransform();
-//	Transform* capsuleTransformEnd = dynamic_cast<CapsuleCollider*>(col2)->CapselBackPosTransform();
-//
-//	VECTOR3 startPos = capsuleStartTransform->WorldTransform().position;
-//	VECTOR3 endPos = capsuleTransformEnd->WorldTransform().position;
-//
-//	auto result = MV1CollCheck_Capsule(dynamic_cast<ModelCollider*>(col1)->GetModel(), -1, startPos, endPos);
-//	return false;
-//}
+VECTOR3 ClosestPointOnSegment(VECTOR3& p, VECTOR3& a, VECTOR3& b)
+{
+	VECTOR3 ab = b - a;
+	float t = VDot(p - a, ab) / ab.SquareSize();
+
+	// 0～1にクランプ（線分内に収める）
+	t = max(0.0f, min(1.0f, t));
+
+	VECTOR3 dist = ab * t;
+
+	return a + dist;
+}
+
+bool CollsionManager::CollsionSphereToCapsule(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos)
+{
+	Transform* sphereTransform = col1->GetTransform();
+	Transform* capsuleStartTransform = col2->GetTransform();
+	Transform* capsuleTransformEnd = dynamic_cast<CapsuleCollider*>(col2)->CapselBackPosTransform();
+
+	VECTOR3 startPos = capsuleStartTransform->WorldTransform().position;
+	VECTOR3 endPos = capsuleTransformEnd->WorldTransform().position;
+	float capselRadous = dynamic_cast<CapsuleCollider*>(col2)->GetRadius();
+	VECTOR3 spherePosition = sphereTransform->WorldTransform().position;
+
+	//円の中心点からカプセルの中の一番近い点の算出
+	VECTOR3 closest = ClosestPointOnSegment(spherePosition, startPos, endPos);
+
+	float distSq = VSquareSize(sphereTransform->WorldTransform().position - closest);
+	float r = sphereTransform->WorldTransform().scale.x + capselRadous;
+
+	bool result = distSq <= r * r;
+
+	return result;
+}
