@@ -43,6 +43,9 @@ BossAttackBase::BossAttackBase()
 	secondOnes = false;
 
 	rockColl = nullptr;
+	rushAttackCount = 0.0f;
+	throwObjectAppearTime = 0.0f;
+	throwObjectNumNow = 0;
 }
 
 BossAttackBase::~BossAttackBase()
@@ -541,7 +544,7 @@ void BossAttackBase::ThrowObjectsEvent()
 		//投擲物が登場するタイミング
 		if (animFrame >= attackParam.throwObjectApperaTime) {
 			if (!rockGet) {
-				boss->rockManager->CreateThrowObject(attackParam.throwAttackData, 0.0f, 0.0f, 0.0f);
+				boss->rockManager->CreateThrowObject(attackParam.throwAttackData, 0, 0, 0.0f);
 				rockGet = true;
 			}
 		}

@@ -72,6 +72,7 @@
           "z": 0.0
         },
         "armFrameNum": 15,
+        "armSwordHand": false,
         "armThrow": true,
         "baseFirction": {
           "x": 0.0,
@@ -152,7 +153,7 @@
         "throwFallGravity": 0.0,
         "throwFirstSpeed": 0.0,
         "throwHeight": 0.0,
-        "throwObjectID": "BossShot",
+        "throwObjectID": "BossAttackRock1",
         "throwSpeed": 0.0,
         "throwToFall": false,
         "throwToFallToPlayer": false,

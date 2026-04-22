@@ -64,7 +64,7 @@
     "playerBaseNear": 2000.0,
     "playerNearAloowStop": true,
     "playerNearStop": false,
-    "rushAfterAnimID": "B_SATTACK2_STOP",
+    "rushAfterAnimID": "2000_SATTACK2_STOP",
     "rushAfterSpeed": 5000.0,
     "rushColl": true,
     "rushMove": true,

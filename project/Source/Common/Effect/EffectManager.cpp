@@ -92,7 +92,7 @@ void EffectManager::Draw()
 
 BaseObject* EffectManager::CreateEffekseer(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D)
 {
-	Object3D* obj = DEBUG_NEW Object3D();
+	Object3D* obj = new Object3D();
 	obj->Init(_transform.position, _transform.rotation, _transform.scale, std::to_string(_id));
 	EffectBase* base =  obj->Component()->AddComponent<EffectBase>();
 	base->EffectInit(_transform,_parent,_id,_time,effect3D);

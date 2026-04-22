@@ -19,7 +19,7 @@ namespace Easing {
     /// </summary>
     template<typename T>
     T inline Lerp(T a, T b, float t) {
-        return a + (b - a) * t;
+        return static_cast<T>(a + (b - a) * t);
     }
     /// <summary>
     /// 徐々に加速するLerp
@@ -27,7 +27,7 @@ namespace Easing {
     template<typename T>
     T inline EaseIn(T a, T b, float t) {
         t = t * t;
-        return Lerp<T>(a,b,t);
+        return static_cast<T>(Lerp<T>(a,b,t));
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ namespace Easing {
     template<typename T>
     T inline EaseOut(T a, T b, float t) {
         t = 1 - (1 - t) * (1 - t);
-        return Lerp<T>(a, b, t);
+        return static_cast<T>(Lerp<T>(a, b, t));
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ namespace Easing {
         else {
             t = 1 - ((t - 1) * (t - 1) * 2);
         }
-        return Lerp<T>(a, b, t);
+        return static_cast<T>(Lerp<T>(a, b, t));
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ namespace Easing {
     template<typename T>
     T inline SmoothStep(T a, T b, float t) {
         t = t * t * (3 - 2 * t);
-        return Lerp<T>(a, b, t);
+        return static_cast<T>(Lerp<T>(a, b, t));
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ namespace Easing {
     template<typename T>
     T inline EaseInExpo(T a, T b, float t) {
         t = powf(2, 10 * t - 10);
-        return Lerp<T>(a, b, t);
+        return static_cast<T>(Lerp<T>(a, b, t));
     }
 
 
@@ -83,7 +83,7 @@ namespace Easing {
         const float c3 = c1 + 1.0f;
 
         t = 1 + c3 * powf(t - 1, 3) + c1 * powf(t - 1, 2);
-        return Lerp<T>(a, b, t);
+        return static_cast<T>(Lerp<T>(a, b, t));
     }
     /// <summary>
     /// 弾むような振動で終了するイージング (Ease Out Elastic)
@@ -96,7 +96,7 @@ namespace Easing {
         if (t == 1.0f) return b;
 
         float easedT = powf(2.0f, -10.0f * t) * sinf((t * 10.0f - 0.75f) * c4) + 1.0f;
-        return Lerp<T>(a, b, easedT);
+        return static_cast<T>(Lerp<T>(a, b, easedT));
     }
     /// <summary>
     /// 弾むような振動で開始するイージング (Ease In Elastic)
@@ -111,7 +111,7 @@ namespace Easing {
             return b;
 
         float eased = -powf(2.0f, 10.0f * t - 10.0f) * sinf((t * 10.0f - 10.75f) * c4);
-        return Lerp<T>(a, b, eased);
+        return static_cast<T>(Lerp<T>(a, b, eased));
     }
     /// <summary>
     /// 軽く戻しを伴いながら加速して開始するイージング (Ease In Back)
@@ -123,7 +123,7 @@ namespace Easing {
         const float c3 = c1 + 1;
 
         t = c3 * t * t * t - c1 * t * t;
-        return Lerp<T>(a, b, t);
+        return static_cast<T>(Lerp<T>(a, b, t));
 
     }
     /// <summary>
@@ -134,7 +134,7 @@ namespace Easing {
     T inline SinCube(T a, T b, float t) {
 
         t = sinf(t * DX_PI_F);
-        return Lerp<T>(a, b, t);
+        return static_cast<T>(Lerp<T>(a, b, t));
 
     }
 
@@ -143,7 +143,7 @@ namespace Easing {
     T inline Sin90Cube(T a, T b, float t) {
 
         t = sinf(t * DX_PI_F / 2);
-        return Lerp<T>(a, b, t);
+        return static_cast<T>(Lerp<T>(a, b, t));
 
     }
     /// <summary>
@@ -161,11 +161,11 @@ namespace Easing {
         //カウンターが0より下になったらminの値を返す
         if (*_counter <= 0.0f) {
             float rate = *_counter / _maxTime;
-            return _func(min, max, rate);
+            return static_cast<T>(_func(min, max, rate));
         }
         *_counter = max(*_counter - Time::DeltaTimeRate(), 0.0f);
         float rate = *_counter / _maxTime;
-        return _func(min, max, rate);
+        return static_cast<T>(_func(min, max, rate));
     }
 
 }

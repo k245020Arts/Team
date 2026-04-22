@@ -203,6 +203,8 @@ private:
 
 	BossParam bossParam;
 	float defense;
+	int bossID;
+	std::string bossFileName;
 };
 
 // to_json

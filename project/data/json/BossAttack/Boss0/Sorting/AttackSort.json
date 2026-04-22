@@ -72,15 +72,6 @@
       "priority": 10,
       "weight": 10
     },
-    "BossNormalAttack8": {
-      "addWeight": 0,
-      "attackState": true,
-      "distance": 0.0,
-      "id": "BossNormalAttack8",
-      "maxAction": 1,
-      "priority": 50,
-      "weight": 30
-    },
     "BossNormalAttack9": {
       "addWeight": 0,
       "attackState": true,

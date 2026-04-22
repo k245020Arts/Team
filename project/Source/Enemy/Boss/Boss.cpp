@@ -220,7 +220,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 
 	std::string charaID = "2";
 
-	int num = stageData.bossID;
+	bossID = stageData.bossID;
 
 	//enemyBaseComponent.boss = this;
 	enemyBaseComponent.anim = obj->Component()->GetComponent<Animator>();
@@ -246,7 +246,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	enemyBaseComponent.state->CreateState<BossRun>("BossRun", StateID::BOSS_RUN_S);
 	enemyBaseComponent.state->CreateState<BossCoolTime>("BossCoolTime", StateID::BOSS_COOL_TIME_S);
 	std::shared_ptr<AttackSorting> attackSorting =  enemyBaseComponent.state->CreateState<AttackSorting>("AttackSorting", StateID::ATTACK_SORTING_S);
-	std::string folderName = "Boss" + std::to_string(num);
+	std::string folderName = "Boss" + std::to_string(bossID);
 	attackSorting->Load(folderName,this);
 
 	enemyBaseComponent.state->CreateState<BossWalk>("BossWalk", StateID::BOSS_WALK);
@@ -275,10 +275,10 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	
 	std::ostringstream oss;
 	// 3桁、空きは'0'で埋める
-	oss << std::setfill('0') << std::setw(3) << num;
-	std::string typeID = oss.str();
+	oss << std::setfill('0') << std::setw(3) << bossID;
+	bossFileName = oss.str();
 
-	enemyBaseComponent.anim->AnimDataLoad(charaID, typeID);
+	enemyBaseComponent.anim->AnimDataLoad(charaID, bossFileName);
 	//enemyBaseComponent.anim->AnimDataLoad("BossAnimData");
 
 	// 初期ステート
@@ -298,7 +298,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 		}
 	}
 
-	bossAttackDataSerializer =  std::make_unique<BossAttackDataSerializer>(attackSorting,this,"Boss1");
+	bossAttackDataSerializer =  std::make_unique<BossAttackDataSerializer>(attackSorting,this, "Boss" + std::to_string(bossID));
 	bossAttackDataSerializer->SetAnim(enemyBaseComponent.anim);
 	bossAttackDataSerializer->SetThrowManager(rockManager);
 	bossParam = _param;

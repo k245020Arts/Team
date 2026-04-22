@@ -605,7 +605,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 	CopyParam(_selectID);
 
 	//========================
-	// ■ 保存
+	//保存
 	//========================
 	if (ImGui::Button("ParamSave")) {
 		AttackSave(_selectID);
