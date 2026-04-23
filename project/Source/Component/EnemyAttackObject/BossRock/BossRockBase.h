@@ -10,6 +10,7 @@ class BossRockManager;
 class DountCollider;
 class SoundManager;
 class EffectManager;
+class CapsuleCollider;
 
 class BossRockBase : public EnemyAttackObject
 {
@@ -35,17 +36,21 @@ public:
 
 	void RockBossHit();
 
-	void Start(const BossAttackBase::ThrowObjectAttackData& _attack);
+	void Start(const BossAttackBase::ThrowObjectAttackData& _attack, MATRIX* _handMatrix);
 	void DropObject();
 	void ThrowRockStart(BaseObject* _player);
-	const BossAttackBase::ThrowObjectAttackData& GetThrowObjectsData() { return attackData; }
+	const BossAttackBase::ThrowObjectAttackData& GetThrowObjectsData()const { return attackData; }
 
 	void SetPreInfo(const VECTOR3& _pos);
+	void SetThrowParam(BossAttackBase::ThrowObjectAttackData _data) { attackData = _data; }
+	bool GetThrowObjectStart() { return start; }
+	void CapsuleColliderPosAddStart();
 
 protected:
 
 	RayCollider* randColl;
 	SphereCollider* playerHitColl;
+	CapsuleCollider* playerHitCapsuleColl;
 	SphereCollider* bossHitColl;
 	SphereCollider* playerAttackHitColl;
 	SphereCollider* bossRushHitColl;
@@ -54,6 +59,7 @@ protected:
 	RayCollider* uiColl;
 	ModelCollider* pushColl;
 	SphereCollider* justAvoidCollider;
+	CapsuleCollider* justAvoidCapselCollider;
 
 	Physics* physics;
 	BossRockManager* rockManager;
@@ -90,4 +96,11 @@ protected:
 	float flyCounter;
 	bool playerAttackHit;
 	bool velocityAdd;
+	MATRIX* handMatrix;
+	bool start;
+	VECTOR3 capsuleEndPos;
+	VECTOR3 capsuleJustAvoidEndPos;
+	bool colliderAddStart;
+	float alotHitCounter;
+	void AlotCollsionSet();
 };

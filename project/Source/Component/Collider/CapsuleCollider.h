@@ -19,12 +19,19 @@ public:
 	/// <param name="_info">ìñÇΩÇËîªíËÇÃèÓïÒ</param>
 	/// <param name="_transform">ê¸ÇÃêÊí[</param>
 	/// <param name="_transform2">ê¸ÇÃññí[</param>
-	void CapsuleSet(const CollsionInfo& _info, const Transform& _backTransform, const Transform& _frontTransform,float _sphere);
-	void CapsuleSet(const CollsionInfo& _info, const Transform& _backTransform, const Transform& _frontTransform, float _sphere, std::string _tag);
-	Transform* CapselBackPosTransform() { return capsuleFrontTransform; }
+	void CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform,float _sphere,bool _mustMatrix,MATRIX* _matrix);
+	void CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform, float _sphere, bool _mustMatrix, MATRIX* _matrix, std::string _tag);
+	Transform* CapselEndTransform() { return capselEndTransform; }
 	float GetRadius() { return radius; }
+	bool GetMultMatrix() { return matrixMult; }
+	void SetCapsuleEndPos(const VECTOR3 _position) { baseEndTransform.position = _position; }
+	void AddCapsuleEndPos(const VECTOR3 _add) { baseEndTransform.position += _add; }
 
 private:
-	Transform* capsuleFrontTransform;
+	Transform* capselEndTransform;
 	float radius;
+	bool matrixMult;
+	Transform baseStartTransform;
+	Transform baseEndTransform;
+	MATRIX* matrix;
 };

@@ -127,3 +127,34 @@ void Transform::RemoveParent(Transform* transform)
 	//transform->SetParent();
 	parent = nullptr;
 }
+
+Transform Transform::MatrixToTransform(const MATRIX& mat)
+{
+	Transform t;
+
+	// --- Position ---
+	t.position = VGet(mat.m[3][0], mat.m[3][1], mat.m[3][2]);
+
+	// --- Scale ---
+	t.scale.x = VSize(VGet(mat.m[0][0], mat.m[0][1], mat.m[0][2]));
+	t.scale.y = VSize(VGet(mat.m[1][0], mat.m[1][1], mat.m[1][2]));
+	t.scale.z = VSize(VGet(mat.m[2][0], mat.m[2][1], mat.m[2][2]));
+
+	VECTOR rot;
+
+	rot.y = asinf(-mat.m[2][0]);
+
+	if (cosf(rot.y) > 0.0001f) {
+		rot.x = atan2f(mat.m[2][1], mat.m[2][2]);
+		rot.z = atan2f(mat.m[1][0], mat.m[0][0]);
+	}
+	else {
+		rot.x = atan2f(-mat.m[1][2], mat.m[1][1]);
+		rot.z = 0.0f;
+	}
+	
+	position = t.position;
+	scale = t.scale;
+	rotation = t.rotation;
+	return t;
+}

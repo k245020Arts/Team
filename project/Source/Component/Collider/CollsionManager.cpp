@@ -305,13 +305,24 @@ VECTOR3 ClosestPointOnSegment(VECTOR3& p, VECTOR3& a, VECTOR3& b)
 
 bool CollsionManager::CollsionSphereToCapsule(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos)
 {
+	CapsuleCollider* capsule = dynamic_cast<CapsuleCollider*>(col2);
 	Transform* sphereTransform = col1->GetTransform();
 	Transform* capsuleStartTransform = col2->GetTransform();
-	Transform* capsuleTransformEnd = dynamic_cast<CapsuleCollider*>(col2)->CapselBackPosTransform();
+	Transform* capsuleTransformEnd = capsule->CapselEndTransform();
 
-	VECTOR3 startPos = capsuleStartTransform->WorldTransform().position;
-	VECTOR3 endPos = capsuleTransformEnd->WorldTransform().position;
-	float capselRadous = dynamic_cast<CapsuleCollider*>(col2)->GetRadius();
+	VECTOR3 startPos = VZero;
+	VECTOR3 endPos = VZero;
+	if (capsule->GetMultMatrix()) {
+		startPos = capsuleStartTransform->position;
+		endPos = capsuleTransformEnd->position;
+	}
+	else {
+		startPos = capsuleStartTransform->WorldTransform().position;
+		endPos = capsuleTransformEnd->WorldTransform().position;
+	}
+	
+	
+	float capselRadous = capsule->GetRadius();
 	VECTOR3 spherePosition = sphereTransform->WorldTransform().position;
 
 	//円の中心点からカプセルの中の一番近い点の算出

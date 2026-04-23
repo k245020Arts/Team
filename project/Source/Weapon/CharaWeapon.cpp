@@ -46,6 +46,8 @@ void CharaWeapon::Draw()
 		// Œ•‚É“K—p
 		MV1SetMatrix(weaponHandle, result);
 		MV1DrawModel(weaponHandle);
+		//SetTransformToWorld(&result);
+		//transform->MatrixToTransform(result);
 	}
 }
 

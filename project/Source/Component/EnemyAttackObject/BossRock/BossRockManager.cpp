@@ -70,15 +70,27 @@ void BossRockManager::Draw()
 
 }
 
-void BossRockManager::CreateThrowObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle)
+void BossRockManager::CreateThrowEmptyObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data)
 {
 	for (auto data : _data) {
 		Object3D* throwObject = new Object3D();
-		SetRockComponent(throwObject, data.baseGravity, data.baseFirction, data);
-		if (data.throwToFallToPlayer || data.throwToFall) {
+		throwObject->Init(Transform(), "bossThrowObject");
+		BossRockBase* bossRock = throwObject->Component()->AddComponent<BossRockBase>();
+		bossRock->SetThrowParam(data);
+		boss->obj->AddChild(throwObject, false);
+	}
+}
+
+void BossRockManager::AppearThrowObject(BossRockBase* _rock, int _index, int _total, float _rotateAngle)
+{
+	//for (auto data : _data) {
+		Object3D* throwObject = static_cast<Object3D*>(_rock->GetBaseObject());
+		BossAttackBase::ThrowObjectAttackData _data = _rock->GetThrowObjectsData();
+		SetRockComponent(throwObject, _data.baseGravity, _data.baseFirction, _data);
+		if (_data.throwToFallToPlayer || _data.throwToFall) {
 			VECTOR3 center = VZero;
 			VECTOR3 dir = VZero;
-			if (data.throwToFallToPlayer) {
+			if (_data.throwToFallToPlayer) {
 				auto playerObj = boss->enemyBaseComponent.playerObj;
 				VECTOR3 playerPos = playerObj->GetTransform()->position;
 
@@ -96,7 +108,7 @@ void BossRockManager::CreateThrowObject(const std::vector<BossAttackBase::ThrowO
 				center = Easing::Lerp(playerPos, futurePos, 0.9f);
 			}
 			else {
-				center = data.thorwStartPos;
+				center = _data.thorwStartPos;
 			}
 			dir.y = 0;
 			dir.Normalize();
@@ -116,10 +128,10 @@ void BossRockManager::CreateThrowObject(const std::vector<BossAttackBase::ThrowO
 			float wave = sinf(_index * 0.8f) * 350.0f;
 			float radius = 1000.0f + wave + Random::GetFloat(-200.0f, 200.0f);
 			VECTOR3 startPos = center + dir * radius;
-			if (data.randomHeight) {
+			if (_data.randomHeight) {
 				//VECTOR3 startPos = center + dir * radius;
 				//8000,12000
-				float offset = Random::GetFloat(data.minHeight, data.maxHeight);
+				float offset = Random::GetFloat(_data.minHeight, _data.maxHeight);
 				startPos.y = center.y + offset;
 			}
 
@@ -129,27 +141,27 @@ void BossRockManager::CreateThrowObject(const std::vector<BossAttackBase::ThrowO
 			throwObject->GetTransform()->position = startPos;
 			throwObject->GetTransform()->rotation = rotation;
 
-			VECTOR3 gravity = VECTOR3(0, data.throwFallGravity, 0);
-			if (data.randomSpeed) {
+			VECTOR3 gravity = VECTOR3(0, _data.throwFallGravity, 0);
+			if (_data.randomSpeed) {
 				//1500,3000
-				gravity.y = Random::GetFloat(data.minSpeed, data.maxSpeed);
+				gravity.y = Random::GetFloat(_data.minSpeed, _data.maxSpeed);
 				gravity.y *= -1.0f;
 			}
 
 			Physics* phy = throwObject->Component()->GetComponent<Physics>();
 			phy->SetGravity(gravity);
 		}
-		else if (data.freeDir) {
-			throwObject->GetTransform()->position = data.thorwStartPos;
+		else if (_data.freeDir) {
+			throwObject->GetTransform()->position = _data.thorwStartPos;
 		}
-		else if (data.armThrow) {
+		else if (_data.armThrow) {
 			Physics* phy = throwObject->Component()->GetComponent<Physics>();
 			phy->Start(VZero, VZero);
 		}
-		if (data.randomBlast) {
+		if (_data.randomBlast) {
 			bool doBlast = true;
 			//0.1
-			if (Random::GetFloat(0.0f, 1.0f) < data.randomBlastRate)
+			if (Random::GetFloat(0.0f, 1.0f) < _data.randomBlastRate)
 			{
 				doBlast = false;
 			}
@@ -162,9 +174,27 @@ void BossRockManager::CreateThrowObject(const std::vector<BossAttackBase::ThrowO
 			rockComp->SetCanBlast(true);
 		}*/
 		BossRockBase* rock = throwObject->Component()->GetComponent<BossRockBase>();
-		rock->Start(data);
-	}
+		CharaWeapon* chara = throwObject->Component()->GetComponent<CharaWeapon>();
+		MATRIX* matrix = nullptr;
+		if (chara != nullptr) {
+			matrix = chara->GetMatrixPtr();
+		}
+		
+		rock->Start(_data, matrix);
+	//}
 	
+}
+
+void BossRockManager::CreateThrowObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle)
+{
+	for (auto data : _data) {
+		Object3D* throwObject = new Object3D();
+		throwObject->Init(Transform(), "bossThrowObject");
+		BossRockBase* bossRock = throwObject->Component()->AddComponent<BossRockBase>();
+		bossRock->SetThrowParam(data);
+		boss->obj->AddChild(throwObject, false);
+		AppearThrowObject(bossRock, _index, _total, _rotateAngle);
+	}
 }
 
 VECTOR3 BossRockManager::GetPushCollSize(BossAttackBase::ThrowObjectAttackData _data)
@@ -364,10 +394,44 @@ void BossRockManager::ChangeJsonData(const BossThrowObjectData& _data,const std:
 	json.Save(fileName, root);
 }
 
+void BossRockManager::RockContorler(BossAttackBase::BossAttackParam _data, float _animNum)
+{
+	for (auto rock : rocks) {
+		BossAttackBase::ThrowObjectAttackData data = rock->GetThrowObjectsData();
+		//投擲物が登場するタイミング
+		if (_animNum >= data.throwObjectApperaTime) {
+			if (!rock->GetThrowObjectStart()) {
+				boss->rockManager->AppearThrowObject(rock, 0, 0, 0.0f);
+			}
+		}
+		//投げるの開始
+		if (data.throwStartTime <= _animNum) {
+			rock->ThrowRockStart(boss->enemyBaseComponent.playerObj);
+		}
+		
+		if (_animNum <= data.capsuleColliderAddStartThrowAnimFrame) {
+			if (!data.capsuleColliderAddStartThrow) {
+				rock->CapsuleColliderPosAddStart();
+			}
+		}
+	}
+}
+
+void BossRockManager::AttackFinishDelete()
+{
+	for (auto itr = rocks.begin(); itr != rocks.end();) {
+		BossAttackBase::ThrowObjectAttackData data = (*itr)->GetThrowObjectsData();
+		if (data.attackFinishDelete) {
+			(*itr)->GetBaseObject()->DestroyMe();
+		}
+		itr++;
+	}
+}
+
 void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity, const VECTOR3& _fir, const BossAttackBase::ThrowObjectAttackData& _data)
 {
-	_base->Init(Transform(),"bossThrowObject");
-	BossRockBase* bossRock = _base->Component()->AddComponent<BossRockBase>();
+	//_base->Init(Transform(),"bossThrowObject");
+	//BossRockBase* bossRock = _base->Component()->AddComponent<BossRockBase>();
 	
 	Physics* phy = _base->Component()->AddComponent<Physics>();
 	phy->Start(_gravity, _fir);
@@ -401,7 +465,7 @@ void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity,
 	shadow->Init(Transform(VECTOR3(0.0f, -20.0f, 0.0f), VZero, VECTOR3(_base->GetTransform()->scale.x + 4.0f, 0.1f, _base->GetTransform()->scale.z + 4.0f)), "BossShadow");
 	Shadow* s = shadow->Component()->AddComponent<Shadow>();
 	s->Start();*/
-	boss->obj->AddChild(_base, false);
+	//boss->obj->AddChild(_base, false);
 }
 
 void BossRockManager::LoadEffect(BossThrowObjectData& _data)

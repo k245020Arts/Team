@@ -563,10 +563,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		if (param.throwObject)
 		{
 			ImGui::Checkbox("ArmThrow", &param.armThrow);
-			ImGui::DragInt("ArmFrame", &param.armFrameNum, 1);
-
-			ImGui::DragFloat("StartTime", &param.throwStartTime, 0.01f);
-			ImGui::DragFloat("AppearTime", &param.throwObjectApperaTime, 0.01f);
+			
 
 			ImGui::DragInt("ThrowNum", &param.throwObjectNum, 1);
 			ImGui::DragFloat3("SpawnPos", &param.objectApperaPosition.x, 0.1f);
@@ -764,10 +761,27 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 
 		if (t.playerHit)
 		{
+			ImGui::Checkbox("PlayerNoHitNoReaction##PlayerHit_", &t.playerHitNoReaction);
 			ImGui::DragFloat("Radius##PlayerHit_", &t.playerHitCollRadius, 0.1f);
 			ImGui::DragFloat("JustAvoidRadius##PlayerHit_", &t.playerHitJustAvoidCollRadius, 0.1f);
+			ImGui::Checkbox("Capsule##PlayerHit_", &t.capsule);
+			ImGui::DragFloat3("CapsuleStartPos##PlayerHit_", &t.capselStartPos.x, 0.1f);
+			ImGui::DragFloat3("CapsuleEndPos##PlayerHit_", &t.capselEndPos.x, 0.1f);
+			ImGui::Checkbox("CapsuleColliderAdd##PlayerHit_", &t.capsuleColliderAdd);
+			ImGui::DragFloat3("CapsuleColliderAddPos##PlayerHit_", &t.causuleColliderAddPos.x, 0.1f);
+			ImGui::Checkbox("CapsuleColliderAddStartThrow##PlayerHit_", &t.capsuleColliderAddStartThrow);
+			ImGui::DragFloat("CapsuleColliderAddStartThrowAnimFrame##PlayerHit_", &t.capsuleColliderAddStartThrowAnimFrame, 0.1f);
 		}
 	}
+
+	if (ImGui::CollapsingHeader("AlotCollsion Hit"))
+	{
+		ImGui::Checkbox("Enable##alotCollsionHit", &t.alotCollsionHit);
+		if (t.alotCollsionHit) {
+			ImGui::DragFloat("alotHitColliderCreateCounter##alotCollsionHit", &t.alotHitColliderCreateCounter, 0.1f);
+		}
+	}
+
 
 	//------------------------------------
 	// ■ Ground Hit
@@ -889,6 +903,9 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		ImGui::Checkbox("ArmThrow##Throw_", &t.armThrow);
 		ImGui::Checkbox("armSwordHand##Throw_", &t.armSwordHand);
 		ImGui::DragInt("ArmFrame##Throw_", &t.armFrameNum, 1);
+
+		ImGui::DragFloat("StartTime##Throw_", &t.throwStartTime, 0.01f);
+		ImGui::DragFloat("AppearTime##Throw_", &t.throwObjectApperaTime, 0.01f);
 		ImGui::DragFloat3("ArmOffset##Throw_", &t.armAddPos.x, 0.1f);
 
 		ImGui::Checkbox("ToPlayer##Throw_", &t.throwToPlayer);
@@ -929,6 +946,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	{
 		ImGui::Checkbox("GroundDelete##Other_", &t.groundDelete);
 		ImGui::Checkbox("Drop##Other_", &t.playerAttackObjectDrop);
+		ImGui::Checkbox("attackFinishDelete##Other_", &t.attackFinishDelete);
 	}
 }
 
@@ -1132,9 +1150,6 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 			param.throwObject = src.throwObject;
 			param.throwAttackData = src.throwAttackData;
 			param.armThrow = src.armThrow;
-			param.armFrameNum = src.armFrameNum;
-			param.throwStartTime = src.throwStartTime;
-			param.throwObjectApperaTime = src.throwObjectApperaTime;
 			param.throwObjectNum = src.throwObjectNum;
 			param.objectApperaPosition = src.objectApperaPosition;
 			param.intervalTime = src.intervalTime;

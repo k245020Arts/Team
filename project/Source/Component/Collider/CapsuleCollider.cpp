@@ -7,38 +7,65 @@ CapsuleCollider::CapsuleCollider()
 	debugId = 35;
 	tag = Function::GetClassNameC<CapsuleCollider>();
 	SetTag(tag);
-	capsuleFrontTransform = nullptr;
+	capselEndTransform = nullptr;
+	matrixMult = false;
 }
 
 CapsuleCollider::~CapsuleCollider()
 {
-	delete capsuleFrontTransform;
+	if (capselEndTransform != nullptr) {
+		delete capselEndTransform;
+	}
+	if (matrix != nullptr) {
+		matrix = nullptr;
+	}
 }
 
 void CapsuleCollider::Update()
 {
+	if (matrixMult) {
+		collTransform->position = baseStartTransform.position * *matrix;
+		capselEndTransform->position = baseEndTransform.position * *matrix;
+	}
 }
 
 void CapsuleCollider::Draw()
 {
-	if (Debug::RayColliderDraw()) { //デバック表示モードがオフなら何もしない
-		DrawCapsule3D(collTransform->WorldTransform().position, capsuleFrontTransform->WorldTransform().position,radius,24, 0xff0000,0xff0000,true);
+	if (matrixMult) {
+		Transform startTransform = *collTransform;
+		Transform EndTransform = *capselEndTransform;
+		DrawCapsule3D(startTransform.position, EndTransform.position, radius, 24, 0xff0000, 0xff0000, false);
 	}
+	else {
+		Transform startTransform = collTransform->WorldTransform();
+		Transform EndTransform = capselEndTransform->WorldTransform();
+		DrawCapsule3D(startTransform.position, EndTransform.position, radius, 24, 0xff0000, 0xff0000, false);
+	}
+	
 }
 
 void CapsuleCollider::Start()
 {
 }
 
-void CapsuleCollider::CapsuleSet(const CollsionInfo& _info, const Transform& _backTransform, const Transform& _frontTransform, float _sphere)
+void CapsuleCollider::CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform, float _sphere, bool _mustMatrix, MATRIX* _matrix)
 {
-	CapsuleSet(_info, _backTransform, _frontTransform,_sphere, "");
+	CapsuleSet(_info, _endTransform, _startTransform,_sphere,_mustMatrix,_matrix, "");
 }
 
-void CapsuleCollider::CapsuleSet(const CollsionInfo& _info, const Transform& _backTransform, const Transform& _frontTransform, float _sphere, std::string _tag)
+void CapsuleCollider::CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform, float _sphere, bool _mustMatrix, MATRIX* _matrix, std::string _tag)
 {
-	ColliderBase::CollsionAdd(_info, _backTransform, _tag);
+	ColliderBase::CollsionAdd(_info, _startTransform, _tag);
 
-	capsuleFrontTransform = new Transform(capsuleFrontTransform);
-	capsuleFrontTransform->SetParent(_info.parentTransfrom);
+	capselEndTransform = new Transform(_endTransform);
+	capselEndTransform->SetParent(_info.parentTransfrom);
+	radius = _sphere;
+	matrixMult = _mustMatrix;
+	matrix = _matrix;
+	baseStartTransform = *GetTransform();
+	baseEndTransform = *capselEndTransform;
+
+	baseStartTransform.RemoveParent(_info.parentTransfrom);
+	baseEndTransform.RemoveParent(_info.parentTransfrom);
+
 }

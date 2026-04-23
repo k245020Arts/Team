@@ -2,7 +2,6 @@
   "BossAttack6": {
     "animID": "2001_Attack6",
     "animNum": 5,
-    "armFrameNum": 37,
     "armThrow": true,
     "attackBeforeAnimID": "",
     "attackCollTransform": {
@@ -113,13 +112,13 @@
         "throwToFall": false,
         "throwToFallToPlayer": false,
         "throwToPlayer": false,
+        "throwObjectApperaTime": 0.0,
+        "throwStartTime": 40.0,
         "upSpeed": 0.0
       }
     ],
     "throwObject": true,
-    "throwObjectApperaTime": 0.0,
     "throwObjectNum": 0,
-    "throwStartTime": 40.0,
     "useFlash": false,
     "voiceName": ""
   }

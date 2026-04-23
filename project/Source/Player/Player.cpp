@@ -724,7 +724,7 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 		{ CollsionInformation::BOSS_ROCK_ATTACK,{PlayerDamage(20.0f,StateID::PLAYER_DAMAGE_S,VECTOR3(0,0,-1000))} },
 		{ CollsionInformation::THROW_OBJECT_GROUND,{PlayerDamage(20.0f,StateID::PLAYER_DAMAGE_S,VECTOR3(0,0,-1000))} },
 		{ CollsionInformation::THROW_OBJECT_GROUND_ONE_HIT,{PlayerDamage(20.0f,StateID::PLAYER_DAMAGE_S,VECTOR3(0,0,-1000))} },
-		{ CollsionInformation::THROW_OBJECT_GROUND_NO_DAMAGE_REACTION,{PlayerDamage(0.1f,StateID::STATE_MAX,VECTOR3(0,0,0))} },
+		{ CollsionInformation::THROW_OBJECT_GROUND_NO_DAMAGE_REACTION,{PlayerDamage(2.0f,StateID::STATE_MAX,VECTOR3(0,0,0))} },
 
 	};
 

@@ -43,7 +43,7 @@
       "id": "BossAttack5",
       "maxAction": 1,
       "priority": 1,
-      "weight": 1
+      "weight": 100
     },
     "BossAttack6": {
       "addWeight": 0,

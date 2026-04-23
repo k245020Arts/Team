@@ -2,7 +2,6 @@
   "BossAttack5": {
     "animID": "2001_Attack5",
     "animNum": 4,
-    "armFrameNum": 37,
     "armThrow": true,
     "attackBeforeAnimID": "",
     "attackCollTransform": {
@@ -51,6 +50,9 @@
     },
     "justAvoidCollsionEndTime": 0.0,
     "justAvoidCollsionStartTime": 0.0,
+    "lookMaxCounter": 60.0,
+    "lookNum": 1,
+    "lookPlayer": true,
     "maxIntervalTime": 0.0,
     "minIntervalTime": 0.0,
     "objectApperaPosition": {
@@ -63,6 +65,17 @@
     "speedUpMotionSpeed": 0.0,
     "throwAttackData": [
       {
+        "Capsule": true,
+        "CapsuleEndPos": {
+          "x": 0.0,
+          "y": 200.0,
+          "z": 0.0
+        },
+        "CapsuleStartPos": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
         "armAddPos": {
           "x": 0.0,
           "y": 0.0,
@@ -71,12 +84,21 @@
         "armFrameNum": 37,
         "armSwordHand": true,
         "armThrow": true,
+        "attackFinishDelete": true,
         "baseFirction": {
           "x": 0.0,
           "y": 0.0,
           "z": 0.0
         },
         "baseGravity": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "capsuleColliderAdd": false,
+        "capsuleColliderAddStartThrow": false,
+        "capsuleColliderAddStartThrowAnimFrame": 0.0,
+        "causuleColliderAddPos": {
           "x": 0.0,
           "y": 0.0,
           "z": 0.0
@@ -89,7 +111,8 @@
         "freeDir": false,
         "playerHit": true,
         "playerHitCollRadius": 200.0,
-        "playerHitJustAvoidCollRadius": 300.0,
+        "playerHitJustAvoidCollRadius": 400.0,
+        "playerHitNoReaction": false,
         "randTime": 10.0,
         "thorwStartPos": {
           "x": 0.0,
@@ -105,8 +128,10 @@
         "throwFallGravity": 0.0,
         "throwFirstSpeed": 0.0,
         "throwHeight": 0.0,
+        "throwObjectApperaTime": 0.0,
         "throwObjectID": "BossTree",
         "throwSpeed": 0.0,
+        "throwStartTime": 150.0,
         "throwToFall": false,
         "throwToFallToPlayer": false,
         "throwToPlayer": false,
@@ -114,9 +139,7 @@
       }
     ],
     "throwObject": true,
-    "throwObjectApperaTime": 0.0,
     "throwObjectNum": 0,
-    "throwStartTime": 150.0,
     "useFlash": false,
     "voiceName": ""
   }

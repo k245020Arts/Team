@@ -64,6 +64,8 @@ public:
 	/// <param name="_model"></param>
 	void SetImage(int _model);
 
+	MATRIX* GetMatrixPtr() { return &matrix; }
+
 private:
 	BaseObject* chara;
 	Animator* anim;

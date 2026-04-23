@@ -75,6 +75,10 @@ public:
 	/// <param name="_matrix">âÒì]çsóÒ</param>
 	void SetRotationMatrix(const MATRIX& _matrix) { rotMatrix = _matrix; }
 
+	Transform MatrixToTransform(const MATRIX& mat);
+
+	void RemoveParent(Transform* transform);
+
 private:
 
 	MATRIX rotMatrix;
@@ -83,8 +87,6 @@ private:
 
 	Transform* parent;
 	std::list<Transform*> child;
-
-	void RemoveParent(Transform* transform);
 
 	void Child(Transform* _child){ child.emplace_back(_child); }
 };

@@ -2,7 +2,6 @@
   "BossNormalAttack9": {
     "animID": "2000_ATTACK9",
     "animNum": 12,
-    "armFrameNum": 15,
     "armThrow": true,
     "attackBeforeAnimID": "",
     "attackCollTransform": {
@@ -150,14 +149,14 @@
         "throwToFall": false,
         "throwToFallToPlayer": false,
         "throwToPlayer": false,
+        "throwObjectApperaTime": 31.586830139160156,
+        "throwStartTime": 78.0,
         "upSpeed": 0.0,
         "waveSpeed": 50.0
       }
     ],
     "throwObject": true,
-    "throwObjectApperaTime": 31.586830139160156,
     "throwObjectNum": 5,
-    "throwStartTime": 78.0,
     "useFlash": true,
     "voiceName": "E_AttackV"
   }

@@ -96,7 +96,7 @@ void BossAttackBase::BossStart()
 	else {
 		boss->enemyBaseComponent.anim->Play(attackParam.attackBeforeAnimID);
 	}
-
+	boss->rockManager->CreateThrowEmptyObject(attackParam.throwAttackData);
 	firstColl = true;
 	attackTime = boss->enemyBaseComponent.anim->EventFinishTime(attackParam.animID) - boss->enemyBaseComponent.anim->EventStartTime(attackParam.animID);
 	sound = true;
@@ -148,6 +148,7 @@ void BossAttackBase::BossFinish()
 		}
 	}
 	firstColl = false;
+	boss->rockManager->AttackFinishDelete();
 }
 
 
@@ -550,20 +551,7 @@ void BossAttackBase::ThrowObjectsEvent()
 	//腕で投げるなら
 	if (attackParam.armThrow) {
 		float animFrame = boss->enemyBaseComponent.anim->GetCurrentFrame();
-		//投げるの開始
-		if (attackParam.throwStartTime <= animFrame) {
-			if (!throwRock) {
-				boss->rockManager->ThrowStart();
-				throwRock = true;
-			}
-		}
-		//投擲物が登場するタイミング
-		if (animFrame >= attackParam.throwObjectApperaTime) {
-			if (!rockGet) {
-				boss->rockManager->CreateThrowObject(attackParam.throwAttackData, 0, 0, 0.0f);
-				rockGet = true;
-			}
-		}
+		boss->rockManager->RockContorler(attackParam, animFrame);
 	}
 	else {
 		throwObjectAppearTime -= Time::DeltaTimeRate();
@@ -632,7 +620,7 @@ bool BossAttackBase::CurrentAttackAnim()
 	return ID::GetID(attackParam.animID) == boss->enemyBaseComponent.anim->GetCurrentID();
 }
 
-void BossAttackBase::AttackFinish()
+void BossAttackBase::AttackFinishFrame()
 {
 	Boss* boss = GetBase<Boss>();
 	//攻撃のアニメーションじゃなかったらリターン
@@ -645,7 +633,6 @@ void BossAttackBase::AttackFinish()
 		boss->GetStateManager()->GetState<AttackSorting>()->AttackFinish();
 	}
 }
-
 
 void BossAttackBase::BossDushSound()
 {
@@ -697,7 +684,7 @@ void BossAttackBase::BossUpdate()
 	if (boss == nullptr) {
 		return;
 	}
-	AttackFinish();
+	AttackFinishFrame();
 	AttackSound();
 	BossAttackCollsion();
 	BossJustAvoidCollsion();

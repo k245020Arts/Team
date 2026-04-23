@@ -17,6 +17,9 @@ public:
 	void Update()override;
 	void Draw() override;
 
+	void CreateThrowEmptyObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data);
+
+	void AppearThrowObject(BossRockBase* _rock, int _index, int _total, float _rotateAngle);
 	void CreateThrowObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle);
 	VECTOR3 GetPushCollSize(BossAttackBase::ThrowObjectAttackData _data);
 
@@ -63,6 +66,9 @@ public:
 
 	void AddJsonData(BossThrowObjectData _data);
 	void ChangeJsonData(const BossThrowObjectData& _data, const std::string& _oldKey, const std::string& _newKey);
+
+	void RockContorler(BossAttackBase::BossAttackParam _data,float _animNum);
+	void AttackFinishDelete();
 
 private:
 

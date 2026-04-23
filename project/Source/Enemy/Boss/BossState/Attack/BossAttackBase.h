@@ -41,11 +41,19 @@ public:
 
 		//投擲物がプレイヤーに当たるか
 		bool playerHit;
+		bool playerHitNoReaction;
 		float playerHitCollRadius;
 		float playerHitJustAvoidCollRadius;
 		bool capsule;
-		VECTOR3 capselBackPos;
-		VECTOR3 capselFrontPos;
+		VECTOR3 capselEndPos;
+		VECTOR3 capselStartPos;
+		bool capsuleColliderAdd;
+		VECTOR3 causuleColliderAddPos;
+		bool capsuleColliderAddStartThrow;
+		float capsuleColliderAddStartThrowAnimFrame;
+		//多段階当たり判定
+		bool alotCollsionHit;
+		float alotHitColliderCreateCounter;
 
 		//地面についた後にプレイヤーに当たり判定がつくか
 		bool playerGroundHit;
@@ -93,6 +101,8 @@ public:
 		bool armThrow;
 		bool armSwordHand;
 		int armFrameNum;
+		float throwStartTime;
+		float throwObjectApperaTime;
 		VECTOR3 armAddPos;
 		bool throwToPlayer;
 		bool thorwToFront;
@@ -112,6 +122,8 @@ public:
 		bool groundDelete;
 		//ダメージを受けた時にオブジェクトを落とすかどうか
 		bool playerAttackObjectDrop;
+		bool attackFinishDelete;
+		
 
 		ThrowObjectAttackData()
 		{
@@ -130,6 +142,10 @@ public:
 			playerHit = false;
 			playerHitCollRadius = 0.0f;
 			playerHitJustAvoidCollRadius = 0.0f;
+			capsule = false;
+			capselEndPos = VZero;
+			capselStartPos = VZero;
+
 
 			playerGroundHit = false;
 			playerGroundCollRadius = 0.0f;
@@ -165,6 +181,8 @@ public:
 
 			armThrow = false;
 			armFrameNum = 0;
+			throwStartTime = 0.0f;
+			throwObjectApperaTime = 0.0f;
 			armAddPos = VECTOR3();
 			throwToPlayer = false;
 			thorwToFront = false;
@@ -184,6 +202,16 @@ public:
 
 			playerAttackObjectDrop = false;
 			armSwordHand = false;
+
+			capsuleColliderAdd = false;
+			causuleColliderAddPos = VZero;
+			capsuleColliderAddStartThrow = false;
+			capsuleColliderAddStartThrowAnimFrame = 0.0f;
+
+			attackFinishDelete = false;
+			playerHitNoReaction = false;
+			alotCollsionHit = false;
+			alotHitColliderCreateCounter = 0.0f;
 		}
 	};
 
@@ -312,9 +340,7 @@ public:
 			throwObject = false;
 			throwAttackData.clear();
 			armThrow = false;
-			armFrameNum = 0;
-			throwStartTime = 0.0f;
-			throwObjectApperaTime = 0.0f;
+			
 
 			throwObjectNum = 0;
 			objectApperaPosition = VECTOR3();
@@ -412,9 +438,6 @@ public:
 		bool throwObject;
 		std::vector<ThrowObjectAttackData> throwAttackData;
 		bool armThrow;
-		int armFrameNum;
-		float throwStartTime;
-		float throwObjectApperaTime;
 		int throwObjectNum;
 		VECTOR3 objectApperaPosition;
 		float intervalTime;
@@ -507,7 +530,7 @@ public:
 	/// <summary>
 	/// 攻撃後の終了判定
 	/// </summary>
-	void AttackFinish();
+	void AttackFinishFrame();
 
 protected:
 	BossAttackParam attackParam;
@@ -592,8 +615,23 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 	if (p.playerHit)
 	{
 		j["playerHit"] = p.playerHit;
+		j["playerHitNoReaction"] = p.playerHitNoReaction;
 		j["playerHitCollRadius"] = p.playerHitCollRadius;
 		j["playerHitJustAvoidCollRadius"] = p.playerHitJustAvoidCollRadius;
+		if (p.capsule) {
+			j["Capsule"] = p.capsule;
+			j["CapsuleStartPos"] = p.capselStartPos;
+			j["CapsuleEndPos"] = p.capselEndPos;
+			j["capsuleColliderAdd"] = p.capsuleColliderAdd;
+			j["causuleColliderAddPos"] = p.causuleColliderAddPos;
+			j["capsuleColliderAddStartThrow"] = p.capsuleColliderAddStartThrow;
+			j["capsuleColliderAddStartThrowAnimFrame"] = p.capsuleColliderAddStartThrowAnimFrame;
+		}
+	}
+
+	if (p.alotCollsionHit) {
+		j["alotCollsionHit"] = p.alotCollsionHit;
+		j["alotHitColliderCreateCounter"] = p.alotHitColliderCreateCounter;
 	}
 
 	// playerGroundHit
@@ -667,6 +705,8 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 		j["armThrow"] = p.armThrow;
 		j["armSwordHand"] = p.armSwordHand;
 		j["armFrameNum"] = p.armFrameNum;
+		j["throwStartTime"] = p.throwStartTime;
+		j["throwObjectApperaTime"] = p.throwObjectApperaTime;
 		j["armAddPos"] = p.armAddPos;
 		j["throwToPlayer"] = p.throwToPlayer;
 		j["thorwToFront"] = p.thorwToFront;
@@ -713,6 +753,11 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 	{
 		j["playerAttackObjectDrop"] = p.playerAttackObjectDrop;
 	}
+
+	if (p.attackFinishDelete)
+	{
+		j["attackFinishDelete"] = p.attackFinishDelete;
+	}
 }
 
 inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
@@ -756,11 +801,30 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 
 		if (p.playerHit)
 		{
+			if (j.contains("playerHitNoReaction")) j.at("playerHitNoReaction").get_to(p.playerHitNoReaction);
 			if (j.contains("playerHitCollRadius")) j.at("playerHitCollRadius").get_to(p.playerHitCollRadius);
 			if (j.contains("playerHitJustAvoidCollRadius")) j.at("playerHitJustAvoidCollRadius").get_to(p.playerHitJustAvoidCollRadius);
+			if (j.contains("Capsule")) j.at("Capsule").get_to(p.capsule);
+			if (p.capsule) {
+				if (j.contains("CapsuleStartPos")) j.at("CapsuleStartPos").get_to(p.capselStartPos);
+				if (j.contains("CapsuleEndPos")) j.at("CapsuleEndPos").get_to(p.capselEndPos);
+				if (j.contains("capsuleColliderAdd")) j.at("capsuleColliderAdd").get_to(p.capsuleColliderAdd);
+				if (j.contains("causuleColliderAddPos")) j.at("causuleColliderAddPos").get_to(p.causuleColliderAddPos);
+				if (j.contains("capsuleColliderAddStartThrow")) j.at("capsuleColliderAddStartThrow").get_to(p.capsuleColliderAddStartThrow);
+				if (j.contains("capsuleColliderAddStartThrowAnimFrame")) j.at("capsuleColliderAddStartThrowAnimFrame").get_to(p.capsuleColliderAddStartThrowAnimFrame);
+			}
 		}
 	}
 	else p.playerHit = false;
+
+	if (j.contains("alotCollsionHit"))
+	{
+		j.at("alotCollsionHit").get_to(p.alotCollsionHit);
+		if (p.alotCollsionHit) {
+			if (j.contains("alotHitColliderCreateCounter")) j.at("alotHitColliderCreateCounter").get_to(p.alotHitColliderCreateCounter);
+		}
+	}
+	else p.alotCollsionHit = false;
 
 	// playerGroundHit
 	if (j.contains("playerGroundHit"))
@@ -870,6 +934,8 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 		if (p.armThrow)
 		{
 			if (j.contains("armFrameNum")) j.at("armFrameNum").get_to(p.armFrameNum);
+			if (j.contains("throwStartTime")) j.at("throwStartTime").get_to(p.throwStartTime);
+			if (j.contains("throwObjectApperaTime")) j.at("throwObjectApperaTime").get_to(p.throwObjectApperaTime);
 			if (j.contains("armSwordHand")) j.at("armSwordHand").get_to(p.armSwordHand);
 			if (j.contains("armAddPos")) j.at("armAddPos").get_to(p.armAddPos);
 			if (j.contains("throwToPlayer")) j.at("throwToPlayer").get_to(p.throwToPlayer);
@@ -934,6 +1000,12 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 		j.at("playerAttackObjectDrop").get_to(p.playerAttackObjectDrop);
 	}
 	else p.playerAttackObjectDrop = false;
+
+	if (j.contains("attackFinishDelete"))
+	{
+		j.at("attackFinishDelete").get_to(p.attackFinishDelete);
+	}
+	else p.attackFinishDelete = false;
 }
 
 inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
@@ -1056,9 +1128,6 @@ inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
 		j["throwObject"] = p.throwObject;
 		j["throwAttackData"] = p.throwAttackData;
 		j["armThrow"] = p.armThrow;
-		j["armFrameNum"] = p.armFrameNum;
-		j["throwStartTime"] = p.throwStartTime;
-		j["throwObjectApperaTime"] = p.throwObjectApperaTime;
 		j["throwObjectNum"] = p.throwObjectNum;
 		j["objectApperaPosition"] = p.objectApperaPosition;
 		j["intervalTime"] = p.intervalTime;
@@ -1268,10 +1337,7 @@ inline void from_json(const JSON& j, BossAttackBase::BossAttackParam& p)
 		if (p.throwObject)
 		{
 			if (j.contains("throwAttackData")) j.at("throwAttackData").get_to(p.throwAttackData);
-			if (j.contains("armThrow")) j.at("armThrow").get_to(p.armThrow);
-			if (j.contains("armFrameNum")) j.at("armFrameNum").get_to(p.armFrameNum);
-			if (j.contains("throwStartTime")) j.at("throwStartTime").get_to(p.throwStartTime);
-			if (j.contains("throwObjectApperaTime")) j.at("throwObjectApperaTime").get_to(p.throwObjectApperaTime);
+			if (j.contains("armThrow")) j.at("armThrow").get_to(p.armThrow);		
 			if (j.contains("throwObjectNum")) j.at("throwObjectNum").get_to(p.throwObjectNum);
 			if (j.contains("objectApperaPosition")) j.at("objectApperaPosition").get_to(p.objectApperaPosition);
 			if (j.contains("intervalTime")) j.at("intervalTime").get_to(p.intervalTime);
