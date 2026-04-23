@@ -190,8 +190,6 @@ void PlayerManager::CreatePlayer()
 	ResourceLoad::LoadAnim(charaID + typeID + "_HEAVY_ATTACK", ID::IDType::P_HEAVY_ATTACK);
 	ResourceLoad::LoadAnim(charaID + typeID + "_HEAVY_CHARGE", ID::IDType::P_HEAVY_CHARGE);
 
-
-
 	anim->AnimDataLoad(charaID, typeID);;
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
