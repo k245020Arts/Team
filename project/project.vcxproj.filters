@@ -1176,6 +1176,9 @@
     <ClInclude Include="Source\Component\Collider\CapsuleCollider.h">
       <Filter>Component\Collider\Capsule</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>icon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1391,5 +1394,13 @@
     <Filter Include="Component\Collider\Capsule">
       <UniqueIdentifier>{b031a996-fc87-4da8-921b-b486cd05b250}</UniqueIdentifier>
     </Filter>
+    <Filter Include="icon">
+      <UniqueIdentifier>{c197f5b0-b19e-492c-b1b5-991491755e7f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>icon</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

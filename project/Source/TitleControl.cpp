@@ -107,6 +107,7 @@ void TitleControl::SetNowProgress(float nowProgress)
 
 void TitleControl::StageSelect()
 {
+	selectMoveCounter += Time::DeltaTimeRate();
 	if (selectCounter > 0.0f) {
 		return;
 	}
@@ -118,6 +119,7 @@ void TitleControl::StageSelect()
 		}
 		StageSelectData::GetInstance()->SetStageID(stageID);
 		selectCounter = 0.5f;
+		selectMoveCounter = 0.0f;
 	}
 
 	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x <= -0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_LEFT)) {
@@ -127,6 +129,7 @@ void TitleControl::StageSelect()
 		}
 		StageSelectData::GetInstance()->SetStageID(stageID);
 		selectCounter = 0.5f;
+		selectMoveCounter = 0.0f;
 	}
 }
 
@@ -141,13 +144,16 @@ void TitleControl::Draw()
 		return;
 
 	StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
+	int move = Easing::SinCube(0, 10, selectMoveCounter);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	DrawRotaGraph(Screen::WIDTH / 2, 850, (double)exrate * 2, 0.0, keyImage, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - alpha);
-	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + 100, 850, 1.0, 1.0, 0xffffff, font, stageData.name.c_str());
+	const int STAGE_POS = 300;
+	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + STAGE_POS, 850 + move, 1.0, 1.0, 0xffffff, font, stageData.name.c_str());
+	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + STAGE_POS - 100, 650 + move, 1.0, 1.0, 0xffffff, font, "Aボタンを押してスタート!!");
 	int width = GetDrawExtendFormatStringWidthToHandle(1.0f, font, stageData.name.c_str());
 
 	int stageMax = StageSelectData::GetInstance()->GetStageMax() - 1;
@@ -155,13 +161,13 @@ void TitleControl::Draw()
 		BLACK_TEXTURE;
 	}
 	
-	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + width + 150, 850, 1.0, 1.0, 0xffffff, font,"→");
+	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + width + STAGE_POS + 50, 850 + move, 1.0, 1.0, 0xffffff, font,"→");
 	DEFAULT_TEXTURE;
 
 	if (stageID == 0) {
 		BLACK_TEXTURE;
 	}
-	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 - 50, 850, 1.0, 1.0, 0xffffff, font,"←");
+	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + STAGE_POS - 100, 850 + move, 1.0, 1.0, 0xffffff, font,"←");
 	DEFAULT_TEXTURE;
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

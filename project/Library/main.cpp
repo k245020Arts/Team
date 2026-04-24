@@ -24,6 +24,7 @@
 #include "../Source/Screen.h"
 #include "../ImGui/imgui_impl_dxlib.hpp"
 #include <d3d11.h>
+#include "../resource.h"
 
 #define CoGVersion "4.5F"
 
@@ -39,6 +40,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//_CrtSetBreakAlloc(132931);
 #endif
 	SetGraphMode(Screen::WIDTH, Screen::HEIGHT, 32);
+	SetWindowIconID(ID_ICON);
 	SetOutApplicationLogValidFlag(FALSE); // ログを出さない
 
 	SetMainWindowText(Screen::WINDOW_NAME);

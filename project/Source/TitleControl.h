@@ -42,9 +42,11 @@ private:
 	int font;
 	int alpha;
 	float alphaTime;
+	float selectMoveCounter;
 
 	TitlePlayer* player;
 	int stageID;
 	float selectCounter;
 	TitleState titleState;
+
 };
