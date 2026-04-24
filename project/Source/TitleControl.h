@@ -1,11 +1,16 @@
 #pragma once
 #include "../Library/GameObject.h"
 
-
 class InputManager;
 class SoundManager;
 
 class TitlePlayer;
+
+enum TitleState
+{
+	TITLE,
+	STAGE_SELECT,
+};
 
 class TitleControl : public GameObject
 {
@@ -15,6 +20,10 @@ public:
 
 	void Update()override;
 	void Draw()override;
+
+	void TitleUpdate();
+	void StageUpdate();
+
 
 	float GetNowProgress();
 	void SetNowProgress(float nowProgress);
@@ -30,8 +39,12 @@ private:
 	float exrate;
 	float pushCounter;
 	float moveButton;
+	int font;
+	int alpha;
+	float alphaTime;
 
 	TitlePlayer* player;
 	int stageID;
 	float selectCounter;
+	TitleState titleState;
 };

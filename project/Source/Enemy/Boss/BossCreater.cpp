@@ -29,7 +29,7 @@ namespace {
 
 	std::unordered_map<std::string, ID::IDType> animMap = {
 	{ "IDOL", ID::B_IDOL },
-	{ "IDLE2", ID::B_COOLTIME },
+	{ "IDOL2", ID::B_COOLTIME },
 	{ "WALK", ID::B_RUN },
 	{ "WAIT_SEE", ID::B_WAIT_SEE },
 	{ "SATTACK2_STOP", ID::B_S_ATTACK2_STOP },

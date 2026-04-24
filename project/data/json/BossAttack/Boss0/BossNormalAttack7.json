@@ -112,6 +112,7 @@
         "playerHit": true,
         "playerHitCollRadius": 200.0,
         "playerHitJustAvoidCollRadius": 300.0,
+        "playerHitNoReaction": false,
         "pushCollCan": true,
         "pushCollTransform": {
           "position": {
@@ -152,16 +153,15 @@
         "throwFallGravity": 0.0,
         "throwFirstSpeed": 0.0,
         "throwHeight": 0.0,
+        "throwObjectApperaTime": 31.586830139160156,
         "throwObjectID": "BossAttackRock1",
         "throwSpeed": 0.0,
+        "throwStartTime": 72.4159164428711,
         "throwToFall": false,
         "throwToFallToPlayer": false,
         "throwToPlayer": true,
-        "throwObjectApperaTime": 31.586830139160156,
         "upSpeed": 0.0,
-        "throwStartTime": 72.4159164428711,
         "waveSpeed": 50.0
-        
       }
     ],
     "throwObject": true,

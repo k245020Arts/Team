@@ -71,6 +71,7 @@
           "z": 0.0
         },
         "armFrameNum": 15,
+        "armSwordHand": false,
         "armThrow": true,
         "baseFirction": {
           "x": 0.0,
@@ -109,6 +110,7 @@
         "playerHit": true,
         "playerHitCollRadius": 200.0,
         "playerHitJustAvoidCollRadius": 300.0,
+        "playerHitNoReaction": false,
         "pushCollCan": true,
         "pushCollTransform": {
           "position": {
@@ -144,13 +146,13 @@
         "throwFallGravity": 0.0,
         "throwFirstSpeed": 10000.0,
         "throwHeight": 0.0,
+        "throwObjectApperaTime": 31.586830139160156,
         "throwObjectID": "BossShot",
         "throwSpeed": 10000.0,
+        "throwStartTime": 78.0,
         "throwToFall": false,
         "throwToFallToPlayer": false,
         "throwToPlayer": false,
-        "throwObjectApperaTime": 31.586830139160156,
-        "throwStartTime": 78.0,
         "upSpeed": 0.0,
         "waveSpeed": 50.0
       }

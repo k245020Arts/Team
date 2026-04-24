@@ -4,7 +4,7 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include "../Common/JsonReader.h"
-
+#include "../Common/UTFConverter.h"
 
 struct StageData
 {
@@ -41,7 +41,7 @@ public:
             StageData stage;
 
             stage.id = elem.value("id", -1);
-            stage.name = elem.value("name", "");
+            stage.name = UTFConverter::Utf8ToSjis(elem.value("name", ""));
             stage.stageModelID = elem.value("map", -1);
             stage.bgm = elem.value("bgm", "");
             stage.bossID = elem.value("bossID", -1);

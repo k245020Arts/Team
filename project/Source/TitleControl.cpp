@@ -17,12 +17,17 @@
 #include "Screen.h"
 #include "Stage/StageSelectData.h"
 
+namespace {
+	const float ALPHA_TIME = 1.0f;
+}
+
 TitleControl::TitleControl()
 {
 
 	hImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Title", ID::TITLE_BACK);
 	titleImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "TitleImage", ID::TITLE);
 	keyImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
+	font = LoadFontDataToHandle("data/font/MPlus2C.dft", 4);
 	SoundManager::GetInstance()->AllDeleteSound();
 	SoundManager::GetInstance()->TitleSceneLoad();
 	SoundManager::GetInstance()->PlayBGM(Sound_ID::TITLE_BGM, true, true);
@@ -39,11 +44,14 @@ TitleControl::TitleControl()
 	SetDrawOrder(-100);
 	stageID = 0;
 	selectCounter = 0.0f;
+	titleState = TITLE;
+	alpha = 255;
 }
 
 TitleControl::~TitleControl()
 {
 	Debug::ClearLogger();
+	DeleteFontToHandle(font);
 }
 
 void TitleControl::Update()
@@ -55,64 +63,34 @@ void TitleControl::Update()
 		FindGameObject<FadeTransitor>()->StartTransitor("PLAY", 1.0f);
 	}
 
-	if (InputManager::GetInstance()->KeyInputDown("SceneChange") && progress == 0) // ‰Ÿ‚µ‚½‚ç
+	switch (titleState)
 	{
-		SoundManager::GetInstance()->AllDeleteSound();
-		SoundManager::GetInstance()->TitleSceneLoad();
-
-		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
-		SoundManager::GetInstance()->PlaySe(Sound_ID::JUST_AVOID_SOUND);
-		//sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
-		SoundManager::GetInstance()->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
-		SoundManager::GetInstance()->PlaySe(Sound_ID::V_P_JUST_AVOID);
-
-		player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
-		StageSelectData::GetInstance()->SetStageID(stageID);
+	case TITLE:
+		TitleUpdate();
+		break;
+	case STAGE_SELECT:
+		StageUpdate();
+		break;
+	default:
+		break;
 	}
 
-	StageSelect();
-
-	if (selectCounter >= 0.0f) {
-		selectCounter -= Time::DeltaTimeRate();
-	}
-
-	if (firstCounter > 0.0f) 
-	{
-		firstCounter -= Time::DeltaTimeRate();
-		if (firstCounter <= 0.0f) 
-		{
-			firstCounter = 0.0f;
+	if (alphaTime > 0.0f) {
+		alphaTime -= Time::DeltaTimeRate();
+		if (alphaTime <= 0.0f) {
+			alphaTime = 0.0f;
 		}
-		float rate = firstCounter / 1.0f;
-		exrate = Easing::EaseIn(0.0f, 0.8f, 0.8f - rate);
-	}
-	else 
-	{
-		if (pushCounter > 0.0f) // ‰Ÿ‚µ‚½‚ ‚Æ
+		float rate = alphaTime / ALPHA_TIME;
+		switch (titleState)
 		{
-			float rate = pushCounter / 0.5f;
-			exrate = Easing::Sin90Cube(0.5f, 0.8f, 0.8f - rate);
-		}
-		else 
-		{
-			float rate = 0.0f;
-			if (moveButton > 0.0f) 
-			{
-				moveButton -= Time::DeltaTimeRate();
-				rate = moveButton / 1.0f;
-				if (moveButton <= 0.0f) 
-					moveButton = -1.0f;
-
-			}
-			else if (moveButton < 0.0f) 
-			{
-				moveButton += Time::DeltaTimeRate();
-				rate = moveButton / -1.0f;
-				rate = 1 - rate;
-				if (moveButton >= 0.0f) 
-					moveButton = 1.0f;
-			}
-			exrate = Easing::EaseInOut(0.4f, 0.5f, rate);
+		case TITLE:
+			alpha = Easing::Lerp(255, 0, rate);
+			break;
+		case STAGE_SELECT:
+			alpha = Easing::Lerp(0, 255, rate);
+			break;
+		default:
+			break;
 		}
 	}
 }
@@ -152,14 +130,115 @@ void TitleControl::StageSelect()
 	}
 }
 
+#define BLACK_TEXTURE SetDrawBright(0, 0, 0)
+#define DEFAULT_TEXTURE SetDrawBright(255, 255, 255)
+
 void TitleControl::Draw()
 {
 	/*DrawGraph(0, 0, hImage, true);*/
 	DrawGraph(750, 100, titleImage, true);
 	if (progress > 0)
 		return;
-	DrawRotaGraph(Screen::WIDTH / 2, 850, (double)exrate * 2,0.0,keyImage, true);
 
-	DrawFormatString(500, 500, 0xffffff, StageSelectData::GetInstance()->GetNowStageData().name.c_str());
+	StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	DrawRotaGraph(Screen::WIDTH / 2, 850, (double)exrate * 2, 0.0, keyImage, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - alpha);
+	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + 100, 850, 1.0, 1.0, 0xffffff, font, stageData.name.c_str());
+	int width = GetDrawExtendFormatStringWidthToHandle(1.0f, font, stageData.name.c_str());
+
+	int stageMax = StageSelectData::GetInstance()->GetStageMax() - 1;
+	if (stageID == stageMax) {
+		BLACK_TEXTURE;
+	}
+	
+	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + width + 150, 850, 1.0, 1.0, 0xffffff, font,"¨");
+	DEFAULT_TEXTURE;
+
+	if (stageID == 0) {
+		BLACK_TEXTURE;
+	}
+	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 - 50, 850, 1.0, 1.0, 0xffffff, font,"©");
+	DEFAULT_TEXTURE;
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void TitleControl::TitleUpdate()
+{
+	if (InputManager::GetInstance()->KeyInputDown("SceneChange") && progress == 0) // ‰Ÿ‚µ‚½‚ç
+	{
+		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
+		titleState = STAGE_SELECT;
+		alphaTime = ALPHA_TIME;
+	}
+	if (firstCounter > 0.0f)
+	{
+		firstCounter -= Time::DeltaTimeRate();
+		if (firstCounter <= 0.0f)
+		{
+			firstCounter = 0.0f;
+		}
+		float rate = firstCounter / 1.0f;
+		exrate = Easing::EaseIn(0.0f, 0.8f, 0.8f - rate);
+	}
+	else
+	{
+		if (pushCounter > 0.0f) // ‰Ÿ‚µ‚½‚ ‚Æ
+		{
+			float rate = pushCounter / 0.5f;
+			exrate = Easing::Sin90Cube(0.5f, 0.8f, 0.8f - rate);
+		}
+		else
+		{
+			float rate = 0.0f;
+			if (moveButton > 0.0f)
+			{
+				moveButton -= Time::DeltaTimeRate();
+				rate = moveButton / 1.0f;
+				if (moveButton <= 0.0f)
+					moveButton = -1.0f;
+
+			}
+			else if (moveButton < 0.0f)
+			{
+				moveButton += Time::DeltaTimeRate();
+				rate = moveButton / -1.0f;
+				rate = 1 - rate;
+				if (moveButton >= 0.0f)
+					moveButton = 1.0f;
+			}
+			exrate = Easing::EaseInOut(0.4f, 0.5f, rate);
+		}
+	}
+}
+
+void TitleControl::StageUpdate()
+{
+	if (InputManager::GetInstance()->KeyInputDown("SceneChange") && progress == 0) // ‰Ÿ‚µ‚½‚ç
+	{
+		SoundManager::GetInstance()->AllDeleteSound();
+		SoundManager::GetInstance()->TitleSceneLoad();
+
+		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
+		SoundManager::GetInstance()->PlaySe(Sound_ID::JUST_AVOID_SOUND);
+		//sound->BaseVolumeChange(Sound_ID::JUST_AVOID_SUCCESS);
+		SoundManager::GetInstance()->PlaySe(Sound_ID::JUST_AVOID_SUCCESS);
+		SoundManager::GetInstance()->PlaySe(Sound_ID::V_P_JUST_AVOID);
+
+		player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
+		StageSelectData::GetInstance()->SetStageID(stageID);
+	}
+
+	StageSelect();
+
+	if (selectCounter >= 0.0f) {
+		selectCounter -= Time::DeltaTimeRate();
+	}
 }
 
