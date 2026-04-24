@@ -12,5 +12,10 @@ public:
 	void Start()override;
 	void Finish()override;
 private:
+	void RangedMove(TrashEnemy* _enemy);
+	void LeaderMove(TrashEnemy* _enemy);
 
+	bool isLeader;
+ /*RANGED_LEADER
+  RANGED,*/
 };

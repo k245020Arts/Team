@@ -34,7 +34,6 @@ void T_EnemyWaitSee::Update()
 
 void T_EnemyWaitSee::Start()
 {
-	EnemyStateBase::Start();
 	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 	
 	targetPos = enemy->TargetPoint();
@@ -54,6 +53,8 @@ void T_EnemyWaitSee::Start()
 	default:
 		break;
 	}
+
+	EnemyStateBase::Start();
 }
 
 void T_EnemyWaitSee::Finish()
@@ -71,7 +72,6 @@ void T_EnemyWaitSee::ReaderMove(TrashEnemy* _enemy)
 
 	VECTOR3 dir = VNorm(targetPos - enePos);
 	_enemy->GetEnemyObj()->GetTransform()->position+= dir * moveSpeed;
-
 }
 
 void T_EnemyWaitSee::NormalMove(TrashEnemy* _enemy)

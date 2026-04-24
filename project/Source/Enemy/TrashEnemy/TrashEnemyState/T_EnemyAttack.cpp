@@ -62,7 +62,7 @@ void T_EnemyAttack::Draw()
 void T_EnemyAttack::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	EnemyStateBase::Start();
+	
 	firstColl = true;
 	//e->enemyBaseComponent.anim->SetFrame(5.0f);
 	attackParam.hitDamage = e->eStatus->GetStatus().normalAttack1;
@@ -70,6 +70,8 @@ void T_EnemyAttack::Start()
 	//e->isAttack = false;
 	mMaxFrame = e->enemyBaseComponent.anim->GetMaxFrame();
 	isDecel = true;
+
+	EnemyStateBase::Start();
 }
 
 void T_EnemyAttack::Finish()

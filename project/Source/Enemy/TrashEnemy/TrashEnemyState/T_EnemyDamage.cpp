@@ -58,11 +58,13 @@ void T_EnemyDamage::Draw()
 void T_EnemyDamage::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	EnemyStateBase::Start();
+	
 	motionSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
 
 	isGetInformation = false;
 	counter = 0;
+
+	EnemyStateBase::Start();
 }
 
 void T_EnemyDamage::Finish()

@@ -103,6 +103,8 @@ public:
 	//近距離か遠距離の敵かを指定する関数
 	void SetEnemyType(EnemyType type);
 
+	void CooperateAtk2(VECTOR3 _pos);
+
 	template<typename T>
 	T* CollsionStart(CollsionSet* _set, const Transform& _trans)
 	{
@@ -152,6 +154,7 @@ private:
 	//bool isEnemyFollow;
 	
 	VECTOR3 targetPoint;
+	//連携攻撃時のポジション指定
 	VECTOR3 cooperateWayPoint;
 
 	//必殺技を食らったときに敵をスローにする

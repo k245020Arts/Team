@@ -30,6 +30,8 @@ public:
 
 	//一番近いウェイポイントを計算する
 	void CloseWayPoint(std::vector<WayPoint> wayPoint);
+	//遠距離の敵の連携攻撃
+	void RangedEnemyAttack();
 
 public:
 	Camera* camera;
@@ -80,9 +82,11 @@ public:
 	//--------------------------
 
 	//遠距離の敵----------------
-	void RangedEnemyAttack(TrashEnemy* _enemy);
-
+	void RangedEnemySetWaypoint(TrashEnemy* _enemy);
+	
 	//WayPoint RangedEnemyPoint;
 	VECTOR3 leaderPos;
+
+
 	//--------------------------
 };

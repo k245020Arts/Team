@@ -56,7 +56,6 @@ void T_EnemyRun::Update()
 
 void T_EnemyRun::Start()
 {
-	EnemyStateBase::Start();
 	TrashEnemy* e = GetBase<TrashEnemy>();
 
 	if (e->enemyType == e->EnemyType::MELEE)
@@ -76,6 +75,8 @@ void T_EnemyRun::Start()
 	motionSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
 
 	e->isRunState = true;
+
+	EnemyStateBase::Start();
 }
 
 void T_EnemyRun::Finish()

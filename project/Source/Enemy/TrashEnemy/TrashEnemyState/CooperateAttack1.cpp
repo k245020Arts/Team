@@ -39,9 +39,11 @@ void CooperateAttack1::Update()
 void CooperateAttack1::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	EnemyStateBase::Start();
+
 	e->enemyBaseComponent.anim->SetFrame(5.0f);
 	firstColl = true;
+
+	EnemyStateBase::Start();
 }
 
 void CooperateAttack1::Finish()

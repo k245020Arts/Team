@@ -36,7 +36,7 @@ void TrashEnemyGroup::Update()
 
 	for (auto ranged : rangedEnemies)
 	{
-		RangedEnemyAttack(ranged);
+		RangedEnemySetWaypoint(ranged);
 	}
 }
 
@@ -289,7 +289,18 @@ void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 	}
 }
 
-void TrashEnemyGroup::RangedEnemyAttack(TrashEnemy* _enemy)
+void TrashEnemyGroup::RangedEnemyAttack()
+{
+	for (auto& enemy : rangedEnemies)
+	{
+		if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
+		{
+			//リーダーの攻撃の構えとリーダーの周りにポイント制作
+		}
+	}
+}
+
+void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 {
 	if (_enemy->GetEnemyType() == _enemy->EnemyType::RANGED)
 	{
