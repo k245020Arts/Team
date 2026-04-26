@@ -2,6 +2,7 @@
 #include "../TrashEnemy.h"
 #include "T_EnemyStatus.h"
 #include "../../../Component/Physics/Physics.h"
+#include "../../../State/StateManager.h"
 
 CooperateAttack2::CooperateAttack2()
 {
@@ -88,6 +89,17 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	speed = 50.0f;
 	
 	_enemy->GetEnemyObj()->GetTransform()->position += dir * speed;
+	
+	AttackCollsion();
+	AttackSound();
+	AttackFlash(ID::E_MODEL, 35, "E_AttackV");
+	Trail();
+	EnemyJustAvoidCollsion();
+
+	//å„Ç≈ïœçX
+	if (VSize(pPos - enePos) <= 30)
+		_enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+
 }
 
 void CooperateAttack2::LeaderMove(TrashEnemy* _enemy)

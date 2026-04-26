@@ -422,6 +422,12 @@ void TrashEnemy::PlayerHit()
 	else
 		loopNum = -1;
 
+	if (isMovingToPlayer && enemyType == EnemyType::RANGED)
+	{
+		//‰“‹——£‚ÌƒŠ[ƒ_[‚É”ò‚Î‚·ˆ—‚ğì‚é
+		return;
+	}
+
 	EnemyDamage::EnemyDamageInfo dInfo;
 	EnemyBlowAway::EnemyBlowAwayInfo bInfo;
 	float random[3] = {};
