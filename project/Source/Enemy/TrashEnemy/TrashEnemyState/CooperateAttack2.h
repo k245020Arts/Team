@@ -16,6 +16,6 @@ private:
 	void LeaderMove(TrashEnemy* _enemy);
 
 	bool isLeader;
- /*RANGED_LEADER
-  RANGED,*/
+	
+	VECTOR3 setGravity;
 };

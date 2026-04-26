@@ -45,6 +45,8 @@ TrashEnemyManager::TrashEnemyManager()
 
 	searchCounter = 1.0f;
 	maxAttackCounter = ATK_COUNTER_MAX * (float)Random::GetReal();
+
+	startRangedAtk = false;
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -53,7 +55,8 @@ TrashEnemyManager::~TrashEnemyManager()
 
 void TrashEnemyManager::Update()
 {
-	
+	if (startRangedAtk)
+		enemyGroup->RangedEnemyAttack();
 }
 
 void TrashEnemyManager::Draw()
@@ -174,8 +177,8 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 		g->GuageDrawReady<TrashEnemy>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
 		g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
 
-		//enemyGroup->SetMeleeEnemy(t);
-		enemyGroup->SetRangedEnemy(t);
+		enemyGroup->SetMeleeEnemy(t);
+		//enemyGroup->SetRangedEnemy(t);
     }
 }
 
@@ -199,6 +202,8 @@ void TrashEnemyManager::ImguiDraw()
 		CreateEnemy(VZero, 1);
 	if (ImGui::Button("ack1"))
 		Cooperate();
+	if (ImGui::Button("ack2"))
+		startRangedAtk = true;
 
 	if (ImGui::Button("waypoint"))
 	{

@@ -29,6 +29,7 @@
 #include "TrashEnemyState/T_EnemyAttack.h"
 #include "TrashEnemyState/T_EnemyDead.h"
 #include "TrashEnemyState/CooperateAttack1.h"
+#include "TrashEnemyState/CooperateAttack2.h"
 #include "TrashEnemyState/Standby.h"
 #include "TrashEnemyState/T_EnemyDamage.h"
 #include "TrashEnemyState/T_EnemyWaitSee.h"
@@ -290,6 +291,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<T_EnemyAttack>("_T_EnemyAttack", StateID::T_ENEMY_ATTACK_S);
 	enemyBaseComponent.state->CreateState<T_EnemyDead>("_T_EnemyDead", StateID::T_ENEMY_DEAD);
 	enemyBaseComponent.state->CreateState<CooperateAttack1>("_CooperateAttack1", StateID::COOPERATEATTACK1);
+	enemyBaseComponent.state->CreateState<CooperateAttack2>("_CooperateAttack2", StateID::COOPERATEATTACK2);
 	enemyBaseComponent.state->CreateState<Standby>("_Standby", StateID::T_ENEMY_STANDBY);
 	enemyBaseComponent.state->CreateState<T_EnemyDamage>("_T_EnemyDamage", StateID::T_ENEMY_DAMAGE);
 	enemyBaseComponent.state->CreateState<T_EnemyWaitSee>("_T_EnemyWaitSee", StateID::T_ENEMY_WAITSEE);
@@ -347,11 +349,19 @@ void TrashEnemy::SetEnemyType(EnemyType type)
 	enemyType = type;
 }
 
-void TrashEnemy::CooperateAtk2(VECTOR3 _pos)
+void TrashEnemy::ReadyCooperteAtk2(VECTOR3 _pos)
 {
 	//isStandby = true;
 	cooperateWayPoint = _pos;
 	enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK2);
+}
+
+void TrashEnemy::RangedAttack()
+{
+	if (enemyType == EnemyType::MELEE || enemyType == EnemyType::MAX)
+		return;
+
+	isCooperateAtk = true;
 }
 
 void TrashEnemy::LookTarget(VECTOR3 _pos)
@@ -405,9 +415,6 @@ void TrashEnemy::Trail()
 
 void TrashEnemy::PlayerHit()
 {
-	/*if (hp <= 0)
-		return;*/
-
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
 	float damage = 0;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr)

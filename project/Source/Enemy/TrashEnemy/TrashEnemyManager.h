@@ -95,4 +95,6 @@ private:
 	float searchCounter;
 	
 	bool debugWaypoint;
+
+	bool startRangedAtk;
 };

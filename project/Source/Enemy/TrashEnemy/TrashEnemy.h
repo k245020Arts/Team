@@ -93,6 +93,7 @@ public:
 
 	//セッター
 	void SetWayPoint(VECTOR3 _wayPoint);
+	void SetCooperateWayPoint(VECTOR3 _wayPoint) { cooperateWayPoint = _wayPoint; }
 	// //ウェイポイントを取得して連携攻撃に切り替わる関数
 	void SetCooperateWayPoint(VECTOR3 _pos, StateID::State_ID _id);
 	//敵のステートを変える関数
@@ -102,8 +103,11 @@ public:
 	void AddPos(VECTOR3 _pos);
 	//近距離か遠距離の敵かを指定する関数
 	void SetEnemyType(EnemyType type);
+	//遠距離の敵の攻撃準備
+	void ReadyCooperteAtk2(VECTOR3 _pos);
 
-	void CooperateAtk2(VECTOR3 _pos);
+	//遠距離の敵が攻撃する
+	void RangedAttack();
 
 	template<typename T>
 	T* CollsionStart(CollsionSet* _set, const Transform& _trans)

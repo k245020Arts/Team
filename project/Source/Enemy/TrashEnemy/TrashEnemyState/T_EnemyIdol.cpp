@@ -39,6 +39,6 @@ void T_EnemyIdol::NormalMove()
 
 	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
 	detectionRange += Time::DeltaTimeRate() * RANGESPEED;
-	if (targetVec.Size() < e->eStatus->GetStatus().chaseRange + detectionRange)
+	if (targetVec.Size() < e->eStatus->GetStatus().chaseRange + detectionRange || e->GetEnemyType()!=e->EnemyType::MELEE)
 		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 }

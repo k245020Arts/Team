@@ -14,6 +14,8 @@ TrashEnemyGroup::TrashEnemyGroup()
 	enemiesRunCounter = 0;
 
 	leaderPos = VZero;
+
+	isReadyLeader = false;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -291,19 +293,64 @@ void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 
 void TrashEnemyGroup::RangedEnemyAttack()
 {
+	float pointCounter = 0;
+	const float MaxPoint = 8;
+	const float Range = 700.0f;
+	const float MaxAttackCounter = 3.0f;
+	bool isActive = false;
+
 	for (auto& enemy : rangedEnemies)
 	{
 		if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
 		{
-			//リーダーの攻撃の構えとリーダーの周りにポイント制作
+			enemy->ChangeState(StateID::COOPERATEATTACK2);
+
+			if (enemy->GetStandby())
+				isReadyLeader = true;
+
+			leaderPos = enemy->GetPos();
+
+			if(enemy->GetStandby())
+				isActive = true;
+		}
+		else
+		{
+			if (!isReadyLeader)
+				return;
+			if (pointCounter < MaxPoint)
+			{
+				//均等に割って円形に配置
+				float angle = (2.0f * DX_PI_F) * pointCounter / MaxPoint;
+
+				//回転を反映した方向
+				VECTOR3 rotatedDir = VECTOR3(cosf(angle), 0, sinf(angle));
+				//プレイヤーからの絶対座標
+				VECTOR3 target = leaderPos + rotatedDir * Range;
+
+				enemy->SetCooperateWayPoint(target);//>SetWayPoint(target);
+				enemy->ChangeState(StateID::COOPERATEATTACK2);
+
+				pointCounter++;
+			}
+
+			if (!isActive)
+				return;
+
+			if (rangedAtkCounter >= MaxAttackCounter&& !enemy->IsMovingToPlayer())
+			{
+				enemy->RangedAttack();
+				rangedAtkCounter = 0;
+			}
 		}
 	}
+	rangedAtkCounter += Time::DeltaTimeRate();
 }
 
 void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 {
 	if (_enemy->GetEnemyType() == _enemy->EnemyType::RANGED)
 	{
+		leaderPos.y = 0.0f;
 		_enemy->SetWayPoint(leaderPos);
 	}
 	else
