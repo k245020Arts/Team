@@ -18,6 +18,8 @@ Standby::Standby()
 	isRedefinition = true;
 
 	runTime = 0.0f;
+
+	
 }
 
 Standby::~Standby()

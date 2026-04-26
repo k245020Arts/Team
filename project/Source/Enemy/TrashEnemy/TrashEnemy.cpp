@@ -347,6 +347,13 @@ void TrashEnemy::SetEnemyType(EnemyType type)
 	enemyType = type;
 }
 
+void TrashEnemy::CooperateAtk2(VECTOR3 _pos)
+{
+	//isStandby = true;
+	cooperateWayPoint = _pos;
+	enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK2);
+}
+
 void TrashEnemy::LookTarget(VECTOR3 _pos)
 {
 	VECTOR3 distance = _pos - obj->GetTransform()->position;

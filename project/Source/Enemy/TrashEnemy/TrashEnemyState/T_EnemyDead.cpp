@@ -55,7 +55,7 @@ void T_EnemyDead::Draw()
 void T_EnemyDead::Start()
 {
 	TrashEnemy* e = GetBase<TrashEnemy>();
-	EnemyStateBase::Start();
+
 	e->enemyBaseComponent.anim->SetPlaySpeed(0.8f);
 	if (!e->IsPlayerSpecialMove())
 	{
@@ -66,6 +66,8 @@ void T_EnemyDead::Start()
 	motionSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
 	counter = 0;
 	FindGameObject<EnemyManager>()->RemoveList(e, obj);
+
+	EnemyStateBase::Start();
 }
 
 void T_EnemyDead::Finish()
