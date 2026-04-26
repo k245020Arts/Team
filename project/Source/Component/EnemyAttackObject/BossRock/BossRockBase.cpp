@@ -594,7 +594,10 @@ void BossRockBase::DropObject()
 	throwRock = true;
 	colliderAddStart = false;
 	float g = 2000.0f;
-	physics->SetGravity(VECTOR3(0, -g, 0));
+	if (physics != nullptr) {
+		physics->SetGravity(VECTOR3(0, -g, 0));
+	}
+	
 }
 
 

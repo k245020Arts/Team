@@ -517,8 +517,8 @@ void BossAttackBase::JumpEvent()
 
 void BossAttackBase::ShackWaveEvent()
 {
-	if (!attackParam.shockWave) {
-		return;
+	if (!attackParam.shockWave || attackParam.jump) {
+		return; //ジャンプイベントの場合はジャンプから衝撃波を出す
 	}
 	Boss* boss = GetBase<Boss>();
 	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
