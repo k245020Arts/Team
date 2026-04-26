@@ -31,7 +31,7 @@ void CapsuleCollider::Update()
 
 void CapsuleCollider::Draw()
 {
-	if (matrixMult) {
+	/*if (matrixMult) {
 		Transform startTransform = *collTransform;
 		Transform EndTransform = *capselEndTransform;
 		DrawCapsule3D(startTransform.position, EndTransform.position, radius, 24, 0xff0000, 0xff0000, false);
@@ -40,7 +40,7 @@ void CapsuleCollider::Draw()
 		Transform startTransform = collTransform->WorldTransform();
 		Transform EndTransform = capselEndTransform->WorldTransform();
 		DrawCapsule3D(startTransform.position, EndTransform.position, radius, 24, 0xff0000, 0xff0000, false);
-	}
+	}*/
 	
 }
 
