@@ -10,20 +10,20 @@
    {
      "id": 1,
       "name" : "Stage1",
-      "map" : 1,
+      "map" : 2,
       "bgm" : "PlaySceneBGM2",
       "bossID" : 1
     },
     {
      "id": 2,
-      "name" : "Stage2",
-      "map" : 1,
+      "name" : "テストステージ1",
+      "map" : 0,
       "bgm" : "PlaySceneBGM2",
       "bossID" : 1
     },
     {
      "id": 3,
-      "name" : "テストステージ",
+      "name" : "テストステージ2",
       "map" : 1,
       "bgm" : "PlaySceneBGM2",
       "bossID" : 1

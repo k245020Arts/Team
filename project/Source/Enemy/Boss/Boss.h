@@ -179,6 +179,9 @@ private:
 
 	const int BOSS_RIGHT_HAND_FRAME = 15;
 	const int BOSS_LEFT_HAND_FRAME = 11;
+
+	const int BOSS_RIGHT_HAND_FRAME_1 = 61;
+	const int BOSS_LEFT_HAND_FRAME_1 = 37;
 	CharaWeapon* chara;
 
 	int maxAttack;
@@ -205,6 +208,9 @@ private:
 	float defense;
 	int bossID;
 	std::string bossFileName;
+	std::list<SphereCollider*> bossHitCollider;
+	int rightHandFrame;
+	int leftHandFrame;
 };
 
 // to_json

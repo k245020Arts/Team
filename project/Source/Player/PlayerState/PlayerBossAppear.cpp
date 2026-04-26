@@ -10,6 +10,7 @@
 #include "../../Camera/Camera.h"
 #include "../../Common//Fead/Fead.h"
 #include  "../../Enemy/EnemyManager.h"
+#include "../../Stage/StageSelectData.h"
 
 PlayerBossAppear::PlayerBossAppear()
 {
@@ -30,7 +31,8 @@ void PlayerBossAppear::Update()
 	if (!feadOut && !fead->IsFead()) { //フェードアウトが終わったらフェードインの開始
 		fead->FeadOut(1.0f, 0x000000, Easing::EaseIn<int>);
 		feadOut = true;
-		p->playerCom.camera->CutSceneChangeState("BossAppear",true);
+		int bossID = StageSelectData::GetInstance()->GetNowStageData().bossID;
+		p->playerCom.camera->CutSceneChangeState("BossAppear" + std::to_string(bossID),true);
 		p->playerCom.enemyManager->CameraRockOnStart(p->playerCom.camera);
 		obj->GetTransform()->position = VECTOR3(300, 0, -2000);
 		obj->GetTransform()->rotation = VZero;

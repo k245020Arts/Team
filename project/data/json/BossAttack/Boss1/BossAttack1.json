@@ -1,6 +1,6 @@
 {
   "BossAttack1": {
-    "animID": "2001_ATTACK1",
+    "animID": "2001_ATTACK2",
     "animNum": 1,
     "attackBeforeAnimID": "",
     "attackCameraBossLook": true,
@@ -24,7 +24,7 @@
     "attackCollsionEndTime": 55.0,
     "attackCollsionStartTime": 40.0,
     "attackFlashStartTime": 7.0,
-    "attackPositionFrameNum": 15,
+    "attackPositionFrameNum": 61,
     "attackSoundStartTime": 1.0,
     "bossID": "",
     "cameraChangeSpeed": 1000.0,
@@ -55,7 +55,7 @@
     "slowAmout": 0.10000000149011612,
     "slowTime": 0.30000001192092896,
     "speedUpMotionSpeed": 0.30000001192092896,
-    "trailRightHand": false,
+    "trailRightHand": true,
     "useFlash": true,
     "useTrail": true,
     "voiceName": "E_AttackV"

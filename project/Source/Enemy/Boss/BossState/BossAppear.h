@@ -23,4 +23,10 @@ private:
 	bool roar;
 	bool first;
 	UIManager* uiManager;
+	int bossId;
+	bool runStop;
+	float stopCounter;
+	bool rightDushSound;
+	bool leftDushSound;
+
 };

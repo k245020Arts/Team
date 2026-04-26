@@ -36,7 +36,7 @@ public:
 	/// <param name="_a">半透明成分</param>
 	/// <param name="index">剣を持っている手のindex</param>
 	/// <param name="_time">何秒表示するか</param>
-	void CreateSwordEffect(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, float _g, float _b, float _a, float index, float _time);
+	void CreateSwordEffect(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, float _g, float _b, float _a, int index, float _time);
 
 	/// <summary>
 	/// 現在のキャラのオブジェクトのポインタの取得

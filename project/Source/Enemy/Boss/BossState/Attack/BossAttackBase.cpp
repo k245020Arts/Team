@@ -399,10 +399,28 @@ void BossAttackBase::MoveEvent()
 	float animFrame = boss->enemyBaseComponent.anim->GetCurrentFrame();
 	if (attackParam.moveStartTime <= animFrame && attackParam.moveFinishTime >= animFrame) {
 		if (attackParam.playerAloowMove) {
+			VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
+			normal = dis.Normalize();
+			bool move = true;
+			normal.y = 0.0f;
+			//y座標をいじりたくないので0にする。
+			if (dis.Size() <= attackParam.playerBaseNear) {
+				if (attackParam.playerNearStop) {
+					boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 24.0f);
+					move = false;
+				}
+				else if (attackParam.playerNearAloowStop) {
+					//move = false;
+					aloowStop = true;
+				}
+
+			}
 			if (firstMove) {
-				VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
-				normal = dis.Normalize();
-				boss->enemyBaseComponent.physics->AddVelocity(normal * attackParam.baseFirstSpeed, false);
+				if (move) {
+					VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
+					normal = dis.Normalize();
+					boss->enemyBaseComponent.physics->AddVelocity(normal * attackParam.baseFirstSpeed, false);
+				}
 				firstMove = false;
 				return;//最初の移動の時は返す
 			}
@@ -418,22 +436,6 @@ void BossAttackBase::MoveEvent()
 					boss->enemyBaseComponent.physics->SetVelocity(normal * speed);
 				}
 				return;
-			}
-			VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
-			normal = dis.Normalize();
-			//y座標をいじりたくないので0にする。
-			normal.y = 0.0f;
-			bool move = true;
-			if (dis.Size() <= attackParam.playerBaseNear) {
-				if (attackParam.playerNearStop) {
-					boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 24.0f);
-					move = false;
-				}
-				else if (attackParam.playerNearAloowStop) {
-					//move = false;
-					aloowStop = true;
-				}
-
 			}
 			if (move) {
 				float speed = dis.Size();

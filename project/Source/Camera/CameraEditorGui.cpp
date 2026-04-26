@@ -36,7 +36,7 @@ void CameraEditorGui::EditorWindow()
     ImGui::InputText("File Name", cutSceneFileName, IM_ARRAYSIZE(cutSceneFileName));
 
     JsonReader checkjson;
-    std::string filePath = std::string("data/json/") + cutSceneFileName + ".json";
+    std::string filePath = std::string("data/json/CutScene/") + cutSceneFileName + ".json";
     checkjson.Load(filePath);
     nlohmann::json& root = checkjson.Data();
 

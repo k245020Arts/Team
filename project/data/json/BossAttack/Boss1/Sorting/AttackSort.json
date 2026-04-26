@@ -1,14 +1,5 @@
 {
   "AttackSort": {
-    "BossBackStep": {
-      "addWeight": 0,
-      "attackState": false,
-      "distance": 0.0,
-      "id": "BossBackStep",
-      "maxAction": 0,
-      "priority": 50,
-      "weight": 30
-    },
     "BossAttack1": {
       "addWeight": 0,
       "attackState": true,
@@ -34,7 +25,7 @@
       "id": "BossAttack3",
       "maxAction": 1,
       "priority": 1,
-      "weight": 20
+      "weight": 30
     },
     "BossAttack4": {
       "addWeight": 0,
@@ -51,8 +42,8 @@
       "distance": 0.0,
       "id": "BossAttack5",
       "maxAction": 1,
-      "priority": 1,
-      "weight": 40
+      "priority": 50,
+      "weight": 20
     },
     "BossAttack6": {
       "addWeight": 0,
@@ -62,6 +53,15 @@
       "maxAction": 1,
       "priority": 1,
       "weight": 0
+    },
+    "BossBackStep": {
+      "addWeight": 0,
+      "attackState": false,
+      "distance": 0.0,
+      "id": "BossBackStep",
+      "maxAction": 0,
+      "priority": 50,
+      "weight": 30
     },
     "BossWalk": {
       "addWeight": 0,

@@ -111,6 +111,42 @@ public:
 		return nullptr;
 	}
 	/// <summary>
+	/// コンポーネントとタグが一致したら返す
+	/// </summary>
+	/// <typeparam name="T">取りたい型</typeparam>
+	/// <param name="_tag">取りたいタグ</param>
+	/// <returns>指定したコンポーネントのポインタ</returns>
+	template <typename T>
+	T* GetComponentWithTag(std::string _tag) {
+		for (Component* c:component) {
+			if (c->GetTag() == _tag) {
+				if (typeid(*c) == typeid(T)) {
+					return dynamic_cast<T*>(c);
+				}
+			}
+		}
+		return nullptr;
+	}
+	/// <summary>
+	/// コンポーネントとタグが一致したすべてのポインタを返す
+	/// </summary>
+	/// <typeparam name="T">取りたい型</typeparam>
+	/// <param name="_tag">取りたいタグ</param>
+	/// <returns>指定したコンポーネントのポインタのリスト</returns>
+	template <typename T>
+	std::list<T*> GetComponentsWithTag(std::string _tag) {
+		std::list<T*> list;
+		for (Component* c : component) {
+			if (c->GetTag() == _tag) {
+				if (typeid(*c) == typeid(T)) {
+					list.push_back(dynamic_cast<T*>(c));
+				}
+			}
+		}
+		return list;
+	}
+
+	/// <summary>
 	/// すべてのリストのコンポーネントを取得
 	/// </summary>
 	/// <returns></returns>

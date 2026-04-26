@@ -39,6 +39,7 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 		std::string name = entry.path().stem().string();
 		animFileName.push_back(name);
 	}
+	//ヌル文字を最後に足す
 	for (char& c : newAnimFile) {
 		c = '\0';
 	}

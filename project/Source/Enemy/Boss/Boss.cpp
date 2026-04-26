@@ -95,6 +95,9 @@ Boss::Boss()
 	oneDie = true;
 
 	rockManager = new BossRockManager(this);
+
+	rightHandFrame = 0.0f;
+	leftHandFrame = 0.0f;
 }
 
 Boss::~Boss()
@@ -305,6 +308,17 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	hp = bossParam.hp;
 	defense = bossParam.defense;
 	enemyBaseComponent.color->setRGB(Color::Rgb(255, 255, 255, 255));
+
+	bossHitCollider = obj->Component()->GetComponentsWithTag<SphereCollider>("BossHit");
+
+	if (bossID == 0) {
+		rightHandFrame = BOSS_RIGHT_HAND_FRAME;
+		leftHandFrame = BOSS_LEFT_HAND_FRAME;
+	}
+	else {
+		rightHandFrame = BOSS_RIGHT_HAND_FRAME_1;
+		leftHandFrame = BOSS_LEFT_HAND_FRAME_1;
+	}
 	/*JsonReader json;
 	std::string filePath = std::string("data/json/BossAttack");
 
@@ -611,10 +625,10 @@ void Boss::PlayerHit()
 void Boss::Drail(bool _right)
 {
 	if (_right) {
-		chara->CreateSwordEffect(VECTOR3(70, 0, -50), VECTOR3(120, 0, 50), 200.0f, 10.0f, 00.0f, 155.0f, 28, 0.5f);
+		chara->CreateSwordEffect(VECTOR3(70, 0, -50), VECTOR3(120, 0, 50), 200.0f, 10.0f, 00.0f, 155.0f, rightHandFrame, 0.5f);
 	}
 	else {
-		chara->CreateSwordEffect(VECTOR3(0, 0, -50), VECTOR3(50, 0, 100), 200.0f, 10.0f, 00.0f, 155.0f, 28, 0.5f);
+		chara->CreateSwordEffect(VECTOR3(0, 0, -50), VECTOR3(50, 0, 100), 200.0f, 10.0f, 00.0f, 155.0f, leftHandFrame, 0.5f);
 	}
 }
 

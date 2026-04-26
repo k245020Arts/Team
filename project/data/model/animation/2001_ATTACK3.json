@@ -1,7 +1,7 @@
 {
   "Animator": {
-    "eventFinishTime": 40.0,
-    "eventStartTime": 30.0,
+    "eventFinishTime": 30.0,
+    "eventStartTime": 20.0,
     "fileName": "2001_ATTACK3",
     "id": "2001_ATTACK3",
     "loop": false,

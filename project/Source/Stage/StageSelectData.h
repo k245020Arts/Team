@@ -13,6 +13,14 @@ struct StageData
     int stageModelID;
 	std::string bgm;
     int bossID;
+
+    StageData() {
+        id = -1;
+        name = "";
+        stageModelID = -1;
+        bgm = "";
+        bossID = -1;
+    }
 };
 
 class StageSelectData : public SingletonBase<StageSelectData>

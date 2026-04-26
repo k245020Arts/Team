@@ -111,6 +111,7 @@ void BossCreater::CreateBoss()
 	info.tag = CollsionInformation::Tag::BOSS;
 	info.size = 1.0f;
 	collider->CollsionAdd(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
+	collider->SetTag("BossHit");
 	SphereCollider* hitUpCollider = boss->Component()->AddComponent<SphereCollider>();
 	info.parentTransfrom = boss->GetTransform();
 	info.shape = CollsionInformation::SPHERE;
@@ -118,6 +119,7 @@ void BossCreater::CreateBoss()
 	info.tag = CollsionInformation::Tag::BOSS;
 	info.size = 1.0f;
 	hitUpCollider->CollsionAdd(info, Transform(VECTOR3(0, 110, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
+	hitUpCollider->SetTag("BossHit");
 	//“–‚½‚è”»’è‚ð¶¬i‚â‚ç‚ê”»’èj
 	/*SphereCollider* collider2 = boss->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info2;
