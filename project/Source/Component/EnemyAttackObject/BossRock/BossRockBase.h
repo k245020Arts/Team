@@ -21,29 +21,76 @@ public:
 
 	virtual void Update()override;
 	void Draw()override;
-
+	/// <summary>
+	/// オブジェクトに当たったかどうかの判定
+	/// </summary>
+	/// <param name="_obj">今当たったオブジェクト</param>
+	/// <returns>過去に当たってたかどうか</returns>
 	bool HitObjects(BaseObject* _obj) {
 		return (hitObjects.count(_obj) > 0);
 	}
-
+	/// <summary>
+	/// 地面についたときの処理
+	/// </summary>
 	virtual void Ground();
 
+	/// <summary>
+	/// オブジェクトが当たった時にオブジェクト情報の追加
+	/// </summary>
+	/// <param name="_obj">追加させるオブジェクト</param>
 	void AddHitObj(BaseObject* _obj) { hitObjects.insert(_obj); }
+	/// <summary>
+	/// 爆発をするかどうかの判定
+	/// </summary>
+	/// <param name="_blast"></param>
 	void SetCanBlast(bool _blast) { blastCan = _blast; }
+	/// <summary>
+	/// プレイヤーの攻撃が投擲物に当たった時の処理
+	/// </summary>
+	/// <param name="_playerTransform">プレイヤーのトランスフォーム</param>
 	void PlayerAttackRockFlyAway(Transform& _playerTransform);
-
-	void SetRockModel();
-
+	/// <summary>
+	/// 攻撃がボスに当たった時にするイベント
+	/// </summary>
 	void RockBossHit();
-
+	/// <summary>
+	/// 投擲物の開始
+	/// </summary>
+	/// <param name="_attack">投擲物が持つデータ</param>
+	/// <param name="_handMatrix">手のマトリックスの情報、いらないならnullptrを入れる</param>
 	void Start(const BossAttackBase::ThrowObjectAttackData& _attack, MATRIX* _handMatrix);
+	/// <summary>
+	/// 投擲物を落とすときに使う
+	/// </summary>
 	void DropObject();
+	/// <summary>
+	/// 投擲物を投げ始めるときに呼ぶ
+	/// </summary>
+	/// <param name="_player"></param>
 	void ThrowRockStart(BaseObject* _player);
+	/// <summary>
+	/// 投擲物のデータを取得
+	/// </summary>
+	/// <returns>投擲物のデータ</returns>
 	const BossAttackBase::ThrowObjectAttackData& GetThrowObjectsData()const { return attackData; }
-
+	/// <summary>
+	/// 予測線を出すときの処理
+	/// </summary>
+	/// <param name="_pos">地面の座標</param>
 	void SetPreInfo(const VECTOR3& _pos);
+	/// <summary>
+	/// 投擲物のデータをセット
+	/// </summary>
+	/// <param name="_data">投擲物のデータ</param>
 	void SetThrowParam(BossAttackBase::ThrowObjectAttackData _data) { attackData = _data; }
+	/// <summary>
+	/// 空のオブジェクトなのかStartの関数を呼んだかどうかの判定
+	/// </summary>
+	/// <returns>trueならStartが呼ばれている。falseなら空のオブジェクト</returns>
 	bool GetThrowObjectStart() { return start; }
+	/// <summary>
+	/// カプセルコリジョンのポジション移動開始
+	/// </summary>
 	void CapsuleColliderPosAddStart();
 
 protected:

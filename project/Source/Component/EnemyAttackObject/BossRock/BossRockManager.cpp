@@ -197,34 +197,9 @@ void BossRockManager::CreateThrowObject(const std::vector<BossAttackBase::ThrowO
 	}
 }
 
-VECTOR3 BossRockManager::GetPushCollSize(BossAttackBase::ThrowObjectAttackData _data)
+VECTOR3 BossRockManager::GetPushCollSize(const BossAttackBase::ThrowObjectAttackData& _data)
 {
 	return throwObjectsData[_data.throwObjectID].pushTransform.scale;
-}
-
-void BossRockManager::CreateRock(int _index,int _total,float _rotateAngle)
-{
-    Object3D* rock = new Object3D();
-
-   
-
-	//斜め
-	/*float angleZ = 45.0f * DegToRad;
-	VECTOR3 normal = VECTOR3(cosf(angleZ), 0, sinf(angleZ));
-	normal.Normalize();
-
-	float speed = 6000.0f;
-	rock->Component()->GetComponent<Physics>()->AddGravity(speed * normal);*/
-}
-
-void BossRockManager::CreateLastRock()
-{
-	//Object3D* rock = new Object3D();
-	//// プレイヤー現在位置取得
-	//VECTOR3 playerPos = boss->enemyBaseComponent.playerObj->GetTransform()->position;
-	//VECTOR3 rockPos = playerPos + VECTOR3(0.0f, 15000.0f,0.0f);
-	//rock->Init(Transform(rockPos, VECTOR3(0.0f, 0.0f, 0.0f), VOne * 3.0f), "bossRock");
-	//SetRockComponent(rock, VECTOR3(0, -3000, 0), VECTOR3(0, 1500, 0));
 }
 
 void BossRockManager::PushList(BossRockBase* _obj)
@@ -259,32 +234,6 @@ bool BossRockManager::IsFreePos(const VECTOR3& _pos, float _minDist)
 void BossRockManager::ShakeCamera()
 {
 	boss->enemyBaseComponent.camera->CameraPerspectiveShakeStart(2.0f, 0.1f);
-}
-
-void BossRockManager::ThrowStart()
-{
-	for (auto rock : rocks) {
-		if (!rock->GetThrowObjectsData().armThrow) {
-			continue;
-		}
-		rock->ThrowRockStart(boss->enemyBaseComponent.playerObj);
-	}
-
-}
-
-void BossRockManager::CreateThrow(VECTOR3& _addPos)
-{
-	//Object3D* rock = new Object3D();
-	//rock->Init(Transform(), "bossRock");
-	//BossThrowRock* throwRock = rock->Component()->AddComponent<BossThrowRock>();
-	//Physics* phy = rock->Component()->AddComponent<Physics>();
-	//Shaker* shaker = rock->Component()->AddComponent<Shaker>();
-	//
-	//phy->Start(VZero, VZero);//
-	//throwRock->CreateThrowRock(_addPos);
-
-	//throwRock->SetRockModel();
-	//boss->obj->AddChild(rock, false);
 }
 
 void BossRockManager::DropRockStart()
@@ -394,22 +343,22 @@ void BossRockManager::ChangeJsonData(const BossThrowObjectData& _data,const std:
 	json.Save(fileName, root);
 }
 
-void BossRockManager::RockContorler(BossAttackBase::BossAttackParam _data, float _animNum)
+void BossRockManager::RockContorler(BossAttackBase::BossAttackParam _data, float _animFrame)
 {
 	for (auto rock : rocks) {
 		BossAttackBase::ThrowObjectAttackData data = rock->GetThrowObjectsData();
 		//投擲物が登場するタイミング
-		if (_animNum >= data.throwObjectApperaTime) {
+		if (_animFrame >= data.throwObjectApperaTime) {
 			if (!rock->GetThrowObjectStart()) {
 				boss->rockManager->AppearThrowObject(rock, 0, 0, 0.0f);
 			}
 		}
 		//投げるの開始
-		if (data.throwStartTime <= _animNum) {
+		if (data.throwStartTime <= _animFrame) {
 			rock->ThrowRockStart(boss->enemyBaseComponent.playerObj);
 		}
 		
-		if (_animNum <= data.capsuleColliderAddStartThrowAnimFrame) {
+		if (_animFrame <= data.capsuleColliderAddStartThrowAnimFrame) {
 			if (!data.capsuleColliderAddStartThrow) {
 				rock->CapsuleColliderPosAddStart();
 			}
@@ -471,12 +420,14 @@ void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity,
 void BossRockManager::LoadEffect(BossThrowObjectData& _data)
 {
 	_data.modelData = ResourceLoad::LoadEffect(_data.modelName, ".efkefc", static_cast<Effect_ID::EFFECT_ID>(effectNum), 50.0f);
+	//エフェクトのEnumの調整のために足す
 	effectNum++;
 }
 
 void BossRockManager::LoadModel(BossThrowObjectData& _data)
 {
 	_data.modelData = ResourceLoad::LoadModel(_data.modelName, static_cast<ID::IDType>(modelNum));
+	//モデルのEnumの調整のために足す
 	modelNum++;
 }
 

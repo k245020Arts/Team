@@ -127,6 +127,7 @@ void AttackSorting::Update()
 	else {
 		if (nextAttack) {
 			if (attacks[nextState] == nullptr) {
+				//次の状態が何も入ってなかったら攻撃ステートを終了
 				b->BossAttackStateChange();
 				return;
 			}
@@ -134,6 +135,7 @@ void AttackSorting::Update()
 		}
 		else {
 			if (nextState == "") {
+				//次の状態が何も入ってなかったらもう一度抽選
 				BuildTable(bossPriority);
 				return;
 			}

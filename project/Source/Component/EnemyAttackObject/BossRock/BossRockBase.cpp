@@ -410,34 +410,6 @@ void BossRockBase::PlayerAttackRockFlyAway(Transform& _playerTransform)
 
 }
 
-void BossRockBase::SetRockModel()
-{
-	/*MeshRenderer* mesh = obj->Component()->AddComponent<MeshRenderer>();
-
-	int random = GetRand(2);
-
-	switch (random)
-	{
-	case 0:
-		mesh->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "BossAttackRock1", ID::ROCK_1));
-		obj->GetTransform()->scale = VOne * 1.0f;
-		break;
-	case 1:
-		mesh->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "BossAttackRock2", ID::ROCK_2));
-		obj->GetTransform()->scale = VOne * 1.0f;
-		break;
-	case 2:
-		mesh->ModelHandle(ResourceLoad::LoadModel(ResourceLoad::MODEL_PATH + "BossAttackRock3", ID::ROCK_3));
-		obj->GetTransform()->scale = VOne * 0.5f;
-		break;
-	default:
-		my_error_assert("rockModelİ’è–Y‚ê");
-		break;
-	}
-
-	useHandleNumber = random;*/
-}
-
 void BossRockBase::RockBossHit()
 {
 	if (attackData.blastCan) {

@@ -16,31 +16,67 @@ public:
 
 	void Update()override;
 	void Draw() override;
-
+	/// <summary>
+	/// 空のオブジェクトを生成
+	/// </summary>
+	/// <param name="_data">攻撃情報に入っているデータの配列</param>
 	void CreateThrowEmptyObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data);
-
+	/// <summary>
+	/// 空のオブジェクトから描画出来るようにする
+	/// </summary>
+	/// <param name="_rock">空のオブジェクトのポインタ</param>
+	/// <param name="_index">インデックス</param>
+	/// <param name="_total">出てくるトータルの数</param>
+	/// <param name="_rotateAngle">回転角</param>
 	void AppearThrowObject(BossRockBase* _rock, int _index, int _total, float _rotateAngle);
+	/// <summary>
+	/// 手で投げるとき以外に使う
+	/// </summary>
+	/// <param name="_data">攻撃情報に入っているデータの配列</param>
+	/// <param name="_index">インデックス</param>
+	/// <param name="_total">出てくるトータルの数</param>
+	/// <param name="_rotateAngle">回転角</param>
 	void CreateThrowObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle);
-	VECTOR3 GetPushCollSize(BossAttackBase::ThrowObjectAttackData _data);
+	/// <summary>
+	/// 当たり判定のサイズを取得
+	/// </summary>
+	/// <param name="_data">投擲物のデータ</param>
+	/// <returns></returns>
+	VECTOR3 GetPushCollSize(const BossAttackBase::ThrowObjectAttackData& _data);
 
-	void CreateRock(int _index, int _total, float _rotateAngle);
-	void CreateLastRock();
-
+	/// <summary>
+	/// リストに追加する関数、投擲物クラスから減速呼んでいるので特にいじる必要なし
+	/// </summary>
+	/// <param name="_obj"></param>
 	void PushList(BossRockBase* _obj);
+	/// <summary>
+	/// リストから削除する関数、投擲物クラスから減速呼んでいるので特にいじる必要なし
+	/// </summary>
+	/// <param name="_obj"></param>
 	void RemoveList(BossRockBase* _obj);
 
+	/// <summary>
+	/// 投擲物のリストのサイズを取得
+	/// </summary>
+	/// <returns></returns>
 	size_t GetSize() { return rocks.size(); }
 
-	bool IsFreePos(const VECTOR3& _pos, float _minDist);
-
+	/// <summary>
+	/// カメラを震わせるときに使う関数
+	/// </summary>
 	void ShakeCamera();
 
-	void ThrowStart();
-	void CreateThrow(VECTOR3& _addPos);
+	/// <summary>
+	/// 投擲物を落とすかどうかの判定
+	/// </summary>
 	void DropRockStart();
 
 	//指定されたポジションから一番近い岩のポジションを返す
 	VECTOR3 GetRockPos(VECTOR3 _pos);
+	/// <summary>
+	/// すべての投擲物の位置を返す
+	/// </summary>
+	/// <returns>投擲物のPosition</returns>
 	std::list<VECTOR3> GetAllRockPos();
 
 	struct BossThrowObjectData
@@ -61,13 +97,33 @@ public:
 			isEffect = false;
 		}
 	};
-
+	/// <summary>
+	/// 投擲物のデータを渡す
+	/// </summary>
+	/// <returns>投擲物のデータの配列</returns>
 	std::map<std::string, BossThrowObjectData> GetThrowObjectsData() { return throwObjectsData; }
 
+	/// <summary>
+	/// 投擲物データの追加
+	/// </summary>
+	/// <param name="_data">新たに入れる投擲物データ</param>
 	void AddJsonData(BossThrowObjectData _data);
+	/// <summary>
+	/// 今まで使われていたものを上書きするときに使う関数
+	/// </summary>
+	/// <param name="_data">新しいデータ</param>
+	/// <param name="_oldKey">今までの名前</param>
+	/// <param name="_newKey">新しい名前</param>
 	void ChangeJsonData(const BossThrowObjectData& _data, const std::string& _oldKey, const std::string& _newKey);
-
-	void RockContorler(BossAttackBase::BossAttackParam _data,float _animNum);
+	/// <summary>
+	/// 岩が出るタイミングを管理
+	/// </summary>
+	/// <param name="_data">ボスの攻撃のデータ</param>
+	/// <param name="_animNum">アニメーションの現在の再生時間</param>
+	void RockContorler(BossAttackBase::BossAttackParam _data,float _animFrame);
+	/// <summary>
+	/// 攻撃が終了した時に消すオブジェクトは消す
+	/// </summary>
 	void AttackFinishDelete();
 
 private:
@@ -80,7 +136,7 @@ private:
 	int modelNum;
 	int effectNum;
 
-
+	bool IsFreePos(const VECTOR3& _pos, float _minDist);
 	void SetRockComponent(Object3D* _base,const VECTOR3& _gravity, const VECTOR3& _fir,const BossAttackBase::ThrowObjectAttackData& _data);
 
 	void LoadEffect(BossThrowObjectData& _data);

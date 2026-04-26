@@ -475,22 +475,61 @@ public:
 	/// </summary>
 	/// <returns>ダメージのパラメーター</returns>
 	const BossAttackParam& GetDamageParam() { return attackParam; }
-
+	/// <summary>
+	/// データのセーブをする関数
+	/// </summary>
 	void DataSaveAll();
-
+	/// <summary>
+	/// 攻撃の当たり判定の生成
+	/// </summary>
 	void AttackCollsion();
+	/// <summary>
+	/// ボスの攻撃の当たり判定の生成
+	/// </summary>
 	void BossAttackCollsion();
-
+	/// <summary>
+	/// 攻撃時の音の生成
+	/// </summary>
 	void AttackSound();
+	/// <summary>
+	/// 攻撃をするときに手を光らせる前段階の処理
+	/// </summary>
+	/// <param name="_modelId">モデルのEnum</param>
+	/// <param name="_modelFrame">光らせる場所のフレーム</param>
+	/// <param name="_voice">ボイスの名前</param>
 	void AttackFlash(ID::IDType _modelId, int _modelFrame, std::string _voice);
+	/// <summary>
+	/// 攻撃をするときに手を光らせる処理
+	/// </summary>
+	/// <param name="_modelId">モデルのEnum</param>
+	/// <param name="_modelFrame">光らせる場所のフレーム</param>
+	/// <param name="_voice">ボイスの名前</param>
 	void AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std::string _voice);
+	/// <summary>
+	/// 軌跡の表示
+	/// </summary>
 	void Trail();
+	/// <summary>
+	/// 軌跡の表示
+	/// </summary>
+	/// <param name="_right">右手から出るか左手から出るか</param>
 	void BossTrail(bool _right);
-
+	/// <summary>
+	/// ジャスト回避当たり判定の生成
+	/// </summary>
 	void BossJustAvoidCollsion();
+	/// <summary>
+	/// ジャスト回避当たり判定の生成
+	/// </summary>
 	void EnemyJustAvoidCollsion();
-
+	/// <summary>
+	/// 攻撃のデータのロード
+	/// </summary>
 	void LoadAttackParam();
+	/// <summary>
+	/// 攻撃のデータの受け渡し
+	/// </summary>
+	/// <param name="_param"></param>
 	void SetAttackParam(BossAttackParam _param);
 
 	/// <summary>
@@ -513,6 +552,9 @@ public:
 	/// 衝撃波イベント
 	/// </summary>
 	void ShackWaveEvent();
+	/// <summary>
+	/// 衝撃波の生成
+	/// </summary>
 	void CreateWave();
 	/// <summary>
 	/// 投擲物イベント
