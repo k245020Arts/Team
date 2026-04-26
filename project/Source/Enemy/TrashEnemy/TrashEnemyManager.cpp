@@ -147,7 +147,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
         const int R_MAX = 2000;
         float rangeX = (float)GetRand(R_MAX * 2) - R_MAX;
 		float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
-        VECTOR3 pos = VECTOR3(rangeX, 0, rangeY);
+        VECTOR3 pos = VECTOR3(rangeX, 3000, rangeY);//
 
 		//“G‚Ìí—Ş‚Ì”‚ª‚Å‚«‚é‚¾‚¯‹Ï“™‚É‚·‚é‚½‚ß‚Ìˆ—
 		if (spawnCounter >= kindsCounter)

@@ -18,4 +18,6 @@ private:
 	const float RANGESPEED = 60.0f;
 	//プレイヤーの探知範囲を少しずつあげる
 	float detectionRange;
+
+	VECTOR3 setGravity;
 };
