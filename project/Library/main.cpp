@@ -24,7 +24,7 @@
 #include "../Source/Screen.h"
 #include "../ImGui/imgui_impl_dxlib.hpp"
 #include <d3d11.h>
-#include "../resource.h"
+#include "../icon/resource.h"
 
 #define CoGVersion "4.5F"
 

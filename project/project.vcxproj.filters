@@ -1176,7 +1176,7 @@
     <ClInclude Include="Source\Component\Collider\CapsuleCollider.h">
       <Filter>Component\Collider\Capsule</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="icon\resource.h">
       <Filter>icon</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1399,7 +1399,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Resource.rc">
+    <ResourceCompile Include="icon\Resource.rc">
       <Filter>icon</Filter>
     </ResourceCompile>
   </ItemGroup>
