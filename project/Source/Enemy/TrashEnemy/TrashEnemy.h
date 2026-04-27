@@ -88,8 +88,12 @@ public:
 	bool GetIsRunState() { return isRunState; }
 	//追いかける時にどのポイントを追いかけるか決める
 	int GetPointNumber() { return pointNumber; }
+	bool GetCooperateDamageMove() { return cooperateDamageMove; }
+	float MaxHp() { return maxHp; }
 
 	VECTOR3 TargetPoint()const { return targetPoint; }
+
+	bool GetDeadMove(){return deadMove;	}
 
 	//セッター
 	void SetWayPoint(VECTOR3 _wayPoint);
@@ -106,8 +110,12 @@ public:
 	//遠距離の敵の攻撃準備
 	void ReadyCooperteAtk2(VECTOR3 _pos);
 
+	void SetLeaderPos(VECTOR3 _pos);
+
 	//遠距離の敵が攻撃する
 	void RangedAttack();
+	//指定した分ダメージを受ける
+	void ChangeHp(float _damage);
 
 	template<typename T>
 	T* CollsionStart(CollsionSet* _set, const Transform& _trans)
@@ -154,9 +162,6 @@ private:
 	//防御力
 	float defense;
 
-	//強めの味方についていくか
-	//bool isEnemyFollow;
-	
 	VECTOR3 targetPoint;
 	//連携攻撃時のポジション指定
 	VECTOR3 cooperateWayPoint;
@@ -173,4 +178,9 @@ private:
 	bool isRunState;
 
 	int pointNumber;
+
+	VECTOR3 leaderPos;
+	bool cooperateDamageMove;
+
+	bool deadMove;
 };

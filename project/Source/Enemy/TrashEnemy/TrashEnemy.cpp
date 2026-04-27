@@ -234,6 +234,12 @@ TrashEnemy::TrashEnemy()
 	isRunState = false;
 
 	pointNumber = 0;
+
+	leaderPos = VZero;
+
+	cooperateDamageMove = false;
+
+	deadMove = false;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -248,8 +254,11 @@ void TrashEnemy::Update()
 	EnemyBase::Update();
 
 	if (hp <= 0)
+	{
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
-
+		deadMove = true;
+	}
+		
 	if (CheckHitKey(KEY_INPUT_9))
 		hp -= maxHp;
 }
@@ -356,12 +365,22 @@ void TrashEnemy::ReadyCooperteAtk2(VECTOR3 _pos)
 	enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK2);
 }
 
+void TrashEnemy::SetLeaderPos(VECTOR3 _pos)
+{
+	leaderPos = _pos;
+}
+
 void TrashEnemy::RangedAttack()
 {
 	if (enemyType == EnemyType::MELEE || enemyType == EnemyType::MAX)
 		return;
 
 	isCooperateAtk = true;
+}
+
+void TrashEnemy::ChangeHp(float _damage)
+{
+	hp += _damage;
 }
 
 void TrashEnemy::LookTarget(VECTOR3 _pos)
@@ -425,6 +444,7 @@ void TrashEnemy::PlayerHit()
 	if (isMovingToPlayer && enemyType == EnemyType::RANGED)
 	{
 		//‰“‹——£‚ÌƒŠ[ƒ_[‚É”ò‚Î‚·ˆ—‚ğì‚é
+		cooperateDamageMove = true;
 		return;
 	}
 
