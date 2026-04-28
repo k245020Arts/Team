@@ -67,6 +67,8 @@ void T_EnemyDead::Start()
 	counter = 0;
 	FindGameObject<EnemyManager>()->RemoveList(e, obj);
 
+	enemyPosY = e->GetPos().y;
+
 	EnemyStateBase::Start();
 }
 

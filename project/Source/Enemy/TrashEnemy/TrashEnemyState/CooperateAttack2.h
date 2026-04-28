@@ -20,4 +20,6 @@ private:
 	
 	VECTOR3 setGravity;
 	bool damageMove;
+
+	float speedDownCounter;
 };

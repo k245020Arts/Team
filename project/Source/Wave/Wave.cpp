@@ -32,7 +32,7 @@ void Wave::Update()
 	
 	CooperateAttack();
 	
-	if (waveNow == 3) {
+	/*if (waveNow == 3) {
 		if (bossCreate) {
 			FindGameObject<BossCreater>()->CreateBoss();
 			FindGameObject<GameControler>()->ChangeState(GameControler::GameState::BOSS_PLAY_BEFORE);
@@ -41,7 +41,7 @@ void Wave::Update()
 			bossCreate = false;
 			bossWave = true;
 		}
-	}
+	}*/
 }
 
 void Wave::Draw()
@@ -50,8 +50,6 @@ void Wave::Draw()
 
 void Wave::FirstRespown()
 {
-	
-	tEnemyManager->CreateEnemy(SPWNPOS, 5);
 	first = true;
 }
 
@@ -65,24 +63,23 @@ void Wave::EnemySpawn()
 	if (waveNow > WAVE_MAX)
 		return;
 
-	//一個前のウェーブで敵を倒した速度によって敵の出す数を変えるためのカウンター
-	battleCounter += Time::DeltaTimeRate();
-
-	if (spawn >= 5 && battleCounter >= 10)
+	int _counter = tEnemyManager->GetActiveEnemy();
+	if (_counter <= 0)
 	{
-		spawn--;
-		battleCounter = 0;
-	}
-	
-	if (tEnemyManager->GetActiveEnemy() <= 0)
-	{
-		if (waveNow < WAVE_MAX) {
-			tEnemyManager->CreateEnemy(SPWNPOS, spawn);
-		}
+		if(waveNow != WAVE_MAX)
+			tEnemyManager->CreateEnemy(SPWNPOS, spawnData[waveNow - 1].MeleeEnemyCounter, spawnData[waveNow - 1].RangedEnemyCounter);
+		
+		if (waveNow == WAVE_MAX)
+			if (bossCreate)
+			{
+				FindGameObject<BossCreater>()->CreateBoss();
+				FindGameObject<GameControler>()->ChangeState(GameControler::GameState::BOSS_PLAY_BEFORE);
 
+				FindGameObject<Fead>()->FeadIn(1.0f, 0x000000, Easing::EaseIn<int>);
+				bossCreate = false;
+				bossWave = true;
+			}
 		isCooperate = false;
-		battleCounter = 0;
-		spawn = SPAWN_MAX;
 		waveNow++;
 	}
 }

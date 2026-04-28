@@ -381,6 +381,8 @@ void TrashEnemy::RangedAttack()
 void TrashEnemy::ChangeHp(float _damage)
 {
 	hp += _damage;
+	//å„Ç≈èCê≥
+	deadPreset = deadPresets[4];
 }
 
 void TrashEnemy::LookTarget(VECTOR3 _pos)

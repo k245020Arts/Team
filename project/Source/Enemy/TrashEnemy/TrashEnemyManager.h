@@ -44,9 +44,8 @@ public:
 	/// </summary>
 	/// <param name="_pos">座標</param>
 	/// <param name="enemySpawnCounter">何体生成するか</param>
-	void CreateEnemy(VECTOR3 _pos,int enemySpawnCounter);
-	//敵のリストの取得
-	//std::list<TrashEnemy*>& EnemyList(){ return enemies; }///
+	void CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int rangedSpawnCounter);
+
 	int GetEnemySize() const;
 	//敵が何人生きているかわかる関数
 	int GetActiveEnemy()const;
@@ -97,4 +96,5 @@ private:
 	bool debugWaypoint;
 
 	bool startRangedAtk;
+
 };

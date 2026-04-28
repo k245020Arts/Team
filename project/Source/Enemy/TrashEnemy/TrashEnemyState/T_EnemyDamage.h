@@ -29,6 +29,7 @@ protected:
 	float side;
 
 	float backSpeed;
+
+	float enemyPosY;
 private:
-	
 };

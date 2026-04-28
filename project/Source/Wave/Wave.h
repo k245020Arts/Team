@@ -25,7 +25,7 @@ private:
 	//最初のスポーン数
 	const float INITIALSPAWN = 8;
 	//最大ウェーブ数
-	const int WAVE_MAX = 2;
+	const int WAVE_MAX = 3;
 	const VECTOR3 SPWNPOS = VECTOR3(0, 0, 2500);
 	int waveNow;
 
@@ -37,4 +37,15 @@ private:
 	bool bossCreate;
 	bool first;
 	bool bossWave;
+
+	struct SpawnData
+	{
+		float MeleeEnemyCounter;
+		float RangedEnemyCounter;
+	};
+	std::vector<SpawnData> spawnData
+	{
+		{8,0},
+		{15,5},
+	};
 };

@@ -19,6 +19,8 @@ T_EnemyDamage::T_EnemyDamage()
 	side = 0;
 
 	backSpeed = 0;
+
+	enemyPosY = 0.0f;
 }
 
 T_EnemyDamage::~T_EnemyDamage()
@@ -37,9 +39,9 @@ void T_EnemyDamage::Update()
 	
 	e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
-	float a = -2000.0f;  //落下の強さ（重力）
-	float h = 0.5f;		 //最高点までの時間
-	float k = 800.0f;    //吹き飛びの高さ
+	//float a = -2000.0f;  //落下の強さ（重力）
+	//float h = 0.5f;		//最高点までの時間
+	//float k = 800.0f;    //吹き飛びの高さ
 
 	KnockbackMove(e, e->deadPreset);
 
@@ -76,7 +78,7 @@ void T_EnemyDamage::KnockbackMove(TrashEnemy* _e, DeadData _deadData)
 {
 	counter += Time::DeltaTimeRate();
 	
-	float offsetY = Orbit(_deadData.gravity, _deadData.timeToPeak, _deadData.maxHeight);
+	float offsetY = Orbit(_deadData.gravity, _deadData.timeToPeak, enemyPosY + _deadData.maxHeight);
 
 	if (offsetY <= 0)
 		offsetY = 0;

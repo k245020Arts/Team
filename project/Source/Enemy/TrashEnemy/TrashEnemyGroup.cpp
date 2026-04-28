@@ -2,6 +2,7 @@
 #include "TrashEnemy.h"
 #include "../../Common/Random.h"
 #include "../../Camera/Camera.h"
+#include "../../Common/Effect/EffectManager.h"
 
 TrashEnemyGroup::TrashEnemyGroup()
 {
@@ -347,10 +348,14 @@ void TrashEnemyGroup::RangedEnemyAttack()
 
 			if (enemy->GetCooperateDamageMove())
 			{
-				if (VSize(leaderPos - enemy->GetPos()) <= 1000)
+				VECTOR3 enemyPos = enemy->GetPos();
+				if (VSize(leaderPos - enemyPos) <= 1000)
 				{
 					rangedDamageMove = true;
-					enemy->ChangeHp(-enemy->MaxHp()-50);
+					enemy->ChangeHp(-enemy->MaxHp());
+					EffectManager::GetInstance()
+						->CreateEffekseer(*enemy->GetEnemyObj()->GetTransform(), nullptr, Effect_ID::ROCK_BLAST, 3.0f);
+					
 				}
 				return;
 			}
@@ -364,6 +369,14 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		}
 	}
 	rangedAtkCounter += Time::DeltaTimeRate();
+}
+
+void TrashEnemyGroup::DeadMeleeEnemy()
+{
+	for (auto& itr : meleeEnemies)
+	{
+		itr->ChangeHp(-itr->GetMaxHp());
+	}
 }
 
 void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
@@ -394,7 +407,7 @@ void TrashEnemyGroup::RangedDamageMove()
 {
 	for (auto& enemy : rangedEnemies)
 	{
-		const float Damage = -enemy->MaxHp() - 50;
+		const float Damage = -enemy->MaxHp();
 		if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
 		{
 			enemy->ChangeHp(Damage);

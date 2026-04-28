@@ -75,18 +75,22 @@ void TrashEnemyManager::Draw()
 	}
 }
 
-void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
+void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int rangedSpawnCounter)
 {
 	//同じ種類の敵を何体出すか
-	int kindsCounter = enemySpawnCounter / 3;
+	int kindsCounter = meleeSpawnCounter / 3;
 	//何種類目の敵か
 	int numCounter = 0;
 	//その種類の敵が何体スポーンしたか
 	int spawnCounter = 0;
-
+	//どのポイントを追いかけるかを決める
 	int number = 0;
+	//何体目に生成される敵か
+	int totalCounter = 0;
+	//生成する合計の敵
+	int max = meleeSpawnCounter + rangedSpawnCounter;
 
-    for (int i = 0; i < enemySpawnCounter; i++)
+    for (int i = 0; i < max/*meleeSpawnCounter*/; i++)
     {
 		// 個別のenemyを作る
 		Object3D* e;
@@ -177,8 +181,18 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 		g->GuageDrawReady<TrashEnemy>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
 		g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
 
-		//enemyGroup->SetMeleeEnemy(t);
-		enemyGroup->SetRangedEnemy(t);
+		totalCounter++;
+
+		if (meleeSpawnCounter >= totalCounter)
+		{
+			enemyGroup->SetMeleeEnemy(t);
+			continue;
+		}
+		else if (max >= totalCounter)
+		{
+			enemyGroup->SetRangedEnemy(t);
+			continue;
+		}
     }
 }
 
@@ -199,11 +213,13 @@ void TrashEnemyManager::ImguiDraw()
 	ImGui::Text("enemiesSize: %d", enemyGroup->GetActiveEnemy());
 
 	if (ImGui::Button("enemySpwn"))
-		CreateEnemy(VZero, 1);
+		CreateEnemy(VZero, 1,0);
 	if (ImGui::Button("ack1"))
 		Cooperate();
 	if (ImGui::Button("ack2"))
 		startRangedAtk = true;
+	if (ImGui::Button("DeadMeleeEnemy"))
+		enemyGroup->DeadMeleeEnemy();
 
 	if (ImGui::Button("waypoint"))
 	{

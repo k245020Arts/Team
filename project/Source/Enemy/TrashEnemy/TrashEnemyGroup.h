@@ -33,6 +33,8 @@ public:
 	//‰“‹——£‚Ì“G‚Ì˜AŒgUŒ‚
 	void RangedEnemyAttack();
 
+	void DeadMeleeEnemy();
+
 public:
 	Camera* camera;
 	TrashEnemyManager* trashEnemyManager;
