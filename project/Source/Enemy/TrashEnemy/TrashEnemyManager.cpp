@@ -177,8 +177,8 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int enemySpawnCounter)
 		g->GuageDrawReady<TrashEnemy>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
 		g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
 
-		enemyGroup->SetMeleeEnemy(t);
-		//enemyGroup->SetRangedEnemy(t);
+		//enemyGroup->SetMeleeEnemy(t);
+		enemyGroup->SetRangedEnemy(t);
     }
 }
 

@@ -83,12 +83,13 @@ public:
 
 	//‰“‹——£‚Ì“G----------------
 	void RangedEnemySetWaypoint(TrashEnemy* _enemy);
-	
+	void RangedDamageMove();
 	//WayPoint RangedEnemyPoint;
 	VECTOR3 leaderPos;
 	bool isReadyLeader;
 
 	float rangedAtkCounter;
+	bool rangedDamageMove;
 
 	//--------------------------
 };

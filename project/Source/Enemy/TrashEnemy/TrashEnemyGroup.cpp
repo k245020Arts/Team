@@ -16,6 +16,8 @@ TrashEnemyGroup::TrashEnemyGroup()
 	leaderPos = VZero;
 
 	isReadyLeader = false;
+
+	rangedDamageMove = false;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -40,6 +42,9 @@ void TrashEnemyGroup::Update()
 	{
 		RangedEnemySetWaypoint(ranged);
 	}
+
+	if (rangedDamageMove)
+		RangedDamageMove();
 }
 
 void TrashEnemyGroup::SettingGroup(TrashEnemy* _enemy, int _index)
@@ -301,6 +306,9 @@ void TrashEnemyGroup::RangedEnemyAttack()
 
 	for (auto& enemy : rangedEnemies)
 	{
+		if (enemy->GetDeadMove())
+			return;
+
 		if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
 		{
 			enemy->ChangeState(StateID::COOPERATEATTACK2);
@@ -317,6 +325,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		{
 			if (!isReadyLeader)
 				return;
+
 			if (pointCounter < MaxPoint)
 			{
 				//‹Ï“™‚ÉŠ„‚Á‚Ä‰~Œ`‚É”z’u
@@ -336,8 +345,19 @@ void TrashEnemyGroup::RangedEnemyAttack()
 			if (!isActive)
 				return;
 
+			if (enemy->GetCooperateDamageMove())
+			{
+				if (VSize(leaderPos - enemy->GetPos()) <= 1000)
+				{
+					rangedDamageMove = true;
+					enemy->ChangeHp(-enemy->MaxHp()-50);
+				}
+				return;
+			}
+
 			if (rangedAtkCounter >= MaxAttackCounter&& !enemy->IsMovingToPlayer())
 			{
+				enemy->SetLeaderPos(leaderPos);
 				enemy->RangedAttack();
 				rangedAtkCounter = 0;
 			}
@@ -368,4 +388,21 @@ void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 
 		leaderPos = _enemy->GetPos();
 	}	
+}
+
+void TrashEnemyGroup::RangedDamageMove()
+{
+	for (auto& enemy : rangedEnemies)
+	{
+		const float Damage = -enemy->MaxHp() - 50;
+		if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
+		{
+			enemy->ChangeHp(Damage);
+		}
+		else
+		{
+			if(!enemy->IsMovingToPlayer())
+				enemy->ChangeHp(Damage);
+		}
+	}
 }

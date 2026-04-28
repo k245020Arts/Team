@@ -21,6 +21,8 @@ CooperateAttack2::CooperateAttack2()
 	isLeader = false;
 
 	setGravity = VZero;
+
+	damageMove = false;
 }
 
 CooperateAttack2::~CooperateAttack2()
@@ -32,7 +34,12 @@ void CooperateAttack2::Update()
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
 	if (!isLeader)
-		RangedMove(enemy);
+	{
+		if (!damageMove)
+			RangedMove(enemy);
+		else
+			DamageMove(enemy);
+	}
 	else 
 		LeaderMove(enemy);
 }
@@ -41,8 +48,6 @@ void CooperateAttack2::Start()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	/*if (enemy->GetEnemyType() == enemy->EnemyType::RANGED)
-	else */
 	if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
 		isLeader = true;;
 
@@ -65,7 +70,7 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
 	VECTOR3 dir = VZero;
 	float speed = 0.0f;
-
+	//リーダーの周りに移動
 	if (VSize(targetPos - enePos) >= 30 && !_enemy->isStandby)
 	{
 		dir = VNorm(targetPos - enePos);
@@ -96,10 +101,22 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	Trail();
 	EnemyJustAvoidCollsion();
 
+	if (_enemy->cooperateDamageMove)
+		damageMove = true;
 	//後で変更
-	if (VSize(pPos - enePos) <= 30)
-		_enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+	/*if (VSize(pPos - enePos) <= 30)
+		_enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);*/
 
+}
+
+void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
+{
+	const VECTOR3 enePos = _enemy->GetPos();
+	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
+	VECTOR3 dir = VNorm(targetPos - enePos);
+	const float Speed = 30.0f;
+
+	_enemy->GetEnemyObj()->GetTransform()->position += dir * Speed;
 }
 
 void CooperateAttack2::LeaderMove(TrashEnemy* _enemy)
