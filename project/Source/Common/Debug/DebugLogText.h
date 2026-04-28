@@ -13,6 +13,9 @@ enum class LogLevel {
     ERROR_LOG,
 };
 
+/// <summary>
+/// デバックのログを外部のTextデータに出力をするためのクラス
+/// </summary>
 class DebugLogText  : public SingletonBase<DebugLogText>
 {
 public:
@@ -24,7 +27,7 @@ public:
             "[" + GetTime() + "][" + LevelToString(level) + "] " + text;
 
 #ifdef _DEBUG
-        // Visual Studio の出力ウィンドウにも出す
+        // VisualStudio の出力ウィンドウにも出す
         std::cout << line << std::endl;
 #endif
 

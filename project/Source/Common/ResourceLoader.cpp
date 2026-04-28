@@ -83,7 +83,7 @@ int ResourceLoad::LoadModel(std::string path, ID::IDType id) {
 
 int ResourceLoad::LoadModel(std::string path, ID::IDType id, bool _common) {
     std::string name = path;
-    auto& targetLoad = _common ? commonFileLoad : fileLoad;
+    auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
 
     if (targetLoad[name].handle == -1) {
         ID::SetID(path, id);
@@ -109,15 +109,16 @@ int ResourceLoad::LoadSound(std::string path, std::string exten, Sound_ID::SOUND
 
 int ResourceLoad::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id, bool _common) {
     std::string name = path;
-    auto& targetLoad = _common ? commonFileLoad : fileLoad;
+    auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
 
+    //配列の要素にデータが入ってなかったらロード
     if (targetLoad[name].handle == -1) {
         std::string loadName = ResourceLoad::SOUND_PATH + path + exten;
         targetLoad[name].handle = LoadSoundMem(loadName.c_str());
         targetLoad[name].type = Type::SOUND;
         Sound_ID::SetSoundId(path, id);
     }
-
+    //ロードを失敗したらMessageBoxを流す
     if (targetLoad[name].handle == -1) {
         ShowLoadError("Sound", name);
         return -1;
@@ -134,15 +135,15 @@ int ResourceLoad::LoadEffect(std::string path, std::string _exten, Effect_ID::EF
 
 int ResourceLoad::LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size, bool _common) {
     std::string name = path;
-    auto& targetLoad = _common ? commonFileLoad : fileLoad;
-
+    auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
+    //配列の要素にデータが入ってなかったらロード
     if (targetLoad[name].handle == -1) {
         std::string loadName = ResourceLoad::EFFECT_PATH + path + _exten;
         targetLoad[name].handle = LoadEffekseerEffect(loadName.c_str(), size);
         targetLoad[name].type = Type::EFFECT;
         Effect_ID::SetEffectID(path, id);
     }
-
+    //ロードを失敗したらMessageBoxを流す
     if (targetLoad[name].handle == -1) {
         ShowLoadError("Effect", name);
         return -1;
@@ -159,14 +160,14 @@ int ResourceLoad::LoadImageGraph(std::string path, ID::IDType id) {
 int ResourceLoad::LoadImageGraph(std::string path, ID::IDType id, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad;
-
+    //配列の要素にデータが入ってなかったらロード
     if (targetLoad[name].handle == -1) {
         ID::SetID(path, id);
         std::string fullPath = path + ".png";
         targetLoad[name].handle = LoadGraph(fullPath.c_str());
         targetLoad[name].type = Type::IMAGE;
     }
-
+    //ロードを失敗したらMessageBoxを流す
     if (targetLoad[name].handle == -1) {
         ShowLoadError("Image", name);
         return -1;
@@ -182,8 +183,8 @@ int ResourceLoad::LoadAnim(std::string path, ID::IDType id) {
 
 int ResourceLoad::LoadAnim(std::string path, ID::IDType id, bool _common) {
     std::string name = path;
-    auto& targetLoad = _common ? commonFileLoad : fileLoad;
-
+    auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
+    //配列の要素にデータが入ってなかったらロード
     if (targetLoad[name].handle == -1) {
         ID::SetID(path, id);
         std::string loadName = ResourceLoad::ANIM_PATH + path;
@@ -191,7 +192,7 @@ int ResourceLoad::LoadAnim(std::string path, ID::IDType id, bool _common) {
         targetLoad[name].handle = MV1LoadModel(loadName.c_str());
         targetLoad[name].type = Type::ANIM;
     }
-
+    //ロードを失敗したらMessageBoxを流す
     if (targetLoad[name].handle == -1) {
         ShowLoadError("Anim", name);
         return -1;
@@ -201,7 +202,7 @@ int ResourceLoad::LoadAnim(std::string path, ID::IDType id, bool _common) {
     return targetLoad[name].handle;
 }
 
-// 共通と通常の両方から検索するGetHandle
+// 共通ファイルとシーンごとで分けるファイルの両方から検索する
 int ResourceLoad::GetHandle(ID::IDType id) {
     std::string name = ID::GetID(id);
 
@@ -219,6 +220,7 @@ int ResourceLoad::GetHandle(ID::IDType id) {
     return -1;
 }
 
+// 共通ファイルとシーンごとで分けるファイルの両方から検索する
 int ResourceLoad::GetSoundHandle(Sound_ID::SOUND_ID id) {
     std::string name = Sound_ID::GetSoundID(id);
 
@@ -235,7 +237,7 @@ int ResourceLoad::GetSoundHandle(Sound_ID::SOUND_ID id) {
     Debug::DebugLog("そのサウンドデータはありません: " + std::to_string((int)id));
     return -1;
 }
-
+// 共通ファイルとシーンごとで分けるファイルの両方から検索する
 int ResourceLoad::GetEffectHandle(Effect_ID::EFFECT_ID id) {
     std::string name = Effect_ID::GetEffectID(id);
 

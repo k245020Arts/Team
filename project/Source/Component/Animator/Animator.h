@@ -150,24 +150,45 @@ public:
 	void ImguiDraw()override;
 
 	struct AnimFileInfo {
-		int hModel;
-		bool loop;
-		float maxFrame;
-		float playSpeed;
-		float eventStartTime;
-		float eventFinishTime;
-		std::string fileName;
-		std::string id;
+		int hModel; //アニメーションモデル
+		bool loop; //ループ再生をするか
+		float maxFrame; //最大フレーム
+		float playSpeed; //プレイスピード
+		float eventStartTime; //アニメーションイベントのスタートタイム
+		float eventFinishTime; //アニメーションイベントの終了タイム
+		std::string fileName; //アニメーションモデルのファイルネーム
+		std::string id; //アニメーションID
 
 		AnimFileInfo() : hModel(-1), loop(false), maxFrame(1.0f), playSpeed(1.0f), eventFinishTime(-1.0f), eventStartTime(-1.0f), fileName(""), id("") {}
 	};
 
+	/// <summary>
+	/// アニメーションのすべてのデータをSaveする
+	/// </summary>
 	void AnimDataSaveAll();
+	/// <summary>
+	/// アニメーションの一部データをSaveする
+	/// </summary>
+	/// <param name="_fileName">アニメーションjsonファイル名</param>
 	void AnimDataReSave(std::string _fileName);
+	/// <summary>
+	/// アニメーションのデータをロードするときに使用
+	/// </summary>
+	/// <param name="_charaID">キャラクターのID</param>
+	/// <param name="_typeID">キャラクターの中の種類のID</param>
 	void AnimDataLoad(const std::string& _charaID,const std::string _typeID);
 	//void AnimDataLoad(const std::string& _path);
-
+	
+	/// <summary>
+	/// アニメーションデータの取得
+	/// </summary>
+	/// <param name="_fileName">指定したファイルネーム</param>
+	/// <returns></returns>
 	AnimFileInfo GetSelectFileInfo(std::string _fileName);
+	/// <summary>
+	/// アニメーションデータのセット
+	/// </summary>
+	/// <param name="_animFileInfo"></param>
 	void SetSelectFileInfo(AnimFileInfo _animFileInfo);
 
 private:
@@ -177,11 +198,11 @@ private:
 	std::map<std::string, AnimFileInfo> fileInfos;
 
 	struct PlayInfo {
-		std::string fileID;
-		int attachID;
-		float frame;
-		float beforeFrame;
-		int boneIndex;
+		std::string fileID; //ID
+		int attachID; //アタッチID
+		float frame; //現在のフレーム
+		float beforeFrame; //１フレーム前のフレーム
+		int boneIndex; //フレームのインデックス
 
 		PlayInfo() : fileID("NONE"), attachID(-1), frame(0.0f),beforeFrame(0.0f), boneIndex(-1){}
 	};

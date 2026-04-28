@@ -123,6 +123,7 @@ private:
         rgb.r = colorfRgb.r * 255.0f;
     }
 };
+//-----------------------色の定数----------------------
 
 const Color::Rgb WHITE = Color::Rgb(255, 255, 255, 255);
 const Color::Rgb RED = Color::Rgb(255, 0, 0, 255);
@@ -148,3 +149,12 @@ const Color::Rgb DARK_GREEN = Color::Rgb(0, 100, 0, 255);
 const Color::Rgb GRAY = Color::Rgb(128, 128, 128, 255);
 const Color::Rgb DARK_GRAY = Color::Rgb(64, 64, 64, 255);
 const Color::Rgb LIGHT_GRAY = Color::Rgb(192, 192, 192, 255);
+
+//-----------------------------------------------------------
+
+//透明と不透明で使う定数(DxLibのColorF型verと通常で使うverの2つ用意)
+static const int OPAQUE_COLOR = 255; //不透明
+static const int TRANSPARENT_COLOR = 0; //透明
+
+static const float OPAQUE_COLOR_F = 1.0f; //不透明
+static const float TRANSPARENT_COLOR = 0.0f; //透明

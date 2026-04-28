@@ -14,6 +14,8 @@ namespace {
 
 EffectManager::EffectManager()
 {
+	//------------------------------------ エフェクトのロードをしている -----------------------------------------------
+
 	ResourceLoad::LoadEffect("enemyChrage3",				".efkefc",Effect_ID::ENEMY_FLASH,				50.0f,true);
 	ResourceLoad::LoadEffect("hitEffect",					".efkefc",Effect_ID::HIT_EFFECT,				50.0f,true);
 	ResourceLoad::LoadEffect("specialHit",					".efkefc",Effect_ID::SPECIAL_HIT_EFFECT,		50.0f,true);
@@ -45,6 +47,9 @@ EffectManager::EffectManager()
 	ResourceLoad::LoadEffect("RockFall",					".efkefc",Effect_ID::ROCK_FALL,					100.0f,true);
 	ResourceLoad::LoadEffect("BossRockHitRush",				".efkefc",Effect_ID::BOSS_ROCK_HIT_RUSH,		50.0f,true);
 	ResourceLoad::LoadEffect("playerAttackRock",			".efkefc",Effect_ID::PLAYER_ATTACK_ROCK,		50.0f,true);
+
+	//-----------------------------------------------------------------------------------------------------------------
+
 	//Effekseer_SetGraphicsDeviceDXLib();
 	//SetDrawOrder(-50000);
 }
@@ -92,6 +97,7 @@ void EffectManager::Draw()
 
 BaseObject* EffectManager::CreateEffekseer(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D)
 {
+	//エフェクトの生成
 	Object3D* obj = new Object3D();
 	obj->Init(_transform.position, _transform.rotation, _transform.scale, std::to_string(_id));
 	EffectBase* base =  obj->Component()->AddComponent<EffectBase>();
@@ -180,7 +186,7 @@ void EffectManager::SetColor(Effect_ID::EFFECT_ID _id, Color::Rgb _rgb)
 void EffectManager::ParentTransformRemove(BaseObject* _obj)
 {
 	for (auto e = effect.begin(); e != effect.end();) {
-		if (_obj == *e) {
+		if (_obj == *e) { //オブジェクトが一致したら削除して関数終了(一個しか削除しない)
 			EffectBase* base = (*e)->Component()->GetComponent<EffectBase>();
 			base->ParentTransformRemove();
 			return;

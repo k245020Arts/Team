@@ -42,7 +42,7 @@ void StripTransitor::Draw()
 	const int width = 80;
 	SetDrawScreen(DX_SCREEN_BACK);
 	float rate = time / timeMax;	
-	int lp = (size.x / width) + 1;
+	const int lp = (size.x / width) + 1;
 	DrawRectGraph(0, 0, 0, 0, size.x, size.y, newWindow, true);
 	for (int i = 0; i < lp; ++i) {
 		if (i % 2 == 0) {

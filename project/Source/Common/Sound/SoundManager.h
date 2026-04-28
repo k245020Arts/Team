@@ -86,7 +86,7 @@ public:
 	/// <param name="_targetObj">ここから音が始まるもととなるObject</param>
 	/// <param name="_maxVolSize">音が聞こえる最大の距離、これより離れると音はならない</param>
 	/// <param name="_minVolSize">音の最大音量の距離、これより近づいても最大の音量で流れる。</param>
-	void Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj,float _maxVolSize,float _minVolSize);
+	void Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj,float _minVolSize,float _maxVolSize);
 	/// <summary>
 	/// 3DSoundの音の距離の基準点（大体の場合がプレイヤー)
 	/// </summary>

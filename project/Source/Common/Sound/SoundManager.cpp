@@ -43,6 +43,7 @@ void SoundManager::SoundLoad(Sound_ID::SOUND_ID _type, std::string path, std::st
 
 void SoundManager::PlaySceneLoad()
 {
+	//プレイシーンに使用する音のロード
 	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND,"swordHit", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND1,"swordHit000001", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::SWORD_HIT_SOUND2,"swordHit000002", ".wav", 255);
@@ -134,6 +135,7 @@ void SoundManager::PlaySceneLoad()
 
 void SoundManager::TitleSceneLoad()
 {
+	//タイトルシーンに使う音のロード
 	SoundLoad(Sound_ID::TITLE_BGM, "titleBGM", ".wav", 150);
 	SoundLoad(Sound_ID::PUSH, "titlePush (1)", ".wav", 250);
 	SoundLoad(Sound_ID::SOUND_ID::JUST_AVOID_SOUND, "justAvoid10", ".wav", 200);
@@ -231,7 +233,7 @@ void SoundManager::BaseVolumeChange(Sound_ID::SOUND_ID _id)
 	sound[Sound_ID::GetSoundID(_id)]->BaseChangeVolumeSound();
 }
 
-void SoundManager::Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj, float _maxVolSize, float _minVolSize)
+void SoundManager::Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj, float _minVolSize, float _maxVolSize)
 {
 	Transform*  targetTransform = _targetObj->GetTransform();
 	Transform* base3DTransfom = Base3DSoundObj->GetTransform();
@@ -239,14 +241,16 @@ void SoundManager::Play3DSound(Sound_ID::SOUND_ID _id, BaseObject* _targetObj, f
 	float size = dist.Size();
 
 	int vol = 0;
-	if (_maxVolSize <= size) {
+	//最低音量の距離より離れたら音量をなくす
+	if (_minVolSize <= size) {
 		vol = 0;
 	}
-	else if (_minVolSize >= size) {
+	//最大音量の距離より近づいたら音量を最大にする
+	else if (_maxVolSize >= size) {
 		vol = sound[Sound_ID::GetSoundID(_id)]->GetVolumn();
 	}
 	else {
-		float rate = (size - _maxVolSize) / (_minVolSize - _maxVolSize);
+		float rate = (size - _minVolSize) / (_maxVolSize - _minVolSize);
 		vol = Easing::Lerp(0, sound[Sound_ID::GetSoundID(_id)]->GetVolumn(),rate);
 	}
 	sound[Sound_ID::GetSoundID(_id)]->ChangeVolumeSound(vol);

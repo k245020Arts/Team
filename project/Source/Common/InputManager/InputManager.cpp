@@ -22,18 +22,24 @@ InputManager::InputManager()
 
 	//DontDestroyOnSceneChange(true);
 
+	//------------------------------inputの情報データを格納--------------------------------------------------------
+
+	//入力を受け付けない値
+	const int NOT_INPUT = -1;
+
 	CreateInputData(KeyConfigData("attack", KEY_INPUT_E, XINPUT_BUTTON_B, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("avoid", KEY_INPUT_X, XINPUT_BUTTON_A, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("SceneChange", KEY_INPUT_P, XINPUT_BUTTON_A, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("debugChange", KEY_INPUT_Z, NOT_INPUT, MouseInput::RIGHT_CLICK));
 	CreateInputData(KeyConfigData("camera", KEY_INPUT_SPACE, XINPUT_BUTTON_RIGHT_THUMB, MouseInput::MOUSE_NONE));
-	CreateInputData(KeyConfigData("changeMode", KEY_INPUT_TAB, -1, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("changeMode", KEY_INPUT_TAB, NOT_INPUT, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("SpecialAttack", KEY_INPUT_Q, XINPUT_BUTTON_X, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("heavyAttack", KEY_INPUT_C, XINPUT_BUTTON_Y, MouseInput::MOUSE_NONE));
-	CreateInputData(KeyConfigData("Mouse", KEY_INPUT_F1, -1, MouseInput::MOUSE_NONE));
-	CreateInputData(KeyConfigData("playerParam", KEY_INPUT_LCONTROL, -1, MouseInput::MOUSE_NONE));
-	CreateInputData(KeyConfigData("BossParamWindow", KEY_INPUT_F2, -1, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("Mouse", KEY_INPUT_F1, NOT_INPUT, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("playerParam", KEY_INPUT_LCONTROL, NOT_INPUT, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("BossParamWindow", KEY_INPUT_F2, NOT_INPUT, MouseInput::MOUSE_NONE));
 
+	//-------------------------------------------------------------------------------------------------------------
 }
 
 InputManager::~InputManager()
@@ -43,6 +49,7 @@ InputManager::~InputManager()
 	if (controller != nullptr)
 	{
 		delete controller;
+		controller = nullptr;
 	}
 	if (keyboard != nullptr)
 	{
@@ -136,6 +143,7 @@ bool InputManager::KeyInputDown(std::string _name)
 	if (m != nullptr) {
 		mouse = m->GetMousePut(inputData[_name].mouceNumber);
 	}
+	//どれかしらがInputされていたらtrue
 	if (control || key || mouse) {
 		return true;
 	}
@@ -169,6 +177,7 @@ bool InputManager::KeyInput(std::string _name)
 	if (m != nullptr) {
 		mouse = m->GetMousePushing(inputData[_name].mouceNumber);
 	}
+	//どれかしらがInputされていたらtrue
 	if (control || key || mouse) {
 		return true;
 	}
@@ -202,6 +211,7 @@ bool InputManager::KeyInputUp(std::string _name)
 	if (m != nullptr) {
 		mouse = m->GetMousePut(inputData[_name].mouceNumber);
 	}
+	//どれかしらがInputされていたらtrue
 	if (control || key || mouse) {
 		return true;
 	}

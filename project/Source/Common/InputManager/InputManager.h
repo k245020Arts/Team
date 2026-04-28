@@ -41,8 +41,7 @@ namespace
 	const int SAVE_FRAME_MAX = 600;
 	//スティック入力の最大値
 	const int STICK_INPUT_MAX = 32767;
-	//入力を受け付けない値
-	const int NOT_INPUT = -1;
+	
 }
 
 /// <summary>
@@ -88,7 +87,10 @@ public:
 	/// <param name="_name">登録名</param>
 	/// <returns>登録しているかどうか</returns>
 	bool IsData(std::string _name);
-
+	/// <summary>
+	/// ImguiのInput系でinputされているかどうか
+	/// </summary>
+	/// <returns>通常入力が出来るならtrue</returns>
 	bool IsInputCan();
 
 private:

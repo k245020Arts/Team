@@ -94,6 +94,7 @@ void TitleTransitor::Draw()
 	SetDrawScreen(DX_SCREEN_BACK);
 	float rate = time / timeMax;
 	DrawRectGraph(0, 0, 0, 0,size.x, size.y, newWindow, true);
+	//分割してシャッフルされた古いキャプチャを表示
 	for (const TitleInfo& cell : tile) {
 		DrawRectGraph(cell.pos.x * tileSize, static_cast<int>(cell.pos.y * tileSize + cell.gravity), cell.pos.x * tileSize, cell.pos.y * tileSize,tileSize, tileSize,oldWindow, true);
 	}

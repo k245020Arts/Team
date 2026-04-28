@@ -9,9 +9,17 @@ public:
 	SingleTonUpdater();
 	~SingleTonUpdater();
 
+	/// <summary>
+	/// XVˆ—
+	/// </summary>
 	static void Update();
+	/// <summary>
+	/// •`‰æ
+	/// </summary>
 	static void Draw();
-
+	/// <summary>
+	/// ”jŠü
+	/// </summary>
 	static void Release();
 
 private:

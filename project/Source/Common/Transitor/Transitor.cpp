@@ -25,12 +25,12 @@ void Transitor::StartTransitor(std::string _sceneName, float _time)
 {
 	size.x = Screen::WIDTH;
 	size.y = Screen::HEIGHT;
-
+	//前のキャプチャデータが残ってたら削除
 	if (newWindow != -1) {
 		DeleteGraph(newWindow);
 		newWindow = -1;
 	}
-
+	//前のキャプチャデータが残ってたら削除
 	if (oldWindow != -1) {
 		DeleteGraph(oldWindow);
 		oldWindow = -1;
@@ -47,7 +47,7 @@ void Transitor::StartTransitor(std::string _sceneName, float _time)
 
 	SetUseSetDrawScreenSettingReset(FALSE); //カメラのリセット
 
-	SceneManager::ChangeScene(_sceneName);
+	SceneManager::ChangeScene(_sceneName); //ここでシーンのチェンジを行う
 }
 
 bool Transitor::IsEnd() const

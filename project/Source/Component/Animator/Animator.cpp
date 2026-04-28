@@ -214,10 +214,12 @@ void Animator::SetMaxFrame(ID::IDType id, float _maxTime)
 void Animator::Play(ID::IDType id, float margeTime)
 {
     std::string str = ID::GetID(id);
+    //文字列とファイルのIDが一致してなかったらリターン
     if (current.fileID == str)
-    {
+    {  
         return;
     }
+    //前に再生されたアニメーションがあったならでデタッチ
     if (before.attachID >= 0)
     {
         MV1DetachAnim(baseModel, before.attachID);
@@ -235,6 +237,7 @@ void Animator::Play(ID::IDType id, float margeTime)
         blendTimeMax    = 0.0f;
     }
     current.fileID      = str;
+    //ファイル内にデータが入っていたらアニメーションのアタッチ
     if (fileInfos.count(str) > 0)
     {
         current.attachID    = MV1AttachAnim(baseModel, 0, fileInfos[str].hModel);
@@ -242,6 +245,7 @@ void Animator::Play(ID::IDType id, float margeTime)
         current.beforeFrame = 0.0f;
         finished = false;
         MV1SetAttachAnimTime(baseModel, current.attachID, 0.0f);
+        //前に再生されたデータがあるならブレンド
         if (before.attachID >= 0)
         {
             MV1SetAttachAnimBlendRate(baseModel, current.attachID, 0.0f);
@@ -394,6 +398,7 @@ void Animator::AnimDataLoad(const std::string& _charaID, const std::string _type
 
         if (!json.Load(path))
         {
+            //ロードできなかったらコンティニュー
             continue;
         }
 
@@ -401,6 +406,7 @@ void Animator::AnimDataLoad(const std::string& _charaID, const std::string _type
 
         if (!data.contains("Animator"))
         {
+            //Animatorが存在しなかったらコンティニュー
             continue;
         }
 
@@ -410,6 +416,7 @@ void Animator::AnimDataLoad(const std::string& _charaID, const std::string _type
         // モデル取得
         info.hModel = ResourceLoad::GetHandle(ID::StringToID(info.id));
 
+        //jsonデータでmaxFrameを-1に設定すればアニメーションの最大フレームを取得
         if (info.maxFrame <= -1.0f) {
             info.maxFrame = MV1GetAnimTotalTime(info.hModel, 0);
         }

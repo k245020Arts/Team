@@ -24,6 +24,7 @@ BlurScreen::BlurScreen()
 
 	
 	vignetteGraph	= ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "visionEffect", ID::SCREEN_BLUR_IMAGE);
+	//縮小してガウスフィルタを掛けている。(描画負荷を抑えつつ、ぼかす)
 	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_DOWN_SCALE, 4);
 	GraphFilter(vignetteGraph, DX_GRAPH_FILTER_GAUSS, 256, 128);
 	
@@ -42,7 +43,7 @@ BlurScreen::~BlurScreen()
 void BlurScreen::Update()
 {
 	if (!use) {
-		return;
+		return; //スクリーンモードでなければスルー
 	}
 
 	CurrentScreenSet();
@@ -118,7 +119,9 @@ void BlurScreen::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)(alpha * 1.2f));
 	if (vignetteGraph != -1) {
 		//画像が大きいので少し端っこからおいている。
-		DrawExtendGraph(-2000, -2000, Screen::WIDTH * 10, Screen::HEIGHT * 10,vignetteGraph, true);
+		const VECTOR2I imagePos = VECTOR2I(-2000, -2000);
+		const VECTOR2I scale = VECTOR2I(10, 10);
+		DrawExtendGraph(imagePos.x, imagePos.y, Screen::WIDTH * scale.x, Screen::HEIGHT * scale.y,vignetteGraph, true);
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -157,7 +160,7 @@ void BlurScreen::Play(float _time, float _fadeTime)
 #else
 	Reset();
 
-	
+	//スクリーンの作成
 	smallW		= Screen::WIDTH;
 	smallH		= Screen::HEIGHT;
 	smallScreen = MakeScreen(smallW, smallH, TRUE);
@@ -166,7 +169,7 @@ void BlurScreen::Play(float _time, float _fadeTime)
 	
 
 	//GraphFilter(smallScreen, DX_GRAPH_FILTER_GAUSS, 8192);
-
+	//ブラースクリーンのキャプチャを取る
 	for (int i = 0; i < SCREEN_NUM; i++) {
 		if (blurScreen[i] != -1) {
 			DeleteGraph(blurScreen[i]);
