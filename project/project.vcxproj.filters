@@ -374,9 +374,6 @@
     <ClCompile Include="Source\Component\Shadow\Shadow.cpp">
       <Filter>Component\Shadow</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.cpp">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Common\ID\StateID.cpp">
       <Filter>Common\ID</Filter>
     </ClCompile>
@@ -384,12 +381,6 @@
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.cpp">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.cpp">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy\Boss\BossState\BossThreat.cpp">
@@ -533,17 +524,11 @@
     <ClCompile Include="Source\Stage\StageSelectData.cpp">
       <Filter>PlayScene\Player\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.cpp">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyGroup.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Source\Common\FileSystemUtils\FileSystemUtils.cpp">
       <Filter>Common\FileSystemUtils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.cpp">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy\Boss\BossAttackDataSerializer.cpp">
       <Filter>PlayScene\Enemy\Boss</Filter>
@@ -553,6 +538,24 @@
     </ClCompile>
     <ClCompile Include="Source\Component\Collider\CapsuleCollider.cpp">
       <Filter>Component\Collider\Capsule</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Ranged</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Ranged</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStaySky.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Ranged</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -975,9 +978,6 @@
     <ClInclude Include="Source\Component\Shadow\Shadow.h">
       <Filter>Component\Shadow</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.h">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Common\ID\StateID.h">
       <Filter>Common\ID</Filter>
     </ClInclude>
@@ -988,12 +988,6 @@
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStatus.h">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.h">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossState\BossThreat.h">
@@ -1152,9 +1146,6 @@
     <ClInclude Include="Source\Common\Debug\DebugLogText.h">
       <Filter>Common\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Common\Debug\DebugNew.h">
       <Filter>Common\Debug</Filter>
     </ClInclude>
@@ -1163,9 +1154,6 @@
     </ClInclude>
     <ClInclude Include="Source\Common\FileSystemUtils\FileSystemUtils.h">
       <Filter>Common\FileSystemUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.h">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossAttackDataSerializer.h">
       <Filter>PlayScene\Enemy\Boss</Filter>
@@ -1178,6 +1166,24 @@
     </ClInclude>
     <ClInclude Include="icon\resource.h">
       <Filter>icon</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack1.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\CooperateAttack2.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Ranged</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Ranged</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\Standby.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyAttack.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStaySky.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Ranged</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1396,6 +1402,12 @@
     </Filter>
     <Filter Include="icon">
       <UniqueIdentifier>{c197f5b0-b19e-492c-b1b5-991491755e7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Enemy\TrashEnemy\TrashEnemyState\Ranged">
+      <UniqueIdentifier>{8053aa89-111c-4f22-90cb-3bcdb479c204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee">
+      <UniqueIdentifier>{9aa88d42-ce3d-4839-bdba-b80790daf40d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

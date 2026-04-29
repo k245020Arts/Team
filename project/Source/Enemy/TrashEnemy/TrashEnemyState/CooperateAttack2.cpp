@@ -51,7 +51,7 @@ void CooperateAttack2::Start()
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
 	if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
-		isLeader = true;;
+		isLeader = true;
 
 	setGravity = enemy->enemyBaseComponent.physics->GetGravity();
 	enemy->enemyBaseComponent.physics->SetGravity(VZero);

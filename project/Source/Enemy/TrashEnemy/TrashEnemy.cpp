@@ -33,6 +33,7 @@
 #include "TrashEnemyState/Standby.h"
 #include "TrashEnemyState/T_EnemyDamage.h"
 #include "TrashEnemyState/T_EnemyWaitSee.h"
+#include "TrashEnemyState/T_EnemyStaySky.h"
 
 namespace
 {
@@ -304,7 +305,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<Standby>("_Standby", StateID::T_ENEMY_STANDBY);
 	enemyBaseComponent.state->CreateState<T_EnemyDamage>("_T_EnemyDamage", StateID::T_ENEMY_DAMAGE);
 	enemyBaseComponent.state->CreateState<T_EnemyWaitSee>("_T_EnemyWaitSee", StateID::T_ENEMY_WAITSEE);
-
+	enemyBaseComponent.state->CreateState <T_EnemyStaySky>("T_EnemyStaySky", StateID::T_ENEMY_STAYSKY);
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
 	// スタートステートも StateID 化
