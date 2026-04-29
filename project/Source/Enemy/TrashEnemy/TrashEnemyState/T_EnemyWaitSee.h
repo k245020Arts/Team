@@ -16,8 +16,7 @@ public:
 
 	bool IsLeader() { return isLeader; }
 private:
-	void ReaderMove(TrashEnemy* _enemy);
-	void NormalMove(TrashEnemy* _enemy);
+	void Move(TrashEnemy* _enemy);
 
 	VECTOR3 targetPos;
 	bool isLeader;

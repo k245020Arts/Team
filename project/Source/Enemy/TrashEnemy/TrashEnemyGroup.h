@@ -88,7 +88,6 @@ public:
 	void RangedDamageMove();
 	//WayPoint RangedEnemyPoint;
 	VECTOR3 leaderPos;
-	bool isReadyLeader;
 
 	float rangedAtkCounter;
 	bool rangedDamageMove;

@@ -18,13 +18,11 @@ CooperateAttack2::CooperateAttack2()
 	attackParam.slowTime = 0.3f;
 	attackParam.speedUpMotionSpeed = 0.3f;
 
-	isLeader = false;
-
-	setGravity = VZero;
-
 	damageMove = false;
 
 	speedDownCounter = 0;
+
+	hitStopCounter = 0.0f;
 }
 
 CooperateAttack2::~CooperateAttack2()
@@ -35,34 +33,24 @@ void CooperateAttack2::Update()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	if (!isLeader)
-	{
-		if (!damageMove)
+	if (!damageMove)
 			RangedMove(enemy);
 		else
 			DamageMove(enemy);
-	}
-	else 
-		LeaderMove(enemy);
 }
 
 void CooperateAttack2::Start()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
-		isLeader = true;
-
-	setGravity = enemy->enemyBaseComponent.physics->GetGravity();
-	enemy->enemyBaseComponent.physics->SetGravity(VZero);
-	
+	enemy->isMovingToPlayer = true;
 	EnemyStateBase::Start();
 }
 
 void CooperateAttack2::Finish()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
-	enemy->enemyBaseComponent.physics->SetGravity(setGravity);
+	
 	enemy->CooperateAtkFinish();
 }
 
@@ -72,23 +60,6 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
 	VECTOR3 dir = VZero;
 	float speed = 0.0f;
-
-	//リーダーの周りに移動
-	if (VSize(targetPos - enePos) >= 30 && !_enemy->isStandby)
-	{
-		dir = VNorm(targetPos - enePos);
-		speed = 30.0f;
-
-		_enemy->GetEnemyObj()->GetTransform()->position += dir * speed;
-	}
-	else
-		_enemy->isStandby = true;
-	
-	if (!_enemy->isCooperateAtk)
-		return;
-
-	//こっから敵の攻撃を始める
-	_enemy->isMovingToPlayer = true;
 
 	const VECTOR3 pPos = _enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 	_enemy->LookTarget(pPos);
@@ -107,14 +78,15 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 
 	if (_enemy->cooperateDamageMove)
 		damageMove = true;
-	//後で変更
-	/*if (VSize(pPos - enePos) <= 30)
-		_enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);*/
-
 }
 
 void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 {
+	hitStopCounter += Time::DeltaTimeRate();
+	const float CounterMax = 0.5f;
+	if (hitStopCounter < CounterMax)
+		return;
+
 	const VECTOR3 enePos = _enemy->GetPos();
 	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
 	VECTOR3 dir = VNorm(targetPos - enePos);
@@ -125,14 +97,14 @@ void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 	_enemy->GetEnemyObj()->GetTransform()->position += dir * (Speed - speedDownCounter);
 }
 
-void CooperateAttack2::LeaderMove(TrashEnemy* _enemy)
-{
-	const float Speed = 50.0f;
-	const float MaxPos = 1800.0f;
-
-	float a = _enemy->GetPos().y;
-	if (_enemy->GetPos().y <= MaxPos)
-		_enemy->GetEnemyObj()->GetTransform()->position.y += Speed;
-	else
-		_enemy->isStandby = true;
-}
+//void CooperateAttack2::LeaderMove(TrashEnemy* _enemy)
+//{
+//	const float Speed = 50.0f;
+//	const float MaxPos = 1800.0f;
+//
+//	float a = _enemy->GetPos().y;
+//	if (_enemy->GetPos().y <= MaxPos)
+//		_enemy->GetEnemyObj()->GetTransform()->position.y += Speed;
+//	else
+//		_enemy->isStandby = true;
+//}

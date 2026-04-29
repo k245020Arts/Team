@@ -1,6 +1,8 @@
 #pragma once
 #include "../EnemyState/EnemyStateBase.h"
 
+class TrashEnemy;
+
 class T_EnemyStaySky : public EnemyStateBase
 {
 public:
@@ -17,4 +19,6 @@ private:
 	void RangedMove(TrashEnemy* _enemy);
 
 	bool isLeader;
+
+	VECTOR3 setGravity;
 };

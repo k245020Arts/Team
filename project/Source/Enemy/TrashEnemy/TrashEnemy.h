@@ -109,7 +109,7 @@ public:
 	//‹ß‹——£‚©‰“‹——£‚Ì“G‚©‚ğw’è‚·‚éŠÖ”
 	void SetEnemyType(EnemyType type);
 	//‰“‹——£‚Ì“G‚ÌUŒ‚€”õ
-	void ReadyCooperteAtk2(VECTOR3 _pos);
+	//void ReadyCooperteAtk2(VECTOR3 _pos);
 
 	void SetLeaderPos(VECTOR3 _pos);
 

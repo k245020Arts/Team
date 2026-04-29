@@ -359,12 +359,12 @@ void TrashEnemy::SetEnemyType(EnemyType type)
 	enemyType = type;
 }
 
-void TrashEnemy::ReadyCooperteAtk2(VECTOR3 _pos)
-{
-	//isStandby = true;
-	cooperateWayPoint = _pos;
-	enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK2);
-}
+//void TrashEnemy::ReadyCooperteAtk2(VECTOR3 _pos)
+//{
+//	//isStandby = true;
+//	cooperateWayPoint = _pos;
+//	enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK2);
+//}
 
 void TrashEnemy::SetLeaderPos(VECTOR3 _pos)
 {
@@ -375,6 +375,8 @@ void TrashEnemy::RangedAttack()
 {
 	if (enemyType == EnemyType::MELEE || enemyType == EnemyType::MAX)
 		return;
+
+	enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK2);
 
 	isCooperateAtk = true;
 }
