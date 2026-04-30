@@ -343,16 +343,16 @@
     <ClInclude Include="Source\Stage\Wall.h" />
     <ClInclude Include="Source\State\StateBase.h" />
     <ClInclude Include="Source\State\StateManager.h" />
-    <ClInclude Include="Source\TitleCamera.h" />
-    <ClInclude Include="Source\TitleControl.h" />
-    <ClInclude Include="Source\TitlePlayer.h" />
-    <ClInclude Include="Source\TitlePlayerIdol.h" />
-    <ClInclude Include="Source\TitleScene.h" />
+    <ClInclude Include="Source\Title\TitleCamera.h" />
+    <ClInclude Include="Source\Title\TitleControl.h" />
+    <ClInclude Include="Source\Title\TitlePlayer.h" />
+    <ClInclude Include="Source\Title\TitlePlayerIdol.h" />
+    <ClInclude Include="Source\Title\TitlePlayerMove.h" />
+    <ClInclude Include="Source\Title\TitleScene.h" />
     <ClInclude Include="Source\Wave\Wave.h" />
     <ClInclude Include="Source\Weapon\CharaWeapon.h" />
     <ClInclude Include="Source\Weapon\SwordEffect.h" />
     <ClInclude Include="Source\Weapon\WeaponManager.h" />
-    <ClInclude Include="Source\TitlePlayerMove.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\crude_json.cpp" />
@@ -531,12 +531,12 @@
     <ClCompile Include="Source\Stage\StageSelectData.cpp" />
     <ClCompile Include="Source\Stage\Wall.cpp" />
     <ClCompile Include="Source\State\StateManager.cpp" />
-    <ClCompile Include="Source\TitleCamera.cpp" />
-    <ClCompile Include="Source\TitleControl.cpp" />
-    <ClCompile Include="Source\TitlePlayer.cpp" />
-    <ClCompile Include="Source\TitlePlayerIdol.cpp" />
-    <ClCompile Include="Source\TitlePlayerMove.cpp" />
-    <ClCompile Include="Source\TitleScene.cpp" />
+    <ClCompile Include="Source\Title\TitleCamera.cpp" />
+    <ClCompile Include="Source\Title\TitleControl.cpp" />
+    <ClCompile Include="Source\Title\TitlePlayer.cpp" />
+    <ClCompile Include="Source\Title\TitlePlayerIdol.cpp" />
+    <ClCompile Include="Source\Title\TitlePlayerMove.cpp" />
+    <ClCompile Include="Source\Title\TitleScene.cpp" />
     <ClCompile Include="Source\Wave\Wave.cpp" />
     <ClCompile Include="Source\Weapon\CharaWeapon.cpp" />
     <ClCompile Include="Source\Weapon\SwordEffect.cpp" />

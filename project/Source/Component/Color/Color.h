@@ -158,4 +158,4 @@ static const int OPAQUE_COLOR = 255; //•s“§–¾
 static const int TRANSPARENT_COLOR = 0; //“§–¾
 
 static const float OPAQUE_COLOR_F = 1.0f; //•s“§–¾
-static const float TRANSPARENT_COLOR = 0.0f; //“§–¾
+static const float TRANSPARENT_COLOR_F = 0.0f; //“§–¾

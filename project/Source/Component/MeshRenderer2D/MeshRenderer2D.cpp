@@ -42,13 +42,13 @@ MeshRenderer2D::~MeshRenderer2D()
 void MeshRenderer2D::Update()
 {
 	if (feedIn) {
-		alpha = Easing::EasingFlow<float>(&feedInOutTimer, feedInOutTimerBase, OPAQUE_COLOR, TRANSPARENT_COLOR, Easing::EaseIn<float>);
+		alpha = Easing::EasingFlow<int>(&feedInOutTimer, feedInOutTimerBase, OPAQUE_COLOR, TRANSPARENT_COLOR, Easing::EaseIn<int>);
 		if (feedInOutTimer <= 0.0f) {
 			feedIn = false;
 		}
 	}
 	else if (feedOut) {
-		alpha = Easing::EasingFlow<float>(&feedInOutTimer, feedInOutTimerBase, TRANSPARENT_COLOR, OPAQUE_COLOR, Easing::EaseIn<float>);
+		alpha = Easing::EasingFlow<int>(&feedInOutTimer, feedInOutTimerBase, TRANSPARENT_COLOR, OPAQUE_COLOR, Easing::EaseIn<int>);
 		if (feedInOutTimer <= 0.0f) {
 			feedOut = false;
 			draw = false;

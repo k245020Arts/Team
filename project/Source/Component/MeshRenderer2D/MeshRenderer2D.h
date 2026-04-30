@@ -114,7 +114,7 @@ public:
 	/// ‰æ‘œ‚Ì”¼“§–¾“x‚ðŽæ“¾
 	/// </summary>
 	/// <returns></returns>
-	float GetAlpha() const { return alpha; } 
+	int GetAlpha() const { return alpha; } 
 
 private:
 	int hImage;

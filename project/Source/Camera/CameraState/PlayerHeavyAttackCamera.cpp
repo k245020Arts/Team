@@ -43,7 +43,7 @@ void PlayerHeavyAttackCamera::Update()
 			c->target = Easing::Lerp(currentTarget, targetp, t);
 		}
 		else {
-			const VECTOR3 ZOOM_POS = VECTOR3(0, 0, -1200)
+			const VECTOR3 ZOOM_POS = VECTOR3(0, 0, -1200);
 			c->currentDistance = ZOOM_POS;
 			VECTOR3 targetp = c->cameraComponent.player.transform->position + ADD_POS;
 			c->target = targetp;

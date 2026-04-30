@@ -114,13 +114,13 @@ void PlayerSpecialAttack::Draw()
 {
 	Player* p = GetBase<Player>();
 	//DrawSphere3D(p->specialAttackCenterPos, 10, 1, 0xffffff, 0xffffff, true);
-	float alpha = p->playerCom.meshRenderer2D->GetAlpha();
-	float add = alpha;
-	if (add >= 60.0f) {
-		add = 60.0f;
+	int alpha = p->playerCom.meshRenderer2D->GetAlpha();
+	int add = alpha;
+	if (add >= 60) {
+		add = 60;
 	}
 	
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	//DrawRotaGraph(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, zoomRate, 0.0f * DegToRad, playerHandle, true);
 	DrawRectRotaGraph((int)Screen::WIDTH / 2, (int)Screen::HEIGHT / 2, 0, (int)zoomSize / 2, (int)Screen::WIDTH, (int)(200.0f - zoomSize), (double)zoomRate, 0.0 * DegToRad, playerHandle, true);
 	
@@ -140,6 +140,7 @@ void PlayerSpecialAttack::Start()
 	const int ROTATION_CHANGE_LOOP = 8;
 	int max = 0;
 	float finalAngle = p->playerTransform->rotation.y;
+
 	//------------------プレイヤーの視野に何人いるかを360に分けて判定、一番群れがいる角度に向かって必殺技を打つ---------
 
 	for (int i = 0; i < ROTATION_CHANGE_LOOP; i++) {

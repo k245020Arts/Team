@@ -1,5 +1,5 @@
 #include "TitlePlayerIdol.h"
-#include "Component/Animator/Animator.h"
+#include "../Component/Animator/Animator.h"
 
 TitlePlayerIdol::TitlePlayerIdol()
 {

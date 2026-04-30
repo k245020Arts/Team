@@ -96,8 +96,8 @@ Boss::Boss()
 
 	rockManager = new BossRockManager(this);
 
-	rightHandFrame = 0.0f;
-	leftHandFrame = 0.0f;
+	rightHandFrame = 0;
+	leftHandFrame = 0;
 }
 
 Boss::~Boss()

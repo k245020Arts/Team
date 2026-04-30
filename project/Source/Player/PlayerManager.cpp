@@ -43,7 +43,7 @@
 #include "PlayerState/PlayerBefore.h"
 #include "../Component/Animator/Anim2D.h"
 #include "../Screen.h"
-#include "../TitlePlayer.h"
+#include "../Title/TitlePlayer.h"
 #include "../Player/PlayerState/PlayerBossAppear.h"
 #include "../PlayScene.h"
 

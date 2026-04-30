@@ -1,10 +1,10 @@
 #pragma once
-#include "CharaBase/CharaBase.h"
-#include "Player/playerInformation.h"
-#include "Component/Transform/Transform.h"
-#include "Common/ID/ID.h"
-#include  "Common/ID/EffectID.h"
-#include "Common/ID/SoundID.h"
+#include "../CharaBase/CharaBase.h"
+#include "../Player/playerInformation.h"
+#include "../Component/Transform/Transform.h"
+#include "../Common/ID/ID.h"
+#include "../Common/ID/EffectID.h"
+#include "../Common/ID/SoundID.h"
 
 class TitleCamera;
 class TitleScene;

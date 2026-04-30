@@ -1,5 +1,5 @@
 #pragma once
-#include "Camera/CameraBase.h"
+#include "../Camera/CameraBase.h"
 
 
 //DxlibŠÖ”’u‚«êi•ª‚©‚ç‚È‚¢‚Ì‚ª‚ ‚Á‚½‚çƒŠƒ“ƒN‚É”ò‚ñ‚Å)
