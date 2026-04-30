@@ -42,9 +42,9 @@ Hierachy::Hierachy()
 {
 	//transform = nullptr;
 #ifdef _DEBUG
-	debug = true;
+	windowMode = true;
 #else
-	debug = false;
+	windowMode = false;
 
 #endif // _DEBUG
 	fade = FindGameObject<FadeTransitor>();
@@ -66,7 +66,7 @@ void Hierachy::Update()
 #ifdef _DEBUG
 
 	if (InputManager::GetInstance()->KeyInputDown("debugChange")) {
-		debug = !debug; //デバックウィンドウの出し入れ
+		windowMode = !windowMode; //デバックウィンドウの出し入れ
 	}
 	//デバックモードのみで作成
 	if (Debug::GetDebugMode()) {
@@ -79,7 +79,7 @@ void Hierachy::Update()
 		//Debug::DebugUpdate();
 		//ImGui::Separator();
 		//オブジェクトのデバックウィンドウ
-		for (BaseObject* obj : list) {
+		for (BaseObject* obj : debugOutPutObjectList) {
 			if (obj->GetParent() == nullptr) {
 				DrawHierarchy(obj); //親がいないオブジェクトのみ描画
 			}
@@ -107,7 +107,7 @@ void Hierachy::Start(std::string _name, BaseObject* _obj)
 {
 	//transform = _obj->GetTransform();
 	color = _obj->Component()->AddComponent<Color>();
-	list.emplace_back(_obj);
+	debugOutPutObjectList.emplace_back(_obj);
 	//name = _obj->GetTag();
 }
 
@@ -177,9 +177,9 @@ void Hierachy::InspectorDraw()
 
 void Hierachy::RemoveHierachy(BaseObject* _obj)
 {
-	for (auto itr = list.begin(); itr != list.end(); itr++) {
+	for (auto itr = debugOutPutObjectList.begin(); itr != debugOutPutObjectList.end(); itr++) {
 		if (*itr == _obj) {
-			list.erase(itr);
+			debugOutPutObjectList.erase(itr);
 			return;
 		}
 	}
@@ -187,7 +187,7 @@ void Hierachy::RemoveHierachy(BaseObject* _obj)
 
 void Hierachy::AllDeleteList()
 {
-	list.clear();
+	debugOutPutObjectList.clear();
 }
 
 void Hierachy::SetCameraEditor(Camera* _camera)

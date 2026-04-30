@@ -18,10 +18,10 @@ public:
 	/// <param name="_info">“–‚½‚è”»’è‚Ìî•ñ</param>
 	/// <param name="_transform">ü‚Ìæ’[</param>
 	/// <param name="_transform2">ü‚Ì––’[</param>
-	void RaySet(const CollsionInfo& _info, const Transform& _transform,const Transform& _transform2);
-	void RaySet(const CollsionInfo& _info, const Transform& _transform,const Transform& _transform2,std::string _tag);
-	Transform* Get2Transform() { return transform2; }
+	void RaySet(const CollsionInfo& _info, const Transform& _transform,const Transform& _endTransform);
+	void RaySet(const CollsionInfo& _info, const Transform& _transform,const Transform& _endTransform,std::string _tag);
+	Transform* GetEndTransform() { return endTransform; }
 
 private:
-	Transform* transform2;
+	Transform* endTransform;
 };

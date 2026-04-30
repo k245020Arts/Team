@@ -49,5 +49,5 @@ private:
 
 	Shaker* shaker;
 	bool worldTransform;
-	bool depricate;
+	bool depricate; //デプリケートモデルにしているかどうか
 };

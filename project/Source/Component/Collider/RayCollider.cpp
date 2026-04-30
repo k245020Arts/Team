@@ -7,11 +7,16 @@ RayCollider::RayCollider()
 	debugId = 20;
 	tag = Function::GetClassNameC<RayCollider>();
 	SetTag(tag);
+	endTransform = nullptr;
 }
 
 RayCollider::~RayCollider()
 {
-	delete transform2;
+	if (endTransform != nullptr) {
+		delete endTransform;
+		endTransform = nullptr;
+	}
+	
 }
 
 void RayCollider::Update()
@@ -21,7 +26,7 @@ void RayCollider::Update()
 void RayCollider::Draw()
 {
 	if (Debug::RayColliderDraw()) { //デバック表示モードがオフなら何もしない
-		DrawLine3D(collTransform->WorldTransform().position, transform2->WorldTransform().position, 0xff0000);
+		DrawLine3D(collTransform->WorldTransform().position, endTransform->WorldTransform().position, 0xff0000);
 	}
 }
 
@@ -30,15 +35,15 @@ void RayCollider::Start()
 	
 }
 
-void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _transform2)
+void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _endTransform)
 {
-	RaySet(_info, _transform,_transform2, "");
+	RaySet(_info, _transform,_endTransform, "");
 }
 
-void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _transform2, std::string _tag)
+void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _endTransform, std::string _tag)
 {
 	ColliderBase::CollsionAdd(_info, _transform,_tag);
 
-	transform2 = new Transform(_transform2);
-	transform2->SetParent(_info.parentTransfrom);
+	endTransform = new Transform(_endTransform);
+	endTransform->SetParent(_info.parentTransfrom);
 }

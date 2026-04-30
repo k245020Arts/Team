@@ -90,11 +90,11 @@ public:
 	void SetAddMode(bool _mode) const  {guage->SetAddMode(_mode);}
 
 private:
-	float* barValue;
+	float* barValue; //値をセッターで毎フレーム渡したくないのでポインタにしている
 	float barValueMax;
-	MeshRenderer2D* guage;
-	MeshRenderer2D* damageGuage;
-	MeshRenderer2D* edge;
+	MeshRenderer2D* guage; //ゲージの描画クラス
+	MeshRenderer2D* damageGuage; //ダメージを食らった時のゲージクラス
+	MeshRenderer2D* edge; //ゲージの淵の描画クラス
 	float displayHp;
 	float changeColorCounter;
 	bool screenMode;
@@ -105,7 +105,7 @@ private:
 	float displayHpMain;
 	float displayHpDamage;
 
-	float damageDelayTimer;
-	float damageDelay;
+	float damageDelayTimer; 
+	float damageDelay;//ダメージの待ち時間を記入
 	float prevHp;
 };

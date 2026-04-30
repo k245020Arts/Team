@@ -118,7 +118,7 @@ public:
 
 private:
 	int hImage;
-	GraphMode mode;
+	GraphMode mode; //描画モードの種類
 	VECTOR2I imageSize;
 	VECTOR2I drawImageSize;
 	Transform* transform2D;
@@ -133,10 +133,10 @@ private:
 	void NormalDraw(const Transform& transform);
 	void AddDraw(const Transform& transform);
 
-	bool addMode;
-	bool xAnim;
+	bool addMode; //加算合成モードかどうか
+	bool xAnim; //アニメーションのTextureが横に伸びているかどうか
 
-	float alpha;
+	int alpha;
 	bool feedIn;
 	bool feedOut;
 

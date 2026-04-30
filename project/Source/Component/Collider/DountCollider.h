@@ -31,7 +31,7 @@ public:
 
 private:
 
-	float outRadius;
+	float outRadius; //ドーナツの外側の半径
 
 	float speed;
 

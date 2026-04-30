@@ -153,6 +153,7 @@ const Color::Rgb LIGHT_GRAY = Color::Rgb(192, 192, 192, 255);
 //-----------------------------------------------------------
 
 //透明と不透明で使う定数(DxLibのColorF型verと通常で使うverの2つ用意)
+
 static const int OPAQUE_COLOR = 255; //不透明
 static const int TRANSPARENT_COLOR = 0; //透明
 

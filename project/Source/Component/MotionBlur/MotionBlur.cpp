@@ -68,6 +68,7 @@ void MotionBlur::MosionStart(float _time, float _alpha,ID::IDType _id, int _mode
 	b.matrix				= b.transform.GetMatrix();
 	b.attackID				= MV1AttachAnim(b.baseModel, 0, ResourceLoad::GetHandle(_id));
 
+	//ブラーに使用するアニメーションの情報の記録
 	MV1SetAttachAnimTime(b.baseModel, b.attackID, b.animFrame);
 	MATRIX identity = MGetIdent();
 	MV1SetFrameUserLocalMatrix(b.baseModel, _modelFrame, identity);

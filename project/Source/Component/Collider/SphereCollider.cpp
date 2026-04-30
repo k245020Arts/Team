@@ -24,7 +24,7 @@ void SphereCollider::Draw()
 		return;
 	}*/
 	if (Debug::SphereColliderDraw()) { //デバック表示モードがオフなら何もしない
-		if (finish) {
+		if (finish) { //当たり判定がストップしているなら黄色の円にする
 			DrawSphere3D(collTransform->WorldTransform().position, collTransform->scale.x, 10, 0xffff00, 0xff0000, false);
 		}
 		else {

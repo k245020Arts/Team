@@ -5,6 +5,7 @@
 #include "../Animator/Anim2D.h"
 #include "../ComponentManager.h"
 #include "../../Common/Easing.h"
+#include "../Color/Color.h"
 
 MeshRenderer2D::MeshRenderer2D()
 {
@@ -21,7 +22,7 @@ MeshRenderer2D::MeshRenderer2D()
 	feedOut				= false;
 	feedInOutTimer		= 0.0f;
 	feedInOutTimerBase	= 0.0f;
-	alpha				= 0.0f;
+	alpha				= 0;
 	xAnim				= false;
 
 }
@@ -41,13 +42,13 @@ MeshRenderer2D::~MeshRenderer2D()
 void MeshRenderer2D::Update()
 {
 	if (feedIn) {
-		alpha = Easing::EasingFlow<float>(&feedInOutTimer, feedInOutTimerBase, 255.0f, 0.0f, Easing::EaseIn<float>);
+		alpha = Easing::EasingFlow<float>(&feedInOutTimer, feedInOutTimerBase, OPAQUE_COLOR, TRANSPARENT_COLOR, Easing::EaseIn<float>);
 		if (feedInOutTimer <= 0.0f) {
 			feedIn = false;
 		}
 	}
 	else if (feedOut) {
-		alpha = Easing::EasingFlow<float>(&feedInOutTimer, feedInOutTimerBase, 0.0f, 255.0f, Easing::EaseIn<float>);
+		alpha = Easing::EasingFlow<float>(&feedInOutTimer, feedInOutTimerBase, TRANSPARENT_COLOR, OPAQUE_COLOR, Easing::EaseIn<float>);
 		if (feedInOutTimer <= 0.0f) {
 			feedOut = false;
 			draw = false;
@@ -58,18 +59,22 @@ void MeshRenderer2D::Update()
 void MeshRenderer2D::Draw()
 {
 	if (hImage == -1 || !draw) {
-		return;
+		return; //描画がオフか画像がロードされてなかったらスルー
 	}
 	if (feedIn || feedOut) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
+		//フェードインかフェードアウトかを入力するとこのモードに入れる
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	}
 	Transform transform;
+	//Objectのtransformを使うかこのクラスにあるトランスフォームを使うかの判定
+	//一つのオブジェクトに二つ以上このコンポーネントをセットしたいときにtransform2Dは使用
 	if (transform2D == nullptr) {
 		transform = *obj->GetTransform();
 	}
 	else {
 		transform = *transform2D;
 	}
+	//アニメーションのクラスが存在したらアニメーションを使い描画
 	if (anim2D != nullptr) {
 		int graphNum = anim2D->GetGraphNum();
 		int num = (int)anim2D->GetAnimCounter() % graphNum;
@@ -84,6 +89,8 @@ void MeshRenderer2D::Draw()
 		
 	}
 	else {
+		//加算合成モードなら
+		//Todo 加算合成モードの作成
 		if (addMode) {
 			AddDraw(transform);
 		}
@@ -92,6 +99,7 @@ void MeshRenderer2D::Draw()
 		}
 	}
 	if (feedIn || feedOut) {
+		//フェードインかフェードアウトの描画モードをデフォルトにする
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }
@@ -101,7 +109,7 @@ void MeshRenderer2D::TextureHandle(int _image, GraphMode _mode)
 	
 	hImage = _image;
 	mode = _mode;
-
+	//画像の大きさを取得
 	if (hImage != -1)
 	{
 		int x(0), y(0);
@@ -165,6 +173,8 @@ void MeshRenderer2D::SetDrawImageSize(VECTOR2I _size)
 
 void MeshRenderer2D::SetPosition(VECTOR3 _position)
 {
+	//Objectのtransformを使うかこのクラスにあるトランスフォームを使うかの判定
+	//一つのオブジェクトに二つ以上このコンポーネントをセットしたいときにtransform2Dは使用
 	if (transform2D == nullptr) {
 		obj->GetTransform()->position = _position;
 	}
@@ -230,6 +240,8 @@ void MeshRenderer2D::FeedOutDraw(float _timer)
 void MeshRenderer2D::DrawNum()
 {
 	Transform transform;
+	//Objectのtransformを使うかこのクラスにあるトランスフォームを使うかの判定
+	//一つのオブジェクトに二つ以上このコンポーネントをセットしたいときにtransform2Dは使用
 	if (transform2D == nullptr) {
 		transform = *obj->GetTransform();
 	}

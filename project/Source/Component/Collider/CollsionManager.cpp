@@ -127,7 +127,7 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 {
 	Transform* modelTransform = col1->GetTransform();
 	Transform* rayStartTrans = col2->GetTransform();
-	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col2)->Get2Transform();
+	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col2)->GetEndTransform();
 
 	VECTOR3 startPos = rayStartTrans->WorldTransform().position;
 	VECTOR3 endPos = rayEndTrans->WorldTransform().position;
@@ -231,7 +231,7 @@ bool CollsionManager::CollsionSphereToDount(ColliderBase* col1, ColliderBase* co
 bool CollsionManager::CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
 {
 	Transform* rayStartTrans = col1->GetTransform();  // レイの始点
-	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col1)->Get2Transform(); // レイの終点
+	Transform* rayEndTrans = dynamic_cast<RayCollider*>(col1)->GetEndTransform(); // レイの終点
 
 	// レイの開始点と終了点(ワールド座標)
 	VECTOR3 startPos = rayStartTrans->WorldTransform().position;
@@ -245,7 +245,9 @@ bool CollsionManager::CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, 
 	float tMin = 0.0f;
 	float tMax = 20000.0f;
 
-	for (int i = 0; i < 3; ++i)
+	const int VECTOR_MAX = 3; //X,Y,Zの3つ
+
+	for (int i = 0; i < VECTOR_MAX; ++i)
 	{
 		float o = ((float*)&startPos)[i];
 		float d = ((float*)&dir)[i];

@@ -6,12 +6,17 @@ ModelCollider::ModelCollider()
 	debugId = 2;
 	tag = Function::GetClassNameC<ModelCollider>();
 	SetTag(tag);
+	modelHandle = -1;
 }
 
 ModelCollider::~ModelCollider()
 {
 	MV1TerminateCollInfo(modelHandle, -1);
-	MV1DeleteModel(modelHandle);
+	if (modelHandle >= 0) {
+		MV1DeleteModel(modelHandle);
+		modelHandle = -1;
+	}
+	
 }
 
 void ModelCollider::Update()

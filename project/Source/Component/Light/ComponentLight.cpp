@@ -11,8 +11,15 @@ ComponentLight::ComponentLight()
 
 ComponentLight::~ComponentLight()
 {
-	delete lightTransform;
-	DeleteLightHandle(lightHandle);
+	if (lightTransform != nullptr) {
+		delete lightTransform;
+		lightTransform = nullptr;
+	}
+	if (lightHandle >= 0) {
+		DeleteLightHandle(lightHandle);
+		lightHandle = -1;
+	}
+	
 }
 
 void ComponentLight::Update()
@@ -69,6 +76,7 @@ void ComponentLight::ImguiDraw()
 
 void ComponentLight::SpotUpdate()
 {
+	//スポットライトの設定
 	SetLightPositionHandle(lightHandle, lightTransform->WorldTransform().position);
 	SetLightDifColorHandle(lightHandle, GetColorF(0.0f, 0.0f, 1.0f, 1.0f));
 	SetLightDirectionHandle(lightHandle, obj->GetTransform()->WorldTransform().rotation);
@@ -76,6 +84,7 @@ void ComponentLight::SpotUpdate()
 
 void ComponentLight::PointUpdate()
 {
+	//ポイントライトの設定
 	SetLightPositionHandle(lightHandle, lightTransform->WorldTransform().position);
 	SetLightDifColorHandle(lightHandle, GetColorF(0.0f, 1.0f, 0.0f, 1.0f));
 }
