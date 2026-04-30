@@ -52,9 +52,9 @@ private:
     float time;
     bool  first;
 
-    CutSceneObj position;
+    CutSceneObj position; //カメラのポジションを設定するために必要な構造体
 
-    CutSceneObj target;
+    CutSceneObj target; // カメラの注視点を設定するために必要な構造体
 
     /*VECTOR3 CutSceneInfoSet(CutSceneObj& _info, Transform* _baseTransform,std::string& _name);
     VECTOR3 GetEndTarget(const CutSceneObj& _info,const VECTOR3& _offset);*/

@@ -28,10 +28,11 @@ PlayerSpecialAttackCamera::~PlayerSpecialAttackCamera()
 
 void PlayerSpecialAttackCamera::Update()
 {
+	const VECTOR3 DIST = VECTOR3(0.0f, 1000.0f, -500.0f);
 	Camera* c = GetBase<Camera>();
 	if (backCounter >= 0.0f) {
 		float t = 1.0f - backCounter / TIMER_MAX;
-		VECTOR3 dist = c->defalutDistance + VECTOR3(0.0f, 1000.0f, -500.0f);
+		VECTOR3 dist = c->defalutDistance + DIST;
 		VECTOR3 easedT = Easing::EaseOut(c->currentDistance, dist, t);
 		VECTOR3 targetp = player->GetSpecialAttackCenterPos();;
 		c->target = Easing::EaseOut(currentTarget, targetp, t);
@@ -39,7 +40,7 @@ void PlayerSpecialAttackCamera::Update()
 		backCounter -= Time::DeltaTimeRate();
 	}
 	else {
-		c->currentDistance = c->defalutDistance + VECTOR3(0.0f, 1000.0f, -500.0f);
+		c->currentDistance = c->defalutDistance + DIST;
 		VECTOR3 targetp = player->GetSpecialAttackCenterPos();
 
 		/*if (fabs(beforeTarget - c->cameraComponent.player.transform->position.y) <= 1.0f) {

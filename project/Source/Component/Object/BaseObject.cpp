@@ -75,7 +75,7 @@ void BaseObject::Update()
 	for (auto itr = children.begin(); itr != children.end(); )
 	{
 		BaseObject* child = *itr;
-
+		//削除申請がなければUpdateを回す
 		if (!child->DestroyRequested())
 		{
 			child->Update();
@@ -83,6 +83,7 @@ void BaseObject::Update()
 		}
 		else
 		{
+			//Transformの親子関係が成立されてるなら子供を切る
 			if (transformParent && transform != nullptr) {
 				transform->RemoveChild((*itr)->GetTransform());
 			}
@@ -110,7 +111,6 @@ void BaseObject::Init(std::string name)
 	componentManager->Init(this);
 	SetTag(name);
 	//デバックウィンドウはここで登録している
-	//FindGameObject<Hierachy>()->Start(name, this);
 	Hierachy* h = FindGameObject<Hierachy>();
 	if (h != nullptr)
 	{
@@ -138,7 +138,7 @@ void BaseObject::AddChild(BaseObject* child, bool _transformParent)
 		transform->AddChild(child->GetTransform());
 	}
 	child->parent = this;
-	ObjectManager::Pop(dynamic_cast<GameObject*>(child));
+	ObjectManager::Pop(static_cast<GameObject*>(child)); //子供はObjectの中で管理したいのでObjectManagerのリストから削除
 	children.emplace_back(child);
 }
 
@@ -146,6 +146,7 @@ void BaseObject::RemoveChild(BaseObject* child) {
 	for (auto itr = children.begin(); itr != children.end();) {
 		if (*itr == child) {
 			BaseObject* obj = *itr;
+			//Transformの親子関係が成立されてるなら子供を切る
 			if (transformParent && transform != nullptr) {
 				transform->RemoveChild(obj->GetTransform());
 			}
@@ -160,6 +161,7 @@ void BaseObject::RemoveChild(BaseObject* child) {
 
 void BaseObject::DeleteChild(BaseObject* child) {
 	for (auto itr = children.begin(); itr != children.end();) {
+		//一致したら削除
 		if (*itr == child) {
 			BaseObject* obj = *itr;
 			delete obj;

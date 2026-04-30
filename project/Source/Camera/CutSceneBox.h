@@ -35,7 +35,7 @@ private:
 	float feedCountMax;
 
 	int alpha;
-	std::function<int(int, int, float)> easingFunc;
+	std::function<int(int, int, float)> easingFunc; //easing‚ğ§Œä‚·‚é‚½‚ß‚ÌŠÖ”ƒ|ƒCƒ“ƒ^
 
 	bool feadIn;
 

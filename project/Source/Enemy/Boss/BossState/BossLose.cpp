@@ -27,6 +27,7 @@ BossLose::~BossLose()
 void BossLose::Update()
 {
 	Boss* b = GetBase<Boss>();
+	//‰¹º‚ªI‚í‚Á‚½‚çI—¹
 	if (!SoundManager::GetInstance()->CheckSe(Sound_ID::WIN)) {
 		b->enemyBaseComponent.gameManager->ChangeState(GameControler::SCENE_CHANGE);
 	}

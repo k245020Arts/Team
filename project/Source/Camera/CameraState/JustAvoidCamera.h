@@ -15,9 +15,9 @@ public:
 
 private:
 
-    VECTOR3 defalutDistance;
-	VECTOR3 zoomDistance;
-    VECTOR3 currentDistance;
+    VECTOR3 defalutDistance; //通常の距離
+	VECTOR3 zoomDistance; //ジャスト回避後のズーム後の距離
+    VECTOR3 currentDistance; //現在の距離
     float speed;
 	float changeTimer;
 

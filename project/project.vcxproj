@@ -265,6 +265,7 @@
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\AttackSorting.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackJsonParse.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossAppear.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossBackStep.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossCoolTime.h" />

@@ -32,7 +32,8 @@ void CameraManager::Draw()
 void CameraManager::CreateCamera()
 {
 	mainCamera = new Object3D();
-	mainCamera->Init(VECTOR3(0,3000,-6000), VZero, VECTOR3(1, 1, 1), "CAMERA_OBJ");
+	const VECTOR3 InitPos = VECTOR3(0, 3000, -6000);
+	mainCamera->Init(InitPos, VZero,VOne, "CAMERA_OBJ");
 
 	mainCamera->Component()->AddComponent<StateManager>();
 
@@ -49,7 +50,7 @@ void CameraManager::CreateCamera()
 
 	
 
-	mainCamera->Component()->AddComponent<Physics>()->Start(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(0.0f, 0.0f, 0.0f));
+	mainCamera->Component()->AddComponent<Physics>()->Start(VZero, VZero);
 
 	mainCamera->SetDrawOrder(-1);
 
@@ -60,19 +61,22 @@ void CameraManager::ParentObj(std::string _str)
 	Object3D* obj = FindGameObjectWithTag<Object3D>(_str);
 	mainCamera->Component()->GetComponent<Camera>()->PlayerSet(obj);
 
+	//当たり判定の情報をセット
 	RayCollider* c = mainCamera->Component()->AddComponent<RayCollider>();
 	CollsionInfo info;
 	info.oneColl			= false;
 	info.parentTransfrom	= mainCamera->Component()->GetComponent<Camera>()->GetCameraTransform();
 	info.shape				= CollsionInformation::RAY;
 	info.tag				= CollsionInformation::C_FLOOR;
-	c->RaySet(info, Transform(VECTOR3(0, -100, 0), VZero, VOne), Transform(VECTOR3(0, 100, 0), VZero, VOne));
+	const float RAY_LONG = 100;
+	c->RaySet(info, Transform(VECTOR3(0, -RAY_LONG, 0), VZero, VOne), Transform(VECTOR3(0, RAY_LONG, 0), VZero, VOne));
 }
 
 void CameraManager::TitleCameraCreate()
 {
 	mainCamera = new Object3D();
-	mainCamera->Init(VECTOR3(0, 3000, -6000), VZero, VECTOR3(1, 1, 1), "CAMERA_OBJ");
+	const VECTOR3 InitPos = VECTOR3(0, 3000, -6000);
+	mainCamera->Init(InitPos, VZero, VOne, "CAMERA_OBJ");
 
 	//mainCamera->Component()->AddComponent<StateManager>();
 
@@ -89,7 +93,7 @@ void CameraManager::TitleCameraCreate()
 
 
 
-	mainCamera->Component()->AddComponent<Physics>()->Start(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(0.0f, 0.0f, 0.0f));
+	mainCamera->Component()->AddComponent<Physics>()->Start(VZero, VZero);
 
 	mainCamera->SetDrawOrder(-6);
 
@@ -99,6 +103,6 @@ void CameraManager::TitleCameraCreate()
 void CameraManager::TitleParentObj(std::string _str)
 {
 	Object3D* obj = FindGameObjectWithTag<Object3D>(_str);
-	
+	//プレイヤーのセット
 	mainCamera->Component()->GetComponent<TitleCamera>()->PlayerSet(obj);
 }

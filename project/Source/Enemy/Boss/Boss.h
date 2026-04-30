@@ -211,6 +211,8 @@ private:
 	std::list<SphereCollider*> bossHitCollider;
 	int rightHandFrame;
 	int leftHandFrame;
+
+	VECTOR3 GetDamageDrawPos();
 };
 
 // to_json

@@ -107,8 +107,8 @@ public:
 	bool CanSpecialAttack()const { return (specialAttackBar >= specialAttackBarMax); }
 
 protected:
-	CollsionSet attackColl;
-	CollsionSet justAvoidColl;
+	CollsionSet attackColl; //UŒ‚‚Ì“–‚½‚è”»’è‚Ìî•ñ
+	CollsionSet justAvoidColl; //ƒWƒƒƒXƒg‰ñ”ğ”»’è‚Ìî•ñ
 
 	float hp;
 	float maxHp;

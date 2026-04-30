@@ -25,10 +25,10 @@ PlayerLose::~PlayerLose()
 void PlayerLose::Update()
 {
 	Player* p = GetBase<Player>();
-	if (!p->playerCom.camera->IsCutScene()) {
+	if (!p->playerCom.camera->IsCutScene()) { //負けた時のカットシーンが終わったらシーンが終了
 		p->playerCom.gameManager->ChangeState(GameControler::SCENE_CHANGE);
 	}
-	if (p->playerCom.camera->GetCutNum() == 2) {
+	if (p->playerCom.camera->GetCutNum() == 2) { //カットが2の時に負けのUIを描画
 		p->playerCom.gameManager->ResultUiStart(false);
 	}
 }
@@ -45,12 +45,19 @@ void PlayerLose::Start()
 	SoundManager::GetInstance()->PlaySe(Sound_ID::LOSE);
 	//one = false;
 	p->playerCom.enemyManager->CameraRockOnStart(p->playerCom.camera);
-	if (FindGameObject<Wave>()->GetBossWave()) {
-		p->playerCom.camera->CutSceneChangeState("PlayerDieBoss", false);
+
+	Wave* wave = FindGameObject<Wave>();
+
+	if (wave != nullptr) {
+		//ボスが出ているならボス用のカットインを流す
+		if (wave->GetBossWave()) {
+			p->playerCom.camera->CutSceneChangeState("PlayerDieBoss", false);
+		}
+		else {
+			p->playerCom.camera->CutSceneChangeState("PlayerDie", false);
+		}
 	}
-	else {
-		p->playerCom.camera->CutSceneChangeState("PlayerDie", false);
-	}
+	
 	FindGameObject<UIManager>()->SetUIDraw(false);
 }
 

@@ -60,12 +60,16 @@ void PlayerBlowAway::Start()
 {
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
+	//“G‚Ì•ûŒü‚ÉŒü‚­‚æ‚¤‚ÉŒ»Ý‚Ì“G‚ÌŠp“x‚ðŽæ“¾
 	if (p->playerCom.hitObj != nullptr) {
 		eRotation = p->playerCom.hitObj->GetTransform()->rotation;
 	}
-	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, 10000) * MGetRotY(eRotation.y));
-	p->playerCom.physics->AddVelocity(VECTOR3(0, 2000, 0), false);
-	p->playerCom.physics->SetGravity(VECTOR3(0, -3000.0f, 0));
+	const float FIRST_SPEED = 10000.0f;
+	const float ADD_SPEED = 2000.0f;
+	const float GRAVITY = -3000.0f;
+	p->playerCom.physics->SetVelocity(VECTOR3(0, 0, FIRST_SPEED) * MGetRotY(eRotation.y));
+	p->playerCom.physics->AddVelocity(VECTOR3(0, ADD_SPEED, 0), false);
+	p->playerCom.physics->SetGravity(VECTOR3(0, GRAVITY, 0));
 	p->playerCom.player->GetPlayerTransform()->position.y += 10.0f;
 	p->playerCom.anim->SetPlaySpeed(2.5f);
 	p->playerCom.shaker->ShakeStart(VECTOR3(10, 10, 10), Shaker::MIX_SHAKE, false, -1.0f);

@@ -25,6 +25,7 @@ PlayerDamage::~PlayerDamage()
 void PlayerDamage::Update()
 {
 	Player* p = GetBase<Player>();
+	//モーションの再生が終わったら移動ステートに戻る
 	if (p->playerCom.anim->IsFinish()) {
 		p->playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 	}

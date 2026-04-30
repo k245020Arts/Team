@@ -1,7 +1,7 @@
 #pragma once
 #include "../../TrashEnemy/EnemyState/EnemyStateBase.h"
 #include "../Boss.h"
-#include "Attack/BossAttackBase.h"
+#include "Attack/BossAttackJsonParse.h"
 
 struct ActionParam
 {
@@ -175,6 +175,6 @@ private:
 	bool forceAttack;
 
 	VECTOR3 vec;
-	std::unordered_map<std::string, std::shared_ptr<BossAttackBase>> attacks;
-	std::unordered_map<std::string, BossAttackBase::BossAttackParam> attackParam;
+	std::unordered_map<std::string, std::shared_ptr<BossAttackBase>> attacks; //攻撃のポインターの保持
+	std::unordered_map<std::string, BossAttackBase::BossAttackParam> attackParam; ///攻撃のパラメーターの保持
 };

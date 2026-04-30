@@ -29,7 +29,6 @@ void JustAvoidAttackCamera::Update()
 		float t = 1.0f - timer / MAX_TIMER;
 		VECTOR3 easedT = Easing::EaseOut(c->cameraComponent.target.transform->position, c->cameraComponent.player.transform->position, t);
 		c->cameraComponent.cameraTransform->rotation.y = Easing::EaseInOut(firstRotation, firstRotation + CHANGE_ROTATION_Y * DegToRad, t);
-		//*c->cameraComponent.currentDistance = Easing::SinCube(-1000.0f, -2000.0f,t);
 		targetPos = easedT;
 		timer -= Time::DeltaTimeRate();
 	}

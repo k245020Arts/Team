@@ -27,6 +27,7 @@
 namespace {
 	std::vector<Boss::BossParam> bossParams;
 
+	//アニメーションの末尾のファイル名と、enumをリンクさせる
 	std::unordered_map<std::string, ID::IDType> animMap = {
 	{ "IDOL", ID::B_IDOL },
 	{ "IDOL2", ID::B_COOLTIME },
@@ -101,7 +102,8 @@ void BossCreater::CreateBoss()
 	Object3D* boss;
 	boss = new Object3D();
 	float bSize = 8.0f;
-	boss->Init(Transform(VECTOR3(0, 450, 2000), VZero, VECTOR3(bSize, bSize - 1, bSize)), "Boss");
+	const VECTOR3 InitPos = VECTOR3(0, 450, 2000);
+	boss->Init(Transform(InitPos, VZero, VECTOR3(bSize, bSize - 1, bSize)), "Boss");
 
 	SphereCollider* collider = boss->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -149,7 +151,7 @@ void BossCreater::CreateBoss()
 	Boss* b = boss->Component()->AddComponent<Boss>();
 
 	Physics* physics = boss->Component()->AddComponent<Physics>();
-	physics->Start(VECTOR3(0.0f, -1500.0f, 0.0f), BossInformation::BASE_FIRCTION);
+	physics->Start(BossInformation::BASE_GRAVITY, BossInformation::BASE_FIRCTION);
 
 	Animator* anim = boss->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(ResourceLoad::GetHandle(ID::B_MODEL), 1);

@@ -44,11 +44,11 @@ public:
 	Transform* GetCameraTransform() const { return cameraComponent.cameraTransform; }
 
 protected:
-	CameraInformation::CameraComponent cameraComponent;
+	CameraInformation::CameraComponent cameraComponent; //コンポーネントを毎回GetComponentしたくないので一括で保管
 
-	float reap;
-	VECTOR3 defalutDistance;
-	VECTOR3 currentDistance;
+	float reap; //追従処理をするときにどれくらいの補完を掛けるかを指定する値
+	VECTOR3 defalutDistance; //基準となる距離
+	VECTOR3 currentDistance; //今の距離
 
 	float fov;
 	float nearFog;

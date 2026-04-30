@@ -40,9 +40,9 @@ private:
 
 	float scale;
 	int alpha;
-	float drawNumCount;
-	float waitTimer;
+	float drawNumCount; //Œ…”
+	float waitTimer; //‘Ò‚¿ŠÔ
 	float feedInOutTime;
 	float feedInOutTimeMax;
-	VECTOR2I graphSize;
+	VECTOR2I graphSize; //‰æ‘œ‚Ì‘å‚«‚³
 };

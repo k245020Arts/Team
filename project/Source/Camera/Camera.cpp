@@ -131,14 +131,19 @@ void Camera::Draw()
 	}
 
 	//Dxlibのカメラの設定(SetDrawScreenを使うと初期化されるため毎フレーム呼ぶ)。
-	SetCameraNearFar(10.0f, 5000000.0f);
+	const float NEAR_CLIP = 10.0f;
+	const float FAR_CLIP = 5000000.0f;
+	SetCameraNearFar(NEAR_CLIP, FAR_CLIP);
 	SetFogEnable(true);
 	SetFogStartEnd(nearFog, farFog);
-	SetFogColor(137, 189, 222);
+	const int R = 137;
+	const int G = 189;
+	const int B = 222;
+	SetFogColor(R, G, B);
 	//SetFogColor(255, 255, 255);
 	SetupCamera_Perspective(fov);
 
-	if (debugButton == 2) {
+	if (debugButton == 2) { //デバックウィンドウでこのモードのラジオボタンを押したら
 		Transform transform = *obj->GetTransform();
 		SetCameraPositionAndTarget_UpVecY(transform.position, diffTarget);
 	}
@@ -154,8 +159,10 @@ void Camera::Draw()
 
 void Camera::Start(BaseObject* _eObj)
 {
-	SetCameraNearFar(10.0f, 10000.0f);
-	SetupCamera_Perspective(DX_PI_F / 3.0f);
+	const float NEAR_CLIP = 10.0f;
+	const float FAR_CLIP = 10000.0f;
+	SetCameraNearFar(NEAR_CLIP, FAR_CLIP);
+	SetupCamera_Perspective(60.0f * DegToRad);
 	//cameraComponent.target = &target;
 	cameraComponent.shaker	= obj->Component()->AddComponent<Shaker>();
 	
@@ -264,7 +271,13 @@ void Camera::PushCamera(const VECTOR3& _norm, float _size, const VECTOR3& _groun
 {
 	float offset	= 5.0f; 
 	float newDist	= max(0, _size - offset);
-	counter			= counter > 1.0f ? 1.0f : counter + Time::DeltaTimeRate() * 3.0f;
+	//1より上なら1にする
+	if (counter > 1.0f) {
+		counter = 1.0f;
+	}
+	else {
+		counter += Time::DeltaTimeRate() * 3.0f;
+	}
 	float rate		= counter / 1.0f;
 	hit				= true;
 
@@ -278,7 +291,6 @@ void Camera::AttackEnemyFovChange(Transform* _targetTransform,float _maxspeed)
 	if (moveTimer > 0.0f || freeCamera->GetID() != StateID::FREE_CAMERA_S || CameraRotationMove()) {
 		return;
 	}
-	//direction				= cameraComponent.enemyManager->BossAttackCamera(this, *_targetTransform);
 	direction				= EnemyAttackChangeCameraDirection::RIGHT;
 	targetEnemyTransform	= _targetTransform;
 	moveTimer				= MOVE_TIMER_MAX;
@@ -314,26 +326,32 @@ void Camera::RotationChange(const Transform& _targetTransform, float _speed)
 		cameraComponent.cameraTransform->rotation.y = inRot;
 	}
 	else {
-		cameraComponent.cameraTransform->rotation.y = (VDot(right, toTarget) > 0) ? cameraComponent.cameraTransform->rotation.y + _speed * DegToRad :
-			cameraComponent.cameraTransform->rotation.y - _speed * DegToRad;
+		if (VDot(right, toTarget) > 0) {
+			cameraComponent.cameraTransform->rotation.y += _speed * DegToRad;
+		}
+		else {
+			cameraComponent.cameraTransform->rotation.y -= _speed * DegToRad;
+		}
 	}
 }
 
 bool Camera::CameraRotationMove()
 {
 	bool cancel = false;
-	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.x >= 0.3f || CheckHitKey(KEY_INPUT_RIGHT)) {
+	const float DEAD_ZONE = 0.3f;
+	//コントローラーの入力があったら移動中と判定
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.x >= DEAD_ZONE || CheckHitKey(KEY_INPUT_RIGHT)) {
 		cancel = true;
 	}
-	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.x <= -0.3f || CheckHitKey(KEY_INPUT_LEFT)) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.x <= -DEAD_ZONE || CheckHitKey(KEY_INPUT_LEFT)) {
 		cancel = true;
 	}
 
-	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.y >= 0.3f || CheckHitKey(KEY_INPUT_UP)) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.y >= DEAD_ZONE || CheckHitKey(KEY_INPUT_UP)) {
 		cancel = true;
 	}
 
-	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.y <= -0.3f || CheckHitKey(KEY_INPUT_DOWN)) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().rightStick.y <= -DEAD_ZONE || CheckHitKey(KEY_INPUT_DOWN)) {
 		cancel = true;
 	}
 	return cancel;

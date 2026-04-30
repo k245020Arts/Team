@@ -1185,6 +1185,9 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStaySky.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Ranged</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackJsonParse.h">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">

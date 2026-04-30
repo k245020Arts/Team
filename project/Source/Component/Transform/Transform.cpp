@@ -27,12 +27,12 @@ MATRIX Transform::GetMatrix()
 
 void Transform::SetParent(Transform* _pare)
 {
-	if (parent != nullptr) {
+	if (parent != nullptr) { //今親を持っていたら親を外す
 		RemoveParent(parent);
 	}
 	
 	parent = _pare;
-	if (parent != nullptr) {
+	if (parent != nullptr) { //親がnullptrではなければ、子供の登録
 		parent->Child(this);
 	}
 }
@@ -42,7 +42,7 @@ Transform Transform::WorldTransform()
 	VECTOR3 worldPos = position;
 	VECTOR3 worldRot = rotation;
 	VECTOR3 worldScale = scale;
-	if (parent != nullptr) {
+	if (parent != nullptr) { //親があれば親のポジションを足す
 		worldPos = position * parent->WorldTransform().GetMatrix();
 		worldRot += parent->rotation;
 		worldScale *= parent->scale;
@@ -78,12 +78,13 @@ Transform Transform::WorldTransform()
 
 void Transform::SetWorld(const Transform& _transform)
 {
-	if (parent == nullptr) {
-		position = _transform.position;
-		rotation = _transform.rotation;
-		scale = _transform.scale;
+	//親がnullptrじゃなかったら通す
+	if (parent != nullptr) {
 		return;
 	}
+	position = _transform.position;
+	rotation = _transform.rotation;
+	scale = _transform.scale;
 }
 
 void Transform::ImguiDraw()
@@ -96,7 +97,7 @@ void Transform::ImguiDraw()
 	ImGui::DragFloat3("scale", &scale.x, 1.0f, 1.0f, 10.0f);
 	ImGui::Separator();
 
-	if (ImGui::Button("posCopy")) {
+	if (ImGui::Button("posCopy")) { //登録したポジションをクリップボードにてコピーを行う
 		char buf[90];
 		sprintfDx(buf,"VECTOR3(%.2f,%.2f,%.2f)", position.x, position.y, position.z);
 		std::string copyData = buf;
@@ -118,43 +119,12 @@ void Transform::RemoveChild(Transform* _child)
 
 void Transform::RemoveParent(Transform* transform)
 {
-	if (parent == nullptr) {
+	if (parent == nullptr) { //親がnullptrなら返す
 		return;
 	}
-	if (parent != transform) {
+	if (parent != transform) { //親と指定したTransformが違うなら返す
 		return;
 	}
 	//transform->SetParent();
 	parent = nullptr;
-}
-
-Transform Transform::MatrixToTransform(const MATRIX& mat)
-{
-	Transform t;
-
-	// --- Position ---
-	t.position = VGet(mat.m[3][0], mat.m[3][1], mat.m[3][2]);
-
-	// --- Scale ---
-	t.scale.x = VSize(VGet(mat.m[0][0], mat.m[0][1], mat.m[0][2]));
-	t.scale.y = VSize(VGet(mat.m[1][0], mat.m[1][1], mat.m[1][2]));
-	t.scale.z = VSize(VGet(mat.m[2][0], mat.m[2][1], mat.m[2][2]));
-
-	VECTOR rot;
-
-	rot.y = asinf(-mat.m[2][0]);
-
-	if (cosf(rot.y) > 0.0001f) {
-		rot.x = atan2f(mat.m[2][1], mat.m[2][2]);
-		rot.z = atan2f(mat.m[1][0], mat.m[0][0]);
-	}
-	else {
-		rot.x = atan2f(-mat.m[1][2], mat.m[1][1]);
-		rot.z = 0.0f;
-	}
-	
-	position = t.position;
-	scale = t.scale;
-	rotation = t.rotation;
-	return t;
 }

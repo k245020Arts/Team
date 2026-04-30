@@ -41,39 +41,10 @@ void PlayerAttack4::Update()
 	collsionCreate = false;
 	PlayerAttackStateBase::Update();
 	PlayerAttackStateBase::AttackCommonUpdate();
-	//if (!noStateChange) {
-	//	EnemyRotation();
-	//	if (InputManager::GetInstance()->KeyInputDown("avoid")) {
-	//		//p->playerCom.player->AvoidReady();
-	//		avoidReady = true;
-	//		//noStateChange = true;
-	//	}
-	//	if (InputManager::GetInstance()->KeyInputDown("attack")) {
-	//		nextAttack = true;
-	//	}
-		timer -= Time::DeltaTimeRate();
-		if (timer <= 0.0f) {
-			p->playerCom.anim->SetPlaySpeed(1.0f);
-		}
-	//	if (p->playerCom.anim->AnimEventCan()) {
-	//		if (beforeAttack) {
-	//			AttackMoveStart();
-	//		}
-	//		beforeAttack = false;
-	//		p->playerCom.physics->SetVelocity(VZero);
-	//		p->playerCom.physics->AddVelocity(VECTOR3(0, 20000, 0), true);
-	//	}
-	//	else {
-	//		if (beforeAttack) {
-	//			//p->playerCom.anim->SetPlaySpeed(1.5f);
-	//		}
-	//		else {
-	//			runTimer = 0.4f;
-	//			noStateChange = true;
-	//			p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-	//		}
-	//	}
-	//}
+	timer -= Time::DeltaTimeRate();
+	if (timer <= 0.0f) {
+		p->playerCom.anim->SetPlaySpeed(1.0f);
+	}
 }
 
 void PlayerAttack4::Draw()

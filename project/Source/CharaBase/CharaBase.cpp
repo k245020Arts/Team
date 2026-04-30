@@ -28,6 +28,7 @@ void CharaBase::Draw()
 
 void CharaBase::DeleteColliderComponent(CollsionSet* _set)
 {
+	//Œ`‚É‚æ‚Á‚Ä•Ï‚¦‚ç‚ê‚é‚æ‚¤‚É‚µ‚Ä‚¢‚é‚ªŒ»óSPHERE‚µ‚©Žg‚Á‚Ä‚È‚¢
 	switch (_set->shape)
 	{
 	case CollsionInformation::SPHERE:

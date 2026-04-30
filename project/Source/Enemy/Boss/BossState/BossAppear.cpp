@@ -37,7 +37,7 @@ void BossAppear::Update()
 {
 	Boss* b = GetBase<Boss>();
 	if (bossId == 0) {
-		if (b->enemyBaseComponent.camera->GetCutNum() == 3) {
+		if (b->enemyBaseComponent.camera->GetCutNum() == 3) { //カットシーンが3カット目に入ったらジャンプモーションを再生
 			if (!feedInFinish) {
 				b->enemyBaseComponent.physics->GetBaseObject()->SetObjectTimeRate(1.0f);
 				feedInFinish = true;
@@ -45,7 +45,7 @@ void BossAppear::Update()
 			}
 
 		}
-		if (b->enemyBaseComponent.camera->GetCutNum() == 5) {
+		if (b->enemyBaseComponent.camera->GetCutNum() == 5) {//カットシーンが3カット目に入ったら咆哮をする
 			if (!roar) {
 				b->enemyBaseComponent.anim->Play(ID::B_ROAR_2, 0.2f);
 				roar = true;
@@ -53,34 +53,20 @@ void BossAppear::Update()
 			}
 
 		}
-		if (roar) {
-			if (b->enemyBaseComponent.anim->AnimEventCan()) {
-				if (first) {
-					//b->trashEnemy->CreateEnemy(VZero, 4);
-					first = false;
-					EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0.0f, 100.0f, 0.0f), VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_ROAR, 2.0f);
-					SoundManager::GetInstance()->PlaySe(Sound_ID::BOSS_ROAR_VOICE);
-					SoundManager::GetInstance()->FeedInOut(Sound_ID::BOSS_BEFORE, 0.5f);
-					b->enemyBaseComponent.camera->CameraPerspectiveShakeStart(5.0f, 2.0f);
-					InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(500, 120);
-				}
-
-			}
-			if (b->enemyBaseComponent.anim->IsFinish()) {
-				b->enemyBaseComponent.gameManager->ChangeState(GameControler::GameState::PLAY);
-				SoundManager::GetInstance()->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
-			}
-		}
-
+		RoarEvent();
+		//フェードが開けたら重力を加算
 		if (feedInFinish) {
-			b->enemyBaseComponent.physics->AddGravity(VECTOR3(0, -80.0f, 0));
+			const VECTOR3 GRAVITY_ADD = VECTOR3(0, -80.0f, 0);
+			b->enemyBaseComponent.physics->AddGravity(GRAVITY_ADD);
+			//着地したら
 			if (b->enemyBaseComponent.physics->GetGround()) {
-				//b->enemyBaseComponent.gameManager->ChangeState("PLAY");
 				b->enemyBaseComponent.anim->Play(ID::B_APPEAR_LAND);
 				b->enemyBaseComponent.camera->CameraShake(VECTOR3(100, 100, 100), Shaker::MIX_SHAKE, false, 1.0f);
 				feedInFinish = false;
 				SoundManager::GetInstance()->PlaySe(Sound_ID::ENEMY_FALL);
-				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(200, 60);
+				const int POWER = 200;
+				const int FRAME = 60;
+				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(POWER, FRAME);
 			}
 			if (!b->enemyBaseComponent.camera->IsCutScene()) {
 
@@ -88,10 +74,11 @@ void BossAppear::Update()
 		}
 	}
 	else {
-		if (b->enemyBaseComponent.camera->GetCutNum() == 2) {
+		if (b->enemyBaseComponent.camera->GetCutNum() == 2) { //カットシーンが2カット目に入ったら走り出す
 			Animator* anim = b->enemyBaseComponent.anim;
 			anim->Play(ID::B_APPEAR_FALL);
 			b->enemyBaseComponent.physics->AddVelocity(b->bossTransform->Forward() * -11000.0f, true);
+			//走るときのサウンド
 			if (anim->GetCurrentFrame() >= 3.0f && anim->GetCurrentFrame() <= 4.0f) {
 				if (rightDushSound) {
 					SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::BOSS_WALK, 30000, 1000);
@@ -114,35 +101,15 @@ void BossAppear::Update()
 				leftDushSound = true;
 			}
 		}
-		if (b->enemyBaseComponent.camera->GetCutNum() == 3) {
+		if (b->enemyBaseComponent.camera->GetCutNum() == 3) { //カットシーンが3カット目に入ったら
 			if (!roar) {
 				b->enemyBaseComponent.anim->Play(ID::B_APPEAR_LAND);
 				runStop = true;
 				b->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 2.0f);
 			}
 		}
-		if (roar) {
-			if (b->enemyBaseComponent.anim->AnimEventCan()) {
-				if (first) {
-					//当たり判定の一時ストップの解除
-					for (SphereCollider* collider : b->bossHitCollider) {
-						collider->CollsionRespown();
-					}
-					first = false;
-					EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0.0f, 100.0f, 0.0f), VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_ROAR, 2.0f);
-					SoundManager::GetInstance()->PlaySe(Sound_ID::BOSS_ROAR_VOICE);
-					SoundManager::GetInstance()->FeedInOut(Sound_ID::BOSS_BEFORE, 0.5f);
-					b->enemyBaseComponent.camera->CameraPerspectiveShakeStart(5.0f, 2.0f);
-					InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(500, 120);
-				}
-
-			}
-			if (b->enemyBaseComponent.anim->IsFinish()) {
-				b->enemyBaseComponent.gameManager->ChangeState(GameControler::GameState::PLAY);
-				SoundManager::GetInstance()->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
-			}
-		}
-		if (runStop) {
+		
+		if (runStop) { //走り終わったら咆哮
 			if (b->enemyBaseComponent.anim->IsFinish()) {
 				stopCounter -= Time::DeltaTimeRate();
 				if (stopCounter <= 0.0f) {
@@ -164,15 +131,18 @@ void BossAppear::Start()
 {
 	Boss* b = GetBase<Boss>();
 	bossId = b->bossID;
+	//Bossの種類によってカットシーンの入り方を変えている
 	if (bossId == 0) {
-		obj->GetTransform()->position = VECTOR3(0, 10000, 2000);
+		const VECTOR3 INIT_POS = VECTOR3(0, 10000, 2000);
+		obj->GetTransform()->position = INIT_POS;
 		b->enemyBaseComponent.physics->GetBaseObject()->SetObjectTimeRate(0.0f);
 		animId = ID::B_APPEAR_FALL;
 	}
 	else {
-		obj->GetTransform()->position = VECTOR3(0, 0, 20000);
+		const VECTOR3 INIT_POS = VECTOR3(0, 0, 20000);
+		obj->GetTransform()->position = INIT_POS;
 		b->enemyBaseComponent.physics->GetBaseObject()->SetObjectTimeRate(1.0f);
-		//当たり判定の一時ストップ
+		//当たり判定の一時ストップ(壁に埋もれないようにするために)
 		for (SphereCollider* collider : b->bossHitCollider) {
 			collider->CollsionFinish();
 		}
@@ -183,6 +153,7 @@ void BossAppear::Start()
 	feedInFinish = false;
 	roar = false;
 	first = true;
+	//UIの描画をなくす
 	uiManager->SetUIDraw(false);
 	SoundManager::GetInstance()->FeedInOut(Sound_ID::PLAY_BGM, 0.5f);
 	SoundManager::GetInstance()->PlayBGM(Sound_ID::BOSS_BEFORE,true,true);
@@ -197,4 +168,30 @@ void BossAppear::Finish()
 {
 	Boss* b = GetBase<Boss>();
 	b->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
+}
+
+void BossAppear::RoarEvent()
+{
+	Boss* b = GetBase<Boss>();
+	if (roar) {
+		if (b->enemyBaseComponent.anim->AnimEventCan()) {
+			if (first) {
+				//当たり判定の一時ストップの解除
+				for (SphereCollider* collider : b->bossHitCollider) {
+					collider->CollsionRespown();
+				}
+				first = false;
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0.0f, 100.0f, 0.0f), VZero, VOne), b->GetBaseObject(), Effect_ID::BOSS_ROAR, 2.0f);
+				SoundManager::GetInstance()->PlaySe(Sound_ID::BOSS_ROAR_VOICE);
+				SoundManager::GetInstance()->FeedInOut(Sound_ID::BOSS_BEFORE, 0.5f);
+				b->enemyBaseComponent.camera->CameraPerspectiveShakeStart(5.0f, 2.0f);
+				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(500, 120);
+			}
+
+		}
+		if (b->enemyBaseComponent.anim->IsFinish()) {
+			b->enemyBaseComponent.gameManager->ChangeState(GameControler::GameState::PLAY);
+			SoundManager::GetInstance()->FeedInStart(Sound_ID::PLAY_BGM, 1.0f);
+		}
+	}
 }

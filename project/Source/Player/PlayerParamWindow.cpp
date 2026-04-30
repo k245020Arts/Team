@@ -22,7 +22,7 @@ void PlayerParamWindow::PlayerParamWindowView()
 	if (InputManager::GetInstance()->KeyInputDown("playerParam")) {
 		windowMode = !windowMode;
 	}
-	if (!windowMode) {
+	if (!windowMode) {//Windowを開いてないならリターン
 		return;
 	}
     ImGui::Begin("Player Param");
@@ -41,7 +41,7 @@ void PlayerParamWindow::PlayerParamWindowView()
             ImGui::DragFloat("StartTime", &data.collsionStartTime, 0.01f);
             ImGui::DragFloat("EndTime", &data.collsionFinishTime, 0.01f);
 
-            // Transform
+            //トランスフォーム
             ImGui::DragFloat3("Pos", &data.collTrans.position.x, 1.0f);
             ImGui::DragFloat3("Scale", &data.collTrans.scale.x, 1.0f);
 
@@ -55,7 +55,7 @@ void PlayerParamWindow::PlayerParamWindowView()
             ImGui::DragFloat("motionCancelTime", &data.motionCancelStartTime, 0.01f);
             ImGui::DragFloat("AttackInputStartTime", &data.attackInputStartTime, 0.01f);
 
-            // chargeLevels
+            // チャージ設定
             if (ImGui::TreeNode("ChargeLevels"))
             {
                 for (int i = 0; i < data.chargeLevels.size(); i++)
@@ -79,12 +79,12 @@ void PlayerParamWindow::PlayerParamWindowView()
             ImGui::TreePop();
         }
     }
-
+    //データの保存
     if (ImGui::Button("Save"))
     {
         SaveAttackData();
     }
-
+    //データのリロード
     if (ImGui::Button("Reload"))
     {
         LoadAttackData();
@@ -102,7 +102,7 @@ void PlayerParamWindow::PlayerParamWindowView()
 
         if (ImGui::TreeNode(label.c_str()))
         {
-            // ===== 基本 =====
+            //基本
             ImGui::DragFloat3("PlayerShakePower", &r.shakePower.x, 1.0f);
             ImGui::DragFloat("PlayerShakeTime", &r.shakeTime, 0.01f);
 
@@ -118,7 +118,7 @@ void PlayerParamWindow::PlayerParamWindowView()
             ImGui::DragInt("ShakePattern", &pattern, 1, 0, 10);
             r.shakePattern = static_cast<Shaker::ShakePattern>(pattern);
 
-            // ===== ChargeLevels =====
+            //ChargeLevels
             if (ImGui::TreeNode("ChargeLevels"))
             {
                 for (int i = 0; i < r.chargeLevels.size(); i++)
@@ -139,7 +139,7 @@ void PlayerParamWindow::PlayerParamWindowView()
                     }
                 }
 
-                // 追加・削除
+                //追加と削除
                 if (ImGui::Button("Add Level"))
                 {
                     r.chargeLevels.emplace_back();
@@ -160,12 +160,12 @@ void PlayerParamWindow::PlayerParamWindowView()
     }
 
     
-
+    //セーブ
     if (ImGui::Button("Save Reaction"))
     {
         SaveReaction();
     }
-
+    //リロード
     if (ImGui::Button("Reload"))
     {
         LoadReaction();

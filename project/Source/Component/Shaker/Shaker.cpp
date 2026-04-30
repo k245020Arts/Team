@@ -21,6 +21,7 @@ void Shaker::Update()
 	if (!Debug::ShakeStop()) {
 		return;
 	}
+	//通常タイムならタイムを減算して行う
 	if (time > 0) {
 		ShakePower();
 		time -= Time::DeltaTimeRate();
@@ -33,6 +34,7 @@ void Shaker::Update()
 		ShakeFinish();
 	}
 	else {
+		//-1.0より小さく設定すると指定がない限りShakeする
 		ShakePower();
 	}
 }
@@ -43,10 +45,10 @@ void Shaker::Draw()
 
 void Shaker::ShakeStart(const VECTOR3& _power, ShakePattern _pattern, bool rok, float _second)
 {
-	if (!Debug::ShakeStop()) {
+	if (!Debug::ShakeStop()) { //HitStopがない状態だとスルー
 		return;
 	}
-	if (time > 0.0f) {
+	if (time > 0.0f) { //現在シェイクを行っているならスルー
 		return;
 	}
 	transform = obj->GetTransform();
@@ -55,7 +57,7 @@ void Shaker::ShakeStart(const VECTOR3& _power, ShakePattern _pattern, bool rok, 
 	pattern = _pattern;
 	time = _second;
 	stop = rok;
-	if (stop) {
+	if (stop) { //HitStopなら何も動かしたくないので時間を止める
 		obj->SetObjectTimeRate(0.0f);
 	}
 	shakePos = VZero;
@@ -130,15 +132,17 @@ void Shaker::ShakePower()
 
 void Shaker::ShakeFinish()
 {
-	if (pattern != NONE) {
-		pattern = NONE;
-		time = 0.0f;
-		currentShakePower = VZero;
-		if (stop) {
-			*transform = currentTransform;
-			obj->SetObjectTimeRate(1.0f);
-		}
+	if (pattern == NONE) { //現在シェイクをしていないならスルー
+		return;
 	}
+	pattern = NONE;
+	time = 0.0f;
+	currentShakePower = VZero;
+	if (stop) {
+		*transform = currentTransform;
+		obj->SetObjectTimeRate(1.0f);
+	}
+	
 }
 
 VECTOR3 Shaker::GetShakePos() const

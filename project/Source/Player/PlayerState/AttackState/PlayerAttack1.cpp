@@ -40,7 +40,7 @@ PlayerAttack1::~PlayerAttack1()
 void PlayerAttack1::Update()
 {
 	Player* p = GetBase<Player>();
-	collsionCreate = false;
+	collsionCreate = false; 
 	
 	
 	PlayerAttackStateBase::Update();

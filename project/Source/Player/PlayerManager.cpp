@@ -64,11 +64,8 @@ void PlayerManager::Update()
 	if (gameManager == nullptr) {
 		gameManager = FindGameObject<GameControler>();
 	}
-
-	if (GetScene<PlayScene>() != nullptr) {
-		int a = 0;
-	}
 	
+	//GameManagerのnullptrに対してのセット
 	if (gameManager != nullptr) {
 		//bool isChange = ;
 		
@@ -166,7 +163,7 @@ void PlayerManager::CreatePlayer()
 
 	std::string charaID = "3";
 	std::string typeID = "000";
-	//キャラIDとプレイヤーの種類IDをセットしてロード
+	//----------------------キャラIDとプレイヤーの種類IDをセットしてロード
 	ResourceLoad::LoadAnim(charaID + typeID + "_IDOL1", ID::IDType::P_ANIM_IDOL);
 	ResourceLoad::LoadAnim(charaID + typeID + "_RUN_M_1", ID::IDType::P_ANIM_RUN);
 	ResourceLoad::LoadAnim(charaID + typeID + "_AVOID_M_1", ID::IDType::P_ANIM_AVOID);
@@ -194,6 +191,8 @@ void PlayerManager::CreatePlayer()
 
 	anim->SetMaxFrame(ID::IDType::P_SPECIAL_ATTACK_BEFORE_ANIM, 35.4f);
 	anim->SetMaxFrame(ID::P_GETUP, 53.0f);
+
+	//----------------------------------------------------------------------------------------------------------------------
 	
 	MotionBlur* blur = playerPointer->Component()->AddComponent<MotionBlur>();
 
@@ -204,6 +203,7 @@ void PlayerManager::CreatePlayer()
 
 	player->Start(playerPointer);
 
+	//影の作成
 	Object3D* shadow = new Object3D();
 	shadow->Init(Transform(VECTOR3(0.0f, -100.0f, 0.0f), VZero, VECTOR3(playerPointer->GetTransform()->scale.x - 1.0f, 0.15f, playerPointer->GetTransform()->scale.z - 1.0f)), "PlayerShadow");
 	Shadow* s = shadow->Component()->AddComponent<Shadow>();
@@ -216,17 +216,21 @@ void PlayerManager::CreatePlayer()
 
 	playerPointer->AddChild(shadow);
 
-	
+	//HPゲージの作成
 	Object2D* guage = new Object2D();
-	guage->Init(VECTOR2F(915.0f, 950.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "playerHp");
+	VECTOR2F GUAGEPOS = VECTOR2F(915.0f, 950.0f);
+	guage->Init(GUAGEPOS, VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "playerHp");
 	playerPointer->AddChild(guage);
 
 	Guage* g = guage->Component()->AddComponent<Guage>();
 	g->GuageDrawReady<Player>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Player_HpBar_GreenBack", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Guage::BAR_MODE::HP);
 	g->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Player_HpBar_Frame", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,Transform(VECTOR3(915.0f,950.0f,0.0f),VZero,VECTOR3(1.0f,1.0f,0.0f)));
 
+	//スペシャルゲージの作成
 	Object2D* SpecialGuage = new Object2D();
-	SpecialGuage->Init(VECTOR2F(915.0f, 1050.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "playerSpecialGuage");
+	
+	VECTOR2F SPECIALGUAGEPOS = VECTOR2F(915.0f, 1050.0f);
+	SpecialGuage->Init(SPECIALGUAGEPOS, VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "playerSpecialGuage");
 	playerPointer->AddChild(SpecialGuage);
 
 	Guage* specialG = SpecialGuage->Component()->AddComponent<Guage>();
@@ -239,9 +243,9 @@ void PlayerManager::GameSceneChangeState()
 {
 	
 	if (stateManager == nullptr) {
-		return;
+		return; //ステートマネージャーがセットされてなかったらリターン
 	}
-	
+	//現在のゲームステートを見る
 	switch (gameManager->GetStateNumber())
 	{
 	case GameControler::GameState::BEFORE:
@@ -276,6 +280,8 @@ void PlayerManager::CreateTitlePlayer()
 {
 	playerPointer = new Object3D();
 	playerPointer->SetDrawOrder(-5);
+
+	//タイトルシーン用のプレイヤーの作成
 	
 	//初期位置
 	playerPointer->Init(VECTOR3(300,800, -2000), VZero, VECTOR3(3.0f, 3.0f, 3.0f), "PLAYER");
@@ -389,6 +395,8 @@ void PlayerManager::CreateTitlePlayer()
 	componentLoght->SpotLightHandleStart(VECTOR3(0, 0, 0), VECTOR3(0.0f, 0.0f, 0.0f), DX_PI_F, DX_PI_F / 2, 4000, 0.0f, 0.002f, 0.0f);*/
 
 	player->Start(playerPointer);
+
+	//影の作成
 
 	Object3D* shadow = new Object3D();
 	shadow->Init(Transform(VECTOR3(0.0f, -100.0f, 0.0f), VZero, VECTOR3(playerPointer->GetTransform()->scale.x - 1.0f, 0.1f, playerPointer->GetTransform()->scale.z - 1.0f)), "PlayerShadow");

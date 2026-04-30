@@ -55,10 +55,10 @@ public:
 	//void SetSlowMode(bool _slow) { slowMode = _slow;}
 
 protected:
-	BaseObject* obj;
+	BaseObject* obj; //このコンポーネントが登録されているObject
 	bool active;
-	std::string tag;
-	std::string colltag;
+	std::string tag; //Componentのタグ
+	std::string colltag; //当たり判定に使用するComponentのタグ
 
 	float timeRate;
 	int debugId;

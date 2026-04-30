@@ -46,7 +46,7 @@ public:
 	void ColorGradeModeFinish() { gradeMode = false; }
 
 private:
-	ButtonType type;
+	ButtonType type; //ƒ{ƒ^ƒ“‚Ìí—Ş‚Ìİ’è
 	int buttonImage;
 	float scale;
 	bool push;

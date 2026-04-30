@@ -8,7 +8,11 @@ Light::Light()
 
 Light::~Light()
 {
-	DeleteLightHandle(hLight);
+	if (hLight >= 0) {
+		DeleteLightHandle(hLight);
+		hLight = -1;
+	}
+	
 }
 
 void Light::Update()

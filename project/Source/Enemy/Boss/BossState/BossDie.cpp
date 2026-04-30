@@ -28,6 +28,7 @@ void BossDie::Update()
 {
 	Boss* b = GetBase<Boss>();
 	if (b->enemyBaseComponent.anim->IsFinish()) {
+		//死ぬモーションが終わったらプレイヤー勝利Stateへと移行
 		b->enemyBaseComponent.state->SetNoStateChange(false);
 		b->enemyBaseComponent.gameManager->ChangeState(GameControler::GameState::WIN);
 			
@@ -58,6 +59,7 @@ void BossDie::Start()
 	slowTime	= 0.5f;
 	b->enemyBaseComponent.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
 	b->enemyBaseComponent.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
+
 	//死んだときに当たり判定を消したいので当たり判定を消す。
 	obj->Component()->RemoveAllComponent<SphereCollider>();
 	obj->Component()->RemoveAllComponent<ModelCollider>();

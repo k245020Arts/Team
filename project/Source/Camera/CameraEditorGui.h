@@ -19,12 +19,12 @@ private:
 	VECTOR3 basePosition;
 	VECTOR3 offset;
 	VECTOR3 baseTarget;
-	int cutNum;
+	int cutNum; //今どのカットを編集しているかの項目
 	std::string cutSceneName;
 
-	CutSceneSpece::CutScene cutScene;
+	CutSceneSpece::CutScene cutScene; //ここの値でパラメータを調整する
 
-	char cutSceneFileName[128];
+	char cutSceneFileName[128]; //カットシーンのファイル名を記入したいのでcharの配列で行う
 
 	int  currentLoadedCut;
 	bool isLoaded;
