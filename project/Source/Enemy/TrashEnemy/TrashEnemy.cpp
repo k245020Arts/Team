@@ -33,6 +33,7 @@
 #include "TrashEnemyState/Standby.h"
 #include "TrashEnemyState/T_EnemyDamage.h"
 #include "TrashEnemyState/T_EnemyWaitSee.h"
+#include "TrashEnemyState/T_EnemyStaySky.h"
 
 namespace
 {
@@ -304,7 +305,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState<Standby>("_Standby", StateID::T_ENEMY_STANDBY);
 	enemyBaseComponent.state->CreateState<T_EnemyDamage>("_T_EnemyDamage", StateID::T_ENEMY_DAMAGE);
 	enemyBaseComponent.state->CreateState<T_EnemyWaitSee>("_T_EnemyWaitSee", StateID::T_ENEMY_WAITSEE);
-
+	enemyBaseComponent.state->CreateState <T_EnemyStaySky>("T_EnemyStaySky", StateID::T_ENEMY_STAYSKY);
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
 	// スタートステートも StateID 化
@@ -358,12 +359,12 @@ void TrashEnemy::SetEnemyType(EnemyType type)
 	enemyType = type;
 }
 
-void TrashEnemy::ReadyCooperteAtk2(VECTOR3 _pos)
-{
-	//isStandby = true;
-	cooperateWayPoint = _pos;
-	enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK2);
-}
+//void TrashEnemy::ReadyCooperteAtk2(VECTOR3 _pos)
+//{
+//	//isStandby = true;
+//	cooperateWayPoint = _pos;
+//	enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK2);
+//}
 
 void TrashEnemy::SetLeaderPos(VECTOR3 _pos)
 {
@@ -375,12 +376,16 @@ void TrashEnemy::RangedAttack()
 	if (enemyType == EnemyType::MELEE || enemyType == EnemyType::MAX)
 		return;
 
+	enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK2);
+
 	isCooperateAtk = true;
 }
 
 void TrashEnemy::ChangeHp(float _damage)
 {
 	hp += _damage;
+	//後で修正
+	deadPreset = deadPresets[4];
 }
 
 void TrashEnemy::LookTarget(VECTOR3 _pos)

@@ -14,10 +14,10 @@ public:
 private:
 	void RangedMove(TrashEnemy* _enemy);
 	void DamageMove(TrashEnemy* _enemy);
-	void LeaderMove(TrashEnemy* _enemy);
+	//void LeaderMove(TrashEnemy* _enemy);
 
-	bool isLeader;
-	
-	VECTOR3 setGravity;
+	float speedDownCounter;
+
 	bool damageMove;
+	float hitStopCounter;
 };

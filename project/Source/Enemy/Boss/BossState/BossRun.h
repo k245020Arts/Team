@@ -22,7 +22,9 @@ private:
 	VECTOR3 rotation;
 
 	VECTOR3 targetPos;
+	//Šâ‚ð‚æ‚¯‚é
 	void HitLine();
+	//‹ß‚­‚ÌŠâ‚Ìƒ|ƒWƒVƒ‡ƒ“‚ð“ü‚ê‚é
 	std::list<VECTOR3> RayCastHits();
 	float speed;
 

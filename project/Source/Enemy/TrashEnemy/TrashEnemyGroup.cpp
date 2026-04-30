@@ -2,6 +2,7 @@
 #include "TrashEnemy.h"
 #include "../../Common/Random.h"
 #include "../../Camera/Camera.h"
+#include "../../Common/Effect/EffectManager.h"
 
 TrashEnemyGroup::TrashEnemyGroup()
 {
@@ -14,8 +15,6 @@ TrashEnemyGroup::TrashEnemyGroup()
 	enemiesRunCounter = 0;
 
 	leaderPos = VZero;
-
-	isReadyLeader = false;
 
 	rangedDamageMove = false;
 }
@@ -311,22 +310,22 @@ void TrashEnemyGroup::RangedEnemyAttack()
 
 		if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
 		{
-			enemy->ChangeState(StateID::COOPERATEATTACK2);
+			enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
 
 			if (enemy->GetStandby())
-				isReadyLeader = true;
+			{
+				isActive = true;
+			}
 
 			leaderPos = enemy->GetPos();
 
-			if(enemy->GetStandby())
-				isActive = true;
 		}
 		else
 		{
-			if (!isReadyLeader)
+			if (!isActive)
 				return;
-
-			if (pointCounter < MaxPoint)
+			//リーダーの周りにポイント配置
+			if (pointCounter < MaxPoint && !enemy->GetStandby())
 			{
 				//均等に割って円形に配置
 				float angle = (2.0f * DX_PI_F) * pointCounter / MaxPoint;
@@ -336,26 +335,27 @@ void TrashEnemyGroup::RangedEnemyAttack()
 				//プレイヤーからの絶対座標
 				VECTOR3 target = leaderPos + rotatedDir * Range;
 
-				enemy->SetCooperateWayPoint(target);//>SetWayPoint(target);
-				enemy->ChangeState(StateID::COOPERATEATTACK2);
+				enemy->SetCooperateWayPoint(target);
+				enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
 
 				pointCounter++;
 			}
 
-			if (!isActive)
-				return;
-
+			//敵がダメージをくらった後の処理
 			if (enemy->GetCooperateDamageMove())
 			{
-				if (VSize(leaderPos - enemy->GetPos()) <= 1000)
+				VECTOR3 enemyPos = enemy->GetPos();
+				if (VSize(leaderPos - enemyPos) <= 1000)
 				{
 					rangedDamageMove = true;
-					enemy->ChangeHp(-enemy->MaxHp()-50);
+					enemy->ChangeHp(-enemy->MaxHp());
+					EffectManager::GetInstance()
+						->CreateEffekseer(*enemy->GetEnemyObj()->GetTransform(), nullptr, Effect_ID::ROCK_BLAST, 3.0f);
 				}
 				return;
 			}
 
-			if (rangedAtkCounter >= MaxAttackCounter&& !enemy->IsMovingToPlayer())
+			if (rangedAtkCounter >= MaxAttackCounter && !enemy->IsMovingToPlayer())
 			{
 				enemy->SetLeaderPos(leaderPos);
 				enemy->RangedAttack();
@@ -364,6 +364,14 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		}
 	}
 	rangedAtkCounter += Time::DeltaTimeRate();
+}
+
+void TrashEnemyGroup::DeadMeleeEnemy()
+{
+	for (auto& itr : meleeEnemies)
+	{
+		itr->ChangeHp(-itr->GetMaxHp());
+	}
 }
 
 void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
@@ -394,7 +402,7 @@ void TrashEnemyGroup::RangedDamageMove()
 {
 	for (auto& enemy : rangedEnemies)
 	{
-		const float Damage = -enemy->MaxHp() - 50;
+		const float Damage = -enemy->MaxHp();
 		if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
 		{
 			enemy->ChangeHp(Damage);

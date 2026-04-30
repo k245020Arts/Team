@@ -176,26 +176,4 @@ std::list<VECTOR3> BossRun::RayCastHits()
 	}
 
 	return hitRocks;
-	/*Boss* b = GetBase<Boss>();
-	std::list<VECTOR3> rockPositions = b->rockManager->GetAllRockPos();
-	std::list<VECTOR3> hitRocks;
-	const float ROCK_RADIUS = 200;
-
-	VECTOR3 playerPos = VZero;
-	VECTOR3 myPos = VZero;
-
-	for(auto rockPosition : rockPositions)
-	{
-		float dx = playerPos.x - myPos.x;
-		float dz = playerPos.z - myPos.z;
-
-		float distance = abs(
-			dx * (myPos.z - rockPosition.z) -
-			dz * (myPos.x - rockPosition.x)
-		) / sqrt(dx * dx + dz * dz);
-
-		if (distance < ROCK_RADIUS)
-			hitRocks.push_back(rockPosition);
-	}
-	return hitRocks;*/
 }

@@ -32,6 +32,7 @@ public:
 	friend class T_EnemyDamage;
 	friend class EnemyStateBase;
 	friend class BossAttackBase;
+	friend class T_EnemyStaySky;
 
 	TrashEnemy();
 	~TrashEnemy();
@@ -108,7 +109,7 @@ public:
 	//近距離か遠距離の敵かを指定する関数
 	void SetEnemyType(EnemyType type);
 	//遠距離の敵の攻撃準備
-	void ReadyCooperteAtk2(VECTOR3 _pos);
+	//void ReadyCooperteAtk2(VECTOR3 _pos);
 
 	void SetLeaderPos(VECTOR3 _pos);
 
@@ -140,6 +141,7 @@ private:
 		{10.0f, -800.0f ,0.5f,600.0f},//通常
 		{30.0f, -1000.0f,0.5f,800.0f},//ジャスト回避
 		{40.0f, -1200.0f,0.5f,1000.0f},//必殺
+		{20.0f, -1200.0f,0.0f,0.0f},//遠距離の特殊ダメージ
 	};
 
 	//_posの方向に向く

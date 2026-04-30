@@ -362,8 +362,8 @@ void BossRockBase::Ground()
 			break;
 		}
 	}*/
-	
-	physics->SetVelocity(VZero);
+	if(physics != nullptr)
+		physics->SetVelocity(VZero);
 	
 
 	

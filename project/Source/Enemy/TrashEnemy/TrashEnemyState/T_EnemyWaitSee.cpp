@@ -26,10 +26,7 @@ void T_EnemyWaitSee::Update()
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 	enemy->LookTarget(enemy->enemyBaseComponent.playerObj->GetTransform()->position);
 
-	/*if (!isLeader)
-		NormalMove(enemy);
-	else*/
-		ReaderMove(enemy);
+	Move(enemy);
 }
 
 void T_EnemyWaitSee::Start()
@@ -61,7 +58,7 @@ void T_EnemyWaitSee::Finish()
 {
 }
 
-void T_EnemyWaitSee::ReaderMove(TrashEnemy* _enemy)
+void T_EnemyWaitSee::Move(TrashEnemy* _enemy)
 {
 	//float speed = 10.0f;
 	targetPos = _enemy->TargetPoint();
@@ -72,8 +69,4 @@ void T_EnemyWaitSee::ReaderMove(TrashEnemy* _enemy)
 
 	VECTOR3 dir = VNorm(targetPos - enePos);
 	_enemy->GetEnemyObj()->GetTransform()->position+= dir * moveSpeed;
-}
-
-void T_EnemyWaitSee::NormalMove(TrashEnemy* _enemy)
-{
 }

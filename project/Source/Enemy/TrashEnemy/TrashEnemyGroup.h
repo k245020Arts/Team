@@ -33,6 +33,8 @@ public:
 	//‰“‹——£‚Ì“G‚Ì˜AŒgUŒ‚
 	void RangedEnemyAttack();
 
+	void DeadMeleeEnemy();
+
 public:
 	Camera* camera;
 	TrashEnemyManager* trashEnemyManager;
@@ -86,7 +88,6 @@ public:
 	void RangedDamageMove();
 	//WayPoint RangedEnemyPoint;
 	VECTOR3 leaderPos;
-	bool isReadyLeader;
 
 	float rangedAtkCounter;
 	bool rangedDamageMove;
