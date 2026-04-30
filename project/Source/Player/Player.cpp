@@ -342,9 +342,10 @@ void Player::Move(float _speed, float _speedMax)
 	StickDirections nowStick = InputManager::GetInstance()->GetControllerInput()->GetStickKnocking(0.6f, 1).leftStick;
 	
 	//スティックの傾きの量が少なかったら移動しない
-	if ((fabs(walkAngle.x) >= 0.3f || fabs(walkAngle.z) >= 0.3f) && hp > 0.0f) {
+	const float DEAD_ZONE = 0.3f;
+	if ((fabs(walkAngle.x) >= DEAD_ZONE || fabs(walkAngle.z) >= DEAD_ZONE) && hp > 0.0f) {
 		//回転処理
-		RotationChange(walkAngle,12.0f);
+		RotationChange(walkAngle,12.0f/*スピード*/);
 
 		VECTOR3 dir = VZero;
 		dir.x		= walkAngle.x * 1.0f * _speed;
@@ -396,8 +397,12 @@ void Player::RotationChange(VECTOR3 _angle,float _speed)
 		avoidStart					= true;
 	}
 	else{
-		playerTransform->rotation.y = (VDot(right,target) > 0) ? playerTransform->rotation.y + _speed * DegToRad :
-			playerTransform->rotation.y - _speed * DegToRad;
+		if (VDot(right, target) > 0) {
+			playerTransform->rotation.y += _speed * DegToRad;
+		}
+		else {
+			playerTransform->rotation.y -= _speed * DegToRad;
+		}
 		avoidStart = false;
 	}
 }

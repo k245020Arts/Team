@@ -69,6 +69,8 @@ public:
 	void CollsionRespown() { finish = false; }
 	BaseObject* GetObj() { return obj; }
 
+	std::function<void(CollsionEventData)> GetEventFunc() { return  collsionEventFunction; }
+
 protected:
 	CollsionInformation::Shape shape; //当たり判定の形
 	CollsionInformation::Tag collTag; //当たり判定のタグ
@@ -76,6 +78,6 @@ protected:
 	float radius;
 	bool oneColl;
 	bool finish;
-
+	std::function<void(CollsionEventData)> collsionEventFunction; //当たり判定イベントの関数ポインタ
 
 };
