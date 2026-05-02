@@ -3,6 +3,13 @@
 
 ColliderBase::ColliderBase()
 {
+	collsionEventFunction = nullptr;
+	shape = CollsionInformation::SHAPE_MAX;
+	collTag = CollsionInformation::TAG_MAX;
+	collTransform = nullptr;
+	radius = 0.0f;
+	oneColl = false;
+	finish = false;
 }
 
 ColliderBase::~ColliderBase()

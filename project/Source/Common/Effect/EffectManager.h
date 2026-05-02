@@ -11,8 +11,7 @@ class BaseObject;
 class EffectManager : public SingletonBase<EffectManager>
 {
 public:
-
-	void DeleteAllEffect();
+	
 
 	void Update()override;
 	void Draw()override;
@@ -20,7 +19,7 @@ public:
 	/// エフェクトの生成を行う関数
 	/// </summary>
 	/// <param name="_transform">発生させるTransformを設定</param>
-	/// <param name="_parent">親をもつなら親のポインタを持つ</param>
+	/// <param name="_parent">親をもつなら親のポインタを持つ(親を持たない場合はnullptrを入れる)</param>
 	/// <param name="_id">エフェクトのID</param>
 	/// <param name="_time">エフェクトの発生させる時間</param>
 	/// <param name="effect3D">エフェクト3Dにするか2Dにするかデフォルトは3D</param>
@@ -60,7 +59,16 @@ public:
 	/// <param name="_obj">今親になっているObject</param>
 	void ParentTransformRemove(BaseObject* _obj);
 
+	/// <summary>
+	/// 引数で指定したエフェクトのデータを削除
+	/// </summary>
+	/// <param name="_obj">エフェクトオブジェクト</param>
 	void RemoveEffekseer(BaseObject* _obj);
+
+	/// <summary>
+	/// すべてのエフェクトを処理する
+	/// </summary>
+	void DeleteAllEffect();
 	
 private:
 	std::list<BaseObject*> effect;

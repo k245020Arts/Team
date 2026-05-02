@@ -21,18 +21,18 @@ struct BlurInfo
 		firstMatrix = MGetIdent();
 		transform = Transform();
 	}
-	int baseModel;
-	float time;
-	float maxTime;
-	float alpha;
+	int baseModel; //モーションブラーに使用するモデルデータ
+	float time; //時間
+	float maxTime; //最大時間
+	float alpha; //半透明度
 
-	float animFrame;
-	int attackID;
-	MATRIX matrix;
+	float animFrame; //ブラーで使用するアニメーションのフレーム
+	int attackID; //アタッチのID
+	MATRIX matrix; //アニメーションで使われている行列
 
-	VECTOR3 firstPos;
-	MATRIX firstMatrix;
-	Transform transform;
+	VECTOR3 firstPos; //最初の位置
+	MATRIX firstMatrix; //最初のマトリックス
+	Transform transform; //トランスフォーム
 };
 
 //モーションブラーを行うためのクラス.
@@ -60,7 +60,7 @@ public:
 
 private:
 
-	std::vector<BlurInfo> blur;
+	std::vector<BlurInfo> blur; //ブラー情報
 	int model;
 	Animator* anim;
 };

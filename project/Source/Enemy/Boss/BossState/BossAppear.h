@@ -29,4 +29,6 @@ private:
 	bool rightDushSound;
 	bool leftDushSound;
 
+	void RoarEvent();
+
 };

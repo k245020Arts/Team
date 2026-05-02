@@ -44,4 +44,7 @@ private:
 	std::unordered_map<int, EventFunc> eventTable;
 
 	int MakeKey(CollsionInformation::Tag t1, CollsionInformation::Tag t2);
+
+	CollsionEventData SetEventData(ColliderBase* _myCollObj, ColliderBase* _targetCollObj, Pushback& _pushInfo, const VECTOR3& _hitPos);
+
 };

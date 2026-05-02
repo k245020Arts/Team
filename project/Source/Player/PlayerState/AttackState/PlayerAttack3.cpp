@@ -48,49 +48,6 @@ void PlayerAttack3::Update()
 	PlayerAttackStateBase::Update();
 	PlayerAttackStateBase::AttackCommonUpdate();
 	
-	//if (!noStateChange) {
-	//	EnemyRotation();
-	//	//UŒ‚‚ÌŽž‚ÉŽŸ‚Ìƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚çŽŸ‚ÌUŒ‚
-	//	if (InputManager::GetInstance()->KeyInputDown("attack")) {
-	//		nextAttack = true;
-	//	}
-	//	//UŒ‚‚ÌŽž‚É‰ñ”ðs“®‚ð‚¢‚ê‚½‚ç‰ñ”ðó‘Ô‚ÉˆÚs
-	//	if (InputManager::GetInstance()->KeyInputDown("avoid")) {
-	//		//p->playerCom.player->AvoidReady();
-	//		nextAvoid = true;
-	//		//noStateChange = true;
-	//	}
-	//	//“–‚½‚è”»’è‚ª‚ ‚éŠÔ‚ÍƒXƒs[ƒh‚ð‘‚­
-	//	if (p->playerCom.anim->AnimEventCan()) {
-	//		if (beforeAttack) {
-	//			AttackMoveStart();
-	//		}
-	//		p->playerCom.anim->SetPlaySpeed(3.0f);
-	//		beforeAttack = false;
-	//		
-	//	}
-	//	else {
-	//		if (beforeAttack)
-	//		p->playerCom.anim->SetPlaySpeed(1.0f);
-	//		else {
-	//			//p->playerCom.physics->SetVelocity(VZero);
-	//			p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(40000.0f, 0.0f, 40000.0f));
-	//			if (nextAttack) {
-	//				//ŽŸ‚ÌUŒ‚‚És‚­‚Æ‚«‚ÌÝ’è
-	//				runTimer		= 0.1f;
-	//				noStateChange	= true;
-	//				p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-	//				
-	//			}
-	//			else {
-	//				//UŒ‚‚ªI‚í‚é‚Æ‚«‚ÌÝ’è
-	//				runTimer		= 0.05f;
-	//				noStateChange	= true;
-	//				p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-	//			}
-	//		}
-	//	}
-	//}
 }
 
 void PlayerAttack3::Draw()

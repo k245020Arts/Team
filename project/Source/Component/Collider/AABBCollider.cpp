@@ -5,6 +5,7 @@ AABBCollider::AABBCollider()
 	debugId = 1;
 	tag = Function::GetClassNameC<AABBCollider>();
 	SetTag(tag);
+	aabbInfo = AABBInfo();
 }
 
 AABBCollider::~AABBCollider()

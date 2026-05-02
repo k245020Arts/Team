@@ -14,6 +14,7 @@ TransitorManager::TransitorManager()
 	StripTransitor* strip = new StripTransitor();
 	TitleTransitor* title = new TitleTransitor();
 	IrisTransitor* iris = new IrisTransitor();
+	//ÅŒã‚Ì•û‚É•`‰æ‚³‚¹‚½‚¢‚Ì‚Å‹É’[‚É¬‚³‚È’l‚É‚µ‚Ä‚¢‚é
 	fade->SetDrawOrder(-5000);
 	push->SetDrawOrder(-5000);
 	wipe->SetDrawOrder(-5000);

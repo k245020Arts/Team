@@ -114,11 +114,11 @@ public:
 	/// 画像の半透明度を取得
 	/// </summary>
 	/// <returns></returns>
-	float GetAlpha() const { return alpha; } 
+	int GetAlpha() const { return alpha; } 
 
 private:
 	int hImage;
-	GraphMode mode;
+	GraphMode mode; //描画モードの種類
 	VECTOR2I imageSize;
 	VECTOR2I drawImageSize;
 	Transform* transform2D;
@@ -133,10 +133,10 @@ private:
 	void NormalDraw(const Transform& transform);
 	void AddDraw(const Transform& transform);
 
-	bool addMode;
-	bool xAnim;
+	bool addMode; //加算合成モードかどうか
+	bool xAnim; //アニメーションのTextureが横に伸びているかどうか
 
-	float alpha;
+	int alpha;
 	bool feedIn;
 	bool feedOut;
 

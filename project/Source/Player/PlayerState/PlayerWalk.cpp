@@ -32,23 +32,33 @@ void PlayerWalk::Update()
 	}
 	DefalutWalk();
 
-	if (p->playerCom.anim->GetCurrentFrame() >= 5.0f && p->playerCom.anim->GetCurrentFrame() <= 6.0f) {
+	
+	//‘«‰¹–Â‚ç‚·ƒvƒƒOƒ‰ƒ€
+	constexpr float FIRST_FOOT_SE = 5.0f;
+	constexpr float FIRST_FOOT_SE_FINISH = 6.0f;
+	if (p->playerCom.anim->GetCurrentFrame() >= FIRST_FOOT_SE && p->playerCom.anim->GetCurrentFrame() <= FIRST_FOOT_SE_FINISH) {
 		if (firstOnes) {
 			sound = true;
 		}
 		firstOnes = false;
 	} 
-	if (p->playerCom.anim->GetCurrentFrame() >= 17.0f && p->playerCom.anim->GetCurrentFrame() <= 18.0f) {
+	constexpr float SECOND_FOOT_SE = 17.0f;
+	constexpr float SECOND_FOOT_SE_FINISH = 18.0f;
+	if (p->playerCom.anim->GetCurrentFrame() >= SECOND_FOOT_SE && p->playerCom.anim->GetCurrentFrame() <= SECOND_FOOT_SE_FINISH) {
 		if (secondOnes) {
 			sound = true;
 		}
 		secondOnes = false;
 	}
 	if (sound) {
-		SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_WALK1,10000,60000);
+		//Žü”g”‚ð•Ï‚¦‚é
+		const int RAMDOM_FREQUENCY = 10000;
+		const int BASE_FREQUENCY = 60000;
+		SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_WALK1,RAMDOM_FREQUENCY,BASE_FREQUENCY);
 		sound = false;
 	}
-	if (p->playerCom.anim->GetCurrentFrame() >= 19.0f) {
+	constexpr float RESET_FOOT_SE_FRAME = 19.0f;
+	if (p->playerCom.anim->GetCurrentFrame() >= RESET_FOOT_SE_FRAME) {
 		firstOnes = true;
 		secondOnes = true;
 	}

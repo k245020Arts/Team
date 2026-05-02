@@ -29,13 +29,14 @@ FollowCamera::~FollowCamera()
 void FollowCamera::Update()
 {
 	Camera* c = GetBase<Camera>();
+	const VECTOR3 ADD_POS = VECTOR3(0, 300, 0);
 	//他の処理から帰ってきたときにすぐにカメラの位置が戻らないように補完を掛けている
 	if (backCounter >= 0.0f) {
 
 		float t				= 1.0f - backCounter / TIMER_MAX;
 		VECTOR3 easedT		= Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
 		VECTOR3 target		= SetTarget();
-		addPos = Easing::EaseOut(VECTOR3(VZero), VECTOR3(0, 300, 0), t);
+		addPos = Easing::EaseOut(VECTOR3(VZero), ADD_POS, t);
 		c->target			= Easing::EaseOut(currentTarget,target,t) + addPos;
 		c->currentDistance	= easedT;
 		backCounter			-= Time::DeltaTimeRate();
@@ -43,7 +44,7 @@ void FollowCamera::Update()
 	}
 	else {
 		c->currentDistance	= c->defalutDistance;
-		addPos = VECTOR3(0, 300, 0);
+		addPos = ADD_POS;
 		c->target			= SetTarget() + addPos;
 	}
 	//追従処理
@@ -57,6 +58,7 @@ void FollowCamera::Update()
 	//カメラの回転
 	c->cameraComponent.camera->CameraRotationSet();
 	StickDirections stickDir = InputManager::GetInstance()->GetControllerInput()->GetStickKnockingPut(0.5f).rightStick;
+	//ロックオンカメラのターゲットの変更
 	if (stickDir == S_RIGHT) {
 		c->cameraComponent.enemyManager->ChangeCameraRockOn(c->cameraComponent.camera,true);
 		Start();

@@ -33,7 +33,7 @@ EnemyManager::EnemyManager()
 	player = nullptr;
 	SetDrawOrder(-10);
 	cameraTargetObj = nullptr;
-	gameManager = nullptr;
+	gameContorler = nullptr;
 	new BossCreater();
 }
 
@@ -41,15 +41,17 @@ EnemyManager::~EnemyManager()
 {
 	enemy.clear();
 	chara.clear();
+	cameraTargetObj = nullptr;
+	gameContorler = nullptr;
 }
 
 void EnemyManager::Update()
 {
-	if (gameManager == nullptr) {
-		gameManager = FindGameObject<GameControler>();
+	if (gameContorler == nullptr) {
+		gameContorler = FindGameObject<GameControler>();
 	}
 	
-	if (gameManager != nullptr && gameManager->GetChangeStateOneFrame()) {
+	if (gameContorler != nullptr && gameContorler->GetChangeStateOneFrame()) {
 		GameSceneChangeState();
 	}
 }
@@ -365,7 +367,7 @@ bool EnemyManager::ChangeCameraRockOn(Camera* camera, bool _right, bool _min, bo
 bool EnemyManager::TargetCancel(Camera* camera)
 {
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
-		if ((*itr)->GetBaseObject() == cameraTargetObj) {
+		if ((*itr)->GetBaseObject() == cameraTargetObj) { //ロックオンしてたら
 			(*itr)->LastTargetOut();
 			player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);
 			cameraTargetObj = nullptr;
@@ -378,7 +380,7 @@ bool EnemyManager::TargetCancel(Camera* camera)
 void EnemyManager::JustAvoidTargetChange(BaseObject* _obj)
 {
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
-		if ((*itr)->GetBaseObject() == _obj) {
+		if ((*itr)->GetBaseObject() == _obj) { //オブジェクトが一致したら
 			(*itr)->LastTargetIn();
 			cameraTargetObj = _obj;
 			player->Component()->GetComponent<Player>()->TargetObjSet((*itr)->GetBaseObject());
@@ -398,7 +400,7 @@ EnemyBase* EnemyManager::PlayerNearEnemy()
 	for (auto itrs = chara.begin(); itrs != chara.end(); itrs++) {
 		VECTOR3 dir = (*itrs)->GetBaseObject()->GetTransform()->position - player->GetTransform()->position;
 		float dist = dir.Size();
-		if (dist <= minDist) {
+		if (dist <= minDist) { //一番距離が近い敵を判定
 			minDist = dist;
 			nearEnemy = (*itrs);
 		}
@@ -412,8 +414,8 @@ void EnemyManager::NearEnemyAlpha(const VECTOR3& camPos)
 		VECTOR3 dist = (*itr)->GetBaseObject()->GetTransform()->position - camPos;
 		if (dist.Size() <= 1000.0f) {
 			float rate = dist.Size() / 1000.0f;
-			float alpha = Easing::Lerp(-700.0f, 255.0f, rate);
-			if (alpha < 0) {
+			int alpha = Easing::Lerp(-700, 255, rate);//0距離にするとほんとの意味で0距離にしないと透明にならないので余裕を持たしている
+			if (alpha < 0) { //余裕を持たした分0に丸める
 				alpha = 0;
 			}
 			(*itr)->SetAlpha((int)alpha);
@@ -427,14 +429,14 @@ void EnemyManager::NearEnemyAlpha(const VECTOR3& camPos)
 Transform EnemyManager::NearEnemyPos(const VECTOR3& _pos)
 {
 
-	if (chara.size() == 0) {
+	if (chara.size() == 0) { //リストに何も入ってなかったら空のTransformを付ける
 		return Transform();
 	}
 	float nearDist = 10000.0f;
 	Transform nearTransform = *(*chara.begin())->GetBaseObject()->GetTransform();
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
 		VECTOR3 dist = (*itr)->GetBaseObject()->GetTransform()->position - _pos;
-		if (dist.Size() <= nearDist) {
+		if (dist.Size() <= nearDist) { //一番近い敵
 			nearTransform = *(*itr)->GetBaseObject()->GetTransform();
 			nearDist = dist.Size();
 		}
@@ -444,7 +446,7 @@ Transform EnemyManager::NearEnemyPos(const VECTOR3& _pos)
 
 Transform EnemyManager::NearFovEnemyPos(Transform& _transform, float _angle)
 {
-	if (chara.size() == 0) {
+	if (chara.size() == 0) {//リストに何も入ってなかったら空のTransformを付ける
 		return Transform();
 	}
 	float nearDist = 10000.0f;
@@ -469,7 +471,7 @@ Transform EnemyManager::NearFovEnemyPos(Transform& _transform, float _angle)
 
 void EnemyManager::SetCameraRockOnObject(EnemyBase* _enemy, Camera* _camera)
 {
-	if (_enemy == nullptr) {
+	if (_enemy == nullptr) { //指定したオブジェクトがnullptrならリターン
 		return;
 	}
 	_enemy->LastTargetIn();
@@ -501,7 +503,7 @@ EnemyAttackChangeCameraDirection EnemyManager::BossAttackCamera(Camera* camera, 
 	VECTOR3 right = target.Normalize() * MGetRotY(90.0f * DegToRad);
 	VECTOR3 tar = player->GetTransform()->position - _targetTransform.position;
 	tar.y = 0;
-
+	//右ベクトルに対して正面なら右向き
 	if (VDot(right, tar) > 0) {
 		
 		return EnemyAttackChangeCameraDirection::RIGHT;
@@ -541,9 +543,10 @@ void EnemyManager::GameSceneChangeState()
 {
 	for (auto itr = chara.begin(); itr != chara.end(); itr++) {
 		BaseObject* obj = (*itr)->GetBaseObject();
+		//ボスの行動を制御
 		if (obj != nullptr && obj->GetTag() == "Boss") {
 			StateManager* stateManager = obj->Component()->GetComponent<StateManager>();
-			switch (gameManager->GetStateNumber())
+			switch (gameContorler->GetStateNumber())
 			{
 			case GameControler::GameState::BEFORE:
 				// stateManager->ChangeState(StateID::PLAYER_BEFORE_S);

@@ -38,7 +38,6 @@ void CharaWeapon::Update()
 void CharaWeapon::Draw()
 {
 	if (parent) {
-		//VECTOR3 framePos = MV1GetFramePosition(modelHandle,frame);
 		matrix = MV1GetFrameLocalWorldMatrix(modelHandle, frame);//くっつけたいモデルのマトリックスをとる。
 		MATRIX scaleMat = MGetScale(transform->scale);
 		// 元の行列にスケールを掛ける
@@ -46,8 +45,6 @@ void CharaWeapon::Draw()
 		// 剣に適用
 		MV1SetMatrix(weaponHandle, result);
 		MV1DrawModel(weaponHandle);
-		//SetTransformToWorld(&result);
-		//transform->MatrixToTransform(result);
 	}
 }
 

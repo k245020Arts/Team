@@ -2,6 +2,7 @@
 #include "../Component/Transform/Transform.h"
 #include "../Common/Easing.h"
 #include "../Screen.h"
+#include "../Component/Color/Color.h"
 
 ResultUi::ResultUi()
 {
@@ -61,7 +62,7 @@ void ResultUi::Draw()
 
 		if (addCount > flashTime)
 		{
-			int flashAlpha = (int)((1.0f - addCount / flashTime) * 255.0f);
+			int flashAlpha = (int)((1.0f - addCount / flashTime) * OPAQUE_COLOR);
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, flashAlpha);
 			DrawBox(0, 0, Screen::WIDTH, Screen::HEIGHT, 0xffffff, TRUE);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -73,7 +74,8 @@ void ResultUi::Draw()
 		// 画面暗転
 		int fade = (int)(t * 180);
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, fade);
-		DrawBox(0, 0, Screen::WIDTH, Screen::HEIGHT, GetColor(0, 0, 0), TRUE);
+		const int BLACK = GetColor(0, 0, 0);
+		DrawBox(0, 0, Screen::WIDTH, Screen::HEIGHT, BLACK, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 		// 少し上から落とす

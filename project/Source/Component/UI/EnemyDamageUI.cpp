@@ -50,7 +50,7 @@ void EnemyDamageUI::Update()
 
 		if (feedIn)
 		{
-			alpha = Easing::EasingFlow<int>(&feedInOutTime, feedInOutTimeMax, 255, 0, Easing::EaseOut<int>);
+			alpha = Easing::EasingFlow<int>(&feedInOutTime, feedInOutTimeMax, OPAQUE_COLOR, TRANSPARENT_COLOR, Easing::EaseOut<int>);
 			if (feedInOutTime <= 0.0f)
 			{
 				feedInOutTime = 0.0f;
@@ -62,13 +62,14 @@ void EnemyDamageUI::Update()
 		{
 			timer = 0.0f;
 			feedOut = true;
-			feedInOutTime = 0.25f;
+			const float FEAD_IN_OUT_TIME = 0.25f;
+			feedInOutTime = FEAD_IN_OUT_TIME;
 			feedInOutTime = feedInOutTimeMax;
 		}
 	}
 	else
 	{
-		alpha = Easing::EasingFlow<int>(&feedInOutTime, feedInOutTimeMax, 0, 255, Easing::EaseOut<int>);
+		alpha = Easing::EasingFlow<int>(&feedInOutTime, feedInOutTimeMax, TRANSPARENT_COLOR, OPAQUE_COLOR, Easing::EaseOut<int>);
 		if (feedInOutTime <= 0.0f)
 		{
 			feedInOutTime = 0.0f;
@@ -80,7 +81,7 @@ void EnemyDamageUI::Update()
 void EnemyDamageUI::Draw()
 {
 	if (numImage < 0 || worldTransform == nullptr) {
-		return;
+		return; //イメージがないかTransformがnullptrの時はリターン
 	}
 
 	VECTOR3 worldPos = worldTransform->position + worldOffset + movePos;
@@ -92,15 +93,16 @@ void EnemyDamageUI::Draw()
 
 	float reTime = timerMax - timer;
 
+	//開始する位置を取得
 	float startX = screenPos.x - (graphSize.x * scale * drawNumCount) * 0.5f;
-
+	//描画する値を別の変数に保存
 	int value = damageNum;
-
+	//一文字づつ描画
 	for (int i = 0; i < drawNumCount; i++)
 	{
 		///一桁目の文字を抽出
 		int digit = value % 10;
-		value /= 10;
+		value /= 10;//位を一つ下げる
 
 		//一文字一文字ずつ描画させている。
 		float numTime = reTime - waitTimer * i;
@@ -119,7 +121,6 @@ void EnemyDamageUI::Draw()
 		const float BOUNCE = 84.0f;
 		
 		float bounce = Easing::SinCube(0.0f, BOUNCE,t);
-		//float bounce = sinf(180.0f * DegToRad * t) * BOUNCE_ADD;
 		const float MAX_SCALE = 0.05f;
 		float plus = Easing::SinCube(0.0f, MAX_SCALE, t);
 		float numScale = scale + plus;
@@ -149,15 +150,17 @@ void EnemyDamageUI::SetInformation(const VECTOR3& _offset, int _damageNum, const
 	int temp = damageNum;
 	drawNumCount = 0;
 	do {
-		drawNumCount++;
-		temp /= 10;
+		drawNumCount++; 
+		temp /= 10;//位を一つ下げる
 	} while (temp > 0);
 
-	scale = 0.4f;
+	const float SCALE = 0.4f;
+	scale = SCALE;
 	alpha = 0;
 	feedIn = true;
 	feedOut = false;
-	feedInOutTime = 0.2f;
+	const float FEAD_IN_OUT_TIME = 0.2f;
+	feedInOutTime = FEAD_IN_OUT_TIME;
 	feedInOutTimeMax = feedInOutTime;
 	obj->SetDrawOrder(-1000);
 }

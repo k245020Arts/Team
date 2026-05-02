@@ -378,8 +378,10 @@ void CutSceneCamera::Draw()
 void CutSceneCamera::Start()
 {
     Camera* camera = GetBase<Camera>();
-    if (camera->cutSceneData.empty()) return;
-
+    if (camera->cutSceneData.empty()) { //カットシーンのデータがなければスルー
+        return;
+    }
+    //0カット目から流す
     camera->cutSceneIndex = 0;
     time = camera->cutSceneData[0].duration;
     first = true;
@@ -399,6 +401,7 @@ void CutSceneCamera::Start()
     beforeTargetName = "";
 
     Transform* startTransform = PlayerEnemyWorldToPos(camera->cutSceneData[camera->cutSceneIndex].firstPosBaseName);
+    //最初に指定するTransformがあったら
     if (startTransform != nullptr) {
         firstPos = camera->cutSceneData[camera->cutSceneIndex].camera.startPos * startTransform->GetRotationMatrix() + startTransform->position;;
     }
@@ -431,10 +434,12 @@ void CutSceneCamera::Finish()
 Transform* CutSceneCamera::PlayerEnemyWorldToPos(std::string _name)
 {
     Camera* camera = GetBase<Camera>();
-
+    
+    //プレイヤー関連の名前がついていたらプレイヤーのTransformを取得
     if (_name == PLAYER_POS_NAME || _name == PLAYER_FIRST_POS_NAME)
         return camera->cameraComponent.player.transform;
 
+    //敵関連の名前がついていたら敵のTransformを取得
     if (_name == ENEMY_POS_NAME || _name == ENEMY_FIRST_POS_NAME)
         return camera->cameraComponent.target.transform;
 

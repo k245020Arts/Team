@@ -41,8 +41,9 @@ namespace {
 	
 	
 
-
+	//UŒ‚U‚è•ª‚¯ƒpƒ‰ƒ[ƒ^[‚Ìİ’è
 	std::vector<ActionParam> actions;
+
 	/*{
 		{"BossWalk",				false,10, 40, 0},
 		{"BossNormalAttack1",		true,10, 10, 1},
@@ -478,7 +479,10 @@ void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, Boss* _bos
 
 void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, Boss* _boss, std::string _attackID)
 {
-	std::string key = _attackID;
+	std::string key = _attackID;	
+	if (attacks[key] != nullptr) { //UŒ‚‚ª‚·‚Å‚É‚ ‚Á‚½‚ç’Ç‰Á‚µ‚È‚¢
+		return;
+	}
 	attacks[key] = std::make_shared<BossAttackBase>();
 
 	attacks[key]->Init(obj, StateID::StringToID(key));
@@ -489,6 +493,7 @@ void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, Boss* _bos
 
 void AttackSorting::ReloadParam(BossAttackBase::BossAttackParam _param,std::string _reLoadID)
 {
+	//İ’è‚Ì‚µ’¼‚µ
 	attackParam[_reLoadID] = _param;
 	attacks[_reLoadID]->SetAttackParam(attackParam[_reLoadID]);
 }

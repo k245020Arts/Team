@@ -96,8 +96,8 @@ Boss::Boss()
 
 	rockManager = new BossRockManager(this);
 
-	rightHandFrame = 0.0f;
-	leftHandFrame = 0.0f;
+	rightHandFrame = 0;
+	leftHandFrame = 0;
 }
 
 Boss::~Boss()
@@ -161,7 +161,10 @@ void Boss::Update()
 	if (noAttackChangeCounter > 0.0f) {
 		noAttackChangeCounter -= Time::DeltaTimeRate();
 	}
-	bossAttackDataSerializer->Update();
+	if (bossAttackDataSerializer != nullptr) {
+		bossAttackDataSerializer->Update();
+	}
+	
 }
 
 void Boss::Draw()
@@ -301,9 +304,11 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 		}
 	}
 
+	//ボスの攻撃の生成ツールの生成
 	bossAttackDataSerializer =  std::make_unique<BossAttackDataSerializer>(attackSorting,this, "Boss" + std::to_string(bossID));
 	bossAttackDataSerializer->SetAnim(enemyBaseComponent.anim);
 	bossAttackDataSerializer->SetThrowManager(rockManager);
+	//ボスの情報のセット
 	bossParam = _param;
 	hp = bossParam.hp;
 	defense = bossParam.defense;
@@ -311,6 +316,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 
 	bossHitCollider = obj->Component()->GetComponentsWithTag<SphereCollider>("BossHit");
 
+	//腕のフレームを設定
 	if (bossID == 0) {
 		rightHandFrame = BOSS_RIGHT_HAND_FRAME;
 		leftHandFrame = BOSS_LEFT_HAND_FRAME;
@@ -340,6 +346,7 @@ void Boss::ImguiDraw()
 
 void Boss::LookPlayer()
 {
+	//デフォルト値をセット
 	LookPlayer(0.07f);
 }
 
@@ -393,111 +400,6 @@ void Boss::LookPlayer(VECTOR3 _target, float speed)
 
 void Boss::PlayerHit()
 {
-	//ID::IDType attackID = pState->GetState<PlayerStateBase>()->GetID();
-	//float damage = 0;;
-	//if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
-	//	damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
-	//}
-	//else {
-	//	loopNum = -1;
-	//}
-
-	//EnemyDamage::EnemyDamageInfo dInfo;
-	//EnemyBlowAway::EnemyBlowAwayInfo bInfo;
-	//float random[3] = {};
-	////エフェクトの位置をランダムに派生
-	//for (float& r : random) {
-	//	r = (float)GetRand(80) - 40.0f;
-	//}
-	////プレイヤーの攻撃の種類によってダメージや吹っ飛び方の種類を変える
-	//float angleRan = 0.0f;
-	//bool lastAttack = false;
-	//bool lastBeforeAttack = false;
-	//switch (attackID)
-	//{
-	//case ID::P_ANIM_ATTACK1:
-	//	//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
-	//	dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 1500.0f), VECTOR3(100, 100, 100), 0.15f, 0.8f);
-	//	enemyBaseComponent.control->ControlVibrationStartFrame(10, 10);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, -40.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//	hit = true;
-	//	break;
-	//case ID::P_ANIM_ATTACK2:
-	//	//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
-	//	dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 1500.0f), VECTOR3(100, 100, 100), 0.25f, 0.8f);
-	//	enemyBaseComponent.control->ControlVibrationStartFrame(40, 30);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 40.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-	//	//enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VOne * VECTOR3(0, 0, 70.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//	hit = true;
-	//	break;
-	//case ID::P_ANIM_ATTACK3:
-	//	//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
-	//	dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 1500.0f), VECTOR3(100, 100, 100), 0.35f, 0.8f);
-	//	enemyBaseComponent.control->ControlVibrationStartFrame(10, 10);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 80.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//	hit = true;
-	//	break;
-	//case ID::P_ANIM_ATTACK4:
-	//	//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
-	//	dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 400.0f, 00.0f), VECTOR3(200, 200, 200), 0.85f, 1.0f);
-	//	enemyBaseComponent.control->ControlVibrationStartFrame(50, 50);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, -120.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//	hit = true;
-	//	break;
-	//case ID::P_ANIM_JUST_AVOID_ATTACK1:
-	//	enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
-	//	obj->SetObjectTimeRate(1.0f);
-	//	dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, -20000.0f, 2000.0f), VECTOR3(400, 400, 400), 0.05f, 0.8f);
-	//	enemyBaseComponent.control->ControlVibrationStartFrame(30, 40);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-	//	//enemyBaseComponent.effect->CreateEffekseer(Transform(VZero, VOne * VECTOR3(0, 0, 50.0f * DegToRad), VOne), obj, ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//	break;
-	//case ID::P_ANIM_JUST_AVOID_ATTACK1:
-	//	
-	//	break;
-	//case ID::P_ANIM_ATTACK_5:
-	//	//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
-	//	dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, -2000.0f, -2000.0f), VECTOR3(200, 200, 200), 0.2f, 0.8f);
-	//	enemyBaseComponent.control->ControlVibrationStartFrame(70, 40);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, -50.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//	break;
-	//case ID::P_ANIM_JUST_AVOID_ATTACK4:
-	//	enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
-	//	dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 7000.0f), VECTOR3(200, 200, 200), 0.2f, 0.8f);
-	//	enemyBaseComponent.control->ControlVibrationStartFrame(40, 40);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 80.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//	break;
-	//case ID::P_ANIM_JUST_AVOID_ATTACK5:
-	//	enemyBaseComponent.state->NowChangeState(ID::E_BLOWAWAY);
-	//	bInfo = EnemyBlowAway::EnemyBlowAwayInfo(4000.0f, 3000.0f, VECTOR3(15.0f, 15.0f, 15.0f), VECTOR3(0.3f, 0.3f, 0.3f), 2000.0f, 20.0f);
-	//	enemyBaseComponent.control->ControlVibrationStartFrame(100, 60);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::SPECIAL_HIT_EFFECT, 5.0f);
-	//	enemyBaseComponent.effect->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, 0.0f * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
-	//	break;
-	//default:
-	//	Debug::("PlayerNoAttackState");
-	//}
-	//EnemyDamageMove(dInfo);
-	//hit = true;
-	//hp -= damage;
-	////ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
-	//std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();
-	//std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();
-	//enemyBaseComponent.sound->RandamSe("E_DamageV", 2);
-	//enemyBaseComponent.color->setRGB(Color::Rgb(255, 0, 0, 255));
-	//damageFlash = 0.5f;
-	/*if (eD != nullptr) {
-		eD->DamageInit(dInfo);
-	}
-	else if (eB != nullptr) {
-		eB->EnemyBlowAwayInfoSet(bInfo);
-	}*/
 
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
 	if (pState->GetState<PlayerAttack3>() != nullptr) {
@@ -612,7 +514,7 @@ void Boss::PlayerHit()
 		}
 	}
 	EnemyDamageMove(dInfo);
-	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage ,500.0f, (float)GetRand(15));
+	hp -= DamageCalculation(GetDamageDrawPos(), damage ,500.0f, (float)GetRand(15));
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();
 	std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();
@@ -624,17 +526,24 @@ void Boss::PlayerHit()
 
 void Boss::Drail(bool _right)
 {
+	const float R = 200.0f;
+	const float G = 10.0f;
+	const float B = 0.0f;
+	const float A = 155.0f;
+	const float Time = 0.5f;
 	if (_right) {
-		chara->CreateSwordEffect(VECTOR3(70, 0, -50), VECTOR3(120, 0, 50), 200.0f, 10.0f, 00.0f, 155.0f, rightHandFrame, 0.5f);
+		chara->CreateSwordEffect(VECTOR3(70, 0, -50)/*剣の末端の座標*/, VECTOR3(120, 0, 50)/*剣の先端の座標*/,
+			R, G, B, A, rightHandFrame, Time);
 	}
 	else {
-		chara->CreateSwordEffect(VECTOR3(0, 0, -50), VECTOR3(50, 0, 100), 200.0f, 10.0f, 00.0f, 155.0f, leftHandFrame, 0.5f);
+		chara->CreateSwordEffect(VECTOR3(0, 0, -50)/*剣の末端の座標*/, VECTOR3(50, 0, 100)/*剣の先端の座標*/,
+			R, G, B, A, leftHandFrame, Time);
 	}
 }
 
 Boss::HP_RATE Boss::Hp()
 {
-
+	//HPの状態を取得
 	if (hp >= bs->GetStatus().maxHp * 0.8f) {
 		hpRate = Boss::MAX;
 	}
@@ -671,6 +580,7 @@ void Boss::MoveBoss(float _speed, float _max)
 
 float Boss::GetAttackCoolTime()
 {
+	//HP状態においてCollTimeの設定
 	switch (hpRate)
 	{
 	case Boss::MAX:
@@ -693,10 +603,11 @@ float Boss::GetAttackCoolTime()
 
 void Boss::BossAttackStateChange()
 {
-	if (maxAttack != -1) {
+	if (maxAttack != -1) { //連続攻撃をするなら
 		enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 	}
 	else {
+		//プレイヤーの範囲内なら攻撃
 		if (RunChangeAttack()) {
 			enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 			alotAttack++;
@@ -739,7 +650,7 @@ void Boss::RockHitDamage(Physics* _phy)
 		baseSpeed = baseSpeed.Normalize() * 6000.0f;
 	}
 	enemyBaseComponent.physics->AddVelocity(baseSpeed, false);*/
-	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage, 500.0f, (float)GetRand(15));
+	hp -= DamageCalculation(GetDamageDrawPos(), damage, defense, (float)GetRand(15));
 }
 
 void Boss::RockHitRushDamage()
@@ -749,15 +660,17 @@ void Boss::RockHitRushDamage()
 	enemyBaseComponent.state->ChangeState(StateID::BOSS_FEAR_S);
 	VECTOR3 baseSpeed = enemyBaseComponent.physics->GetVelocity() * -1.0f;
 	EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0,200,0), VZero, VOne), obj, Effect_ID::BOSS_ROCK_HIT_RUSH, 1.0f);
-	if (baseSpeed.Size() <= 3000.0f) {
-		baseSpeed = baseSpeed.Normalize() * 3000.0f;
+	const float MIN_DIST = 3000.0f;
+	if (baseSpeed.Size() <= MIN_DIST) {
+		baseSpeed = baseSpeed.Normalize() * MIN_DIST;
 	}
-	if (baseSpeed.Size() >= 8000.0f) {
-		baseSpeed = baseSpeed.Normalize() * 6000.0f;
+	const float MAX_DIST = 6000.0f;
+	if (baseSpeed.Size() >= MAX_DIST) {
+		baseSpeed = baseSpeed.Normalize() * MAX_DIST;
 	}
 	enemyBaseComponent.physics->AddVelocity(baseSpeed, false);
 
-	hp -= DamageCalculation(VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200)), damage, 500.0f, (float)GetRand(15));
+	hp -= DamageCalculation(GetDamageDrawPos(), damage, defense, (float)GetRand(15));
 }
 
 void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps, VECTOR3 _randomPos, float _randomAngle)
@@ -793,4 +706,9 @@ void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std
 	default:
 		break;
 	}
+}
+
+VECTOR3 Boss::GetDamageDrawPos()
+{
+	return VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200));
 }

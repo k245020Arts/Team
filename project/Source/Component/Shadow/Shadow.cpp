@@ -22,7 +22,9 @@ Shadow::~Shadow()
 
 void Shadow::Update()
 {
+	//親のポジション
 	obj->GetTransform()->position = obj->GetParent()->GetTransform()->position;
+	//地面のポジションを参照
 	obj->GetTransform()->position.y = groundPos.y;
 }
 
@@ -46,6 +48,7 @@ void Shadow::ChangeScale(const VECTOR3& _dist, const VECTOR3& _groundPos)
 {
 	float base = baseScale.x;
 	float d = _dist.y;
+	//最大の距離より遠くなったらこれ以上影を小さくしない
 	if (d > MAX_DIST) {
 		d = MAX_DIST;
 	}

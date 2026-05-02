@@ -155,7 +155,7 @@ public:
 	}
 
 private:
-	std::list<Component*> component;
-	BaseObject* obj;
+	std::list<Component*> component; //登録しているコンポーネント
+	BaseObject* obj; //このコンポーネントManagerを持っているオブジェクト
 	
 };

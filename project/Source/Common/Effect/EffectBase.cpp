@@ -32,6 +32,7 @@ void EffectBase::Update()
 	(this->*effectPlay)();
 	if (feedInTime <= 0.0f) {
 		time		-= Time::DeltaTimeRate();
+		//再生が終了をしたら破棄
 		if (time <= 0.0f) {
 			(this->*effectStop)();
 			obj->DestroyMe();
@@ -41,11 +42,14 @@ void EffectBase::Update()
 	else {
 		feedInTime		-= Time::DeltaTimeRate();
 		if (feedInTime <= 0.0f) {
-			feedInTime	= 0.0f;
+			feedInTime	= 0.0f; //0に丸めておかないと、Easingの処理がおかしくなるのでまとめる
 		}
 		float rate		= 1 - (feedInTime / FEEDIN_TIME);
-		float amout		= Easing::EaseIn(0.0f, 255.0f, rate);
-		Color::Rgb rgb	= Color::Rgb(255.0f, 255.0f, 255.0f, amout);
+		float amout		= Easing::EaseIn(float(TRANSPARENT_COLOR), float(OPAQUE_COLOR), rate);
+		
+		Color::Rgb rgb	= WHITE;
+		//白に半透明情報を付与
+		rgb.a = amout;
 		(this->*effectColor)(rgb);
 	}
 	
@@ -55,13 +59,14 @@ void EffectBase::Draw() {
 
 }
 
-void EffectBase::EffectInit(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D)
+void EffectBase::EffectInit(const Transform& _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D)
 {
 	//transform = new Transform(_transform);
 	BaseObject* base = GetBaseObject();
 	base->GetTransform()->position = _transform.position;
 	base->GetTransform()->rotation = _transform.rotation;
 	base->GetTransform()->scale = _transform.scale;
+	//親のトランスフォームがついていたら、親子関係を付ける
 	if (_parent != nullptr) {
 		parent = _parent;
 		parent->AddChild(GetBaseObject(), true);
@@ -71,6 +76,7 @@ void EffectBase::EffectInit(Transform _transform, BaseObject* _parent, Effect_ID
 	id = _id;
 	time = _time;
 	
+	//3Dなら3Dで使う関数。2Dなら2Dで使う関数をセット
 	if (effect3D) {
 		effectPlay	= &EffectBase::EffectPlay3D;
 		effectStop	= &EffectBase::EffectStop3D;

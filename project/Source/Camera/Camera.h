@@ -267,34 +267,37 @@ private:
 	int cutSceneIndex;
 	bool normalCamera;
 	int targetChangeButton;
-	//PadInput* control;
-	//InputManager* input;
 	bool rockOn;
 	float beforePos;
 	float counter;
 	bool hit;
 	float rokPos;
 	float moveAmout;
+
+	//当たり判定で判定に使用する変数
 	VECTOR3 hitNormal;
 	float  hitDist;
 	VECTOR3 hitPos;
-	EnemyAttackChangeCameraDirection direction;
+	//------------------------------
+	
+	EnemyAttackChangeCameraDirection direction; //敵が攻撃をしてきたときに回転する方向の指定
 	Transform* targetEnemyTransform;
 	
 	float moveTimer;
 	const float MOVE_TIMER_MAX = 0.4f;
 	float angleMaxSpeed;
 
-	CameraEditorGui* editor;
-	std::vector<CutSceneSpece::CutScene> cutSceneData;
+	CameraEditorGui* editor; //カットシーンのWindowのクラス
+	std::vector<CutSceneSpece::CutScene> cutSceneData; //カットシーンのデータが記入
 	bool isCutScene;
 	
-	int cutStopChara;
-	CutSceneBox* cutSceneBox;
+	int cutStopChara; //カットシーンの時に対象のオブジェクトを止めるかどうかの判定をビット演算にて行う
+	CutSceneBox* cutSceneBox; //カットシーンの時に上下に黒いボックスを付けるかどうかのクラス
 	bool cutSceneBoxDraw;
 	UIManager* uiManager;
 
+	//視野角のShakeのために必要な変数
 	float shakePower;
 	float shakeTime;
-	float keepFov;
+	float keepFov; //視野角のShakeのために行う
 };

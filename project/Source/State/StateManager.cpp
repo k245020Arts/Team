@@ -31,7 +31,7 @@ StateManager::~StateManager()
 
 void StateManager::Update()
 {
-	if (currentId != nextId) {
+	if (currentId != nextId) { //ステートの変更の要請があったら変更する
 		currentId = nextId;
 		Change(currentId);
 	}
@@ -249,6 +249,7 @@ void StateManager::ImguiDraw()
 		}
 	}
 }
+
 #include "../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
 void StateManager::DataSaveState()
 {

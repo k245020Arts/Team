@@ -24,6 +24,7 @@ void JustAvoidCamera::Update()
     //ズーム処理
     if (timer >= 0.0f) {
         float t = 1.0f - timer / MAX_TIMER;
+        //ジャスト回避の時にカメラを近づける
         VECTOR3 easedT   = Easing::EaseOut(c->defalutDistance, zoomDistance, t);
         c->currentDistance = easedT;
         timer           -= Time::DeltaTimeRate();
@@ -37,6 +38,7 @@ void JustAvoidCamera::Update()
     changeTimer -= Time::DeltaTimeRate();
 
     if (changeTimer <= 0.0f) {
+        //ターゲットのオブジェクトが生きていたら追いかけObject
         if (c->cameraComponent.target.obj != nullptr) {
             c->cameraComponent.state->ChangeState(StateID::FOLLOW_CAMERA_S);
         }

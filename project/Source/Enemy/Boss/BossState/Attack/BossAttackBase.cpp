@@ -1,4 +1,4 @@
-#include "BossAttackBase.h"
+#include "BossAttackJsonParse.h"
 #include "../../Boss.h"
 #include "../../../../Component/Animator/Animator.h"
 #include "../../../../CharaBase/CharaBase.h"
@@ -90,13 +90,18 @@ void BossAttackBase::BossStart()
 	boss->threat	= false;
 	//attackParam.flash	= false;
 	//DebugLogText::GetInstance()->Log(LogLevel::INFO, string + "攻撃が開始しました");
+	
+	//攻撃の前モーションが設定されてなかったら攻撃のモーションを流す
 	if (attackParam.attackBeforeAnimID == ID::ID_MAX) {
 		boss->enemyBaseComponent.anim->Play(attackParam.animID);
 	}
 	else {
 		boss->enemyBaseComponent.anim->Play(attackParam.attackBeforeAnimID);
 	}
+	//空のオブジェクトを投擲物データ分生成
 	boss->rockManager->CreateThrowEmptyObject(attackParam.throwAttackData);
+
+	//攻撃に必要なデータの初期化
 	firstColl = true;
 	attackTime = boss->enemyBaseComponent.anim->EventFinishTime(attackParam.animID) - boss->enemyBaseComponent.anim->EventStartTime(attackParam.animID);
 	sound = true;
@@ -120,8 +125,11 @@ void BossAttackBase::BossStart()
 	boss->threat = false;
 
 	if (attackParam.attackCameraBossLook) {
+		//敵の攻撃時に敵の方向を向く攻撃なら敵の方向にカメラを向かせるs
 		boss->enemyBaseComponent.camera->AttackEnemyFovChange(boss->bossTransform, attackParam.cameraChangeSpeed);
 	}
+
+	//-------------------------------------------------------
 }
 
 void BossAttackBase::BossFinish()
@@ -133,15 +141,17 @@ void BossAttackBase::BossFinish()
 	boss->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION);
 	boss->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1500, 0));
-
+	//敵の攻撃がまだ残っていたら削除
 	if (boss->attackColl.instance != nullptr) {
 		boss->DeleteCollision(&boss->attackColl);
 	}
 	boss->enemyBaseComponent.anim->AnimEventReset();
+	//岩に当たった時にひるむ判定が残っていたら削除
 	if (rockColl != nullptr) {
 		rockColl->GetBaseObject()->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("Rush");
 		rockColl = nullptr;
 	}
+	//攻撃終了時に投擲物をなくしたい場合は、投擲物の削除
 	for (auto data : attackParam.throwAttackData) {
 		if (data.playerAttackObjectDrop) {
 			boss->rockManager->DropRockStart();
@@ -203,7 +213,6 @@ void BossAttackBase::AttackSound()
 	EnemyBase* e = GetBase<EnemyBase>();
 	float time = e->enemyBaseComponent.anim->EventStartTime(attackParam.animID);
 	//敵の攻撃の音を発生
-	//attackParam.attackSoundStartTime = 1.0f;
 	if (time - attackParam.attackSoundStartTime <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
 		if (!SoundManager::GetInstance()->CheckSe(Sound_ID::ENEMY_SWORD_WIND1) && !SoundManager::GetInstance()->CheckSe(Sound_ID::ENEMY_SWORD_WIND2)) {
 			SoundManager::GetInstance()->RandamSe("EnemySword", 2);
@@ -222,9 +231,6 @@ void BossAttackBase::AttackFlash(ID::IDType _modelId, int _modelFrame, std::stri
 		return;
 	}
 	//敵の剣回りを光らせていることへの設定
-	//attackParam.attackFlashStartTime = 7.0f;
-	///attackParam.attackPositionFrameNum = _modelFrame;
-	//attackParam.voiceName = _voice;
 	if (time - attackParam.attackFlashStartTime <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
 		if (_modelId == ID::E_MODEL) {
 			int a = 0;
@@ -247,7 +253,7 @@ void BossAttackBase::AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std
 		MATRIX objWorldMat = obj->GetTransform()->WorldTransform().GetMatrix();
 		MATRIX invObjWorldMat = MInverse(objWorldMat);
 		VECTOR3 frashPosLocal = frameWorldPos * invObjWorldMat;
-		//e->enemyBaseComponent.effect->CreateEffekseer(Transform(frashPos_local, VZero, VOne), obj, Effect_ID::ENEMY_FLASH, 1.0f);
+		//Enemyのモデルの時だけ挙動がおかしくなったので専用処理を挟む
 		if (_modelId == ID::E_MODEL) {
 			EffectManager::GetInstance()->CreateEffekseer(Transform(frameWorldPos + obj->GetTransform()->position, VZero, VOne), nullptr, Effect_ID::ENEMY_FLASH, 1.0f);
 		}
@@ -298,9 +304,6 @@ void BossAttackBase::BossJustAvoidCollsion()
 	float time = e->enemyBaseComponent.anim->EventStartTime(attackParam.animID);
 	//ジャスト回避判定の作成
 	if (time - attackParam.justAvoidCollsionStartTime <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
-		//Transform colTrans = attackParam.attackCollTransform;
-		//colTrans.scale.x += 200.0f;
-		//attackParam.justAvoidCollTransform = colTrans;
 		e->CollsionStart<SphereCollider>(&e->justAvoidColl, attackParam.justAvoidCollTransform);
 		e->SetShape(CollsionInformation::SPHERE, &e->justAvoidColl);
 		e->justAvoidCollTime = 3.0f;
@@ -314,7 +317,7 @@ void BossAttackBase::EnemyJustAvoidCollsion()
 	//ジャスト回避判定の作成
 	if (time - 6.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
 		Transform colTrans = collTrans;
-		colTrans.scale.x += 200.0f;
+		colTrans.scale.x += 200.0f; //通常の当たり判定より大きく設定
 		e->CollsionStart<SphereCollider>(&e->justAvoidColl, colTrans);
 		e->SetShape(CollsionInformation::SPHERE, &e->justAvoidColl);
 		e->justAvoidCollTime = 3.0f;
@@ -361,11 +364,11 @@ void BossAttackBase::RotateEvent()
 {
 	Boss* boss = GetBase<Boss>();
 	if (!attackParam.rotateMove) {
-		return;
+		return; //回転イベントがない場合スルー
 	}
 	if (boss->enemyBaseComponent.anim->AnimEventCan()) {
 		//攻撃にかかる時間で90°回したいので１フレームごとに進む角度を求めている。
-		averageSpeed = 90.0f / attackTime;
+		averageSpeed = attackParam.angleMoveAmout / attackTime;
 		averageSpeed *= boss->obj->GetObjectTimeRate();
 
 		boss->bossTransform->rotation.y += averageSpeed * DegToRad;
@@ -376,12 +379,13 @@ void BossAttackBase::LookEvent()
 {
 	Boss* boss = GetBase<Boss>();
 	if (!attackParam.lookPlayer) {
-		return;
+		return; //見るイベントがない場合スルー
 	}
 	if (attackParam.lookMaxCounter <= boss->enemyBaseComponent.anim->GetCurrentFrame()) {
-		return;
+		return; //プレイヤーを見るイベントの最大フレームを越したらスルー
 	}
 
+	//引数で値を増やしても良いがそれだと微調整が出来ないのでこの処理を何回走るかで振り向きの強度を決めている
 	for (int i = 0; i < attackParam.lookNum; i++) {
 		boss->LookPlayer();
 	}
@@ -391,31 +395,38 @@ void BossAttackBase::MoveEvent()
 {
 	Boss* boss = GetBase<Boss>();
 	if (!CurrentAttackAnim()) {
-		return;
+		return; //今再生されてるモーションが攻撃モーション以外ならスルー
 	}
 	if (!attackParam.playerAloowMove && !attackParam.frontMove) {
-		return;
+		return; //追従モードがまっすぐに進むかのイベントが両方入ってないならスルー
 	}
 	float animFrame = boss->enemyBaseComponent.anim->GetCurrentFrame();
+
+	//移動するアニメーションの再生時間なら移動する
+
+	const float FIRCTION_RATE = 24.0f;
 	if (attackParam.moveStartTime <= animFrame && attackParam.moveFinishTime >= animFrame) {
+		//プレイヤー追従モードなら
 		if (attackParam.playerAloowMove) {
 			VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
 			normal = dis.Normalize();
 			bool move = true;
-			normal.y = 0.0f;
 			//y座標をいじりたくないので0にする。
+			normal.y = 0.0f;
+			//基準の距離よりボスとプレイヤーが近くなったら
 			if (dis.Size() <= attackParam.playerBaseNear) {
 				if (attackParam.playerNearStop) {
-					boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 24.0f);
+					boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * FIRCTION_RATE); //ストップさせる
 					move = false;
 				}
 				else if (attackParam.playerNearAloowStop) {
 					//move = false;
-					aloowStop = true;
+					aloowStop = true; //プレイヤーを通り越して走り出す
 				}
 
 			}
 			if (firstMove) {
+				//初速を代入
 				if (move) {
 					VECTOR3 dis = boss->enemyBaseComponent.playerObj->GetTransform()->position - boss->bossTransform->position;
 					normal = dis.Normalize();
@@ -424,6 +435,7 @@ void BossAttackBase::MoveEvent()
 				firstMove = false;
 				return;//最初の移動の時は返す
 			}
+			//プレイヤーを通過するモードになったら正面移動をし続ける
 			if (aloowStop) {
 				VECTOR3 dis = boss->bossTransform->Forward() * 1.0f;
 				normal = dis.Normalize();
@@ -448,6 +460,7 @@ void BossAttackBase::MoveEvent()
 				}
 				
 			}
+			//追従するときは基本プレイヤーを見るのでlookEventも動かす
 			LookEvent();
 		}
 		if (attackParam.frontMove) {
@@ -471,40 +484,44 @@ void BossAttackBase::MoveEvent()
 		}
 
 	}
+	//移動が終了したら移動をストップする
 	if (animFrame > attackParam.moveFinishTime) {
-		boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 24.0f);
+		boss->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * FIRCTION_RATE);
 	}
 }
 
 void BossAttackBase::JumpEvent()
 {
 	if (!attackParam.jump) {
-		return;
+		return; //ジャンプイベント状態ではないならスルー
 	}
 	Boss* boss = GetBase<Boss>();
 	if (boss->enemyBaseComponent.anim->GetCurrentFrame() <= attackParam.jumpStartTime) {
-		return;
+		return; //ジャンプスタートの時間が来るまではリターン
 	}
 	if (firstJump) {
-		firstJump = false;
+		firstJump = false; //初速のジャンプ
 		boss->enemyBaseComponent.physics->AddVelocity(VECTOR3(0, attackParam.jumpSpeed/*3000.0f*/, 0), false);
 	}
 
-	boss->enemyBaseComponent.physics->AddGravity(VECTOR3(0, gravitySpeed, 0));
+	boss->enemyBaseComponent.physics->AddGravity(VECTOR3(0, gravitySpeed, 0)); //重力をどんどん増加させる
 	gravitySpeed += attackParam.addGravity;
 
+	//地面についたとき
 	if (boss->enemyBaseComponent.physics->GetGround()) {
 		if (boss->enemyBaseComponent.anim->GetCurrentFrame() >= attackParam.groundEffectStartTime) {
+			
 			if (groundEffect) {
 				groundEffect = false;
 				
 				BaseObject* obj2 = EffectManager::GetInstance()->CreateEffekseer(*boss->GetBaseObject()->GetTransform(), boss->GetBaseObject(), attackParam.jumpGroundEffect, 1.0f);
-			
+				
 				
 				EffectManager::GetInstance()->ParentTransformRemove(obj2);
 				
 				SoundManager::GetInstance()->PlaySe(Sound_ID::GROUND);
 				boss->enemyBaseComponent.camera->CameraPerspectiveShakeStart(/*3.0f, 0.4f*/ attackParam.groundShakeCamera,attackParam.groundShakeTime);
+				//衝撃波を出すなら出す
 				CreateWave();
 			}
 		}
@@ -533,7 +550,7 @@ void BossAttackBase::ShackWaveEvent()
 void BossAttackBase::CreateWave()
 {
 	if (!attackParam.shockWave) {
-		return;
+		return; //Waveを出さないなら出さない
 	}
 	Boss* boss = GetBase<Boss>();
 	BaseObject* obj1 = EffectManager::GetInstance()->CreateEffekseer(*boss->GetBaseObject()->GetTransform(), boss->GetBaseObject(), /*Effect_ID::BOSS_WAVE*/attackParam.shockMoveEffect, 1.0f);
@@ -686,6 +703,8 @@ void BossAttackBase::BossUpdate()
 	if (boss == nullptr) {
 		return;
 	}
+	//-------------------------ボスの攻撃に必要なUpdateの処理を実行--------------------------
+
 	AttackFinishFrame();
 	AttackSound();
 	BossAttackCollsion();
@@ -701,6 +720,8 @@ void BossAttackBase::BossUpdate()
 		BossTrail(attackParam.trailRightHand);
 	}
 	AttackFlash(ID::B_MODEL, attackParam.attackPositionFrameNum, attackParam.voiceName);
+
+	//--------------------------------------------------------------------------------------
 }
 
 void BossAttackBase::AttackStart()

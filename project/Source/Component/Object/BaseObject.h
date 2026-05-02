@@ -32,11 +32,23 @@ public:
 	/// </summary>
 	/// <returns>objectごとのスピードをセット</returns>
 	float GetObjectTimeRate() { return objectTimeRate * Time::DeltaTimeRate(); }
-	//float GetObjectRate() { return objectTimeRate * Time::GetTimeRate(); }
-	int GetId() { return id; }
+	
+	/// <summary>
+	/// オブジェクトごとのidの取得
+	/// </summary>
+	/// <returns></returns>
+	int GetId() const { return id; }
 
+	/// <summary>
+	/// Transformのポインタの取得
+	/// </summary>
+	/// <returns></returns>
 	Transform* GetTransform() const { return transform; }
 
+	/// <summary>
+	/// 初期化を行う
+	/// </summary>
+	/// <param name="name">オブジェクトのTag</param>
 	void Init(std::string name);
 
 	/// <summary>
@@ -103,7 +115,7 @@ protected:
 	float objectTimeRate;
 	TransitorManager* transitor;
 	int id;
-	static int idPlus;
+	static int idPlus; //idの加算用の変数
 
 	Transform* transform;
 

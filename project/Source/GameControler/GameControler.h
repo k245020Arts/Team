@@ -63,7 +63,10 @@ public:
 	/// </summary>
 	/// <returns>1フレ前にステートがチェンジされていたらtrue</returns>
 	bool GetChangeStateOneFrame() const { return changeState; }
-
+	/// <summary>
+	/// 勝ちか負けかの判定を行う
+	/// </summary>
+	/// <param name="_win"></param>
 	void ResultUiStart(bool _win);
 	
 	
@@ -88,7 +91,6 @@ private:
 	void SceneChangeDraw();
 
 	float startCount;
-	Object2D* obj;
 
 	float resultCounter;
 

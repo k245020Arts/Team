@@ -13,6 +13,7 @@
 BootScene::BootScene()
 {
 	InputManager* input			= InputManager::GetInstance();
+	//初期化
 	ResourceLoad::Init();
 	ID::Init();
 	Sound_ID::InitID();
@@ -24,6 +25,7 @@ BootScene::BootScene()
 	new CollsionManager();
 	new Fead();
 	/*Load::SetAsync(false);*/
+	//タイトルとプレイシーンに必要な背景モデルと当たり判定使用モデルをロード
 	ResourceLoad::LoadModel("stage_s", ID::S_MODEL, true);
 	ResourceLoad::LoadModel("cube", ID::WALL, true);
 
@@ -36,9 +38,7 @@ BootScene::~BootScene()
 void BootScene::Update()
 {
 	
-	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
-	//SceneManager::ChangeScene("TITLE"); // 起動が終わったらTitleを表示
-	//SceneManager::Exit();
+	FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f); // 起動が終わったらTitleを表示
 }
 
 void BootScene::Draw()

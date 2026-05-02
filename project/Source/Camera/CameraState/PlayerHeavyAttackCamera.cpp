@@ -29,6 +29,8 @@ PlayerHeavyAttackCamera::~PlayerHeavyAttackCamera()
 void PlayerHeavyAttackCamera::Update()
 {
 	Camera* c = GetBase<Camera>();
+	const VECTOR3 ADD_POS = VECTOR3(0, 400, 0);
+	//強攻撃のチャージをしているとき
 	if (player->GetCharge()) {
 		//他の処理から帰ってきたときにすぐにカメラの位置が戻らないように補完を掛けている
 		if (backCounter >= 0.0f) {
@@ -37,28 +39,30 @@ void PlayerHeavyAttackCamera::Update()
 			VECTOR3 easedT = Easing::Lerp(c->defalutDistance, VECTOR3(0, 0, -1200), t);
 			c->currentDistance = easedT;
 			backCounter -= Time::DeltaTimeRate();
-			VECTOR3 targetp = c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0);
+			VECTOR3 targetp = c->cameraComponent.player.transform->position + ADD_POS;
 			c->target = Easing::Lerp(currentTarget, targetp, t);
 		}
 		else {
-			c->currentDistance = VECTOR3(0, 0, -1200);
-			VECTOR3 targetp = c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0);
+			const VECTOR3 ZOOM_POS = VECTOR3(0, 0, -1200);
+			c->currentDistance = ZOOM_POS;
+			VECTOR3 targetp = c->cameraComponent.player.transform->position + ADD_POS;
 			c->target = targetp;
 		}
 	}
 	else {
+		//ズームの処理
 		if (zoomTimer >= 0.0f) {
 
 			float t = 1.0f - zoomTimer / 0.2f;
 			VECTOR3 easedT = Easing::Lerp(c->currentDistance, c->defalutDistance, t);
 			c->currentDistance = easedT;
 			zoomTimer -= Time::DeltaTimeRate();
-			VECTOR3 targetp = c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0);
+			VECTOR3 targetp = c->cameraComponent.player.transform->position + ADD_POS;
 			c->target = Easing::Lerp(currentTarget, targetp, t);
 		}
 		else {
 			c->currentDistance = c->defalutDistance;
-			VECTOR3 targetp = c->cameraComponent.player.transform->position + VECTOR3(0, 400, 0);
+			VECTOR3 targetp = c->cameraComponent.player.transform->position + ADD_POS;
 			c->target = targetp;
 		}
 		
@@ -80,6 +84,7 @@ void PlayerHeavyAttackCamera::Start()
 
 	//backCounter = TIMER_MAX;
 	currentTarget = c->target;
+	//補完処理の時間
 	backCounter = 2.0f;
 	zoomTimer = 0.2f;
 	//c->cameraComponent.cameraTransform->rotation.y = player->GetPlayerTransform()->rotation.y;

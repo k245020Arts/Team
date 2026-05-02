@@ -8,11 +8,18 @@ UIBase::UIBase()
 
 UIBase::~UIBase()
 {
-	uiManager->UIDelete(obj);
+	//リストから削除
+	if (uiManager != nullptr) {
+		uiManager->UIDelete(obj);
+	}
+	
 }
 
 void UIBase::Awake()
 {
-	uiManager->UIPush(obj);
+	if (uiManager == nullptr) {
+		return; //UiManagerがnullptrならリターン
+	}
+	uiManager->UIPush(obj);//リストに登録
 	obj->SetDraw(false);
 }

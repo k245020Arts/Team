@@ -1,5 +1,6 @@
 #include "Fead.h"
 #include "../../Screen.h"
+#include "../../Component/Color/Color.h"
 
 Fead::Fead()
 {
@@ -10,6 +11,7 @@ Fead::Fead()
 	alpha = 0;;
 
 	DontDestroyOnSceneChange();
+	//一番最後に描画させたいので低い値を代入
 	SetDrawOrder(-10000);
 
 	feadIn = Fead::NONE;;
@@ -28,7 +30,7 @@ void Fead::Update()
 void Fead::Draw()
 {
 	if (feedTime <= 0.0f) {
-		feadIn = NONE;
+		feadIn = NONE; //フェードタイムが設定させてなかったらフェードしていない状態にする
 		return;
 	}
 	feedTime -= Time::DeltaTimeRate();
@@ -37,6 +39,7 @@ void Fead::Draw()
 	}
 	float rate = 0.0f;
 
+	//フェードインとフェードアウトで処理を分ける
 	if (feadIn) {
 		rate = feedTime / feedCountMax;
 	}
@@ -44,7 +47,7 @@ void Fead::Draw()
 		rate = 1 - (feedTime / feedCountMax);
 	}
 	if (easingFunc != nullptr) {
-		alpha = easingFunc(255, 0, rate);
+		alpha = easingFunc(OPAQUE_COLOR, TRANSPARENT_COLOR, rate);
 	}
 	
 

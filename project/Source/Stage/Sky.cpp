@@ -28,18 +28,13 @@ void Sky::CreateSky()
 {
 	sky =  new Object3D();
 
-	sky->Init(VECTOR3(0, -4000, 0), VECTOR3(0, 0, 0), VECTOR3(2000.0f,2000.0f,2000.0f), "sky");
+	const VECTOR3 SCALE = VECTOR3(2000.0f, 2000.0f, 2000.0f);
+	const VECTOR3 POSITION = VECTOR3(0, -4000, 0);
+
+	sky->Init(POSITION, VZero, SCALE, "sky");
 	sky->SetDrawOrder(10);
 
 	MeshRenderer* mesh = sky->Component()->AddComponent<MeshRenderer>();
 	mesh->ModelHandle(ResourceLoad::LoadModel("sky/sky_2", ID::SKY));
-
-	sky2 = new Object3D();
-
-	sky2->Init(VECTOR3(CUT_SCENE_POS), VECTOR3(0, 0, 0), VECTOR3(100.0f, 100.0f, 100.0f), "sky");
-	sky2->SetDrawOrder(10);
-
-	MeshRenderer* mesh2 = sky2->Component()->AddComponent<MeshRenderer>();
-	mesh2->ModelHandle(ResourceLoad::LoadModel("sky/sky_2", ID::SKY));
 
 }

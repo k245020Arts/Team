@@ -43,7 +43,6 @@ void PlayerJustAvoid::Update()
 		return;
 	}
 	Time::ChangeDeltaRate(0.4f);
-	//p->playerCom.hitObj->SetObjectTimeRate(0.6f);
 	easingCount += Time::DeltaTime() * 0.8f;
 	if (easingCount >= 1.0f) {
 		easingCount = 1.0f;
@@ -56,9 +55,12 @@ void PlayerJustAvoid::Update()
 		count = 1.0f;
 	}
 	//回避の速度の調整
-	float speed = Easing::EaseInOut(9000.0f, 2000.0f, count);
+	constexpr float MAX_SPEED = 90000.0f;
+	constexpr float MIN_SPEED = 2000.0f;
+	float speed = Easing::EaseInOut(MAX_SPEED, MIN_SPEED, count);
 	p->playerCom.anim->SetPlaySpeed(rate);
-	p->playerCom.player->Avoid(speed, 6000.0f, cameraAngle,0.0f);
+	constexpr float MAX_AVOID_SPEED = 6000.0f;
+	p->playerCom.player->Avoid(speed, MAX_AVOID_SPEED, cameraAngle,0.0f);
 	//カメラの追従速度を早くする
 	float leap = Easing::EaseIn(cameraLeap, 0.2f, easingCount / 2.0f);
 	p->playerCom.camera->CameraLeapSet(leap);
@@ -66,7 +68,7 @@ void PlayerJustAvoid::Update()
 	if (p->playerCom.anim->IsFinish())
 	{
 		p->playerCom.player->AvoidFinishState();
-		p->playerCom.color->setRGB(Color::Rgb(255, 255, 255, 255));
+		p->playerCom.color->setRGB(WHITE);
 		if (p->playerCom.hitObj != nullptr) {
 			p->playerCom.hitObj->SetObjectTimeRate();
 		}
@@ -97,7 +99,9 @@ void PlayerJustAvoid::Update()
 	if (InputManager::GetInstance()->KeyInput("attack")) {
 		attack = true;
 	}
+
 	if (easingCount >= 0.5f) {
+		//次の攻撃ボタンが押されているなら攻撃状態へ移行
 		if (attack) {
 			if (p->largeJustAvoid) {
 				p->playerCom.stateManager->ChangeState(StateID::PLAYER_JUST_AVOID_ATTACK1_S);
@@ -185,7 +189,7 @@ void PlayerJustAvoid::Start()
 		cameraLeap = 0.2f;
 	}
 	
-	
+	//カメラの追いかけ方を遅くする
 	p->playerCom.camera->CameraLeapSet(cameraLeap);
 	if (p->playerCom.hitObj != nullptr) {
 		p->playerCom.camera->TargetSet(p->playerCom.hitObj);
@@ -215,7 +219,9 @@ void PlayerJustAvoid::Finish()
 
 	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);
 	p->playerCom.player->PlayerStickInput();
+	//カメラの追従速度を元に戻す
 	p->playerCom.camera->CameraLeapSet(0.2f);
+	//元のオブジェクトに戻す
 	if (p->playerCom.hitObj != nullptr) {
 		p->playerCom.hitObj->SetObjectTimeRate();
 	}
@@ -238,16 +244,17 @@ void PlayerJustAvoid::JustAvoidRotation()
 	VECTOR3 forward = VECTOR3(0, 0, 1) * MGetRotY(pl->rotation.y);
 	VECTOR3 right	= VECTOR3(1, 0, 0) * MGetRotY(pl->rotation.y);
 	VECTOR3 target	= p->playerCom.player->GetWalkAngle() * MGetRotY(cameraRotation.y);
-	float dot = VDot(target.Normalize(), forward.Normalize());
-	if (dot >= cosf(5.0f * DegToRad)) {
+	float dot = VDot(target.Normalize(), forward.Normalize()); //内積を使い調整
+	const float SPEED = 5.0f;
+	if (dot >= cosf(SPEED * DegToRad)) {
 		float inRot		= atan2f(target.x, target.z);
 		pl->rotation.y	= inRot;
 	}
 	else if (VDot(right, target) > 0) {
-		pl->rotation.y	+= 5.0f * DegToRad;
+		pl->rotation.y	+= SPEED * DegToRad;
 		
 	}
 	else {
-		pl->rotation.y	-= 5.0f * DegToRad;
+		pl->rotation.y	-= SPEED * DegToRad;
 	}
 }

@@ -1,11 +1,11 @@
 #include "TitleCamera.h"
-#include "Component/Transform/Transform.h"
-#include "../ImGui/imgui.h"
-#include "Common/InputManager/PadInput.h"
+#include "../Component/Transform/Transform.h"
+#include "../../ImGui/imgui.h"
+#include "../Common/InputManager/PadInput.h"
 #include <cmath>
-#include "Component/ComponentManager.h"
-#include "Component/Shaker/Shaker.h"
-#include "Common/Easing.h"
+#include "../Component/ComponentManager.h"
+#include "../Component/Shaker/Shaker.h"
+#include "../Common/Easing.h"
 #include "TitleScene.h"
 #include "TitleControl.h"
 

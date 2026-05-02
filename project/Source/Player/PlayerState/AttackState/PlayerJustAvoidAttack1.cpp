@@ -41,7 +41,14 @@ void PlayerJustAvoidAttack1::Update()
 	/*AttackCollsion();*/
 	PlayerAttackStateBase::Update();
 	if (p->playerCom.anim->AnimEventCan()) {
-		p->playerCom.player->DrawTrail(VECTOR3(0, 0, -100), VECTOR3(0, 0, -350), 0.0f, 0.0f, 255.0f, 150.0f, 28, 0.8f);
+		const float R = 0.0f;
+		const float G = 0.0f;
+		const float B = 255.0f;
+		const float A = 150.0f;
+		const int FRAME = 28;
+		const float TIME = 0.8f;
+		p->playerCom.player->DrawTrail(VECTOR3(0, 0, -100)/*先端座標*/, VECTOR3(0, 0, -350)/*末端座標*/,
+			R, G, B, A, FRAME, TIME);
 	}
 	if (!noStateChange) {
 		if (distSize <= ATTACK_MOVE_DIST) {

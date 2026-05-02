@@ -92,12 +92,32 @@ CollsionEvent::CollsionEvent()
 CollsionEvent::~CollsionEvent()
 {
 }
+//#define CollsionEventPtrMode
 
 void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
 {
 	using namespace CollsionInformation;
 	using namespace CollsionInformation;
 
+#ifdef CollsionEventPtrMode
+	Tag tag1 = _coll1->GetCollTag();
+	Tag tag2 = _coll2->GetCollTag();
+
+	CollsionEventData col1EventData = SetEventData(_coll1,_coll2,resolver,_hitPos);
+	CollsionEventData col2EventData = SetEventData(_coll2,_coll1,resolver,_hitPos);
+
+	std::function<void(CollsionEventData)> eventFunc1 = _coll1->GetEventFunc();
+	std::function<void(CollsionEventData)> eventFunc2 = _coll2->GetEventFunc();
+
+	if (eventFunc1 != nullptr) {
+		eventFunc1(col1EventData);
+	}
+	
+	if (eventFunc2 != nullptr) {
+		eventFunc2(col2EventData);
+	}
+
+#else
 	Tag tag1 = _coll1->GetCollTag();
 	Tag tag2 = _coll2->GetCollTag();
 
@@ -109,6 +129,10 @@ void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& 
 	{
 		(this->*(it->second))(_coll1, _coll2, resolver, _hitPos);
 	}
+#endif // CollsionEventPtrMode
+
+
+	
 }
 
 void CollsionEvent::PlayerDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2, const VECTOR3& _hitPos)
@@ -289,15 +313,32 @@ void CollsionEvent::JustAvoid(ColliderBase* _coll1, ColliderBase* _coll2, Pushba
 	Player* player = _coll1->GetObj()->Component()->GetComponent<Player>();
 	//EnemyBase* enemy = _coll2->GetObj()->Component()->GetComponent<TrashEnemy>();
 	BaseObject* _obj = _coll2->GetObj();
-	//if (_coll2->GetCollTag() == CollsionInformation::B_E_ATTACK || _coll2->GetCollTag() == CollsionInformation::BOSS_ROCK_ATTACK) {
-		if (_obj->GetParent() != nullptr) {
-			_obj = _obj->GetParent();
-		}
-	//}
+	
+	if (_obj->GetParent() != nullptr) {
+		_obj = _obj->GetParent();
+	}
 	player->JustAvoidCollsionHit(_obj,_coll2->GetCollTag());
 }
 
 int CollsionEvent::MakeKey(CollsionInformation::Tag t1, CollsionInformation::Tag t2)
 {
 	return Function::EnumTag(t1, t2, CollsionInformation::TAG_MAX);
+}
+
+CollsionEventData CollsionEvent::SetEventData(ColliderBase* _myCollObj, ColliderBase* _targetCollObj, Pushback& _pushInfo, const VECTOR3& _hitPos)
+{
+	CollsionEventData eventData;
+
+	eventData.myPosition = _myCollObj->GetTransform()->position;
+	eventData.myShape = _myCollObj->GetShape();
+	eventData.myTag = _myCollObj->GetCollTag();
+
+	eventData.targetPosition = _targetCollObj->GetTransform()->position;
+	eventData.targetShape = _targetCollObj->GetShape();
+	eventData.targetTag = _targetCollObj->GetCollTag();
+
+	eventData.pushes = _pushInfo.GetPushInfo();
+	eventData.hitPos = _hitPos;
+
+	return eventData;
 }

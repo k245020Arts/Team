@@ -31,6 +31,7 @@ ButtonUI::~ButtonUI()
 {
 	if (backImage <= 0) {
 		DeleteGraph(backImage);
+		backImage = -1;
 	}
 }
 
@@ -91,7 +92,7 @@ void ButtonUI::Draw()
 		DrawRotaGraph((int)transform->position.x, (int)transform->position.y, (double)transform->scale.x, 0.0, buttonImage, true);
 	}
 
-	
+	//Œ³‚É–ß‚·
 	SetDrawBright(255, 255, 255);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

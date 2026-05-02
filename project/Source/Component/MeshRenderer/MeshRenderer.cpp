@@ -20,7 +20,7 @@ MeshRenderer::MeshRenderer()
 
 MeshRenderer::~MeshRenderer()
 {
-	if (depricate) {
+	if (depricate) { //デプリケートモデルで設定しているなら
 		if (hModel != -1) {
 			MV1DeleteModel(hModel);
 		}
@@ -34,10 +34,10 @@ void MeshRenderer::Update()
 
 void MeshRenderer::Draw()
 {
-	if (!draw) {
+	if (!draw) { //描画をしないならリターン
 		return;
 	}
-	if (hModel < 0) {
+	if (hModel < 0) { //モデルがロード出来てなかったら
 		return;
 	}
 	//描画専用のトランスフォームを作る
@@ -92,5 +92,5 @@ void MeshRenderer::ImguiDraw()
 
 void MeshRenderer::RotationMesh(int _meshNum, float _angle)
 {
-	int a = MV1SetFrameUserLocalMatrix(hModel, _meshNum, MGetRotY(_angle));
+	MV1SetFrameUserLocalMatrix(hModel, _meshNum, MGetRotY(_angle));
 }

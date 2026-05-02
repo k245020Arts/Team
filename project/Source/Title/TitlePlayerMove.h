@@ -1,6 +1,6 @@
 #pragma once
 #include "TitlePlayer.h"
-#include "Player/PlayerState/PlayerStateBase.h"
+#include "../Player/PlayerState/PlayerStateBase.h"
 
 class TitleControl;
 class TitlePlayer;

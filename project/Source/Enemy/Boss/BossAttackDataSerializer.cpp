@@ -77,6 +77,7 @@ void BossAttackDataSerializer::Update()
 {
 	if (InputManager::GetInstance()->KeyInputDown("BossParamWindow")) {
 		windowMode = !windowMode;
+		//パラメーター調整中は敵を止める
 		if (windowMode) {
 			boss->GetBaseObject()->SetObjectTimeRate(0.0f);
 		}
@@ -129,10 +130,6 @@ void BossAttackDataSerializer::Update()
 				//表示
 				ImGui::Separator();
 				ImGui::Text("AttackID : %s", selectedID.c_str());
-
-				//AttackParam（攻撃データ）
-				/*ImGui::DragInt("AnimNum", &param.animNum);
-				ImGui::DragText("AnimFile", (char*)param.animFileName.c_str(), 256);*/
 
 				//ActionParam編集
 				if (actionPtr) {
@@ -245,13 +242,11 @@ void BossAttackDataSerializer::Update()
 		selectedIndex = -1; // 入力変わったらリセット
 	}
 
-	//========================
-	// ■ 候補生成（フィルタ）
-	//========================
+	//候補生成（フィルタ）
 	std::vector<std::string> filtered;
 	std::vector<const char*> items;
 
-	for (auto& name : animFileName) // ← さっき作った一覧
+	for (auto& name : animFileName)
 	{
 		// 部分一致検索
 		if (std::string(name).find(inputBuf) != std::string::npos)
@@ -261,9 +256,7 @@ void BossAttackDataSerializer::Update()
 		}
 	}
 
-	//========================
-	// ■ Combo表示
-	//========================
+	//Combo表示
 	if (!items.empty())
 	{
 		if (ImGui::Combo("Candidates", &selectedIndex, items.data(), (int)items.size()))
@@ -329,6 +322,7 @@ void BossAttackDataSerializer::Update()
 		sorting->AddAttack(newParam,boss, newID);
 
 		// ActionParam追加（ローカル）
+		//空のデータを追加
 		ActionParam newAction;
 		newAction.id = newID;
 		newAction.attackState = true;
@@ -343,8 +337,10 @@ void BossAttackDataSerializer::Update()
 		ActionsSave();
 
 		sorting->LoadSorting(BossName);
-
+			
 		Animator::AnimFileInfo animInfos = Animator::AnimFileInfo();
+
+		//モーションも基本からのデータを取得
 
 		animInfos.fileName = newAnimFile;
 		animInfos.id = newAnimFile;
@@ -409,9 +405,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 {
 	auto& param = attackParam[_selectID];
 
-	//========================
-	// ■ 基本
-	//========================
+	//基本
 	if (ImGui::CollapsingHeader("Basic", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::DragFloat("HitDamage", &param.hitDamage, 0.1f);
@@ -435,9 +429,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		ImGui::DragFloat("FlashStartTime", &param.attackFlashStartTime, 0.01f);
 	}
 
-	//========================
-	// ■ 移動
-	//========================
+	// 移動
 	if (ImGui::CollapsingHeader("Move Event"))
 	{
 		ImGui::Checkbox("FrontMove", &param.frontMove);
@@ -451,9 +443,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		}
 	}
 
-	//========================
-	// ■ プレイヤー追従
-	//========================
+	//プレイヤー追従
 	if (ImGui::CollapsingHeader("Player Follow"))
 	{
 		ImGui::Checkbox("Enable##Follow", &param.playerAloowMove);
@@ -475,9 +465,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		}
 	}
 
-	//========================
-	// ■ 突進
-	//========================
+	//突進
 	if (ImGui::CollapsingHeader("Rush Event"))
 	{
 		ImGui::Checkbox("Enable##Rush", &param.rushMove);
@@ -495,9 +483,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		}
 	}
 
-	//========================
-	// ■ 回転
-	//========================
+	//回転
 	if (ImGui::CollapsingHeader("Rotate Event"))
 	{
 		ImGui::Checkbox("Enable##Rotate", &param.rotateMove);
@@ -508,9 +494,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		}
 	}
 
-	//========================
-	// ■ ジャンプ
-	//========================
+	//ジャンプ
 	if (ImGui::CollapsingHeader("Jump Event"))
 	{
 		ImGui::Checkbox("Enable##Jump", &param.jump);
@@ -528,7 +512,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		}
 	}
 
-	///プレイヤー見るイベント
+	///プレイヤー見る
 	if (ImGui::CollapsingHeader("PlayerLook Event"))
 	{
 		ImGui::Checkbox("Enable##PlayerLook", &param.lookPlayer);
@@ -540,9 +524,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		}
 	}
 
-	//========================
-	// ■ 衝撃波
-	//========================
+	//衝撃波
 	if (ImGui::CollapsingHeader("ShockWave"))
 	{
 		ImGui::Checkbox("Enable##Shock", &param.shockWave);
@@ -554,9 +536,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		}
 	}
 
-	//========================
-	// ■ 投擲
-	//========================
+	//投擲
 	if (ImGui::CollapsingHeader("Throw Event"))
 	{
 		ImGui::Checkbox("Enable##Throw", &param.throwObject);
@@ -580,18 +560,14 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		}
 	}
 
-	//========================
-	// ■ カメラ
-	//========================
+	//カメラ
 	if (ImGui::CollapsingHeader("Camera"))
 	{
 		ImGui::Checkbox("BossLook", &param.attackCameraBossLook);
 		ImGui::DragFloat("ChangeSpeed", &param.cameraChangeSpeed, 0.1f);
 	}
 
-	//========================
-	// ■ トレイル
-	//========================
+	//トレイル
 	if (ImGui::CollapsingHeader("Trail"))
 	{
 		ImGui::Checkbox("UseTrail", &param.useTrail);
@@ -604,9 +580,7 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 
 	CopyParam(_selectID);
 
-	//========================
 	//保存
-	//========================
 	if (ImGui::Button("ParamSave")) {
 		AttackSave(_selectID);
 		sorting->ReloadParam(param, _selectID);
@@ -638,9 +612,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	ImGui::Separator();
 	ImGui::Text("Throw Object List");
 
-	//------------------------------------
-	// ■ リスト
-	//------------------------------------
+	//リスト
 	for (int i = 0; i < list.size(); i++)
 	{
 		std::string label = std::to_string(i) + " : " + list[i].throwObjectID;
@@ -651,9 +623,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	//------------------------------------
-	// ■ 追加・削除
-	//------------------------------------
+	//追加・削除
 	if (ImGui::Button("Add Empty"))
 	{
 		list.push_back(BossAttackBase::ThrowObjectAttackData());
@@ -683,9 +653,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	ImGui::Separator();
 	ImGui::Text("Edit Throw Data");
 
-	//------------------------------------
-	// ■ ThrowObjectID（Combo）
-	//------------------------------------
+	//ThrowObjectID（Combo）
 	if (!throwObjectsData.empty())
 	{
 		static std::vector<const char*> throwObjectitems;
@@ -713,18 +681,14 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	//------------------------------------
-	// ■ Base
-	//------------------------------------
+	//ベースパラメーター
 	if (ImGui::CollapsingHeader("Base"))
 	{
 		ImGui::DragFloat3("Gravity##Base_", &t.baseGravity.x, 0.1f);
 		ImGui::DragFloat3("Friction##Base_", &t.baseFirction.x, 0.1f);
 	}
 
-	//------------------------------------
-	// ■ Push
-	//------------------------------------
+	//押し出し判定
 	if (ImGui::CollapsingHeader("PushCollision"))
 	{
 		ImGui::Checkbox("Enable##Push_", &t.pushCollCan);
@@ -735,9 +699,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	//------------------------------------
-	// ■ Ground
-	//------------------------------------
+	//接地判定
 	if (ImGui::CollapsingHeader("Ground"))
 	{
 		ImGui::Checkbox("Enable##Ground_", &t.randCan);
@@ -753,9 +715,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		ImGui::DragFloat("LifeTime##Ground_", &t.randTime, 0.1f);
 	}
 
-	//------------------------------------
-	// ■ Player Hit
-	//------------------------------------
+	//プレイヤー攻撃判定
 	if (ImGui::CollapsingHeader("Player Hit"))
 	{
 		ImGui::Checkbox("Enable##PlayerHit_", &t.playerHit);
@@ -775,6 +735,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
+	//当たり判定たくさん
 	if (ImGui::CollapsingHeader("AlotCollsion Hit"))
 	{
 		ImGui::Checkbox("Enable##alotCollsionHit", &t.alotCollsionHit);
@@ -784,9 +745,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	}
 
 
-	//------------------------------------
-	// ■ Ground Hit
-	//------------------------------------
+	//地面についてから当たり判定をつけるか
 	if (ImGui::CollapsingHeader("Ground Hit"))
 	{
 		ImGui::Checkbox("Enable##GroundHit_", &t.playerGroundHit);
@@ -799,9 +758,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	//------------------------------------
-	// ■ Boss Hit
-	//------------------------------------
+	//ボスヒット
 	if (ImGui::CollapsingHeader("Boss Hit"))
 	{
 		ImGui::Checkbox("Enable##BossHit_", &t.bossHit);
@@ -812,9 +769,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	//------------------------------------
-	// ■ Flying
-	//------------------------------------
+	//プレイヤーの攻撃で飛ばす
 	if (ImGui::CollapsingHeader("Player Attack Flying"))
 	{
 		ImGui::Checkbox("Enable##Flying_", &t.playerAttackFlying);
@@ -827,9 +782,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	//------------------------------------
-	// ■ Rush Hit
-	//------------------------------------
+	//突進でひるむ判定
 	if (ImGui::CollapsingHeader("Boss Rush Hit"))
 	{
 		ImGui::Checkbox("Enable##RushHit_", &t.bossRushHit);
@@ -840,9 +793,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	//------------------------------------
-	// ■ Blast
-	//------------------------------------
+	//爆発するか
 	if (ImGui::CollapsingHeader("Blast"))
 	{
 		ImGui::Checkbox("Enable##Blast_", &t.blastCan);
@@ -863,9 +814,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	//------------------------------------
-	// ■ Random
-	//------------------------------------
+	//ランダムで着地するか
 	if (ImGui::CollapsingHeader("Random"))
 	{
 		ImGui::Checkbox("Height##Random_", &t.randomHeight);
@@ -883,9 +832,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	//------------------------------------
-	// ■ Prediction
-	//------------------------------------
+	//予測円
 	if (ImGui::CollapsingHeader("Prediction"))
 	{
 		ImGui::Checkbox("Enable##Prediction_", &t.predictionCicleCan);
@@ -896,9 +843,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		}
 	}
 
-	//------------------------------------
-	// ■ Throw
-	//------------------------------------
+	//腕投げ
 	if (ImGui::CollapsingHeader("Throw"))
 	{
 		ImGui::Checkbox("ArmThrow##Throw_", &t.armThrow);
@@ -922,9 +867,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 		ImGui::DragFloat3("Velocity##Throw_", &t.thorwVelocity.x, 0.1f);
 	}
 
-	//------------------------------------
-	// ■ Fall
-	//------------------------------------
+	//落ちる
 	if (ImGui::CollapsingHeader("Fall"))
 	{
 		ImGui::Checkbox("Enable##Fall_", &t.throwToFall);
@@ -939,10 +882,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 			ImGui::DragFloat3("StartPos##Fall_", &t.thorwStartPos.x, 0.1f);
 		}
 	}
-
-	//------------------------------------
-	// ■ Other
-	//------------------------------------
+	//その他項目
 	if (ImGui::CollapsingHeader("Other"))
 	{
 		ImGui::Checkbox("GroundDelete##Other_", &t.groundDelete);
@@ -953,9 +893,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 
 void BossAttackDataSerializer::CopyParam(std::string _selectID)
 {
-	//========================
-	// ■ コピー機能
-	//========================
+	// コピー機能
 	auto& param = attackParam[_selectID];
 
 	ImGui::Separator();
@@ -981,6 +919,7 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 
 	if (ImGui::Button("Copy ALL"))
 	{
+		//変えてはいけないユニークなデータは変えない
 		src.attackID = param.attackID;
 		src.animID = param.animID;
 		src.animNum = param.animNum;
@@ -1013,9 +952,7 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 		param.useFlash = src.useFlash;
 		param.attackFlashStartTime = src.attackFlashStartTime;
 	}
-	//========================
-	// ■ イベント単位コピー
-	//========================
+	//イベント単位コピー
 	ImGui::Separator();
 	ImGui::Text("Event Copy");
 
@@ -1067,9 +1004,7 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 	//========================
 	if (ImGui::Button("Copy Selected Events"))
 	{
-		//------------------------
-		// Move
-		//------------------------
+		//移動
 		if (copyMove)
 		{
 			param.frontMove = src.frontMove;
@@ -1079,9 +1014,7 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 			param.addVelocity = src.addVelocity;
 		}
 
-		//------------------------
-		// Follow
-		//------------------------
+		//追いかけ
 		if (copyFollow)
 		{
 			param.playerAloowMove = src.playerAloowMove;
@@ -1096,9 +1029,7 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 			param.moveFinishTime = src.moveFinishTime;
 		}
 
-		//------------------------
-		// Rush
-		//------------------------
+		//突進
 		if (copyRush)
 		{
 			param.rushMove = src.rushMove;
@@ -1110,18 +1041,14 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 			param.rushSoundLeftFoot = src.rushSoundLeftFoot;
 		}
 
-		//------------------------
-		// Rotate
-		//------------------------
+		//回転
 		if (copyRotate)
 		{
 			param.rotateMove = src.rotateMove;
 			param.angleMoveAmout = src.angleMoveAmout;
 		}
 
-		//------------------------
-		// Jump
-		//------------------------
+		//ジャンプ
 		if (copyJump)
 		{
 			param.jump = src.jump;
@@ -1133,9 +1060,7 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 			param.groundShakeTime = src.groundShakeTime;
 		}
 
-		//------------------------
-		// ShockWave
-		//------------------------
+		//衝撃波
 		if (copyShock)
 		{
 			param.shockWave = src.shockWave;
@@ -1143,9 +1068,7 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 			param.startRange = src.startRange;
 		}
 
-		//------------------------
-		// Throw
-		//------------------------
+		//投擲
 		if (copyThrow)
 		{
 			param.throwObject = src.throwObject;
@@ -1159,18 +1082,14 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 			param.minIntervalTime = src.minIntervalTime;
 		}
 
-		//------------------------
-		// Camera
-		//------------------------
+		//カメラ
 		if (copyCamera)
 		{
 			param.attackCameraBossLook = src.attackCameraBossLook;
 			param.cameraChangeSpeed = src.cameraChangeSpeed;
 		}
 
-		//------------------------
-		// Trail
-		//------------------------
+		//トレイル
 		if (copyTrail)
 		{
 			param.useTrail = src.useTrail;
@@ -1202,18 +1121,14 @@ void BossAttackDataSerializer::DrawDountColliderInfo(const char* label, BossAtta
 }
 void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData)
 {
-	//------------------------------------
-	// ■ 状態保持
-	//------------------------------------
+	//状態保持
 	static int selectIndex = -1;
 
 	static BossRockManager::BossThrowObjectData editData;
 	static std::string editKey = "";
 	static bool isEditing = false;
 
-	//------------------------------------
-	// ■ keys更新（必要な時だけ）
-	//------------------------------------
+	//keys更新（必要な時だけ）
 	if (throwKeyReset)
 	{
 		throwObjectKeys.clear();
@@ -1224,9 +1139,7 @@ void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRoc
 		throwKeyReset = false;
 	}
 
-	//------------------------------------
-	// ■ Combo
-	//------------------------------------
+	//Combo
 	if (!throwObjectKeys.empty())
 	{
 		std::vector<const char*> items;
@@ -1244,9 +1157,7 @@ void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRoc
 		ImGui::Text("No Data");
 	}
 
-	//------------------------------------
-	// ■ 追加
-	//------------------------------------
+	//追加
 	static char newID[128] = "";
 	ImGui::InputText("New ID", newID, sizeof(newID));
 	ImGui::Checkbox("Effect", &isEffect);
@@ -1272,9 +1183,7 @@ void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRoc
 		}
 	}
 
-	//------------------------------------
-	// ■ 編集
-	//------------------------------------
+	//編集
 	if (!isEditing) return;
 
 	auto& t = editData;
@@ -1282,9 +1191,7 @@ void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRoc
 	ImGui::Separator();
 	ImGui::Text("Edit : %s", editKey.c_str());
 
-	//------------------------------------
-	// ■ ID変更
-	//------------------------------------
+	//ID変更
 	char idBuf[128];
 	strcpy_s(idBuf, t.id.c_str());
 
@@ -1304,20 +1211,14 @@ void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRoc
 
 	ImGui::DragInt("ModelData", &t.modelData, 1);
 
-	//------------------------------------
-	// ■ Transform
-	//------------------------------------
+	//Transform
 	DrawTransform("ModelTransform", t.modelTransform);
 	DrawTransform("PushTransform", t.pushTransform);
 
-	//------------------------------------
-	// ■ その他
-	//------------------------------------
+	//その他
 	ImGui::Checkbox("IsEffect", &t.isEffect);
 
-	//------------------------------------
-	// ■ Save
-	//------------------------------------
+	//セーブ
 	if (ImGui::Button("Save"))
 	{
 		// キー変更対応
@@ -1342,9 +1243,7 @@ void BossAttackDataSerializer::DrawAddThrowObjects(std::map<std::string, BossRoc
 
 	ImGui::SameLine();
 
-	//------------------------------------
-	// ■ Cancel
-	//------------------------------------
+	//Cancel
 	if (ImGui::Button("Cancel"))
 	{
 		isEditing = false;

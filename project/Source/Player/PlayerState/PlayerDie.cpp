@@ -23,6 +23,7 @@ PlayerDie::~PlayerDie()
 void PlayerDie::Update()
 {
 	Player* p = GetBase<Player>();
+	//モーションが死んだらプレイヤー負けStateにする
 	if (p->playerCom.anim->IsFinish()) {
 		p->playerCom.stateManager->SetNoStateChange(false);
 		p->playerCom.gameManager->ChangeState(GameControler::GameState::LOSE);
@@ -51,11 +52,11 @@ void PlayerDie::Start()
 	PlayerStateBase::Start();
 	Time::ChangeDeltaRate(0.1f);
 	slowTime	= 0.5f;
-	p->playerCom.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
-	p->playerCom.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f);
+	p->playerCom.camera->CameraShake(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f/*指定があるまでshake*/);
+	p->playerCom.shaker->ShakeStart(VOne * 10.0f, Shaker::MIX_SHAKE, false, -1.0f/*指定があるまでshake*/);
 	//one			= true;
 	p->obj->Component()->RemoveAllComponent<SphereCollider>();
-	SoundManager::GetInstance()->FeedInOut(Sound_ID::PLAY_BGM, 1.0f);
+	SoundManager::GetInstance()->FeedInOut(Sound_ID::PLAY_BGM, 1.0f/*フェードイン時間*/);
 }
 
 void PlayerDie::Finish()

@@ -7,8 +7,8 @@ public:
 
 	struct AABBInfo
 	{
-		VECTOR3 boxMin;
-		VECTOR3 boxMax;
+		VECTOR3 boxMin; //左上の座標
+		VECTOR3 boxMax; //右下の座標
 		AABBInfo() {
 			boxMin = VZero;
 			boxMax = VZero;
@@ -34,7 +34,10 @@ public:
 	void SetUpAABBCollsion(const CollsionInfo& _info, const VECTOR3& _boxMin, const VECTOR3& _boxMax, std::string _tag);
 	void SetUpAABBCollsion(const CollsionInfo& _info,const VECTOR3& _boxMin, const VECTOR3& _boxMax);
 	
-
+	/// <summary>
+	/// 当たり判定の情報の付与
+	/// </summary>
+	/// <returns></returns>
 	const AABBInfo& GetAABBInfo() { return aabbInfo; }
 
 private:

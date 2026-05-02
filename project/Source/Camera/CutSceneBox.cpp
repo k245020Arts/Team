@@ -1,5 +1,6 @@
 #include "CutSceneBox.h"
 #include "../Screen.h"
+#include "../Component/Color/Color.h"
 
 CutSceneBox::CutSceneBox()
 {
@@ -58,7 +59,7 @@ void CutSceneBox::StartBox(float _time, int _color, std::function<int(int, int, 
 	}
 	feedCountMax = _time;
 	feedTime = _time;
-	alpha = 255;
+	alpha = OPAQUE_COLOR;
 	//color = _color;
 	easingFunc = _func;
 	feadIn = true;
@@ -72,7 +73,7 @@ void CutSceneBox::FinishBox(float _time, int _color, std::function<int(int, int,
 	}
 	feedCountMax = _time;
 	feedTime = _time;
-	alpha = 255;
+	alpha = OPAQUE_COLOR;
 	//color = _color;
 	easingFunc = _func;
 	feadIn = false;

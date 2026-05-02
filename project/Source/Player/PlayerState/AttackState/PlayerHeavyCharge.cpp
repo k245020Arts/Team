@@ -49,13 +49,16 @@ void PlayerHeavyCharge::Update()
 			p->playerCom.shaker->SetShakePower(VECTOR3(20, 20, 20));
 			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(150, -1);
 			
+			//オーラエフェクトが切れたらまた再生
 			if (!EffectManager::GetInstance()->IsPlayIng(Effect_ID::PLAYER_CHARGE_FINAL)) {
 				EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FINAL, 1.0f);
 			}
 			baseFrequ = 90000;
+			//チャージの音がなっていないならまた再生
 			if (!SoundManager::GetInstance()->CheckSe(Sound_ID::PLAYER_MAX_CHARGE)) {
 				SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_MAX_CHARGE, 0, baseFrequ);
 			}
+			//最大溜めになった瞬間エフェクトとSeを出す
 			if (!maxCharge) {
 				maxCharge = true;
 				SoundManager::GetInstance()->PlaySe(Sound_ID::PLAYER_CHARGE_END);
@@ -70,6 +73,7 @@ void PlayerHeavyCharge::Update()
 				EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_SECOND, 1.0f);
 			}
 			baseFrequ = 80000;
+			//
 			if (!SoundManager::GetInstance()->CheckSe(Sound_ID::PLAYER_CHARGE)) {
 				SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_CHARGE, 0, baseFrequ);
 			}
@@ -79,6 +83,7 @@ void PlayerHeavyCharge::Update()
 	else {
 		chargeFinish = true;
 	}
+	//チャージの状態が終わったら
 	if (chargeFinish) {
 		p->HeavyAttackChangeParam(p->attackLevel);
 		p->playerCom.stateManager->ChangeState(playerAttackData.specialAttackNextID);

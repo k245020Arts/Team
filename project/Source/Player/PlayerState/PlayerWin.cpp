@@ -28,7 +28,7 @@ void PlayerWin::Update()
 	else {
 		player->playerCom.anim->SetPlaySpeed(1.0f);
 	}
-	if (player->playerCom.camera->GetCutNum() == 7) {
+	if (player->playerCom.camera->GetCutNum() == 7) { //7ƒJƒbƒg–Ú‚ÅWin‚Ì•¶Žš‚Ì•`‰æ
 		player->playerCom.gameManager->ResultUiStart(true);
 	}
 }

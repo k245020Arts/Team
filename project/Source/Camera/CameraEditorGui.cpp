@@ -29,9 +29,8 @@ void CameraEditorGui::EditorWindow()
 {
     ImGui::Begin("CutScene Editor");
 
-    //=============================
+
     //File & Slot Info
-    //=============================
     ImGui::Text("=== CutScene File ===");
     ImGui::InputText("File Name", cutSceneFileName, IM_ARRAYSIZE(cutSceneFileName));
 
@@ -67,6 +66,7 @@ void CameraEditorGui::EditorWindow()
     }
 
     ImGui::Separator();
+    //カメラのTransformの描画と調整
     if (ImGui::TreeNode("Camera Transform"))
     {
         ImGui::DragFloat3("Position", &camera->cameraComponent.cameraTransform->position.x, 1.0f);
@@ -75,6 +75,7 @@ void CameraEditorGui::EditorWindow()
     }
     ImGui::Separator();
  
+    //追従するポジションの制御
     if (ImGui::TreeNode("Follow Position"))
     {
         ImGui::DragFloat3("Base Position", &basePosition.x, 1.0f);
@@ -111,6 +112,7 @@ void CameraEditorGui::EditorWindow()
     }
 
     ImGui::Separator();
+    //注視点の制御
     if (ImGui::TreeNode("Target"))
     {
         ImGui::DragFloat3("Base Target", &baseTarget.x, 1.0f);
@@ -145,6 +147,7 @@ void CameraEditorGui::EditorWindow()
     }
 
     ImGui::Separator();
+    //カットシーンのパラメーターの調整
     if (ImGui::TreeNode("CutScene Parameters"))
     {
         ImGui::Text("Start Pos : %.1f , %.1f , %.1f", cutScene.camera.startPos.x, cutScene.camera.startPos.y, cutScene.camera.startPos.z);
@@ -170,13 +173,15 @@ void CameraEditorGui::EditorWindow()
         }
 
         ImGui::Separator();
-
+        //秒数の制御
         ImGui::DragFloat("Duration", &cutScene.duration, 0.1f, 0.0f, 5.0f);
 
         ImGui::TreePop();
     }
     ImGui::Separator();
+    //Easingの制御
     if (ImGui::TreeNode("Easing")) {
+        
         const char* easingItems[] = {
                         "Linear",
                         "EaseIn",
@@ -186,6 +191,7 @@ void CameraEditorGui::EditorWindow()
 
         int easing = static_cast<int>(cutScene.ease);
 
+        //コンボにて表示
         ImGui::Combo("Easing", &easing, easingItems, IM_ARRAYSIZE(easingItems));
 
         cutScene.ease = static_cast<CutSceneSpece::EaseType>(easing);
@@ -193,7 +199,7 @@ void CameraEditorGui::EditorWindow()
         ImGui::TreePop();
     }
 
-
+    //カットシーン中ならポジションを動かす
     if (!camera->IsCutScene())
     {
         camera->cameraComponent.cameraTransform->position = basePosition + offset;
@@ -202,7 +208,7 @@ void CameraEditorGui::EditorWindow()
 
     ImGui::Separator();
 
-  
+    //データのセーブの制御
     if (ImGui::Button("Save")) {
         if (usingCutScene) {
             ImGui::OpenPopup("Save Confirm");
@@ -214,6 +220,7 @@ void CameraEditorGui::EditorWindow()
 
     ImGui::SameLine();
 
+    //プレビュー機能の制御
     if (ImGui::Button("Preview")) {
         std::string file = cutSceneFileName;
         camera->CutSceneChangeState(file,false);
@@ -239,14 +246,14 @@ void CameraEditorGui::SavePopUp(bool _using)
 	if (ImGui::BeginPopupModal("Save Confirm", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::Text("CutScene %d save？", cutNum);
-		
+		//カットシーン情報が入っていたら本当にセーブをしても良いかどうかの判定
 		if (_using) {
 			ImGui::Spacing();
 			ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "usingCutScene!!!!");
 		}
 
 		ImGui::Separator();
-
+        //YESを押したらセーブ
 		if (ImGui::Button("Yes", ImVec2(120, 0))) {
 
 			DataSave();
@@ -254,7 +261,7 @@ void CameraEditorGui::SavePopUp(bool _using)
 		}
 
 		ImGui::SameLine();
-
+        //Noを押したらセーブしない
 		if (ImGui::Button("No", ImVec2(120, 0))) {
 			ImGui::CloseCurrentPopup();
 		}
@@ -272,6 +279,7 @@ void CameraEditorGui::DataSave()
 
 	nlohmann::json& root = json.Data();
 
+    //cutScenesがなければ追加
 	if (!root.contains("cutScenes")) {
 		root["cutScenes"] = nlohmann::json::object();
 	}
@@ -291,6 +299,7 @@ void CameraEditorGui::LoadCutScene()
 
     nlohmann::json& root = json.Data();
 
+    //cutScenesがなければデータの挿入はしない
     if (!root.contains("cutScenes"))
     {
         isLoaded = false;
@@ -305,7 +314,7 @@ void CameraEditorGui::LoadCutScene()
         return;
     }
 
-    // === JSON → CutScene 構造体 ===
+    //jsonからCutScene構造体への代入
     cutScene = root["cutScenes"][key].get<CutSceneSpece::CutScene>();
 
     currentLoadedCut = cutNum;

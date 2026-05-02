@@ -23,10 +23,9 @@ void JustAvoidAttackHitCamera::Update()
 	//カメラを回転させている
 	if (timer >= 0.0f) {
 		float t = 1.0f - timer / MAX_TIMER;
-		//VECTOR3 easedT = Easing::EaseOut(c->cameraComponent.enemy.transform->position, c->cameraComponent.player.transform->position, t);
 		c->cameraComponent.cameraTransform->rotation.y = Easing::EaseInOut(firstRotation, firstRotation + CHANGE_ROTATION_Y * DegToRad, t);
+		//ジャスト回避の時にカメラを近づける処理
 		c->currentDistance	= Easing::Sin90Cube(VECTOR3(0.0f,0.0f,-500.0f) , VECTOR3(0.0f, 0.0f, -3000.0f), t);
-		//targetPos = easedT;
 		timer				-= Time::DeltaTimeRate();
 		targetPos			= c->cameraComponent.player.transform->position;
 	}

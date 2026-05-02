@@ -51,29 +51,30 @@ void PlayerAttack5::Update()
 			p->playerCom.player->DrawTrail();
 		}
 		attackAgainStartCounter -= Time::DeltaTimeRate();
-		if (attackAgainStartCounter <= 0.0f) {
+		if (attackAgainStartCounter <= 0.0f) { //V‚µ‚­“–‚½‚è”»’è‚Ì¶¬‚ªo—ˆ‚é‚æ‚¤‚É‚È‚é‚È‚ç
 			attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
 			AgainAttackCollsion();
 		}
 		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
+
 	}
 
 	if (!noStateChange) {
-		EnemyRotation();
+		EnemyRotation(); //“G‚Ì•ûŒü‚ÉŒü‚­
 		if (InputManager::GetInstance()->KeyInputDown("avoid")) {
 			//p->playerCom.player->AvoidReady();
-			avoidReady = true;
+			avoidReady = true; //‰ñ”ðó‘Ô‚ÉˆÚs
 			//noStateChange = true;
 		}
 		if (InputManager::GetInstance()->KeyInputDown("attack")) {
-			nextAttack = true;
+			nextAttack = true; //ŽŸ‚ÌUŒ‚ó‘Ô‚ÉˆÚs
 		}
 		timer -= Time::DeltaTimeRate();
 		if (p->playerCom.physics->GetGravity().y <= -30000.0f) {
 
 		}
 		else {
-			p->playerCom.physics->AddGravity(VECTOR3(0, -1500, 0));
+			p->playerCom.physics->AddGravity(VECTOR3(0, -1500, 0)); //d—Í‚Ì‰ÁŽZ
 		}
 		//if (p->playerCom.anim->GetCurrentFrame() >= p->playerCom.anim->EventStartTime(animId) - 3.0f) {
 
@@ -84,24 +85,12 @@ void PlayerAttack5::Update()
 				p->playerCom.anim->SetPlaySpeed(2.0f);
 			}
 			beforeAttack = false;
-			//p->playerCom.physics->SetVelocity(VZero);
-			//p->playerCom.anim->SetPlaySpeed(1.0f);
 		}
 		else {
 			if (!beforeAttack) {
 				//p->playerCom.anim->SetFrame(p->playerCom.anim->EventStartTime(animId));
 				//firstColl = true;
 			}
-			/*if (p->playerCom.physics->GetGround()) {
-				if (beforeAttack) {
-					p->playerCom.anim->SetPlaySpeed(1.5f);
-				}
-				else {
-					runTimer = 0.4f;
-					noStateChange = true;
-					p->playerCom.anim->SetPlaySpeed(ATTACK_FINISH_ANIM_SPEED);
-				}
-			}*/
 		}
 		if (p->playerCom.physics->GetGround()) {
 			if (avoidReady) {
@@ -128,9 +117,7 @@ void PlayerAttack5::Start()
 	Player* p = GetBase<Player>();
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
-	/*if (distSize <= ATTACK_MOVE_DIST) {
-		p->playerCom.physics->SetVelocity(norm * distSize * 2.0f);
-	}*/
+	
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.physics->AddGravity(VECTOR3(0, 0, 0));
 	p->playerCom.physics->SetGravity(VZero);

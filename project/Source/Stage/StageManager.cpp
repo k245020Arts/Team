@@ -66,6 +66,7 @@ void StageManager::CreateStage()
 	
 	
 	MeshRenderer* mesh = stage->Component()->AddComponent<MeshRenderer>();
+	//ステージのデータを外部データから取得
 	std::string mapName = stageModelData[StageSelectData::GetInstance()->GetNowStageData().stageModelID].mapFile;
 	ResourceLoad::LoadModel(mapName, ID::PLAY_SCENE_BACKGROUND_MODEL);
 	mesh->ModelHandle(ResourceLoad::GetHandle(ID::PLAY_SCENE_BACKGROUND_MODEL));
@@ -114,17 +115,18 @@ void StageManager::CreateWall()
 		}
 		Object3D* obj = new Object3D();
 		obj->Init(transform, "WALL" + std::to_string(i));
-		/*MeshRenderer* mesh = obj->Component()->AddComponent<MeshRenderer>();
-		mesh->ModelHandle(Load::GetHandle(ID::WALL));
-		mesh->DrawLocalPosition();*/
+		
+
 		Wall* wall = obj->Component()->AddComponent<Wall>();
 		wall->ModelSet(ResourceLoad::GetHandle(ID::WALL));
 		ModelCollider* c = obj->Component()->AddComponent<ModelCollider>();
+		//壁の当たり判定のセット
 		CollsionInfo info;
 		info.oneColl = false;
 		info.parentTransfrom = obj->GetTransform();
 		info.shape = CollsionInformation::MODEL;
 		info.tag = CollsionInformation::WALL;
+		//本来の壁とは違うモデルの仕様
 		c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(ResourceLoad::GetHandle(ID::WALL)));
 		stage->AddChild(obj,false);
 	}
@@ -143,14 +145,19 @@ void StageManager::CreateFloor()
 {
 	
 	//for (int i = 0; i < 4; i++) {
+	const VECTOR3 POSITION = VECTOR3(0.0f, -1000.0f, 0.0f);
+	const VECTOR3 SCALE = VECTOR3(500.0f, 10.0f, 500.0f);
 	Transform transform;
-	transform = Transform(VECTOR3(0.0f, -1000.0f, 0.0f), VZero, VOne * VECTOR3(500.0f, 10.0f, 500.0f));
+	transform = Transform(POSITION, VZero, SCALE);
 
 	Object3D* obj = new Object3D();
 	obj->Init(transform, "FLOOR");
 	/*MeshRenderer* mesh = obj->Component()->AddComponent<MeshRenderer>();
 	mesh->ModelHandle(Load::GetHandle(ID::WALL));
 	mesh->DrawLocalPosition();*/
+
+	//プレイヤーのための設置判定
+
 	ModelCollider* c = obj->Component()->AddComponent<ModelCollider>();
 	CollsionInfo info;
 	info.oneColl = false;
@@ -161,6 +168,7 @@ void StageManager::CreateFloor()
 	stage->AddChild(obj, false);
 	//}
 	
+	//予測円のための接地面の判定
 	AABBCollider* aabb = obj->Component()->AddComponent<AABBCollider>();
 	info.shape = CollsionInformation::AABB;
 	info.tag = CollsionInformation::FLOOR_AABB;

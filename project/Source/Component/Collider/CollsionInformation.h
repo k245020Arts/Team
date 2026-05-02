@@ -142,3 +142,26 @@ public:
 private:
 	std::vector<PushInfo> pushes;
 };
+
+struct CollsionEventData
+{
+	VECTOR3 targetPosition; //相手の座標
+	CollsionInformation::Tag targetTag; //相手の当たり判定のタグ
+	CollsionInformation::Shape targetShape; //相手の当たり判定の形
+	std::vector<PushInfo> pushes; //当たり判定の押し返し情報
+	CollsionInformation::Tag myTag; //自分の当たり判定のタグ
+	CollsionInformation::Shape myShape; //自分の当たり判定の形
+	VECTOR3 myPosition; //自分の当たったポジション
+
+	VECTOR3 hitPos; //当たった座標
+	
+	CollsionEventData() {
+		targetPosition = VZero;
+		targetTag = CollsionInformation::TAG_MAX;
+		pushes.clear();
+		myTag = CollsionInformation::TAG_MAX;
+		myShape = CollsionInformation::SHAPE_MAX;
+		myPosition = VZero;
+		hitPos = VZero;
+	}
+};

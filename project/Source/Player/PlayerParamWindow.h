@@ -8,6 +8,9 @@ public:
 	PlayerParamWindow(Player* _player);
 	~PlayerParamWindow();
 
+	/// <summary>
+	/// パラメータのWindowを表示する関数
+	/// </summary>
 	void PlayerParamWindowView();
 	
 

@@ -246,12 +246,31 @@ public:
 	/// </summary>
 	void AttackRockHit();
 
+	/// <summary>
+	/// ジャスト回避当たり判定が当たった処理
+	/// </summary>
+	/// <param name="_obj"></param>
+	/// <param name="_tag"></param>
 	void JustAvoidCollsionHit(BaseObject* _obj,CollsionInformation::Tag _tag);
 
+	/// <summary>
+	/// リアクションの取得
+	/// </summary>
+	/// <returns></returns>
 	std::unordered_map<StateID::State_ID, PlayerInformation::PlayerReaction>& GetReactionMap();
+	/// <summary>
+	/// プレイヤーの攻撃のデータを取得
+	/// </summary>
+	/// <returns></returns>
 	std::unordered_map<StateID::State_ID, PlayerAttackStateBase::PlayerAttackData>& GetAllAttackData();
 
+	/// <summary>
+	/// 攻撃のパラメータのリロード
+	/// </summary>
 	void ParamReLoad();
+	/// <summary>
+	/// 攻撃のリアクションのパラメータのリロード
+	/// </summary>
 	void ReactionReLoad();
 
 private:

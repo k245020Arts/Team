@@ -20,10 +20,11 @@ void BossIdol::Update()
 	Boss* b = GetBase<Boss>();
 
 	VECTOR3 targetVec = b->bossTransform->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
-
+	//ˆê’è‹——£‚Ü‚Å‹ß‚Ã‚¢‚½‚çƒAƒEƒg
 	if (targetVec.Size() < b->bs->GetStatus().chaseRange)
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
 	timer -= Time::DeltaTimeRate();
+	//ˆê’èˆÈã~‚Ü‚Á‚½‚çUŒ‚‚É“ü‚é
 	if (timer <= 0.0f) {
 		b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 	}

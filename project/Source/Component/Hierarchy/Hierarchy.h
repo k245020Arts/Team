@@ -55,9 +55,9 @@ private:
 	//Transform* transform;
 	std::string name;
 	Color* color;
-	std::list<BaseObject*> list;
+	std::list<BaseObject*> debugOutPutObjectList;
 
-	bool debug;
+	bool windowMode;
 	FadeTransitor* fade;
 	int selectId;
 	BaseObject* selectObj;

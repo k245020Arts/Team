@@ -30,7 +30,10 @@ public:
 	///<summary>キーボード用　指定したキーを押して離した1Fのみ間trueを返す</summary>
 	/// <param name="_keyCode">キーの種類</param>
 	bool GetIsKeyboardRelease(int _keyCode);
-
+	/// <summary>
+	/// ImguiのInput系でinputされているかどうか
+	/// </summary>
+	/// <returns>通常入力が出来るならtrue</returns>
 	bool IsInputCan();
 
 private:

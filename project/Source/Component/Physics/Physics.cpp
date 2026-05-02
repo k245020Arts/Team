@@ -91,7 +91,7 @@ void Physics::Draw()
 {
 
 #ifdef _DEBUG
-
+	//進んでる距離をラインに起こす
 	VECTOR3 pos = obj->GetTransform()->position;
 	DrawLine3D(pos, pos + (velocity * obj->GetObjectTimeRate()), 0xff0000);
 
@@ -112,6 +112,7 @@ void Physics::Start(const VECTOR3& _gravityAmout, const VECTOR3& _fir)
 void Physics::AddVelocity(const VECTOR3& _addVelocity, bool _deltaTime)
 {
 	VECTOR3 add = _addVelocity;
+	//毎フレーム加算をしたいならここをTrueにする
 	if (_deltaTime) {
 		add *= obj->GetObjectTimeRate();
 	}

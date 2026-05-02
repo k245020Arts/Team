@@ -78,6 +78,7 @@ void PlayerAttackStateBase::Update()
 		if (runTimer <= 0.0f) {
 			if (nextAttack) {
 				if (normal) {
+					//次の攻撃状態が記録されているなら派生攻撃へと移行、弱攻撃状態
 					if (playerAttackData.normalAttackNextID != StateID::STATE_MAX) {
 						p->playerCom.stateManager->ChangeState(playerAttackData.normalAttackNextID);
 					}
@@ -86,6 +87,7 @@ void PlayerAttackStateBase::Update()
 					}
 				}
 				else {
+					//次の攻撃状態が記録されているなら派生攻撃へと移行、強攻撃状態
 					if (playerAttackData.specialAttackNextID != StateID::STATE_MAX) {
 						p->playerCom.stateManager->ChangeState(playerAttackData.specialAttackNextID);
 					}
@@ -98,12 +100,6 @@ void PlayerAttackStateBase::Update()
 			}
 			
 			else {
-				/*if (id == ID::P_ANIM_JUST_AVOID_ATTACK5) {
-					p->playerCom.player->AvoidFinishState();
-				}
-				else {
-					p->playerCom.player->AvoidFinishState();
-				}*/
 				p->playerCom.player->AvoidFinishState();
 			}
 			
@@ -145,25 +141,15 @@ void PlayerAttackStateBase::Start()
 		p->attackTargetTrans				= nearEnemyPos;
 		//p->attackTargetTrans.position = VECTOR3(0, 0, 1) * p->playerTransform->rotation;
 	}
-	/*if (!p->playerCom.enemyManager->CameraInEnemy()) {
-		p->playerCom.camera->AttackEnemyFovChange(&p->attackTargetTrans,1000.0f);
-	}*/
 	
-	//AgainTimerSet(100.0f, 0);
 	//敵とプレイヤーの距離をとる
 	dist				= p->attackTargetTrans.position - p->playerCom.player->GetPlayerTransform()->position;
 	
 	VECTOR3 frontVector = VECTOR3(0.0f, 0.0f, 1.0f) * MGetRotY(p->playerTransform->rotation.y);
 	rockOn = false;
 	beforeAngle			= p->playerCom.player->GetPlayerTransform()->rotation.y;
-	//if (VDot(dist, frontVector) >= 60.0f * DegToRad) {
-	//	//角度計算
-	//	angle			= atan2f(dist.x, dist.z);
-	//	rockOn			= true;
-	//}
-	//else {
-	//	angle			= beforeAngle;
-	//}
+
+	//角度計算
 	angle = atan2f(dist.x, dist.z);
 	rockOn			= true;
 	
@@ -174,15 +160,11 @@ void PlayerAttackStateBase::Start()
 	SoundManager::GetInstance()->RandamSe("P_AttackV", 3);
 	beforeAttack		= true;
 	runTimer			= 0.0f;
-	/*attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
-	attackCount = playerAttackData.attackNum;*/
 	attackCount = playerAttackData.attackNum;
 	attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
 	runTimer = -1.0f;
 	normal = false;
 	special = false;
-	//collsionCreate = false;
-	//AgainTimerSet(playerAttackData.attackAgainStartCounterMax, playerAttackData.attackNum);
 }
 
 void PlayerAttackStateBase::Finish()
@@ -209,27 +191,21 @@ bool PlayerAttackStateBase::IsAttack()
 void PlayerAttackStateBase::AttackMoveStart()
 {
 	Player* p = GetBase<Player>();
-	//if (dist.Size() >= 5000) {
-		//距離が遠いともともとの角度ぶん攻撃の移動処理をいれる
-		//rotation = false;;
-		//p->playerCom.physics->SetVelocity(VECTOR3(0, 0, frontSpeed) * MGetRotY(beforeAngle));
-	//}
-	//else {
-		//近いと敵の方向に向かって攻撃の移動処理をいれる
-		rotation = true;
-		p->playerCom.physics->SetVelocity(playerAttackData.attackMove * MGetRotY(angle));
-	//}
+	//近いと敵の方向に向かって攻撃の移動処理をいれる
+	rotation = true;
+	p->playerCom.physics->SetVelocity(playerAttackData.attackMove * MGetRotY(angle));
 }
 
 void PlayerAttackStateBase::AttackCommonUpdate()
 {
 	if (noStateChange) {
-		return;
+		return; //ステートがチェンジするならリターン
 	}
 	//collsionCreate = false;
 	Player* p = GetBase<Player>();
 	float frame = p->playerCom.anim->GetCurrentFrame();
 	if (InputManager::GetInstance()->KeyInputDown("attack")) {
+		//アニメーション一定フレーム以降なら
 		if (playerAttackData.attackInputStartTime <= frame) {
 			nextAttack = true;
 			normal = true;
@@ -237,6 +213,7 @@ void PlayerAttackStateBase::AttackCommonUpdate()
 		}
 	}
 	if (InputManager::GetInstance()->KeyInputDown("heavyAttack")) {
+		//アニメーション一定フレーム以降なら
 		if (playerAttackData.attackInputStartTime <= frame) {
 			nextAttack = true;
 			special = true;
@@ -256,11 +233,10 @@ void PlayerAttackStateBase::AttackCommonUpdate()
 			p->playerCom.player->DrawTrail();
 		}
 		attackAgainStartCounter -= Time::DeltaTimeRate();
-		if (attackAgainStartCounter <= 0.0f) {
+		if (attackAgainStartCounter <= 0.0f) { //複数当たり判定が入っているなら
 			attackAgainStartCounter = playerAttackData.attackAgainStartCounterMax;
 			AgainAttackCollsion();
 		}
-		/*p->playerCom.blur->MosionStart(0.04f, 0.1f, animId, 1);;*/
 	}
 
 	EnemyRotation();
@@ -305,42 +281,22 @@ void PlayerAttackStateBase::AgainAttackCollsion()
 	Player* p = GetBase<Player>();
 
 	if (attackCount <= 0) {
-		return;
+		return; //攻撃の回数が0なら返す
 	}
 
 	firstColl = true;
 	attackCount--;
 
-	/*if (attackCount % 2 == 0) {
-		p->playerCom.anim->Play(animId, 0.01f);
-		p->playerCom.anim->SetPlaySpeed(2.5f);
-	}
-	else {
-		p->playerCom.anim->Play(ID::P_ANIM_ATTACK3, 0.01f);
-		p->playerCom.anim->SetPlaySpeed(2.0f);
-	}
-	nextAttack = false;
-	p->playerCom.sound->RandamSe("P_AttackV", 4);
-	p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA);*/
+	
 	Debug::DebugLog("collsionCreate");
 	p->DeleteCollision(&p->attackColl);
 	firstColl = false;
 	BaseAttackCollsion();
-	/*p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("p_attack");
-
-	ColliderBase* collider = p->obj->Component()->AddComponent<SphereCollider>();
-	CollsionInfo info;
-
-	info.parentTransfrom = obj->GetTransform();
-	info.oneColl = true;
-	info.shape = CollsionInformation::SPHERE;
-	info.tag = CollsionInformation::Tag::P_ATTACK;
-	info.size = 1.0f;
-	collider->CollsionAdd(info, collTrans, "p_attack");*/
 }
 
 void PlayerAttackStateBase::AgainTimerSet(float _time, int _attackNum)
 {
+	//複数タイムのセット
 	playerAttackData.attackNum = _attackNum;
 	attackCount = playerAttackData.attackNum;
 	attackAgainStartCounter = _time;
@@ -367,7 +323,7 @@ void PlayerAttackStateBase::SpecialAttackStart()
 {
 	Player* p = GetBase<Player>();
 	if (InputManager::GetInstance()->KeyInputDown("SpecialAttack")) {
-		if (p->CanSpecialAttack()) {
+		if (p->CanSpecialAttack()) { //スペシャルゲージがたまっているなら
 			p->playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
 			p->specialAttackBar = 0.0f;
 		}

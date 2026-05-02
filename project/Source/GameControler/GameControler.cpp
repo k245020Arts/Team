@@ -32,6 +32,7 @@ GameControler::GameControler()
 	//winImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
 	//loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
 
+	//結果のUIのセッティング
 	Object2D* result = new Object2D();
 	result->Init(Transform(VECTOR3(980.0f, 149.0f, 0.00), VZero, VOne), "resultUi");
 	result->SetDraw(false);
@@ -49,7 +50,6 @@ GameControler::GameControler()
 #endif // STRING_MODE
 	
 	changeState = true;
-	obj = nullptr;
 	
 }
 

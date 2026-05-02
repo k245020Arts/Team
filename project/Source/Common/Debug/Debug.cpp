@@ -165,7 +165,9 @@ void Debug::UpdateLogger()
 		ImGui::EndChild();
 		ImGui::TreePop();
 	}
-	if (logger.size() >= 1000) {
+	const int LOG_MAX = 1000;
+	//ƒƒO‚Ì’~Ï‚ªÅ‘å‚æ‚è‚½‚Ü‚Á‚½‚çAæ“ª‚©‚çíœ‚·‚é
+	if (logger.size() >= LOG_MAX) {
 		logger.pop_front();
 	}
 	

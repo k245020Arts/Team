@@ -149,12 +149,12 @@ public:
 
 private:
 	
-	std::list<BaseObject*> enemy;
+	std::list<BaseObject*> enemy;//敵のObjectのリスト
 	Object3D* player;
-	std::list<EnemyBase*> chara;
+	std::list<EnemyBase*> chara; //EnemyBaseコンポーネントのリスト
 	BaseObject* cameraTargetObj;
 	//std::list<Boss> bossList;
-	GameControler* gameManager;
+	GameControler* gameContorler;
 	void GameSceneChangeState();
 
 	

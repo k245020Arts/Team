@@ -72,8 +72,17 @@ PlayerSpecialAttack::PlayerSpecialAttack()
 
 PlayerSpecialAttack::~PlayerSpecialAttack()
 {
-	DeleteGraph(playerHandle);
-	DeleteGraph(boxHandle);
+	if (playerHandle >= 0) {
+		DeleteGraph(playerHandle);
+		playerHandle = -1;
+	}
+
+	if (boxHandle >= 0) {
+		DeleteGraph(boxHandle);
+		boxHandle = -1;
+	}
+	
+	
 }
 
 void PlayerSpecialAttack::Update()
@@ -105,22 +114,13 @@ void PlayerSpecialAttack::Draw()
 {
 	Player* p = GetBase<Player>();
 	//DrawSphere3D(p->specialAttackCenterPos, 10, 1, 0xffffff, 0xffffff, true);
-	float alpha = p->playerCom.meshRenderer2D->GetAlpha();
-	float add = alpha;
-	if (add >= 60.0f) {
-		add = 60.0f;
+	int alpha = p->playerCom.meshRenderer2D->GetAlpha();
+	int add = alpha;
+	if (add >= 60) {
+		add = 60;
 	}
-
-	/*SetDrawBlendMode(DX_BLENDMODE_ADD, add);
-	SetDrawBright(200, 130, 0);
-	double rate = 7.0;
-	for (int i = 0; i < 8; i++) {
-		rate += 0.15f;
-		DrawRotaGraph((int)Screen::WIDTH / 2, (int)Screen::HEIGHT / 2, rate, 0.0, boxHandle, true);
-	}
-	SetDrawBright(255, 255, 255);*/
 	
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	//DrawRotaGraph(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, zoomRate, 0.0f * DegToRad, playerHandle, true);
 	DrawRectRotaGraph((int)Screen::WIDTH / 2, (int)Screen::HEIGHT / 2, 0, (int)zoomSize / 2, (int)Screen::WIDTH, (int)(200.0f - zoomSize), (double)zoomRate, 0.0 * DegToRad, playerHandle, true);
 	
@@ -140,7 +140,9 @@ void PlayerSpecialAttack::Start()
 	const int ROTATION_CHANGE_LOOP = 8;
 	int max = 0;
 	float finalAngle = p->playerTransform->rotation.y;
-	//プレイヤーの視野に何人いるかを360に分けて判定、一番群れがいる角度に向かって必殺技を打つ
+
+	//------------------プレイヤーの視野に何人いるかを360に分けて判定、一番群れがいる角度に向かって必殺技を打つ---------
+
 	for (int i = 0; i < ROTATION_CHANGE_LOOP; i++) {
 		int n = p->playerCom.enemyManager->PlayerFovEnemyNum(obj->GetTransform(), 45.0f);
 		if (max <= n) {
@@ -159,6 +161,8 @@ void PlayerSpecialAttack::Start()
 
 	defalutRotation = p->playerTransform->rotation;
 
+	//-----------------------------------------------------------------------------------------------------------
+
 	state = BEFORE;
 	collsionCreate = true;
 	p->playerCom.anim->SetPlaySpeed(1.0f);
@@ -166,24 +170,6 @@ void PlayerSpecialAttack::Start()
 	waitCounter = -1.0f;
 	chargeCounter = -1.0f;
 	p->noDamage = true;
-
-	//int makeHandle = MakeScreen(Screen::WIDTH, 200, TRUE);
-
-	/*SetDrawScreen(makeHandle);
-
-	DrawBoxAA(0, 0, Screen::WIDTH, 200, 0xffffff, true);
-
-	SetDrawScreen(DX_SCREEN_BACK);
-
-	boxHandle = MakeScreen(Screen::WIDTH, Screen::HEIGHT, TRUE);
-
-	SetDrawScreen(boxHandle);
-
-	DrawRectRotaGraph(Screen::WIDTH / 2.0f, Screen::HEIGHT / 2.0f, 0, 0, Screen::WIDTH, Screen::HEIGHT, 1.5f, 30.0f * DegToRad, makeHandle, true);
-
-	SetDrawScreen(DX_SCREEN_BACK);
-
-	DeleteGraph(makeHandle);*/
 
 	p->playerCom.meshRenderer2D->FeedInDraw(0.5f);
 	
@@ -309,7 +295,6 @@ void PlayerSpecialAttack::BeforeUpdate()
 			beforeWaitCounter -= Time::DeltaTimeRate();
 			if (beforeWaitCounter <= 0.0f) { //攻撃の開始
 				state = GROUND_ATTACK;
-				//p->playerTransform->position = keepPos;
 				p->specialAttackStartPos = p->playerTransform->position;
 				VECTOR3 forward = p->playerTransform->Forward();
 				p->specialAttackCenterPos = p->specialAttackStartPos + forward * radius;
@@ -317,12 +302,8 @@ void PlayerSpecialAttack::BeforeUpdate()
 				moveNum = 20;
 				moveStart = true;
 				p->playerCom.camera->CutSceneChangeState("PlayerSpecialAttack", false);
-				//p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_SPECIAL_ATTACK_CAMERA_S);
-				//p->playerTransform->rotation.z += 90.0f * DegToRad;
 				p->playerCom.meshRenderer2D->FeedOutDraw(0.5f);
 				p->playerCom.camera->SleepTargetSet(CutSceneSpece::ALL_ENEMY, false);
-				//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 4.0f), nullptr, Effect_ID::PLAYER_SPECIAL_PLACE, 1.8f);
-			//p->playerCom.effect->CreateEffekseer(Transform(p->specialAttackCenterPos, VZero, VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_SLASH, 1.8f);
 			}
 		}
 	}
@@ -511,12 +492,9 @@ void PlayerSpecialAttack::FinalAttackUpdate()
 	VECTOR3 forward = p->playerTransform->Forward();
 	p->playerCom.physics->AddVelocity(forward * 15000.0f, true);
 	if (distance > radius) { //半径より外側に出たら、攻撃後の余韻に以降
-		//ColliderBase* collider = p->obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("special");
-		//p->playerTransform->position = forward * (radius);
 		waitCounter = 10.0f;
 		p->playerCom.physics->SetVelocity(VZero);
 		EffectManager::GetInstance()->CreateEffekseer(Transform(p->specialAttackCenterPos + VECTOR3(0.0f,150.0f,0.0f), VECTOR3(0.0f, 0.0f, 180.0f * DegToRad), VOne * 8.0f), nullptr, Effect_ID::PLAYER_SPECIAL_FINAL, 1.5f);
-		//p->playerCom.effect->SetSpeedEffekseer(Effect_ID::PLAYER_SPECIAL_FINAL, 1.0f);
 		attackDamage = true;
 		SoundManager::GetInstance()->PlaySe(Sound_ID::PLAYER_SPECIAL_ATTACK_BOM);
 	}

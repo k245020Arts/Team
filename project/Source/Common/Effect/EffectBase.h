@@ -21,12 +21,12 @@ public:
 	/// エフェクトの準備をするクラス
 	/// EffectManagerで自動で呼ばれるので手動で呼ぶ必要はない
 	/// </summary>
-	/// <param name="_transform"></param>
-	/// <param name="_parent"></param>
-	/// <param name="_id"></param>
-	/// <param name="_time"></param>
-	/// <param name="effect3D"></param>
-	void EffectInit(Transform _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D = true);
+	/// <param name="_transform">EffectのTransform</param>
+	/// <param name="_parent">親子関係をするか</param>
+	/// <param name="_id">エフェクトのID</param>
+	/// <param name="_time">エフェクトのトータル再生時間</param>
+	/// <param name="effect3D">エフェクトを3Dで再生するか</param>
+	void EffectInit(const Transform& _transform, BaseObject* _parent, Effect_ID::EFFECT_ID _id, float _time, bool effect3D = true);
 
 	/// <summary>
 	/// エフェクトを再生させる2Dと3Dで関数を分けている
@@ -66,7 +66,9 @@ public:
 	/// <param name="_rgb">RGBの構造体</param>
 	void SetColor3D(Color::Rgb _rgb);
 	void SetColor(Color::Rgb _rgb);
-
+	/// <summary>
+	/// 親子関係は継続しつつ親子関係のTransformを外したいときに使う関数
+	/// </summary>
 	void ParentTransformRemove();
 
 private:

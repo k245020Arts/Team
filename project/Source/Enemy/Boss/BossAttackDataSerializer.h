@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "BossState/Attack/BossAttackBase.h"
+#include "BossState/Attack/BossAttackJsonParse.h"
 #include "../../Component/Animator/Animator.h"
 #include "../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
 
