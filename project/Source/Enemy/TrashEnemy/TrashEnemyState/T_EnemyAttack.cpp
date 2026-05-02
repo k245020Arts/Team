@@ -32,17 +32,17 @@ T_EnemyAttack::~T_EnemyAttack()
 
 void T_EnemyAttack::Update()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
-	e->LookTarget(e->enemyBaseComponent.playerObj->GetTransform()->position);
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	enemy->LookTarget(enemy->enemyBaseComponent.playerObj->GetTransform()->position);
 	
-	if (e->isCooperateAtk)
+	if (enemy->isCooperateAtk)
 		return;
 
 	counter++;
 	if (counter >= 5 && counter <= 10)
 	{
-		e->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
-		e->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-e->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
+		enemy->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
+		enemy->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 	}
 
 	const float M_FRAME_SPEED = mMaxFrame * 0.5f;
@@ -50,9 +50,9 @@ void T_EnemyAttack::Update()
 	if (mSpeed > 0 && isDecel)
 		mSpeed = Easing::EaseOut(mMaxFrame, 0.0f, M_FRAME_SPEED);
 
-	e->enemyBaseComponent.anim->SetPlaySpeed(mSpeed);
+	enemy->enemyBaseComponent.anim->SetPlaySpeed(mSpeed);
 	
-	AttackInformation(e);
+	AttackInformation(enemy);
 }
 
 void T_EnemyAttack::Draw()
@@ -61,14 +61,12 @@ void T_EnemyAttack::Draw()
 
 void T_EnemyAttack::Start()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
 	
 	firstColl = true;
-	//e->enemyBaseComponent.anim->SetFrame(5.0f);
-	attackParam.hitDamage = e->eStatus->GetStatus().normalAttack1;
+	attackParam.hitDamage = enemy->eStatus->GetStatus().normalAttack1;
 	counter = 0;
-	//e->isAttack = false;
-	mMaxFrame = e->enemyBaseComponent.anim->GetMaxFrame();
+	mMaxFrame = enemy->enemyBaseComponent.anim->GetMaxFrame();
 	isDecel = true;
 
 	EnemyStateBase::Start();
@@ -76,9 +74,9 @@ void T_EnemyAttack::Start()
 
 void T_EnemyAttack::Finish()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
-	e->isAttack = false;
-	e->DeleteCollision(&e->attackColl);
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	enemy->isAttack = false;
+	enemy->DeleteCollision(&enemy->attackColl);
 }
 
 void T_EnemyAttack::AttackInformation(TrashEnemy* _e)

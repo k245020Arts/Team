@@ -216,8 +216,6 @@ TrashEnemy::TrashEnemy()
 	isStandby = false;
 	isCooperateAtk = false;
 
-	//isEnemyFollow = false;
-
 	cooperateWayPoint = VZero;
 
 	isMovingToPlayer = false;
@@ -267,10 +265,6 @@ void TrashEnemy::Update()
 void TrashEnemy::Draw()
 {
 	EnemyBase::Draw();
-	/*if (isAttack)
-		enemyBaseComponent.color->setRGB(Color::Rgb(255.0f, 0.0f, 0.0f, 255.0f));
-	else
-		enemyBaseComponent.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));*/
 }
 
 void TrashEnemy::Start(Object3D* _obj)
@@ -314,9 +308,7 @@ void TrashEnemy::Start(Object3D* _obj)
 
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::E_MODEL, -1);
-	chara->SetImage(ResourceLoad::GetHandle(ID::SWORD_EFFECT_B));
-	
-	//active = true;
+	chara->SetImage(ResourceLoad::GetHandle(ID::SWORD_EFFECT_B));	
 }
 
 void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds, int _number)
@@ -358,13 +350,6 @@ void TrashEnemy::SetEnemyType(EnemyType type)
 {
 	enemyType = type;
 }
-
-//void TrashEnemy::ReadyCooperteAtk2(VECTOR3 _pos)
-//{
-//	//isStandby = true;
-//	cooperateWayPoint = _pos;
-//	enemyBaseComponent.state->ChangeState(StateID::COOPERATEATTACK2);
-//}
 
 void TrashEnemy::SetLeaderPos(VECTOR3 _pos)
 {
@@ -507,11 +492,9 @@ void TrashEnemy::PlayerHit()
 			}
 			if (lastAttack)
 			{
-				//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 3500.0f), VECTOR3(100, 100, 100), 0.5f, 1.2f);
 				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(250, 60);
 				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE * 14.5f), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
-				//angleRan = GetRand(360);
 				EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				hit = true;
 			}
@@ -527,7 +510,6 @@ void TrashEnemy::PlayerHit()
 			}
 			else
 			{
-				//enemyBaseComponent.state->NowChangeState(ID::E_DAMAGE);
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(20, 20, 20), 0.2f, 0.02f);
 				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(450, 20);
 				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
@@ -605,29 +587,6 @@ void TrashEnemy::CooperateAtkFinish()
 	isMovingToPlayer = false;
 	
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_IDOL_S);
-}
-
-void TrashEnemy::Move(float _speed, float _max)
-{
-	//VECTOR3 pos = GetBaseObject()->GetTransform()->position;
-
-	//// ターゲット座標へ向かうベクトル
-	//VECTOR3 dir = VECTOR3(targetPos - pos).Normalize();
-	//dir.y = 0;
-
-	//// スピードをかける
-	//VECTOR3 velocity = dir * _speed;
-
-	//enemyBaseComponent.physics->AddVelocity(velocity, false);
-
-	//VECTOR3 moveVelo = enemyBaseComponent.physics->GetVelocity() * VECTOR3(1, 0, 1);
-
-	//// 最大速度制限
-	//if (moveVelo.SquareSize() >= _max * _max) {
-	//	moveVelo = moveVelo.Normalize() * _max;
-	//	moveVelo.y = enemyBaseComponent.physics->GetVelocity().y;
-	//	enemyBaseComponent.physics->SetVelocity(moveVelo);
-	//}
 }
 
 void TrashEnemy::AddPos(VECTOR3 _pos)

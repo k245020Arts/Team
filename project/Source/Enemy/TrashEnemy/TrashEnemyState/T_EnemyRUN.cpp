@@ -20,70 +20,68 @@ T_EnemyRun::~T_EnemyRun()
 
 void T_EnemyRun::Update()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	if (e->IsPlayerSpecialMove())
+	if (enemy->IsPlayerSpecialMove())
 	{
-		e->enemyBaseComponent.anim->SetPlaySpeed(0);
+		enemy->enemyBaseComponent.anim->SetPlaySpeed(0);
 		return;
 	}
 	else
-		e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
+		enemy->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
-	if (!e->isCooperateAtk )
-		targetPos = e->targetPoint;
-	else if(e->isMovingToPlayer)
-		e->enemyBaseComponent.playerObj->GetTransform()->position;
+	if (!enemy->isCooperateAtk )
+		targetPos = enemy->targetPoint;
+	else if(enemy->isMovingToPlayer)
+		enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	rotation = e->obj->GetTransform()->rotation;
-	e->LookTarget(targetPos);
+	rotation = enemy->obj->GetTransform()->rotation;
+	enemy->LookTarget(targetPos);
 
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
 
-	e->GetEnemyObj()->GetTransform()->position.x += e->eStatus->GetStatus().runSpeed * cosf(ROTY);
-	e->GetEnemyObj()->GetTransform()->position.z += e->eStatus->GetStatus().runSpeed * sinf(ROTY);
+	enemy->GetEnemyObj()->GetTransform()->position.x += enemy->eStatus->GetStatus().runSpeed * cosf(ROTY);
+	enemy->GetEnemyObj()->GetTransform()->position.z += enemy->eStatus->GetStatus().runSpeed * sinf(ROTY);
 
-	VECTOR3 targetVec = targetPos - e->obj->GetTransform()->position;
+	VECTOR3 targetVec = targetPos - enemy->obj->GetTransform()->position;
 	
-	if (targetVec.Size() <= e->eStatus->GetStatus().atkRang)
+	if (targetVec.Size() <= enemy->eStatus->GetStatus().atkRang)
 	{
-		if (!e->IsMovingToPlayer())
-			e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+		if (!enemy->IsMovingToPlayer())
+			enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
 		else 
-			e->enemyBaseComponent.state->ChangeState(e->GetNextCooperateID());
+			enemy->enemyBaseComponent.state->ChangeState(enemy->GetNextCooperateID());
 	}
 }
 
 void T_EnemyRun::Start()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	if (e->enemyType == e->EnemyType::MELEE)
+	if (enemy->enemyType == enemy->EnemyType::MELEE)
 	{
-		if (!e->isCooperateAtk /*|| e->isMovingToPlayer*/)
-			targetPos = e->targetPoint;
-		else if (e->isMovingToPlayer)
-			targetPos = e->enemyBaseComponent.playerObj->GetTransform()->position;
+		if (!enemy->isCooperateAtk)
+			targetPos = enemy->targetPoint;
+		else if (enemy->isMovingToPlayer)
+			targetPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 		else
-			targetPos = e->cooperateWayPoint;
+			targetPos = enemy->cooperateWayPoint;
 	}
 	else
 	{
-		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_WAITSEE);
+		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_WAITSEE);
 	}
 
-	motionSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
+	motionSpeed = enemy->enemyBaseComponent.anim->GetPlaySpeed();
 
-	e->isRunState = true;
+	enemy->isRunState = true;
 
 	EnemyStateBase::Start();
 }
 
 void T_EnemyRun::Finish()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
-	/*if (!e->isCooperateAtk)
-		e->isAttack = true;*/
-
-	e->isRunState = false;
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	
+	enemy->isRunState = false;
 }

@@ -23,28 +23,28 @@ T_EnemyDead::~T_EnemyDead()
 
 void T_EnemyDead::Update()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	if (e->IsPlayerSpecialMove())
+	if (enemy->IsPlayerSpecialMove())
 	{
-		e->enemyBaseComponent.anim->SetPlaySpeed(0);
+		enemy->enemyBaseComponent.anim->SetPlaySpeed(0);
 		return;
 	}
 	else
-		e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
+		enemy->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
-	KnockbackMove(e, e->deadPreset);
+	KnockbackMove(enemy, enemy->deadPreset);
 
-	if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
+	if (enemy->enemyBaseComponent.anim->IsFinish() && enemy->GetEnemyObj()->GetTransform()->position.y <= 0)
 	{
 		fadeCounter -= Time::DeltaTimeRate();
 		float reet = fadeCounter / FADE_SPEED;
 		float alph = Easing::EaseIn(0.0f, 255.0f, reet);
 
 		float color = 255.0f;
-		e->enemyBaseComponent.color->setRGB(Color::Rgb(255, 255, 255, alph));
+		enemy->enemyBaseComponent.color->setRGB(Color::Rgb(255, 255, 255, alph));
 		if (fadeCounter <= 0)
-			e->active = false;
+			enemy->active = false;
 	}
 }
 
@@ -54,20 +54,20 @@ void T_EnemyDead::Draw()
 
 void T_EnemyDead::Start()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	e->enemyBaseComponent.anim->SetPlaySpeed(0.8f);
-	if (!e->IsPlayerSpecialMove())
+	enemy->enemyBaseComponent.anim->SetPlaySpeed(0.8f);
+	if (!enemy->IsPlayerSpecialMove())
 	{
 		obj->Component()->RemoveAllComponent<SphereCollider>();
 		obj->Component()->RemoveAllComponent<ModelCollider>();
 	}
 	
-	motionSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
+	motionSpeed = enemy->enemyBaseComponent.anim->GetPlaySpeed();
 	counter = 0;
-	FindGameObject<EnemyManager>()->RemoveList(e, obj);
+	FindGameObject<EnemyManager>()->RemoveList(enemy, obj);
 
-	enemyPosY = e->GetPos().y;
+	enemyPosY = enemy->GetPos().y;
 
 	EnemyStateBase::Start();
 }

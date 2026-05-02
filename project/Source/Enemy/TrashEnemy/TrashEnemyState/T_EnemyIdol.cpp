@@ -47,13 +47,13 @@ void T_EnemyIdol::Finish()
 
 void T_EnemyIdol::NormalMove()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	if (e->GetPos().y >= 30)
+	if (enemy->GetPos().y >= 30)
 		return;
 
-	VECTOR3 targetVec = e->obj->GetTransform()->position - e->enemyBaseComponent.playerObj->GetTransform()->position;
+	VECTOR3 targetVec = enemy->obj->GetTransform()->position - enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 	detectionRange += Time::DeltaTimeRate() * RANGESPEED;
-	if (targetVec.Size() < e->eStatus->GetStatus().chaseRange + detectionRange || e->GetEnemyType()!=e->EnemyType::MELEE)
-		e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
+	if (targetVec.Size() < enemy->eStatus->GetStatus().chaseRange + detectionRange || enemy->GetEnemyType()!=enemy->EnemyType::MELEE)
+		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 }

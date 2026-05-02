@@ -1,7 +1,7 @@
 #pragma once
 #include "T_EnemyDamage.h"
 
-class T_EnemyDead :public T_EnemyDamage/*EnemyStateBase*/
+class T_EnemyDead :public T_EnemyDamage
 {
 public:
 	T_EnemyDead();

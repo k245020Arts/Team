@@ -39,7 +39,7 @@ void T_EnemyWaitSee::Start()
 	{
 	case enemy->EnemyType::RANGED:
 		moveSpeed = NormalMoveSpeed;
-		pointRange = 400 + 200 * Random::GetReal();
+		pointRange = 400.0f + 200.0f * (float)Random::GetReal();
 		break;
 	case enemy->EnemyType::RANGED_LEADER:
 		pointRange = 400;
@@ -60,7 +60,10 @@ void T_EnemyWaitSee::Finish()
 
 void T_EnemyWaitSee::Move(TrashEnemy* _enemy)
 {
-	//float speed = 10.0f;
+	if (_enemy->GetEnemyType() == _enemy->EnemyType::RANGED_LEADER)
+		if (_enemy->GetPos().y > 0.0f)
+			return;
+
 	targetPos = _enemy->TargetPoint();
 	const VECTOR3 enePos = _enemy->GetPos();
 

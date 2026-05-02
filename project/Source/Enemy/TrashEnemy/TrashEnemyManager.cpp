@@ -90,7 +90,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 	//ê∂ê¨Ç∑ÇÈçáåvÇÃìG
 	int max = meleeSpawnCounter + rangedSpawnCounter;
 
-    for (int i = 0; i < max/*meleeSpawnCounter*/; i++)
+    for (int i = 0; i < max; i++)
     {
 		// å¬ï ÇÃenemyÇçÏÇÈ
 		Object3D* e;
@@ -123,18 +123,15 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 
 		Animator* anim = e->Component()->AddComponent<Animator>();
 		anim->BaseModelSet(handle, 1);
-		/*anim->AddFile(ID::TE_IDOL, charaID + typeID + "_IDOL", true, 1.0f);
-		anim->AddFile(ID::TE_RUN, charaID + typeID + "_RUN", true, 1.0f);
-		anim->AddFile(ID::TE_ATTACK, charaID + typeID + "_ATTACK1", false, 0.8f, 20.0f, 30.0f);
-		anim->AddFile(ID::TE_ATTACK2, charaID + typeID + "_ATTACK2", false, 1.0f, 25.0f, 35.0f);
-		anim->AddFile(ID::E_DAMAGE, charaID + typeID + "_DAMAGE", false, 1.0f);
-		anim->AddFile(ID::E_DIE, charaID + typeID + "_DEAD", false, 2.0f);*/
 		ResourceLoad::LoadAnim(charaID + typeID + "_IDOL", ID::TE_IDOL);
 		ResourceLoad::LoadAnim(charaID + typeID + "_RUN", ID::TE_RUN);
 		ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK1", ID::TE_ATTACK);
-		ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK2", ID::TE_ATTACK2);
+		ResourceLoad::LoadAnim(charaID + typeID + "_C_ATTACK1", ID::TE_C_ATTACK);
+		ResourceLoad::LoadAnim(charaID + typeID + "_C_ATTACK2", ID::TE_C_ATTACK2);
+
 		ResourceLoad::LoadAnim(charaID + typeID + "_DAMAGE", ID::E_DAMAGE);
 		ResourceLoad::LoadAnim(charaID + typeID + "_DEAD", ID::E_DIE);
+		ResourceLoad::LoadAnim(charaID + typeID + "_Stance", ID::TE_STANCE);
 
 		anim->AnimDataLoad(charaID, typeID);;
 		
@@ -175,8 +172,6 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 		e->AddChild(guage);
 
 		Guage* g = guage->Component()->AddComponent<Guage>();
-		/*g->EdgeDrawReady(Load::LoadImageGraph(Load::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_BILLBOARD, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
-		g->GuageDrawReady<TrashEnemy>(Load::LoadImageGraph(Load::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_BILLBOARD,Guage::BAR_MODE::HP);*/
 		g->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
 		g->GuageDrawReady<TrashEnemy>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "playerHp", ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::HP);
 		g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
@@ -196,14 +191,19 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
     }
 }
 
-int TrashEnemyManager::GetEnemySize() const
-{
-	return enemyGroup->GetEnemySize();
-}
-
-int TrashEnemyManager::GetActiveEnemy() const
+int TrashEnemyManager::GetActiveEnemy()const
 {
 	return enemyGroup->GetActiveEnemy();
+}
+
+int TrashEnemyManager::GetMeleeActiveEnemy()const
+{
+	return enemyGroup->GetMeleeActiveEnemy();
+}
+
+int TrashEnemyManager::GetRangedActiveEnemy()const
+{
+	return enemyGroup->GetRangedActiveEnemy();
 }
 
 void TrashEnemyManager::ImguiDraw()
@@ -275,31 +275,6 @@ void TrashEnemyManager::PlayerWayPoint()
 	{
 		wayPoint.emplace_back(WayPoint(itr + playerPos, true));
 	}
-
-	//enemyGroup->CloseWayPoint(wayPoint);
-}
-
-bool TrashEnemyManager::StageWall(VECTOR3 _pos)
-{
-	float size = 13000.0f;
-	/*for (auto* itr : stage)*/
-	//{
-		if (/*itr->GetTransform()->position.x*/ size < _pos.x)
-			return true;
-		else if (/*itr->GetTransform()->position.x*/ -size > _pos.x)
-			return true;
-		else if (/*itr->GetTransform()->position.z*/ size < _pos.z)
-			return true;
-		else if (/*itr->GetTransform()->position.z*/ -size > _pos.z)
-			return true;
-		else
-			return false;
-	//}
-}
-
-void TrashEnemyManager::Cooperate2Move()
-{
-
 }
 
 std::vector<VECTOR3> TrashEnemyManager::GetWayPointPosition()
