@@ -48,6 +48,8 @@ EffectManager::EffectManager()
 	ResourceLoad::LoadEffect("BossRockHitRush",				".efkefc",Effect_ID::BOSS_ROCK_HIT_RUSH,		50.0f,true);
 	ResourceLoad::LoadEffect("playerAttackRock",			".efkefc",Effect_ID::PLAYER_ATTACK_ROCK,		50.0f,true);
 
+	ResourceLoad::LoadEffect("enemyCooperateAttack",		".efk",	  Effect_ID::COOPERATEATTACK,			50.0f, true);
+	
 	//-----------------------------------------------------------------------------------------------------------------
 
 	//Effekseer_SetGraphicsDeviceDXLib();

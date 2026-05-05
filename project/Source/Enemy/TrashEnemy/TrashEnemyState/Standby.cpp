@@ -5,6 +5,7 @@
 #include "T_EnemyStatus.h"
 #include "../../../Common/Random.h"
 #include "../../../Camera/Camera.h"
+#include "../../../Common/Effect/EffectManager.h"
 
 Standby::Standby()
 {
@@ -69,6 +70,7 @@ void Standby::Update()
 		else if (counter != 2)
 		{
 			enemy->isStandby = true;
+			EffectManager::GetInstance()->CreateEffekseer(Transform(enemy->GetPos(), VZero, VOne), nullptr, Effect_ID::COOPERATEATTACK, 1.0f);
 			counter = 2;
 		}
 		else
@@ -151,4 +153,5 @@ void Standby::InCameraView()
 		enemy->isAttack = true;
 	else
 		enemy->isAttack = false;
+
 }
