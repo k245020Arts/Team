@@ -14,6 +14,7 @@ public:
 	~TrashEnemyGroup();
 
 	void Update()override;
+	void Draw()override;
 
 	/// <summary>
 	/// 近距離と遠距離の敵を均等に分ける
@@ -74,6 +75,8 @@ private:
 	void CooperateAttackMove(TrashEnemy* _enemy);
 	//近距離の敵のステートを指定したステートに全員変える処理
 	void AllChangeMeleeState(StateID::State_ID _id);
+	//連携時に連携する敵を線でつなげる
+	void CooperateAttackLine();
 	
 	float attackCounter;
 	float maxAttackCounter;
@@ -82,6 +85,7 @@ private:
 	float cooperateCounter;
 
 	int enemiesRunCounter;
+
 	//--------------------------
 
 	//遠距離の敵----------------

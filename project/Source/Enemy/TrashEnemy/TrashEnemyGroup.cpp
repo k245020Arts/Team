@@ -50,6 +50,11 @@ void TrashEnemyGroup::Update()
 		RangedDamageMove();
 }
 
+void TrashEnemyGroup::Draw()
+{
+	CooperateAttackLine();
+}
+
 void TrashEnemyGroup::SettingGroup(TrashEnemy* _enemy, int _index)
 {
 	if (_index % 2 == 0)
@@ -267,6 +272,33 @@ void TrashEnemyGroup::AllChangeMeleeState(StateID::State_ID _id)
 		else
 			itr->CooperateAtkFinish();
 	}
+}
+
+void TrashEnemyGroup::CooperateAttackLine()
+{
+	if (meleeEnemies.size() <= 0)
+		return;
+
+	std::vector<VECTOR3> copyPos;
+	const float PosY = 300.0f;
+
+	for (auto& itr : meleeEnemies)
+	{
+		if (!itr->IsCooperateAtk())
+			return;
+
+		copyPos.push_back(VECTOR3(itr->GetPos().x, PosY, itr->GetPos().z));
+	}
+
+	const float Counter = copyPos.size() - 1;
+
+	for (int i = 0; i < Counter; i++)
+	{
+		//DrawLine3D(copyPos[i], copyPos[i + 1], GetColor(255, 0, 0));
+		DrawCapsule3D(copyPos[i], copyPos[i + 1] , 50, 0, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
+	}
+
+	copyPos.clear();
 }
 
 void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
