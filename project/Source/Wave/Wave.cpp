@@ -49,7 +49,7 @@ bool Wave::GetBossWave()
 
 void Wave::EnemySpawn()
 {
-	if (waveNow > WAVE_MAX)
+	if (waveNow >= WAVE_MAX)
 		return;
 
 	int _counter = tEnemyManager->GetActiveEnemy();

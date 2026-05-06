@@ -105,7 +105,7 @@ namespace ID {
 		TE_STANCE,
 
 		SHADOW,
-		B_DUSH,
+		B_DUSH_ANIM,
 		B_ROAR_ANIM,
 		JUST_AVOID_BLUR,
 		B_THREAT,

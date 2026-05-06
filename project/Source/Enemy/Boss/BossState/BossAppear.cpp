@@ -108,7 +108,7 @@ void BossAppear::Update()
 				b->enemyBaseComponent.physics->SetFirction(BossInformation::BASE_FIRCTION * 2.0f);
 			}
 		}
-		
+		RoarEvent();
 		if (runStop) { //‘–‚èI‚í‚Á‚½‚ç™ôšK
 			if (b->enemyBaseComponent.anim->IsFinish()) {
 				stopCounter -= Time::DeltaTimeRate();
