@@ -373,14 +373,14 @@ void TrashEnemyGroup::RangedEnemyAttack()
 			if (!leaderActiveEnd)
 				return;
 			//リーダーの周りにポイント配置
-			if (pointCounter < MaxPoint && !enemy->GetStandby())
+			if (pointCounter < MaxPoint && !enemy->GetStandby() && !enemy->IsMovingToPlayer())
 			{
 				//均等に割って円形に配置
 				float angle = (2.0f * DX_PI_F) * pointCounter / MaxPoint;
 
 				//回転を反映した方向
 				VECTOR3 rotatedDir = VECTOR3(cosf(angle), 0, sinf(angle));
-				//プレイヤーからの絶対座標
+				//リーダーからの絶対座標
 				VECTOR3 target = leaderPos + rotatedDir * Range;
 				//指定したポイントを渡す
 				enemy->SetCooperateWayPoint(target);
@@ -394,7 +394,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 			{
 				const VECTOR3 enemyPos = enemy->GetPos();
 				//リーダーとの距離で近くなったらの処理
-				const float LeaderVecMax = 1000.0f;
+				const float LeaderVecMax = 1200.0f;
 				if (VSize(leaderPos - enemyPos) <= LeaderVecMax)
 				{
 					rangedDamageMove = true;

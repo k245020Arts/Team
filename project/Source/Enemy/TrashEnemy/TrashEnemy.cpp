@@ -447,7 +447,7 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 	else
 		loopNum = -1;
 
-	if (isMovingToPlayer && enemyType == EnemyType::RANGED)
+	if (/*isMovingToPlayer */isStandby && enemyType == EnemyType::RANGED)
 	{
 		//‰“‹——£‚ÌƒŠ[ƒ_[‚É”ò‚Î‚·ˆ—‚ğì‚é
 		cooperateDamageMove = true;

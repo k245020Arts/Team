@@ -19,7 +19,7 @@ private:
 
 	bool damageMove;
 	float hitStopCounter;
-
+	
 	VECTOR3 pPos;
 
 	bool isDamageMove;

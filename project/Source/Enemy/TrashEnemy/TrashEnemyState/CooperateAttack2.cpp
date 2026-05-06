@@ -4,6 +4,7 @@
 #include "../../../Component/Physics/Physics.h"
 #include "../../../State/StateManager.h"
 #include "../../../Component/Animator/Animator.h"
+#include "../../../Component/Collider/ColliderBase.h"
 
 CooperateAttack2::CooperateAttack2()
 {
@@ -29,6 +30,7 @@ CooperateAttack2::CooperateAttack2()
 	pPos = VZero;
 
 	isDamageMove = true;
+
 }
 
 CooperateAttack2::~CooperateAttack2()
@@ -51,7 +53,11 @@ void CooperateAttack2::Start()
 
 	firstColl = true;
 
+	BossAttackBase::collTrans.position.z = 0.0f;
+	BossAttackBase::collTrans.scale = VECTOR3(100, 0, 0);
+
 	enemy->isMovingToPlayer = true;
+
 	EnemyStateBase::Start();
 }
 
@@ -80,8 +86,10 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	{
 		_enemy->enemyBaseComponent.anim->Play(ID::TE_IDOL);
 		_enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-		isDamageMove = false;
 
+		_enemy->isStandby = false;
+		isDamageMove = false;
+			
 		return;
 	}
 

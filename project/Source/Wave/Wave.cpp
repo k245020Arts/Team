@@ -57,7 +57,7 @@ void Wave::EnemySpawn()
 	{
 		waveNow++;
 
-		if(waveNow != WAVE_MAX)
+		if(waveNow <= WAVE_MAX - 1)
 			tEnemyManager->CreateEnemy(SPWNPOS, spawnData[waveNow - 1].MeleeEnemyCounter, spawnData[waveNow - 1].RangedEnemyCounter);
 		
 		if (waveNow == WAVE_MAX)
