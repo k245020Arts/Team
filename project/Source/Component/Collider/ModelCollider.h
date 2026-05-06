@@ -17,8 +17,8 @@ public:
 	/// <param name="_info">当たり判定の情報</param>
 	/// <param name="_transform">Transformの取得</param>
 	/// <param name="_modelHandle">当たり判定に使用するモデルデーター</param>
-	void ModelColliderSet(const CollsionInfo& _info, const Transform& _transform , int _modelHandle);
-	void ModelColliderSet(const CollsionInfo& _info, const Transform& _transform , int _modelHandle,std::string _tag);
+	void ModelColliderSet(const CollsionInfo& _info, const Transform& _transform , int _modelHandle, std::function<void(const CollsionEventData&)> _funk);
+	void ModelColliderSet(const CollsionInfo& _info, const Transform& _transform , int _modelHandle, std::function<void(const CollsionEventData&)> _funk,std::string _tag);
 
 	/// <summary>
 	/// 現在使われているモデルデータ

@@ -47,6 +47,7 @@ BossAttackBase::BossAttackBase()
 	rushAttackCount = 0.0f;
 	throwObjectAppearTime = 0.0f;
 	throwObjectNumNow = 0;
+	bossPtr = nullptr;
 }
 
 BossAttackBase::~BossAttackBase()
@@ -87,6 +88,7 @@ void BossAttackBase::Update()
 void BossAttackBase::BossStart()
 {
 	Boss* boss		= GetBase<Boss>();
+	bossPtr = boss;
 	boss->threat	= false;
 	//attackParam.flash	= false;
 	//DebugLogText::GetInstance()->Log(LogLevel::INFO, string + "攻撃が開始しました");
@@ -186,7 +188,7 @@ void BossAttackBase::AttackCollsion()
 	if (e->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
 			firstColl = false;
-			e->CollsionStart<SphereCollider>(&e->attackColl, collTrans);
+			e->CollsionStart<SphereCollider>(&e->attackColl, collTrans,e->attackFunk);
 			e->SetShape(CollsionInformation::SPHERE, &e->attackColl);
 		}
 	}
@@ -202,7 +204,7 @@ void BossAttackBase::BossAttackCollsion()
 	if (b->enemyBaseComponent.anim->AnimEventCan()) {
 		if (firstColl) {
 			firstColl = false;
-			b->CollsionStart<SphereCollider>(&b->attackColl, attackParam.attackCollTransform);
+			b->CollsionStart<SphereCollider>(&b->attackColl, attackParam.attackCollTransform,b->attackFunk);
 			b->SetShape(CollsionInformation::SPHERE, &b->attackColl);
 		}
 	}
@@ -304,7 +306,7 @@ void BossAttackBase::BossJustAvoidCollsion()
 	float time = e->enemyBaseComponent.anim->EventStartTime(attackParam.animID);
 	//ジャスト回避判定の作成
 	if (time - attackParam.justAvoidCollsionStartTime <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
-		e->CollsionStart<SphereCollider>(&e->justAvoidColl, attackParam.justAvoidCollTransform);
+		e->CollsionStart<SphereCollider>(&e->justAvoidColl, attackParam.justAvoidCollTransform,e->justAvoidAttackFunk);
 		e->SetShape(CollsionInformation::SPHERE, &e->justAvoidColl);
 		e->justAvoidCollTime = 3.0f;
 	}
@@ -318,7 +320,7 @@ void BossAttackBase::EnemyJustAvoidCollsion()
 	if (time - 6.0f <= e->enemyBaseComponent.anim->GetCurrentFrame() && time >= e->enemyBaseComponent.anim->GetCurrentFrame()) {
 		Transform colTrans = collTrans;
 		colTrans.scale.x += 200.0f; //通常の当たり判定より大きく設定
-		e->CollsionStart<SphereCollider>(&e->justAvoidColl, colTrans);
+		e->CollsionStart<SphereCollider>(&e->justAvoidColl,colTrans,e->justAvoidAttackFunk);
 		e->SetShape(CollsionInformation::SPHERE, &e->justAvoidColl);
 		e->justAvoidCollTime = 3.0f;
 	}
@@ -749,7 +751,9 @@ void BossAttackBase::AttackStart()
 		rockColl = obj->Component()->AddComponent<SphereCollider>();
 		Transform rushColl = attackParam.attackCollTransform;
 		rushColl.scale.x += attackParam.addRushCollScale;
-		rockColl->CollsionAdd(info, rushColl, "Rush");
+		
+		std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) {bossPtr->RockHitRushDamage(_data); };
+		rockColl->CollsionAdd(info, rushColl, func, "Rush");
 	}
 	//連続攻撃をしないなら
 	if (b->maxAttack <= 0) {

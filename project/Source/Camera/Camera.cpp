@@ -267,10 +267,15 @@ void Camera::CollsionPosHit(const VECTOR3& _norm, float _size, const VECTOR3& _g
 	hit			= true;
 }
 
-void Camera::PushCamera(const VECTOR3& _norm, float _size, const VECTOR3& _groundPos)
+void Camera::PushCamera(const CollsionEventData& _data)
 {
+	PushInfo info = _data.pushes[0];
+	VECTOR3 norm = info.normal;
+	float size = info.penetration;
+	VECTOR3 groundPos = info.targetPos;
+
 	float offset	= 5.0f; 
-	float newDist	= max(0, _size - offset);
+	float newDist	= max(0, size - offset);
 	//1‚æ‚èã‚È‚ç1‚É‚·‚é
 	if (counter > 1.0f) {
 		counter = 1.0f;
@@ -281,7 +286,7 @@ void Camera::PushCamera(const VECTOR3& _norm, float _size, const VECTOR3& _groun
 	float rate		= counter / 1.0f;
 	hit				= true;
 
-	cameraComponent.cameraTransform->position = VECTOR3(cameraComponent.cameraTransform->position.x ,_groundPos.y + 280.0f, cameraComponent.cameraTransform->position.z);
+	cameraComponent.cameraTransform->position = VECTOR3(cameraComponent.cameraTransform->position.x ,groundPos.y + 280.0f, cameraComponent.cameraTransform->position.z);
 }
 
 void Camera::AttackEnemyFovChange(Transform* _targetTransform,float _maxspeed)

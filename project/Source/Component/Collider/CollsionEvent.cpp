@@ -8,8 +8,7 @@
 #include "../../Enemy/Boss/Boss.h"
 #include "../../Common/Effect/EffectBase.h"
 #include "../../Camera/Camera.h"
-#include "../EnemyAttackObject/BossRock/BossRock.h"
-#include "../EnemyAttackObject/BossRock/BossThrowRock.h"
+#include "../EnemyAttackObject/BossRock/BossRockBase.h"
 #include "../Physics/Physics.h"
 
 CollsionEvent::CollsionEvent()
@@ -92,7 +91,7 @@ CollsionEvent::CollsionEvent()
 CollsionEvent::~CollsionEvent()
 {
 }
-//#define CollsionEventPtrMode
+#define CollsionEventPtrMode
 
 void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
 {
@@ -106,8 +105,8 @@ void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& 
 	CollsionEventData col1EventData = SetEventData(_coll1,_coll2,resolver,_hitPos);
 	CollsionEventData col2EventData = SetEventData(_coll2,_coll1,resolver,_hitPos);
 
-	std::function<void(CollsionEventData)> eventFunc1 = _coll1->GetEventFunc();
-	std::function<void(CollsionEventData)> eventFunc2 = _coll2->GetEventFunc();
+	std::function<void(const CollsionEventData&)> eventFunc1 = _coll1->GetEventFunc();
+	std::function<void(const CollsionEventData&)> eventFunc2 = _coll2->GetEventFunc();
 
 	if (eventFunc1 != nullptr) {
 		eventFunc1(col1EventData);
@@ -154,7 +153,7 @@ void CollsionEvent::EnemyDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2,
 	if (enemy->GetHit()) {
 		return;
 	}
-	enemy->PlayerHit();
+	//enemy->PlayerHit();
 	player->PlayerAttackHit();
 }
 
@@ -192,7 +191,7 @@ void CollsionEvent::BossDamageEvent(ColliderBase* _coll1, ColliderBase* _coll2, 
 	if (boss->GetHit()) {
 		return;
 	}
-	boss->PlayerHit();
+	//boss->PlayerHit();
 	player->PlayerAttackHit();
 }
 
@@ -200,7 +199,7 @@ void CollsionEvent::CameraPushEvent(ColliderBase* _coll1, ColliderBase* _coll2, 
 {
 	Camera* camera = _coll2->GetBaseObject()->Component()->GetComponent<Camera>();
 	PushInfo info = resolver.GetPushInfo()[0];
-	camera->PushCamera(info.normal, info.penetration, info.targetPos);
+	//camera->PushCamera(info.normal, info.penetration, info.targetPos);
 }
 
 void CollsionEvent::PlayerDamageBossChildEvent(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
@@ -218,7 +217,7 @@ void CollsionEvent::BossRockPrePosition(ColliderBase* _coll1, ColliderBase* _col
 {
 	BossRockBase* rock = _coll1->GetObj()->Component()->GetComponent<BossRockBase>();
 
-	rock->SetPreInfo(_hitPos);
+	//rock->SetPreInfo(_hitPos);
 	
 }
 
@@ -226,7 +225,7 @@ void CollsionEvent::BossRockGround(ColliderBase* _coll1, ColliderBase* _coll2, P
 {
 	BossRockBase* throwRock = _coll2->GetObj()->Component()->GetComponent<BossRockBase>();
 	
-	throwRock->Ground();
+	//throwRock->Ground();
 	
 }
 
@@ -234,9 +233,9 @@ void CollsionEvent::PlayerAttackRock(ColliderBase* _coll1, ColliderBase* _coll2,
 {
 	Player* player = _coll2->GetObj()->Component()->GetComponent<Player>();
 	BossRockBase* throwRock = _coll1->GetObj()->Component()->GetComponent<BossRockBase>();
-	throwRock->PlayerAttackRockFlyAway(*player->GetPlayerTransform());
+	//throwRock->PlayerAttackRockFlyAway(*player->GetPlayerTransform());
 
-	player->AttackRockHit();
+	//player->AttackRockHit();
 }
 
 void CollsionEvent::BossRockDamage(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& resolver, const VECTOR3& _hitPos)
@@ -244,11 +243,11 @@ void CollsionEvent::BossRockDamage(ColliderBase* _coll1, ColliderBase* _coll2, P
 	Boss* boss = _coll1->GetObj()->Component()->GetComponent<Boss>();
 	Physics* physics = _coll2->GetObj()->Component()->GetComponent<Physics>();
 
-	boss->RockHitDamage(physics);
+	//boss->RockHitDamage(physics);
 	
 
 	BossRockBase* throwRock = _coll2->GetObj()->Component()->GetComponent<BossRockBase>();
-	throwRock->RockBossHit();
+	//throwRock->RockBossHit();
 	
 }
 
@@ -256,7 +255,7 @@ void CollsionEvent::BossRockRush(ColliderBase* _coll1, ColliderBase* _coll2, Pus
 {
 	Boss* boss = _coll2->GetObj()->Component()->GetComponent<Boss>();
 
-	boss->RockHitRushDamage();
+	//boss->RockHitRushDamage();
 	BossRockBase* throwRock = _coll1->GetObj()->Component()->GetComponent<BossRockBase>();
 	throwRock->GetBaseObject()->DestroyMe();
 }
@@ -288,7 +287,7 @@ void CollsionEvent::BossRockBlastDamageBoss(ColliderBase* _coll1, ColliderBase* 
 	
 	Physics* physics = _coll2->GetObj()->Component()->GetComponent<Physics>();
 
-	boss->RockHitDamage(physics);
+	//boss->RockHitDamage(physics);
 	throwRock->AddHitObj(boss->GetEnemyObj());
 }
 
@@ -329,16 +328,21 @@ CollsionEventData CollsionEvent::SetEventData(ColliderBase* _myCollObj, Collider
 {
 	CollsionEventData eventData;
 
-	eventData.myPosition = _myCollObj->GetTransform()->position;
+	eventData.myTransform = _myCollObj->GetBaseObject()->GetTransform();
 	eventData.myShape = _myCollObj->GetShape();
 	eventData.myTag = _myCollObj->GetCollTag();
+	eventData.myObject = _myCollObj->GetBaseObject();
+	eventData.myColliderBase = _myCollObj;
 
-	eventData.targetPosition = _targetCollObj->GetTransform()->position;
+	eventData.targetTransform = _targetCollObj->GetBaseObject()->GetTransform();
 	eventData.targetShape = _targetCollObj->GetShape();
 	eventData.targetTag = _targetCollObj->GetCollTag();
+	eventData.targetObject = _targetCollObj->GetBaseObject();
+	eventData.targetColliderBase = _targetCollObj;
 
 	eventData.pushes = _pushInfo.GetPushInfo();
 	eventData.hitPos = _hitPos;
+	
 
 	return eventData;
 }

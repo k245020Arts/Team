@@ -96,5 +96,6 @@ private:
 	bool debugWaypoint;
 
 	bool startRangedAtk;
+	TrashEnemy* trashEnemy;
 
 };

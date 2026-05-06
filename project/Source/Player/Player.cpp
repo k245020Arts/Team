@@ -36,7 +36,7 @@
 #include "../Player/PlayerState/AttackState/PlayerAttack5.h"
 #include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 #include "../Common/ResourceLoader.h"
-//#include "../Enemy/TrashEnemy/Enemy.h"
+#include "../Enemy/TrashEnemy/TrashEnemy.h"
 #include "../Enemy/TrashEnemy/EnemyState/EnemyStateManager.h"
 //#include "../Enemy/TrashEnemy/EnemyState/AttackState/EnemyAttack1.h"
 #include "../Common/Transitor/FadeTransitor.h"
@@ -49,6 +49,7 @@
 #include "../Component/UI/ButtonUI.h"
 #include "PlayerParamWindow.h"
 #include "../Common/Debug/DebugLogText.h"
+#include "../Component/EnemyAttackObject/BossRock/BossRockBase.h"
 
 namespace {
 
@@ -196,6 +197,13 @@ void Player::Update()
 	//playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
 	
 	paramWindow->PlayerParamWindowView();
+
+	std::shared_ptr<PlayerAttackStateBase> pAttack = playerCom.stateManager->GetState<PlayerAttackStateBase>();
+	if (pAttack != nullptr) {
+		if (pAttack->GetCollsionCreate()) {
+			hitObjects.clear();
+		}
+	}
 	
 }
 
@@ -868,6 +876,82 @@ void Player::ReactionReLoad()
 		PlayerInformation::PlayerReaction reaction;
 		j.get_to(reaction);
 		attackEffects[reaction.state] = reaction;
+	}
+}
+
+void Player::CollsionEvent(const CollsionEventData& _data)
+{
+	if (_data.targetTag == CollsionInformation::B_ATTACK) {
+		Boss* b = _data.targetObject->Component()->GetComponent<Boss>();
+		bool damage = EnemyHit(b->GetStateManager()->GetState<EnemyStateBase>()->GetAnimId(), b->GetEnemyObj());
+		if (!damage) {
+			_data.targetColliderBase->CollsionRespown();
+		}
+	}
+	if (_data.targetTag == CollsionInformation::E_ATTACK) {
+		TrashEnemy* e = _data.targetObject->Component()->GetComponent<TrashEnemy>();
+		bool damage = EnemyHit(e->GetStateManager()->GetState<EnemyStateBase>()->GetAnimId(), e->GetEnemyObj());
+		if (!damage) {
+			_data.targetColliderBase->CollsionRespown();
+		}
+	}
+	if (_data.targetTag == CollsionInformation::B_E_ATTACK) {
+		bool damage = EnemyAttackObjectHitIsPlayer(_data.targetObject, _data.targetTag);
+		if (!damage) {
+			_data.targetColliderBase->CollsionRespown();
+		}
+	}
+
+	if (_data.targetTag == CollsionInformation::BOSS_ROCK_ATTACK || 
+	_data.targetTag == CollsionInformation::THROW_OBJECT_GROUND ||
+	_data.targetTag == CollsionInformation::THROW_OBJECT_GROUND_ONE_HIT ||
+	_data.targetTag == CollsionInformation::THROW_OBJECT_GROUND_NO_DAMAGE_REACTION){
+		bool damage = EnemyAttackObjectHitIsPlayer(_data.targetObject, _data.targetTag);
+		if (!damage) {
+			_data.targetColliderBase->CollsionRespown();
+		}
+	}
+
+	if (_data.targetTag == CollsionInformation::ROCK_BLAST_DAMAGE) {
+		BossRockBase* r = _data.targetObject->Component()->GetComponent<BossRockBase>();
+		if (r->HitObjects(_data.targetObject)) {
+			return;
+		}
+		bool damage = EnemyAttackObjectHitIsPlayer(_data.targetObject, _data.targetTag);
+		if (!damage) {
+			_data.targetColliderBase->CollsionRespown();
+		}
+	}
+
+	if (_data.targetTag == CollsionInformation::JUST_AVOID_BOSS ||
+		_data.targetTag == CollsionInformation::JUST_AVOID_ENEMY) {
+		JustAvoidCollsionHit(_data.targetObject, _data.targetTag);
+	}
+
+	if (_data.targetTag == CollsionInformation::JUST_AVOID) {
+		BaseObject* _obj = _data.targetObject;
+
+		if (_obj->GetParent() != nullptr) {
+			_obj = _obj->GetParent();
+		}
+
+		JustAvoidCollsionHit(_obj, _data.targetTag);
+	}
+		
+}
+
+void Player::CollsionAttackEvent(const CollsionEventData& _data)
+{
+	if (IsHitObject(_data.targetObject)) {
+		return;
+	}
+	HitObjectInsert(_data.targetObject);
+	hitObjects;
+	if (_data.targetTag == CollsionInformation::BOSS_ROCK_ATTACK) {
+		AttackRockHit();
+	}
+	else {
+		PlayerAttackHit();
 	}
 }
 

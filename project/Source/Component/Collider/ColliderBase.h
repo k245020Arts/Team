@@ -17,7 +17,7 @@ public:
 	/// </summary>
 	/// <param name="_info">当たり判定の情報</param>
 	/// <param name="transform">当たり判定のTransform</param>
-	void CollsionAdd(const CollsionInfo& _info, const Transform& transform);
+	void CollsionAdd(const CollsionInfo& _info, const Transform& transform, std::function<void(const CollsionEventData&)> _funk);
 	/// <summary>
 	/// 当たり判定の追加をするときに呼び出す
 	/// タグを付けたいときは下のを使いタグを作る
@@ -25,7 +25,7 @@ public:
 	/// <param name="_info">当たり判定の情報</param>
 	/// <param name="transform">当たり判定のTransform</param>
 	/// <param name="tag">当たり判定のタグ</param>
-	void CollsionAdd(const CollsionInfo& _info, const Transform& transform, std::string _tag);
+	void CollsionAdd(const CollsionInfo& _info, const Transform& transform, std::function<void(const CollsionEventData&)> _funk,std::string _tag);
 	
 	/// <summary>
 	/// 当たり判定の形を取得
@@ -69,7 +69,7 @@ public:
 	void CollsionRespown() { finish = false; }
 	BaseObject* GetObj() { return obj; }
 
-	std::function<void(CollsionEventData)> GetEventFunc() { return  collsionEventFunction; }
+	std::function<void(const CollsionEventData&)> GetEventFunc() { return  collsionEventFunction; }
 
 protected:
 	CollsionInformation::Shape shape; //当たり判定の形
@@ -78,6 +78,6 @@ protected:
 	float radius;
 	bool oneColl;
 	bool finish;
-	std::function<void(CollsionEventData)> collsionEventFunction; //当たり判定イベントの関数ポインタ
+	std::function<void(const CollsionEventData&)> collsionEventFunction; //当たり判定イベントの関数ポインタ
 
 };

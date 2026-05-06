@@ -20,6 +20,7 @@ ColliderBase::~ColliderBase()
 	delete collTransform;
 	CollsionManager* coll = FindGameObject<CollsionManager>();
 	coll->RemoveCollList(this);
+	collsionEventFunction = nullptr;
 }
 
 void ColliderBase::Update()
@@ -30,18 +31,19 @@ void ColliderBase::Draw()
 {
 }
 
-void ColliderBase::CollsionAdd(const CollsionInfo& _info, const Transform& transform)
+void ColliderBase::CollsionAdd(const CollsionInfo& _info, const Transform& transform, std::function<void(const CollsionEventData&)> _funk)
 {
-	CollsionAdd(_info, transform, "");
+	CollsionAdd(_info, transform,_funk, "");
 }
 
-void ColliderBase::CollsionAdd(const CollsionInfo& _info, const Transform& transform, std::string _tag)
+void ColliderBase::CollsionAdd(const CollsionInfo& _info, const Transform& transform, std::function<void(const CollsionEventData&)> _funk, std::string _tag)
 {
 	shape = _info.shape;
 	radius = _info.size;
 	oneColl = _info.oneColl;
 	collTag = _info.tag;
 	finish = false;
+	collsionEventFunction = _funk;
 
 	collTransform = new Transform(transform);
 

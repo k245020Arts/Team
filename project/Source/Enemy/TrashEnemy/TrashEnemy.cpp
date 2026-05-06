@@ -241,6 +241,8 @@ TrashEnemy::TrashEnemy()
 	cooperateDamageMove = false;
 
 	deadMove = false;
+	attackFunk = nullptr;
+	justAvoidAttackFunk = nullptr;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -275,6 +277,16 @@ void TrashEnemy::Draw()
 
 void TrashEnemy::Start(Object3D* _obj)
 {
+	SphereCollider* collider = _obj->Component()->AddComponent<SphereCollider>();
+	CollsionInfo info;
+	info.parentTransfrom = _obj->GetTransform();
+	info.shape = CollsionInformation::SPHERE;
+	info.oneColl = false;
+	info.tag = CollsionInformation::Tag::ENEMY;
+	info.size = 1.0f;//
+	std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { PlayerHit(_data); };
+	collider->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)), func);
+
 	enemyBaseComponent.state = obj->Component()->AddComponent<StateManager>();
 	enemyBaseComponent.playerObj = FindGameObjectWithTag<Object3D>("PLAYER");
 	pState = enemyBaseComponent.playerObj->Component()->GetComponent<Player>()->GetPlayerStateManager();
@@ -437,8 +449,12 @@ void TrashEnemy::Trail()
 	chara->CreateSwordEffect(VECTOR3(70, 0, -50), VECTOR3(120, 0, 50), 200.0f, 10.0f, 00.0f, 155.0f, 28, 0.5f);
 }
 
-void TrashEnemy::PlayerHit()
+void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 {
+	Player* player = pState->GetBaseObject()->Component()->GetComponent<Player>();
+	if (player->IsHitObject(_data.myObject)) {
+		return;
+	}
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
 	float damage = 0;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr)

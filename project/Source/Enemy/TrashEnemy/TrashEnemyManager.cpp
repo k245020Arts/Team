@@ -29,6 +29,7 @@ TrashEnemyManager::TrashEnemyManager()
 	player = FindGameObjectWithTag<Object3D>("PLAYER");
 	
 	enemyGroup = new TrashEnemyGroup;
+	trashEnemy = nullptr;
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -97,19 +98,18 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 		e = new Object3D();
 		e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(2.5f, 2.5f, 2.5f), "ENEMY" + std::to_string(i));
 		//当たり判定を生成（やられ判定）
-		SphereCollider* collider = e->Component()->AddComponent<SphereCollider>();
+		trashEnemy = e->Component()->AddComponent<TrashEnemy>();
 		CollsionInfo info;
 		info.parentTransfrom = e->GetTransform();
 		info.shape = CollsionInformation::SPHERE;
 		info.oneColl = false;
 		info.tag = CollsionInformation::Tag::ENEMY;
 		info.size = 1.0f;//
-		collider->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
 		
 		RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
 		info.shape = CollsionInformation::RAY;
 		info.tag = CollsionInformation::E_FLOOR;
-		collider3->RaySet(info, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, 1/*-100*/, 0), VZero, VECTOR3(1.0f, 1, 1)));
+		collider3->RaySet(info, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, 1/*-100*/, 0), VZero, VECTOR3(1.0f, 1, 1)),nullptr);
 
 		Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
@@ -144,8 +144,8 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 		physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));
 
         // 個別のTrashEnemyを追加
-        TrashEnemy* t = e->Component()->AddComponent<TrashEnemy>();
-		t->Start(e);
+       
+		trashEnemy->Start(e);
        
         // 位置を決める
         const int R_MAX = 2000;
@@ -165,7 +165,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 			number = 0;
 
 		//ポジションをセット
-		t->CreateTrashEnemy(_pos + pos, numCounter, number);
+		trashEnemy->CreateTrashEnemy(_pos + pos, numCounter, number);
 		spawnCounter++;
 		//hp表示
 		Object2D* guage = new Object2D();
@@ -185,12 +185,12 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 
 		if (meleeSpawnCounter >= totalCounter)
 		{
-			enemyGroup->SetMeleeEnemy(t);
+			enemyGroup->SetMeleeEnemy(trashEnemy);
 			continue;
 		}
 		else if (max >= totalCounter)
 		{
-			enemyGroup->SetRangedEnemy(t);
+			enemyGroup->SetRangedEnemy(trashEnemy);
 			continue;
 		}
     }

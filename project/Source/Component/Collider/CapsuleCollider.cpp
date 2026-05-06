@@ -48,14 +48,14 @@ void CapsuleCollider::Start()
 {
 }
 
-void CapsuleCollider::CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform, float _sphere, bool _mustMatrix, MATRIX* _matrix)
+void CapsuleCollider::CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform, float _sphere, bool _mustMatrix, MATRIX* _matrix, std::function<void(const CollsionEventData&)> _funk)
 {
-	CapsuleSet(_info, _endTransform, _startTransform,_sphere,_mustMatrix,_matrix, "");
+	CapsuleSet(_info, _endTransform, _startTransform,_sphere,_mustMatrix,_matrix, _funk, "");
 }
 
-void CapsuleCollider::CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform, float _sphere, bool _mustMatrix, MATRIX* _matrix, std::string _tag)
+void CapsuleCollider::CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform, float _sphere, bool _mustMatrix, MATRIX* _matrix, std::function<void(const CollsionEventData&)> _funk, std::string _tag)
 {
-	ColliderBase::CollsionAdd(_info, _startTransform, _tag);
+	ColliderBase::CollsionAdd(_info, _startTransform, _funk, _tag);
 
 	capselEndTransform = new Transform(_endTransform);
 	capselEndTransform->SetParent(_info.parentTransfrom);

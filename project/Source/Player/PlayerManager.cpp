@@ -52,6 +52,7 @@ PlayerManager::PlayerManager()
 	playerPointer = nullptr;
 	gameManager = nullptr;
 	stateManager = nullptr;
+	playerPtr = nullptr;
 }
 
 PlayerManager::~PlayerManager()
@@ -88,6 +89,9 @@ void PlayerManager::CreatePlayer()
 	playerPointer->SetDrawOrder(-5);
 	//playerPointer->Init(VECTOR3(300, 100, 1500), VZero, VECTOR3(3.0f, 3.0f,3.0f), "PLAYER");
 	playerPointer->Init(VECTOR3(300,0, -2000), VZero, VECTOR3(3.0f ,3.0f,3.0f), "PLAYER");
+
+	playerPtr = playerPointer->Component()->AddComponent<Player>();
+
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	ColliderBase* collider = playerPointer->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -96,15 +100,16 @@ void PlayerManager::CreatePlayer()
 	info.oneColl			= false;
 	info.tag				= CollsionInformation::Tag::PLAYER;
 	info.size				= 1.0f;
-	collider->CollsionAdd(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(150.0f, 0, 0)),"playerColl");
+	std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { playerPtr->CollsionEvent(_data); };
+	collider->CollsionAdd(info, Transform(VECTOR3(0, 0, 0), VZero, VECTOR3(150.0f, 0, 0)),func,"playerColl");
 
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	ColliderBase* collider2 = playerPointer->Component()->AddComponent<SphereCollider>();
-	collider2->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(200.0f, 0, 0)),"playerColl");
+	collider2->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(200.0f, 0, 0)), func,"playerColl");
 	RayCollider* collider3	= playerPointer->Component()->AddComponent<RayCollider>();
 	info.shape				= CollsionInformation::RAY;
 	info.tag				= CollsionInformation::P_FLOOR;
-	collider3->RaySet(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10, 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider3->RaySet(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -10, 0), VZero, VECTOR3(1.0f, 1, 1)),nullptr);
 
 	Shaker* shaker		= playerPointer->Component()->AddComponent<Shaker>();
 	
@@ -123,7 +128,7 @@ void PlayerManager::CreatePlayer()
 	me2D->AnimStart(1.0f,10,true);
 	
 	Physics* physics	= playerPointer->Component()->AddComponent<Physics>();
-	Player* player		= playerPointer->Component()->AddComponent<Player>();
+	
 	
 	physics->Start(PlayerInformation::BASE_GRAVITY, PlayerInformation::BASE_INTERIA);
 	/*Camera* camera = playerPointer->Component()->AddComponent<Camera>();
@@ -201,7 +206,7 @@ void PlayerManager::CreatePlayer()
 	/*ComponentLight* componentLoght = playerPointer->Component()->AddComponent<ComponentLight>();
 	componentLoght->SpotLightHandleStart(VECTOR3(0, 0, 0), VECTOR3(0.0f, 0.0f, 0.0f), DX_PI_F, DX_PI_F / 2, 4000, 0.0f, 0.002f, 0.0f);*/
 
-	player->Start(playerPointer);
+	playerPtr->Start(playerPointer);
 
 	//‰e‚Ìì¬
 	Object3D* shadow = new Object3D();
@@ -212,7 +217,7 @@ void PlayerManager::CreatePlayer()
 	RayCollider* collider4 = shadow->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::SHADOW;
-	collider4->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist(), 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider4->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist(), 0), VZero, VECTOR3(1.0f, 1, 1)), nullptr);
 
 	playerPointer->AddChild(shadow);
 
@@ -297,11 +302,11 @@ void PlayerManager::CreateTitlePlayer()
 
 	//‚â‚ç‚ê”»’è‚Ì’Ç‰Á
 	ColliderBase* collider2 = playerPointer->Component()->AddComponent<SphereCollider>();
-	collider2->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(200.0f, 0, 0)), "playerColl");
+	collider2->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(200.0f, 0, 0)), nullptr, "playerColl");
 	RayCollider* collider3 = playerPointer->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::P_FLOOR;
-	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 1.0f, 1.0f)), Transform(VECTOR3(0, -20, 0), VZero, VECTOR3(1.0f, 1.0f, 1.0f)));
+	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 1.0f, 1.0f)), Transform(VECTOR3(0, -20, 0), VZero, VECTOR3(1.0f, 1.0f, 1.0f)), nullptr);
 
 	Shaker* shaker = playerPointer->Component()->AddComponent<Shaker>();
 
@@ -406,7 +411,7 @@ void PlayerManager::CreateTitlePlayer()
 	RayCollider* collider4 = shadow->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::SHADOW;
-	collider4->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist(), 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider4->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist(), 0), VZero, VECTOR3(1.0f, 1, 1)), nullptr);
 
 	playerPointer->AddChild(shadow);
 }

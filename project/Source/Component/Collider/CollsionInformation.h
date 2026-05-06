@@ -4,6 +4,7 @@
 
 class Transform;
 class ColliderBase;
+class BaseObject;
 
 namespace CollsionInformation {
 	//当たり判定の形
@@ -145,23 +146,36 @@ private:
 
 struct CollsionEventData
 {
-	VECTOR3 targetPosition; //相手の座標
-	CollsionInformation::Tag targetTag; //相手の当たり判定のタグ
+	Transform* targetTransform;				//相手のトランスフォーム
+	CollsionInformation::Tag targetTag;		//相手の当たり判定のタグ
 	CollsionInformation::Shape targetShape; //相手の当たり判定の形
-	std::vector<PushInfo> pushes; //当たり判定の押し返し情報
-	CollsionInformation::Tag myTag; //自分の当たり判定のタグ
-	CollsionInformation::Shape myShape; //自分の当たり判定の形
-	VECTOR3 myPosition; //自分の当たったポジション
+	BaseObject* targetObject;				//相手のオブジェクト
+	ColliderBase* targetColliderBase;			//相手のオブジェクト
 
-	VECTOR3 hitPos; //当たった座標
+	std::vector<PushInfo> pushes;			//当たり判定の押し返し情報
+	CollsionInformation::Tag myTag;			//自分の当たり判定のタグ
+	CollsionInformation::Shape myShape;		//自分の当たり判定の形
+	Transform* myTransform;					//自分の当たったトランスフォーム
+	BaseObject* myObject;					//自分のオブジェクト
+	ColliderBase* myColliderBase;				//自分のオブジェクト
+
+	VECTOR3 hitPos;							//当たった座標
+
+
+
 	
 	CollsionEventData() {
-		targetPosition = VZero;
+		targetTransform = nullptr;
 		targetTag = CollsionInformation::TAG_MAX;
+		targetShape = CollsionInformation::SHAPE_MAX;
+		targetColliderBase = nullptr;
 		pushes.clear();
 		myTag = CollsionInformation::TAG_MAX;
 		myShape = CollsionInformation::SHAPE_MAX;
-		myPosition = VZero;
+		myTransform = nullptr;
+		myColliderBase = nullptr;
 		hitPos = VZero;
+		targetObject = nullptr;
+		myObject = nullptr;
 	}
 };

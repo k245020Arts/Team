@@ -50,7 +50,7 @@ public:
 
 	void Trail();
 
-	void PlayerHit()override;
+	void PlayerHit(const CollsionEventData& _data)override;
 
 	//çUåÇñΩóﬂ
 	void AttackCommand();
@@ -119,13 +119,13 @@ public:
 	void ChangeHp(float _damage);
 
 	template<typename T>
-	T* CollsionStart(CollsionSet* _set, const Transform& _trans)
+	T* CollsionStart(CollsionSet* _set, const Transform& _trans, std::function<void(const CollsionEventData&)> _func)
 	{
 		if (_set->instance == nullptr) {
 			CollsionInfo info = CharaBase::CollsionInstant<T>(_set, _trans);
 			info.tag = _set->tag;
 			//collName = _set->collName;
-			_set->instance->CollsionAdd(info, _trans, _set->collName);
+			_set->instance->CollsionAdd(info, _trans,_func, _set->collName);
 		};
 		return static_cast<T*>(_set->instance);
 	}
@@ -185,4 +185,8 @@ private:
 	bool cooperateDamageMove;
 
 	bool deadMove;
+
+	std::function<void(const CollsionEventData&)> attackFunk;
+	std::function<void(const CollsionEventData&)> justAvoidAttackFunk;
+
 };

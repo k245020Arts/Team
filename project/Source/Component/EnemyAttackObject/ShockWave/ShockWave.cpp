@@ -40,11 +40,11 @@ void ShockWave::CreateWave(CollsionInformation::Tag _tag, const Transform& _tran
 	info.tag				= _tag;
 	collider				= obj->Component()->AddComponent<DountCollider>();
 	justAvoidCollider		= obj->Component()->AddComponent<DountCollider>();
-	collider->DountSet(info, _transform, _startOutRange);
+	collider->DountSet(info, _transform, _startOutRange,nullptr);
 	info.oneColl = false;
 	info.tag = CollsionInformation::Tag::JUST_AVOID;
 	Transform transform = _transform;
 	transform.scale.x += 150.0f;
-	justAvoidCollider->DountSet(info, transform, _startOutRange + 650.0f);
+	justAvoidCollider->DountSet(info, transform, _startOutRange + 650.0f,nullptr);
 	waveSpeed				= _speed;
 }

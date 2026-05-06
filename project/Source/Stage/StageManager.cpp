@@ -127,7 +127,7 @@ void StageManager::CreateWall()
 		info.shape = CollsionInformation::MODEL;
 		info.tag = CollsionInformation::WALL;
 		//本来の壁とは違うモデルの仕様
-		c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(ResourceLoad::GetHandle(ID::WALL)));
+		c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(ResourceLoad::GetHandle(ID::WALL)),nullptr);
 		stage->AddChild(obj,false);
 	}
 	/*Object3D* obj = new Object3D();
@@ -164,7 +164,7 @@ void StageManager::CreateFloor()
 	info.parentTransfrom = obj->GetTransform();
 	info.shape = CollsionInformation::MODEL;
 	info.tag = CollsionInformation::FLOOR;
-	c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(ResourceLoad::GetHandle(ID::WALL)));
+	c->ModelColliderSet(info, Transform(VZero, VZero, VOne), MV1DuplicateModel(ResourceLoad::GetHandle(ID::WALL)),nullptr);
 	stage->AddChild(obj, false);
 	//}
 	
@@ -173,7 +173,7 @@ void StageManager::CreateFloor()
 	info.shape = CollsionInformation::AABB;
 	info.tag = CollsionInformation::FLOOR_AABB;
 	VECTOR3 minPos = VECTOR3(-WALL_EDGE_POS, -100.0f, -WALL_EDGE_POS);
-	aabb->SetUpAABBCollsion(info, minPos, VECTOR3(WALL_EDGE_POS, 100.0f, WALL_EDGE_POS));
+	aabb->SetUpAABBCollsion(info, minPos, VECTOR3(WALL_EDGE_POS, 100.0f, WALL_EDGE_POS),nullptr);
 
 	//Transform transform2;
 	//transform2 = Transform(CUT_SCENE_POS + VECTOR3(0, -1000, 0), VZero, VOne * VECTOR3(500.0f, 10.0f, 500.0f));

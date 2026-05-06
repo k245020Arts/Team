@@ -17,15 +17,15 @@ namespace {
 
 void CollsionInformation::InitSetPair()
 {
-    SetPair(PLAYER, ENEMY);
-    SetPair(PLAYER, BOSS);
+    //SetPair(PLAYER, ENEMY);
+    //SetPair(PLAYER, BOSS);
     SetPair(PLAYER, BOSS_PUSH);
     SetPair(FLOOR, SHADOW);
     SetPair(PLAYER, B_E_ATTACK);
     SetPair(PLAYER, E_ATTACK);
     SetPair(PLAYER, BOSS_ROCK_ATTACK);
     SetPair(PLAYER, BOSS_ROCK);
-    SetPair(BOSS, BOSS_ROCK);
+    //SetPair(BOSS, BOSS_ROCK);
     SetPair(PLAYER, ROCK_BLAST_DAMAGE);
     SetPair(BOSS, ROCK_BLAST_DAMAGE);
     SetPair(BOSS, BOSS_ROCK_DAMAGE);

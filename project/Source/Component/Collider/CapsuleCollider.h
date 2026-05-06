@@ -19,8 +19,8 @@ public:
 	/// <param name="_info">当たり判定の情報</param>
 	/// <param name="_transform">線の先端</param>
 	/// <param name="_transform2">線の末端</param>
-	void CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform,float _sphere,bool _mustMatrix,MATRIX* _matrix);
-	void CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform, float _sphere, bool _mustMatrix, MATRIX* _matrix, std::string _tag);
+	void CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform,float _sphere,bool _mustMatrix,MATRIX* _matrix, std::function<void(const CollsionEventData&)> _funk);
+	void CapsuleSet(const CollsionInfo& _info, const Transform& _endTransform, const Transform& _startTransform, float _sphere, bool _mustMatrix, MATRIX* _matrix, std::function<void(const CollsionEventData&)> _funk, std::string _tag);
 	/// <summary>
 	/// カプセルの終了のTransformを取得
 	/// </summary>

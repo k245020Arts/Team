@@ -51,6 +51,7 @@ namespace {
 
 BossCreater::BossCreater()
 {
+	bossComponentPtr = nullptr;
 	LoadBossParam("data/json/BossAttack/BossParam.json");
 
 	const StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
@@ -105,6 +106,8 @@ void BossCreater::CreateBoss()
 	const VECTOR3 InitPos = VECTOR3(0, 450, 2000);
 	boss->Init(Transform(InitPos, VZero, VECTOR3(bSize, bSize - 1, bSize)), "Boss");
 
+	bossComponentPtr = boss->Component()->AddComponent<Boss>();
+
 	SphereCollider* collider = boss->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
 	info.parentTransfrom = boss->GetTransform();
@@ -112,7 +115,8 @@ void BossCreater::CreateBoss()
 	info.oneColl = false;
 	info.tag = CollsionInformation::Tag::BOSS;
 	info.size = 1.0f;
-	collider->CollsionAdd(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
+	std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { bossComponentPtr->BossDamageCollsionEvent(_data); };
+	collider->CollsionAdd(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)), func);
 	collider->SetTag("BossHit");
 	SphereCollider* hitUpCollider = boss->Component()->AddComponent<SphereCollider>();
 	info.parentTransfrom = boss->GetTransform();
@@ -120,7 +124,7 @@ void BossCreater::CreateBoss()
 	info.oneColl = false;
 	info.tag = CollsionInformation::Tag::BOSS;
 	info.size = 1.0f;
-	hitUpCollider->CollsionAdd(info, Transform(VECTOR3(0, 110, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)));
+	hitUpCollider->CollsionAdd(info, Transform(VECTOR3(0, 110, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)), func);
 	hitUpCollider->SetTag("BossHit");
 	//“–‚½‚è”»’è‚ð¶¬i‚â‚ç‚ê”»’èj
 	/*SphereCollider* collider2 = boss->Component()->AddComponent<SphereCollider>();
@@ -134,12 +138,12 @@ void BossCreater::CreateBoss()
 	RayCollider* collider3 = boss->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::B_FLOOR;
-	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 10.0, 1.0)), Transform(VECTOR3(0, -0, 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider3->RaySet(info, Transform(VECTOR3(0, 200, 0), VZero, VECTOR3(1.0f, 10.0, 1.0)), Transform(VECTOR3(0, -0, 0), VZero, VECTOR3(1.0f, 1, 1)),nullptr);
 
 	ModelCollider* collider4 = boss->Component()->AddComponent<ModelCollider>();
 	info.shape = CollsionInformation::MODEL;
 	info.tag = CollsionInformation::BOSS_PUSH;
-	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), ResourceLoad::LoadModel("wall", ID::BOSS_PUSH));
+	collider4->ModelColliderSet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(0.35f, 1.0f, 0.35f)), ResourceLoad::LoadModel("wall", ID::BOSS_PUSH),nullptr);
 
 
 	Shaker* shaker = boss->Component()->AddComponent<Shaker>();
@@ -148,7 +152,7 @@ void BossCreater::CreateBoss()
 	m->ModelHandle(ResourceLoad::LoadModel(bossParam.modelName, ID::B_MODEL));
 	m->RotationMesh(0, 180.0f * DegToRad);
 
-	Boss* b = boss->Component()->AddComponent<Boss>();
+	
 
 	Physics* physics = boss->Component()->AddComponent<Physics>();
 	physics->Start(BossInformation::BASE_GRAVITY, BossInformation::BASE_FIRCTION);
@@ -213,7 +217,7 @@ void BossCreater::CreateBoss()
 	ResourceLoad::LoadAnim("B_BACKSTEP", ID::B_BACKSTEP);
 	ResourceLoad::LoadAnim("B_WIN", ID::B_WIN);*/
 
-	b->Start(boss, bossParam);
+	bossComponentPtr->Start(boss, bossParam);
 
 	//const StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
 
@@ -251,7 +255,7 @@ void BossCreater::CreateBoss()
 	RayCollider* collider5 = shadow->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::SHADOW;
-	collider5->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist(), 0), VZero, VECTOR3(1.0f, 1, 1)));
+	collider5->RaySet(info, Transform(VECTOR3(0, 50, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, -s->GetMaxDist(), 0), VZero, VECTOR3(1.0f, 1, 1)),nullptr);
 	boss->AddChild(shadow);
 
 	player->Component()->GetComponent<Player>()->TargetObjSet(nullptr);

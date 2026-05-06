@@ -208,7 +208,7 @@ void BossRockBase::Draw()
 	}
 }
 
-void BossRockBase::Ground()
+void BossRockBase::Ground(const CollsionEventData& _data)
 {
 	if (fly || attackData.groundDelete) {
 		if (attackData.blastCan) {
@@ -259,7 +259,7 @@ void BossRockBase::Ground()
 
 			playerHitCapsuleColl = obj->Component()->AddComponent<CapsuleCollider>();
 			//200
-			playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitCollRadius, true, handMatrix, "_rockGroundAttack");
+			playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitCollRadius, true, handMatrix,nullptr, "_rockGroundAttack");
 		}
 		else {
 			info.shape = CollsionInformation::SPHERE;
@@ -278,7 +278,7 @@ void BossRockBase::Ground()
 
 			playerHitColl = obj->Component()->AddComponent<SphereCollider>();
 			//200
-			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerGroundCollRadius, 1.0f, 1.0f)), "_rockGroundAttack");
+			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerGroundCollRadius, 1.0f, 1.0f)), nullptr, "_rockGroundAttack");
 		}
 		
 	
@@ -302,21 +302,22 @@ void BossRockBase::Ground()
 		if (pushColl == nullptr) {
 			VECTOR3 size = rockManager->GetPushCollSize(attackData);
 			pushColl = obj->Component()->AddComponent<ModelCollider>();
-			pushColl->ModelColliderSet(info, Transform(VZero, VZero, size), MV1DuplicateModel(ResourceLoad::GetHandle(ID::BOSS_PUSH)));
+			
+			pushColl->ModelColliderSet(info, Transform(VZero, VZero, size), MV1DuplicateModel(ResourceLoad::GetHandle(ID::BOSS_PUSH)), nullptr);
 		}
 	}
 
 	if (attackData.playerAttackFlying) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
-		info.shape = CollsionInformation::SPHERE;
+		info.shape = CollsionInformation::SPHERE; 
 		info.oneColl = true;
 		info.tag = CollsionInformation::BOSS_ROCK_PLAYER_ATTACK;
-
+		std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { PlayerAttackRockFlyAway(_data); };
 		if (playerAttackHitColl == nullptr) {
 			playerAttackHitColl = obj->Component()->AddComponent<SphereCollider>();
 			//200
-			playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerAttackFlyingCollRadius, 1.0f, 1.0f)), "bossplayerAttack");
+			playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerAttackFlyingCollRadius, 1.0f, 1.0f)), func, "bossplayerAttack");
 		}
 	}
 
@@ -326,9 +327,10 @@ void BossRockBase::Ground()
 		info.shape = CollsionInformation::SPHERE;
 		info.oneColl = true;
 		info.tag = CollsionInformation::BOSS_ROCK_RUSH;
+		std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { RockBossHit(_data); };
 		if (bossRushHitColl == nullptr) {
 			bossRushHitColl = obj->Component()->AddComponent<SphereCollider>();
-			bossRushHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.bossRushHitCollRadius, 1.0f, 1.0f)), "bossRushAttack");
+			bossRushHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.bossRushHitCollRadius, 1.0f, 1.0f)), func,"bossRushAttack");
 		}
 	}
 
@@ -374,7 +376,7 @@ void BossRockBase::Ground()
 }
 
 
-void BossRockBase::PlayerAttackRockFlyAway(Transform& _playerTransform)
+void BossRockBase::PlayerAttackRockFlyAway(const CollsionEventData& _data)
 {
 	CollsionInfo info;
 
@@ -385,10 +387,11 @@ void BossRockBase::PlayerAttackRockFlyAway(Transform& _playerTransform)
 		info.tag = CollsionInformation::BOSS_ROCK_DAMAGE;
 
 		bossHitColl = obj->Component()->AddComponent<SphereCollider>();
-		bossHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.bossHitCollRadius, 1.0f, 1.0f)), "rockBossHit");
+		std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { RockBossHit(_data); };
+		bossHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.bossHitCollRadius, 1.0f, 1.0f)),func, "rockBossHit");
 	}
 	
-	physics->SetVelocity(_playerTransform.Forward() * /*10000.0f*/attackData.flyingSpeed);
+	physics->SetVelocity(_data.targetTransform->Forward() * /*10000.0f*/attackData.flyingSpeed);
 	physics->AddVelocity(VECTOR3(0, attackData.flyingHeight, 0), false);
 	//physics->SetGravity(VZero);
 	flyCounter = 0.5f;
@@ -410,12 +413,13 @@ void BossRockBase::PlayerAttackRockFlyAway(Transform& _playerTransform)
 
 }
 
-void BossRockBase::RockBossHit()
+void BossRockBase::RockBossHit(const CollsionEventData& _data)
 {
 	if (attackData.blastCan) {
 		SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BLAST);
 		BlastCollsionCreate();
 	}
+	obj->DestroyMe();
 	/*blastColl = obj->Component()->AddComponent<DountCollider>();
 	blastJustAvoidColl = obj->Component()->AddComponent<DountCollider>();
 	nowBlast = true;
@@ -445,7 +449,8 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack,MA
 		info.tag = CollsionInformation::BOSS_ROCK_F;
 		randColl = obj->Component()->AddComponent<RayCollider>();
 		//300C-300
-		randColl->RaySet(info, Transform(VECTOR3(0, _attack.randCollInfo.rayStartPos, 0), VZero, VOne), Transform(VECTOR3(0, _attack.randCollInfo.rayFinishPos, 0), VZero, VOne));
+		std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { Ground(_data); };
+		randColl->RaySet(info, Transform(VECTOR3(0, _attack.randCollInfo.rayStartPos, 0), VZero, VOne), Transform(VECTOR3(0, _attack.randCollInfo.rayFinishPos, 0), VZero, VOne),func);
 	}
 	if (attackData.playerHit) {
 		CollsionInfo info;
@@ -461,28 +466,28 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack,MA
 			info.shape = CollsionInformation::CAPSULE;
 			playerHitCapsuleColl = obj->Component()->AddComponent<CapsuleCollider>();
 			//200
-			playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos,VZero,VOne),Transform(attackData.capselStartPos,VZero,VZero),attackData.playerHitCollRadius,true, handMatrix, "_rockGroundAttack");
+			playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos,VZero,VOne),Transform(attackData.capselStartPos,VZero,VZero),attackData.playerHitCollRadius,true, handMatrix, nullptr,"_rockGroundAttack");
 			info.oneColl = false;
 			info.tag = CollsionInformation::JUST_AVOID;
 			capsuleEndPos = attackData.capselEndPos;
 			if (justAvoidCapselCollider == nullptr) {
 				justAvoidCapselCollider = obj->Component()->AddComponent<CapsuleCollider>();
 				//450
-				justAvoidCapselCollider->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitJustAvoidCollRadius, true, handMatrix, "justAvoid_rock");
+				justAvoidCapselCollider->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitJustAvoidCollRadius, true, handMatrix, nullptr,"justAvoid_rock");
 			}
 		}
 		else {
 			info.shape = CollsionInformation::SPHERE;
 			playerHitColl = obj->Component()->AddComponent<SphereCollider>();
 			//200
-			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitCollRadius, 1.0f, 1.0f)), "_rockGroundAttack");
+			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitCollRadius, 1.0f, 1.0f)),nullptr, "_rockGroundAttack");
 
 			info.oneColl = false;
 			info.tag = CollsionInformation::JUST_AVOID;
 			if (justAvoidCollider == nullptr) {
 				justAvoidCollider = obj->Component()->AddComponent<SphereCollider>();
 				//450
-				justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitJustAvoidCollRadius, 1.0f, 1.0f)), "justAvoid_rock");
+				justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitJustAvoidCollRadius, 1.0f, 1.0f)),nullptr, "justAvoid_rock");
 			}
 		}
 	}
@@ -495,7 +500,8 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack,MA
 		info.tag = CollsionInformation::BOSS_ROCK_UI;
 		uiColl = obj->Component()->AddComponent<RayCollider>();
 		//10000,-10000
-		uiColl->RaySet(info, Transform(VECTOR3(0, attackData.predictionCicleColliderInfo.rayStartPos, 0), VZero, VOne), Transform(VECTOR3(0, attackData.predictionCicleColliderInfo.rayFinishPos, 0), VZero, VOne), "uiColl");
+		std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { SetPreInfo(_data); };
+		uiColl->RaySet(info, Transform(VECTOR3(0, attackData.predictionCicleColliderInfo.rayStartPos, 0), VZero, VOne), Transform(VECTOR3(0, attackData.predictionCicleColliderInfo.rayFinishPos, 0), VZero, VOne), func, "uiColl");
 	}
 
 	preDraw = false;
@@ -544,8 +550,9 @@ void BossRockBase::DropObject()
 		info.oneColl = false;
 		info.tag = CollsionInformation::BOSS_ROCK_F;
 		if (randColl == nullptr) {
+			std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { Ground(_data); };
 			randColl = obj->Component()->AddComponent<RayCollider>();
-			randColl->RaySet(info, Transform(VECTOR3(0, 300, 0), VZero, VOne), Transform(VECTOR3(0, -300, 0), VZero, VOne));
+			randColl->RaySet(info, Transform(VECTOR3(0, 300, 0), VZero, VOne), Transform(VECTOR3(0, -300, 0), VZero, VOne), nullptr);
 		}
 	}
 	
@@ -558,7 +565,7 @@ void BossRockBase::DropObject()
 
 		if (playerAttackHitColl == nullptr) {
 			playerAttackHitColl = obj->Component()->AddComponent<SphereCollider>();
-			playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(250.0f, 1.0f, 1.0f)), "bossplayerAttack");
+			playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(250.0f, 1.0f, 1.0f)), nullptr, "bossplayerAttack");
 		}
 	}
 	
@@ -589,7 +596,8 @@ void BossRockBase::ThrowRockStart(BaseObject* _player)
 		info.tag = CollsionInformation::BOSS_ROCK_F;
 		if (randColl == nullptr) {
 			randColl = obj->Component()->AddComponent<RayCollider>();
-			randColl->RaySet(info, Transform(VECTOR3(0, 300, 0), VZero, VOne), Transform(VECTOR3(0, -300, 0), VZero, VOne));
+			std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { Ground(_data); };
+			randColl->RaySet(info, Transform(VECTOR3(0, 300, 0), VZero, VOne), Transform(VECTOR3(0, -300, 0), VZero, VOne), func);
 		}
 	}
 
@@ -602,7 +610,8 @@ void BossRockBase::ThrowRockStart(BaseObject* _player)
 
 		if (playerAttackHitColl == nullptr) {
 			playerAttackHitColl = obj->Component()->AddComponent<SphereCollider>();
-			playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(250.0f, 1.0f, 1.0f)), "bossplayerAttack");
+			std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { PlayerAttackRockFlyAway(_data); };
+			playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(250.0f, 1.0f, 1.0f)), func, "bossplayerAttack");
 		}
 	}
 
@@ -669,11 +678,12 @@ void BossRockBase::BlastCollsionCreate()
 	info.oneColl = false;
 	info.tag = CollsionInformation::ROCK_BLAST_DAMAGE;
 	//50,100
-	blastColl->DountSet(info, Transform(VZero, VZero, VOne * attackData.blastColliderInfo.inRadius), attackData.blastColliderInfo.outRadius);
+	std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { BlastCollsionEvent(_data); };
+	blastColl->DountSet(info, Transform(VZero, VZero, VOne * attackData.blastColliderInfo.inRadius), attackData.blastColliderInfo.outRadius, nullptr);
 	info.oneColl = false;
 	info.tag = CollsionInformation::JUST_AVOID;
 	//300,950
-	blastJustAvoidColl->DountSet(info, Transform(VZero, VZero, VOne * attackData.blastColliderInfo.inRadius), attackData.blastColliderInfo.outRadius);
+	blastJustAvoidColl->DountSet(info, Transform(VZero, VZero, VOne * attackData.blastColliderInfo.inRadius), attackData.blastColliderInfo.outRadius, nullptr);
 	SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BLAST);
 	SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BLAST);
 	EffectManager::GetInstance()->CreateEffekseer(Transform(obj->GetTransform()->position, VZero, VOne * 3.0f), nullptr, Effect_ID::ROCK_BLAST, 1.0f);
@@ -700,23 +710,23 @@ void BossRockBase::AlotCollsionSet()
 		playerHitCapsuleColl = nullptr;
 		obj->Component()->RemoveComponentWithTagIsCollsion<CapsuleCollider>("_rockAttack");
 		playerHitCapsuleColl = obj->Component()->AddComponent<CapsuleCollider>();
-		playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitCollRadius, true, handMatrix, "_rockGroundAttack");
+		playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitCollRadius, true, handMatrix, nullptr, "_rockGroundAttack");
 	}
 	if (justAvoidCapselCollider != nullptr) {
 		justAvoidCapselCollider = nullptr;
 		obj->Component()->RemoveComponentWithTagIsCollsion<CapsuleCollider>("justAvoid_rock");
 		playerHitCapsuleColl = obj->Component()->AddComponent<CapsuleCollider>();
-		playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitJustAvoidCollRadius, true, handMatrix, "_rockGroundAttack");
+		playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitJustAvoidCollRadius, true, handMatrix, nullptr, "_rockGroundAttack");
 	}
 	if (playerHitColl != nullptr) {
 		playerHitColl = nullptr;
 		obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("_rockAttack");
 		playerHitColl = obj->Component()->AddComponent<SphereCollider>();
 		if (attackData.playerHit) {
-			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitCollRadius, 1.0f, 1.0f)), "_rockGroundAttack");
+			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitCollRadius, 1.0f, 1.0f)), nullptr, "_rockGroundAttack");
 		}
 		if (attackData.playerGroundHit) {
-			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerGroundCollRadius, 1.0f, 1.0f)), "_rockGroundAttack");
+			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerGroundCollRadius, 1.0f, 1.0f)), nullptr, "_rockGroundAttack");
 		}
 			
 	}
@@ -725,7 +735,7 @@ void BossRockBase::AlotCollsionSet()
 		obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("justAvoid_rock");
 		justAvoidCollider = obj->Component()->AddComponent<SphereCollider>();
 		if (attackData.playerHit) {
-			justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitJustAvoidCollRadius, 1.0f, 1.0f)), "_rockGroundAttack");
+			justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitJustAvoidCollRadius, 1.0f, 1.0f)), nullptr, "_rockGroundAttack");
 		}
 		/*if (attackData.playerGroundHit) {
 			justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerGroundCollRadius, 1.0f, 1.0f)), "_rockGroundAttack");
@@ -734,9 +744,9 @@ void BossRockBase::AlotCollsionSet()
 	}
 }
 
-void BossRockBase::SetPreInfo(const VECTOR3& _pos)
+void BossRockBase::SetPreInfo(const CollsionEventData& _data)
 {
-	preTransform = Transform(_pos, VZero, VECTOR3(5.0f, 0.1f, 5.0f));
+	preTransform = Transform(_data.hitPos, VZero, VECTOR3(5.0f, 0.1f, 5.0f));
 	preDraw = true;
 }
 
@@ -745,4 +755,12 @@ void BossRockBase::CapsuleColliderPosAddStart()
 	if (attackData.capsuleColliderAdd) {
 		colliderAddStart = true;
 	}
+}
+
+void BossRockBase::BlastCollsionEvent(const CollsionEventData& _data)
+{
+	if (HitObjects(_data.targetObject)) {
+		return;
+	}
+	AddHitObj(_data.targetObject);
 }

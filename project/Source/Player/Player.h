@@ -6,6 +6,7 @@
 #include  "../Common/ID/EffectID.h"
 #include "../Common/ID/SoundID.h"
 #include "PlayerState/AttackState/PlayerAttackStateBase.h"
+#include <unordered_set>
 
 class BossAttackBase;
 class BossRockManager;
@@ -146,7 +147,8 @@ public:
 			CollsionInfo info = CharaBase::CollsionInstant<T>(_set, _trans);
 			info.tag = _set->tag;
 			//collName = _set->collName;
-			_set->instance->CollsionAdd(info, _trans, _set->collName);
+			std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) {this->CollsionAttackEvent(_data); };
+			_set->instance->CollsionAdd(info, _trans, func,_set->collName);
 		};
 		return static_cast<T*>(_set->instance);
 	}
@@ -272,6 +274,16 @@ public:
 	/// 攻撃のリアクションのパラメータのリロード
 	/// </summary>
 	void ReactionReLoad();
+	/// <summary>
+	/// 当たり判定のイベントを呼び出す用の関数
+	/// </summary>
+	/// <param name="_data"></param>
+	void CollsionEvent(const CollsionEventData & _data);
+
+	void CollsionAttackEvent(const CollsionEventData& _data);
+
+	void HitObjectInsert(BaseObject* _base) { hitObjects.insert(_base); }
+	bool IsHitObject(BaseObject* _base) { return hitObjects.count(_base) > 0; }
 
 private:
 	PlayerInformation::CharaComponent playerCom;
@@ -319,5 +331,7 @@ private:
 	std::unordered_map<StateID::State_ID, PlayerAttackStateBase::PlayerAttackData> attackData;
 
 	PlayerAttackStateBase::PlayerAttackData GetAttackDataMap(StateID::State_ID _data) { return attackData[_data]; }
+
+	std::unordered_set<BaseObject*> hitObjects;
 };
 

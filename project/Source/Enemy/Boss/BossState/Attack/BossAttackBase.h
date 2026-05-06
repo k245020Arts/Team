@@ -5,6 +5,7 @@
 #include "../../../../Component/Collider/CollsionInformation.h"
 
 class SphereCollider;
+class Boss;
 
 class BossAttackBase: public EnemyStateBase
 {
@@ -598,4 +599,6 @@ private:
 	void AttackStart();
 	void BossDushSound();
 	void BossUpdate();
+
+	Boss* bossPtr;
 };
