@@ -5,6 +5,7 @@
 #include "../Common/ID/StateID.h"
 #include "../Common/JsonReader.h"
 #include "../Camera/CameraBase.h"
+#include "../Component/Collider/CollsionInformation.h"
 
 static const std::string PLAYER_POS_NAME		= "Player";
 static const std::string PLAYER_FIRST_POS_NAME	= "First_Player";
@@ -184,10 +185,8 @@ public:
 	/// <summary>
 	/// カメラの当たり判定で押し返しをするカメラの設定
 	/// </summary>
-	/// <param name="norm">法線</param>
-	/// <param name="size">大きさ</param>
-	/// <param name="groundPos">地面の座標</param>
-	void PushCamera(const VECTOR3& _norm, float _size, const VECTOR3& _groundPos);
+	/// <param name="_data">当たり判定の情報</param>
+	void PushCamera(const CollsionEventData& _data);
 	/// <summary>
 	/// 敵が攻撃した時にカメラを向く座標
 	/// </summary>

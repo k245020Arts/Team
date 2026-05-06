@@ -2,6 +2,7 @@
 #include "../../Library/GameObject.h"
 
 class Object3D;
+class Camera;
 
 class CameraManager : public GameObject
 {
@@ -37,4 +38,5 @@ public:
 
 private:
 	Object3D* mainCamera;
+	Camera* cameraComponentPtr; //関数ポインタ実行用
 };

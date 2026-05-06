@@ -70,7 +70,7 @@ void EnemyBase::Update()
 	if (loopNum >= 0) {
 		hitCounter -= Time::DeltaTimeRate();
 		if (hitCounter <= 0.0f) {
-			PlayerHit();
+			PlayerHit(CollsionEventData());
 		}
 	}
 	pAttack = pState->GetState<PlayerAttackStateBase>();

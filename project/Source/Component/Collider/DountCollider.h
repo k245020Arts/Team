@@ -16,7 +16,7 @@ public:
 	/// <param name="_info">当たり判定の情報</param>
 	/// <param name="_transform">ドーナツの外側のTransform</param>
 	/// <param name="_outRadius">外側の円の半径</param>
-	void DountSet(const CollsionInfo& _info, const Transform& _transform,float _outRadius);
+	void DountSet(const CollsionInfo& _info, const Transform& _transform,float _outRadius, std::function<void(const CollsionEventData&)> _funk);
 
 	/// <summary>
 	/// 外側の半径の取得

@@ -32,7 +32,7 @@ public:
 	/// <summary>
 	/// 地面についたときの処理
 	/// </summary>
-	virtual void Ground();
+	void Ground(const CollsionEventData& _data);
 
 	/// <summary>
 	/// オブジェクトが当たった時にオブジェクト情報の追加
@@ -48,11 +48,11 @@ public:
 	/// プレイヤーの攻撃が投擲物に当たった時の処理
 	/// </summary>
 	/// <param name="_playerTransform">プレイヤーのトランスフォーム</param>
-	void PlayerAttackRockFlyAway(Transform& _playerTransform);
+	void PlayerAttackRockFlyAway(const CollsionEventData& _data);
 	/// <summary>
 	/// 攻撃がボスに当たった時にするイベント
 	/// </summary>
-	void RockBossHit();
+	void RockBossHit(const CollsionEventData& _data);
 	/// <summary>
 	/// 投擲物の開始
 	/// </summary>
@@ -77,7 +77,7 @@ public:
 	/// 予測線を出すときの処理
 	/// </summary>
 	/// <param name="_pos">地面の座標</param>
-	void SetPreInfo(const VECTOR3& _pos);
+	void SetPreInfo(const CollsionEventData& _data);
 	/// <summary>
 	/// 投擲物のデータをセット
 	/// </summary>
@@ -92,6 +92,8 @@ public:
 	/// カプセルコリジョンのポジション移動開始
 	/// </summary>
 	void CapsuleColliderPosAddStart();
+
+	void BlastCollsionEvent(const CollsionEventData& _data);
 
 protected:
 

@@ -4,6 +4,7 @@
 class Object3D;
 class GameControler;
 class StateManager;
+class Player;
 
 class PlayerManager : public GameObject
 {
@@ -30,4 +31,5 @@ private:
 	GameControler* gameManager;
 	StateManager* stateManager;
 	void GameSceneChangeState();
+	Player* playerPtr;
 };

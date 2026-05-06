@@ -49,7 +49,7 @@ public:
 	void CreateTrashEnemy(VECTOR3 _pos,int kinds,int _number);
 	void Trail();
 	//プレイヤーからダメージをもらった時の処理
-	void PlayerHit()override;
+	void PlayerHit(const CollsionEventData& _data)override;
 
 	//攻撃命令
 	void AttackCommand();
@@ -102,11 +102,12 @@ public:
 	void SetCooperateWayPoint(VECTOR3 _pos, StateID::State_ID _id);
 	//敵のステートを変える関数
 	void ChangeState(StateID::State_ID _id);
-	
+	void Move(float _speed, float _max);
 	void AddPos(VECTOR3 _pos);
 	//近距離か遠距離の敵かを指定する関数
 	void SetEnemyType(EnemyType type);
-	
+	//void ReadyCooperteAtk2(VECTOR3 _pos);
+
 	void SetLeaderPos(VECTOR3 _pos);
 
 	//遠距離の敵が攻撃する
@@ -115,12 +116,13 @@ public:
 	void ChangeHp(float _damage);
 
 	template<typename T>
-	T* CollsionStart(CollsionSet* _set, const Transform& _trans)
+	T* CollsionStart(CollsionSet* _set, const Transform& _trans, std::function<void(const CollsionEventData&)> _func)
 	{
 		if (_set->instance == nullptr) {
 			CollsionInfo info = CharaBase::CollsionInstant<T>(_set, _trans);
 			info.tag = _set->tag;
-			_set->instance->CollsionAdd(info, _trans, _set->collName);
+			//collName = _set->collName;
+			_set->instance->CollsionAdd(info, _trans,_func, _set->collName);
 		};
 		return static_cast<T*>(_set->instance);
 	}
@@ -181,4 +183,8 @@ private:
 	bool cooperateDamageMove;
 
 	bool deadMove;
+
+	std::function<void(const CollsionEventData&)> attackFunk;
+	std::function<void(const CollsionEventData&)> justAvoidAttackFunk;
+
 };

@@ -35,14 +35,14 @@ void ModelCollider::Draw()
 	MV1DrawModel(modelHandle);
 }
 
-void ModelCollider::ModelColliderSet(const CollsionInfo& _info, const Transform& _transform, int _modelHandle)
+void ModelCollider::ModelColliderSet(const CollsionInfo& _info, const Transform& _transform, int _modelHandle, std::function<void(const CollsionEventData&)> _funk)
 {
-	ModelColliderSet(_info, _transform, _modelHandle,"");
+	ModelColliderSet(_info, _transform, _modelHandle, _funk,"");
 }
 
-void ModelCollider::ModelColliderSet(const CollsionInfo& _info, const Transform& _transform, int _modelHandle, std::string _tag)
+void ModelCollider::ModelColliderSet(const CollsionInfo& _info, const Transform& _transform, int _modelHandle, std::function<void(const CollsionEventData&)> _funk, std::string _tag)
 {
-	ColliderBase::CollsionAdd(_info, _transform,_tag);
+	ColliderBase::CollsionAdd(_info, _transform, _funk,_tag);
 
 	modelHandle = _modelHandle;
 	int i = MV1SetupCollInfo(modelHandle, -1, 8, 8, 8);

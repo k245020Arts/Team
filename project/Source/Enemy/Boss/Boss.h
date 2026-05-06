@@ -112,19 +112,19 @@ public:
 	/// <param name="_trans">基準のTransform</param>
 	/// <returns>当たり判定クラスのポインタ</returns>
 	template<typename T>
-	T* CollsionStart(CollsionSet* _set,const Transform& _trans) {
+	T* CollsionStart(CollsionSet* _set,const Transform& _trans, std::function<void(const CollsionEventData&)> _funk) {
 		if (_set->instance == nullptr) {
 			CollsionInfo info = CharaBase::CollsionInstant<T>(_set, _trans);
 			info.tag = _set->tag;
 			//collName = _set->collName;
-			_set->instance->CollsionAdd(info, _trans, _set->collName);
+			_set->instance->CollsionAdd(info, _trans, _funk,_set->collName);
 		};
 		return static_cast<T*>(_set->instance);
 	}
 	/// <summary>
 	/// playerにダメージを食らった時の判定
 	/// </summary>
-	void PlayerHit()override;
+	void PlayerHit(const CollsionEventData& _data)override;
 	/// <summary>
 	/// 攻撃の軌跡を生成
 	/// </summary>
@@ -159,15 +159,17 @@ public:
 	/// <summary>
 	/// 石にダメージを食らった時の処理
 	/// </summary>
-	void RockHitDamage(Physics* _phy);
+	void RockHitDamage(const CollsionEventData& _data);
 	/// <summary>
 	/// 突進でダメージを食らった時の処理
 	/// </summary>
-	void RockHitRushDamage();
+	void RockHitRushDamage(const CollsionEventData& _data);
 
 	std::shared_ptr<PlayerAttack3> GetStateState() {
 		return pState->GetState<PlayerAttack3>();
 	}
+
+	void BossDamageCollsionEvent(const CollsionEventData& _data);
 
 private:
 	void PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps,VECTOR3 _randomPos,float _randomAngle);
@@ -211,6 +213,9 @@ private:
 	std::list<SphereCollider*> bossHitCollider;
 	int rightHandFrame;
 	int leftHandFrame;
+
+	std::function<void(const CollsionEventData&)> attackFunk;
+	std::function<void(const CollsionEventData&)> justAvoidAttackFunk;
 
 	VECTOR3 GetDamageDrawPos();
 };

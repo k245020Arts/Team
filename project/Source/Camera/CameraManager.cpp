@@ -59,7 +59,8 @@ void CameraManager::CreateCamera()
 void CameraManager::ParentObj(std::string _str)
 {
 	Object3D* obj = FindGameObjectWithTag<Object3D>(_str);
-	mainCamera->Component()->GetComponent<Camera>()->PlayerSet(obj);
+	cameraComponentPtr = mainCamera->Component()->GetComponent<Camera>();
+	cameraComponentPtr->PlayerSet(obj);
 
 	//“–‚½‚è”»’è‚Ìî•ñ‚ðƒZƒbƒg
 	RayCollider* c = mainCamera->Component()->AddComponent<RayCollider>();
@@ -69,7 +70,10 @@ void CameraManager::ParentObj(std::string _str)
 	info.shape				= CollsionInformation::RAY;
 	info.tag				= CollsionInformation::C_FLOOR;
 	const float RAY_LONG = 100;
-	c->RaySet(info, Transform(VECTOR3(0, -RAY_LONG, 0), VZero, VOne), Transform(VECTOR3(0, RAY_LONG, 0), VZero, VOne));
+
+	std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data){ cameraComponentPtr->PushCamera(_data);};
+
+	c->RaySet(info, Transform(VECTOR3(0, -RAY_LONG, 0), VZero, VOne), Transform(VECTOR3(0, RAY_LONG, 0), VZero, VOne), func);
 }
 
 void CameraManager::TitleCameraCreate()

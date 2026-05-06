@@ -36,7 +36,7 @@ public:
 	/// <returns>ベースオブジェクトのポインタ</returns>
 	BaseObject* GetEnemyObj() { return obj; }
 
-	virtual void PlayerHit() { hit = true; }
+	virtual void PlayerHit(const CollsionEventData& _data) { hit = true; }
 	/// <summary>
 	/// 剣の軌跡
 	/// </summary>

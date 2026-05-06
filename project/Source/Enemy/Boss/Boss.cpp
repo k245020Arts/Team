@@ -42,6 +42,7 @@
 #include "../../Common/Random.h"
 #include "../../Component/UI/EnemyDamageUI.h"
 #include "../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
+#include "../../Component/EnemyAttackObject/BossRock/BossRockBase.h"
 #include "../../Player/PlayerState/AttackState/PlayerAttack2.h"
 #include "BossAttackDataSerializer.h"
 #include "../../Stage/StageSelectData.h"
@@ -98,6 +99,9 @@ Boss::Boss()
 
 	rightHandFrame = 0;
 	leftHandFrame = 0;
+
+	attackFunk = nullptr;
+	justAvoidAttackFunk = nullptr;
 }
 
 Boss::~Boss()
@@ -398,9 +402,12 @@ void Boss::LookPlayer(VECTOR3 _target, float speed)
 		bossTransform->rotation.y = direction;
 }
 
-void Boss::PlayerHit()
+void Boss::PlayerHit(const CollsionEventData& _data)
 {
-
+	Player* player = pState->GetBaseObject()->Component()->GetComponent<Player>();
+	if (player->IsHitObject(_data.myObject)) {
+		return;
+	}
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
 	if (pState->GetState<PlayerAttack3>() != nullptr) {
 		int c = 0;
@@ -638,7 +645,7 @@ bool Boss::RunChangeAttack()
 	return result;
 }
 
-void Boss::RockHitDamage(Physics* _phy)
+void Boss::RockHitDamage(const CollsionEventData& _data)
 {
 	float damage = 500.0f;
 	enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
@@ -653,7 +660,7 @@ void Boss::RockHitDamage(Physics* _phy)
 	hp -= DamageCalculation(GetDamageDrawPos(), damage, defense, (float)GetRand(15));
 }
 
-void Boss::RockHitRushDamage()
+void Boss::RockHitRushDamage(const CollsionEventData& _data)
 {
 	float damage = 1000.0f;
 	SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BREAK);
@@ -661,6 +668,7 @@ void Boss::RockHitRushDamage()
 	VECTOR3 baseSpeed = enemyBaseComponent.physics->GetVelocity() * -1.0f;
 	EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0,200,0), VZero, VOne), obj, Effect_ID::BOSS_ROCK_HIT_RUSH, 1.0f);
 	const float MIN_DIST = 3000.0f;
+	//移動速度に応じて跳ね返りの速度を変える
 	if (baseSpeed.Size() <= MIN_DIST) {
 		baseSpeed = baseSpeed.Normalize() * MIN_DIST;
 	}
@@ -671,6 +679,20 @@ void Boss::RockHitRushDamage()
 	enemyBaseComponent.physics->AddVelocity(baseSpeed, false);
 
 	hp -= DamageCalculation(GetDamageDrawPos(), damage, defense, (float)GetRand(15));
+}
+
+void Boss::BossDamageCollsionEvent(const CollsionEventData& _data)
+{
+	if (_data.targetTag == CollsionInformation::ROCK_BLAST_DAMAGE || _data.targetTag == CollsionInformation::BOSS_ROCK_DAMAGE) {
+		BossRockBase* r = _data.targetObject->Component()->GetComponent<BossRockBase>();
+		if (r->HitObjects(_data.targetObject)) { //すでに当たっているオブジェクト内に登録されていたら
+			return;
+		}
+		RockHitDamage(_data);
+	}
+	else {
+		PlayerHit(_data);
+	}
 }
 
 void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps, VECTOR3 _randomPos, float _randomAngle)

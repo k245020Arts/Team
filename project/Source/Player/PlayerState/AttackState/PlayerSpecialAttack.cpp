@@ -266,7 +266,8 @@ void PlayerSpecialAttack::AddCollsion()
 	info.oneColl = false;
 	info.tag = CollsionInformation::Tag::P_SPECIAL_ATTACK;
 	info.size = 1.0f;
-	collider->CollsionAdd(info, Transform(p->specialAttackCenterPos, VZero, VECTOR3(radius, 0, 0)),"special");
+	std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) {dynamic_cast<Player*>(com)->CollsionAttackEvent(_data); };
+	collider->CollsionAdd(info, Transform(p->specialAttackCenterPos, VZero, VECTOR3(radius, 0, 0)), func,"special");
 	p->playerCom.enemyManager->CanPlayerSpecialHit();
 }
 
@@ -278,8 +279,8 @@ void PlayerSpecialAttack::StateImguiDraw()
 void PlayerSpecialAttack::BeforeUpdate()
 {
 	Player* p = GetBase<Player>();
-	float alpha = p->playerCom.meshRenderer2D->GetAlpha();
-	if (alpha >= 255.0f) {
+	int alpha = p->playerCom.meshRenderer2D->GetAlpha();
+	if (alpha >= 255) {
 		if (zoom) { //ÉYÅ[ÉÄÇÇ∑ÇÈ
 			zoomRate = Easing::EasingFlow<float>(&zoomCounter, zoomCounterBase, 2.0f, 1.0f, Easing::EaseIn<float>);
 			zoomSize = Easing::EasingFlow<float>(&zoomCounter, zoomCounterBase, 120.0f, 0.0f, Easing::EaseIn<float>);

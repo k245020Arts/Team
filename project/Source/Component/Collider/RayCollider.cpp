@@ -35,14 +35,14 @@ void RayCollider::Start()
 	
 }
 
-void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _endTransform)
+void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _endTransform, std::function<void(const CollsionEventData&)> _funk)
 {
-	RaySet(_info, _transform,_endTransform, "");
+	RaySet(_info, _transform,_endTransform, _funk, "");
 }
 
-void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _endTransform, std::string _tag)
+void RayCollider::RaySet(const CollsionInfo& _info, const Transform& _transform, const Transform& _endTransform, std::function<void(const CollsionEventData&)> _funk, std::string _tag)
 {
-	ColliderBase::CollsionAdd(_info, _transform,_tag);
+	ColliderBase::CollsionAdd(_info, _transform, _funk,_tag);
 
 	endTransform = new Transform(_endTransform);
 	endTransform->SetParent(_info.parentTransfrom);
