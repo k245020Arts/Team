@@ -14,6 +14,7 @@ public:
 	~TrashEnemyGroup();
 
 	void Update()override;
+	void Draw()override;
 
 	/// <summary>
 	/// 近距離と遠距離の敵を均等に分ける
@@ -25,17 +26,22 @@ public:
 	void SetMeleeEnemy(TrashEnemy* _enemy);
 	//遠距離の敵だけを作る
 	void SetRangedEnemy(TrashEnemy* _enemy);
-	//今生きてるすべての敵の数
-	int GetEnemySize()const;
+
+	//生きてるすべての敵を数える関数
+	int GetActiveEnemy()const;
+	//生きてる近距離の敵を数える関数
+	int GetMeleeActiveEnemy()const;
+	//生きてる遠距離の敵を数える関数
+	int GetRangedActiveEnemy()const;
 
 	//一番近いウェイポイントを計算する
 	void CloseWayPoint(std::vector<WayPoint> wayPoint);
 	//遠距離の敵の連携攻撃
 	void RangedEnemyAttack();
-
+	//連携攻撃中に攻撃を食らった後の処理
 	void DeadMeleeEnemy();
 
-public:
+private:
 	Camera* camera;
 	TrashEnemyManager* trashEnemyManager;
 
@@ -57,22 +63,20 @@ public:
 	void Separation();
 
 	void InCameraWayPoint(WayPoint& _wayPoint);
-	//生きてる敵を数える関数
-	int GetActiveEnemy();
-
+	
 	bool hasLeader;
-
-	//float separationTime;
 
 	//近距離の敵で使う----------
 	//敵の攻撃
 	void MeleeEnemyAttack(TrashEnemy* _enemy);
-	//
+	//近距離の敵の走るポイントを決める
 	void EnemiesRun(TrashEnemy* _enemy);
 	//近距離の敵の連携攻撃
 	void CooperateAttackMove(TrashEnemy* _enemy);
-	//近距離の敵のステートを強制的に全員変える
+	//近距離の敵のステートを指定したステートに全員変える処理
 	void AllChangeMeleeState(StateID::State_ID _id);
+	//連携時に連携する敵を線でつなげる
+	void CooperateAttackLine();
 	
 	float attackCounter;
 	float maxAttackCounter;
@@ -81,16 +85,24 @@ public:
 	float cooperateCounter;
 
 	int enemiesRunCounter;
+
 	//--------------------------
 
 	//遠距離の敵----------------
+	//敵の待機の挙動
 	void RangedEnemySetWaypoint(TrashEnemy* _enemy);
+	//連携攻撃を失敗したときの倒される処理
 	void RangedDamageMove();
-	//WayPoint RangedEnemyPoint;
+	//遠距離の敵のステートを指定したステートに全員変える処理
+	void AllChangeRangedState(StateID::State_ID _id);
+
 	VECTOR3 leaderPos;
 
-	float rangedAtkCounter;
+	float rangedAtkTime;
 	bool rangedDamageMove;
+	int rangedAtkCounter;
+	//連携開始時のリーダー以外の敵が何体いるか
+	int rangedJoinCounter;
 
 	//--------------------------
 };

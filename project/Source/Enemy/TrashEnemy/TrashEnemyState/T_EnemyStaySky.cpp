@@ -44,6 +44,9 @@ void T_EnemyStaySky::Finish()
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
 	enemy->enemyBaseComponent.physics->SetGravity(setGravity);
+
+	if(isLeader)
+		enemy->CooperateAtkFinish();
 }
 
 void T_EnemyStaySky::LeaderMove(TrashEnemy* _enemy)

@@ -14,7 +14,6 @@ public:
 private:
 	void RotateMove();
 	void InCameraView();
-	//float CalculateAngle();
 	const float BACKSPEED = 60.0f;
 
 	VECTOR3 vec;

@@ -56,6 +56,7 @@ namespace ID {
 		P_FALL,
 		P_GETUP,
 		P_WEAPON,
+
 		E_ANIM_IDOL,
 		E_ATTACK1,
 		E_DAMAGE,
@@ -63,6 +64,7 @@ namespace ID {
 		E_FALL,
 		E_GETUP,
 		E_WEAPON,
+
 		C_FOLLOW,
 		C_AVOID_ATTACK,
 		E_RUN,
@@ -94,10 +96,14 @@ namespace ID {
 		LOSE,
 		B_S_ATTACK2_STOP,
 		B_S_ATTACK2_BEFORE,	
+
 		TE_IDOL,
 		TE_RUN,
 		TE_ATTACK,
-		TE_ATTACK2,
+		TE_C_ATTACK,
+		TE_C_ATTACK2,
+		TE_STANCE,
+
 		SHADOW,
 		B_DUSH,
 		B_ROAR_ANIM,

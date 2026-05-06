@@ -7,14 +7,6 @@ class TrashEnemy;
 class Object3D;
 class TrashEnemyGroup;
 
-//enum CooperateData
-//{
-//	Cooperate1,
-//	Cooperate2,
-//
-//	CooperateMax
-//};
-
 struct WayPoint
 {
 	VECTOR3 position;
@@ -46,21 +38,23 @@ public:
 	/// <param name="enemySpawnCounter">何体生成するか</param>
 	void CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int rangedSpawnCounter);
 
-	int GetEnemySize() const;
 	//敵が何人生きているかわかる関数
 	int GetActiveEnemy()const;
+	//生きてる近距離の敵を数える関数
+	int GetMeleeActiveEnemy()const;
+	//生きてる遠距離の敵を数える関数
+	int GetRangedActiveEnemy()const;
 
+	//遠距離の連携を始めるか終えることができる
+	void SetStartRangedAttack(bool _endAtk) { startRangedAtk = _endAtk; }
 	void ImguiDraw();
 
 	//連携攻撃
 	void Cooperate();
 	
-	void Cooperate2Move();
-
 	VECTOR3 GetPlayerPos() { return player->GetTransform()->position; }
 	std::vector<VECTOR3> GetWayPointPosition();
 private:
-	//std::list<TrashEnemy*> enemies;
 	const int ENEMIESMAX = 30;
 	const int ATK_COUNTER_MIN = 1;
 	const float ATK_COUNTER_MAX = 3;
@@ -82,9 +76,6 @@ private:
 	//プレイヤーの周りにポイントを作る
 	void PlayerWayPoint();
 	
-	//壁の外にあるウェイポイントを探す
-	bool StageWall(VECTOR3 _pos);
-
 	bool comboRequest;
 	//int counter;
 	

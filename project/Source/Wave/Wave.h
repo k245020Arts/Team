@@ -40,12 +40,12 @@ private:
 
 	struct SpawnData
 	{
-		float MeleeEnemyCounter;
-		float RangedEnemyCounter;
+		int MeleeEnemyCounter;
+		int RangedEnemyCounter;
 	};
 	std::vector<SpawnData> spawnData
 	{
-		{8,0},
-		{15,5},
+		{5,0},
+		{13,5},
 	};
 };

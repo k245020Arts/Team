@@ -47,9 +47,8 @@ public:
 	/// <param name="_pos">ポジションの指定</param>
 	/// <param name="kinds">敵の強さの種類(０なら軽い,1ならデフォルト,それ以外は重い敵)</param>
 	void CreateTrashEnemy(VECTOR3 _pos,int kinds,int _number);
-
 	void Trail();
-
+	//プレイヤーからダメージをもらった時の処理
 	void PlayerHit(const CollsionEventData& _data)override;
 
 	//攻撃命令
@@ -103,12 +102,10 @@ public:
 	void SetCooperateWayPoint(VECTOR3 _pos, StateID::State_ID _id);
 	//敵のステートを変える関数
 	void ChangeState(StateID::State_ID _id);
-	//加速移動
 	void Move(float _speed, float _max);
 	void AddPos(VECTOR3 _pos);
 	//近距離か遠距離の敵かを指定する関数
 	void SetEnemyType(EnemyType type);
-	//遠距離の敵の攻撃準備
 	//void ReadyCooperteAtk2(VECTOR3 _pos);
 
 	void SetLeaderPos(VECTOR3 _pos);
@@ -146,6 +143,7 @@ private:
 
 	//_posの方向に向く
 	void LookTarget(VECTOR3 _pos);
+	//プレイヤーが必殺中に止まる処理
 	bool IsPlayerSpecialMove();
 	
 	bool active;

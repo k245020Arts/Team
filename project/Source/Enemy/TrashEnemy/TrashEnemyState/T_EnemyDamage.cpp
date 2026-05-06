@@ -29,26 +29,22 @@ T_EnemyDamage::~T_EnemyDamage()
 
 void T_EnemyDamage::Update()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
 	
-	if (e->IsPlayerSpecialMove())
+	if (enemy->IsPlayerSpecialMove())
 	{
-		e->enemyBaseComponent.anim->SetPlaySpeed(0);
+		enemy->enemyBaseComponent.anim->SetPlaySpeed(0);
 		return;
 	}
 	
-	e->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
+	enemy->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
-	//float a = -2000.0f;  //落下の強さ（重力）
-	//float h = 0.5f;		//最高点までの時間
-	//float k = 800.0f;    //吹き飛びの高さ
+	KnockbackMove(enemy, enemy->deadPreset);
 
-	KnockbackMove(e, e->deadPreset);
-
-	if (e->hp > 0)
+	if (enemy->hp > 0)
 	{
-		if (e->enemyBaseComponent.anim->IsFinish() && e->GetEnemyObj()->GetTransform()->position.y <= 0)
-			e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+		if (enemy->enemyBaseComponent.anim->IsFinish() && enemy->GetEnemyObj()->GetTransform()->position.y <= 0)
+			enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
 	}
 }
 
@@ -59,9 +55,9 @@ void T_EnemyDamage::Draw()
 
 void T_EnemyDamage::Start()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
 	
-	motionSpeed = e->enemyBaseComponent.anim->GetPlaySpeed();
+	motionSpeed = enemy->enemyBaseComponent.anim->GetPlaySpeed();
 
 	isGetInformation = false;
 	counter = 0;

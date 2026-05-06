@@ -7,8 +7,8 @@
 CooperateAttack1::CooperateAttack1()
 {
 	string = Function::GetClassNameC<CooperateAttack1>();
-	animId = ID::TE_ATTACK2;
-	attackParam.animID = ID::TE_ATTACK2;
+	animId = ID::TE_C_ATTACK;
+	attackParam.animID = ID::TE_C_ATTACK;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	attackParam.damagePattern = BossAttackBase::BACK;
 
@@ -27,20 +27,20 @@ CooperateAttack1::~CooperateAttack1()
 
 void CooperateAttack1::Update()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	AttackInformation(e);
+	AttackInformation(enemy);
 	time += Time::DeltaTimeRate();
 
 	if (time >= 1)
-		e->isCooperateAtk = false;
+		enemy->isCooperateAtk = false;
 }
 
 void CooperateAttack1::Start()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	e->enemyBaseComponent.anim->SetFrame(5.0f);
+	enemy->enemyBaseComponent.anim->SetFrame(5.0f);
 	firstColl = true;
 
 	EnemyStateBase::Start();
@@ -48,8 +48,8 @@ void CooperateAttack1::Start()
 
 void CooperateAttack1::Finish()
 {
-	TrashEnemy* e = GetBase<TrashEnemy>();
-	e->speed=e->eStatus->GetStatus().runSpeed;
-	e->CooperateAtkFinish();
-	e->DeleteCollision(&e->attackColl);
+	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	enemy->speed=enemy->eStatus->GetStatus().runSpeed;
+	enemy->CooperateAtkFinish();
+	enemy->DeleteCollision(&enemy->attackColl);
 }
