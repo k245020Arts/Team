@@ -38,7 +38,7 @@ namespace {
 	{ "DIE", ID::BOSS_DIE },
 	{ "ROAR_ANIM", ID::B_ROAR_ANIM },
 	{ "ROAR3", ID::B_ROAR_2 },
-	{ "RUN", ID::B_DUSH },
+	{ "RUN", ID::B_DUSH_ANIM },
 	{ "THREAT", ID::B_THREAT },
 	{ "DAMAGE", ID::BOSS_DAMAGE },
 	{ "APPEAR_FALL", ID::B_APPEAR_FALL },
@@ -97,7 +97,7 @@ void BossCreater::CreateBoss()
 	for (auto& param : bossParams) {
 		if (currentBossID == param.bossID) {
 			bossParam = param;
-			break;
+			break; //IDÇ∆àÍívÇµÇΩÇÁèIóπ
 		}
 	}
 	Object3D* boss;

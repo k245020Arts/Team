@@ -294,7 +294,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();
 	
 	enemyBaseComponent.color = obj->Component()->GetComponent<Color>();
-	enemyBaseComponent.color->setRGB(Color::Rgb(0.0f, 0.0f, 0.0f, 255.0f));
+	enemyBaseComponent.color->setRGB(Color::Rgb(255.0f, 255.0f, 255.0f, 255.0f));
 	enemyBaseComponent.shaker = obj->Component()->GetComponent<Shaker>();
 	
 	enemyBaseComponent.physics = obj->Component()->GetComponent<Physics>();

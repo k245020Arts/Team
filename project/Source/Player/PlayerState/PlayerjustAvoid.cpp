@@ -55,7 +55,7 @@ void PlayerJustAvoid::Update()
 		count = 1.0f;
 	}
 	//‰ñ”ð‚Ì‘¬“x‚Ì’²®
-	constexpr float MAX_SPEED = 90000.0f;
+	constexpr float MAX_SPEED = 9000.0f;
 	constexpr float MIN_SPEED = 2000.0f;
 	float speed = Easing::EaseInOut(MAX_SPEED, MIN_SPEED, count);
 	p->playerCom.anim->SetPlaySpeed(rate);

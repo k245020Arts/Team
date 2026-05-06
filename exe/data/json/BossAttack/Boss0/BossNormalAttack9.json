@@ -100,7 +100,7 @@
           "y": 0.0,
           "z": 0.0
         },
-        "flyingHeight": 1500.0,
+        "flyingHeight": 0.0,
         "flyingSpeed": 10000.0,
         "freeDir": false,
         "maxRadius": 3000.0,

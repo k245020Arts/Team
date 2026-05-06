@@ -79,7 +79,7 @@ void BossRun::Start()
 	Boss* b = GetBase<Boss>();
 	//ボスのHPが半分を切ったらモーションを変える
 	if (b->hpRate == Boss::FIVE || b->hpRate == Boss::THREE) {
-		animId = ID::B_DUSH;
+		animId = ID::B_DUSH_ANIM;
 	}
 	else {
 		animId = ID::B_RUN;
