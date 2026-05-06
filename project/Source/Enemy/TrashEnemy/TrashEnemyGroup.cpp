@@ -52,7 +52,7 @@ void TrashEnemyGroup::Update()
 
 void TrashEnemyGroup::Draw()
 {
-	CooperateAttackLine();
+	//CooperateAttackLine();
 }
 
 void TrashEnemyGroup::SettingGroup(TrashEnemy* _enemy, int _index)
