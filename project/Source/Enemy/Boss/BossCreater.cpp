@@ -97,7 +97,7 @@ void BossCreater::CreateBoss()
 	for (auto& param : bossParams) {
 		if (currentBossID == param.bossID) {
 			bossParam = param;
-			break;
+			break; //ID‚Æˆê’v‚µ‚½‚çI—¹
 		}
 	}
 	Object3D* boss;
