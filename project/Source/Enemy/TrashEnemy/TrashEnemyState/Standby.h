@@ -13,6 +13,7 @@ public:
 	void Finish()override;
 private:
 	void RotateMove();
+	//ƒJƒƒ‰‚Ì’†‚É‚¢‚½‚çUŒ‚‚Å‚«‚é
 	void InCameraView();
 	const float BACKSPEED = 60.0f;
 

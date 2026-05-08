@@ -21,6 +21,8 @@ TrashEnemyGroup::TrashEnemyGroup()
 	rangedAtkCounter = 0;
 
 	rangedJoinCounter = 0;
+
+	startRangedAtk = false;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -52,7 +54,7 @@ void TrashEnemyGroup::Update()
 
 void TrashEnemyGroup::Draw()
 {
-	//CooperateAttackLine();
+	CooperateAttackLine();
 }
 
 void TrashEnemyGroup::SettingGroup(TrashEnemy* _enemy, int _index)
@@ -206,7 +208,7 @@ int TrashEnemyGroup::GetRangedActiveEnemy()const
 
 void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 {
-	if (_enemy->IsCooperateAtk() || !_enemy->IsAttack())
+	if (_enemy->IsCooperateAtk() || !_enemy->IsAttack() || startRangedAtk)
 		return;
 
 	attackCounter+=Time::DeltaTimeRate();
@@ -295,7 +297,7 @@ void TrashEnemyGroup::CooperateAttackLine()
 	for (int i = 0; i < Counter; i++)
 	{
 		//DrawLine3D(copyPos[i], copyPos[i + 1], GetColor(255, 0, 0));
-		DrawCapsule3D(copyPos[i], copyPos[i + 1] , 50, 0, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
+		DrawCapsule3D(copyPos[i], copyPos[i + 1] , 30, 0, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
 	}
 
 	copyPos.clear();
@@ -352,6 +354,8 @@ void TrashEnemyGroup::RangedEnemyAttack()
 			//リーダーが飛ぶ処理
 			enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
 
+			startRangedAtk = true;
+
 			if (enemy->GetStandby())//リーダーが他の奴に指示を出す
 				leaderActiveEnd = true;
 
@@ -364,6 +368,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 					rangedAtkTime = 0;
 					AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
 					rangedJoinCounter = 0;
+					startRangedAtk = false;
 					FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
 				}
 			}

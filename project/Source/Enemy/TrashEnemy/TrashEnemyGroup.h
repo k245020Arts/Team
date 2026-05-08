@@ -103,6 +103,8 @@ private:
 	int rangedAtkCounter;
 	//連携開始時のリーダー以外の敵が何体いるか
 	int rangedJoinCounter;
+	//遠距離の敵の攻撃
+	bool startRangedAtk;
 
 	//--------------------------
 };
