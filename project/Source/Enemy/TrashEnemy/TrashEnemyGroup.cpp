@@ -297,7 +297,7 @@ void TrashEnemyGroup::CooperateAttackLine()
 	for (int i = 0; i < Counter; i++)
 	{
 		//DrawLine3D(copyPos[i], copyPos[i + 1], GetColor(255, 0, 0));
-		DrawCapsule3D(copyPos[i], copyPos[i + 1] , 30, 0, GetColor(0, 0, 0), GetColor(0, 0, 0), true);
+		DrawCapsule3D(copyPos[i], copyPos[i + 1] , 20, 0, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
 	}
 
 	copyPos.clear();

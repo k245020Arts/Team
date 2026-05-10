@@ -19,6 +19,8 @@ CooperateAttack1::CooperateAttack1()
 	attackParam.slowAmout = 0.1f;
 	attackParam.slowTime = 0.3f;
 	attackParam.speedUpMotionSpeed = 0.3f;
+
+	copyColl = VZero;
 }
 
 CooperateAttack1::~CooperateAttack1()
@@ -43,6 +45,9 @@ void CooperateAttack1::Start()
 	enemy->enemyBaseComponent.anim->SetFrame(5.0f);
 	firstColl = true;
 
+	copyColl = BossAttackBase::collTrans.scale;
+	BossAttackBase::collTrans.scale = VECTOR3(200, 0, 0);
+
 	EnemyStateBase::Start();
 }
 
@@ -52,4 +57,6 @@ void CooperateAttack1::Finish()
 	enemy->speed=enemy->eStatus->GetStatus().runSpeed;
 	enemy->CooperateAtkFinish();
 	enemy->DeleteCollision(&enemy->attackColl);
+
+	BossAttackBase::collTrans.scale = copyColl;
 }

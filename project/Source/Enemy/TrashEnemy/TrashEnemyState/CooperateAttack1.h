@@ -14,6 +14,8 @@ private:
 	VECTOR3 rotation;
 	VECTOR3 velocity;
 
+	VECTOR3 copyColl;
+
 	float speed;
 	float time;
 };
