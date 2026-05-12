@@ -551,6 +551,9 @@
     <ClCompile Include="Source\Title\TitleScene.cpp">
       <Filter>TitleScene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Component\UI\TextRenderer.cpp">
+      <Filter>Component\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1175,6 +1178,9 @@
     </ClInclude>
     <ClInclude Include="Source\Title\TitleScene.h">
       <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\UI\TextRenderer.h">
+      <Filter>Component\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

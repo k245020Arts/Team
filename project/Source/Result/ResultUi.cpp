@@ -29,7 +29,7 @@ ResultUi::~ResultUi()
 
 void ResultUi::Update()
 {
-	if (!start) {
+	if (!start) { //UI表示が始まってなかったらスルー
 		return;
 	}
 	addCount = max(addCount - Time::DeltaTimeRate() * 1.0f, 0.0f);
@@ -43,9 +43,11 @@ void ResultUi::Draw()
 {
 	Transform* transform = obj->GetTransform();
 	if (win) {
+		//勝ちの時の表示
 		const int LOOP_NUM = 10;
 		double size = (double)addExrate / LOOP_NUM;
 		SetDrawBlendMode(DX_BLENDMODE_ADD, addDrawValue);
+		//加算合成
 		for (int i = 0; i < LOOP_NUM; i++) {
 			double t = (double)i / LOOP_NUM;
 			double s = size * (1.0 + t * 0.3);
@@ -69,6 +71,8 @@ void ResultUi::Draw()
 		}
 	}
 	else {
+		//負けの時の表示
+
 		float t = min(1.0f - addCount, 1.0f);
 
 		// 画面暗転
@@ -90,13 +94,15 @@ void ResultUi::Draw()
 
 void ResultUi::ResultStart(bool _win)
 {
-	if (start) {
+	if (start) { //すでに始まってたら
 		return;
 	}
 	if (_win) {
+		//勝ちの時は勝ちの画像を表示
 		hImage = ResourceLoad::GetHandle(ID::WIN);
 	}
 	else {
+		//負けの時は負けの画像を表示
 		hImage = ResourceLoad::GetHandle(ID::LOSE);
 	}
 	

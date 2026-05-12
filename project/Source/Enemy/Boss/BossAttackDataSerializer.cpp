@@ -728,10 +728,10 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 			ImGui::Checkbox("Capsule##PlayerHit_", &t.capsule);
 			ImGui::DragFloat3("CapsuleStartPos##PlayerHit_", &t.capselStartPos.x, 0.1f);
 			ImGui::DragFloat3("CapsuleEndPos##PlayerHit_", &t.capselEndPos.x, 0.1f);
-			ImGui::Checkbox("CapsuleColliderAdd##PlayerHit_", &t.capsuleColliderAdd);
-			ImGui::DragFloat3("CapsuleColliderAddPos##PlayerHit_", &t.causuleColliderAddPos.x, 0.1f);
-			ImGui::Checkbox("CapsuleColliderAddStartThrow##PlayerHit_", &t.capsuleColliderAddStartThrow);
-			ImGui::DragFloat("CapsuleColliderAddStartThrowAnimFrame##PlayerHit_", &t.capsuleColliderAddStartThrowAnimFrame, 0.1f);
+			ImGui::Checkbox("capsuleEndPosExtend##PlayerHit_", &t.capsuleEndPosExtend);
+			ImGui::DragFloat3("capsuleEndPosExtendOffset##PlayerHit_", &t.capsuleEndPosExtendOffset.x, 0.1f);
+			ImGui::Checkbox("capsuleEndPosExtendFromThrowStart##PlayerHit_", &t.capsuleEndPosExtendFromThrowStart);
+			ImGui::DragFloat("capsuleEndPosExtendStartAnimFrame##PlayerHit_", &t.capsuleEndPosExtendStartAnimFrame, 0.1f);
 		}
 	}
 

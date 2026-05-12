@@ -361,8 +361,8 @@ void BossRockManager::RockContorler(BossAttackBase::BossAttackParam _data, float
 			rock->ThrowRockStart(boss->enemyBaseComponent.playerObj);
 		}
 		
-		if (_animFrame <= data.capsuleColliderAddStartThrowAnimFrame) {
-			if (!data.capsuleColliderAddStartThrow) {
+		if (_animFrame <= data.capsuleEndPosExtendStartAnimFrame) {
+			if (!data.capsuleEndPosExtendFromThrowStart) {
 				rock->CapsuleColliderPosAddStart();
 			}
 		}

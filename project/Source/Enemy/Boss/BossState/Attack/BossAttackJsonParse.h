@@ -65,10 +65,10 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 			j["Capsule"] = p.capsule;
 			j["CapsuleStartPos"] = p.capselStartPos;
 			j["CapsuleEndPos"] = p.capselEndPos;
-			j["capsuleColliderAdd"] = p.capsuleColliderAdd;
-			j["causuleColliderAddPos"] = p.causuleColliderAddPos;
-			j["capsuleColliderAddStartThrow"] = p.capsuleColliderAddStartThrow;
-			j["capsuleColliderAddStartThrowAnimFrame"] = p.capsuleColliderAddStartThrowAnimFrame;
+			j["capsuleEndPosExtend"] = p.capsuleEndPosExtend;
+			j["capsuleEndPosExtendOffset"] = p.capsuleEndPosExtendOffset;
+			j["capsuleEndPosExtendFromThrowStart"] = p.capsuleEndPosExtendFromThrowStart;
+			j["capsuleEndPosExtendStartAnimFrame"] = p.capsuleEndPosExtendStartAnimFrame;
 		}
 	}
 
@@ -251,10 +251,10 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 			if (p.capsule) {
 				if (j.contains("CapsuleStartPos")) j.at("CapsuleStartPos").get_to(p.capselStartPos);
 				if (j.contains("CapsuleEndPos")) j.at("CapsuleEndPos").get_to(p.capselEndPos);
-				if (j.contains("capsuleColliderAdd")) j.at("capsuleColliderAdd").get_to(p.capsuleColliderAdd);
-				if (j.contains("causuleColliderAddPos")) j.at("causuleColliderAddPos").get_to(p.causuleColliderAddPos);
-				if (j.contains("capsuleColliderAddStartThrow")) j.at("capsuleColliderAddStartThrow").get_to(p.capsuleColliderAddStartThrow);
-				if (j.contains("capsuleColliderAddStartThrowAnimFrame")) j.at("capsuleColliderAddStartThrowAnimFrame").get_to(p.capsuleColliderAddStartThrowAnimFrame);
+				if (j.contains("capsuleEndPosExtend")) j.at("capsuleEndPosExtend").get_to(p.capsuleEndPosExtend);
+				if (j.contains("capsuleEndPosExtendOffset")) j.at("capsuleEndPosExtendOffset").get_to(p.capsuleEndPosExtendOffset);
+				if (j.contains("capsuleEndPosExtendFromThrowStart")) j.at("capsuleEndPosExtendFromThrowStart").get_to(p.capsuleEndPosExtendFromThrowStart);
+				if (j.contains("capsuleEndPosExtendStartAnimFrame")) j.at("capsuleEndPosExtendStartAnimFrame").get_to(p.capsuleEndPosExtendStartAnimFrame);
 			}
 		}
 	}

@@ -106,7 +106,7 @@ void BossRockBase::Update()
 	if (!start) {
 		return;//まだ情報が入っていないのでリターン
 	}
-	if (throwReady && !attackData.armSwordHand) {
+	if (throwReady && !attackData.armSwordHand) { //腕投げの時の座標
 		Transform* transform = obj->GetTransform();
 		MATRIX matrixWorld = MV1GetFrameLocalWorldMatrix(throwRockBaseModel, boneNum);
 		// WORLD座標を取得
@@ -116,13 +116,13 @@ void BossRockBase::Update()
 		VECTOR3 frashPosLocal = frameWorldPos * invObjWorldMat;
 		transform->position = frameWorldPos + addPos;
 	}
-	if (!attackData.groundDelete) {
+	if (!attackData.groundDelete) { //削除時間
 		groundTime -= Time::DeltaTimeRate();
 		if (groundTime <= 0.0f) {
 			obj->DestroyMe();
 		}
 	}
-	if (throwRock) {
+	if (throwRock) { //投げた後の挙動
 		if (velocityAdd) {
 			VECTOR3 direction = dir + attackData.diffusionAngle;
 			physics->AddVelocity(direction * attackData.throwSpeed, true);
@@ -141,22 +141,22 @@ void BossRockBase::Update()
 			physics->AddVelocity(attackData.thorwVelocity, true);
 		}
 	}
-	if (playerAttackHit) {
+	if (playerAttackHit) { //プレイヤーが攻撃して飛ばしたときに一瞬で地面についた判定にならないためのカウンター
 
 		flyCounter -= Time::DeltaTimeRate();
 		if (flyCounter <= 0.0f) {
 			fly = true;
 		}
 	}
-	if (colliderAddStart) {
+	if (colliderAddStart) {//当たり判定が大きくなるか
 		if (playerHitCapsuleColl != nullptr) {
-			playerHitCapsuleColl->AddCapsuleEndPos(attackData.causuleColliderAddPos);
+			playerHitCapsuleColl->AddCapsuleEndPos(attackData.capsuleEndPosExtendOffset);
 		}
 		if (justAvoidCapselCollider != nullptr) {
-			justAvoidCapselCollider->AddCapsuleEndPos(attackData.causuleColliderAddPos);
+			justAvoidCapselCollider->AddCapsuleEndPos(attackData.capsuleEndPosExtendOffset);
 		}
 	}
-	if (attackData.alotCollsionHit) {
+	if (attackData.alotCollsionHit) { //多段ヒット
 		alotHitCounter += Time::DeltaTime();
 		//再生成タイミングが来たら
 		if (alotHitCounter > attackData.alotHitColliderCreateCounter) {
@@ -164,14 +164,14 @@ void BossRockBase::Update()
 			alotHitCounter = 0.0f;
 		}
 	}
-	if (nowBlast) {
+	if (nowBlast) { //爆発
 		//50
 		float waveSpeed = attackData.waveSpeed;
 		blastColl->GetTransform()->scale.x += waveSpeed;
 		blastColl->AddOutRadius(waveSpeed);
 		blastJustAvoidColl->GetTransform()->scale.x += waveSpeed;
 		blastJustAvoidColl->AddOutRadius(waveSpeed);
-		//3000
+		//一定以上の爆発範囲になったら削除
 		if (blastColl->GetOutRadius() >= attackData.maxRadius) {
 			obj->DestroyMe();
 		}
@@ -180,7 +180,7 @@ void BossRockBase::Update()
 		}
 	}
 	else {
-		if (blast) {
+		if (blast) { //爆発の予測
 			blinkCounter -= Time::DeltaTimeRate();
 			if (blinkCounter <= 0.0f) {
 				blinkCounter = blinkBaseMax;
@@ -203,7 +203,7 @@ void BossRockBase::Update()
 
 void BossRockBase::Draw()
 {
-	if (preDraw) {
+	if (preDraw) { //予測線の描画
 		//MV1SetDifColorScale(preModel, GetColorF(1.0f, 0.0f, 0.0f, 1.0f));
 		MV1SetMatrix(preModel, preTransform.GetMatrix());
 		MV1DrawModel(preModel);
@@ -212,11 +212,11 @@ void BossRockBase::Draw()
 
 void BossRockBase::Ground(const CollsionEventData& _data)
 {
-	if (fly || attackData.groundDelete) {
-		if (attackData.blastCan) {
+	if (fly || attackData.groundDelete) { //二回地面につくか、地面についたら消えるようになるパラメータをセットしたら
+		if (attackData.blastCan) { //爆発するなら爆発
 			BlastCollsionCreate();
 		}
-		else {
+		else { //しないなら削除
 			obj->DestroyMe();
 			SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BREAK);
 			EffectManager::GetInstance()->CreateEffekseer(Transform(VZero, VZero, VOne * 4.0f), obj, Effect_ID::ROCK_BREAK, 1.0f);
@@ -231,6 +231,7 @@ void BossRockBase::Ground(const CollsionEventData& _data)
 	EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0,-100,0), VZero, VOne * 4.0f), obj, Effect_ID::BOSS_GROUND, 1.0f);
 	//effectManager->StopEffekseer(Effect_ID::ROCK_FALL);
 	groundInit = true;
+	//当たり判定が存在していたら削除
 	if (playerHitColl != nullptr) {
 		obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("_rockAttack");
 		playerHitColl = nullptr;
@@ -240,12 +241,13 @@ void BossRockBase::Ground(const CollsionEventData& _data)
 		playerHitCapsuleColl = nullptr;
 	}
 	
-	
+	//地面についたときの残留ダメージがあるならその当たり判定の生成
 	if (attackData.playerGroundHit) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
 
 		info.oneColl = false;
+		//カプセルの形ならカプセルで生成
 		if (attackData.capsule) {
 			info.shape = CollsionInformation::CAPSULE;
 			if (attackData.playerGroundOneHit) {
@@ -264,6 +266,7 @@ void BossRockBase::Ground(const CollsionEventData& _data)
 			playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitCollRadius, true, handMatrix,nullptr, "_rockGroundAttack");
 		}
 		else {
+			//それ以外なら丸で生成
 			info.shape = CollsionInformation::SPHERE;
 			if (attackData.playerGroundOneHit) {
 				info.oneColl = true;
@@ -290,11 +293,12 @@ void BossRockBase::Ground(const CollsionEventData& _data)
 	justAvoidCollider = nullptr;
 	//randColl = nullptr;
 	//flyCounter = 0.5f;
-	if (attackData.capsuleColliderAddStartThrow) {
+	if (attackData.capsuleEndPosExtendFromThrowStart) {
 		CapsuleColliderPosAddStart();
 	}
 	
 	velocityAdd = false;
+	//押し返し判定があるなら押し返し判定をする
 	if (attackData.pushCollCan) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -309,6 +313,7 @@ void BossRockBase::Ground(const CollsionEventData& _data)
 		}
 	}
 
+	//はじき返し判定があるなら生成
 	if (attackData.playerAttackFlying) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -323,6 +328,7 @@ void BossRockBase::Ground(const CollsionEventData& _data)
 		}
 	}
 
+	//突進攻撃時にひるませる判定があるなら生成
 	if (attackData.bossRushHit) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -345,6 +351,7 @@ void BossRockBase::Ground(const CollsionEventData& _data)
 		}
 	}
 
+	//予測円があるなら、予測円を削除
 	if (attackData.predictionCicleCan) {
 		preDraw = false;
 		obj->Component()->RemoveComponentWithTagIsCollsion<RayCollider>("uiColl");
@@ -366,6 +373,8 @@ void BossRockBase::Ground(const CollsionEventData& _data)
 			break;
 		}
 	}*/
+	
+	//物理クラスがあるなら、移動を完全に静止
 	if(physics != nullptr)
 		physics->SetVelocity(VZero);
 	
@@ -382,6 +391,7 @@ void BossRockBase::PlayerAttackRockFlyAway(const CollsionEventData& _data)
 {
 	CollsionInfo info;
 
+	//はじき返したオブジェクトがボスに当たる当たり判定
 	if (attackData.bossHit) {
 		info.parentTransfrom = obj->GetTransform();
 		info.shape = CollsionInformation::SPHERE;
@@ -393,7 +403,8 @@ void BossRockBase::PlayerAttackRockFlyAway(const CollsionEventData& _data)
 		bossHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.bossHitCollRadius, 1.0f, 1.0f)),func, "rockBossHit");
 	}
 	
-	physics->SetVelocity(_data.targetTransform->Forward() * /*10000.0f*/attackData.flyingSpeed);
+
+	physics->SetVelocity(_data.targetTransform->Forward() * attackData.flyingSpeed);
 	physics->AddVelocity(VECTOR3(0, attackData.flyingHeight, 0), false);
 	//physics->SetGravity(VZero);
 	flyCounter = 0.5f;
@@ -402,6 +413,7 @@ void BossRockBase::PlayerAttackRockFlyAway(const CollsionEventData& _data)
 	
 	playerAttackHit = true;
 	velocityAdd = false;
+	//当たり判定が操作したら削除
 	if (playerHitColl != nullptr) {
 		playerHitColl = nullptr;
 		obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("_rockAttack");
@@ -417,6 +429,7 @@ void BossRockBase::PlayerAttackRockFlyAway(const CollsionEventData& _data)
 
 void BossRockBase::RockBossHit(const CollsionEventData& _data)
 {
+	//ボスが岩に当たった時に削除
 	if (attackData.blastCan) {
 		SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BLAST);
 		BlastCollsionCreate();
@@ -443,6 +456,7 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack,MA
 	attackData = _attack;
 	handMatrix = _handMatrix;
 	
+	//地面判定があるなら付ける
 	if (attackData.randCan) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -454,6 +468,7 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack,MA
 		std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { Ground(_data); };
 		randColl->RaySet(info, Transform(VECTOR3(0, _attack.randCollInfo.rayStartPos, 0), VZero, VOne), Transform(VECTOR3(0, _attack.randCollInfo.rayFinishPos, 0), VZero, VOne),func);
 	}
+	//投擲物がプレイヤーに当たるなら付ける
 	if (attackData.playerHit) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -464,6 +479,7 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack,MA
 		else {
 			info.tag = CollsionInformation::BOSS_ROCK_ATTACK;
 		}
+		//カプセルの時はカプセル型の当たり判定の生成
 		if (attackData.capsule) {
 			info.shape = CollsionInformation::CAPSULE;
 			playerHitCapsuleColl = obj->Component()->AddComponent<CapsuleCollider>();
@@ -479,6 +495,7 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack,MA
 			}
 		}
 		else {
+			//それ以外は丸型
 			info.shape = CollsionInformation::SPHERE;
 			playerHitColl = obj->Component()->AddComponent<SphereCollider>();
 			//200
@@ -494,6 +511,7 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack,MA
 		}
 	}
 
+	//予測円を出すなら生成
 	if (attackData.predictionCicleCan) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -519,11 +537,13 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack,MA
 	blinkCounter = blinkBaseMax;
 	ChangeColorMode = false;
 	nowBlast = false;
+	//落ちる時専用のエフェクトを生成
 	if (attackData.throwToFall || attackData.throwToFallToPlayer) {
 		SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_FALL);
 
 		EffectManager::GetInstance()->CreateEffekseer(Transform(VZero, VZero, VOne * 2.0f), obj, Effect_ID::ROCK_FALL, 3.0f);
 	}
+	//腕で投げられる時の位置を取得
 	if (attackData.armThrow) {
 		throwReady = true;
 
@@ -541,10 +561,11 @@ void BossRockBase::Start(const BossAttackBase::ThrowObjectAttackData& _attack,MA
 
 void BossRockBase::DropObject()
 {
-	if (throwRock) {
+	if (throwRock) { //投げ終わった後なら落ちない
 		return;
 	}
 	throwReady = false;
+	//地面につくかどうかの判定
 	if (attackData.randCan) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -557,7 +578,7 @@ void BossRockBase::DropObject()
 			randColl->RaySet(info, Transform(VECTOR3(0, 300, 0), VZero, VOne), Transform(VECTOR3(0, -300, 0), VZero, VOne), nullptr);
 		}
 	}
-	
+	//はじき返すかの判定
 	if (attackData.playerAttackFlying) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -575,6 +596,7 @@ void BossRockBase::DropObject()
 	throwRock = true;
 	colliderAddStart = false;
 	float g = 2000.0f;
+	//一定の重力の生成
 	if (physics != nullptr) {
 		physics->SetGravity(VECTOR3(0, -g, 0));
 	}
@@ -585,11 +607,12 @@ void BossRockBase::DropObject()
 
 void BossRockBase::ThrowRockStart(BaseObject* _player)
 {
-	if (throwRock) {
+	if (throwRock) { //一回投げたらそれ以降は入らないようにする
 		return;
 	}
 	dir = obj->GetParent()->GetTransform()->Forward() * -1.0f;
 	throwReady = false;
+	//地面につくかどうかの判定
 	if (attackData.randCan) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -602,7 +625,7 @@ void BossRockBase::ThrowRockStart(BaseObject* _player)
 			randColl->RaySet(info, Transform(VECTOR3(0, 300, 0), VZero, VOne), Transform(VECTOR3(0, -300, 0), VZero, VOne), func);
 		}
 	}
-
+	//はじき返すかどうかの判定
 	if (attackData.playerAttackFlying) {
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
@@ -639,10 +662,12 @@ void BossRockBase::ThrowRockStart(BaseObject* _player)
 		float cosA = cosf(angle);
 		float sinA = sinf(angle);
 
-		float numerator = g * distance * distance;
+		//放物線の方程式にて速度を設定
+
+		float num = g * distance * distance;
 		float denominator = 2 * cosA * cosA * (distance * tanf(angle) - height);
 
-		float speed = sqrtf(numerator / denominator);
+		float speed = sqrtf(num / denominator);
 
 		// 速度ベクトル
 		VECTOR3 dir = diffXZ.Normalize();
@@ -654,7 +679,9 @@ void BossRockBase::ThrowRockStart(BaseObject* _player)
 
 		physics->AddVelocity(velocity, false);
 	}
+	//前に飛ばす処理
 	if (attackData.thorwToFront) {
+		//拡散方向
 		VECTOR3 direction = dir + attackData.diffusionAngle;
 		physics->AddVelocity(direction * attackData.throwFirstSpeed, true);
 		physics->AddVelocity(VECTOR3(0.0f, attackData.upSpeed, 0.0f), false);
@@ -669,7 +696,7 @@ void BossRockBase::ThrowRockStart(BaseObject* _player)
 void BossRockBase::BlastCollsionCreate()
 {
 	if (blastColl != nullptr) {
-		return;
+		return; //爆発の当たり判定があったらない
 	}
 	CollsionInfo info;
 	blastColl = obj->Component()->AddComponent<DountCollider>();
@@ -708,27 +735,36 @@ void BossRockBase::AlotCollsionSet()
 	else {
 		info.shape = CollsionInformation::SPHERE;
 	}
+	//------------------各々の当たり判定を削除してから再生成することで多段ヒットを実現----------------------------------
 	if (playerHitCapsuleColl != nullptr) {
 		playerHitCapsuleColl = nullptr;
 		obj->Component()->RemoveComponentWithTagIsCollsion<CapsuleCollider>("_rockAttack");
 		playerHitCapsuleColl = obj->Component()->AddComponent<CapsuleCollider>();
-		playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitCollRadius, true, handMatrix, nullptr, "_rockGroundAttack");
+		playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), 
+			Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitCollRadius, 
+			true, handMatrix, nullptr, "_rockGroundAttack"
+		);
 	}
 	if (justAvoidCapselCollider != nullptr) {
 		justAvoidCapselCollider = nullptr;
 		obj->Component()->RemoveComponentWithTagIsCollsion<CapsuleCollider>("justAvoid_rock");
 		playerHitCapsuleColl = obj->Component()->AddComponent<CapsuleCollider>();
-		playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitJustAvoidCollRadius, true, handMatrix, nullptr, "_rockGroundAttack");
+		playerHitCapsuleColl->CapsuleSet(info, Transform(attackData.capselEndPos, VZero, VOne), 
+			Transform(attackData.capselStartPos, VZero, VZero), attackData.playerHitJustAvoidCollRadius, 
+			true, handMatrix, nullptr, "_rockGroundAttack"
+		);
 	}
 	if (playerHitColl != nullptr) {
 		playerHitColl = nullptr;
 		obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("_rockAttack");
 		playerHitColl = obj->Component()->AddComponent<SphereCollider>();
 		if (attackData.playerHit) {
-			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitCollRadius, 1.0f, 1.0f)), nullptr, "_rockGroundAttack");
+			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, 
+				VECTOR3(attackData.playerHitCollRadius, 1.0f, 1.0f)), nullptr, "_rockGroundAttack");
 		}
 		if (attackData.playerGroundHit) {
-			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerGroundCollRadius, 1.0f, 1.0f)), nullptr, "_rockGroundAttack");
+			playerHitColl->CollsionAdd(info, Transform(VZero, VZero, 
+				VECTOR3(attackData.playerGroundCollRadius, 1.0f, 1.0f)), nullptr, "_rockGroundAttack");
 		}
 			
 	}
@@ -737,13 +773,16 @@ void BossRockBase::AlotCollsionSet()
 		obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("justAvoid_rock");
 		justAvoidCollider = obj->Component()->AddComponent<SphereCollider>();
 		if (attackData.playerHit) {
-			justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitJustAvoidCollRadius, 1.0f, 1.0f)), nullptr, "_rockGroundAttack");
+			justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerHitJustAvoidCollRadius, 1.0f, 1.0f))
+				, nullptr, "_rockGroundAttack");
 		}
 		/*if (attackData.playerGroundHit) {
 			justAvoidCollider->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(attackData.playerGroundCollRadius, 1.0f, 1.0f)), "_rockGroundAttack");
 		}*/
 
 	}
+
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
 
 void BossRockBase::SetPreInfo(const CollsionEventData& _data)
@@ -754,7 +793,7 @@ void BossRockBase::SetPreInfo(const CollsionEventData& _data)
 
 void BossRockBase::CapsuleColliderPosAddStart()
 {
-	if (attackData.capsuleColliderAdd) {
+	if (attackData.capsuleEndPosExtend) {
 		colliderAddStart = true;
 	}
 }
@@ -762,7 +801,7 @@ void BossRockBase::CapsuleColliderPosAddStart()
 void BossRockBase::BlastCollsionEvent(const CollsionEventData& _data)
 {
 	if (HitObjects(_data.targetObject)) {
-		return;
+		return; //すでに当たってるオブジェクトならリターン
 	}
 	AddHitObj(_data.targetObject);
 }

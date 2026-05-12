@@ -90,10 +90,10 @@ namespace PlayerInformation {
 	// チャージレベル1つ分のリアクションパラメータ
 	struct ChargeReactionLevelData
 	{
-		VECTOR3 shakePower;
-		float   shakeTime;
-		VECTOR3 cameraShakePower;
-		float   cameraShakeTime;
+		VECTOR3 shakePower;		//ヒットストップのパワー
+		float   shakeTime;		//ヒットストップの時間
+		VECTOR3 cameraShakePower;//カメラのシェイクのパワー
+		float   cameraShakeTime;//カメラのシェイクのパワー
 
 		ChargeReactionLevelData()
 			: shakePower(VZero), shakeTime(0.0f)
@@ -141,17 +141,18 @@ namespace PlayerInformation {
 			
 		}
 		
-		StateID::State_ID state;
-		VECTOR3 shakePower;
-		float shakeTime;
-		VECTOR3 cameraShakePower;
-		float cameraShakeTime;
-		std::string soundName;
-		int soundKind;
-		bool shakerLoop;
-		Shaker::ShakePattern shakePattern;
-		std::vector<ChargeReactionLevelData> chargeLevels;
+		StateID::State_ID state;							//攻撃のステート
+		VECTOR3 shakePower;									//ヒットストップのShakeのパワー
+		float shakeTime;									//ヒットストップのShakeの時間
+		VECTOR3 cameraShakePower;							//ヒットストップの時のカメラのShakeのパワー
+		float cameraShakeTime;								//ヒットストップの時のカメラのShakeの時間
+		std::string soundName;								//当たった時のヒット音
+		int soundKind;										//サウンドが何種類あるか
+		bool shakerLoop;									//ループするか
+		Shaker::ShakePattern shakePattern;					//shakeのパターン
+		std::vector<ChargeReactionLevelData> chargeLevels;  //チャージのレベル
 
+		//チャージのレベルを取得
 		const ChargeReactionLevelData* GetChargeLevel(int level) const
 		{
 			int idx = static_cast<int>(level);

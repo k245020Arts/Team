@@ -78,8 +78,7 @@ Camera::~Camera()
 }
 
 void Camera::Update()
-{
-	
+{	
 
 	cameraComponent.enemyManager->NearEnemyAlpha(cameraComponent.cameraTransform->position);
 	

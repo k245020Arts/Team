@@ -46,10 +46,10 @@ public:
 
 	struct ChargeAttackLevelData
 	{
-		float againTimer;        // AgainTimerSetの第1引数
-		int   againTimerFlag;    // AgainTimerSetの第2引数
-		VECTOR3 moveSpeed;
-		float hitDamage;
+		float againTimer;        // 攻撃回数
+		int   againTimerFlag;    // 再攻撃可能になるまでの時間
+		VECTOR3 moveSpeed;		//移動スピード
+		float hitDamage;		//攻撃力
 
 		ChargeAttackLevelData()
 			: againTimer(0.0f), againTimerFlag(0)
@@ -67,27 +67,26 @@ public:
 
 	struct PlayerAttackData
 	{
-		StateID::State_ID state;
-		StateID::State_ID normalAttackNextID;
-		StateID::State_ID specialAttackNextID;
+		StateID::State_ID state;							// 使用するステートID
+		StateID::State_ID normalAttackNextID;				// 通常攻撃派生先ステートID
+		StateID::State_ID specialAttackNextID;				// 特殊攻撃派生先ステートID
 
-		float hitDamage;
-		float attackAgainStartCounterMax;
-		int attackNum;
-		float collsionStartTime;
-		float collsionFinishTime;
+		float hitDamage;									// 攻撃ダメージ量
+		float attackAgainStartCounterMax;					// 再攻撃可能になるまでの時間
+		int attackNum;										// 攻撃回数
+		float collsionStartTime;							// 攻撃判定開始時間
+		float collsionFinishTime;							// 攻撃判定終了時間
 
-		float motionCancelStartTime;
-		float attackInputStartTime;
-		float nextAttackRunTimer;
-		float noAttackRunTimer;
+		float motionCancelStartTime;						// モーションキャンセル開始時間
+		float attackInputStartTime;							// 次攻撃入力受付開始時間
+		float nextAttackRunTimer;							// 次段攻撃へ移行する入力猶予時間
+		float noAttackRunTimer;								// 非攻撃状態へ戻るまでの時間
 
+		VECTOR3 attackMove;									// 攻撃時移動量
 
-		VECTOR3 attackMove;
+		Transform collTrans;								// 攻撃判定Transform
 
-		Transform collTrans;
-
-		std::vector<ChargeAttackLevelData> chargeLevels;
+		std::vector<ChargeAttackLevelData> chargeLevels;	// チャージ攻撃レベルデータ一覧
 
 		const ChargeAttackLevelData* GetChargeLevel(int level) const
 		{
@@ -148,7 +147,7 @@ public:
 			, noAttackRunTimer(_noAttackRunTimer)
 			, attackMove(_attackMove)
 			, collTrans(collTrans)
-			, chargeLevels(chargeLevels)  // 追加
+			, chargeLevels(chargeLevels)
 		{
 		}
 	};
