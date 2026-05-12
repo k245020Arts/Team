@@ -467,9 +467,6 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossLose.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRock.cpp">
-      <Filter>Component\EnemyAttackObject\BossRock</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRockManager.cpp">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
     </ClCompile>
@@ -477,9 +474,6 @@
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClCompile>
     <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRockBase.cpp">
-      <Filter>Component\EnemyAttackObject\BossRock</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossThrowRock.cpp">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
     </ClCompile>
     <ClCompile Include="Source\Component\Collider\AABBCollider.cpp">
@@ -1086,9 +1080,6 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDamage.h">
       <Filter>PlayScene\Enemy\TrashEnemy\EnemyState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRock.h">
-      <Filter>Component\EnemyAttackObject\BossRock</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRockManager.h">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
     </ClInclude>
@@ -1096,9 +1087,6 @@
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>
     <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRockBase.h">
-      <Filter>Component\EnemyAttackObject\BossRock</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossThrowRock.h">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
     </ClInclude>
     <ClInclude Include="Source\Result\ResultUi.h">

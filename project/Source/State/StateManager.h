@@ -121,8 +121,7 @@ public:
 
 	void ImguiDraw();
 
-	void DataSaveState();
-	void LoadSaveState();
+	std::unordered_map<std::string, std::shared_ptr<StateBase>> GetStateInfo() { return stateInfo; }
 
 protected:
 

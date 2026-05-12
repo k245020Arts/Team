@@ -12,6 +12,7 @@
 #include "../../Physics/Physics.h"
 #include "../../Shaker/Shaker.h"
 #include "../../MeshRenderer/MeshRenderer.h"
+#include "../../../Common/Debug/DebugNew.h"
 
 BossRockBase::BossRockBase()
 {
@@ -92,6 +93,7 @@ BossRockBase::~BossRockBase()
 	preDraw = false;
 	throwReady = false;
 	playerAttackHit = false;
+	handMatrix = nullptr;
 }
 
 void BossRockBase::Awake()

@@ -298,7 +298,7 @@ void Player::Start(Object3D* _obj)
 		attackData[attackD.state] = attackD;
 	}
 
-	playerCom.stateManager->LoadSaveState();
+	DataLoadPlayerState();
 
 	//playerCom.stateManager->DataSaveState();
 
@@ -861,7 +861,7 @@ std::unordered_map<StateID::State_ID, PlayerAttackStateBase::PlayerAttackData>& 
 
 void Player::ParamReLoad()
 {
-	playerCom.stateManager->LoadSaveState();
+	DataLoadPlayerState();
 }
 
 void Player::ReactionReLoad()
@@ -968,4 +968,38 @@ void Player::HeavyAttackChangeParam(int _level)
 	param.shakeTime = reactionParam->shakeTime;
 	param.cameraShakePower = reactionParam->cameraShakePower;
 	param.cameraShakeTime = reactionParam->cameraShakeTime;
+}
+
+void Player::DataSavePlayerState()
+{
+	std::string filePath = std::string("data/json/") + "PlayerAttackData" + ".json";
+	JsonReader json;
+	nlohmann::json& root = json.Data();
+	if (!root.contains("PlayerAttackData")) {
+		root["PlayerAttackData"] = nlohmann::json::object();
+	}
+	auto states = playerCom.stateManager->GetStateInfo();
+	for (auto& t : states) {
+		std::shared_ptr<PlayerAttackStateBase>p = std::dynamic_pointer_cast<PlayerAttackStateBase>(t.second);
+
+		if (p != nullptr) {
+			PlayerAttackStateBase::PlayerAttackData data = p->GetAttackData();
+			std::string key = StateID::GetID(data.state);
+			root["PlayerAttackData"][key] = data;
+
+			json.Save(filePath, root);
+		}
+	}
+}
+
+void Player::DataLoadPlayerState()
+{
+	auto states = playerCom.stateManager->GetStateInfo();
+	for (auto& t : states) {
+		std::shared_ptr<PlayerAttackStateBase>p = std::dynamic_pointer_cast<PlayerAttackStateBase>(t.second);
+
+		if (p != nullptr) {
+			p->SetAttackData();
+		}
+	}
 }

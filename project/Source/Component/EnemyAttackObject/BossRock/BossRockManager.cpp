@@ -1,7 +1,5 @@
 ﻿#include "BossRockManager.h"
 #include "BossRockBase.h"
-#include "BossRock.h"
-#include "BossThrowRock.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Component/Shadow/Shadow.h"
@@ -16,6 +14,7 @@
 #include "../../../Common/ResourceLoader.h"
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Weapon/CharaWeapon.h"
+#include "../../../Common/Debug/DebugNew.h"
 
 BossRockManager::BossRockManager() :  BossRockManager(nullptr)
 {
@@ -57,6 +56,10 @@ BossRockManager::BossRockManager(Boss* _boss)
 BossRockManager::~BossRockManager()
 {
 	rocks.clear();
+	throwObjectsData.clear();
+	if (boss != nullptr) {
+		boss = nullptr;
+	}
 }
 
 void BossRockManager::Update()

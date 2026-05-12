@@ -236,10 +236,8 @@
     <ClInclude Include="Source\Component\Color\Color.h" />
     <ClInclude Include="Source\Component\Component.h" />
     <ClInclude Include="Source\Component\ComponentManager.h" />
-    <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRock.h" />
     <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRockBase.h" />
     <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRockManager.h" />
-    <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossThrowRock.h" />
     <ClInclude Include="Source\Component\EnemyAttackObject\EnemyAttackObject.h" />
     <ClInclude Include="Source\Component\EnemyAttackObject\ShockWave\ShockWave.h" />
     <ClInclude Include="Source\Component\Guage\Guage.h" />
@@ -435,10 +433,8 @@
     <ClCompile Include="Source\Component\Color\Color.cpp" />
     <ClCompile Include="Source\Component\Component.cpp" />
     <ClCompile Include="Source\Component\ComponentManager.cpp" />
-    <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRock.cpp" />
     <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRockBase.cpp" />
     <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRockManager.cpp" />
-    <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossThrowRock.cpp" />
     <ClCompile Include="Source\Component\EnemyAttackObject\EnemyAttackObject.cpp" />
     <ClCompile Include="Source\Component\EnemyAttackObject\ShockWave\ShockWave.cpp" />
     <ClCompile Include="Source\Component\Guage\Guage.cpp" />

@@ -333,5 +333,8 @@ private:
 	PlayerAttackStateBase::PlayerAttackData GetAttackDataMap(StateID::State_ID _data) { return attackData[_data]; }
 
 	std::unordered_set<BaseObject*> hitObjects;
+
+	void DataSavePlayerState();
+	void DataLoadPlayerState();
 };
 

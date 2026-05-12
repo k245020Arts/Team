@@ -83,6 +83,8 @@ BossCreater::BossCreater()
 
 BossCreater::~BossCreater()
 {
+	/*animMap.clear();
+	bossParams.clear();*/
 }
 
 

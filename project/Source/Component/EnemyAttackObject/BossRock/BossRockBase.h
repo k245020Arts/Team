@@ -16,10 +16,10 @@ class BossRockBase : public EnemyAttackObject
 {
 public:
 	 BossRockBase();
-	virtual ~BossRockBase();
+	~BossRockBase();
 	void Awake()override;
 
-	virtual void Update()override;
+	void Update()override;
 	void Draw()override;
 	/// <summary>
 	/// オブジェクトに当たったかどうかの判定

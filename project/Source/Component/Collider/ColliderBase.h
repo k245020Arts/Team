@@ -7,7 +7,7 @@ class ColliderBase : public Component
 {
 public:
 	ColliderBase();
-	~ColliderBase();
+	virtual ~ColliderBase();
 	void Update();
 	void Draw();
 

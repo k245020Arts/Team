@@ -37,7 +37,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 #ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(132931);
+	//_CrtSetBreakAlloc(2495626);
 #endif
 	SetGraphMode(Screen::WIDTH, Screen::HEIGHT, 32);
 	SetWindowIconID(ID_ICON);
