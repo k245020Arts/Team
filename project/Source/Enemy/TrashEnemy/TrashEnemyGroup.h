@@ -58,7 +58,7 @@ private:
 	/// 指定した敵のリストの中身を見て敵がやられてたらリストから削除する
 	/// </summary>
 	/// <param name="enemies">敵のリスト</param>
-	void EnemyDeaad(std::list<TrashEnemy*>& enemies);
+	void EnemyDead(std::list<TrashEnemy*>& enemies);
 	//雑魚的どうしであたった時の押し返し
 	void Separation();
 

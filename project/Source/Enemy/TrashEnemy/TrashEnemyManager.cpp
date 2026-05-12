@@ -53,19 +53,8 @@ TrashEnemyManager::TrashEnemyManager()
 	runPoint = 0;
 
 	setPos = VZero;
-	charaTypeID =
-	{
-		{"1","000"},
-		{"1","100"},
-	};
-
-	for (auto itr : charaTypeID)
-	{
-		hModels.push_back(MV1DuplicateModel(ResourceLoad::LoadModel(itr.first + itr.second + "_Model", ID::IDType::E_MODEL)));
-
-		charaID.push_back(itr.first);
-		typeID.push_back(itr.second);
-	}
+	resources.push_back(EnemyResource("1", "000", ResourceLoad::LoadModel("1000_Model", ID::IDType::E_MODEL)));
+	resources.push_back(EnemyResource("1", "100", ResourceLoad::LoadModel("1100_Model", ID::IDType::E_MODEL)));
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -105,7 +94,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 	int enemyCounter = 0;
 	//ê∂ê¨Ç∑ÇÈçáåvÇÃìG
 	int max = meleeSpawnCounter + rangedSpawnCounter;
-
+	
     for (int i = 0; i < max; i++)
     {
 		//ìGÇÃéÌóﬁÇÃêîÇ™Ç≈Ç´ÇÈÇæÇØãœìôÇ…Ç∑ÇÈÇΩÇﬂÇÃèàóù
@@ -124,13 +113,13 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 
 		if (meleeSpawnCounter >= enemyCounter)
 		{
-			CreateData(charaID[0], typeID[0], hModels[0], i);
+			CreateData(resources[0],  i);
 			enemyGroup->SetMeleeEnemy(trashEnemy);
 			continue;
 		}
 		else if (max >= enemyCounter)
 		{
-			CreateData(charaID[1], typeID[1], hModels[1], i);
+			CreateData(resources[1], i);
 			enemyGroup->SetRangedEnemy(trashEnemy);
 			continue;
 		}
@@ -236,7 +225,7 @@ std::vector<VECTOR3> TrashEnemyManager::GetWayPointPosition()
 	return _pos;
 }
 
-void TrashEnemyManager::CreateData(std::string _charaID, std::string _typeID, int _hModel,int _i)
+void TrashEnemyManager::CreateData(EnemyResource _resource,int _i)
 {
 	// å¬ï ÇÃenemyÇçÏÇÈ
 	Object3D* e;
@@ -258,10 +247,10 @@ void TrashEnemyManager::CreateData(std::string _charaID, std::string _typeID, in
 
 	Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
-	std::string charaTypeID = _charaID + _typeID;
+	std::string charaTypeID = _resource.charaTypeID;
 
 	MeshRenderer* me = e->Component()->AddComponent<MeshRenderer>();
-	int handle = MV1DuplicateModel(_hModel);
+	int handle = MV1DuplicateModel(_resource.model);
 	me->ModelHandle(handle, true);
 	me->RotationMesh(1, DX_PI_F);
 
@@ -275,9 +264,9 @@ void TrashEnemyManager::CreateData(std::string _charaID, std::string _typeID, in
 	ResourceLoad::LoadAnim(charaTypeID + "_DEAD", ID::E_DEAD);
 	ResourceLoad::LoadAnim(charaTypeID + "_Stance", ID::TE_STANCE);
 
-	anim->AnimDataLoad(_charaID, _typeID);
+	anim->AnimDataLoad(_resource.charaID, _resource.typeID);
 
-	anim->Play(ID::TE_IDOL);
+	//anim->Play(ID::TE_IDOL);
 
 	Physics* physics = e->Component()->AddComponent<Physics>();
 	physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));

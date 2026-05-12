@@ -101,7 +101,6 @@ namespace ID {
 		TE_RUN,
 		TE_ATTACK,
 		TE_C_ATTACK,
-		//TE_C_ATTACK2,
 		TE_STANCE,
 
 		SHADOW,

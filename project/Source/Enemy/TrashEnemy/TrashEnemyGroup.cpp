@@ -31,8 +31,8 @@ TrashEnemyGroup::~TrashEnemyGroup()
 
 void TrashEnemyGroup::Update()
 {
-	EnemyDeaad(meleeEnemies);
-	EnemyDeaad(rangedEnemies);
+	EnemyDead(meleeEnemies);
+	EnemyDead(rangedEnemies);
 	Separation();
 	
 	//‹ß‹——£‚Ì“GŠÖ˜A
@@ -98,7 +98,7 @@ void TrashEnemyGroup::SetRangedEnemy(TrashEnemy* _enemy)
 	}
 }
 
-void TrashEnemyGroup::EnemyDeaad(std::list<TrashEnemy*>& enemies)
+void TrashEnemyGroup::EnemyDead(std::list<TrashEnemy*>& enemies)
 {
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
