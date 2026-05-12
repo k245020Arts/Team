@@ -16,6 +16,7 @@
 #include "../State/StateManager.h"
 #include "../Screen.h"
 #include "../Stage/StageSelectData.h"
+#include "../Component/Color/Color.h"
 
 namespace {
 	const float ALPHA_TIME = 1.0f;
@@ -84,10 +85,10 @@ void TitleControl::Update()
 		switch (titleState)
 		{
 		case TITLE:
-			alpha = Easing::Lerp(255, 0, rate);
+			alpha = Easing::Lerp(OPAQUE_COLOR, TRANSPARENT_COLOR, rate);
 			break;
 		case STAGE_SELECT:
-			alpha = Easing::Lerp(0, 255, rate);
+			alpha = Easing::Lerp(TRANSPARENT_COLOR, OPAQUE_COLOR, rate);
 			break;
 		default:
 			break;
