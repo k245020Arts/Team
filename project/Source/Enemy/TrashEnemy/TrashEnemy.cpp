@@ -241,6 +241,8 @@ TrashEnemy::TrashEnemy()
 	deadMove = false;
 	attackFunk = nullptr;
 	justAvoidAttackFunk = nullptr;
+
+	cAttack = false;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -600,7 +602,9 @@ void TrashEnemy::AttackCommand()
 void TrashEnemy::CooperateAtkFinish()
 {
 	isCooperateAtk = false;
+	isStandby = false;
 	isMovingToPlayer = false;
+	cAttack = false;
 	
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_IDOL_S);
 }

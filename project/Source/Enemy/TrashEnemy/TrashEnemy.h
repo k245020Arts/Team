@@ -95,6 +95,8 @@ public:
 
 	bool GetDeadMove(){return deadMove;	}
 
+	bool GetCAttack() { return cAttack; }
+
 	//セッター
 	void SetWayPoint(VECTOR3 _wayPoint);
 	void SetCooperateWayPoint(VECTOR3 _wayPoint) { cooperateWayPoint = _wayPoint; }
@@ -102,7 +104,6 @@ public:
 	void SetCooperateWayPoint(VECTOR3 _pos, StateID::State_ID _id);
 	//敵のステートを変える関数
 	void ChangeState(StateID::State_ID _id);
-	void Move(float _speed, float _max);
 	void AddPos(VECTOR3 _pos);
 	//近距離か遠距離の敵かを指定する関数
 	void SetEnemyType(EnemyType type);
@@ -150,12 +151,15 @@ private:
 	
 	//通常攻撃をしてもよいか
 	bool isAttack;
-	//連携攻撃中
+
+	//連携攻撃を始める
 	bool isCooperateAtk;
-	//プレイヤーのほうに向かうかどうか
-	bool isMovingToPlayer;
 	//連携攻撃の準備ができてるか
 	bool isStandby;
+	//プレイヤーのほうに向かうかどうか
+	bool isMovingToPlayer;
+	//プレイヤーに攻撃する
+	bool cAttack;
 	
 	//移動速度
 	float speed;

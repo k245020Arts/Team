@@ -60,7 +60,13 @@ private:
 	const float ATK_COUNTER_MAX = 3;
 
 	TrashEnemyGroup* enemyGroup;
-	
+	/// <summary>
+	/// 敵の元データを作る
+	/// </summary>
+	/// <param name="_charaID"></param>
+	/// <param name="_typeID">雑魚敵の種類のID</param>
+	/// <param name="_i"></param>
+	void CreateDate(std::string _charaID,std::string _typeID,int _i);
 	//ウェイポイントの元を保管する変数
 	std::list<VECTOR3> wayPointOffsets;
 	//ウェイポイントを保管する変数
@@ -89,4 +95,9 @@ private:
 	bool startRangedAtk;
 	TrashEnemy* trashEnemy;
 
+	VECTOR3 setPos;
+	//何種類目の敵か
+	int numTypeCounter;
+	//どのポイントを追いかけるかを決める
+	int runPoint;
 };

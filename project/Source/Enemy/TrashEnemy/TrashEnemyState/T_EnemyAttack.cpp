@@ -38,8 +38,9 @@ void T_EnemyAttack::Update()
 	if (enemy->isCooperateAtk)
 		return;
 
-	counter++;
-	if (counter >= 5 && counter <= 10)
+	counter+=Time::DeltaTimeRate();
+
+	if (counter <= 0.3f)
 	{
 		enemy->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 		enemy->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);

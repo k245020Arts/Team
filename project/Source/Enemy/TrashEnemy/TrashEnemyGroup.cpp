@@ -42,7 +42,7 @@ void TrashEnemyGroup::Update()
 		MeleeEnemyAttack(melee);
 		CooperateAttackMove(melee);
 	}
-
+	//‰“‹——£‚Ì“GŠÖ˜A
 	for (auto ranged : rangedEnemies)
 	{
 		RangedEnemySetWaypoint(ranged);
@@ -211,7 +211,7 @@ void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 	if (_enemy->IsCooperateAtk() || !_enemy->IsAttack() || startRangedAtk)
 		return;
 
-	attackCounter+=Time::DeltaTimeRate();
+	attackCounter += Time::DeltaTimeRate();
 
 	if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)
 	{
@@ -260,6 +260,9 @@ void TrashEnemyGroup::CooperateAttackMove(TrashEnemy* _enemy)
 		standbyCounter = 0;
 		cooperateCounter = 0;
 	}
+
+	if (_enemy->GetCAttack())
+		AllChangeMeleeState(StateID::COOPERATEATTACK1);
 }
 
 void TrashEnemyGroup::AllChangeMeleeState(StateID::State_ID _id)
