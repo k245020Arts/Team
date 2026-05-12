@@ -66,7 +66,14 @@ private:
 	/// <param name="_charaID"></param>
 	/// <param name="_typeID">雑魚敵の種類のID</param>
 	/// <param name="_i"></param>
-	void CreateDate(std::string _charaID,std::string _typeID,int _i);
+	void CreateData(std::string _chara ,std::string _typeID,int _hModel,int _i);
+	//敵のモデルを保持する
+	std::vector<int> hModels;
+
+	std::vector<std::pair<std::string, std::string>> charaTypeID;
+	std::vector <std::string> charaID;
+	std::vector <std::string> typeID;
+	
 	//ウェイポイントの元を保管する変数
 	std::list<VECTOR3> wayPointOffsets;
 	//ウェイポイントを保管する変数

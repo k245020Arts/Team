@@ -8,7 +8,7 @@
 
 T_EnemyDamage::T_EnemyDamage()
 {
-	animId = ID::E_DIE;
+	animId = ID::E_DEAD;
 	string = Function::GetClassNameC<T_EnemyDamage>();
 
 	motionSpeed = 0;

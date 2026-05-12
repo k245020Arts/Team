@@ -73,7 +73,7 @@ namespace ID {
 		SWORD_EFFECT,
 		WALL,
 		PLAYER_HP_GUAGE,
-		E_DIE,
+		E_DEAD,
 		P_DIE,
 		START_NUM,
 		B_MODEL,
@@ -101,7 +101,7 @@ namespace ID {
 		TE_RUN,
 		TE_ATTACK,
 		TE_C_ATTACK,
-		TE_C_ATTACK2,
+		//TE_C_ATTACK2,
 		TE_STANCE,
 
 		SHADOW,

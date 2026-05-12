@@ -53,6 +53,19 @@ TrashEnemyManager::TrashEnemyManager()
 	runPoint = 0;
 
 	setPos = VZero;
+	charaTypeID =
+	{
+		{"1","000"},
+		{"1","100"},
+	};
+
+	for (auto itr : charaTypeID)
+	{
+		hModels.push_back(MV1DuplicateModel(ResourceLoad::LoadModel(itr.first + itr.second + "_Model", ID::IDType::E_MODEL)));
+
+		charaID.push_back(itr.first);
+		typeID.push_back(itr.second);
+	}
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -111,13 +124,13 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 
 		if (meleeSpawnCounter >= enemyCounter)
 		{
-			CreateDate("1", "000", i);
+			CreateData(charaID[0], typeID[0], hModels[0], i);
 			enemyGroup->SetMeleeEnemy(trashEnemy);
 			continue;
 		}
 		else if (max >= enemyCounter)
 		{
-			CreateDate("1", "000", i);
+			CreateData(charaID[1], typeID[1], hModels[1], i);
 			enemyGroup->SetRangedEnemy(trashEnemy);
 			continue;
 		}
@@ -223,7 +236,7 @@ std::vector<VECTOR3> TrashEnemyManager::GetWayPointPosition()
 	return _pos;
 }
 
-void TrashEnemyManager::CreateDate(std::string _charaID, std::string _typeID,int _i)
+void TrashEnemyManager::CreateData(std::string _charaID, std::string _typeID, int _hModel,int _i)
 {
 	// ŒÂ•Ê‚Ìenemy‚ðì‚é
 	Object3D* e;
@@ -245,26 +258,24 @@ void TrashEnemyManager::CreateDate(std::string _charaID, std::string _typeID,int
 
 	Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
-	std::string charaID = _charaID;
-	std::string typeID = _typeID;
+	std::string charaTypeID = _charaID + _typeID;
 
 	MeshRenderer* me = e->Component()->AddComponent<MeshRenderer>();
-	int handle = MV1DuplicateModel(ResourceLoad::LoadModel(charaID + typeID + "_Model", ID::IDType::E_MODEL));
+	int handle = MV1DuplicateModel(_hModel);
 	me->ModelHandle(handle, true);
 	me->RotationMesh(1, DX_PI_F);
 
 	Animator* anim = e->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(handle, 1);
-	ResourceLoad::LoadAnim(charaID + typeID + "_IDOL", ID::TE_IDOL);
-	ResourceLoad::LoadAnim(charaID + typeID + "_RUN", ID::TE_RUN);
-	ResourceLoad::LoadAnim(charaID + typeID + "_ATTACK1", ID::TE_ATTACK);
-	ResourceLoad::LoadAnim(charaID + typeID + "_C_ATTACK1", ID::TE_C_ATTACK);
-	ResourceLoad::LoadAnim(charaID + typeID + "_C_ATTACK2", ID::TE_C_ATTACK2);
-	ResourceLoad::LoadAnim(charaID + typeID + "_DAMAGE", ID::E_DAMAGE);
-	ResourceLoad::LoadAnim(charaID + typeID + "_DEAD", ID::E_DIE);
-	ResourceLoad::LoadAnim(charaID + typeID + "_Stance", ID::TE_STANCE);
+	ResourceLoad::LoadAnim(charaTypeID + "_IDOL", ID::TE_IDOL);
+	ResourceLoad::LoadAnim(charaTypeID + "_RUN", ID::TE_RUN);
+	ResourceLoad::LoadAnim(charaTypeID + "_ATTACK1", ID::TE_ATTACK);
+	ResourceLoad::LoadAnim(charaTypeID + "_C_ATTACK", ID::TE_C_ATTACK);
+	ResourceLoad::LoadAnim(charaTypeID + "_DAMAGE", ID::E_DAMAGE);
+	ResourceLoad::LoadAnim(charaTypeID + "_DEAD", ID::E_DEAD);
+	ResourceLoad::LoadAnim(charaTypeID + "_Stance", ID::TE_STANCE);
 
-	anim->AnimDataLoad(charaID, typeID);;
+	anim->AnimDataLoad(_charaID, _typeID);
 
 	anim->Play(ID::TE_IDOL);
 

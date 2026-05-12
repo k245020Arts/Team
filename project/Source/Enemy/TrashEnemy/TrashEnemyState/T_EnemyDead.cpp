@@ -10,7 +10,7 @@
 
 T_EnemyDead::T_EnemyDead()
 {
-	animId = ID::E_DIE;
+	animId = ID::E_DEAD;
 	string = Function::GetClassNameC<T_EnemyDead>();
 	counter = 0;
 	fadeCounter = FADE_SPEED;

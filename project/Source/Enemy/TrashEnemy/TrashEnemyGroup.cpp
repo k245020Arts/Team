@@ -299,7 +299,6 @@ void TrashEnemyGroup::CooperateAttackLine()
 
 	for (int i = 0; i < Counter; i++)
 	{
-		//DrawLine3D(copyPos[i], copyPos[i + 1], GetColor(255, 0, 0));
 		DrawCapsule3D(copyPos[i], copyPos[i + 1] , 20, 0, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
 	}
 
@@ -343,6 +342,12 @@ void TrashEnemyGroup::RangedEnemyAttack()
 	const float Range = 700.0f;
 	const float MaxAttackCounter = 2.5f;
 	bool leaderActiveEnd = false;
+	/*
+	　　二回目以降打てないバグ
+		必殺技中でもマネージャーは動いているバグ
+		リーダーが死んだ後の振り分け
+		チャージ攻撃で打ち返し
+	*/
 
 	for (auto& enemy : rangedEnemies)
 	{
