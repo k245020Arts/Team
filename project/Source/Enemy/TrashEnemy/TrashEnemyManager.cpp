@@ -113,6 +113,13 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 
 		if (meleeSpawnCounter >= enemyCounter)
 		{
+			/*ResourceLoad::LoadAnim(charaTypeID + "_IDOL", ID::TE_IDOL);
+			ResourceLoad::LoadAnim(charaTypeID + "_RUN", ID::TE_RUN);
+			ResourceLoad::LoadAnim(charaTypeID + "_ATTACK1", ID::TE_ATTACK);
+			ResourceLoad::LoadAnim(charaTypeID + "_C_ATTACK", ID::TE_C_ATTACK);
+			ResourceLoad::LoadAnim(charaTypeID + "_DAMAGE", ID::E_DAMAGE);
+			ResourceLoad::LoadAnim(charaTypeID + "_DEAD", ID::E_DEAD);
+			ResourceLoad::LoadAnim(charaTypeID + "_Stance", ID::TE_STANCE);*/
 			CreateData(resources[0],  i);
 			enemyGroup->SetMeleeEnemy(trashEnemy);
 			continue;
@@ -256,6 +263,7 @@ void TrashEnemyManager::CreateData(EnemyResource _resource,int _i)
 
 	Animator* anim = e->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(handle, 1);
+
 	ResourceLoad::LoadAnim(charaTypeID + "_IDOL", ID::TE_IDOL);
 	ResourceLoad::LoadAnim(charaTypeID + "_RUN", ID::TE_RUN);
 	ResourceLoad::LoadAnim(charaTypeID + "_ATTACK1", ID::TE_ATTACK);

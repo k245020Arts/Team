@@ -342,16 +342,16 @@ void TrashEnemyGroup::RangedEnemyAttack()
 	const float Range = 700.0f;
 	const float MaxAttackCounter = 2.5f;
 	bool leaderActiveEnd = false;
+
 	/*
-	　　二回目以降打てないバグ
-		必殺技中でもマネージャーは動いているバグ
+		
 		リーダーが死んだ後の振り分け
 		チャージ攻撃で打ち返し
 	*/
 
 	for (auto& enemy : rangedEnemies)
 	{
-		if (enemy->GetDeadMove())
+		if (enemy->GetDeadMove()|| enemy->IsPlayerSpecialMove())
 			return;
 
 		if (rangedJoinCounter == 0)//リーダー以外の敵を数える
@@ -376,6 +376,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 					rangedAtkTime = 0;
 					AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
 					rangedJoinCounter = 0;
+					rangedAtkCounter = 0;
 					startRangedAtk = false;
 					FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
 				}

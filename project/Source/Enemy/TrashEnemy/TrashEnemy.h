@@ -96,6 +96,8 @@ public:
 	bool GetDeadMove(){return deadMove;	}
 
 	bool GetCAttack() { return cAttack; }
+	//プレイヤーが必殺中に止まる処理
+	bool IsPlayerSpecialMove();
 
 	//セッター
 	void SetWayPoint(VECTOR3 _wayPoint);
@@ -144,8 +146,7 @@ private:
 
 	//_posの方向に向く
 	void LookTarget(VECTOR3 _pos);
-	//プレイヤーが必殺中に止まる処理
-	bool IsPlayerSpecialMove();
+	
 	
 	bool active;
 	

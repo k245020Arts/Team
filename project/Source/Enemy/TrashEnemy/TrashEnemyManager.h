@@ -124,4 +124,15 @@ private:
 	int numTypeCounter;
 	//‚Ç‚Ìƒ|ƒCƒ“ƒg‚ð’Ç‚¢‚©‚¯‚é‚©‚ðŒˆ‚ß‚é
 	int runPoint;
+
+	std::unordered_map<std::string, ID::IDType> animMap =
+	{
+		{"_IDOL", ID::TE_IDOL},
+		{"_RUN", ID::TE_RUN},
+		{"_ATTACK1", ID::TE_ATTACK},
+		{"_C_ATTACK", ID::TE_C_ATTACK},
+		{"_DAMAGE", ID::E_DAMAGE},
+		{"_DEAD", ID::E_DEAD},
+		{"_Stance", ID::TE_STANCE}
+	};	
 };

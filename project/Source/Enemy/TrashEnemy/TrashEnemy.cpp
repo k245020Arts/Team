@@ -254,6 +254,10 @@ TrashEnemy::~TrashEnemy()
 void TrashEnemy::Update()
 {
 	slowCounter += Time::DeltaTimeRate();
+
+	if (IsPlayerSpecialMove())
+		return;
+
 	EnemyBase::Update();
 
 	if (hp <= 0)
@@ -449,7 +453,7 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 	else
 		loopNum = -1;
 
-	if (/*isMovingToPlayer */isStandby && enemyType == EnemyType::RANGED)
+	if (isStandby && enemyType == EnemyType::RANGED)
 	{
 		//‰“‹——£‚ÌƒŠ[ƒ_[‚É”ò‚Î‚·ˆ—‚ðì‚é
 		cooperateDamageMove = true;

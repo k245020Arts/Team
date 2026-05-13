@@ -5,6 +5,7 @@
 #include "../../../State/StateManager.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../Component/Collider/ColliderBase.h"
+#include "../../../Common/Easing.h"
 
 CooperateAttack2::CooperateAttack2()
 {
@@ -31,6 +32,7 @@ CooperateAttack2::CooperateAttack2()
 
 	isDamageMove = true;
 
+	motionSpeed = 0;
 }
 
 CooperateAttack2::~CooperateAttack2()
@@ -73,7 +75,7 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	const VECTOR3 enePos = _enemy->GetPos();
 	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
 	VECTOR3 dir = VZero;
-	float speed = 0.0f;
+	const float Speed = 50.0f;
 	const float SearchPosMax = 100;
 	const float Max = 50;
 
@@ -82,22 +84,33 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 
 	_enemy->LookTarget(pPos);
 
-	if (VSize(pPos - _enemy->GetPos()) < Max)
+	
+	if (_enemy->cooperateDamageMove && isDamageMove)//ダメージをもらった時の処理
 	{
-		_enemy->enemyBaseComponent.anim->Play(ID::TE_IDOL);
-		_enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+		damageMove = true;
+		return;
+	}
+	else if (VSize(pPos - _enemy->GetPos()) < Max )//地面に着地した時
+	{
+		if (!_enemy->cooperateDamageMove)//攻撃を食らってなかったとき
+		{
+			_enemy->enemyBaseComponent.anim->Play(ID::TE_IDOL);
+			_enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 
-		_enemy->isStandby = false;
-		isDamageMove = false;
-			
+			isDamageMove = false;
+			_enemy->isStandby = false;
+
+		}
+		else if (!isDamageMove)//攻撃を食らうのと着地が同時だった時
+			isDamageMove = true;
+
 		return;
 	}
 
 	const float ROTY = -_enemy->enemyBaseComponent.playerObj->GetTransform()->rotation.y - 0.5f * DX_PI_F;
 	dir = VNorm(pPos - enePos);
-	speed = 50.0f;
-	
-	_enemy->GetEnemyObj()->GetTransform()->position += dir * speed;
+	/*Easing::EaseInOut()*/
+	_enemy->GetEnemyObj()->GetTransform()->position += dir * Speed; 
 	
 	AttackCollsion();
 	AttackSound();
@@ -105,8 +118,6 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	Trail();
 	EnemyJustAvoidCollsion();
 
-	if (_enemy->cooperateDamageMove && isDamageMove)
-		damageMove = true;
 }
 
 void CooperateAttack2::DamageMove(TrashEnemy* _enemy)

@@ -23,4 +23,7 @@ private:
 	VECTOR3 pPos;
 
 	bool isDamageMove;
+
+	float motionSpeed;
+
 };
