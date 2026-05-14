@@ -5,6 +5,7 @@ class InputManager;
 class SoundManager;
 
 class TitlePlayer;
+class TextRenderer;
 
 enum TitleState
 {
@@ -48,5 +49,8 @@ private:
 	int stageID;
 	float selectCounter;
 	TitleState titleState;
+
+	TextRenderer* stageText;
+	TextRenderer* text;
 
 };

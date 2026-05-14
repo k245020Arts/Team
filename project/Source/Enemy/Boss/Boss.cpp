@@ -446,6 +446,7 @@ void Boss::PlayerHit(const CollsionEventData& _data)
 		case EnemyInformation::EnemyReaction::Type::Normal:
 			//Debug::DebugLog("hitToPlayerBoss");
 			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(e.vibrationPower, e.vibrationType);
+			enemyBaseComponent.shaker->ShakeStart(VECTOR3(30.0f, 50.0f,30.0f),Shaker::HEIGHT_SHAKE,false,0.15f);
 			EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne *e.hitEffectScaleRate), obj, e.hitEffectID, e.hitEffectTime);
 			EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			hit = true;
@@ -482,6 +483,7 @@ void Boss::PlayerHit(const CollsionEventData& _data)
 				//angleRan = GetRand(360);
 				EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90 * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				hit = true;
+				enemyBaseComponent.shaker->ShakeStart(VECTOR3(30.0f, 50.0f, 30.0f), Shaker::HEIGHT_SHAKE, false, 0.2f);
 			}
 			else if (lastBeforeAttack) {//最後の一個前の攻撃
 				dInfo = EnemyDamage::EnemyDamageInfo(VECTOR3(0.0f, 0.0f, 0.0f), VECTOR3(100, 100, 100), 0.5f, 0.5f);
@@ -490,6 +492,7 @@ void Boss::PlayerHit(const CollsionEventData& _data)
 				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(random[0], 100 + random[1] / 5.0f, random[2]), VZero, VOne * EnemyInformation::HIT_EFFECT_SCALE_RATE), obj, Effect_ID::HIT_EFFECT, EnemyInformation::HIT_EFFECT_TIME);
 				angleRan = (float)GetRand(360);
 				EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, 90.0f * DegToRad), VOne * 1.5f), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
+				enemyBaseComponent.shaker->ShakeStart(VECTOR3(30.0f, 50.0f, 30.0f), Shaker::HEIGHT_SHAKE, false, 0.15f);
 			}
 			else {//それ以外なら
 				//enemyBaseComponent.state->NowChangeState( StateID::B_THREAT_S);
@@ -500,6 +503,7 @@ void Boss::PlayerHit(const CollsionEventData& _data)
 				EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(random[0] * 2.0f, 100, random[2]), VOne * VECTOR3(0, 0, angleRan * DegToRad), VOne), obj, Effect_ID::PLAYER_SLASH_ATTACK, 1.0f);
 				enemyBaseComponent.playerObj->Component()->GetComponent<Shaker>()->ShakeStart(VECTOR3(200, 200, 200), Shaker::HORIZONAL_SHAKE, true, 0.05f);
 				enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
+				enemyBaseComponent.shaker->ShakeStart(VECTOR3(30.0f, 50.0f, 30.0f), Shaker::HEIGHT_SHAKE, false, 0.2f);
 			}
 			if (maxAttack < 0) {
 				enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
@@ -649,6 +653,7 @@ void Boss::RockHitDamage(const CollsionEventData& _data)
 {
 	float damage = 500.0f;
 	enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
+	enemyBaseComponent.shaker->ShakeStart(VECTOR3(30.0f, 50.0f, 30.0f), Shaker::HEIGHT_SHAKE, false, 0.15f);
 	/*VECTOR3 baseSpeed = _phy->GetVelocity() * 1.0f;
 	if (baseSpeed.Size() <= 3000.0f) {
 		baseSpeed = baseSpeed.Normalize() * 3000.0f;
@@ -711,6 +716,7 @@ void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std
 		EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, _e.slashAngleRad), VOne), obj, _e.slashEffectID, 1.0f);
 		enemyBaseComponent.state->ChangeState(StateID::BOSS_DAMAGE_S);
 		specialAttackHit = false;
+		//enemyBaseComponent.shaker->ShakeStart(VECTOR3(30.0f, 50.0f, 30.0f), Shaker::HEIGHT_SHAKE, false, 0.1f);
 		break;
 	case PlayerSpecialAttack::CHARGE:
 		EffectManager::GetInstance()->CreateEffekseer(Transform(_randomPos, _randomAngle * DegToRad, VOne * _e.hitEffectScaleRate), obj, _e.hitEffectID, _e.hitEffectTime);

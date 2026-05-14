@@ -16,6 +16,7 @@ namespace {
 		IMAGE,
 		SOUND,
 		EFFECT,
+        FONT,
 	};
 
 	struct LoadData
@@ -202,6 +203,33 @@ int ResourceLoad::LoadAnim(std::string path, ID::IDType id, bool _common) {
     return targetLoad[name].handle;
 }
 
+
+int ResourceLoad::LoadFont(std::string path, std::string exten, Font_ID::Font_ID id, int _edge) {
+    // 通常版は _common = false
+    return LoadFont(path, exten, id, _edge,false);
+}
+
+int ResourceLoad::LoadFont(std::string path, std::string exten, Font_ID::Font_ID id, int _edge, bool _common) {
+    std::string name = path;
+    auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
+
+    //配列の要素にデータが入ってなかったらロード
+    if (targetLoad[name].handle == -1) {
+        std::string loadName = ResourceLoad::FONT_PATH + path + exten;
+        targetLoad[name].handle = LoadFontDataToHandle(loadName.c_str(), _edge);
+        targetLoad[name].type = Type::FONT;
+        Font_ID::SetFontID(path, id);
+    }
+    //ロードを失敗したらMessageBoxを流す
+    if (targetLoad[name].handle == -1) {
+        ShowLoadError("Font", name);
+        return -1;
+    }
+
+    Debug::DebugOutPutPrintf("%s : Loadしました。", name.c_str());
+    return targetLoad[name].handle;
+}
+
 // 共通ファイルとシーンごとで分けるファイルの両方から検索する
 int ResourceLoad::GetHandle(ID::IDType id) {
     std::string name = ID::GetID(id);
@@ -254,6 +282,7 @@ int ResourceLoad::GetEffectHandle(Effect_ID::EFFECT_ID id) {
     Debug::DebugLog("そのエフェクトデータはありません: " + std::to_string((int)id));
     return -1;
 }
+
 
 // DeleteDataで_commonフラグ対応
 void ResourceLoad::DeleteData(ID::IDType id, bool _common) {
@@ -317,21 +346,24 @@ void ResourceLoad::DeleteEffectData(Effect_ID::EFFECT_ID id, bool _common)
 
 // fileLoadのみ全削除
 void ResourceLoad::FileLoadClear() {
-    for (auto& f : fileLoad) {
-        switch (f.second.type)
+    for (auto& file : fileLoad) {
+        switch (file.second.type)
         {
         case Type::MODEL:
         case Type::ANIM:
-            MV1DeleteModel(f.second.handle);
+            MV1DeleteModel(file.second.handle);
             break;
         case Type::SOUND:
-            DeleteSoundMem(f.second.handle);
+            DeleteSoundMem(file.second.handle);
             break;
         case Type::EFFECT:
-            DeleteEffekseerEffect(f.second.handle);
+            DeleteEffekseerEffect(file.second.handle);
             break;
         case Type::IMAGE:
-            DeleteGraph(f.second.handle);
+            DeleteGraph(file.second.handle);
+            break;
+        case Type::FONT:
+            DeleteFontToHandle(file.second.handle);
             break;
         default:
             my_error_assert("リソースデータ削除ミス");
@@ -343,27 +375,48 @@ void ResourceLoad::FileLoadClear() {
 // 共通も含めて全削除
 void ResourceLoad::AllDelete() {
     FileLoadClear();
-    for (auto& f : commonFileLoad) {
-        switch (f.second.type)
+    for (auto& file : commonFileLoad) {
+        switch (file.second.type)
         {
         case Type::MODEL:
         case Type::ANIM:
-            MV1DeleteModel(f.second.handle);
-            break;
-        case Type::SOUND:
-            DeleteSoundMem(f.second.handle);
+            MV1DeleteModel(file.second.handle);
+            break;         
+        case Type::SOUND:  
+            DeleteSoundMem(file.second.handle);
             break;
         case Type::EFFECT:
-            DeleteEffekseerEffect(f.second.handle);
+            DeleteEffekseerEffect(file.second.handle);
             break;
         case Type::IMAGE:
-            DeleteGraph(f.second.handle);
+            DeleteGraph(file.second.handle);
+            break;
+        case Type::FONT:
+            DeleteFontToHandle(file.second.handle);
             break;
         default:
             my_error_assert("リソースデータ削除ミス");
         }
     }
     commonFileLoad.clear();    
+}
+
+int ResourceLoad::GetFontHandle(Font_ID::Font_ID id)
+{
+    std::string name = Font_ID::GetFontID(id);
+
+    auto it = fileLoad.find(name);
+    if (it != fileLoad.end()) {
+        return it->second.handle;
+    }
+
+    it = commonFileLoad.find(name);
+    if (it != commonFileLoad.end()) {
+        return it->second.handle;
+    }
+
+    Debug::DebugLog("そのフォントデータはありません: " + std::to_string((int)id));
+    return -1;
 }
 
 void ResourceLoad::SetAsync(bool _async)
