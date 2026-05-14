@@ -8,11 +8,12 @@
 
 T_EnemyIdol::T_EnemyIdol()
 {
-	animId = ID::TE_IDOL;
 	string = Function::GetClassNameC<T_EnemyIdol>();
 	detectionRange = 0;
 
 	setGravity = VZero;
+
+	counter = 0;
 }
 
 T_EnemyIdol::~T_EnemyIdol()
@@ -32,6 +33,20 @@ void T_EnemyIdol::Start()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
+	//‹ß‹——£‚Æ‰“‹——£‚Åƒ‚[ƒVƒ‡ƒ“‚ª•Ï‚í‚é‚©‚ç‚»‚Ì‚½‚ß‚ÌÝ’è
+	switch (enemy->enemyType)
+	{
+	case enemy->EnemyType::MELEE:
+		animId = ID::TE_IDOL;
+		break;
+	case enemy->EnemyType::RANGED_LEADER: 
+	case enemy->EnemyType::RANGED:
+		animId = ID::TE_R_IDOL;
+		break;
+	default:
+		break;
+	}
+
 	setGravity = enemy->enemyBaseComponent.physics->GetGravity();
 	float addSpeed = (float)Random::GetInt(0, 500);
 	enemy->enemyBaseComponent.physics->SetGravity(VECTOR3(0, -1000 - addSpeed, 0));
@@ -48,6 +63,10 @@ void T_EnemyIdol::Finish()
 void T_EnemyIdol::NormalMove()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
+
+	/*if (enemy->GetEnemyType() != enemy->EnemyType::MELEE && counter == 0)
+		enemy->enemyBaseComponent.anim->Play(ID::TE_R_IDOL);
+	counter = 1;*/
 
 	if (enemy->GetPos().y >= 30)
 		return;

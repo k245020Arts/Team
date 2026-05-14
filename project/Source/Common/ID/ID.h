@@ -59,7 +59,6 @@ namespace ID {
 
 		E_ANIM_IDOL,
 		E_ATTACK1,
-		E_DAMAGE,
 		E_BLOWAWAY,
 		E_FALL,
 		E_GETUP,
@@ -73,7 +72,6 @@ namespace ID {
 		SWORD_EFFECT,
 		WALL,
 		PLAYER_HP_GUAGE,
-		E_DEAD,
 		P_DIE,
 		START_NUM,
 		B_MODEL,
@@ -101,7 +99,17 @@ namespace ID {
 		TE_RUN,
 		TE_ATTACK,
 		TE_C_ATTACK,
+		TE_DAMAGE,
+		TE_DEAD,
 		TE_STANCE,
+
+		TE_R_IDOL,
+		TE_R_RUN,
+		TE_R_ATTACK,
+		TE_R_C_ATTACK,
+		TE_R_DAMAGE,
+		TE_R_DEAD,
+		TE_R_STANCE,
 
 		SHADOW,
 		B_DUSH_ANIM,

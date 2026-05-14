@@ -10,7 +10,6 @@
 
 T_EnemyDead::T_EnemyDead()
 {
-	animId = ID::E_DEAD;
 	string = Function::GetClassNameC<T_EnemyDead>();
 	counter = 0;
 	fadeCounter = FADE_SPEED;
@@ -55,6 +54,19 @@ void T_EnemyDead::Draw()
 void T_EnemyDead::Start()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
+
+	//‹ß‹——£‚Æ‰“‹——£‚Åƒ‚[ƒVƒ‡ƒ“‚ª•Ï‚í‚é‚©‚ç‚»‚Ì‚½‚ß‚ÌÝ’è
+	switch (enemy->enemyType)
+	{
+	case enemy->EnemyType::MELEE:
+		animId = ID::TE_DEAD;
+		break;
+	case enemy->EnemyType::RANGED_LEADER: case enemy->EnemyType::RANGED:
+		animId = ID::TE_R_DEAD;
+		break;
+	default:
+		break;
+	}
 
 	enemy->enemyBaseComponent.anim->SetPlaySpeed(0.8f);
 	if (!enemy->IsPlayerSpecialMove())

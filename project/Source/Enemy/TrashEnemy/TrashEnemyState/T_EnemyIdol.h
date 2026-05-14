@@ -20,4 +20,6 @@ private:
 	float detectionRange;
 
 	VECTOR3 setGravity;
+
+	int counter;
 };
