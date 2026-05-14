@@ -10,8 +10,8 @@
 CooperateAttack2::CooperateAttack2()
 {
 	string = Function::GetClassNameC<CooperateAttack2>();
-	animId = ID::TE_C_ATTACK;
-	attackParam.animID = ID::TE_C_ATTACK;
+	animId = ID::TE_R_C_ATTACK;
+	attackParam.animID = ID::TE_R_C_ATTACK;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	attackParam.damagePattern = BossAttackBase::BACK;
 
@@ -94,7 +94,7 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	{
 		if (!_enemy->cooperateDamageMove)//UŒ‚‚ðH‚ç‚Á‚Ä‚È‚©‚Á‚½‚Æ‚«
 		{
-			_enemy->enemyBaseComponent.anim->Play(ID::TE_IDOL);
+			_enemy->enemyBaseComponent.anim->Play(ID::TE_R_IDOL);
 			_enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 
 			isDamageMove = false;

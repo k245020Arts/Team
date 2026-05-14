@@ -113,19 +113,26 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 
 		if (meleeSpawnCounter >= enemyCounter)
 		{
-			/*ResourceLoad::LoadAnim(charaTypeID + "_IDOL", ID::TE_IDOL);
-			ResourceLoad::LoadAnim(charaTypeID + "_RUN", ID::TE_RUN);
-			ResourceLoad::LoadAnim(charaTypeID + "_ATTACK1", ID::TE_ATTACK);
-			ResourceLoad::LoadAnim(charaTypeID + "_C_ATTACK", ID::TE_C_ATTACK);
-			ResourceLoad::LoadAnim(charaTypeID + "_DAMAGE", ID::E_DAMAGE);
-			ResourceLoad::LoadAnim(charaTypeID + "_DEAD", ID::E_DEAD);
-			ResourceLoad::LoadAnim(charaTypeID + "_Stance", ID::TE_STANCE);*/
+			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_IDOL",		ID::TE_IDOL);
+			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_RUN",		ID::TE_RUN);
+			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_ATTACK1",	ID::TE_ATTACK);
+			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_C_ATTACK",	ID::TE_C_ATTACK);
+			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_DAMAGE",	ID::TE_DAMAGE);
+			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_DEAD",		ID::TE_DEAD);
+			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_Stance",	ID::TE_STANCE);
 			CreateData(resources[0],  i);
 			enemyGroup->SetMeleeEnemy(trashEnemy);
 			continue;
 		}
 		else if (max >= enemyCounter)
 		{
+			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_IDOL",		ID::TE_R_IDOL);
+			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_RUN",		ID::TE_R_RUN);
+			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_ATTACK1",	ID::TE_R_ATTACK);
+			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_C_ATTACK",	ID::TE_R_C_ATTACK);
+			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_DAMAGE",	ID::TE_R_DAMAGE);
+			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_DEAD",		ID::TE_R_DEAD);
+			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_Stance",	ID::TE_R_STANCE);
 			CreateData(resources[1], i);
 			enemyGroup->SetRangedEnemy(trashEnemy);
 			continue;
@@ -264,17 +271,7 @@ void TrashEnemyManager::CreateData(EnemyResource _resource,int _i)
 	Animator* anim = e->Component()->AddComponent<Animator>();
 	anim->BaseModelSet(handle, 1);
 
-	ResourceLoad::LoadAnim(charaTypeID + "_IDOL", ID::TE_IDOL);
-	ResourceLoad::LoadAnim(charaTypeID + "_RUN", ID::TE_RUN);
-	ResourceLoad::LoadAnim(charaTypeID + "_ATTACK1", ID::TE_ATTACK);
-	ResourceLoad::LoadAnim(charaTypeID + "_C_ATTACK", ID::TE_C_ATTACK);
-	ResourceLoad::LoadAnim(charaTypeID + "_DAMAGE", ID::E_DAMAGE);
-	ResourceLoad::LoadAnim(charaTypeID + "_DEAD", ID::E_DEAD);
-	ResourceLoad::LoadAnim(charaTypeID + "_Stance", ID::TE_STANCE);
-
 	anim->AnimDataLoad(_resource.charaID, _resource.typeID);
-
-	//anim->Play(ID::TE_IDOL);
 
 	Physics* physics = e->Component()->AddComponent<Physics>();
 	physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));

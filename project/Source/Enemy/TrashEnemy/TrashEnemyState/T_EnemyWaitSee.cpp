@@ -6,7 +6,7 @@
 
 T_EnemyWaitSee::T_EnemyWaitSee()
 {
-	animId = ID::TE_IDOL;
+	animId = ID::TE_R_IDOL/*ID::TE_R_STANCE*/;
 
 	attackCounter = 0.0f;
 	targetPos = VZero;

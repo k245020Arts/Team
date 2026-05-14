@@ -8,7 +8,6 @@
 
 T_EnemyDamage::T_EnemyDamage()
 {
-	animId = ID::E_DEAD;
 	string = Function::GetClassNameC<T_EnemyDamage>();
 
 	motionSpeed = 0;
@@ -58,6 +57,19 @@ void T_EnemyDamage::Start()
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 	
 	motionSpeed = enemy->enemyBaseComponent.anim->GetPlaySpeed();
+
+	//‹ß‹——£‚Æ‰“‹——£‚Åƒ‚[ƒVƒ‡ƒ“‚ª•Ï‚í‚é‚©‚ç‚»‚Ì‚½‚ß‚ÌÝ’è
+	switch (enemy->enemyType)
+	{
+	case enemy->EnemyType::MELEE:
+		animId = ID::TE_DEAD;
+		break;
+	case enemy->EnemyType::RANGED_LEADER: case enemy->EnemyType::RANGED :
+		animId = ID::TE_R_DEAD;
+		break;
+	default:
+		break;
+	}
 
 	isGetInformation = false;
 	counter = 0;

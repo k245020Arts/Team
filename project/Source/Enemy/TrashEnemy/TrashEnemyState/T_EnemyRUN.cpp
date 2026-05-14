@@ -6,7 +6,6 @@
 
 T_EnemyRun::T_EnemyRun()
 {
-	animId = ID::TE_RUN;
 	string = Function::GetClassNameC<T_EnemyRun>();
 
 	targetPos = VZero;
@@ -59,7 +58,30 @@ void T_EnemyRun::Start()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	if (enemy->enemyType == enemy->EnemyType::MELEE)
+	//‹ß‹——£‚Æ‰“‹——£‚Å‚Ìˆá‚¢‚ðÝ’è
+	switch (enemy->enemyType)
+	{
+	case enemy->EnemyType::MELEE:
+		//‹ß‹——£‚Æ‰“‹——£‚Åƒ‚[ƒVƒ‡ƒ“‚ª•Ï‚í‚é‚©‚ç‚»‚Ì‚½‚ß‚ÌÝ’è
+		animId = ID::TE_RUN;
+
+		if (!enemy->isCooperateAtk)
+			targetPos = enemy->targetPoint;
+		else if (enemy->isMovingToPlayer)
+			targetPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
+		else
+			targetPos = enemy->cooperateWayPoint;
+		break;
+	case enemy->EnemyType::RANGED_LEADER: case enemy->EnemyType::RANGED:
+		//animId = ID::TE_R_RUN;
+
+		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_WAITSEE);
+		break;
+	default:
+		break;
+	}
+
+	/*if (enemy->enemyType == enemy->EnemyType::MELEE)
 	{
 		if (!enemy->isCooperateAtk)
 			targetPos = enemy->targetPoint;
@@ -71,7 +93,7 @@ void T_EnemyRun::Start()
 	else
 	{
 		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_WAITSEE);
-	}
+	}*/
 
 	motionSpeed = enemy->enemyBaseComponent.anim->GetPlaySpeed();
 
