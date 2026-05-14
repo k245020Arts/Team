@@ -10,6 +10,8 @@
 #include "../../ImGui/imgui.h"
 #include "../Common/Debug/Debug.h"
 #include "../Result/ResultUi.h"
+#include "../Common/InputManager/InputManager.h"
+#include "../Pause/PauseScreen.h"
 
 namespace {
 	const int GAME_STATE_MAX = 5;
@@ -29,6 +31,7 @@ GameControler::GameControler()
 {
 	startCount = 0.0f;
 	SetDrawOrder(-500);
+	pause = FindGameObject<PauseScreen>();
 	//winImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
 	//loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
 
@@ -96,6 +99,7 @@ void GameControler::Update()
 		
 		break;
 	case GameControler::BOSS_PLAY_BEFORE:
+		PauseUpdate();
 		break;
 	case GameControler::WIN:
 		WinUpdate();
@@ -146,8 +150,33 @@ void GameControler::Update()
 	}
 #endif // STRING_MODE
 
-	
-	
+	if (InputManager::GetInstance()->KeyInputDown("PauseScreen")) {
+		if (gameState == PAUSE_SCENE) {
+			gameState = keepGameState;
+			bool result = pause->PauseFinish();
+			/*if (result) {
+				
+			}
+			else {
+				gameState = SCENE_CHANGE;
+			}*/
+		}
+		else {
+			keepGameState = gameState;
+			gameState = PAUSE_SCENE;
+			pause->PauseStart();
+		}
+	}
+
+	if (pause->IsSelect()) {
+		bool result = pause->PauseFinish();
+		if (result) {
+			gameState = keepGameState;
+		}
+		else {
+			gameState = SCENE_CHANGE;
+		}
+	}
 }
 
 void GameControler::Draw()
@@ -161,6 +190,9 @@ void GameControler::Draw()
 		break;
 	case GameControler::PLAY:
 		PlayDraw();
+		break;
+	case GameControler::PAUSE_SCENE:
+		PauseDraw();
 		break;
 	case GameControler::BOSS_PLAY_BEFORE:
 		break;
@@ -349,6 +381,14 @@ void GameControler::PlayDraw()
 {
 	//DrawFormatString(1000, 500, 0xffffff, "%d", (int)startCount);
 
+}
+
+void GameControler::PauseUpdate()
+{
+}
+
+void GameControler::PauseDraw()
+{
 }
 
 void GameControler::BossPlayBeforeUpdate()

@@ -32,6 +32,7 @@
 #include "../Source/Wave/Wave.h"
 #include "Component/UI/UIManager/UIManager.h"
 #include "../ImGui/imgui.h"
+#include "Pause/PauseScreen.h"
 
 //int PlayScene::count = 0;
 
@@ -67,6 +68,7 @@ PlayScene::PlayScene()
 	Sky* sky = new Sky();
 	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
 	UIManager* uiManager = new UIManager();
+	PauseScreen* pauseScreen = new PauseScreen();
 	GameControler* gameManager = new GameControler();
 	
 

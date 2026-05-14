@@ -1,6 +1,7 @@
 #include "Debug.h"
 #include "../../../ImGui/imgui.h"
 #include "../InputManager/InputManager.h"
+#include "../PostEffect/PostEffect.h"
 
 namespace {
 	std::list<std::string>logger;
@@ -78,7 +79,9 @@ void Debug::DebugUpdate()
 	if (inputManager->KeyInputDown("debugChange")) {
 		debug = !debug;
 	}
-
+#ifdef POST_EFFECT
+	PostEffectImgui();
+#endif // POST_EFFECT
 
 	if (!debug) { //デバックウィンドウ非表示モードならリターン
 		return;
@@ -239,4 +242,51 @@ void Debug::MouseDrawUpdate()
 	if (inputManager->KeyInputDown("Mouse")) {
 		mouse = !mouse;
 	}
+}
+
+void Debug::PostEffectImgui()
+{
+	if (ImGui::Begin("PostEffect"))
+	{
+		auto& pe = PostEffect::GetParameters();
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Reset PostEffect Params"))
+		{
+			PostEffect::ResetParameters();
+		}
+
+		ImGui::Separator();
+		ImGui::Text("Bloom");
+		ImGui::SliderInt("Bloom Threshold", &pe.bloomBrightThreshold, 0, 255);
+		ImGui::SliderInt("Bloom Blur Width", &pe.bloomGaussPixelWidth, 1, 64);
+		ImGui::SliderInt("Bloom Blur Strength", &pe.bloomGaussParam, 1, 2000);
+		ImGui::SliderInt("Bloom Alpha", &pe.bloomAlpha, 0, 255);
+		ImGui::SliderInt("Bloom Passes", &pe.bloomPasses, 1, 8);
+
+		ImGui::Separator();
+		ImGui::Text("Shared Edge Mask");
+		ImGui::SliderInt("Edge Threshold", &pe.edgeThreshold, 0, 255);
+
+		ImGui::Separator();
+		ImGui::Text("Rim Light");
+		ImGui::SliderInt("Rim Blur Width", &pe.rimSoftGaussWidth, 1, 64);
+		ImGui::SliderInt("Rim Blur Strength", &pe.rimSoftGaussParam, 1, 2000);
+		ImGui::SliderInt("Rim Alpha", &pe.rimAlpha, 0, 255);
+		ImGui::SliderInt("Rim Passes", &pe.rimPasses, 1, 8);
+		ImGui::SliderInt("Rim Color R", &pe.rimColorR, 0, 255);
+		ImGui::SliderInt("Rim Color G", &pe.rimColorG, 0, 255);
+		ImGui::SliderInt("Rim Color B", &pe.rimColorB, 0, 255);
+
+		ImGui::Separator();
+		ImGui::Text("AO Like");
+		ImGui::SliderInt("AO Blur Width", &pe.aoSoftGaussWidth, 1, 64);
+		ImGui::SliderInt("AO Blur Strength", &pe.aoSoftGaussParam, 1, 2000);
+		ImGui::SliderInt("AO Alpha", &pe.aoAlpha, 0, 255);
+		ImGui::SliderInt("AO Passes", &pe.aoPasses, 1, 8);
+
+		PostEffect::ValidateParameters();
+	}
+	ImGui::End();
 }

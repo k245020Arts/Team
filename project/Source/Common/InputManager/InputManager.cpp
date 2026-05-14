@@ -38,6 +38,8 @@ InputManager::InputManager()
 	CreateInputData(KeyConfigData("Mouse", KEY_INPUT_F1, NOT_INPUT, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("playerParam", KEY_INPUT_LCONTROL, NOT_INPUT, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("BossParamWindow", KEY_INPUT_F2, NOT_INPUT, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("PauseScreen", KEY_INPUT_F3, XINPUT_BUTTON_START, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("PauseSelect", KEY_INPUT_F4, XINPUT_BUTTON_B, MouseInput::MOUSE_NONE));
 
 	//-------------------------------------------------------------------------------------------------------------
 }

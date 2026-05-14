@@ -25,6 +25,7 @@ BaseObject::BaseObject()
 	transformParent = true;
 	sleep = false;
 	draw = true;
+	gameControler = FindGameObject<GameControler>();
 }
 
 BaseObject::~BaseObject()
@@ -49,12 +50,15 @@ void BaseObject::Update()
 	/*if (!transitor->IsTransitor()) {
 		return;
 	}*/
+
+	if (gameControler != nullptr && GameControler::PAUSE_SCENE == gameControler->GetStateNumber()) { //ポーズ画面なら通さない
+		return;
+	}
+
 	if (sleep) { //sleepモード中ならUpdateを通さない
 		return;
 	}
-	/*if (GetTag() == "STAGE") {
-		int a = 0;
-	}*/
+
 	PlayScene* playscene = GetScene<PlayScene>();
 	//カメラ以外のオブジェクト
 	if (GetTag() != "CAMERA_OBJ") {

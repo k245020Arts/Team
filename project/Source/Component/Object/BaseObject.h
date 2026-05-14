@@ -4,7 +4,10 @@
 class ComponentManager;
 class Color;
 class TransitorManager;
+
 class Transform;
+class GameControler;
+
 //Object‚ÌŠî’êƒNƒ‰ƒX
 class BaseObject : public GameObject
 {
@@ -126,4 +129,6 @@ protected:
 
 	bool sleep;
 	bool draw;
+
+	GameControler* gameControler;
 };

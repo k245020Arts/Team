@@ -557,6 +557,12 @@
     <ClCompile Include="Source\Common\ShadowMap\ShadowMap.cpp">
       <Filter>Common\ShadowMap</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Common\PostEffect\PostEffect.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Pause\PauseScreen.cpp">
+      <Filter>PlayScene\Pause</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1188,6 +1194,12 @@
     <ClInclude Include="Source\Common\ShadowMap\ShadowMap.h">
       <Filter>Common\ShadowMap</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Common\PostEffect\PostEffect.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pause\PauseScreen.h">
+      <Filter>PlayScene\Pause</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1414,6 +1426,9 @@
     </Filter>
     <Filter Include="Common\ShadowMap">
       <UniqueIdentifier>{e82bfde7-b1c2-4ee5-b464-8cf13691b3c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\Pause">
+      <UniqueIdentifier>{78a54da2-5d5b-4a6d-b6fa-fdfd4de2bc47}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

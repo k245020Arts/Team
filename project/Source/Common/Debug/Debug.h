@@ -110,4 +110,6 @@ namespace Debug {
 	/// マウスの表示、非表示を管理
 	/// </summary>
 	void MouseDrawUpdate();
+
+	void PostEffectImgui();
 }

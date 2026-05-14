@@ -8,6 +8,7 @@ typedef MethodExec<class GameControler> MEBDraw;
 class SoundManager;
 class Camera;
 class ResultUi;
+class PauseScreen;
 
 //#define STRING_MODE
 
@@ -20,6 +21,7 @@ public:
 		NONE = -1,
 		BEFORE,
 		PLAY,
+		PAUSE_SCENE,
 		BOSS_PLAY_BEFORE,
 		WIN,
 		LOSE,
@@ -78,6 +80,9 @@ private:
 	void PlayUpdate();
 	void PlayDraw();
 
+	void PauseUpdate();
+	void PauseDraw();
+
 	void BossPlayBeforeUpdate();
 	void BossPlayBeforeDraw();
 
@@ -102,7 +107,10 @@ private:
 	GameState gameState;
 	GameState beforeGameState;
 
+	GameState keepGameState;
+
 	ResultUi* resultUi;
 
 	bool changeState;
+	PauseScreen* pause;
 };
