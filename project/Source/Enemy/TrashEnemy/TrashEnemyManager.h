@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Library/GameObject.h"
 #include "../EnemyBase.h"
+#include "TrashEnemy.h"
 #include <list>
 
 class TrashEnemy;
@@ -88,8 +89,7 @@ private:
 	/// <param name="_charaID"></param>
 	/// <param name="_typeID">雑魚敵の種類のID</param>
 	/// <param name="_i"></param>
-	void CreateData(EnemyResource _resource,int _i);
-
+	void CreateData(EnemyResource _resource, int _i, EnemyType _type);
 
 	//ウェイポイントの元を保管する変数
 	std::list<VECTOR3> wayPointOffsets;
@@ -107,7 +107,6 @@ private:
 	void PlayerWayPoint();
 	
 	bool comboRequest;
-	//int counter;
 	
 	float maxAttackCounter;//
 	int standbyCounter;
@@ -125,14 +124,5 @@ private:
 	//どのポイントを追いかけるかを決める
 	int runPoint;
 
-	std::unordered_map<std::string, ID::IDType> animMap =
-	{
-		{"_IDOL", ID::TE_IDOL},
-		{"_RUN", ID::TE_RUN},
-		{"_ATTACK1", ID::TE_ATTACK},
-		{"_C_ATTACK", ID::TE_C_ATTACK},
-		{"_DAMAGE", ID::TE_DAMAGE},
-		{"_DEAD", ID::TE_DEAD},
-		{"_Stance", ID::TE_STANCE}
-	};	
+	bool hasLeader;
 };

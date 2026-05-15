@@ -9,7 +9,7 @@ TrashEnemyGroup::TrashEnemyGroup()
 	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
 	trashEnemyManager = FindGameObject<TrashEnemyManager>();
 
-	hasLeader = false;
+	//hasLeader = false;
 	attackCounter = 0;
 
 	enemiesRunCounter = 0;
@@ -57,45 +57,46 @@ void TrashEnemyGroup::Draw()
 	CooperateAttackLine();
 }
 
-void TrashEnemyGroup::SettingGroup(TrashEnemy* _enemy, int _index)
-{
-	if (_index % 2 == 0)
-	{
-		_enemy->SetEnemyType(_enemy->EnemyType::MELEE);
-		meleeEnemies.push_back(_enemy);
-	}
-	else if (hasLeader)
-	{
-		_enemy->SetEnemyType(_enemy->EnemyType::RANGED);
-		rangedEnemies.push_back(_enemy);
-	}
-	else
-	{
-		_enemy->SetEnemyType(_enemy->EnemyType::RANGED_LEADER);
-		rangedEnemies.push_back(_enemy);
-		hasLeader = true;
-	}
-}
+//void TrashEnemyGroup::SettingGroup(TrashEnemy* _enemy, int _index)
+//{
+//	if (_index % 2 == 0)
+//	{
+//		_enemy->SetEnemyType(_enemy->EnemyType::MELEE);
+//		meleeEnemies.push_back(_enemy);
+//	}
+//	else if (hasLeader)
+//	{
+//		_enemy->SetEnemyType(_enemy->EnemyType::RANGED);
+//		rangedEnemies.push_back(_enemy);
+//	}
+//	else
+//	{
+//		_enemy->SetEnemyType(_enemy->EnemyType::RANGED_LEADER);
+//		rangedEnemies.push_back(_enemy);
+//		hasLeader = true;
+//	}
+//}
 
 void TrashEnemyGroup::SetMeleeEnemy(TrashEnemy* _enemy)
 {
-	_enemy->SetEnemyType(_enemy->EnemyType::MELEE);
+	//_enemy->SetEnemyType(_enemy->EnemyType::MELEE);
 	meleeEnemies.push_back(_enemy);
 }
 
 void TrashEnemyGroup::SetRangedEnemy(TrashEnemy* _enemy)
 {
-	if (hasLeader)
-	{
-		_enemy->SetEnemyType(_enemy->EnemyType::RANGED);
-		rangedEnemies.push_back(_enemy);
-	}
-	else
-	{
-		_enemy->SetEnemyType(_enemy->EnemyType::RANGED_LEADER);
-		rangedEnemies.push_back(_enemy);
-		hasLeader = true;
-	}
+	rangedEnemies.push_back(_enemy);
+	//if (hasLeader)
+	//{
+	//	//_enemy->SetEnemyType(_enemy->EnemyType::RANGED);
+	//	rangedEnemies.push_back(_enemy);
+	//}
+	//else
+	//{
+	//	//_enemy->SetEnemyType(_enemy->EnemyType::RANGED_LEADER);
+	//	rangedEnemies.push_back(_enemy);
+	//	hasLeader = true;
+	//}
 }
 
 void TrashEnemyGroup::EnemyDead(std::list<TrashEnemy*>& enemies)
@@ -358,7 +359,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		if (rangedJoinCounter == 0)//リーダー以外の敵を数える
 			rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
 
-		if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
+		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		{
 			//リーダーが飛ぶ処理
 			enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
@@ -442,7 +443,7 @@ void TrashEnemyGroup::DeadMeleeEnemy()
 
 void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 {
-	if (_enemy->GetEnemyType() == _enemy->EnemyType::RANGED)
+	if (_enemy->GetEnemyType() == EnemyType::RANGED)
 	{
 		leaderPos.y = 0.0f;
 		_enemy->SetWayPoint(leaderPos);
@@ -469,7 +470,7 @@ void TrashEnemyGroup::RangedDamageMove()
 	for (auto& enemy : rangedEnemies)
 	{
 		const float Damage = -enemy->MaxHp();
-		if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
+		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		{
 			enemy->ChangeHp(Damage);
 		}

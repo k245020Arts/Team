@@ -64,7 +64,7 @@ private:
 
 	void InCameraWayPoint(WayPoint& _wayPoint);
 	
-	bool hasLeader;
+	//bool hasLeader;
 
 	//‹ß‹——£‚Ì“G‚Åg‚¤----------
 	//“G‚ÌUŒ‚

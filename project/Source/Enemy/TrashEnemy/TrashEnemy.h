@@ -16,6 +16,15 @@ struct DeadData
 	float maxHeight;	//吹き飛びの高さ
 };
 
+enum EnemyType
+{
+	MELEE,			//近距離
+	RANGED_LEADER,	//遠距離のリーダ
+	RANGED,			//遠距離
+
+	MAX,
+};
+
 class TrashEnemy : public EnemyBase
 {
 public:
@@ -40,7 +49,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void Start(Object3D* _obj);
+	void Start(Object3D* _obj, EnemyType _type);
 	/// <summary>
 	/// 敵の生成
 	/// </summary>
@@ -57,15 +66,6 @@ public:
 	void AttackCoolTimeReset() { isAttack = true; }
 	//連携攻撃を終わらせた後の処理
 	void CooperateAtkFinish();
-
-	enum EnemyType
-	{
-		MELEE,			//近距離
-		RANGED_LEADER,	//遠距離のリーダ
-		RANGED,			//遠距離
-
-		MAX,
-	};
 
 	//ゲッター
 	VECTOR3 GetPos() { return obj->GetTransform()->position; }

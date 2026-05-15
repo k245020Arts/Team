@@ -30,7 +30,7 @@ void T_EnemyStaySky::Start()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	if (enemy->GetEnemyType() == enemy->EnemyType::RANGED_LEADER)
+	if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		isLeader = true;
 
 	setGravity = enemy->enemyBaseComponent.physics->GetGravity();

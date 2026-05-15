@@ -37,11 +37,11 @@ void T_EnemyWaitSee::Start()
 
 	switch (enemy->enemyType)
 	{
-	case enemy->EnemyType::RANGED:
+	case EnemyType::RANGED:
 		moveSpeed = NormalMoveSpeed;
 		pointRange = 400.0f + 200.0f * (float)Random::GetReal();
 		break;
-	case enemy->EnemyType::RANGED_LEADER:
+	case EnemyType::RANGED_LEADER:
 		pointRange = 400;
 		/*targetPos = enemy->TargetPoint();*/
 		moveSpeed = LeaderMoveSpeed;
@@ -60,7 +60,7 @@ void T_EnemyWaitSee::Finish()
 
 void T_EnemyWaitSee::Move(TrashEnemy* _enemy)
 {
-	if (_enemy->GetEnemyType() == _enemy->EnemyType::RANGED_LEADER)
+	if (_enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		if (_enemy->GetPos().y > 0.0f)
 			return;
 

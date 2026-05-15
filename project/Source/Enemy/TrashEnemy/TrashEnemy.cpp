@@ -275,7 +275,7 @@ void TrashEnemy::Draw()
 	EnemyBase::Draw();
 }
 
-void TrashEnemy::Start(Object3D* _obj)
+void TrashEnemy::Start(Object3D* _obj, EnemyType _type)
 {
 	SphereCollider* collider = _obj->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -320,6 +320,7 @@ void TrashEnemy::Start(Object3D* _obj)
 	enemyBaseComponent.state->CreateState <T_EnemyStaySky>("T_EnemyStaySky", StateID::T_ENEMY_STAYSKY);
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
+	enemyType = _type;
 	// スタートステートも StateID 化
 	enemyBaseComponent.state->StartState(StateID::T_ENEMY_IDOL_S);
 	enemyBaseComponent.weapon = FindGameObject<WeaponManager>();

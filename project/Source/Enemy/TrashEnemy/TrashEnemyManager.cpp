@@ -1,5 +1,4 @@
 #include "TrashEnemyManager.h"
-#include "TrashEnemy.h"
 #include "../../Common/ResourceLoader.h"
 #include "../../Component/MeshRenderer/MeshRenderer.h"
 #include "../../../ImGui/imgui.h"
@@ -53,8 +52,25 @@ TrashEnemyManager::TrashEnemyManager()
 	runPoint = 0;
 
 	setPos = VZero;
+	hasLeader = false;
 	resources.push_back(EnemyResource("1", "000", ResourceLoad::LoadModel("1000_Model", ID::IDType::E_MODEL)));
 	resources.push_back(EnemyResource("1", "100", ResourceLoad::LoadModel("1100_Model", ID::IDType::E_MODEL)));
+
+	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_IDOL",		ID::TE_IDOL);
+	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_RUN",		ID::TE_RUN);
+	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_ATTACK1",	ID::TE_ATTACK);
+	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_C_ATTACK",	ID::TE_C_ATTACK);
+	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_DAMAGE",	ID::TE_DAMAGE);
+	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_DEAD",		ID::TE_DEAD);
+	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_Stance",	ID::TE_STANCE);
+
+	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_IDOL",		ID::TE_R_IDOL);
+	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_RUN",		ID::TE_R_RUN);
+	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_ATTACK1",	ID::TE_R_ATTACK);
+	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_C_ATTACK",	ID::TE_R_C_ATTACK);
+	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_DAMAGE",	ID::TE_R_DAMAGE);
+	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_DEAD",		ID::TE_R_DEAD);
+	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_Stance",	ID::TE_R_STANCE);
 }
 
 TrashEnemyManager::~TrashEnemyManager()
@@ -113,31 +129,25 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 
 		if (meleeSpawnCounter >= enemyCounter)
 		{
-			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_IDOL",		ID::TE_IDOL);
-			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_RUN",		ID::TE_RUN);
-			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_ATTACK1",	ID::TE_ATTACK);
-			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_C_ATTACK",	ID::TE_C_ATTACK);
-			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_DAMAGE",	ID::TE_DAMAGE);
-			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_DEAD",		ID::TE_DEAD);
-			ResourceLoad::LoadAnim(resources[0].charaTypeID + "_Stance",	ID::TE_STANCE);
-			CreateData(resources[0],  i);
+			
+			CreateData(resources[0],  i,EnemyType::MELEE);
 			enemyGroup->SetMeleeEnemy(trashEnemy);
 			continue;
 		}
 		else if (max >= enemyCounter)
 		{
-			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_IDOL",		ID::TE_R_IDOL);
-			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_RUN",		ID::TE_R_RUN);
-			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_ATTACK1",	ID::TE_R_ATTACK);
-			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_C_ATTACK",	ID::TE_R_C_ATTACK);
-			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_DAMAGE",	ID::TE_R_DAMAGE);
-			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_DEAD",		ID::TE_R_DEAD);
-			ResourceLoad::LoadAnim(resources[1].charaTypeID + "_Stance",	ID::TE_R_STANCE);
-			CreateData(resources[1], i);
+			if(hasLeader)
+				CreateData(resources[1], i,EnemyType::RANGED);
+			else
+			{
+				CreateData(resources[1], i,EnemyType::RANGED_LEADER);
+				hasLeader = true;
+			}
 			enemyGroup->SetRangedEnemy(trashEnemy);
 			continue;
 		}
     }
+	hasLeader = false;
 }
 
 int TrashEnemyManager::GetActiveEnemy()const
@@ -239,7 +249,7 @@ std::vector<VECTOR3> TrashEnemyManager::GetWayPointPosition()
 	return _pos;
 }
 
-void TrashEnemyManager::CreateData(EnemyResource _resource,int _i)
+void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _type)
 {
 	// ŒÂ•Ê‚Ìenemy‚ðì‚é
 	Object3D* e;
@@ -298,5 +308,5 @@ void TrashEnemyManager::CreateData(EnemyResource _resource,int _i)
 	g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
 
 	// ŒÂ•Ê‚ÌTrashEnemy‚ð’Ç‰Á
-	trashEnemy->Start(e);
+	trashEnemy->Start(e, _type);
 }

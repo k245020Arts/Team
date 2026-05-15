@@ -61,10 +61,11 @@ void T_EnemyDamage::Start()
 	//‹ß‹——£‚Æ‰“‹——£‚Åƒ‚[ƒVƒ‡ƒ“‚ª•Ï‚í‚é‚©‚ç‚»‚Ì‚½‚ß‚ÌÝ’è
 	switch (enemy->enemyType)
 	{
-	case enemy->EnemyType::MELEE:
+	case EnemyType::MELEE:
 		animId = ID::TE_DEAD;
 		break;
-	case enemy->EnemyType::RANGED_LEADER: case enemy->EnemyType::RANGED :
+	case EnemyType::RANGED_LEADER: 
+	case EnemyType::RANGED :
 		animId = ID::TE_R_DEAD;
 		break;
 	default:

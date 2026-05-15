@@ -61,7 +61,7 @@ void T_EnemyRun::Start()
 	//‹ß‹——£‚Æ‰“‹——£‚Å‚Ìˆá‚¢‚ðÝ’è
 	switch (enemy->enemyType)
 	{
-	case enemy->EnemyType::MELEE:
+	case EnemyType::MELEE:
 		//‹ß‹——£‚Æ‰“‹——£‚Åƒ‚[ƒVƒ‡ƒ“‚ª•Ï‚í‚é‚©‚ç‚»‚Ì‚½‚ß‚ÌÝ’è
 		animId = ID::TE_RUN;
 
@@ -72,7 +72,8 @@ void T_EnemyRun::Start()
 		else
 			targetPos = enemy->cooperateWayPoint;
 		break;
-	case enemy->EnemyType::RANGED_LEADER: case enemy->EnemyType::RANGED:
+	case EnemyType::RANGED_LEADER: 
+	case EnemyType::RANGED:
 		//animId = ID::TE_R_RUN;
 
 		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_WAITSEE);

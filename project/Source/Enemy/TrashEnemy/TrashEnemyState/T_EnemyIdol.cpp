@@ -36,11 +36,11 @@ void T_EnemyIdol::Start()
 	//‹ß‹——£‚Æ‰“‹——£‚Åƒ‚[ƒVƒ‡ƒ“‚ª•Ï‚í‚é‚©‚ç‚»‚Ì‚½‚ß‚ÌÝ’è
 	switch (enemy->enemyType)
 	{
-	case enemy->EnemyType::MELEE:
+	case EnemyType::MELEE:
 		animId = ID::TE_IDOL;
 		break;
-	case enemy->EnemyType::RANGED_LEADER: 
-	case enemy->EnemyType::RANGED:
+	case EnemyType::RANGED_LEADER: 
+	case EnemyType::RANGED:
 		animId = ID::TE_R_IDOL;
 		break;
 	default:
@@ -71,8 +71,14 @@ void T_EnemyIdol::NormalMove()
 	if (enemy->GetPos().y >= 30)
 		return;
 
+	if (enemy->GetEnemyType() != EnemyType::MELEE)
+	{
+		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_WAITSEE);
+		return;
+	}
+
 	VECTOR3 targetVec = enemy->obj->GetTransform()->position - enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 	detectionRange += Time::DeltaTimeRate() * RANGESPEED;
-	if (targetVec.Size() < enemy->eStatus->GetStatus().chaseRange + detectionRange || enemy->GetEnemyType()!=enemy->EnemyType::MELEE)
+	if (targetVec.Size() < enemy->eStatus->GetStatus().chaseRange + detectionRange )
 		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 }
