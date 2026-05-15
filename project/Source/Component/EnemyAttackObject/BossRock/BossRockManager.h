@@ -125,6 +125,10 @@ public:
 	/// 攻撃が終了した時に消すオブジェクトは消す
 	/// </summary>
 	void AttackFinishDelete();
+	/// <summary>
+	/// 攻撃が終了した時にまだ空のオブジェクトなら削除
+	/// </summary>
+	void DeleteEmptyObject();
 
 private:
 

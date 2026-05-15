@@ -47,6 +47,8 @@
 #include "BossAttackDataSerializer.h"
 #include "../../Stage/StageSelectData.h"
 #include "../../Common/FileSystemUtils/FileSystemUtils.h"
+#include "../../Component/UI/TextRenderer.h"
+#include "../../Screen.h"
 
 namespace {
 	std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable;
@@ -329,6 +331,12 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 		rightHandFrame = BOSS_RIGHT_HAND_FRAME_1;
 		leftHandFrame = BOSS_LEFT_HAND_FRAME_1;
 	}
+
+	Object2D* bossName = new Object2D();
+	bossName->Init(VECTOR2F(Screen::WIDTH / 2.0f,0.0f),VECTOR2F(0.0f,0.0f),VECTOR2F(1.0f,1.0f),"BossName");
+	TextRenderer* text = bossName->Component()->AddComponent<TextRenderer>();
+	text->TextSetting(UTFConverter::Utf8ToSjis(bossParam.bossName), "MPlus2C", ".dft", WHITE, 4, Font_ID::UI_FONT);
+	bossName->GetTransform()->position.x -= text->GetTextWidth() / 2.0f;
 	/*JsonReader json;
 	std::string filePath = std::string("data/json/BossAttack");
 

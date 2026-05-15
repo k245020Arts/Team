@@ -33,7 +33,7 @@ void CollsionInformation::InitSetPair()
     SetPair(PLAYER, WALL);
     //SetPair(CAMERA, FLOOR);
     SetPair(ENEMY, P_ATTACK);
-    //SetPair(ENEMY, WALL);
+    SetPair(ENEMY, WALL);
     SetPair(PLAYER, B_ATTACK);
     SetPair(BOSS, P_ATTACK);
     SetPair(BOSS_ROCK_PLAYER_ATTACK, P_ATTACK);

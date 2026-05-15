@@ -2,6 +2,8 @@
 #include "UIBase.h"
 #include "../Color/Color.h"
 
+class Shaker;
+
 class TextRenderer : public UIBase
 {
 public:
@@ -33,4 +35,5 @@ private:
 	int fontHandle;
 	std::string text;
 	Color::Rgb rgb;
+	Shaker* shaker;
 };

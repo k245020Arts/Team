@@ -50,6 +50,8 @@
 #include "PlayerParamWindow.h"
 #include "../Common/Debug/DebugLogText.h"
 #include "../Component/EnemyAttackObject/BossRock/BossRockBase.h"
+#include "../Component/UI/TextRenderer.h"
+#include "../Screen.h"
 
 namespace {
 
@@ -111,7 +113,9 @@ Player::Player()
 	paramWindow					= new PlayerParamWindow(this);
 	justAvoidCan				= false;
 	justAvoidColHit				= false;
-	
+	specialTextObj				= nullptr;
+	hpTextObj					= nullptr;
+	hpUIMoveCounter				= 0.0f;
 }
 
 Player::~Player()
@@ -205,6 +209,7 @@ void Player::Update()
 		}
 	}
 	
+	HpUIUpdate();
 }
 
 void Player::Draw()
@@ -299,6 +304,19 @@ void Player::Start(Object3D* _obj)
 	}
 
 	DataLoadPlayerState();
+
+	hpTextObj = new Object2D();
+	hpTextObj->Init(VECTOR2F(610.0f, 925.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "hp");
+	TextRenderer* hpText = hpTextObj->Component()->AddComponent<TextRenderer>();
+	Shaker* shake = hpTextObj->Component()->AddComponent<Shaker>();
+	hpText->TextSetting("HP", "MPlus2C", ".dft", LIGHT_GREEN, 4, Font_ID::UI_FONT);
+	hpTextObj->GetTransform()->position.x -= hpText->GetTextWidth();
+
+	specialTextObj = new Object2D();
+	specialTextObj->Init(VECTOR2F(610.0f, 1025.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "special");
+	TextRenderer* specialText = specialTextObj->Component()->AddComponent<TextRenderer>();
+	specialText->TextSetting("SPECIAL", "MPlus2C", ".dft", YELLOW, 4, Font_ID::UI_FONT);
+	specialTextObj->GetTransform()->position.x -= specialText->GetTextWidth();
 
 	//playerCom.stateManager->DataSaveState();
 
@@ -623,6 +641,12 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 					break;
 				}
 			}
+			const float HP_UI_MOVE_TIME = 0.5f;
+			hpUIMoveCounter = HP_UI_MOVE_TIME;
+			Shaker* shaker = hpTextObj->Component()->GetComponent<Shaker>();
+			shaker->ShakeStart(VECTOR3(10.0f, 10.0f, 10.0f), Shaker::ShakePattern::HEIGHT_SHAKE, false, HP_UI_MOVE_TIME);
+			TextRenderer* hpText = hpTextObj->Component()->GetComponent<TextRenderer>();
+			hpText->SetColor(RED);
 			playerCom.color->setRGB(Color::Rgb(255.0f, 0.0f, 0.0f, 255.0f));
 			redCounter = 0.5f;
 			playerCom.hitObj = _obj;
@@ -786,7 +810,12 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 			if (param.changeID != StateID::STATE_MAX) {
 				playerCom.stateManager->ChangeState(param.changeID);
 			}
-			
+			const float HP_UI_MOVE_TIME = 0.5f;
+			hpUIMoveCounter = HP_UI_MOVE_TIME;
+			Shaker* shaker = hpTextObj->Component()->GetComponent<Shaker>();
+			shaker->ShakeStart(VECTOR3(10.0f, 10.0f, 10.0f), Shaker::ShakePattern::HEIGHT_SHAKE, false, HP_UI_MOVE_TIME);
+			TextRenderer* hpText = hpTextObj->Component()->GetComponent<TextRenderer>();
+			hpText->SetColor(RED);
 			playerCom.physics->AddVelocity(param.moveAdd,false);
 			hp -= param.damage;
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();
@@ -1000,6 +1029,17 @@ void Player::DataLoadPlayerState()
 
 		if (p != nullptr) {
 			p->SetAttackData();
+		}
+	}
+}
+
+void Player::HpUIUpdate()
+{
+	if (hpUIMoveCounter > 0.0f) {
+		hpUIMoveCounter -= Time::DeltaTimeRate();
+		if (hpUIMoveCounter <= 0.0f) {
+			TextRenderer* hpText = hpTextObj->Component()->GetComponent<TextRenderer>();
+			hpText->SetColor(LIGHT_GREEN);
 		}
 	}
 }

@@ -161,6 +161,7 @@ void BossAttackBase::BossFinish()
 	}
 	firstColl = false;
 	boss->rockManager->AttackFinishDelete();
+	boss->rockManager->DeleteEmptyObject();
 }
 
 

@@ -7,6 +7,7 @@ namespace Font_ID {
 	{
 		TITLE_USE_FONT,
 		PAUSE_FONT,
+		UI_FONT,
 		Font_MAX
 	};
 
