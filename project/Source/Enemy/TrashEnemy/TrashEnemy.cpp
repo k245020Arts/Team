@@ -394,7 +394,9 @@ void TrashEnemy::ChangeHp(float _damage)
 
 void TrashEnemy::DamageCollsionEvent(const CollsionEventData& _data)
 {
-	PlayerHit(_data);
+	if (_data.targetTag != CollsionInformation::WALL) {
+		PlayerHit(_data);
+	}
 }
 
 void TrashEnemy::LookTarget(VECTOR3 _pos)
