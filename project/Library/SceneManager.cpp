@@ -9,6 +9,7 @@
 #include "../Source/Common/ID/ID.h"
 #include "../Source/Common/ID/SoundID.h"
 #include "../Source/Common/ID/StateID.h"
+#include "../Source/Common/ID/FontID.h"
 
 namespace
 {
@@ -79,6 +80,7 @@ void SceneManager::Release()
 	StateID::DeleteStateID();
 	Effect_ID::DeleteEffectID();
 	Sound_ID::DeleteSoundID();
+	Font_ID::DeleteFontID();
 	Debug::ClearLogger();
 }
 

@@ -17,9 +17,12 @@
 #include "../Screen.h"
 #include "../Stage/StageSelectData.h"
 #include "../Component/Color/Color.h"
+#include "../Common/ID/FontID.h"
+#include "../Component/UI/TextRenderer.h"
 
 namespace {
 	const float ALPHA_TIME = 1.0f;
+	
 }
 
 TitleControl::TitleControl()
@@ -28,7 +31,8 @@ TitleControl::TitleControl()
 	hImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Title", ID::TITLE_BACK);
 	titleImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "TitleImage", ID::TITLE);
 	keyImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
-	font = LoadFontDataToHandle("data/font/MPlus2C.dft", 4);
+	//font = LoadFontDataToHandle("data/font/MPlus2C.dft", 4);
+	font = ResourceLoad::LoadFont("MPlus2C", ".dft", Font_ID::TITLE_USE_FONT,4);
 	SoundManager::GetInstance()->AllDeleteSound();
 	SoundManager::GetInstance()->TitleSceneLoad();
 	SoundManager::GetInstance()->PlayBGM(Sound_ID::TITLE_BGM, true, true);
@@ -38,6 +42,7 @@ TitleControl::TitleControl()
 	moveButton = 0.0f;
 	moveButton = 1.0f;
 	progress = 0.0f;
+
 	
 	Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
 	player = obj->Component()->GetComponent<TitlePlayer>();
@@ -47,12 +52,25 @@ TitleControl::TitleControl()
 	selectCounter = 0.0f;
 	titleState = TITLE;
 	alpha = 255;
+
+	const int STAGE_POS = 300;
+	Object2D* stageTextObj = new Object2D();
+	stageTextObj->Init(VECTOR2F(Screen::WIDTH / 2 + STAGE_POS, 850), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "stageText");
+	stageText = stageTextObj->Component()->AddComponent<TextRenderer>();
+	
+	stageText->TextSetting("", "MPlus2C", ".dft",WHITE,4,Font_ID::TITLE_USE_FONT);
+
+	Object2D* commonTextObj = new Object2D();
+	commonTextObj->Init(VECTOR2F(Screen::WIDTH / 2 + STAGE_POS - 100, 650), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "Text");
+	text = commonTextObj->Component()->AddComponent<TextRenderer>();
+	
+	text->TextSetting("Aボタンを押してスタート!!", "MPlus2C", ".dft", WHITE, 4, Font_ID::TITLE_USE_FONT);
 }
 
 TitleControl::~TitleControl()
 {
 	Debug::ClearLogger();
-	DeleteFontToHandle(font);
+	//DeleteFontToHandle(font);
 }
 
 void TitleControl::Update()
@@ -112,24 +130,26 @@ void TitleControl::StageSelect()
 	if (selectCounter > 0.0f) {
 		return;
 	}
-	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x >= 0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_RIGHT)) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x >= 0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_RIGHT)
+		|| InputManager::GetInstance()->GetControllerInput()->GetIsButtonPutNow(XINPUT_BUTTON_DPAD_RIGHT)) {
 		stageID++;
 		int stageMax = StageSelectData::GetInstance()->GetStageMax() - 1;
 		if (stageID >= stageMax) {
 			stageID = stageMax;
 		}
 		StageSelectData::GetInstance()->SetStageID(stageID);
-		selectCounter = 0.5f;
+		selectCounter = 0.1f;
 		selectMoveCounter = 0.0f;
 	}
 
-	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x <= -0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_LEFT)) {
+	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x <= -0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_LEFT)
+		|| InputManager::GetInstance()->GetControllerInput()->GetIsButtonPutNow(XINPUT_BUTTON_DPAD_LEFT)) {
 		stageID--;
 		if (stageID <= 0) {
 			stageID = 0;
 		}
 		StageSelectData::GetInstance()->SetStageID(stageID);
-		selectCounter = 0.5f;
+		selectCounter = 0.2f;
 		selectMoveCounter = 0.0f;
 	}
 }
@@ -141,8 +161,12 @@ void TitleControl::Draw()
 {
 	/*DrawGraph(0, 0, hImage, true);*/
 	DrawGraph(750, 100, titleImage, true);
-	if (progress > 0)
+	if (progress > 0) { //画面遷移が始まったら文字の描画を止める
+		stageText->SetAlpha(0.0f);
+		text->SetAlpha(0.0f);
 		return;
+	}
+		
 
 	StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
 	int move = Easing::SinCube(0, 10, selectMoveCounter);
@@ -152,15 +176,22 @@ void TitleControl::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - alpha);
-	const int STAGE_POS = 300;
-	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + STAGE_POS, 850 + move, 1.0, 1.0, 0xffffff, font, stageData.name.c_str());
-	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + STAGE_POS - 100, 650 + move, 1.0, 1.0, 0xffffff, font, "Aボタンを押してスタート!!");
-	int width = GetDrawExtendFormatStringWidthToHandle(1.0f, font, stageData.name.c_str());
+
+	stageText->GetBaseObject()->GetTransform()->position.y = 850 + move;
+	stageText->SetText(stageData.name.c_str());
+	stageText->SetAlpha(255 - alpha);
+
+	text->GetBaseObject()->GetTransform()->position.y = 650 + move;
+	text->SetAlpha(255 - alpha);
+	
+	int width = stageText->GetTextWidth();
 
 	int stageMax = StageSelectData::GetInstance()->GetStageMax() - 1;
 	if (stageID == stageMax) {
 		BLACK_TEXTURE;
 	}
+
+	const int STAGE_POS = 300;
 	
 	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + width + STAGE_POS + 50, 850 + move, 1.0, 1.0, 0xffffff, font,"→");
 	DEFAULT_TEXTURE;
@@ -240,6 +271,9 @@ void TitleControl::StageUpdate()
 
 		player->playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
 		StageSelectData::GetInstance()->SetStageID(stageID);
+
+		stageText->SetAlpha(0.0f);
+		text->SetAlpha(0.0f);
 	}
 
 	StageSelect();

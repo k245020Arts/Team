@@ -13,7 +13,7 @@
 #include "../../Camera/Camera.h"
 #include "../../Common/Effect/EffectManager.h"
 #include "../../Common/Sound/SoundManager.h"
-#include "../../Common/ID/ID.h"//
+#include "../../Common/ID/ID.h"
 #include "../../Weapon/WeaponManager.h"
 #include "../../State/StateManager.h"
 #include "../../GameControler/GameControler.h"

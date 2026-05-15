@@ -563,6 +563,9 @@
     <ClCompile Include="Source\Pause\PauseScreen.cpp">
       <Filter>PlayScene\Pause</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Common\ID\FontID.cpp">
+      <Filter>Common\ID</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1199,6 +1202,9 @@
     </ClInclude>
     <ClInclude Include="Source\Pause\PauseScreen.h">
       <Filter>PlayScene\Pause</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Common\ID\FontID.h">
+      <Filter>Common\ID</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

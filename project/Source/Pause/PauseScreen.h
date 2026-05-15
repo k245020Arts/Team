@@ -4,6 +4,7 @@
 
 
 class UIManager;
+class TextRenderer;
 
 class PauseScreen : public GameObject
 {
@@ -34,4 +35,8 @@ private:
 	UIManager* UiManager;
 
 	PauseMenuItem pauseItem;
+
+	TextRenderer* pauseText;
+	TextRenderer* backText;
+	TextRenderer* titleText;
 };
