@@ -177,12 +177,12 @@ void TitleControl::Draw()
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - alpha);
 
-	stageText->GetBaseObject()->GetTransform()->position.y = 850 + move;
+	stageText->GetBaseObject()->GetTransform()->position.y = 850.0f + move;
 	stageText->SetText(stageData.name.c_str());
-	stageText->SetAlpha(255 - alpha);
+	stageText->SetAlpha(255.0f- alpha);
 
-	text->GetBaseObject()->GetTransform()->position.y = 650 + move;
-	text->SetAlpha(255 - alpha);
+	text->GetBaseObject()->GetTransform()->position.y = 650.0f + move;
+	text->SetAlpha(255.0f - alpha);
 	
 	int width = stageText->GetTextWidth();
 

@@ -380,6 +380,17 @@ void BossRockManager::AttackFinishDelete()
 	}
 }
 
+void BossRockManager::DeleteEmptyObject()
+{
+	for (auto itr = rocks.begin(); itr != rocks.end();) {
+		bool start = (*itr)->GetThrowObjectStart();
+		if (!start) {
+			(*itr)->GetBaseObject()->DestroyMe();
+		}
+		itr++;
+	}
+}
+
 void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity, const VECTOR3& _fir, const BossAttackBase::ThrowObjectAttackData& _data)
 {
 	//_base->Init(Transform(),"bossThrowObject");

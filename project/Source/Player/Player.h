@@ -336,5 +336,9 @@ private:
 
 	void DataSavePlayerState();
 	void DataLoadPlayerState();
+	Object2D* specialTextObj;
+	Object2D* hpTextObj;
+	float hpUIMoveCounter;
+	void HpUIUpdate();
 };
 

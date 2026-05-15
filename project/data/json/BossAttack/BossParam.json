@@ -2,14 +2,14 @@
   "Boss": [
     {
       "bossID": 0,
-      "bossName": "",
+      "bossName": "ヴォルクレイド",
       "defense": 500.0,
       "hp": 30000.0,
       "modelName": "BossModel"
     },
     {
       "bossID": 1,
-      "bossName": "",
+      "bossName": "セラフィオン",
       "defense": 1000.0,
       "hp": 30000.0,
       "modelName": "BossModel3"

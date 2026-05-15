@@ -1,5 +1,7 @@
 #include "TextRenderer.h"
 #include "../Transform/Transform.h"
+#include "../Shaker/Shaker.h"
+#include "../ComponentManager.h"
 
 TextRenderer::TextRenderer()
 {
@@ -8,6 +10,8 @@ TextRenderer::TextRenderer()
 	text = "";
 	rgb = Color::Rgb();
 	//scale = VECTOR2F(1.0f,1.0f);
+	debugId = 36;
+	tag = Function::GetClassNameC<TextRenderer>();
 }
 
 TextRenderer::~TextRenderer()
@@ -23,6 +27,11 @@ void TextRenderer::Update()
 void TextRenderer::Draw()
 {
 	VECTOR3 position = obj->GetTransform()->position;
+	//描画専用のポジジョンを作る
+	if (shaker != nullptr) {
+		//ヒットストップなどでシェイクしているときは描画用の座標だけを動かしている
+		position += shaker->GetShakePower();
+	}
 	VECTOR3 scale = obj->GetTransform()->scale;
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)rgb.a);
     DrawExtendFormatStringToHandle((int)position.x,(int)position.y,(double)scale.x,(double)scale.y,GetColor((int)rgb.r,(int)rgb.g,(int)rgb.b),fontHandle,"%s",text.c_str());
@@ -37,6 +46,7 @@ void TextRenderer::TextSetting(std::string _text, std::string _fileName, std::st
 	fontHandle = ResourceLoad::LoadFont(_fileName.c_str(), _exten, _id, _size);
 	rgb = _rgb;
 	//scale = _scale;
+	shaker = obj->Component()->GetComponent<Shaker>();
 }
 
 int TextRenderer::GetTextWidth()
