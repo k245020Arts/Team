@@ -284,7 +284,7 @@ void TrashEnemy::Start(Object3D* _obj, EnemyType _type)
 	info.oneColl = false;
 	info.tag = CollsionInformation::Tag::ENEMY;
 	info.size = 1.0f;//
-	std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { PlayerHit(_data); };
+	std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) {DamageCollsionEvent(_data); };
 	collider->CollsionAdd(info, Transform(VECTOR3(0, 100, 0), VZero, VECTOR3(350.0f, 1.0f, 1.0f)), func);
 
 	enemyBaseComponent.state = obj->Component()->AddComponent<StateManager>();
@@ -390,6 +390,11 @@ void TrashEnemy::ChangeHp(float _damage)
 	hp += _damage;
 	//å„Ç≈èCê≥
 	deadPreset = deadPresets[4];
+}
+
+void TrashEnemy::DamageCollsionEvent(const CollsionEventData& _data)
+{
+	PlayerHit(_data);
 }
 
 void TrashEnemy::LookTarget(VECTOR3 _pos)

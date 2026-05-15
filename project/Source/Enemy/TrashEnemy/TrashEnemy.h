@@ -130,6 +130,8 @@ public:
 		return static_cast<T*>(_set->instance);
 	}
 
+	void DamageCollsionEvent(const CollsionEventData& _data);
+
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
