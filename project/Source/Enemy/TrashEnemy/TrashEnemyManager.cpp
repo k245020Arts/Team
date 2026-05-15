@@ -55,7 +55,7 @@ TrashEnemyManager::TrashEnemyManager()
 	hasLeader = false;
 	resources.push_back(EnemyResource("1", "000", ResourceLoad::LoadModel("1000_Model", ID::IDType::E_MODEL)));
 	resources.push_back(EnemyResource("1", "100", ResourceLoad::LoadModel("1100_Model", ID::IDType::E_MODEL)));
-
+	//‹ß‹——£‚Ì“G‚ÌƒAƒjƒ[ƒVƒ‡ƒ“Ý’è
 	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_IDOL",		ID::TE_IDOL);
 	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_RUN",		ID::TE_RUN);
 	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_ATTACK1",	ID::TE_ATTACK);
@@ -63,7 +63,7 @@ TrashEnemyManager::TrashEnemyManager()
 	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_DAMAGE",	ID::TE_DAMAGE);
 	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_DEAD",		ID::TE_DEAD);
 	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_Stance",	ID::TE_STANCE);
-
+	//‰“‹——£‚Ì“G‚ÌƒAƒjƒ[ƒVƒ‡ƒ“Ý’è
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_IDOL",		ID::TE_R_IDOL);
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_RUN",		ID::TE_R_RUN);
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_ATTACK1",	ID::TE_R_ATTACK);
@@ -127,14 +127,13 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 		spawnCounter++;
 		enemyCounter++;
 
-		if (meleeSpawnCounter >= enemyCounter)
+		if (meleeSpawnCounter >= enemyCounter)//‹ß‹——£‚Ì“G‚Ì¶¬
 		{
-			
 			CreateData(resources[0],  i,EnemyType::MELEE);
 			enemyGroup->SetMeleeEnemy(trashEnemy);
 			continue;
 		}
-		else if (max >= enemyCounter)
+		else if (max >= enemyCounter)//‰“‹——£‚Ì“G‚Ì¶¬
 		{
 			if(hasLeader)
 				CreateData(resources[1], i,EnemyType::RANGED);
@@ -179,6 +178,10 @@ void TrashEnemyManager::ImguiDraw()
 		startRangedAtk = true;
 	if (ImGui::Button("DeadMeleeEnemy"))
 		enemyGroup->DeadMeleeEnemy();
+	if (ImGui::Button("DeadRangedReader"))
+		enemyGroup->DeadRangedEnemy(true);
+	if(ImGui::Button("DeadRanged"))
+		enemyGroup->DeadRangedEnemy(false);
 
 	if (ImGui::Button("waypoint"))
 	{

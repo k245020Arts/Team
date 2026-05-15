@@ -61,12 +61,7 @@ private:
 	const float ATK_COUNTER_MAX = 3;
 
 	TrashEnemyGroup* enemyGroup;
-	//敵のモデルを保持する
-	/*std::vector<int> hModels;
-
-	std::vector<std::pair<std::string, std::string>> charaTypeID;
-	std::vector <std::string> charaID;
-	std::vector <std::string> typeID;*/
+	//敵のファイルネームなどを設定するために使う
 	struct EnemyResource
 	{
 		std::string charaID;

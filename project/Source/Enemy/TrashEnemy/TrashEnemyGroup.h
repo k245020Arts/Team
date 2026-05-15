@@ -16,12 +16,6 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	/// <summary>
-	/// ‹ß‹——£‚Æ‰“‹——£‚Ì“G‚ğ‹Ï“™‚É•ª‚¯‚é
-	/// </summary>
-	/// <param name="_enemy">“G‚ÌƒNƒ‰ƒX</param>
-	/// <param name="_index">‰½‘Ì–Ú‚Ì“G‚©</param>
-	void SettingGroup(TrashEnemy* _enemy, int _index);
 	//‹ß‹——£‚Ì“G‚¾‚¯‚ğì‚é
 	void SetMeleeEnemy(TrashEnemy* _enemy);
 	//‰“‹——£‚Ì“G‚¾‚¯‚ğì‚é
@@ -38,18 +32,24 @@ public:
 	void CloseWayPoint(std::vector<WayPoint> wayPoint);
 	//‰“‹——£‚Ì“G‚Ì˜AŒgUŒ‚
 	void RangedEnemyAttack();
-	//˜AŒgUŒ‚’†‚ÉUŒ‚‚ğH‚ç‚Á‚½Œã‚Ìˆ—
+
+	//‹ß‹——£‚Ì“G‚ğ‹­§“I‚É“|‚·ˆ—
 	void DeadMeleeEnemy();
+	/// <summary>
+	/// ‰“‹——£‚Ì“G‚ğ‹­§“I‚É“|‚·ˆ—
+	/// </summary>
+	/// <param name="_readerDead">ƒŠ[ƒ_[‚¾‚¯“|‚·‚©</param>
+	void DeadRangedEnemy(bool _readerDead);
 
 private:
 	Camera* camera;
 	TrashEnemyManager* trashEnemyManager;
 
 	//‹ß‹——£‚Ì“G
-	std::list<TrashEnemy*> meleeEnemies;
+	std::vector<TrashEnemy*> meleeEnemies;
 	//‰“‹——£‚Ì“G
-	std::list<TrashEnemy*> rangedEnemies;
-	//
+	std::vector<TrashEnemy*> rangedEnemies;
+	//‘S•”‚Ì“G‚Ìî•ñ
 	std::list<TrashEnemy*> allEnemy;
 
 	const int ATK_COUNTER_MIN = 1;
@@ -58,15 +58,14 @@ private:
 	/// w’è‚µ‚½“G‚ÌƒŠƒXƒg‚Ì’†g‚ğŒ©‚Ä“G‚ª‚â‚ç‚ê‚Ä‚½‚çƒŠƒXƒg‚©‚çíœ‚·‚é
 	/// </summary>
 	/// <param name="enemies">“G‚ÌƒŠƒXƒg</param>
-	void EnemyDead(std::list<TrashEnemy*>& enemies);
+	void EnemyDead(std::vector<TrashEnemy*>& enemies);
 	//G‹›“I‚Ç‚¤‚µ‚Å‚ ‚½‚Á‚½‚Ì‰Ÿ‚µ•Ô‚µ
 	void Separation();
 
 	void InCameraWayPoint(WayPoint& _wayPoint);
-	
-	//bool hasLeader;
 
 	//‹ß‹——£‚Ì“G‚Åg‚¤----------
+	
 	//“G‚ÌUŒ‚
 	void MeleeEnemyAttack(TrashEnemy* _enemy);
 	//‹ß‹——£‚Ì“G‚Ì‘–‚éƒ|ƒCƒ“ƒg‚ğŒˆ‚ß‚é
@@ -89,12 +88,15 @@ private:
 	//--------------------------
 
 	//‰“‹——£‚Ì“G----------------
+
 	//“G‚Ì‘Ò‹@‚Ì‹““®
 	void RangedEnemySetWaypoint(TrashEnemy* _enemy);
 	//˜AŒgUŒ‚‚ğ¸”s‚µ‚½‚Æ‚«‚Ì“|‚³‚ê‚éˆ—
 	void RangedDamageMove();
 	//‰“‹——£‚Ì“G‚ÌƒXƒe[ƒg‚ğw’è‚µ‚½ƒXƒe[ƒg‚É‘Sˆõ•Ï‚¦‚éˆ—
 	void AllChangeRangedState(StateID::State_ID _id);
+
+	void NextLeader(/*TrashEnemy* _enemy*/);
 
 	VECTOR3 leaderPos;
 
