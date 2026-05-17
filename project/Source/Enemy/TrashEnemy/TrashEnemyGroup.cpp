@@ -314,7 +314,6 @@ void TrashEnemyGroup::RangedEnemyAttack()
 	bool leaderActiveEnd = false;
 
 	/*
-		リーダーが死んだ後の振り分け
 		チャージ攻撃で打ち返し
 		演出寄りで制作する
 		細かいとこ調整して気持ちよさをだせるようにする
@@ -496,6 +495,6 @@ void TrashEnemyGroup::NextLeader()
 	//リーダーが死んでた時別の敵をリーダーにする
 	if (!readerActive)
 	{
-		rangedEnemies[Max - 1]->SetEnemyType(EnemyType::RANGED_LEADER);
+		rangedEnemies[0]->SetEnemyType(EnemyType::RANGED_LEADER);
 	}
 }

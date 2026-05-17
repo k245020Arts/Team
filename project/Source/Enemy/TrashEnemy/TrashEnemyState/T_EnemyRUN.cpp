@@ -3,6 +3,7 @@
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
 #include "T_EnemyStatus.h"
+#include "../../../Component/Physics/Physics.h"
 
 T_EnemyRun::T_EnemyRun()
 {
@@ -41,7 +42,7 @@ void T_EnemyRun::Update()
 
 	enemy->GetEnemyObj()->GetTransform()->position.x += enemy->eStatus->GetStatus().runSpeed * cosf(ROTY);
 	enemy->GetEnemyObj()->GetTransform()->position.z += enemy->eStatus->GetStatus().runSpeed * sinf(ROTY);
-
+	
 	VECTOR3 targetVec = targetPos - enemy->obj->GetTransform()->position;
 	
 	if (targetVec.Size() <= enemy->eStatus->GetStatus().atkRang)
@@ -81,20 +82,6 @@ void T_EnemyRun::Start()
 	default:
 		break;
 	}
-
-	/*if (enemy->enemyType == enemy->EnemyType::MELEE)
-	{
-		if (!enemy->isCooperateAtk)
-			targetPos = enemy->targetPoint;
-		else if (enemy->isMovingToPlayer)
-			targetPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
-		else
-			targetPos = enemy->cooperateWayPoint;
-	}
-	else
-	{
-		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_WAITSEE);
-	}*/
 
 	motionSpeed = enemy->enemyBaseComponent.anim->GetPlaySpeed();
 

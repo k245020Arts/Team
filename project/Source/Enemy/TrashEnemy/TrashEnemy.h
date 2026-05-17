@@ -132,6 +132,8 @@ public:
 
 	void DamageCollsionEvent(const CollsionEventData& _data);
 
+	void Move(VECTOR3& _targetPos, float _speed);
+
 private:
 	CharaWeapon* chara;
 	T_EnemyStatus* eStatus;
