@@ -40,8 +40,7 @@ void T_EnemyRun::Update()
 
 	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
 
-	enemy->GetEnemyObj()->GetTransform()->position.x += enemy->eStatus->GetStatus().runSpeed * cosf(ROTY);
-	enemy->GetEnemyObj()->GetTransform()->position.z += enemy->eStatus->GetStatus().runSpeed * sinf(ROTY);
+	enemy->Move(targetPos, enemy->eStatus->GetStatus().runSpeed);
 	
 	VECTOR3 targetVec = targetPos - enemy->obj->GetTransform()->position;
 	
@@ -51,7 +50,6 @@ void T_EnemyRun::Update()
 			enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
 		else
 			enemy->cAttack = true;
-			//enemy->enemyBaseComponent.state->ChangeState(enemy->GetNextCooperateID());
 	}
 }
 
@@ -75,7 +73,6 @@ void T_EnemyRun::Start()
 		break;
 	case EnemyType::RANGED_LEADER: 
 	case EnemyType::RANGED:
-		//animId = ID::TE_R_RUN;
 
 		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_WAITSEE);
 		break;

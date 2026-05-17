@@ -44,7 +44,6 @@ void Standby::Update()
 
 			enemy->GetEnemyObj()->GetTransform()->position.x -= range / BACKSPEED * cosf(rotY - 0.5f * DX_PI_F);
 			enemy->GetEnemyObj()->GetTransform()->position.z -= range / BACKSPEED * sinf(rotY - 0.5f * DX_PI_F);
-			//enemy->enemyBaseComponent.physics->AddVelocity(VECTOR3(range / BACKSPEED * cosf(rotY - 0.5f * DX_PI_F), 0.0f, range / BACKSPEED * sinf(rotY - 0.5f * DX_PI_F)), true);
 		}
 		else
 		{
@@ -128,8 +127,8 @@ void Standby::RotateMove()
 	else if (VSize(newPos - EPos) >= vecMax)
 	{
 		// ˆÚ“®
-		VECTOR3 dir = VNorm(newPos - EPos);
-		enemy->GetEnemyObj()->GetTransform()->position += dir * 10;
+		const float Speed = 10.0f;
+		enemy->Move(newPos, Speed);
 	}
 	else
 	{

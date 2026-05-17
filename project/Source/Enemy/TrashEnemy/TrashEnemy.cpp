@@ -402,7 +402,8 @@ void TrashEnemy::DamageCollsionEvent(const CollsionEventData& _data)
 void TrashEnemy::Move(VECTOR3& _targetPos, float _speed)
 {
 	VECTOR3 dir = VNorm(_targetPos - GetPos()) ;
-	enemyBaseComponent.physics->AddVelocity(dir * _speed, false);
+	//enemyBaseComponent.physics->AddVelocity(dir * _speed, false);
+	GetEnemyObj()->GetTransform()->position += dir * _speed;
 }
 
 void TrashEnemy::LookTarget(VECTOR3 _pos)
