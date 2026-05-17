@@ -339,6 +339,9 @@ private:
 	Object2D* specialTextObj;
 	Object2D* hpTextObj;
 	float hpUIMoveCounter;
+	Physics* specialTextPhysics;
+	float specialMoveCounter;
 	void HpUIUpdate();
+	void SpecialUIUpdate();
 };
 

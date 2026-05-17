@@ -178,8 +178,10 @@ void Camera::ImguiDraw()
 	ImGui::RadioButton("DiffTarget", &debugButton, 2);
 	ImGui::DragFloat3("deffTarget", &diffTarget.x, 1.0f, -100000.0f, 10000.0f);
 	ImGui::DragFloat3("cameraPosition", &cameraComponent.cameraTransform->position.x,1.0f, 0.0f, 5000.0f);
+	ImGui::DragFloat3("cameraPlayerPosition", &cameraComponent.player.transform->position.x,1.0f, 0.0f, 5000.0f);
 	ImGui::DragFloat3("cameraRotation", &cameraComponent.cameraTransform->rotation.x,1.0f, 0.0f, 5000.0f);
 	ImGui::DragFloat3("target", &target.x,1.0f, 0.0f, 5000.0f);
+	ImGui::DragFloat3("currentDistance", &currentDistance.x,1.0f, 0.0f, 5000.0f);
 	ImGui::DragFloat("time", &timeTest,1.0f,0.0f, 2.0f);
 	//ImGui::DragFloat3("distance", cameraComponent.currentDistance.x,5.0f,-1500.0f, 1500.0f);
 	ImGui::RadioButton("targetPlayer", &targetChangeButton, 0);

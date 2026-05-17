@@ -80,7 +80,7 @@ void Physics::Update()
 	velocity.y = velo.y;
 
 	// 微小速度をカット（誤差防止）
-	if (fabs(velocity.y) < 2.0f)
+	if (fabs(velocity.y) < 0.01f)
 		velocity.y = 0.0f;
 
 	// 位置更新

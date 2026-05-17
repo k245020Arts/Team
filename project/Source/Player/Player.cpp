@@ -69,7 +69,7 @@ namespace {
 	PlayerParamWindow* paramWindow;
 
 	
-
+	const float SPECIAL_UI_INIT_POS_Y = 1025.0f;
 }
 
 
@@ -116,6 +116,7 @@ Player::Player()
 	specialTextObj				= nullptr;
 	hpTextObj					= nullptr;
 	hpUIMoveCounter				= 0.0f;
+	specialTextPhysics			= nullptr;
 }
 
 Player::~Player()
@@ -151,6 +152,8 @@ void Player::Update()
 			DeleteCollision(&attackColl);
 		}
 	}
+
+	//------------------------------デバックボタン---------------------------------------------
 	
 	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_B)){
 		playerCom.stateManager->ChangeState(StateID::PLAYER_SPECIAL_ATTACK_S);
@@ -168,6 +171,8 @@ void Player::Update()
 	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_N)) {
 		noDamage = true;
 	}
+
+	//------------------------------------------------------------------------------------------
 
 	//必殺技が発動できればUIを不透明度を上げる。
 	if (CanSpecialAttack()) {
@@ -210,6 +215,7 @@ void Player::Update()
 	}
 	
 	HpUIUpdate();
+	SpecialUIUpdate();
 }
 
 void Player::Draw()
@@ -313,8 +319,10 @@ void Player::Start(Object3D* _obj)
 	hpTextObj->GetTransform()->position.x -= hpText->GetTextWidth();
 
 	specialTextObj = new Object2D();
-	specialTextObj->Init(VECTOR2F(610.0f, 1025.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "special");
+	specialTextObj->Init(VECTOR2F(610.0f, SPECIAL_UI_INIT_POS_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "special");
 	TextRenderer* specialText = specialTextObj->Component()->AddComponent<TextRenderer>();
+	/*specialTextPhysics = specialTextObj->Component()->AddComponent<Physics>();
+	specialTextPhysics->Start(VECTOR3(0.0f, 6.0f, 0.0f), VECTOR3(0.0f, 16.0f, 0.0f));*/
 	specialText->TextSetting("SPECIAL", "MPlus2C", ".dft", YELLOW, 4, Font_ID::UI_FONT);
 	specialTextObj->GetTransform()->position.x -= specialText->GetTextWidth();
 
@@ -1042,4 +1050,19 @@ void Player::HpUIUpdate()
 			hpText->SetColor(LIGHT_GREEN);
 		}
 	}
+}
+
+void Player::SpecialUIUpdate()
+{
+	if (CanSpecialAttack()) {
+		specialMoveCounter += Time::DeltaTimeRate() * 0.4f;
+		/*if (specialMoveCounter >= 1.0f) {
+			specialMoveCounter = 0.0f;
+		}*/
+	}
+	else {
+		specialMoveCounter = 0.0f;
+	}
+	float move = Easing::SinCube(0.0f, -0.2f, specialMoveCounter);
+	specialTextObj->GetTransform()->position.y += move;
 }
