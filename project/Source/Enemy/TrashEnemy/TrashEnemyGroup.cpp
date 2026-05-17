@@ -9,7 +9,6 @@ TrashEnemyGroup::TrashEnemyGroup()
 	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
 	trashEnemyManager = FindGameObject<TrashEnemyManager>();
 
-	//hasLeader = false;
 	attackCounter = 0;
 
 	enemiesRunCounter = 0;
@@ -48,6 +47,8 @@ void TrashEnemyGroup::Update()
 		RangedEnemySetWaypoint(ranged);
 	}
 
+	NextLeader();
+
 	if (rangedDamageMove)
 		RangedDamageMove();
 }
@@ -57,49 +58,17 @@ void TrashEnemyGroup::Draw()
 	CooperateAttackLine();
 }
 
-//void TrashEnemyGroup::SettingGroup(TrashEnemy* _enemy, int _index)
-//{
-//	if (_index % 2 == 0)
-//	{
-//		_enemy->SetEnemyType(_enemy->EnemyType::MELEE);
-//		meleeEnemies.push_back(_enemy);
-//	}
-//	else if (hasLeader)
-//	{
-//		_enemy->SetEnemyType(_enemy->EnemyType::RANGED);
-//		rangedEnemies.push_back(_enemy);
-//	}
-//	else
-//	{
-//		_enemy->SetEnemyType(_enemy->EnemyType::RANGED_LEADER);
-//		rangedEnemies.push_back(_enemy);
-//		hasLeader = true;
-//	}
-//}
-
 void TrashEnemyGroup::SetMeleeEnemy(TrashEnemy* _enemy)
 {
-	//_enemy->SetEnemyType(_enemy->EnemyType::MELEE);
 	meleeEnemies.push_back(_enemy);
 }
 
 void TrashEnemyGroup::SetRangedEnemy(TrashEnemy* _enemy)
 {
 	rangedEnemies.push_back(_enemy);
-	//if (hasLeader)
-	//{
-	//	//_enemy->SetEnemyType(_enemy->EnemyType::RANGED);
-	//	rangedEnemies.push_back(_enemy);
-	//}
-	//else
-	//{
-	//	//_enemy->SetEnemyType(_enemy->EnemyType::RANGED_LEADER);
-	//	rangedEnemies.push_back(_enemy);
-	//	hasLeader = true;
-	//}
 }
 
-void TrashEnemyGroup::EnemyDead(std::list<TrashEnemy*>& enemies)
+void TrashEnemyGroup::EnemyDead(std::vector<TrashEnemy*>& enemies)
 {
 	for (auto itr = enemies.begin(); itr != enemies.end(); )
 	{
@@ -345,7 +314,6 @@ void TrashEnemyGroup::RangedEnemyAttack()
 	bool leaderActiveEnd = false;
 
 	/*
-		リーダーが死んだ後の振り分け
 		チャージ攻撃で打ち返し
 		演出寄りで制作する
 		細かいとこ調整して気持ちよさをだせるようにする
@@ -441,6 +409,26 @@ void TrashEnemyGroup::DeadMeleeEnemy()
 	}
 }
 
+void TrashEnemyGroup::DeadRangedEnemy(bool _readerDead)
+{
+	for (auto& itr : rangedEnemies)
+	{
+		if (_readerDead)
+		{
+			if (itr->GetEnemyType() == EnemyType::RANGED_LEADER)
+			{
+				itr->ChangeHp(-itr->GetMaxHp());
+				return;
+			}
+		}
+		else
+		{
+			itr->ChangeHp(-itr->GetMaxHp());
+		}
+		
+	}
+}
+
 void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 {
 	if (_enemy->GetEnemyType() == EnemyType::RANGED)
@@ -486,4 +474,27 @@ void TrashEnemyGroup::AllChangeRangedState(StateID::State_ID _id)
 {
 	for (auto& enemy : rangedEnemies)
 		enemy->ChangeState(_id);
+}
+
+void TrashEnemyGroup::NextLeader()
+{
+	bool readerActive = false;
+	const size_t Max = rangedEnemies.size();
+
+	if (Max <= 0)
+		return;
+
+	for (auto& enemy : rangedEnemies)
+	{
+		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
+		{
+			readerActive = true;
+			return;
+		}
+	}
+	//リーダーが死んでた時別の敵をリーダーにする
+	if (!readerActive)
+	{
+		rangedEnemies[0]->SetEnemyType(EnemyType::RANGED_LEADER);
+	}
 }
