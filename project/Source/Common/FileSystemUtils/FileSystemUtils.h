@@ -84,7 +84,7 @@ public:
 	/// <param name="keyword">‚±‚±‚©‚çŒŸõŠJn‚Ì•¶š—ñ</param>
 	/// <returns>Œã‚Ì•¶š—ñ‚¾‚¯æ“¾</returns>
 	static std::string FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword);
-	static std::string FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword,int _cutNum);
+	static std::string FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword,size_t _cutNum);
 	static std::string FindAfterAndMatchFileName(const std::vector<std::string> str, const std::string& after, const std::string& keyword);
 
 	// -------------------------------------------------------------------------------------------

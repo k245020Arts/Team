@@ -193,7 +193,7 @@ public:
 	/// <param name="_a">”¼“§–¾¬•ª</param>
 	/// <param name="index">Œ•‚ğ‚Á‚Ä‚¢‚éè‚Ìindex</param>
 	/// <param name="_time">‰½•b•\¦‚·‚é‚©</param>
-	void DrawTrail(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, float _g, float _b, float _a, float index, float _time);
+	void DrawTrail(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, float _g, float _b, float _a, int index, float _time);
 	/// <summary>
 	/// “–‚½‚è”»’è‚Ìíœ
 	/// </summary>

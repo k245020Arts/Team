@@ -715,7 +715,7 @@ void Player::DrawTrail()
 	DrawTrail(VECTOR3(-23, -4, -200), VECTOR3(23, 4, 16), 0.0f, 0.0f, 255.0f, 100.0f, 28, 0.25f);
 }
 
-void Player::DrawTrail(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, float _g, float _b, float _a, float index, float _time)
+void Player::DrawTrail(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, float _g, float _b, float _a, int index, float _time)
 {
 	//Œ•‚Ì‹OÕ‚Ìˆ—
 	playerCom.weapon->CreateTrailPlayer(_nPos,_fPos,_r,_g,_b,_a,index,_time);
