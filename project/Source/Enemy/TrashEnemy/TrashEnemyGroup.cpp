@@ -265,7 +265,7 @@ void TrashEnemyGroup::CooperateAttackLine()
 		copyPos.push_back(VECTOR3(itr->GetPos().x, PosY, itr->GetPos().z));
 	}
 
-	const float Counter = copyPos.size() - 1;
+	const size_t Counter = copyPos.size() - 1;
 
 	for (int i = 0; i < Counter; i++)
 	{

@@ -140,7 +140,7 @@ std::string FileSystemUtils::FindAfterAndMatch(const std::vector<std::string> st
 	return FindAfterAndMatch(str, after, keyword, after.length());
 }
 
-std::string FileSystemUtils::FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword, int _cutNum)
+std::string FileSystemUtils::FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword, size_t _cutNum)
 {
 	// uafterv‚ÌˆÊ’u‚ğ’T‚·
 	for (auto& s : str) {

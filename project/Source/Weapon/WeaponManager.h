@@ -28,7 +28,7 @@ public:
 	/// <param name="_rgb">‹OÕ‚ÌF</param>
 	/// <param name="_boneIndex">œ</param>
 	/// <param name="_time">ŠÔ</param>
-	void CreateTrailPlayer(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, float index, float _time);
+	void CreateTrailPlayer(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, int index, float _time);
 	/// <summary>
 	/// Œ•‚Ì‹OÕ‚Ì¶¬
 	/// </summary>
@@ -37,7 +37,7 @@ public:
 	/// <param name="_rgb">‹OÕ‚ÌF</param>
 	/// <param name="_boneIndex">œ</param>
 	/// <param name="_time">ŠÔ</param>
-	void CreateTrailEnemy(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, float index, float _time);
+	void CreateTrailEnemy(VECTOR3 _nPos, VECTOR3 _fPos, float _r, float _g, float _b, float _a, int index, float _time);
 
 private:
 	Object3D* pObj;
