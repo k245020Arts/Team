@@ -95,10 +95,10 @@
           "y": 0.0,
           "z": 0.0
         },
-        "capsuleColliderAdd": false,
-        "capsuleColliderAddStartThrow": false,
-        "capsuleColliderAddStartThrowAnimFrame": 0.0,
-        "causuleColliderAddPos": {
+        "capsuleEndPosExtend": false,
+        "capsuleEndPosExtendFromThrowStart": false,
+        "capsuleEndPosExtendStartAnimFrame": 0.0,
+        "capsuleEndPosExtendOffset": {
           "x": 0.0,
           "y": 0.0,
           "z": 0.0
