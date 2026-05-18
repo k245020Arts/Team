@@ -19,7 +19,10 @@ private:
 	TrashEnemyManager* tEnemyManager;
 	Player* player;
 
-	const VECTOR3 camPos = VECTOR3(0, 50, -700);
+	//カメラがプレイヤーとどんだけ離れるか
+	const float CamPos = 700.0f;
+	//少しずらしたいからプレイヤーに補正をかける数字
+	const VECTOR3 PlayerPosOffset = VECTOR3(150.0f, 0.0f, 0.0f);
 	VECTOR3 enemyPos;
 	VECTOR3 pPos;
 };

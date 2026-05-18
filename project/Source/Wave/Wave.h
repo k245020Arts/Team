@@ -45,7 +45,8 @@ private:
 	};
 	std::vector<SpawnData> spawnData
 	{
-		{5,0},
+		//{5,0},
+		{0,5},
 		{13,5},
 	};
 };

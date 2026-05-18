@@ -19,16 +19,20 @@ RangedEnemyCamera::~RangedEnemyCamera()
 void RangedEnemyCamera::Update()
 {
 	Camera* camera = GetBase<Camera>();
+
 	enemyPos = tEnemyManager->GetRangedLeaderPos();
-	pPos = player->GetPlayerObj()->GetTransform()->position;
+	pPos = player->GetPlayerObj()->GetTransform()->position + PlayerPosOffset;
+
+	VECTOR3 dir = VNorm(enemyPos - pPos);
+	dir.y = 0.0f;
+
+	float dist = VSize(enemyPos - pPos);
 
 	camera->target = (pPos + enemyPos) * 0.5f;
 
-	VECTOR3 dir = enemyPos - pPos;
+	VECTOR3 offset = dir * -1 * CamPos + VGet(0, 400, 0);
 
-	// ƒJƒƒ‰ˆÊ’u
-	VECTOR3 camPosition = camera->target - dir * camPos.z + VECTOR3(0, camPos.y, 0);
-	camera->cameraComponent.cameraTransform->position = camPosition;
+	camera->cameraComponent.cameraTransform->position = pPos + offset;
 }
 
 void RangedEnemyCamera::Draw()
@@ -43,7 +47,7 @@ void RangedEnemyCamera::Start()
 	player = camera->cameraComponent.player.obj->Component()->GetComponent<Player>();
 
 	enemyPos = tEnemyManager->GetRangedLeaderPos();
-	pPos = player->GetPlayerObj()->GetTransform()->position;
+	pPos = player->GetPlayerObj()->GetTransform()->position + PlayerPosOffset;
 }
 
 void RangedEnemyCamera::Finish()
