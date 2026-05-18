@@ -52,6 +52,8 @@ public:
 
 	//˜AŒgUŒ‚
 	void Cooperate();
+
+	VECTOR3 GetRangedLeaderPos();
 	
 	VECTOR3 GetPlayerPos() { return player->GetTransform()->position; }
 	std::vector<VECTOR3> GetWayPointPosition();

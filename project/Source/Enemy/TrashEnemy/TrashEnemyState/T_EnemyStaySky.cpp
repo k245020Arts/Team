@@ -2,6 +2,7 @@
 #include "../TrashEnemy.h"
 #include "../../../State/StateManager.h"
 #include "../../../Component/Physics/Physics.h"
+#include "../../../Camera/Camera.h"
 
 T_EnemyStaySky::T_EnemyStaySky()
 {
@@ -57,7 +58,10 @@ void T_EnemyStaySky::LeaderMove(TrashEnemy* _enemy)
 	if (_enemy->GetPos().y <= MaxPos)
 		_enemy->GetEnemyObj()->GetTransform()->position.y += Speed;
 	else
+	{
 		_enemy->isStandby = true;
+		_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
+	}
 }
 
 void T_EnemyStaySky::RangedMove(TrashEnemy* _enemy)

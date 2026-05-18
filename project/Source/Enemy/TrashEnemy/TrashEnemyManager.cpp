@@ -206,6 +206,11 @@ void TrashEnemyManager::Cooperate()
 	enemyGroup->CloseWayPoint(wayPoint);
 }
 
+VECTOR3 TrashEnemyManager::GetRangedLeaderPos()
+{
+	return enemyGroup->RangedLeaderPosition();
+}
+
 void TrashEnemyManager::WayPointOffset()
 {
 	const int WaypointMax = 8;

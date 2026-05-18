@@ -60,6 +60,7 @@ namespace StateID{
         PLAYER_SPECIAL_ATTACK_CAMERA_S,
         CUT_SCENE_CAMERA_S,
         PLAYER_HEAVY_CHARGE_CAMERA_S,
+        R_ENEMY_CAMERA_S,
 
         T_ENEMY_IDOL_S,
         T_ENEMY_RUN_S,

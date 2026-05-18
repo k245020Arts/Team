@@ -41,6 +41,8 @@ public:
 	/// <param name="_readerDead">リーダーだけ倒すか</param>
 	void DeadRangedEnemy(bool _readerDead);
 
+	//遠距離のリーダーのポジション
+	VECTOR3 RangedLeaderPosition() { return leaderPos; }
 private:
 	Camera* camera;
 	TrashEnemyManager* trashEnemyManager;

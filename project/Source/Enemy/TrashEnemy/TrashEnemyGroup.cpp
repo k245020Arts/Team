@@ -335,8 +335,10 @@ void TrashEnemyGroup::RangedEnemyAttack()
 			startRangedAtk = true;
 
 			if (enemy->GetStandby())//リーダーが他の奴に指示を出す
+			{
 				leaderActiveEnd = true;
-
+			}
+				
 			leaderPos = enemy->GetPos();
 
 			if (rangedJoinCounter <= rangedAtkCounter)//敵全員が攻撃を終えた後の処理
@@ -433,8 +435,9 @@ void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 {
 	if (_enemy->GetEnemyType() == EnemyType::RANGED)
 	{
-		leaderPos.y = 0.0f;
-		_enemy->SetWayPoint(leaderPos);
+		VECTOR3 lPos = leaderPos;
+		lPos.y = 0.0f;
+		_enemy->SetWayPoint(lPos);
 	}
 	else
 	{
