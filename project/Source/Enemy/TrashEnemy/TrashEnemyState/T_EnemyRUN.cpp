@@ -34,7 +34,7 @@ void T_EnemyRun::Update()
 		targetPos = enemy->targetPoint;
 	else if (enemy->isMovingToPlayer)
 		targetPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
-		
+	
 	rotation = enemy->obj->GetTransform()->rotation;
 	enemy->LookTarget(targetPos);
 

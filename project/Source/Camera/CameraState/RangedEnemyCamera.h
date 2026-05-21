@@ -29,9 +29,7 @@ private:
 	void CamRotYMove(Camera* _camera);
 
 	//è≠ÇµÇ∏ÇÁÇµÇΩÇ¢Ç©ÇÁÉvÉåÉCÉÑÅ[Ç…ï‚ê≥ÇÇ©ÇØÇÈêîéö
-	const VECTOR3 PlayerPosOffset = VECTOR3(150.0f, 0.0f, 0.0f);
-
-	const VECTOR3 YButtonPos = VECTOR3(1100.0f, 200.0f, 0.0f);
+	const VECTOR3 PlayerPosOffset = VZero; /*VECTOR3(150.0f, 0.0f, 0.0f);*/
 
 	VECTOR3 enemyPos;
 	VECTOR3 pPos;
@@ -40,5 +38,4 @@ private:
 	float angle;
 	bool isAngleSet;
 	bool a;
-	int yButtonImage;
 };

@@ -110,5 +110,11 @@ private:
 	//‰“‹——£‚Ì“G‚ÌUŒ‚
 	bool startRangedAtk;
 
+	bool startButtonImage;
+	//‘Å‚¿•Ô‚¹‚Ì‰æ‘œ
+	int yButtonImage;
+	//‘Å‚¿•Ô‚¹‰æ‘œ‚Ìƒ|ƒWƒVƒ‡ƒ“
+	const VECTOR3 YButtonPos = VECTOR3(1100.0f, 200.0f, 0.0f);
+
 	//--------------------------
 };

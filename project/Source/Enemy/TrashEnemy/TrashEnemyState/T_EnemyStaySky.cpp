@@ -46,8 +46,11 @@ void T_EnemyStaySky::Finish()
 
 	enemy->enemyBaseComponent.physics->SetGravity(setGravity);
 
-	if(isLeader)
+	if (isLeader)
+	{
 		enemy->CooperateAtkFinish();
+		enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::FREE_CAMERA_S);
+	}
 }
 
 void T_EnemyStaySky::LeaderMove(TrashEnemy* _enemy)

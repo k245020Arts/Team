@@ -19,7 +19,6 @@ RangedEnemyCamera::RangedEnemyCamera()
 
 	isAngleSet = false;
 
-	yButtonImage = LoadGraph("data/image/YButton.png");
 }
 
 RangedEnemyCamera::~RangedEnemyCamera()
@@ -39,7 +38,6 @@ void RangedEnemyCamera::Update()
 
 void RangedEnemyCamera::Draw()
 {
-	DrawGraph(YButtonPos.x, YButtonPos.y, yButtonImage,true);
 }
 
 void RangedEnemyCamera::Start()
@@ -108,7 +106,7 @@ void RangedEnemyCamera::UpdeteCamMove(Camera* _camera)
 	}
 	else
 		angle += diff * CamSpeed;
-
+	//”¼Œa
 	float radius = VSize(targetoffset);
 	_camera->cameraComponent.cameraTransform->position.x = pPos.x + cosf(angle) * radius;
 	_camera->cameraComponent.cameraTransform->position.z = pPos.z + sinf(angle) * radius;

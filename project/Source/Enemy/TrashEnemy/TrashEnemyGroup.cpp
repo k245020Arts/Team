@@ -22,6 +22,10 @@ TrashEnemyGroup::TrashEnemyGroup()
 	rangedJoinCounter = 0;
 
 	startRangedAtk = false;
+
+	startButtonImage = false;
+	yButtonImage = LoadGraph("data/image/YButton.png");
+	SetDrawOrder(-300000);
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -56,6 +60,9 @@ void TrashEnemyGroup::Update()
 void TrashEnemyGroup::Draw()
 {
 	CooperateAttackLine();
+
+	if(startButtonImage)
+		DrawGraph(YButtonPos.x, YButtonPos.y, yButtonImage, true);
 }
 
 void TrashEnemyGroup::SetMeleeEnemy(TrashEnemy* _enemy)
@@ -351,6 +358,8 @@ void TrashEnemyGroup::RangedEnemyAttack()
 					rangedAtkCounter = 0;
 					startRangedAtk = false;
 					FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
+
+					startButtonImage = false;
 				}
 			}
 		}
@@ -372,6 +381,8 @@ void TrashEnemyGroup::RangedEnemyAttack()
 				enemy->SetCooperateWayPoint(target);
 				enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
 
+				startButtonImage = true;
+
 				pointCounter++;
 			}
 
@@ -387,6 +398,8 @@ void TrashEnemyGroup::RangedEnemyAttack()
 					enemy->ChangeHp(-enemy->MaxHp());
 					EffectManager::GetInstance()
 						->CreateEffekseer(*enemy->GetEnemyObj()->GetTransform(), nullptr, Effect_ID::ROCK_BLAST, 3.0f);
+
+					startButtonImage = false;
 				}
 				return;
 			}
