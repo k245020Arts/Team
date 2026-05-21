@@ -400,6 +400,10 @@ void TrashEnemyGroup::RangedEnemyAttack()
 						->CreateEffekseer(*enemy->GetEnemyObj()->GetTransform(), nullptr, Effect_ID::ROCK_BLAST, 3.0f);
 
 					startButtonImage = false;
+					rangedJoinCounter = 0;
+					rangedAtkCounter = 0;
+					startRangedAtk = false;
+					FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
 				}
 				return;
 			}
