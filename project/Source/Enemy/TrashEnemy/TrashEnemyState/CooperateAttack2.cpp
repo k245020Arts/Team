@@ -56,8 +56,8 @@ void CooperateAttack2::Start()
 
 	firstColl = true;
 
-	BossAttackBase::collTrans.position.z = 0.0f;
-	BossAttackBase::collTrans.scale = VECTOR3(100, 0, 0);
+	BossAttackBase::collTrans.position	= CollPos;
+	BossAttackBase::collTrans.scale		= Collscale;
 
 	enemy->isMovingToPlayer = true;
 
@@ -110,7 +110,7 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 
 	const float ROTY = -_enemy->enemyBaseComponent.playerObj->GetTransform()->rotation.y - 0.5f * DX_PI_F;
 	dir = VNorm(pPos - enePos);
-	/*Easing::EaseInOut()*/
+	
 	_enemy->GetEnemyObj()->GetTransform()->position += dir * Speed; 
 	
 	AttackCollsion();

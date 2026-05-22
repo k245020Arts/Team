@@ -15,6 +15,9 @@ private:
 	void RangedMove(TrashEnemy* _enemy);
 	void DamageMove(TrashEnemy* _enemy);
 
+	const VECTOR3 CollPos	= VECTOR3(0.0f, 100.0f, 50.0f);
+	const VECTOR3 Collscale = VECTOR3(100.0f, 0.0f, 0.0f);
+
 	float speedDownCounter;
 
 	bool damageMove;

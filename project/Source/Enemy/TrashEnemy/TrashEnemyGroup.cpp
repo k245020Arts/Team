@@ -62,7 +62,7 @@ void TrashEnemyGroup::Draw()
 	CooperateAttackLine();
 
 	if(startButtonImage)
-		DrawGraph(YButtonPos.x, YButtonPos.y, yButtonImage, true);
+		DrawGraph((int)YButtonPos.x, (int)YButtonPos.y, yButtonImage, true);
 }
 
 void TrashEnemyGroup::SetMeleeEnemy(TrashEnemy* _enemy)
@@ -488,6 +488,10 @@ void TrashEnemyGroup::RangedDamageMove()
 				enemy->ChangeHp(Damage);
 		}
 	}
+
+	rangedDamageMove = false;
+
+	trashEnemyManager->SetStartRangedAttack(false);
 }
 
 void TrashEnemyGroup::AllChangeRangedState(StateID::State_ID _id)
@@ -516,5 +520,7 @@ void TrashEnemyGroup::NextLeader()
 	if (!readerActive)
 	{
 		rangedEnemies[0]->SetEnemyType(EnemyType::RANGED_LEADER);
+		AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
+		//rangedEnemies[0]->ChangeState(StateID::T_ENEMY_IDOL_S);
 	}
 }
