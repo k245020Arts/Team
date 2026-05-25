@@ -100,6 +100,8 @@ private:
 
 	void NextLeader(/*TrashEnemy* _enemy*/);
 
+	void DeadRangedEnemy(TrashEnemy* _enemy);
+
 	VECTOR3 leaderPos;
 
 	float rangedAtkTime;

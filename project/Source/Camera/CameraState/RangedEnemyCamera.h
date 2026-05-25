@@ -25,7 +25,7 @@ private:
 	void UpdateCamPos(Camera* _camera);
 	//カメラの挙動
 	void UpdeteCamMove(Camera* _camera);
-	//カメラのY軸の挙動
+	////敵とカメラの位置によってプレイヤーの動きが反転しないための処理
 	void CamRotYMove(Camera* _camera);
 
 	//少しずらしたいからプレイヤーに補正をかける数字
@@ -37,5 +37,5 @@ private:
 
 	float angle;
 	bool isAngleSet;
-	bool a;
+	bool isCameraArrived;
 };

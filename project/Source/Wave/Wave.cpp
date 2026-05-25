@@ -11,7 +11,6 @@ Wave::Wave()
 	
 	waveNow = 0;
 	battleCounter = 0;
-	spawn = SPAWN_MAX;
 	isCooperate = false;
 	bossCreate = true;
 	first = false;
@@ -31,6 +30,7 @@ void Wave::Update()
 	EnemySpawn();
 	
 	CooperateAttack();
+	RangedCooperateAttack();
 }
 
 void Wave::Draw()
@@ -86,10 +86,20 @@ void Wave::CooperateAttack()
 		tEnemyManager->Cooperate();
 		isCooperate = true;
 	}
-		
-	else if (waveNow == 2)
-	{
-		tEnemyManager->SetStartRangedAttack(true);
-		isCooperate = true;
-	}
+}
+
+void Wave::RangedCooperateAttack()
+{
+	if (waveNow != 2)
+		return;
+	int counter = tEnemyManager->GetMeleeActiveEnemy();
+
+	if (counter <= 5)
+		isCooperate = false;
+
+	if (counter > 10 || isCooperate)
+		return;
+
+	tEnemyManager->SetStartRangedAttack(true);
+	isCooperate = true;
 }

@@ -334,6 +334,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		if (rangedJoinCounter == 0)//リーダー以外の敵を数える
 			rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
 
+
 		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		{
 			//リーダーが飛ぶ処理
@@ -343,7 +344,10 @@ void TrashEnemyGroup::RangedEnemyAttack()
 
 			if (enemy->GetStandby())//リーダーが他の奴に指示を出す
 			{
-				leaderActiveEnd = true;
+				if (rangedJoinCounter > 0)
+					leaderActiveEnd = true;
+				else
+					DeadRangedEnemy(enemy);
 			}
 				
 			leaderPos = enemy->GetPos();
@@ -394,16 +398,10 @@ void TrashEnemyGroup::RangedEnemyAttack()
 				const float LeaderVecMax = 1200.0f;
 				if (VSize(leaderPos - enemyPos) <= LeaderVecMax)
 				{
-					rangedDamageMove = true;
-					enemy->ChangeHp(-enemy->MaxHp());
 					EffectManager::GetInstance()
 						->CreateEffekseer(*enemy->GetEnemyObj()->GetTransform(), nullptr, Effect_ID::ROCK_BLAST, 3.0f);
 
-					startButtonImage = false;
-					rangedJoinCounter = 0;
-					rangedAtkCounter = 0;
-					startRangedAtk = false;
-					FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
+					DeadRangedEnemy(enemy);
 				}
 				return;
 			}
@@ -523,4 +521,16 @@ void TrashEnemyGroup::NextLeader()
 		AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
 		//rangedEnemies[0]->ChangeState(StateID::T_ENEMY_IDOL_S);
 	}
+}
+
+void TrashEnemyGroup::DeadRangedEnemy(TrashEnemy* _enemy)
+{
+	rangedDamageMove = true;
+	_enemy->ChangeHp(-_enemy->MaxHp());
+
+	startButtonImage = false;
+	rangedJoinCounter = 0;
+	rangedAtkCounter = 0;
+	startRangedAtk = false;
+	FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
 }

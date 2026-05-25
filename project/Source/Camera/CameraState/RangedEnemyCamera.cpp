@@ -15,7 +15,7 @@ RangedEnemyCamera::RangedEnemyCamera()
 	copyCamPos = VZero;
 
 	angle = 0.0f;
-	a = false;
+	isCameraArrived = false;
 
 	isAngleSet = false;
 
@@ -75,7 +75,7 @@ void RangedEnemyCamera::UpdateCamPos(Camera* _camera)
 void RangedEnemyCamera::UpdeteCamMove(Camera* _camera)
 {
 	const float CamSpeed = 0.1f;
-	if (a)
+	if (isCameraArrived)//カメラが指定された位置に近づいたら強制的にポジションに合わせる
 	{
 		_camera->cameraComponent.cameraTransform->position = copyCamPos;
 		return;
@@ -101,7 +101,7 @@ void RangedEnemyCamera::UpdeteCamMove(Camera* _camera)
 	if (fabsf(diff) < 0.03f)
 	{
 		angle = targetAngle;
-		a = true;
+		isCameraArrived = true;
 		return;
 	}
 	else
