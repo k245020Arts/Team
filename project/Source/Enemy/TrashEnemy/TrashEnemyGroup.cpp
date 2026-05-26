@@ -30,6 +30,9 @@ TrashEnemyGroup::TrashEnemyGroup()
 
 TrashEnemyGroup::~TrashEnemyGroup()
 {
+	DeleteGraph(yButtonImage);
+	camera = nullptr;
+	trashEnemyManager = nullptr;
 }
 
 void TrashEnemyGroup::Update()

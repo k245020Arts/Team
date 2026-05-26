@@ -75,6 +75,7 @@ TrashEnemyManager::TrashEnemyManager()
 
 TrashEnemyManager::~TrashEnemyManager()
 {
+	player = nullptr;
 }
 
 void TrashEnemyManager::Update()
