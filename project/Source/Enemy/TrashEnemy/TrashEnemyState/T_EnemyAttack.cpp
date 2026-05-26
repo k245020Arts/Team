@@ -42,8 +42,9 @@ void T_EnemyAttack::Update()
 
 	if (counter <= 0.3f)
 	{
-		enemy->GetEnemyObj()->GetTransform()->position.x += 40 * cosf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
-		enemy->GetEnemyObj()->GetTransform()->position.z += 40 * sinf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
+		const float Speed = 30.0f;
+		enemy->GetEnemyObj()->GetTransform()->position.x += Speed * cosf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
+		enemy->GetEnemyObj()->GetTransform()->position.z += Speed * sinf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 	}
 
 	const float M_FRAME_SPEED = mMaxFrame * 0.5f;

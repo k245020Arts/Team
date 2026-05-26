@@ -125,9 +125,6 @@ void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 {
 	const float CounterMax = 0.5f;
 
-	/*if (hitStopCounter <= 0.0f)
-		FindGameObject<PadInput>()->ControlVibrationStartTime(500, (int)(CounterMax * 2.0f));*/
-
 	hitStopCounter += Time::DeltaTimeRate();
 
 	if (hitStopCounter < CounterMax)

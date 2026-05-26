@@ -53,9 +53,9 @@ public:
 	//˜AŒgUŒ‚
 	void Cooperate();
 
-	VECTOR3 GetRangedLeaderPos();
+	VECTOR3 GetRangedLeaderPos()const;
 	
-	VECTOR3 GetPlayerPos() { return player->GetTransform()->position; }
+	VECTOR3 GetPlayerPos()const { return player->GetTransform()->position; }
 	std::vector<VECTOR3> GetWayPointPosition();
 private:
 	const int ENEMIESMAX = 30;
@@ -105,7 +105,7 @@ private:
 	
 	bool comboRequest;
 	
-	float maxAttackCounter;//
+	float maxAttackCounter;
 	int standbyCounter;
 
 	float searchCounter;

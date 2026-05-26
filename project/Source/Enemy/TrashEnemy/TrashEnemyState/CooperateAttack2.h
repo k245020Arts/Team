@@ -13,6 +13,7 @@ public:
 	void Finish()override;
 private:
 	void RangedMove(TrashEnemy* _enemy);
+	//ƒ_ƒ[ƒW‚ğ‚à‚½‚Á‚½Œã‚Ìˆ—
 	void DamageMove(TrashEnemy* _enemy);
 
 	const VECTOR3 CollPos	= VECTOR3(0.0f, 100.0f, 50.0f);
@@ -28,5 +29,4 @@ private:
 	bool isDamageMove;
 
 	float motionSpeed;
-
 };

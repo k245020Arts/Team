@@ -12,7 +12,8 @@ public:
 	void Start()override;
 	void Finish()override;
 private:
-	void RotateMove();
+	//“G‚Ì—lqŒ©‚ÌˆÚ“®
+	void RotateMove(TrashEnemy* _enemy);
 	//ƒJƒƒ‰‚Ì’†‚É‚¢‚½‚çUŒ‚‚Å‚«‚é
 	void InCameraView();
 	const float BACKSPEED = 60.0f;

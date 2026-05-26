@@ -206,7 +206,7 @@ void TrashEnemyManager::Cooperate()
 	enemyGroup->CloseWayPoint(wayPoint);
 }
 
-VECTOR3 TrashEnemyManager::GetRangedLeaderPos()
+VECTOR3 TrashEnemyManager::GetRangedLeaderPos()const
 {
 	return enemyGroup->RangedLeaderPosition();
 }
@@ -275,7 +275,7 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::E_FLOOR;
-	collider3->RaySet(info, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, 1/*-100*/, 0), VZero, VECTOR3(1.0f, 1, 1)), nullptr);
+	collider3->RaySet(info, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, 1, 0), VZero, VECTOR3(1.0f, 1, 1)), nullptr);
 
 	Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
