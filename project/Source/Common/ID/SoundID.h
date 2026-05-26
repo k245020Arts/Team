@@ -83,6 +83,7 @@ namespace Sound_ID {
 		BOSS_SHOT_CHARGE,
 		BOSS_SHOT_FIRING,
 		BOSS_TREE_SWING,
+		BOSS_JUMP,
 
 		SOUND_MAX
 	};

@@ -671,8 +671,7 @@ void BossAttackBase::SoundEvent()
 
 	Boss* boss = GetBase<Boss>();
 
-	float currentFrame =
-		boss->enemyBaseComponent.anim->GetCurrentFrame();
+	float currentFrame = boss->enemyBaseComponent.anim->GetCurrentFrame();
 
 	for (const auto& event : attackParam.soundEvent)
 	{
