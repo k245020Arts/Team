@@ -120,8 +120,8 @@ void TrashEnemyGroup::Separation()
 			VECTOR3 vec = pos1 - pos2;
 			VECTOR3 vec2 = pos2 - pos1;
 
-			vec.y = 0;
-			vec2.y = 0;
+			vec.y = 0.0f;
+			vec2.y = 0.0f;
 
 			//エネミーの分散
 			if (vec.Size() <= E_SIZE)
@@ -321,9 +321,9 @@ void TrashEnemyGroup::RangedEnemyAttack()
 	bool leaderActiveEnd = false;
 
 	/*
-		チャージ攻撃で打ち返し
-		演出寄りで制作する
-		細かいとこ調整して気持ちよさをだせるようにする
+		↓細かいとこ調整して気持ちよさをだせるようにする
+		敵キャラ揺れ
+		コントローラー揺れ
 	*/
 
 	for (auto& enemy : rangedEnemies)

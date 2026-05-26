@@ -1,6 +1,8 @@
 #pragma once
 #include "../EnemyState/EnemyStateBase.h"
 
+class TrashEnemy;
+
 class Standby :public EnemyStateBase
 {
 public:
