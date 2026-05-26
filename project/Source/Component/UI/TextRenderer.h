@@ -4,7 +4,7 @@
 
 class Shaker;
 
-class TextRenderer : public UIBase
+class TextRenderer : public Component
 {
 public:
 	TextRenderer();
@@ -24,16 +24,40 @@ public:
 	/// <param name="_size">フォントの基礎の大きさ</param>
 	void TextSetting(std::string _text, std::string _fileName, std::string _exten, const Color::Rgb& _rgb, int _size, Font_ID::Font_ID _id);
 
+	/// <summary>
+	/// 色のセット
+	/// </summary>
+	/// <param name="_rgba"></param>
 	void SetColor(Color::Rgb _rgba) { rgb = _rgba; }
+	/// <summary>
+	/// αのセット
+	/// </summary>
+	/// <param name="_alpha"></param>
 	void SetAlpha(float _alpha) { rgb.a = _alpha; }
-
+	/// <summary>
+	/// テキストのセット
+	/// </summary>
+	/// <param name="_text"></param>
 	void SetText(std::string _text) { text = _text; }
 
+	/// <summary>
+	/// テキストの長さを取得
+	/// </summary>
+	/// <returns></returns>
 	int GetTextWidth();
+
+	/// <summary>
+	/// このテキストをUIとして扱う
+	/// UIとして扱うメリット
+	/// ①カットシーンの時などに描画をしないセッティングがすぐに出来る
+	/// ②UIManagerで最後にまとめて描画をするため、描画順を意識しなくても良くなる
+	/// </summary>
+	void UseDrawUI();
 
 private:
 	int fontHandle;
 	std::string text;
 	Color::Rgb rgb;
 	Shaker* shaker;
+	UIManager* uiManager;
 };

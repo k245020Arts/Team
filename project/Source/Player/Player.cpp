@@ -117,6 +117,7 @@ Player::Player()
 	hpTextObj					= nullptr;
 	hpUIMoveCounter				= 0.0f;
 	specialTextPhysics			= nullptr;
+	specialMoveCounter			= 0.0f;
 }
 
 Player::~Player()
@@ -296,7 +297,6 @@ void Player::Start(Object3D* _obj)
 		attackEffects[reaction.state] = reaction;
 	}
 
-	
 
 	std::string filePathAttack = std::string("data/json/") + "PlayerAttackData" + ".json";
 	JsonReader json2;
@@ -314,6 +314,7 @@ void Player::Start(Object3D* _obj)
 	hpTextObj = new Object2D();
 	hpTextObj->Init(VECTOR2F(610.0f, 925.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "hp");
 	TextRenderer* hpText = hpTextObj->Component()->AddComponent<TextRenderer>();
+	hpText->UseDrawUI();
 	Shaker* shake = hpTextObj->Component()->AddComponent<Shaker>();
 	hpText->TextSetting("HP", "MPlus2C", ".dft", LIGHT_GREEN, 4, Font_ID::UI_FONT);
 	hpTextObj->GetTransform()->position.x -= hpText->GetTextWidth();
@@ -325,6 +326,7 @@ void Player::Start(Object3D* _obj)
 	specialTextPhysics->Start(VECTOR3(0.0f, 6.0f, 0.0f), VECTOR3(0.0f, 16.0f, 0.0f));*/
 	specialText->TextSetting("SPECIAL", "MPlus2C", ".dft", YELLOW, 4, Font_ID::UI_FONT);
 	specialTextObj->GetTransform()->position.x -= specialText->GetTextWidth();
+	specialText->UseDrawUI();
 
 	//playerCom.stateManager->DataSaveState();
 
@@ -630,7 +632,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 				}
 
 			}
-			if (pB->GetID() != StateID::PLAYER_HEAVY_CHARGE_S) {
+			if (pB->GetID() != StateID::PLAYER_HEAVY_CHARGE_S && pB->GetID() != StateID::PLAYER_SPECIAL_ATTACK_S) {
 				InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(80, 30);
 				//playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 				switch (param.damagePattern)
@@ -655,7 +657,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 			shaker->ShakeStart(VECTOR3(10.0f, 10.0f, 10.0f), Shaker::ShakePattern::HEIGHT_SHAKE, false, HP_UI_MOVE_TIME);
 			TextRenderer* hpText = hpTextObj->Component()->GetComponent<TextRenderer>();
 			hpText->SetColor(RED);
-			playerCom.color->setRGB(Color::Rgb(255.0f, 0.0f, 0.0f, 255.0f));
+			playerCom.color->setRGB(RED);
 			redCounter = 0.5f;
 			playerCom.hitObj = _obj;
 			//hp -= playerCom.hitObj->Component()->GetComponent<Enemy>()->GetStateManager()->GetState<EnemyAttack1>()->GetHitDamage();

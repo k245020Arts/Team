@@ -13,6 +13,11 @@ struct StageModelData
 	std::string mapFile;
 	int stageModelID;
 	Transform transform;
+	StageModelData() {
+		mapFile = "";
+		stageModelID = -1;
+		transform = Transform();
+	}
 };
 
 class StageManager : public GameObject

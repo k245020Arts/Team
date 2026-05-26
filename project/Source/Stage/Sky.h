@@ -19,5 +19,4 @@ public:
 
 private:
 	Object3D* sky;
-	Object3D* sky2;
 };

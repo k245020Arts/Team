@@ -14,6 +14,7 @@ Shadow::Shadow()
 	tag			= Function::GetClassNameC<Shadow>();
 	height = -1;
 	obj = nullptr;
+	//gameControler = FindGameObject<GameControler>();
 }
 
 Shadow::~Shadow()

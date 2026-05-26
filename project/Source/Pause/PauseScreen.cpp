@@ -20,19 +20,22 @@ PauseScreen::PauseScreen()
 	const int EDGE_NUM_Y = 200;
 
 	Object2D* pauseObj = new Object2D();
-	pauseObj->Init(VECTOR2F(550.0f + EDGE_NUM_X,250.0f + EDGE_NUM_Y),VECTOR2F(0.0f,0.0f),VECTOR2F(1.0f,1.0f),"PauseText");
+	pauseObj->Init(VECTOR2F(525.0f + EDGE_NUM_X,250.0f + EDGE_NUM_Y),VECTOR2F(0.0f,0.0f),VECTOR2F(1.0f,1.0f),"PauseText");
 	pauseText = pauseObj->Component()->AddComponent<TextRenderer>();
-	pauseText->TextSetting("Pause", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
+	pauseText->TextSetting("ポーズ画面", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
+	pauseObj->SetDrawOrder(-6000);
 
 	Object2D* back = new Object2D();
-	back->Init(VECTOR2F(560.0f + EDGE_NUM_X, 350.0f + EDGE_NUM_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "BackText");
+	back->Init(VECTOR2F(525.0f + EDGE_NUM_X, 350.0f + EDGE_NUM_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "BackText");
 	backText = back->Component()->AddComponent<TextRenderer>();
-	backText->TextSetting("Continue", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
+	backText->TextSetting("ゲームに戻る", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
+	back->SetDrawOrder(-6000);
 
 	Object2D* title = new Object2D();
-	title->Init(VECTOR2F(560.0f + EDGE_NUM_X, 420.0f + EDGE_NUM_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "TitleText");
+	title->Init(VECTOR2F(505.0f + EDGE_NUM_X, 420.0f + EDGE_NUM_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "TitleText");
 	titleText = title->Component()->AddComponent<TextRenderer>();
-	titleText->TextSetting("Title", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
+	titleText->TextSetting("タイトルに戻る", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
+	title->SetDrawOrder(-6000);
 
 	pauseText->SetAlpha(0.0f);
 	backText->SetAlpha(0.0f);

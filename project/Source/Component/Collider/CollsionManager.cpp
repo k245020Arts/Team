@@ -12,6 +12,7 @@
 #include "AABBCollider.h"
 #include "../Shadow/Shadow.h"
 #include "CapsuleCollider.h"
+#include "../../GameControler/GameControler.h"
 
 static int plus = 0;
 
@@ -32,6 +33,7 @@ CollsionManager::CollsionManager()
 	InitSetPair();
 	//DontDestroyOnSceneChange(true);
 	//SetDrawOrder(0);
+	gameControler = nullptr;
 }
 
 CollsionManager::~CollsionManager()
@@ -42,6 +44,9 @@ CollsionManager::~CollsionManager()
 
 void CollsionManager::Update()
 {
+	if (gameControler != nullptr && gameControler->GetStateNumber() == GameControler::PAUSE_SCENE) { //ポーズシーン中ならここは通さない
+		return;
+	}
 	for (auto itr1 = collList.begin(); itr1 != collList.end();itr1++) {
 		for (auto itr2 = itr1; itr2 != collList.end(); itr2++) {
 			if (itr1 == itr2) {
@@ -109,6 +114,11 @@ void CollsionManager::RemoveCollList(ColliderBase* obj)
 	}
 }
 
+void CollsionManager::FindGameControler()
+{
+	gameControler = FindGameObject<GameControler>();
+}
+
 bool CollsionManager::CollsionSphereToSphere(ColliderBase* col1, ColliderBase* col2, Pushback& resolver,VECTOR3& _hitPos)
 {
 	Transform* trans1 = col1->GetTransform();
@@ -137,6 +147,10 @@ bool CollsionManager::CollsionModelToRay(ColliderBase* col1, ColliderBase* col2,
 
 	if (result.HitFlag != 0)
 	{
+		/*if (col2->GetCollTag() == CollsionInformation::SHADOW)
+		{
+			int a = 0;
+		}*/
 		VECTOR3 normal = result.Normal;
 		VECTOR3 rayVec = endPos - startPos;
 		float rayLength = VSize(rayVec);

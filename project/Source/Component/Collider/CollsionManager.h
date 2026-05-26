@@ -6,6 +6,7 @@
 class Object3D;
 class ColliderBase;
 class CollsionEvent;
+class GameControler;
 
 //当たり判定の総まとめをするクラス。
 
@@ -26,6 +27,10 @@ public:
 	/// </summary>
 	/// <param name="obj"></param>
 	void RemoveCollList(ColliderBase* obj);
+	/// <summary>
+	/// ゲームコントローラークラスのFindを行う;
+	/// </summary>
+	void FindGameControler();
 
 private:
 	std::list<ColliderBase*> collList;
@@ -41,4 +46,6 @@ private:
 	bool CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos);
 	bool CollsionSphereToCapsule(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos);
 	CollsionEvent* event;
+
+	GameControler* gameControler;
 };

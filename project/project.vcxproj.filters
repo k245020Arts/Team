@@ -551,9 +551,6 @@
     <ClCompile Include="Source\Title\TitleScene.cpp">
       <Filter>TitleScene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component\UI\TextRenderer.cpp">
-      <Filter>Component\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Common\ShadowMap\ShadowMap.cpp">
       <Filter>Common\ShadowMap</Filter>
     </ClCompile>
@@ -568,6 +565,9 @@
     </ClCompile>
     <ClCompile Include="Source\Camera\CameraState\RangedEnemyCamera.cpp">
       <Filter>PlayScene\Camera\CameraState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\UI\TextRenderer.cpp">
+      <Filter>Component\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1194,9 +1194,6 @@
     <ClInclude Include="Source\Title\TitleScene.h">
       <Filter>TitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\UI\TextRenderer.h">
-      <Filter>Component\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Common\ShadowMap\ShadowMap.h">
       <Filter>Common\ShadowMap</Filter>
     </ClInclude>
@@ -1211,6 +1208,9 @@
     </ClInclude>
     <ClInclude Include="Source\Camera\CameraState\RangedEnemyCamera.h">
       <Filter>PlayScene\Camera\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\UI\TextRenderer.h">
+      <Filter>Component\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1441,6 +1441,9 @@
     </Filter>
     <Filter Include="PlayScene\Pause">
       <UniqueIdentifier>{78a54da2-5d5b-4a6d-b6fa-fdfd4de2bc47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\TextRenderer">
+      <UniqueIdentifier>{05bc78ba-1382-4f9e-8ccf-47c35bdf5e4f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

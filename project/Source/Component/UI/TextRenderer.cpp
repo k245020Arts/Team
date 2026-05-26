@@ -2,6 +2,7 @@
 #include "../Transform/Transform.h"
 #include "../Shaker/Shaker.h"
 #include "../ComponentManager.h"
+#include "UIManager/UIManager.h"
 
 TextRenderer::TextRenderer()
 {
@@ -52,4 +53,14 @@ void TextRenderer::TextSetting(std::string _text, std::string _fileName, std::st
 int TextRenderer::GetTextWidth()
 {
 	return GetDrawExtendFormatStringWidthToHandle(obj->GetTransform()->scale.x, fontHandle, text.c_str());
+}
+
+void TextRenderer::UseDrawUI()
+{
+	uiManager = FindGameObject<UIManager>();
+	if (uiManager == nullptr) {
+		return; //UiManager‚ªnullptr‚È‚çƒŠƒ^[ƒ“
+	}
+	uiManager->UIPush(obj);//ƒŠƒXƒg‚É“o˜^
+	obj->SetDraw(false);
 }

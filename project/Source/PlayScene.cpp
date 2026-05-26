@@ -71,6 +71,7 @@ PlayScene::PlayScene()
 	PauseScreen* pauseScreen = new PauseScreen();
 	GameControler* gameManager = new GameControler();
 	
+	collManager->FindGameControler();
 
 	
 	uiManager->ButtonUISet();
