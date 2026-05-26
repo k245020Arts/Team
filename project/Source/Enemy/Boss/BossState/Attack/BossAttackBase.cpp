@@ -132,6 +132,12 @@ void BossAttackBase::BossStart()
 	}
 
 	//-------------------------------------------------------
+
+	//サウンドイベントで使う変数の初期化
+	for (const auto& event : attackParam.soundEvent) {
+		soundLoopPlaying[event.name] = false;
+		soundPlayed[event.name] = false;
+	}
 }
 
 void BossAttackBase::BossFinish()
@@ -657,10 +663,71 @@ void BossAttackBase::AttackFinishFrame()
 	}
 }
 
+void BossAttackBase::SoundEvent()
+{
+	if (attackParam.soundEvent.empty()) {
+		return;
+	}
+
+	Boss* boss = GetBase<Boss>();
+
+	float currentFrame =
+		boss->enemyBaseComponent.anim->GetCurrentFrame();
+
+	for (const auto& event : attackParam.soundEvent)
+	{
+		const auto soundID = Sound_ID::StringToID(event.name);
+
+		//再生区間内
+		bool inRange = currentFrame >= event.soundStartFrame && currentFrame <= event.soundStopFrame;
+
+		if (inRange)
+		{
+			//ループ再生
+			if (event.loop)
+			{
+				if (!SoundManager::GetInstance()->CheckSe(soundID)) {
+					SoundManager::GetInstance()->PlaySe(soundID);
+					soundLoopPlaying[event.name] = true;
+				}
+			}
+			//1回再生
+			else
+			{
+				if (!soundPlayed[event.name])
+				{
+					SoundManager::GetInstance()->PlaySe(soundID);
+
+					soundPlayed[event.name] = true;
+				}
+			}
+		}
+		//区間外
+		else
+		{
+			//ループ停止
+			if (event.loop &&soundLoopPlaying[event.name])
+			{
+				SoundManager::GetInstance()->StopSE(soundID);
+				soundLoopPlaying[event.name] = false;
+			}
+
+			//stopFrame後に停止
+			if (currentFrame > event.soundStopFrame)
+			{
+				if (!event.soundStopFrameAfetrSoundPlay)
+				{
+					SoundManager::GetInstance()->StopSE(soundID);
+				}
+			}
+		}
+	}
+}
+
 void BossAttackBase::BossDushSound()
 {
 	Boss* b = GetBase<Boss>();
-	SoundManager::GetInstance()->Play3DSound(Sound_ID::BOSS_WALK, obj, 200000, 30000);
+	SoundManager::GetInstance()->Play3DSound(Sound_ID::BOSS_WALK, obj, 200000.0f, 30000.0f);
 	//突進時の足跡の音(アニメーションフレームで再生)
 	if (b->enemyBaseComponent.anim->GetCurrentFrame() >= attackParam.rushSoundLeftFoot &&
 		b->enemyBaseComponent.anim->GetCurrentFrame() <= attackParam.rushSoundLeftFoot + 1.0f) {
@@ -720,6 +787,7 @@ void BossAttackBase::BossUpdate()
 	RushEvent();
 	JumpEvent();
 	ThrowObjectsEvent();
+	SoundEvent();
 	if (attackParam.useTrail) {
 		BossTrail(attackParam.trailRightHand);
 	}

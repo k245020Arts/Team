@@ -50,4 +50,8 @@ private:
 	bool isEffect;
 	std::vector<std::string> throwObjectKeys;
 	bool throwKeyReset;
+
+	void DrawSoundEventEditor(std::vector<BossAttackBase::SoundEffectEvent>& _eventData);
+
+	std::vector<std::string> soundFileNames;
 };

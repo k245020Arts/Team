@@ -140,6 +140,7 @@ void TitleControl::StageSelect()
 		StageSelectData::GetInstance()->SetStageID(stageID);
 		selectCounter = 0.1f;
 		selectMoveCounter = 0.0f;
+		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
 	}
 
 	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x <= -0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_LEFT)
@@ -149,8 +150,9 @@ void TitleControl::StageSelect()
 			stageID = 0;
 		}
 		StageSelectData::GetInstance()->SetStageID(stageID);
-		selectCounter = 0.2f;
+		selectCounter = 0.1f;
 		selectMoveCounter = 0.0f;
+		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
 	}
 }
 

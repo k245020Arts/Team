@@ -745,7 +745,6 @@ void BossRockBase::BlastCollsionCreate()
 	//300,950
 	blastJustAvoidColl->DountSet(info, Transform(VZero, VZero, VOne * attackData.blastColliderInfo.inRadius), attackData.blastColliderInfo.outRadius, nullptr);
 	SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BLAST);
-	SoundManager::GetInstance()->PlaySe(Sound_ID::ROCK_BLAST);
 	EffectManager::GetInstance()->CreateEffekseer(Transform(obj->GetTransform()->position, VZero, VOne * 3.0f), nullptr, Effect_ID::ROCK_BLAST, 1.0f);
 }
 

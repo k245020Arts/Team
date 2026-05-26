@@ -15,12 +15,38 @@ public:
 	{
 		float rayStartPos; //Rayの判定の開始の座標
 		float rayFinishPos; //Rayの判定の終了の座標
+		RayColliderInfo() {
+			rayStartPos = 0.0f;
+			rayFinishPos = 0.0f;
+		}
 	};
 
 	struct DountColliderInfo
 	{
 		float inRadius; //内側の半径
 		float outRadius; //外側の円の半径
+		DountColliderInfo() {
+			inRadius = 0.0f;
+			outRadius = 0.0f;
+		}
+	};
+
+	struct SoundEffectEvent
+	{
+		std::string name;
+		float soundStartFrame;
+		float soundStopFrame;
+		bool loop;
+		bool soundStopFrameAfetrSoundPlay;
+		bool loopAnim;
+		SoundEffectEvent() {
+			name = "";
+			soundStartFrame = 0.0f;
+			soundStopFrame = 0.0f;
+			loop = false;
+			soundStopFrameAfetrSoundPlay = false;
+			loopAnim = false;
+		}
 	};
 
 	struct ThrowObjectAttackData
@@ -467,6 +493,8 @@ public:
 		bool useTrail;									// トレイルを使用するか
 		bool trailRightHand;							// 右手トレイルを使用するか
 
+		//サウンドイベント
+		std::vector<SoundEffectEvent> soundEvent;			//アニメーションフレーム
 	};
 
 	
@@ -590,6 +618,11 @@ public:
 	/// </summary>
 	void AttackFinishFrame();
 
+	/// <summary>
+	/// サウンドイベントを実行
+	/// </summary>
+	void SoundEvent();
+
 protected:
 	BossAttackParam attackParam;
 private:
@@ -616,4 +649,6 @@ private:
 	void BossUpdate();
 
 	Boss* bossPtr;
+	std::unordered_map<std::string, bool> soundPlayed;
+	std::unordered_map<std::string, bool> soundLoopPlaying;
 };

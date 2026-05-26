@@ -127,6 +127,12 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::SOUND_ID::ROCK_BREAK,	"rockBreak", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::ROCK_FALL,	"rockFall", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::ROCK_GROUND,	"rockGround", ".wav", 255);
+
+	SoundLoad(Sound_ID::SOUND_ID::BOSS_ROCK_APPEAR, "BossRockAppear", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::BOSS_ROCK_FIRING, "BossRockFiring", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::BOSS_SHOT_CHARGE, "BossShotCharge", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::BOSS_SHOT_FIRING, "BossShotFiring", ".wav", 255);
+	SoundLoad(Sound_ID::SOUND_ID::BOSS_TREE_SWING, "BossTreeSwing", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK2, "p_walk2", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK3, "p_walk3", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK4, "p_walk4", ".wav", 255);

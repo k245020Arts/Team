@@ -19,7 +19,7 @@ inline void to_json(JSON& j, const BossAttackBase::DountColliderInfo& p)
 {
 	j = JSON{
 		{"inRadius", p.inRadius},
-		{"outRadius", p.outRadius}
+		{"outRadius", p.outRadius},
 	};
 }
 
@@ -27,6 +27,29 @@ inline void from_json(const JSON& j, BossAttackBase::DountColliderInfo& p)
 {
 	if (j.contains("inRadius")) j.at("inRadius").get_to(p.inRadius);
 	if (j.contains("outRadius")) j.at("outRadius").get_to(p.outRadius);
+}
+
+inline void to_json(JSON& j, const BossAttackBase::SoundEffectEvent& p)
+{
+	j = JSON{
+		{"name", p.name},
+		{"soundStartFrame", p.soundStartFrame},
+		{"soundStopFrame", p.soundStopFrame},
+		{"loop", p.loop},
+		{"soundStopFrameAfetrSoundPlay", p.soundStopFrameAfetrSoundPlay},
+		{"loopAnim", p.loopAnim}
+	};
+}
+
+inline void from_json(const JSON& j, BossAttackBase::SoundEffectEvent& p)
+{
+	if (j.contains("name")) j.at("name").get_to(p.name);
+	if (j.contains("soundStartFrame")) j.at("soundStartFrame").get_to(p.soundStartFrame);
+	if (j.contains("soundStopFrame")) j.at("soundStopFrame").get_to(p.soundStopFrame);
+	if (j.contains("loop")) j.at("loop").get_to(p.loop);
+	if (j.contains("soundStopFrameAfetrSoundPlay"))
+		j.at("soundStopFrameAfetrSoundPlay").get_to(p.soundStopFrameAfetrSoundPlay);
+	if (j.contains("loopAnim")) j.at("loopAnim").get_to(p.loopAnim);
 }
 
 inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
@@ -594,6 +617,11 @@ inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
 		j["useTrail"] = p.useTrail;
 		j["trailRightHand"] = p.trailRightHand;
 	}
+
+	if (!p.soundEvent.empty()) {
+		j["soundEvent"] = p.soundEvent;
+	}
+
 }
 
 inline void from_json(const JSON& j, BossAttackBase::BossAttackParam& p)
@@ -808,4 +836,7 @@ inline void from_json(const JSON& j, BossAttackBase::BossAttackParam& p)
 
 	if (j.contains("trailRightHand"))
 		j.at("trailRightHand").get_to(p.trailRightHand);
+
+	if(j.contains("soundEvent"))
+		if (j.contains("soundEvent")) j.at("soundEvent").get_to(p.soundEvent);
 }

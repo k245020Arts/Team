@@ -62,6 +62,24 @@
     },
     "slowAmout": 0.10000000149011612,
     "slowTime": 0.30000001192092896,
+    "soundEvent": [
+      {
+        "loop": false,
+        "loopAnim": false,
+        "name": "BossRockAppear",
+        "soundStartFrame": 31.0,
+        "soundStopFrame": 37.0,
+        "soundStopFrameAfetrSoundPlay": true
+      },
+      {
+        "loop": false,
+        "loopAnim": false,
+        "name": "BossRockFiring",
+        "soundStartFrame": 70.0,
+        "soundStopFrame": 76.0,
+        "soundStopFrameAfetrSoundPlay": true
+      }
+    ],
     "speedUpMotionSpeed": 0.30000001192092896,
     "throwAttackData": [
       {
