@@ -129,6 +129,10 @@ public:
 	/// 攻撃が終了した時にまだ空のオブジェクトなら削除
 	/// </summary>
 	void DeleteEmptyObject();
+	/// <summary>
+	/// ボスが死んだときにオブジェクトが生きているなら消す
+	/// </summary>
+	void BossDieDeleteObject(float _hp);
 
 private:
 

@@ -337,6 +337,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	TextRenderer* text = bossName->Component()->AddComponent<TextRenderer>();
 	text->TextSetting(UTFConverter::Utf8ToSjis(bossParam.bossName), "MPlus2C", ".dft", WHITE, 4, Font_ID::UI_FONT);
 	bossName->GetTransform()->position.x -= text->GetTextWidth() / 2.0f;
+	text->UseDrawUI();
 	/*JsonReader json;
 	std::string filePath = std::string("data/json/BossAttack");
 

@@ -392,6 +392,17 @@ void BossRockManager::DeleteEmptyObject()
 	}
 }
 
+void BossRockManager::BossDieDeleteObject(float _hp)
+{
+	if (_hp > 0.0f) {
+		return; //ボスが死んでなかったら削除しない
+	}
+	for (auto itr = rocks.begin(); itr != rocks.end();) {
+		(*itr)->GetBaseObject()->DestroyMe();
+		itr++;
+	}
+}
+
 void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity, const VECTOR3& _fir, const BossAttackBase::ThrowObjectAttackData& _data)
 {
 	//_base->Init(Transform(),"bossThrowObject");
