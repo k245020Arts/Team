@@ -47,7 +47,7 @@ void Standby::Update()
 		}
 		else
 		{
-			RotateMove();
+			RotateMove(enemy);
 			if (vec.Size() <= range / 2)
 			{
 				pPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
@@ -109,16 +109,15 @@ void Standby::Finish()
 	isRedefinition = true;
 }
 
-void Standby::RotateMove()
+void Standby::RotateMove(TrashEnemy* _enemy)
 {
-	TrashEnemy* enemy = GetBase<TrashEnemy>();
-	const VECTOR3 EPos = enemy->GetPos();
+	const VECTOR3 EPos = _enemy->GetPos();
 	const float vecMax = 200.0f;
 
 	if (isRedefinition)
 	{
 		float MaxPos = 1500;
-		enemy->enemyBaseComponent.anim->Play(ID::TE_STANCE);
+		_enemy->enemyBaseComponent.anim->Play(ID::TE_STANCE);
 		float _rangeX = MaxPos * (float)Random::GetReal() - MaxPos * (float)Random::GetReal();
 		float _rangeZ = MaxPos * (float)Random::GetReal() - MaxPos * (float)Random::GetReal();
 		newPos = VECTOR3(_rangeX, 0, _rangeZ) + EPos;
@@ -128,12 +127,12 @@ void Standby::RotateMove()
 	{
 		// ˆÚ“®
 		const float Speed = 10.0f;
-		enemy->Move(newPos, Speed);
+		_enemy->Move(newPos, Speed);
 	}
 	else
 	{
 		redefinitionCounter += Time::DeltaTimeRate();
-		enemy->enemyBaseComponent.anim->Play(ID::TE_IDOL);
+		_enemy->enemyBaseComponent.anim->Play(ID::TE_IDOL);
 		const float MaxTime = 1.0f;
 
 		if (redefinitionCounter >= MaxTime)

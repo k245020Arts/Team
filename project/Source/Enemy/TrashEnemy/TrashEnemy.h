@@ -151,7 +151,6 @@ private:
 	//_pos‚Ì•ûŒü‚ÉŒü‚­
 	void LookTarget(VECTOR3 _pos);
 	
-	
 	bool active;
 	
 	//’ÊíUŒ‚‚ğ‚µ‚Ä‚à‚æ‚¢‚©

@@ -6,7 +6,7 @@
 
 T_EnemyWaitSee::T_EnemyWaitSee()
 {
-	animId = ID::TE_R_IDOL/*ID::TE_R_STANCE*/;
+	animId = ID::TE_R_IDOL;
 
 	attackCounter = 0.0f;
 	targetPos = VZero;
@@ -43,7 +43,6 @@ void T_EnemyWaitSee::Start()
 		break;
 	case EnemyType::RANGED_LEADER:
 		pointRange = 400;
-		/*targetPos = enemy->TargetPoint();*/
 		moveSpeed = LeaderMoveSpeed;
 		isLeader = true;
 		break;

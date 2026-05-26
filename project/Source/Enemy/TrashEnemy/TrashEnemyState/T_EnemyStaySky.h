@@ -15,7 +15,9 @@ public:
 	void Finish()override;
 
 private:
+	//ƒŠ[ƒ_[‚Ì“®‚«
 	void LeaderMove(TrashEnemy* _enemy);
+	//•’Ê‚Ì“G‚Ìˆ—
 	void RangedMove(TrashEnemy* _enemy);
 
 	bool isLeader;

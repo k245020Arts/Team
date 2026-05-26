@@ -42,7 +42,7 @@ public:
 	void DeadRangedEnemy(bool _readerDead);
 
 	//遠距離のリーダーのポジション
-	VECTOR3 RangedLeaderPosition() { return leaderPos; }
+	VECTOR3 RangedLeaderPosition()const { return leaderPos; }
 private:
 	Camera* camera;
 	TrashEnemyManager* trashEnemyManager;
@@ -55,7 +55,7 @@ private:
 	std::list<TrashEnemy*> allEnemy;
 
 	const int ATK_COUNTER_MIN = 1;
-	const float ATK_COUNTER_MAX = 3;
+	const float ATK_COUNTER_MAX = 3.0f;
 	/// <summary>
 	/// 指定した敵のリストの中身を見て敵がやられてたらリストから削除する
 	/// </summary>
@@ -97,8 +97,8 @@ private:
 	void RangedDamageMove();
 	//遠距離の敵のステートを指定したステートに全員変える処理
 	void AllChangeRangedState(StateID::State_ID _id);
-
-	void NextLeader(/*TrashEnemy* _enemy*/);
+	//遠距離の敵のリーダーがやられたとき次のリーダーを決める関数
+	void NextLeader();
 
 	void DeadRangedEnemy(TrashEnemy* _enemy);
 
