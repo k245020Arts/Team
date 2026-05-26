@@ -41,6 +41,8 @@ public:
 	/// <param name="_readerDead">リーダーだけ倒すか</param>
 	void DeadRangedEnemy(bool _readerDead);
 
+	//遠距離のリーダーのポジション
+	VECTOR3 RangedLeaderPosition() { return leaderPos; }
 private:
 	Camera* camera;
 	TrashEnemyManager* trashEnemyManager;
@@ -98,6 +100,8 @@ private:
 
 	void NextLeader(/*TrashEnemy* _enemy*/);
 
+	void DeadRangedEnemy(TrashEnemy* _enemy);
+
 	VECTOR3 leaderPos;
 
 	float rangedAtkTime;
@@ -107,6 +111,12 @@ private:
 	int rangedJoinCounter;
 	//遠距離の敵の攻撃
 	bool startRangedAtk;
+
+	bool startButtonImage;
+	//打ち返せの画像
+	int yButtonImage;
+	//打ち返せ画像のポジション
+	const VECTOR3 YButtonPos = VECTOR3(1100.0f, 200.0f, 0.0f);
 
 	//--------------------------
 };

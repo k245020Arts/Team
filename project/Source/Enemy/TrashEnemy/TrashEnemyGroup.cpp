@@ -22,6 +22,10 @@ TrashEnemyGroup::TrashEnemyGroup()
 	rangedJoinCounter = 0;
 
 	startRangedAtk = false;
+
+	startButtonImage = false;
+	yButtonImage = LoadGraph("data/image/YButton.png");
+	SetDrawOrder(-300000);
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -56,6 +60,9 @@ void TrashEnemyGroup::Update()
 void TrashEnemyGroup::Draw()
 {
 	CooperateAttackLine();
+
+	if(startButtonImage)
+		DrawGraph((int)YButtonPos.x, (int)YButtonPos.y, yButtonImage, true);
 }
 
 void TrashEnemyGroup::SetMeleeEnemy(TrashEnemy* _enemy)
@@ -327,6 +334,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		if (rangedJoinCounter == 0)//リーダー以外の敵を数える
 			rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
 
+
 		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		{
 			//リーダーが飛ぶ処理
@@ -335,8 +343,13 @@ void TrashEnemyGroup::RangedEnemyAttack()
 			startRangedAtk = true;
 
 			if (enemy->GetStandby())//リーダーが他の奴に指示を出す
-				leaderActiveEnd = true;
-
+			{
+				if (rangedJoinCounter > 0)
+					leaderActiveEnd = true;
+				else
+					DeadRangedEnemy(enemy);
+			}
+				
 			leaderPos = enemy->GetPos();
 
 			if (rangedJoinCounter <= rangedAtkCounter)//敵全員が攻撃を終えた後の処理
@@ -349,6 +362,8 @@ void TrashEnemyGroup::RangedEnemyAttack()
 					rangedAtkCounter = 0;
 					startRangedAtk = false;
 					FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
+
+					startButtonImage = false;
 				}
 			}
 		}
@@ -370,6 +385,8 @@ void TrashEnemyGroup::RangedEnemyAttack()
 				enemy->SetCooperateWayPoint(target);
 				enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
 
+				startButtonImage = true;
+
 				pointCounter++;
 			}
 
@@ -381,10 +398,10 @@ void TrashEnemyGroup::RangedEnemyAttack()
 				const float LeaderVecMax = 1200.0f;
 				if (VSize(leaderPos - enemyPos) <= LeaderVecMax)
 				{
-					rangedDamageMove = true;
-					enemy->ChangeHp(-enemy->MaxHp());
 					EffectManager::GetInstance()
 						->CreateEffekseer(*enemy->GetEnemyObj()->GetTransform(), nullptr, Effect_ID::ROCK_BLAST, 3.0f);
+
+					DeadRangedEnemy(enemy);
 				}
 				return;
 			}
@@ -433,8 +450,9 @@ void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 {
 	if (_enemy->GetEnemyType() == EnemyType::RANGED)
 	{
-		leaderPos.y = 0.0f;
-		_enemy->SetWayPoint(leaderPos);
+		VECTOR3 lPos = leaderPos;
+		lPos.y = 0.0f;
+		_enemy->SetWayPoint(lPos);
 	}
 	else
 	{
@@ -468,6 +486,10 @@ void TrashEnemyGroup::RangedDamageMove()
 				enemy->ChangeHp(Damage);
 		}
 	}
+
+	rangedDamageMove = false;
+
+	trashEnemyManager->SetStartRangedAttack(false);
 }
 
 void TrashEnemyGroup::AllChangeRangedState(StateID::State_ID _id)
@@ -496,5 +518,19 @@ void TrashEnemyGroup::NextLeader()
 	if (!readerActive)
 	{
 		rangedEnemies[0]->SetEnemyType(EnemyType::RANGED_LEADER);
+		AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
+		//rangedEnemies[0]->ChangeState(StateID::T_ENEMY_IDOL_S);
 	}
+}
+
+void TrashEnemyGroup::DeadRangedEnemy(TrashEnemy* _enemy)
+{
+	rangedDamageMove = true;
+	_enemy->ChangeHp(-_enemy->MaxHp());
+
+	startButtonImage = false;
+	rangedJoinCounter = 0;
+	rangedAtkCounter = 0;
+	startRangedAtk = false;
+	FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
 }

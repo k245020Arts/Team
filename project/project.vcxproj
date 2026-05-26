@@ -181,6 +181,7 @@
     <ClInclude Include="Source\Camera\CameraState\JustAvoidCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\PlayerHeavyAttackCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h" />
+    <ClInclude Include="Source\Camera\CameraState\RangedEnemyCamera.h" />
     <ClInclude Include="Source\Camera\CutSceneBox.h" />
     <ClInclude Include="Source\CharaBase\CharaBase.h" />
     <ClInclude Include="Source\Common\BlurScreen.h" />
@@ -390,6 +391,7 @@
     <ClCompile Include="Source\Camera\CameraState\JustAvoidCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\PlayerHeavyAttackCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.cpp" />
+    <ClCompile Include="Source\Camera\CameraState\RangedEnemyCamera.cpp" />
     <ClCompile Include="Source\Camera\CutSceneBox.cpp" />
     <ClCompile Include="Source\CharaBase\CharaBase.cpp" />
     <ClCompile Include="Source\Common\BlurScreen.cpp" />

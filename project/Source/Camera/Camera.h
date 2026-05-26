@@ -135,6 +135,7 @@ public:
 	friend class PlayerSpecialAttackCamera;
 	friend class CutSceneCamera;
 	friend class PlayerHeavyAttackCamera;
+	friend class RangedEnemyCamera;
 	
 	Camera();
 	~Camera();

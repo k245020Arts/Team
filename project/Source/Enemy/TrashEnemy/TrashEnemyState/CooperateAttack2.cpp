@@ -6,6 +6,7 @@
 #include "../../../Component/Animator/Animator.h"
 #include "../../../Component/Collider/ColliderBase.h"
 #include "../../../Common/Easing.h"
+#include "../../../Common/InputManager/PadInput.h"
 
 CooperateAttack2::CooperateAttack2()
 {
@@ -55,8 +56,8 @@ void CooperateAttack2::Start()
 
 	firstColl = true;
 
-	BossAttackBase::collTrans.position.z = 0.0f;
-	BossAttackBase::collTrans.scale = VECTOR3(100, 0, 0);
+	BossAttackBase::collTrans.position	= CollPos;
+	BossAttackBase::collTrans.scale		= Collscale;
 
 	enemy->isMovingToPlayer = true;
 
@@ -84,10 +85,10 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 
 	_enemy->LookTarget(pPos);
 
-	
 	if (_enemy->cooperateDamageMove && isDamageMove)//ダメージをもらった時の処理
 	{
 		damageMove = true;
+		_enemy->DeleteCollision(&_enemy->attackColl);
 		return;
 	}
 	else if (VSize(pPos - _enemy->GetPos()) < Max )//地面に着地した時
@@ -109,7 +110,7 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 
 	const float ROTY = -_enemy->enemyBaseComponent.playerObj->GetTransform()->rotation.y - 0.5f * DX_PI_F;
 	dir = VNorm(pPos - enePos);
-	/*Easing::EaseInOut()*/
+	
 	_enemy->GetEnemyObj()->GetTransform()->position += dir * Speed; 
 	
 	AttackCollsion();
@@ -122,8 +123,13 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 
 void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 {
-	hitStopCounter += Time::DeltaTimeRate();
 	const float CounterMax = 0.5f;
+
+	/*if (hitStopCounter <= 0.0f)
+		FindGameObject<PadInput>()->ControlVibrationStartTime(500, (int)(CounterMax * 2.0f));*/
+
+	hitStopCounter += Time::DeltaTimeRate();
+
 	if (hitStopCounter < CounterMax)
 		return;
 
