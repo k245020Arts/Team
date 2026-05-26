@@ -11,6 +11,7 @@ class DountCollider;
 class SoundManager;
 class EffectManager;
 class CapsuleCollider;
+class MeshRenderer2D;
 
 class BossRockBase : public EnemyAttackObject
 {
@@ -152,4 +153,10 @@ protected:
 	bool colliderAddStart;
 	float alotHitCounter;
 	void AlotCollsionSet();
+
+	int playerFlyAwayBButtonUI;
+	int playerFlyAwayYButtonUI;
+	bool flyingUIDraw;
+
+	std::list<MeshRenderer2D*> meshRenderer2DList;
 };

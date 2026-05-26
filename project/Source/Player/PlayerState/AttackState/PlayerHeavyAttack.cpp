@@ -49,6 +49,7 @@ void PlayerHeavyAttack::Start()
 	PlayerAttackStateBase::Start();
 	Player* p = GetBase<Player>();
 	chargeCount = 1.0f;
+	frontMove = true;
 	p->playerCom.camera->ChangeStateCamera(StateID::PLAYER_HEAVY_CHARGE_CAMERA_S);
 	const auto* chargeParam = playerAttackData.GetChargeLevel(p->attackLevel);
 	//my_assert(chargeParam == nullptr,"チャージレベルがセットされていない");
@@ -61,7 +62,7 @@ void PlayerHeavyAttack::Start()
 	AgainTimerSet(chargeParam->againTimer, chargeParam->againTimerFlag);
 	playerAttackData.attackMove = chargeParam->moveSpeed;
 	playerAttackData.hitDamage = chargeParam->hitDamage;
-	
+	rockOn = false;
 }
 
 void PlayerHeavyAttack::Finish()

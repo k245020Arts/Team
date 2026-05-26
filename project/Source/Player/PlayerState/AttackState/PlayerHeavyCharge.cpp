@@ -78,6 +78,8 @@ void PlayerHeavyCharge::Update()
 				SoundManager::GetInstance()->PlayRamdomChangeFrequencySe(Sound_ID::PLAYER_CHARGE, 0, baseFrequ);
 			}
 		}
+		p->PlayerStickInput();
+		p->RotationChange(p->walkAngle, 12.0f/*スピード*/);
 		
 	}
 	else {
@@ -112,6 +114,7 @@ void PlayerHeavyCharge::Start()
 	p->attackLevel = 0;
 	InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(50, -1);
 	EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FIRST, 1.0f);
+	p->playerCom.physics->SetVelocity(VZero);
 }
 
 void PlayerHeavyCharge::Finish()

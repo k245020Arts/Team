@@ -162,6 +162,7 @@ protected:
 	float angle;
 	bool nextAttack;
 	bool nextAvoid;
+	bool frontMove;
 	
 	VECTOR3 dist;
 	VECTOR3 norm;

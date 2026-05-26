@@ -50,6 +50,7 @@ PlayerAttackStateBase::PlayerAttackStateBase()
 	speedChange = true;
 	normal = false;
 	special = false;
+	frontMove = false;
 }
 
 PlayerAttackStateBase::~PlayerAttackStateBase()
@@ -193,7 +194,14 @@ void PlayerAttackStateBase::AttackMoveStart()
 	Player* p = GetBase<Player>();
 	//‹ß‚¢‚Æ“G‚Ì•ûŒü‚ÉŒü‚©‚Á‚ÄUŒ‚‚ÌˆÚ“®ˆ—‚ð‚¢‚ê‚é
 	rotation = true;
-	p->playerCom.physics->SetVelocity(playerAttackData.attackMove * MGetRotY(angle));
+	if (frontMove) {
+		//‘O‚És‚­‚Æ‚«‚É‚ÍzŽ²‚Ì‚Ý‚ðŽg‚¤‚Ì‚Åz‚ðŽQÆ
+		p->playerCom.physics->SetVelocity(p->playerTransform->Forward() * playerAttackData.attackMove.z);
+	}
+	else {
+		p->playerCom.physics->SetVelocity(playerAttackData.attackMove * MGetRotY(angle));
+	}
+	
 }
 
 void PlayerAttackStateBase::AttackCommonUpdate()

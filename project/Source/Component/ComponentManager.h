@@ -111,6 +111,21 @@ public:
 		return nullptr;
 	}
 	/// <summary>
+	/// その型に含まれるすべてのコンポーネントの取得
+	/// </summary>
+	/// <typeparam name="T">指定する型</typeparam>
+	/// <returns>指定したコンポーネントのポインタ</returns>
+	template <typename T>
+	std::list<T*> GetComponents() {
+		std::list<T*> list;
+		for (Component* c : component) {
+			if (typeid(*c) == typeid(T)) {
+				list.push_back(dynamic_cast<T*>(c));
+			}
+		}
+		return list;
+	}
+	/// <summary>
 	/// コンポーネントとタグが一致したら返す
 	/// </summary>
 	/// <typeparam name="T">取りたい型</typeparam>

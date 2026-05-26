@@ -89,6 +89,10 @@ void ButtonUI::Draw()
 	}
 	else {
 		DrawRotaGraph((int)transform->position.x, (int)transform->position.y, (double)transform->scale.x, 0.0, backImage, true);
+		//UIの部分はアクティブの時以外は戻さないで薄暗くしたい
+		if (buttonActive) {
+			SetDrawBright(255, 255, 255);
+		}
 		DrawRotaGraph((int)transform->position.x, (int)transform->position.y, (double)transform->scale.x, 0.0, buttonImage, true);
 	}
 

@@ -1,17 +1,17 @@
 {
   "PlayerAttackData": {
     "PlayerAttack1": {
-      "AttackMove": {                       
+      "AttackMove": {
         "x": 0.0,
         "y": 0.0,
         "z": 5500.0
       },
-      "PlayerState": "PlayerAttack1",       
-      "attackAgainStartCounterMax": 0.0,    
-      "attackInputStartTime": 5.0,          
-      "attackNum": 0,                       
-      "chargeLevels": [],                   
-      "collTrans": {                        
+      "PlayerState": "PlayerAttack1",
+      "attackAgainStartCounterMax": 0.0,
+      "attackInputStartTime": 5.0,
+      "attackNum": 0,
+      "chargeLevels": [],
+      "collTrans": {
         "position": {
           "x": 0.0,
           "y": 80.0,
@@ -28,14 +28,14 @@
           "z": 0.0
         }
       },
-      "collsionFinishTime": 27.0,       
-      "collsionStartTime": 19.0,        
-      "hitDamage": 500.0,               
-      "motionCancelStartTime": 0.0,    
-      "nextAttackRunTimer": 0.10000000149011612,    
-      "noAttackRunTimer": 0.05000000074505806,     
-      "normalAttackNextID": "PlayerAttack2",        
-      "specialAttackNextID": "PlayerAttack4"        
+      "collsionFinishTime": 27.0,
+      "collsionStartTime": 19.0,
+      "hitDamage": 500.0,
+      "motionCancelStartTime": 0.0,
+      "nextAttackRunTimer": 0.10000000149011612,
+      "noAttackRunTimer": 0.05000000074505806,
+      "normalAttackNextID": "PlayerAttack2",
+      "specialAttackNextID": "PlayerAttack4"
     },
     "PlayerAttack2": {
       "AttackMove": {
@@ -222,8 +222,8 @@
             "y": 0.0,
             "z": 10000.0
           },
-          "againTimer": 0.10000000149011612,
-          "againTimerFlag": 6,
+          "againTimer": 0.07000000029802322,
+          "againTimerFlag": 10,
           "hitDamage": 300.0
         }
       ],

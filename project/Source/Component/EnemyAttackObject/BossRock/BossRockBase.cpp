@@ -13,6 +13,7 @@
 #include "../../Shaker/Shaker.h"
 #include "../../MeshRenderer/MeshRenderer.h"
 #include "../../../Common/Debug/DebugNew.h"
+#include "../../MeshRenderer2D/MeshRenderer2D.h"
 
 BossRockBase::BossRockBase()
 {
@@ -69,6 +70,7 @@ BossRockBase::BossRockBase()
 	capsuleJustAvoidEndPos = VZero;
 	colliderAddStart = false;
 	alotHitCounter = 0.0f;
+	flyingUIDraw = false;
 }
 
 BossRockBase::~BossRockBase()
@@ -94,6 +96,8 @@ BossRockBase::~BossRockBase()
 	throwReady = false;
 	playerAttackHit = false;
 	handMatrix = nullptr;
+	playerFlyAwayBButtonUI = -1;
+	playerFlyAwayYButtonUI = -1;
 }
 
 void BossRockBase::Awake()
@@ -199,6 +203,21 @@ void BossRockBase::Update()
 			}
 		}
 	}
+	if (flyingUIDraw) {
+		VECTOR3 pos = obj->GetTransform()->position;
+		VECTOR3 UIDrawPos = ConvWorldPosToScreenPos(pos);
+		int i = 0;
+		for (auto mesh : meshRenderer2DList) {
+			mesh->SetPosition(VECTOR3(UIDrawPos.x + i * 50.0f, UIDrawPos.y, pos.z));
+			i++;
+			bool draw = true;
+			if (UIDrawPos.z > 1.0f) {
+				draw = false;
+			}
+			mesh->SetDraw(draw);
+		}
+	}
+	
 }
 
 void BossRockBase::Draw()
@@ -208,6 +227,7 @@ void BossRockBase::Draw()
 		MV1SetMatrix(preModel, preTransform.GetMatrix());
 		MV1DrawModel(preModel);
 	}
+	
 }
 
 void BossRockBase::Ground(const CollsionEventData& _data)
@@ -315,6 +335,8 @@ void BossRockBase::Ground(const CollsionEventData& _data)
 
 	//‚Í‚¶‚«•Ô‚µ”»’è‚ª‚ ‚é‚È‚ç¶¬
 	if (attackData.playerAttackFlying) {
+		meshRenderer2DList = obj->Component()->GetComponents<MeshRenderer2D>();
+		flyingUIDraw = true;
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
 		info.shape = CollsionInformation::SPHERE; 
@@ -424,7 +446,10 @@ void BossRockBase::PlayerAttackRockFlyAway(const CollsionEventData& _data)
 	}
 	/*obj->Component()->RemoveComponentWithTagIsCollsion<SphereCollider>("bossplayerAttack");
 	playerAttackHitColl = nullptr;*/
-
+	flyingUIDraw = false;
+	for (auto mesh : meshRenderer2DList) {
+		mesh->SetDraw(false);
+	}
 }
 
 void BossRockBase::RockBossHit(const CollsionEventData& _data)
@@ -580,6 +605,9 @@ void BossRockBase::DropObject()
 	}
 	//‚Í‚¶‚«•Ô‚·‚©‚Ì”»’è
 	if (attackData.playerAttackFlying) {
+		meshRenderer2DList = obj->Component()->GetComponents<MeshRenderer2D>();
+		flyingUIDraw = true;
+		
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
 		info.shape = CollsionInformation::SPHERE;
@@ -627,12 +655,15 @@ void BossRockBase::ThrowRockStart(BaseObject* _player)
 	}
 	//‚Í‚¶‚«•Ô‚·‚©‚Ç‚¤‚©‚Ì”»’è
 	if (attackData.playerAttackFlying) {
+		flyingUIDraw = true;
+		meshRenderer2DList = obj->Component()->GetComponents<MeshRenderer2D>();
 		CollsionInfo info;
 		info.parentTransfrom = obj->GetTransform();
 		info.shape = CollsionInformation::SPHERE;
 		info.oneColl = true;
 		info.tag = CollsionInformation::BOSS_ROCK_PLAYER_ATTACK;
-
+		playerFlyAwayBButtonUI = ResourceLoad::GetHandle(ID::B_BUTTON);
+		playerFlyAwayYButtonUI = ResourceLoad::GetHandle(ID::Y_BUTTON);
 		if (playerAttackHitColl == nullptr) {
 			playerAttackHitColl = obj->Component()->AddComponent<SphereCollider>();
 			std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { PlayerAttackRockFlyAway(_data); };

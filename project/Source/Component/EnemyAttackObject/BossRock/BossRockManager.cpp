@@ -15,6 +15,7 @@
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Weapon/CharaWeapon.h"
 #include "../../../Common/Debug/DebugNew.h"
+#include "../../MeshRenderer2D/MeshRenderer2D.h"
 
 BossRockManager::BossRockManager() :  BossRockManager(nullptr)
 {
@@ -420,9 +421,12 @@ void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity,
 		}
 		
 	}
-
-	
-	
+	MeshRenderer2D* yButton = _base->Component()->AddComponent<MeshRenderer2D>();
+	yButton->SetTransform(Transform(VZero,VZero,VOne * 0.5f));
+	yButton->TextureHandle(ResourceLoad::GetHandle(ID::Y_BUTTON), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+	MeshRenderer2D* bButton = _base->Component()->AddComponent<MeshRenderer2D>();
+	bButton->SetTransform(Transform(VZero, VZero, VOne * 0.5f));
+	bButton->TextureHandle(ResourceLoad::GetHandle(ID::B_BUTTON), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
 	//Shadow* shadow = _base->Component()->AddComponent<Shadow>();
 	/*Object3D* shadow = new Object3D();
 	shadow->Init(Transform(VECTOR3(0.0f, -20.0f, 0.0f), VZero, VECTOR3(_base->GetTransform()->scale.x + 4.0f, 0.1f, _base->GetTransform()->scale.z + 4.0f)), "BossShadow");
