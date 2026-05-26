@@ -31,7 +31,7 @@ void T_EnemyIdol::Draw()
 
 void T_EnemyIdol::Start()
 {
-	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 
 	//‹ß‹——£‚Æ‰“‹——£‚Åƒ‚[ƒVƒ‡ƒ“‚ª•Ï‚í‚é‚©‚ç‚»‚Ì‚½‚ß‚ÌÝ’è
 	switch (enemy->enemyType)
@@ -56,7 +56,7 @@ void T_EnemyIdol::Start()
 
 void T_EnemyIdol::Finish()
 {
-	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 	enemy->enemyBaseComponent.physics->SetGravity(setGravity);
 }
 

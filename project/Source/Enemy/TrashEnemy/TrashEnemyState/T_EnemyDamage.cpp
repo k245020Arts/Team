@@ -54,7 +54,7 @@ void T_EnemyDamage::Draw()
 
 void T_EnemyDamage::Start()
 {
-	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 	
 	motionSpeed = enemy->enemyBaseComponent.anim->GetPlaySpeed();
 

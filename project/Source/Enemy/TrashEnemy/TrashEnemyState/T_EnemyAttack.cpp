@@ -63,7 +63,7 @@ void T_EnemyAttack::Draw()
 
 void T_EnemyAttack::Start()
 {
-	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 	
 	firstColl = true;
 	attackParam.hitDamage = enemy->eStatus->GetStatus().normalAttack1;
