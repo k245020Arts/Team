@@ -7,6 +7,7 @@
 #include "../../../Component/Collider/ColliderBase.h"
 #include "../../../Common/Easing.h"
 #include "../../../Common/InputManager/PadInput.h"
+#include "../../../Common/InputManager/InputManager.h"
 
 CooperateAttack2::CooperateAttack2()
 {
@@ -77,8 +78,8 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
 	VECTOR3 dir = VZero;
 	const float Speed = 50.0f;
-	const float SearchPosMax = 100;
-	const float Max = 50;
+	const float SearchPosMax = 200.0f;
+	const float Max = 50.0f;
 
 	if (VSize(pPos - _enemy->GetPos()) > SearchPosMax)
 		pPos = _enemy->enemyBaseComponent.playerObj->GetTransform()->position;
@@ -89,6 +90,7 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	{
 		damageMove = true;
 		_enemy->DeleteCollision(&_enemy->attackColl);
+		InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartTime(ControllerPower, SceondTime);
 		return;
 	}
 	else if (VSize(pPos - _enemy->GetPos()) < Max )//’n–Ê‚É’…’n‚µ‚½Žž
@@ -123,13 +125,16 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 
 void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 {
-	const float CounterMax = 0.5f;
+	const float CounterMax = 1.0f;
 
 	hitStopCounter += Time::DeltaTimeRate();
 
 	if (hitStopCounter < CounterMax)
+	{
+		_enemy->GetEnemyObj()->GetTransform()->position += sinf(hitStopCounter * 60) * VECTOR3(10, 0, 10);
 		return;
-
+	}
+	
 	const VECTOR3 enePos = _enemy->GetPos();
 	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
 	VECTOR3 dir = VNorm(targetPos - enePos);

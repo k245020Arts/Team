@@ -40,7 +40,7 @@ void CooperateAttack1::Update()
 
 void CooperateAttack1::Start()
 {
-	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 
 	enemy->enemyBaseComponent.anim->SetFrame(5.0f);
 	firstColl = true;

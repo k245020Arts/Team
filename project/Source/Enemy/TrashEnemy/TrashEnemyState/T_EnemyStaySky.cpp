@@ -29,7 +29,7 @@ void T_EnemyStaySky::Update()
 
 void T_EnemyStaySky::Start()
 {
-	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 
 	if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		isLeader = true;

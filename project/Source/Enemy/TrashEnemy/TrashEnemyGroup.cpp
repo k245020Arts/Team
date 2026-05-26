@@ -30,6 +30,9 @@ TrashEnemyGroup::TrashEnemyGroup()
 
 TrashEnemyGroup::~TrashEnemyGroup()
 {
+	DeleteGraph(yButtonImage);
+	camera = nullptr;
+	trashEnemyManager = nullptr;
 }
 
 void TrashEnemyGroup::Update()
@@ -320,12 +323,6 @@ void TrashEnemyGroup::RangedEnemyAttack()
 	const float MaxAttackCounter = 2.5f;
 	bool leaderActiveEnd = false;
 
-	/*
-		↓細かいとこ調整して気持ちよさをだせるようにする
-		敵キャラ揺れ
-		コントローラー揺れ
-	*/
-
 	for (auto& enemy : rangedEnemies)
 	{
 		if (enemy->GetDeadMove()|| enemy->IsPlayerSpecialMove())
@@ -333,7 +330,6 @@ void TrashEnemyGroup::RangedEnemyAttack()
 
 		if (rangedJoinCounter == 0)//リーダー以外の敵を数える
 			rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
-
 
 		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		{
