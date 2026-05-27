@@ -91,7 +91,7 @@ public:
 	/// 画像の位置をセットする関数
 	/// </summary>
 	/// <param name="_position">画像の位置</param>
-	void SetPosition(VECTOR3 _position);
+	void SetPosition(const VECTOR3& _position);
 
 	/// <summary>
 	/// 加算合成モードにするかどうか
@@ -115,6 +115,8 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	int GetAlpha() const { return alpha; } 
+
+	void SetScale(const VECTOR3& _scale);
 
 private:
 	int hImage;

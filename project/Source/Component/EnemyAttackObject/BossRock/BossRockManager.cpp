@@ -81,6 +81,7 @@ void BossRockManager::CreateThrowEmptyObject(const std::vector<BossAttackBase::T
 		throwObject->Init(Transform(), "bossThrowObject");
 		BossRockBase* bossRock = throwObject->Component()->AddComponent<BossRockBase>();
 		bossRock->SetThrowParam(data);
+		bossRock->SetPlayerTransform(boss->enemyBaseComponent.playerObj->GetTransform());
 		boss->obj->AddChild(throwObject, false);
 	}
 }
@@ -397,6 +398,7 @@ void BossRockManager::BossDieDeleteObject(float _hp)
 	if (_hp > 0.0f) {
 		return; //ボスが死んでなかったら削除しない
 	}
+	//死んだら全削除
 	for (auto itr = rocks.begin(); itr != rocks.end();) {
 		(*itr)->GetBaseObject()->DestroyMe();
 		itr++;
@@ -407,7 +409,6 @@ void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity,
 {
 	//_base->Init(Transform(),"bossThrowObject");
 	//BossRockBase* bossRock = _base->Component()->AddComponent<BossRockBase>();
-	
 	Physics* phy = _base->Component()->AddComponent<Physics>();
 	phy->Start(_gravity, _fir);
 	//bossRock->StartCollAdd(CollsionInformation::BOSS_ROCK_ATTACK, Transform());;

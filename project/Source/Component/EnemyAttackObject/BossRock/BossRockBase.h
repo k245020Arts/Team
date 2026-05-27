@@ -96,6 +96,8 @@ public:
 
 	void BlastCollsionEvent(const CollsionEventData& _data);
 
+	void SetPlayerTransform(Transform* _transform);
+
 protected:
 
 	RayCollider* randColl;
@@ -159,4 +161,5 @@ protected:
 	bool flyingUIDraw;
 
 	std::list<MeshRenderer2D*> meshRenderer2DList;
+	Transform* playerTransform;
 };

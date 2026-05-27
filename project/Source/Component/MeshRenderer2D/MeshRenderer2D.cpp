@@ -171,7 +171,7 @@ void MeshRenderer2D::SetDrawImageSize(VECTOR2I _size)
 	drawImageSize = _size;
 }
 
-void MeshRenderer2D::SetPosition(VECTOR3 _position)
+void MeshRenderer2D::SetPosition(const VECTOR3& _position)
 {
 	//Objectのtransformを使うかこのクラスにあるトランスフォームを使うかの判定
 	//一つのオブジェクトに二つ以上このコンポーネントをセットしたいときにtransform2Dは使用
@@ -235,6 +235,16 @@ void MeshRenderer2D::FeedOutDraw(float _timer)
 	feedOut = true;
 	feedInOutTimer = _timer;
 	feedInOutTimerBase = feedInOutTimer;
+}
+
+void MeshRenderer2D::SetScale(const VECTOR3& _scale)
+{
+	if (transform2D == nullptr) {
+		obj->GetTransform()->scale = _scale;
+	}
+	else {
+		transform2D->scale = _scale;
+	}
 }
 
 void MeshRenderer2D::DrawNum()

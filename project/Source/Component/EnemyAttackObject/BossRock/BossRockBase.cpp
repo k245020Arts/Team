@@ -71,6 +71,8 @@ BossRockBase::BossRockBase()
 	colliderAddStart = false;
 	alotHitCounter = 0.0f;
 	flyingUIDraw = false;
+
+	playerTransform = nullptr;
 }
 
 BossRockBase::~BossRockBase()
@@ -203,15 +205,32 @@ void BossRockBase::Update()
 			}
 		}
 	}
+	//はじき返せることをUIで示す
 	if (flyingUIDraw) {
 		VECTOR3 pos = obj->GetTransform()->position;
 		VECTOR3 UIDrawPos = ConvWorldPosToScreenPos(pos);
 		int i = 0;
 		for (auto mesh : meshRenderer2DList) {
-			mesh->SetPosition(VECTOR3(UIDrawPos.x + i * 50.0f, UIDrawPos.y, pos.z));
+			
+			//距離によってスケールを変えたり、座標を変える
+			const float MAX_DIST = 15000.0f;
+			VECTOR3 dist = (playerTransform->position - obj->GetTransform()->position);
+			float size = dist.Size();
+			if (size <= 0.0f) {
+				size = 0.0f;
+			}
+			if (size >= MAX_DIST) {
+				size = MAX_DIST;
+			}
+			float rate = size / MAX_DIST;
+			VECTOR3 scale = VOne * (1 - rate);
+			mesh->SetScale(scale);
+			float POS_AMONG = 50.0f;
+			mesh->SetPosition(VECTOR3(UIDrawPos.x + (i * POS_AMONG) * (1 - rate), UIDrawPos.y, pos.z));
 			i++;
 			bool draw = true;
-			if (UIDrawPos.z > 1.0f) {
+			const float PLAYER_BACK_BASE_NUM = 1.0f;
+			if (UIDrawPos.z > PLAYER_BACK_BASE_NUM) {
 				draw = false;
 			}
 			mesh->SetDraw(draw);
@@ -834,4 +853,9 @@ void BossRockBase::BlastCollsionEvent(const CollsionEventData& _data)
 		return; //すでに当たってるオブジェクトならリターン
 	}
 	AddHitObj(_data.targetObject);
+}
+
+void BossRockBase::SetPlayerTransform(Transform* _transform)
+{
+	playerTransform = _transform;
 }
