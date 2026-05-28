@@ -267,6 +267,7 @@
     <ClInclude Include="Source\Enemy\Boss\BossCreater.h" />
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\AttackSorting.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttack.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackJsonParse.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossAppear.h" />
@@ -469,6 +470,7 @@
     <ClCompile Include="Source\Enemy\Boss\BossAttackDataSerializer.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossCreater.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttack.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossAppear.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossBackStep.cpp" />

@@ -569,6 +569,9 @@
     <ClCompile Include="Source\Component\UI\TextRenderer.cpp">
       <Filter>Component\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttack.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1211,6 +1214,9 @@
     </ClInclude>
     <ClInclude Include="Source\Component\UI\TextRenderer.h">
       <Filter>Component\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttack.h">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

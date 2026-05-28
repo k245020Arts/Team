@@ -26,8 +26,6 @@ public:
 		Title
 	};
 
-	
-
 private:
 	bool pause;
 	float timeRate;
@@ -39,4 +37,6 @@ private:
 	TextRenderer* pauseText;
 	TextRenderer* backText;
 	TextRenderer* titleText;
+
+	void ActiveButtonState(TextRenderer* _activeButton, TextRenderer* _noActiveButton);
 };
