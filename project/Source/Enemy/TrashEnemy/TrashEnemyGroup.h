@@ -78,7 +78,9 @@ private:
 	void AllChangeMeleeState(StateID::State_ID _id);
 	//連携時に連携する敵を線でつなげる
 	void CooperateAttackLine();
-	
+	//
+	void LeaderRotY(TrashEnemy* _enemy);
+
 	float attackCounter;
 	float maxAttackCounter;
 	float standbyCounter;
@@ -103,7 +105,7 @@ private:
 	void DeadRangedEnemy(TrashEnemy* _enemy);
 
 	VECTOR3 leaderPos;
-
+	float leaderRotY;
 	float rangedAtkTime;
 	bool rangedDamageMove;
 	int rangedAtkCounter;
@@ -117,6 +119,8 @@ private:
 	int yButtonImage;
 	//打ち返せ画像のポジション
 	const VECTOR3 YButtonPos = VECTOR3(1100.0f, 200.0f, 0.0f);
+
+	bool rangedAtkUpdate;
 
 	//--------------------------
 };

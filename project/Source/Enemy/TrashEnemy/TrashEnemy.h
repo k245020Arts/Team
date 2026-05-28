@@ -42,7 +42,7 @@ public:
 	friend class EnemyStateBase;
 	friend class EnemyAttackBase;
 	friend class T_EnemyStaySky;
-	friend class T_EvadeStat;
+	friend class T_Evade;
 
 	TrashEnemy();
 	~TrashEnemy();
@@ -70,6 +70,7 @@ public:
 
 	//ゲッター
 	VECTOR3 GetPos() { return obj->GetTransform()->position; }
+	VECTOR3 GetRot() { return obj->GetTransform()->rotation; }
 	float Speed() { return speed; }
 	//通常攻撃をしてもよいか
 	bool IsAttack() { return isAttack; }
@@ -114,6 +115,7 @@ public:
 
 	void SetLeaderPos(VECTOR3 _pos);
 
+	void SetLeaderRotY(float _rotY) { leaderRotY = _rotY; }
 	//遠距離の敵が攻撃する
 	void RangedAttack();
 	//指定した分ダメージを受ける
@@ -189,6 +191,7 @@ private:
 	int pointNumber;
 
 	VECTOR3 leaderPos;
+	float leaderRotY;
 	bool cooperateDamageMove;
 
 	bool deadMove;

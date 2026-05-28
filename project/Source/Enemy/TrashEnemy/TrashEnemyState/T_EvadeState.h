@@ -1,14 +1,17 @@
 #pragma once
 #include "../EnemyState/EnemyStateBase.h"
 
-class T_EvadeState :public EnemyStateBase
+class T_Evade :public EnemyStateBase
 {
 public:
-	T_EvadeState();
-	~T_EvadeState();
+	T_Evade();
+	~T_Evade();
 
 	void Update()override;
 	void Start()override;
 	void Finish()override;
 private:
+	const float BackSpeed = 10.0f;
+	float targetRotY;
+	VECTOR3 targetPos;
 };
