@@ -2,6 +2,7 @@
 #include "../../TrashEnemy/EnemyState/EnemyStateBase.h"
 #include "../Boss.h"
 #include "Attack/BossAttackJsonParse.h"
+#include "Attack/BossAttack.h"
 
 struct ActionParam
 {
@@ -87,7 +88,7 @@ public:
 	/// 今の攻撃状態を記録
 	/// </summary>
 	/// <returns></returns>
-	std::shared_ptr<BossAttackBase> GetNowAttackState();
+	std::shared_ptr<EnemyAttackBase> GetNowAttackState();
 	/// <summary>
 	/// 攻撃抽選情報のセーブ
 	/// </summary>
@@ -107,26 +108,26 @@ public:
 	/// 攻撃情報の取得
 	/// </summary>
 	/// <returns></returns>
-	std::unordered_map<std::string, BossAttackBase::BossAttackParam> GetAttackParam();
+	std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> GetAttackParam();
 	/// <summary>
 	/// 攻撃の追加
 	/// </summary>
 	/// <param name="_param">攻撃情報</param>
 	/// <param name="_boss">ボスのポインタ</param>
-	void AddAttack(BossAttackBase::BossAttackParam _param, Boss* _boss);
+	void AddAttack(EnemyAttackBase::BossAttackParam _param, Boss* _boss);
 	/// <summary>
 	/// 攻撃の追加
 	/// </summary>
 	/// <param name="_param">攻撃情報</param>
 	/// <param name="_boss">ボスのポインタ</param>
 	/// <param name="_attackID">攻撃のID</param>
-	void AddAttack(BossAttackBase::BossAttackParam _param,Boss* _boss,std::string _attackID);
+	void AddAttack(EnemyAttackBase::BossAttackParam _param,Boss* _boss,std::string _attackID);
 	/// <summary>
 	/// 攻撃情報のリロードをする
 	/// </summary>
 	/// <param name="_param"></param>
 	/// <param name="_reLoadID"></param>
-	void ReloadParam(BossAttackBase::BossAttackParam _param,std::string _reLoadID);
+	void ReloadParam(EnemyAttackBase::BossAttackParam _param,std::string _reLoadID);
 
 	//void StateImguiDraw()override;
 
@@ -175,6 +176,6 @@ private:
 	bool forceAttack;
 
 	VECTOR3 vec;
-	std::unordered_map<std::string, std::shared_ptr<BossAttackBase>> attacks; //攻撃のポインターの保持
-	std::unordered_map<std::string, BossAttackBase::BossAttackParam> attackParam; ///攻撃のパラメーターの保持
+	std::unordered_map<std::string, std::shared_ptr<BossAttack>> attacks; //攻撃のポインターの保持
+	std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> attackParam; ///攻撃のパラメーターの保持
 };

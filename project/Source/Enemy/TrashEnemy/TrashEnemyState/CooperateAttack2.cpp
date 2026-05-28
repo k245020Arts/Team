@@ -15,7 +15,7 @@ CooperateAttack2::CooperateAttack2()
 	animId = ID::TE_R_C_ATTACK;
 	attackParam.animID = ID::TE_R_C_ATTACK;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
-	attackParam.damagePattern = BossAttackBase::BACK;
+	attackParam.damagePattern = EnemyAttackBase::BACK;
 
 	attackParam.hitDamage = 50;
 	attackParam.useFlash = true;
@@ -57,8 +57,8 @@ void CooperateAttack2::Start()
 
 	firstColl = true;
 
-	BossAttackBase::collTrans.position	= CollPos;
-	BossAttackBase::collTrans.scale		= Collscale;
+	EnemyAttackBase::collTrans.position	= CollPos;
+	EnemyAttackBase::collTrans.scale		= Collscale;
 
 	enemy->isMovingToPlayer = true;
 

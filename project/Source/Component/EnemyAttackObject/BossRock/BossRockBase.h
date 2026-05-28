@@ -1,7 +1,7 @@
 #pragma once
 #include "../EnemyAttackObject.h"
 #include <unordered_set>
-#include "../../../Enemy/Boss/BossState/Attack/BossAttackBase.h"
+#include "../../../Enemy/Boss/BossState/Attack/EnemyAttackBase.h"
 
 class SphereCollider;
 class RayCollider;
@@ -59,7 +59,7 @@ public:
 	/// </summary>
 	/// <param name="_attack">投擲物が持つデータ</param>
 	/// <param name="_handMatrix">手のマトリックスの情報、いらないならnullptrを入れる</param>
-	void Start(const BossAttackBase::ThrowObjectAttackData& _attack, MATRIX* _handMatrix);
+	void Start(const EnemyAttackBase::ThrowObjectAttackData& _attack, MATRIX* _handMatrix);
 	/// <summary>
 	/// 投擲物を落とすときに使う
 	/// </summary>
@@ -73,7 +73,7 @@ public:
 	/// 投擲物のデータを取得
 	/// </summary>
 	/// <returns>投擲物のデータ</returns>
-	const BossAttackBase::ThrowObjectAttackData& GetThrowObjectsData()const { return attackData; }
+	const EnemyAttackBase::ThrowObjectAttackData& GetThrowObjectsData()const { return attackData; }
 	/// <summary>
 	/// 予測線を出すときの処理
 	/// </summary>
@@ -83,7 +83,7 @@ public:
 	/// 投擲物のデータをセット
 	/// </summary>
 	/// <param name="_data">投擲物のデータ</param>
-	void SetThrowParam(BossAttackBase::ThrowObjectAttackData _data) { attackData = _data; }
+	void SetThrowParam(EnemyAttackBase::ThrowObjectAttackData _data) { attackData = _data; }
 	/// <summary>
 	/// 空のオブジェクトなのかStartの関数を呼んだかどうかの判定
 	/// </summary>
@@ -131,7 +131,7 @@ protected:
 	bool groundInit;
 	bool fly;
 	int useHandleNumber;
-	BossAttackBase::ThrowObjectAttackData attackData;
+	EnemyAttackBase::ThrowObjectAttackData attackData;
 
 	void BlastCollsionCreate();
 	bool preDraw;

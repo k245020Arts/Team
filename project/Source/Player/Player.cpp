@@ -43,7 +43,7 @@
 #include "../GameControler/GameControler.h"
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Enemy/EnemyManager.h"
-#include "../Enemy/Boss/BossState/Attack/BossAttackBase.h"
+#include "../Enemy/Boss/BossState/Attack/EnemyAttackBase.h"
 #include "../Enemy/Boss/BossState/AttackSorting.h"
 #include "../Common/Easing.h"
 #include "../Component/UI/ButtonUI.h"
@@ -568,13 +568,13 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	std::shared_ptr<StateBase> pB	= playerCom.stateManager->GetState<StateBase>();
 	Animator* enemyAnim				= _obj->Component()->GetComponent<Animator>();
 	std::shared_ptr<AttackSorting> sorthing = _obj->Component()->GetComponent<StateManager>()->GetState<AttackSorting>();
-	std::shared_ptr<BossAttackBase> attack;
+	std::shared_ptr<EnemyAttackBase> attack;
 	//AttackSorthingがあるならAttackSorthingの中から攻撃を取得
 	if (sorthing != nullptr) {
 		attack = sorthing->GetNowAttackState();
 	}
 	else {
-		attack = _obj->Component()->GetComponent<StateManager>()->GetState<BossAttackBase>();
+		attack = _obj->Component()->GetComponent<StateManager>()->GetState<EnemyAttackBase>();
 	}
 	
 	float startTime					= enemyAnim->EventStartTime(_attackId);
@@ -590,7 +590,7 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 	if (attack == nullptr)
 		return true;
 
-	BossAttackBase::BossAttackParam param = attack->GetDamageParam();
+	EnemyAttackBase::BossAttackParam param = attack->GetDamageParam();
 	//ジャスト回避が出来る処理
 	//if (justAvoidCanCounter > 0.0f && avoidReadyCounter <= 0.0f) {
 	//	if (enemyAnim->GetCurrentFrame() <= startTime + 8.0f || startTime >= 0.0f) {
@@ -637,13 +637,13 @@ bool Player::EnemyHit(ID::IDType _attackId,BaseObject* _obj)
 				//playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 				switch (param.damagePattern)
 				{
-				case BossAttackBase::NO_BACK:
+				case EnemyAttackBase::NO_BACK:
 					playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 					break;
-				case BossAttackBase::BACK:
+				case EnemyAttackBase::BACK:
 					playerCom.stateManager->ChangeState(StateID::PLAYER_DAMAGE_S);
 					break;
-				case BossAttackBase::BLOW_AWAY:
+				case EnemyAttackBase::BLOW_AWAY:
 					playerCom.stateManager->ChangeState(StateID::PLAYER_BLOW_AWAY_S);
 					break;
 				default:
@@ -837,7 +837,7 @@ bool Player::EnemyAttackObjectHitIsPlayer(BaseObject* _obj, CollsionInformation:
 	return true;
 }
 
-bool Player::LargeJustAvoid(std::shared_ptr<BossAttackBase> _attack)
+bool Player::LargeJustAvoid(std::shared_ptr<EnemyAttackBase> _attack)
 {
 	if (_attack->GetDamageParam().useFlash) {
 		largeJustAvoid = true;

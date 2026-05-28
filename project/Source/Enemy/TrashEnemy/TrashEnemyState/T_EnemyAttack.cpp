@@ -13,7 +13,7 @@ T_EnemyAttack::T_EnemyAttack()
 	attackParam.animID = ID::TE_ATTACK;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 
-	attackParam.damagePattern = BossAttackBase::NO_BACK;
+	attackParam.damagePattern = EnemyAttackBase::NO_BACK;
 
 	mSpeed = 0;
 	mMaxFrame = 0;
@@ -33,6 +33,7 @@ T_EnemyAttack::~T_EnemyAttack()
 void T_EnemyAttack::Update()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	EnemyAttackBase::Update();
 	enemy->LookTarget(enemy->enemyBaseComponent.playerObj->GetTransform()->position);
 	
 	if (enemy->isCooperateAtk)

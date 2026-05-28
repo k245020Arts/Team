@@ -318,7 +318,7 @@ void BossAttackDataSerializer::Update()
 		std::string newID = newAttackID;
 
 		// AttackParam追加（ローカル）
-		BossAttackBase::BossAttackParam newParam;
+		EnemyAttackBase::BossAttackParam newParam;
 		newParam.attackID = newID;
 		newParam.animFileName = newAnimFile;
 		newParam.animNum = FileSystemUtils::GetFileCount("data/json/BossAttack/" + BossName);
@@ -624,7 +624,7 @@ const char* BossAttackDataSerializer::MakeLabel(const char* label, const char* c
 	return buf;
 }
 
-void BossAttackDataSerializer::DrawSoundEventEditor(std::vector<BossAttackBase::SoundEffectEvent>& _eventData)
+void BossAttackDataSerializer::DrawSoundEventEditor(std::vector<EnemyAttackBase::SoundEffectEvent>& _eventData)
 {
 	static int selectIndex = -1;
 
@@ -654,7 +654,7 @@ void BossAttackDataSerializer::DrawSoundEventEditor(std::vector<BossAttackBase::
 	//追加・複製・削除
 	if (ImGui::Button("Add Sound Event"))
 	{
-		_eventData.push_back(BossAttackBase::SoundEffectEvent());
+		_eventData.push_back(EnemyAttackBase::SoundEffectEvent());
 		selectIndex = (int)_eventData.size() - 1;
 	}
 
@@ -738,7 +738,7 @@ void BossAttackDataSerializer::DrawSoundEventEditor(std::vector<BossAttackBase::
 	}
 }
 
-void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase::ThrowObjectAttackData>& list,const std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData)
+void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<EnemyAttackBase::ThrowObjectAttackData>& list,const std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData)
 {
 	static int selectIndex = -1;
 
@@ -759,7 +759,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	//追加・削除
 	if (ImGui::Button("Add Empty"))
 	{
-		list.push_back(BossAttackBase::ThrowObjectAttackData());
+		list.push_back(EnemyAttackBase::ThrowObjectAttackData());
 		selectIndex = (int)list.size() - 1;
 	}
 
@@ -1238,7 +1238,7 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 	}
 }
 
-void BossAttackDataSerializer::DrawRayColliderInfo(const char* label, BossAttackBase::RayColliderInfo& r)
+void BossAttackDataSerializer::DrawRayColliderInfo(const char* label, EnemyAttackBase::RayColliderInfo& r)
 {
 	if (ImGui::TreeNode(label))
 	{
@@ -1249,7 +1249,7 @@ void BossAttackDataSerializer::DrawRayColliderInfo(const char* label, BossAttack
 	}
 }
 
-void BossAttackDataSerializer::DrawDountColliderInfo(const char* label, BossAttackBase::DountColliderInfo& d)
+void BossAttackDataSerializer::DrawDountColliderInfo(const char* label, EnemyAttackBase::DountColliderInfo& d)
 {
 	if (ImGui::TreeNode(label))
 	{

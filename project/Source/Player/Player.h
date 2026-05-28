@@ -8,7 +8,7 @@
 #include "PlayerState/AttackState/PlayerAttackStateBase.h"
 #include <unordered_set>
 
-class BossAttackBase;
+class EnemyAttackBase;
 class BossRockManager;
 struct PlayerAttackData;
 
@@ -219,7 +219,7 @@ public:
 	/// </summary>
 	/// <param name="_attack">アタックID</param>
 	/// <returns>大きいジャスト回避ならtrued</returns>
-	bool LargeJustAvoid(std::shared_ptr<BossAttackBase> _attack);
+	bool LargeJustAvoid(std::shared_ptr<EnemyAttackBase> _attack);
 
 	/// <summary>
 	/// 必殺技の円の中心点を取得する関数

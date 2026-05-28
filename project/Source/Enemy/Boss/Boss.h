@@ -37,7 +37,8 @@ public:
 	friend class BossDie;
 	friend class BossRoar;
 	friend class BossThreat;
-	friend class BossAttackBase;
+	friend class EnemyAttackBase;
+	friend class BossAttack;
 	friend class BossDamage;
 	friend class BossAppear;
 	friend class BossLose;

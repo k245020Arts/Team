@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../../Library/GameObject.h"
-#include "../../../Enemy/Boss/BossState/Attack/BossAttackBase.h"
+#include "../../../Enemy/Boss/BossState/Attack/EnemyAttackBase.h"
 #include "../../../Common/JsonReader.h"
 
 class BossRockBase;
@@ -20,7 +20,7 @@ public:
 	/// 空のオブジェクトを生成
 	/// </summary>
 	/// <param name="_data">攻撃情報に入っているデータの配列</param>
-	void CreateThrowEmptyObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data);
+	void CreateThrowEmptyObject(const std::vector<EnemyAttackBase::ThrowObjectAttackData>& _data);
 	/// <summary>
 	/// 空のオブジェクトから描画出来るようにする
 	/// </summary>
@@ -36,13 +36,13 @@ public:
 	/// <param name="_index">インデックス</param>
 	/// <param name="_total">出てくるトータルの数</param>
 	/// <param name="_rotateAngle">回転角</param>
-	void CreateThrowObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle);
+	void CreateThrowObject(const std::vector<EnemyAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle);
 	/// <summary>
 	/// 当たり判定のサイズを取得
 	/// </summary>
 	/// <param name="_data">投擲物のデータ</param>
 	/// <returns></returns>
-	VECTOR3 GetPushCollSize(const BossAttackBase::ThrowObjectAttackData& _data);
+	VECTOR3 GetPushCollSize(const EnemyAttackBase::ThrowObjectAttackData& _data);
 
 	/// <summary>
 	/// リストに追加する関数、投擲物クラスから減速呼んでいるので特にいじる必要なし
@@ -120,7 +120,7 @@ public:
 	/// </summary>
 	/// <param name="_data">ボスの攻撃のデータ</param>
 	/// <param name="_animNum">アニメーションの現在の再生時間</param>
-	void RockContorler(BossAttackBase::BossAttackParam _data,float _animFrame);
+	void RockContorler(EnemyAttackBase::BossAttackParam _data,float _animFrame);
 	/// <summary>
 	/// 攻撃が終了した時に消すオブジェクトは消す
 	/// </summary>
@@ -145,7 +145,7 @@ private:
 	int effectNum;
 
 	bool IsFreePos(const VECTOR3& _pos, float _minDist);
-	void SetRockComponent(Object3D* _base,const VECTOR3& _gravity, const VECTOR3& _fir,const BossAttackBase::ThrowObjectAttackData& _data);
+	void SetRockComponent(Object3D* _base,const VECTOR3& _gravity, const VECTOR3& _fir,const EnemyAttackBase::ThrowObjectAttackData& _data);
 
 	void LoadEffect(BossThrowObjectData& _data);
 	void LoadModel(BossThrowObjectData& _data);

@@ -74,7 +74,7 @@ void BossRockManager::Draw()
 
 }
 
-void BossRockManager::CreateThrowEmptyObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data)
+void BossRockManager::CreateThrowEmptyObject(const std::vector<EnemyAttackBase::ThrowObjectAttackData>& _data)
 {
 	for (auto data : _data) {
 		Object3D* throwObject = new Object3D();
@@ -90,7 +90,7 @@ void BossRockManager::AppearThrowObject(BossRockBase* _rock, int _index, int _to
 {
 	//for (auto data : _data) {
 		Object3D* throwObject = static_cast<Object3D*>(_rock->GetBaseObject());
-		BossAttackBase::ThrowObjectAttackData _data = _rock->GetThrowObjectsData();
+		EnemyAttackBase::ThrowObjectAttackData _data = _rock->GetThrowObjectsData();
 		SetRockComponent(throwObject, _data.baseGravity, _data.baseFirction, _data);
 		if (_data.throwToFallToPlayer || _data.throwToFall) {
 			VECTOR3 center = VZero;
@@ -190,19 +190,20 @@ void BossRockManager::AppearThrowObject(BossRockBase* _rock, int _index, int _to
 	
 }
 
-void BossRockManager::CreateThrowObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle)
+void BossRockManager::CreateThrowObject(const std::vector<EnemyAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle)
 {
 	for (auto data : _data) {
 		Object3D* throwObject = new Object3D();
 		throwObject->Init(Transform(), "bossThrowObject");
 		BossRockBase* bossRock = throwObject->Component()->AddComponent<BossRockBase>();
 		bossRock->SetThrowParam(data);
+		bossRock->SetPlayerTransform(boss->enemyBaseComponent.playerObj->GetTransform());
 		boss->obj->AddChild(throwObject, false);
 		AppearThrowObject(bossRock, _index, _total, _rotateAngle);
 	}
 }
 
-VECTOR3 BossRockManager::GetPushCollSize(const BossAttackBase::ThrowObjectAttackData& _data)
+VECTOR3 BossRockManager::GetPushCollSize(const EnemyAttackBase::ThrowObjectAttackData& _data)
 {
 	return throwObjectsData[_data.throwObjectID].pushTransform.scale;
 }
@@ -348,10 +349,10 @@ void BossRockManager::ChangeJsonData(const BossThrowObjectData& _data,const std:
 	json.Save(fileName, root);
 }
 
-void BossRockManager::RockContorler(BossAttackBase::BossAttackParam _data, float _animFrame)
+void BossRockManager::RockContorler(EnemyAttackBase::BossAttackParam _data, float _animFrame)
 {
 	for (auto rock : rocks) {
-		BossAttackBase::ThrowObjectAttackData data = rock->GetThrowObjectsData();
+		EnemyAttackBase::ThrowObjectAttackData data = rock->GetThrowObjectsData();
 		//投擲物が登場するタイミング
 		if (_animFrame >= data.throwObjectApperaTime) {
 			if (!rock->GetThrowObjectStart()) {
@@ -374,7 +375,7 @@ void BossRockManager::RockContorler(BossAttackBase::BossAttackParam _data, float
 void BossRockManager::AttackFinishDelete()
 {
 	for (auto itr = rocks.begin(); itr != rocks.end();) {
-		BossAttackBase::ThrowObjectAttackData data = (*itr)->GetThrowObjectsData();
+		EnemyAttackBase::ThrowObjectAttackData data = (*itr)->GetThrowObjectsData();
 		if (data.attackFinishDelete) {
 			(*itr)->GetBaseObject()->DestroyMe();
 		}
@@ -405,7 +406,7 @@ void BossRockManager::BossDieDeleteObject(float _hp)
 	}
 }
 
-void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity, const VECTOR3& _fir, const BossAttackBase::ThrowObjectAttackData& _data)
+void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity, const VECTOR3& _fir, const EnemyAttackBase::ThrowObjectAttackData& _data)
 {
 	//_base->Init(Transform(),"bossThrowObject");
 	//BossRockBase* bossRock = _base->Component()->AddComponent<BossRockBase>();

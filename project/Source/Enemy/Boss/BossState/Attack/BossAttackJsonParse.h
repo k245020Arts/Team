@@ -1,7 +1,7 @@
 #pragma once
-#include "BossAttackBase.h"
+#include "EnemyAttackBase.h"
 
-inline void to_json(JSON& j, const BossAttackBase::RayColliderInfo& p)
+inline void to_json(JSON& j, const EnemyAttackBase::RayColliderInfo& p)
 {
 	j = JSON{
 		{"rayStartPos", p.rayStartPos},
@@ -9,13 +9,13 @@ inline void to_json(JSON& j, const BossAttackBase::RayColliderInfo& p)
 	};
 }
 
-inline void from_json(const JSON& j, BossAttackBase::RayColliderInfo& p)
+inline void from_json(const JSON& j, EnemyAttackBase::RayColliderInfo& p)
 {
 	if (j.contains("rayStartPos")) j.at("rayStartPos").get_to(p.rayStartPos);
 	if (j.contains("rayFinishPos")) j.at("rayFinishPos").get_to(p.rayFinishPos);
 }
 
-inline void to_json(JSON& j, const BossAttackBase::DountColliderInfo& p)
+inline void to_json(JSON& j, const EnemyAttackBase::DountColliderInfo& p)
 {
 	j = JSON{
 		{"inRadius", p.inRadius},
@@ -23,13 +23,13 @@ inline void to_json(JSON& j, const BossAttackBase::DountColliderInfo& p)
 	};
 }
 
-inline void from_json(const JSON& j, BossAttackBase::DountColliderInfo& p)
+inline void from_json(const JSON& j, EnemyAttackBase::DountColliderInfo& p)
 {
 	if (j.contains("inRadius")) j.at("inRadius").get_to(p.inRadius);
 	if (j.contains("outRadius")) j.at("outRadius").get_to(p.outRadius);
 }
 
-inline void to_json(JSON& j, const BossAttackBase::SoundEffectEvent& p)
+inline void to_json(JSON& j, const EnemyAttackBase::SoundEffectEvent& p)
 {
 	j = JSON{
 		{"name", p.name},
@@ -41,7 +41,7 @@ inline void to_json(JSON& j, const BossAttackBase::SoundEffectEvent& p)
 	};
 }
 
-inline void from_json(const JSON& j, BossAttackBase::SoundEffectEvent& p)
+inline void from_json(const JSON& j, EnemyAttackBase::SoundEffectEvent& p)
 {
 	if (j.contains("name")) j.at("name").get_to(p.name);
 	if (j.contains("soundStartFrame")) j.at("soundStartFrame").get_to(p.soundStartFrame);
@@ -52,7 +52,7 @@ inline void from_json(const JSON& j, BossAttackBase::SoundEffectEvent& p)
 	if (j.contains("loopAnim")) j.at("loopAnim").get_to(p.loopAnim);
 }
 
-inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
+inline void to_json(JSON& j, const EnemyAttackBase::ThrowObjectAttackData& p)
 {
 	j = JSON{
 		{"throwObjectID", p.throwObjectID},
@@ -226,7 +226,7 @@ inline void to_json(JSON& j, const BossAttackBase::ThrowObjectAttackData& p)
 	}
 }
 
-inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
+inline void from_json(const JSON& j, EnemyAttackBase::ThrowObjectAttackData& p)
 {
 	// Šî–{
 	if (j.contains("throwObjectID")) j.at("throwObjectID").get_to(p.throwObjectID);
@@ -474,7 +474,7 @@ inline void from_json(const JSON& j, BossAttackBase::ThrowObjectAttackData& p)
 	else p.attackFinishDelete = false;
 }
 
-inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
+inline void to_json(JSON& j, const EnemyAttackBase::BossAttackParam& p)
 {
 	j = JSON{
 		{"bossID", p.bossID},
@@ -495,7 +495,7 @@ inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
 		{"animID", ID::GetID(p.animID)},
 		{"attackBeforeAnimID", ID::GetID(p.attackBeforeAnimID)},
 		{"hitDamage", p.hitDamage},
-		{"damagePattern", BossAttackBase::ToString(p.damagePattern)},
+		{"damagePattern", EnemyAttackBase::ToString(p.damagePattern)},
 		{"voiceName", p.voiceName}
 	};
 
@@ -624,7 +624,7 @@ inline void to_json(JSON& j, const BossAttackBase::BossAttackParam& p)
 
 }
 
-inline void from_json(const JSON& j, BossAttackBase::BossAttackParam& p)
+inline void from_json(const JSON& j, EnemyAttackBase::BossAttackParam& p)
 {
 	// Šî–{
 	if (j.contains("bossID")) j.at("bossID").get_to(p.bossID);
@@ -665,7 +665,7 @@ inline void from_json(const JSON& j, BossAttackBase::BossAttackParam& p)
 	{
 		std::string s;
 		j.at("damagePattern").get_to(s);
-		p.damagePattern = BossAttackBase::FromString(s);
+		p.damagePattern = EnemyAttackBase::FromString(s);
 	}
 
 	if (j.contains("voiceName")) j.at("voiceName").get_to(p.voiceName);
