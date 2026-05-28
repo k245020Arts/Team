@@ -15,10 +15,6 @@ T_EnemyAttack::T_EnemyAttack()
 
 	attackParam.damagePattern = EnemyAttackBase::NO_BACK;
 
-	mSpeed = 0;
-	mMaxFrame = 0;
-
-	isDecel = true;
 	attackParam.useFlash = true;
 	attackParam.attackFlashStartTime = 0.7f;
 	attackParam.slowAmout = 0.1f;
@@ -48,13 +44,6 @@ void T_EnemyAttack::Update()
 		enemy->GetEnemyObj()->GetTransform()->position.z += Speed * sinf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
 	}
 
-	const float M_FRAME_SPEED = mMaxFrame * 0.5f;
-
-	if (mSpeed > 0 && isDecel)
-		mSpeed = Easing::EaseOut(mMaxFrame, 0.0f, M_FRAME_SPEED);
-
-	enemy->enemyBaseComponent.anim->SetPlaySpeed(mSpeed);
-	
 	AttackInformation(enemy);
 }
 
@@ -69,8 +58,6 @@ void T_EnemyAttack::Start()
 	firstColl = true;
 	attackParam.hitDamage = enemy->eStatus->GetStatus().normalAttack1;
 	counter = 0;
-	mMaxFrame = enemy->enemyBaseComponent.anim->GetMaxFrame();
-	isDecel = true;
 
 	EnemyStateBase::Start();
 }
@@ -90,7 +77,6 @@ void T_EnemyAttack::AttackInformation(TrashEnemy* _e)
 	AttackCollsion();
 	AttackSound();
 	AttackFlash(ID::E_MODEL, 35, "E_AttackV");
-	_e->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	Trail();
 	EnemyJustAvoidCollsion();
 }

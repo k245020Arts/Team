@@ -72,7 +72,7 @@ namespace StateID{
         T_ENEMY_DAMAGE,
         T_ENEMY_WAITSEE,
         T_ENEMY_STAYSKY,
-
+        T_ENEMY_EVADE,
 
         STATE_MAX,
     };

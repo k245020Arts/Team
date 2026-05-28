@@ -34,6 +34,7 @@
 #include "TrashEnemyState/T_EnemyDamage.h"
 #include "TrashEnemyState/T_EnemyWaitSee.h"
 #include "TrashEnemyState/T_EnemyStaySky.h"
+#include "TrashEnemyState/T_EvadeState.h"
 
 namespace
 {
@@ -318,6 +319,8 @@ void TrashEnemy::Start(Object3D* _obj, EnemyType _type)
 	enemyBaseComponent.state->CreateState<T_EnemyDamage>("_T_EnemyDamage", StateID::T_ENEMY_DAMAGE);
 	enemyBaseComponent.state->CreateState<T_EnemyWaitSee>("_T_EnemyWaitSee", StateID::T_ENEMY_WAITSEE);
 	enemyBaseComponent.state->CreateState <T_EnemyStaySky>("T_EnemyStaySky", StateID::T_ENEMY_STAYSKY);
+	enemyBaseComponent.state->CreateState<T_EvadeState>("T_Evade", StateID::T_ENEMY_EVADE);
+
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
 	enemyType = _type;

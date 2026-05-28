@@ -42,6 +42,7 @@ public:
 	friend class EnemyStateBase;
 	friend class EnemyAttackBase;
 	friend class T_EnemyStaySky;
+	friend class T_EvadeStat;
 
 	TrashEnemy();
 	~TrashEnemy();

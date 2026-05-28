@@ -32,8 +32,9 @@ void CooperateAttack1::Update()
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
 	AttackInformation(enemy);
-	time += Time::DeltaTimeRate();
+	enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 
+	time += Time::DeltaTimeRate();
 	if (time >= 1)
 		enemy->isCooperateAtk = false;
 }
@@ -42,7 +43,6 @@ void CooperateAttack1::Start()
 {
 	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	enemy->enemyBaseComponent.anim->SetFrame(5.0f);
 	firstColl = true;
 
 	copyColl = EnemyAttackBase::collTrans.scale;
