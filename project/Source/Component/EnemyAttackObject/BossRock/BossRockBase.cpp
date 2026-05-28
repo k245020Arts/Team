@@ -635,7 +635,8 @@ void BossRockBase::DropObject()
 
 		if (playerAttackHitColl == nullptr) {
 			playerAttackHitColl = obj->Component()->AddComponent<SphereCollider>();
-			playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(250.0f, 1.0f, 1.0f)), nullptr, "bossplayerAttack");
+			std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) { PlayerAttackRockFlyAway(_data); };
+			playerAttackHitColl->CollsionAdd(info, Transform(VZero, VZero, VECTOR3(250.0f, 1.0f, 1.0f)), func, "bossplayerAttack");
 		}
 	}
 	

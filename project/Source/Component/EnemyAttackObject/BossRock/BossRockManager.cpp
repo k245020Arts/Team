@@ -317,17 +317,14 @@ void BossRockManager::ChangeJsonData(const BossThrowObjectData& _data,const std:
 		ResourceLoad::DeleteEffectData(Effect_ID::StringToID(table[_oldKey].modelName), false);
 	}
 
-	//------------------------------------
-	// ■ キー変更（リネーム）
-	//------------------------------------
+	//キー変更
 	if (_oldKey != _newKey)
 	{
 		table.erase(_oldKey);
 	}
 
-	//------------------------------------
-	// ■ 更新
-	//------------------------------------
+
+	//更新
 	table[_newKey] = _data;
 
 	if (table[_newKey].isEffect) {
