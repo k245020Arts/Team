@@ -67,7 +67,7 @@ void RangedEnemyCamera::UpdateCamPos(Camera* _camera)
 
 	float dist = VSize(enemyPos - pPos);
 
-	VECTOR3 offset = dir * -1 * CamPos + VGet(0, 400, 0);
+	VECTOR3 offset = dir * -1 * CamPos + VECTOR3(0, 400, 0);
 
 	copyCamPos = pPos + offset;
 }
@@ -75,17 +75,14 @@ void RangedEnemyCamera::UpdateCamPos(Camera* _camera)
 void RangedEnemyCamera::UpdeteCamMove(Camera* _camera)
 {
 	const float CamSpeed = 0.1f;
-	if (isCameraArrived)//カメラが指定された位置に近づいたら強制的にポジションに合わせる
-	{
-		_camera->cameraComponent.cameraTransform->position = copyCamPos;
-		return;
-	}
+	//カメラのポジションを格納
+	const VECTOR3 CamPos = _camera->cameraComponent.cameraTransform->position;
 
 	//指定したポジションのangleをだす
 	VECTOR3 targetoffset = copyCamPos - pPos;
 	float targetAngle = atan2f(targetoffset.z, targetoffset.x);
 
-	VECTOR3 offset = _camera->cameraComponent.cameraTransform->position - pPos;
+	VECTOR3 offset = CamPos - pPos;
 
 	if (!isAngleSet)
 	{
@@ -95,20 +92,18 @@ void RangedEnemyCamera::UpdeteCamMove(Camera* _camera)
 	
 	float diff = targetAngle - angle;
 
-	while (diff > DX_PI_F)  diff -= DX_TWO_PI_F;
-	while (diff < -DX_PI_F) diff += DX_TWO_PI_F;
+	if (diff > DX_PI_F)  diff -= DX_TWO_PI_F;
+	if (diff < -DX_PI_F) diff += DX_TWO_PI_F;	
+	
+	angle += diff * CamSpeed;
 
-	if (fabsf(diff) < 0.03f)
-	{
-		angle = targetAngle;
-		isCameraArrived = true;
-		return;
-	}
-	else
-		angle += diff * CamSpeed;
 	//半径
 	float radius = VSize(targetoffset);
 	_camera->cameraComponent.cameraTransform->position.x = pPos.x + cosf(angle) * radius;
+
+	if(CamPos.y >= copyCamPos.y * CamSpeed || CamPos.y <= copyCamPos.y * -CamSpeed)
+		_camera->cameraComponent.cameraTransform->position.y = (copyCamPos.y - CamPos.y )* CamSpeed;
+
 	_camera->cameraComponent.cameraTransform->position.z = pPos.z + sinf(angle) * radius;
 }
 
