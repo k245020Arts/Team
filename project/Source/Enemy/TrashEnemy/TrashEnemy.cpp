@@ -244,6 +244,8 @@ TrashEnemy::TrashEnemy()
 	justAvoidAttackFunk = nullptr;
 
 	cAttack = false;
+
+	leaderRotY = 0;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -319,7 +321,7 @@ void TrashEnemy::Start(Object3D* _obj, EnemyType _type)
 	enemyBaseComponent.state->CreateState<T_EnemyDamage>("_T_EnemyDamage", StateID::T_ENEMY_DAMAGE);
 	enemyBaseComponent.state->CreateState<T_EnemyWaitSee>("_T_EnemyWaitSee", StateID::T_ENEMY_WAITSEE);
 	enemyBaseComponent.state->CreateState <T_EnemyStaySky>("T_EnemyStaySky", StateID::T_ENEMY_STAYSKY);
-	enemyBaseComponent.state->CreateState<T_EvadeState>("T_Evade", StateID::T_ENEMY_EVADE);
+	enemyBaseComponent.state->CreateState<T_Evade>("T_Evade", StateID::T_ENEMY_EVADE);
 
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 

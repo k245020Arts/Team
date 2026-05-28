@@ -24,6 +24,10 @@ TrashEnemyGroup::TrashEnemyGroup()
 	startRangedAtk = false;
 
 	startButtonImage = false;
+
+	leaderRotY = 0.0f;
+	rangedAtkUpdate = false;
+
 	yButtonImage = LoadGraph("data/image/YButton.png");
 	SetDrawOrder(-300000);
 }
@@ -47,6 +51,8 @@ void TrashEnemyGroup::Update()
 		EnemiesRun(melee);
 		MeleeEnemyAttack(melee);
 		CooperateAttackMove(melee);
+		if (rangedAtkUpdate)
+			LeaderRotY(melee);
 	}
 	//遠距離の敵関連
 	for (auto ranged : rangedEnemies)
@@ -285,6 +291,12 @@ void TrashEnemyGroup::CooperateAttackLine()
 	copyPos.clear();
 }
 
+void TrashEnemyGroup::LeaderRotY(TrashEnemy* _enemy)
+{
+	_enemy->SetLeaderPos(leaderPos);
+	_enemy->SetLeaderRotY(leaderRotY);
+}
+
 void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 {
 	VECTOR3 position = camera->GetCameraTransform()->position;
@@ -329,15 +341,19 @@ void TrashEnemyGroup::RangedEnemyAttack()
 			return;
 
 		if (rangedJoinCounter == 0)//リーダー以外の敵を数える
+		{
 			rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
+			rangedAtkUpdate = true;
+		}
 
 		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		{
 			//リーダーが飛ぶ処理
 			enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
+			leaderRotY = enemy->GetRot().y;
 
 			startRangedAtk = true;
-
+			
 			if (enemy->GetStandby())//リーダーが他の奴に指示を出す
 			{
 				if (rangedJoinCounter > 0)
@@ -358,8 +374,9 @@ void TrashEnemyGroup::RangedEnemyAttack()
 					rangedAtkCounter = 0;
 					startRangedAtk = false;
 					FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
-
+					
 					startButtonImage = false;
+					rangedAtkUpdate = false;
 				}
 			}
 		}
