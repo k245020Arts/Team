@@ -51,8 +51,14 @@ public:
 	/// UIとして扱うメリット
 	/// ①カットシーンの時などに描画をしないセッティングがすぐに出来る
 	/// ②UIManagerで最後にまとめて描画をするため、描画順を意識しなくても良くなる
+	/// 意図としてカットシーン中にポーズ画面のテキストの表示がされないのが困るため作成
 	/// </summary>
 	void UseDrawUI();
+	/// <summary>
+	/// テキストの大きさを変える
+	/// </summary>
+	/// <param name="_scale"></param>
+	void SetScale(const VECTOR3& _scale);
 
 private:
 	int fontHandle;

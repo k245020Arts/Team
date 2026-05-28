@@ -17,10 +17,10 @@ PauseScreen::PauseScreen()
 	ResourceLoad::LoadFont("MonopinJRegular", ".dft", Font_ID::PAUSE_FONT, 4);
 
 	const int EDGE_NUM_X = 300;
-	const int EDGE_NUM_Y = 200;
+	const int EDGE_NUM_Y = 300;
 
 	Object2D* pauseObj = new Object2D();
-	pauseObj->Init(VECTOR2F(525.0f + EDGE_NUM_X,250.0f + EDGE_NUM_Y),VECTOR2F(0.0f,0.0f),VECTOR2F(1.0f,1.0f),"PauseText");
+	pauseObj->Init(VECTOR2F(550.0f + EDGE_NUM_X,150.0f + EDGE_NUM_Y),VECTOR2F(0.0f,0.0f),VECTOR2F(1.0f,1.0f),"PauseText");
 	pauseText = pauseObj->Component()->AddComponent<TextRenderer>();
 	pauseText->TextSetting("ポーズ画面", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
 	pauseObj->SetDrawOrder(-6000);
@@ -51,12 +51,12 @@ void PauseScreen::Update()
 	if (!pause) {
 		return;
 	}
-    if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y >= 0.5f)
+    if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y >= 0.5f || InputManager::GetInstance()->KeyInputDown("PauseUp"))
     {
         pauseItem = Back;
     }
 
-    if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y <= -0.5f)
+    if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y <= -0.5f || InputManager::GetInstance()->KeyInputDown("PauseDown"))
     {
         pauseItem = Title;
     }
@@ -82,9 +82,12 @@ void PauseScreen::Draw()
 
 	/*DrawString(550, 250, "PAUSE", GetColor(255, 255, 255));*/
 
-	(pauseItem == PauseMenuItem::Back) ? backText->SetColor(ORANGE) : backText->SetColor(WHITE);
-
-	(pauseItem == PauseMenuItem::Title) ? titleText->SetColor(ORANGE) : titleText->SetColor(WHITE);
+	if (pauseItem == PauseMenuItem::Back) {
+		ActiveButtonState(backText, titleText);
+	}
+	else if (pauseItem == PauseMenuItem::Title) {
+		ActiveButtonState(titleText, backText);
+	}
 
 	/*DrawString(560, 350, "Continue", resumeColor);
 	DrawString(560, 420, "Title", titleColor);*/
@@ -121,4 +124,14 @@ bool PauseScreen::PauseFinish()
 	else {
 		return false;
 	}
+}
+
+void PauseScreen::ActiveButtonState(TextRenderer* _activeButton, TextRenderer* _noActiveButton)
+{
+	//アクティブ状態になるオブジェクトの修正
+	_activeButton->SetColor(ORANGE);
+	_activeButton->SetScale(VOne * 1.2f);
+	//非アクティブ状態になるオブジェクトの修正
+	_noActiveButton->SetColor(WHITE);
+	_noActiveButton->SetScale(VOne * 0.8f);
 }
