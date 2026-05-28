@@ -320,7 +320,7 @@
       },
       "collsionFinishTime": 30.0,
       "collsionStartTime": 4.0,
-      "hitDamage": 200.0,
+      "hitDamage": 230.0,
       "motionCancelStartTime": 0.0,
       "nextAttackRunTimer": 1.0,
       "noAttackRunTimer": 1.0,
