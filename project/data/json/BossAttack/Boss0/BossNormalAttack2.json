@@ -29,7 +29,7 @@
     "attackSoundStartTime": 1.0,
     "bossID": "",
     "damagePattern": "NO_BACK",
-    "hitDamage": 50.0,
+    "hitDamage": 100.0,
     "justAvoidCollTransform": {
       "position": {
         "x": 0.0,

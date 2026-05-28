@@ -33,7 +33,7 @@
     "bossID": "",
     "cameraChangeSpeed": 1000.0,
     "damagePattern": "BLOW_AWAY",
-    "hitDamage": 150.0,
+    "hitDamage": 450.0,
     "justAvoidCollTransform": {
       "position": {
         "x": 0.0,
