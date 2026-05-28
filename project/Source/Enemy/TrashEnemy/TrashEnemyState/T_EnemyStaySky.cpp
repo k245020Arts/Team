@@ -49,7 +49,7 @@ void T_EnemyStaySky::Finish()
 	if (isLeader)
 	{
 		enemy->CooperateAtkFinish();
-		enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::FREE_CAMERA_S);
+		//enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::FREE_CAMERA_S);
 	}
 }
 
@@ -63,7 +63,7 @@ void T_EnemyStaySky::LeaderMove(TrashEnemy* _enemy)
 	else
 	{
 		_enemy->isStandby = true;
-		_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
+		//_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
 	}
 }
 
