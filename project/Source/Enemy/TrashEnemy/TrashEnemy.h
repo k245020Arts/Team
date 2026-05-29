@@ -69,35 +69,35 @@ public:
 	void CooperateAtkFinish();
 
 	//ゲッター
-	VECTOR3 GetPos() { return obj->GetTransform()->position; }const 
-	VECTOR3 GetRot() { return obj->GetTransform()->rotation; }const
-	float Speed() { return speed; }
+	VECTOR3 GetPos()const { return obj->GetTransform()->position; } 
+	VECTOR3 GetRot()const { return obj->GetTransform()->rotation; }
+
 	//通常攻撃をしてもよいか
-	bool IsAttack() { return isAttack; }
+	bool IsAttack()const { return isAttack; }
 	//連携攻撃かどうか
-	bool IsCooperateAtk() { return isCooperateAtk; }
+	bool IsCooperateAtk()const { return isCooperateAtk; }
 	//連携攻撃でプレイヤーのほうに向かうかどうか
-	bool IsMovingToPlayer() { return isMovingToPlayer; }
+	bool IsMovingToPlayer()const { return isMovingToPlayer; }
 	//連携攻撃の準備ができてるか
-	bool GetStandby() { return isStandby; }
+	bool GetStandby()const { return isStandby; }
 	//生きてるかどうか
-	bool GetActive() { return active; }
+	bool GetActive()const { return active; }
 	//連携攻撃を取得する
-	const StateID::State_ID GetNextCooperateID() { return nextCooperateID; };
+	const StateID::State_ID GetNextCooperateID()const { return nextCooperateID; };
 	//近距離か遠距離の敵か分かる関数
 	EnemyType GetEnemyType()const { return enemyType; }
 	//runステートか分かる関数
-	bool GetIsRunState() { return isRunState; }
+	bool GetIsRunState()const { return isRunState; }
 	//追いかける時にどのポイントを追いかけるか決める
-	int GetPointNumber() { return pointNumber; }
-	bool GetCooperateDamageMove() { return cooperateDamageMove; }
-	float MaxHp() { return maxHp; }
+	int GetPointNumber()const { return pointNumber; }
+	bool GetCooperateDamageMove()const { return cooperateDamageMove; }
+	float MaxHp()const { return maxHp; }
 
 	VECTOR3 TargetPoint()const { return targetPoint; }
 
-	bool GetDeadMove(){return deadMove;	}
+	bool GetDeadMove()const{return deadMove;}
 
-	bool GetCAttack() { return cAttack; }
+	bool GetCAttack()const { return cAttack; }
 	//プレイヤーが必殺中に止まる処理
 	bool IsPlayerSpecialMove();
 
