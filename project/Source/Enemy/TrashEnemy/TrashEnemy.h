@@ -69,8 +69,8 @@ public:
 	void CooperateAtkFinish();
 
 	//ƒQƒbƒ^[
-	VECTOR3 GetPos() { return obj->GetTransform()->position; }
-	VECTOR3 GetRot() { return obj->GetTransform()->rotation; }
+	VECTOR3 GetPos() { return obj->GetTransform()->position; }const 
+	VECTOR3 GetRot() { return obj->GetTransform()->rotation; }const
 	float Speed() { return speed; }
 	//’ÊíUŒ‚‚ğ‚µ‚Ä‚à‚æ‚¢‚©
 	bool IsAttack() { return isAttack; }

@@ -78,8 +78,8 @@ private:
 	void AllChangeMeleeState(StateID::State_ID _id);
 	//連携時に連携する敵を線でつなげる
 	void CooperateAttackLine();
-	//
-	void LeaderRotY(TrashEnemy* _enemy);
+	//遠距離の敵の攻撃時に敵が捌けるようにする
+	void MeleeEvadeMove(TrashEnemy* _enemy);
 
 	float attackCounter;
 	float maxAttackCounter;
@@ -101,7 +101,7 @@ private:
 	void AllChangeRangedState(StateID::State_ID _id);
 	//遠距離の敵のリーダーがやられたとき次のリーダーを決める関数
 	void NextLeader();
-
+	//連携攻撃を打ち返された後の処理
 	void DeadRangedEnemy(TrashEnemy* _enemy);
 
 	VECTOR3 leaderPos;
@@ -120,7 +120,7 @@ private:
 	//打ち返せ画像のポジション
 	const VECTOR3 YButtonPos = VECTOR3(1100.0f, 200.0f, 0.0f);
 
-	bool rangedAtkUpdate;
+	//bool rangedAtkUpdate;
 
 	//--------------------------
 };

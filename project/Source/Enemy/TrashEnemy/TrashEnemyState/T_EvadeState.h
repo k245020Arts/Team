@@ -14,4 +14,8 @@ private:
 	const float BackSpeed = 10.0f;
 	float targetRotY;
 	VECTOR3 targetPos;
+
+	VECTOR3 copyePos;
+
+	bool isIdolAmim;
 };

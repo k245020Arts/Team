@@ -293,7 +293,7 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	anim->AnimDataLoad(_resource.charaID, _resource.typeID);
 
 	Physics* physics = e->Component()->AddComponent<Physics>();
-	physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));
+	physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(10.0f, 10.0f, 10.0f));
 
 	// ˆÊ’u‚ðŒˆ‚ß‚é
 	const int R_MAX = 2000;

@@ -408,7 +408,7 @@ void TrashEnemy::Move(VECTOR3& _targetPos, float _speed)
 {
 	VECTOR3 dir = VNorm(_targetPos - GetPos()) ;
 	dir.y = 0.0f;
-	//enemyBaseComponent.physics->AddVelocity(dir * _speed, false);
+	//enemyBaseComponent.physics->AddVelocity(dir * _speed, true);
 	GetEnemyObj()->GetTransform()->position += dir * _speed;
 }
 

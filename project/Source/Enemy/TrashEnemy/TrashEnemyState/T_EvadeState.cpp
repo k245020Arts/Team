@@ -1,5 +1,6 @@
 #include "T_EvadeState.h"
 #include "../TrashEnemy.h"
+#include "../../../Component/Animator/Animator.h"
 
 T_Evade::T_Evade()
 {
@@ -8,6 +9,9 @@ T_Evade::T_Evade()
 
 	targetRotY = 0;
 	targetPos = VZero;
+	copyePos = VZero;
+
+	isIdolAmim = false;
 }
 
 T_Evade::~T_Evade()
@@ -20,9 +24,26 @@ void T_Evade::Update()
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 	const VECTOR3 ePos = enemy->GetEnemyObj()->GetTransform()->position;
 
-	if (VSize(enemy->enemyBaseComponent.playerObj->GetTransform()->position - ePos) >= 2000)
-		return;
+	if (VSize(enemy->enemyBaseComponent.playerObj->GetTransform()->position - ePos) >= 2000 && VSize(copyePos - ePos) >= 2000)
+	{
+		if (!isIdolAmim)
+		{
+			enemy->enemyBaseComponent.anim->Play(ID::TE_IDOL);
+			enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 
+			isIdolAmim = true;
+		}
+		
+		return;
+	}
+
+	if (isIdolAmim)
+	{
+		enemy->enemyBaseComponent.anim->Play(ID::TE_STANCE);
+		enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+		isIdolAmim = false;
+	}
+		
 	//正面べく
 	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(targetRotY);
 	//プレイヤーとのベクトル
@@ -44,6 +65,10 @@ void T_Evade::Start()
 	targetRotY = enemy->leaderRotY;
 	targetPos = enemy->leaderPos;
 	targetPos.y = 0.0f;
+
+	copyePos = enemy->GetPos();
+
+	EnemyStateBase::Start();
 }
 
 void T_Evade::Finish()

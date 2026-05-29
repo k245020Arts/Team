@@ -26,7 +26,7 @@ TrashEnemyGroup::TrashEnemyGroup()
 	startButtonImage = false;
 
 	leaderRotY = 0.0f;
-	rangedAtkUpdate = false;
+	//rangedAtkUpdate = false;
 
 	yButtonImage = LoadGraph("data/image/YButton.png");
 	SetDrawOrder(-300000);
@@ -51,8 +51,8 @@ void TrashEnemyGroup::Update()
 		EnemiesRun(melee);
 		MeleeEnemyAttack(melee);
 		CooperateAttackMove(melee);
-		if (rangedAtkUpdate)
-			LeaderRotY(melee);
+		if (startRangedAtk)
+			MeleeEvadeMove(melee);
 	}
 	//遠距離の敵関連
 	for (auto ranged : rangedEnemies)
@@ -291,10 +291,12 @@ void TrashEnemyGroup::CooperateAttackLine()
 	copyPos.clear();
 }
 
-void TrashEnemyGroup::LeaderRotY(TrashEnemy* _enemy)
+void TrashEnemyGroup::MeleeEvadeMove(TrashEnemy* _enemy)
 {
 	_enemy->SetLeaderPos(leaderPos);
 	_enemy->SetLeaderRotY(leaderRotY);
+
+	_enemy->ChangeState(StateID::T_ENEMY_EVADE);
 }
 
 void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
@@ -343,7 +345,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		if (rangedJoinCounter == 0)//リーダー以外の敵を数える
 		{
 			rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
-			rangedAtkUpdate = true;
+			//rangedAtkUpdate = true;
 		}
 
 		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
@@ -369,14 +371,17 @@ void TrashEnemyGroup::RangedEnemyAttack()
 				if (rangedAtkTime >= MaxAttackCounter)
 				{
 					rangedAtkTime = 0;
+					//遠距離の敵を元のステートに戻す
 					AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
+					//近距離の敵を元のステートに戻す
+					AllChangeMeleeState(StateID::T_ENEMY_RUN_S);
 					rangedJoinCounter = 0;
 					rangedAtkCounter = 0;
 					startRangedAtk = false;
 					FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
 					
 					startButtonImage = false;
-					rangedAtkUpdate = false;
+					//rangedAtkUpdate = false;
 				}
 			}
 		}
@@ -413,7 +418,8 @@ void TrashEnemyGroup::RangedEnemyAttack()
 				{
 					EffectManager::GetInstance()
 						->CreateEffekseer(*enemy->GetEnemyObj()->GetTransform(), nullptr, Effect_ID::ROCK_BLAST, 3.0f);
-
+					//近距離の敵を元のステートに戻す
+					AllChangeMeleeState(StateID::T_ENEMY_RUN_S);
 					DeadRangedEnemy(enemy);
 				}
 				return;
