@@ -210,11 +210,11 @@
           "MoveSpeed": {
             "x": 0.0,
             "y": 0.0,
-            "z": 2000.0
+            "z": 5000.0
           },
           "againTimer": 0.30000001192092896,
           "againTimerFlag": 2,
-          "hitDamage": 150.0
+          "hitDamage": 200.0
         },
         {
           "MoveSpeed": {

@@ -34,7 +34,7 @@
     "groundEffectStartTime": 40.0,
     "groundShakeCamera": 3.0,
     "groundShakeTime": 0.30000001192092896,
-    "hitDamage": 50.0,
+    "hitDamage": 200.0,
     "jump": true,
     "jumpGroundEffect": 12,
     "jumpSpeed": 3000.0,
