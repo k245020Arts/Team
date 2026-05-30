@@ -575,6 +575,9 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EvadeState.cpp">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera\CameraState\RangedEnemyFinishCamera.cpp">
+      <Filter>PlayScene\Camera\CameraState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1223,6 +1226,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EvadeState.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CameraState\RangedEnemyFinishCamera.h">
+      <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
