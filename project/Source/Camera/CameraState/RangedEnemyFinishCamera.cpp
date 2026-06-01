@@ -1,4 +1,5 @@
 #include "RangedEnemyFinishCamera.h"
+#include "../Camera.h"
 
 RangedEnemyFinishCamera::RangedEnemyFinishCamera()
 {
