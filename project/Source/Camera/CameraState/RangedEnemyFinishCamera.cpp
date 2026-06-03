@@ -1,6 +1,7 @@
 #include "RangedEnemyFinishCamera.h"
 #include "../Camera.h"
 #include "../../Player/player.h"
+#include "../../Enemy/TrashEnemy/TrashEnemyGroup.h"
 
 RangedEnemyFinishCamera::RangedEnemyFinishCamera()
 {
@@ -27,9 +28,10 @@ void RangedEnemyFinishCamera::Start()
 {
 	Camera* camera = GetBase<Camera>();
 	player = camera->cameraComponent.player.obj->Component()->GetComponent<Player>();
+	groupManager = FindGameObject<TrashEnemyGroup>();
 
 	targetPos = player->GetPlayerObj()->GetTransform()->position + PosOffset;
-	camera->target = player->GetPlayerObj()->GetTransform()->position;
+	camera->target = (player->GetPlayerObj()->GetTransform()->position + groupManager->HitEnemyPosition()) * 0.5f;
 }
 
 void RangedEnemyFinishCamera::Finish()

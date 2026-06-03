@@ -1,7 +1,7 @@
 #pragma once
 #include "CameraStateBase.h"
 
-class TrashEnemyManager;
+class TrashEnemyGroup;
 class Player;
 
 class RangedEnemyFinishCamera :public CameraStateBase
@@ -16,6 +16,7 @@ public:
 
 private:
 	Player* player;
+	TrashEnemyGroup* groupManager;
 	VECTOR3 targetPos;
 
 	const VECTOR3 PosOffset = VECTOR3(300.0f, 1000.0f, 0.0f);

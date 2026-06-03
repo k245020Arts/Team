@@ -410,6 +410,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 			if (enemy->GetCooperateDamageMove())
 			{
 				const VECTOR3 enemyPos = enemy->GetPos();
+				hitEnemyPos = enemyPos;
 				//ƒŠ[ƒ_[‚Æ‚Ì‹——£‚Å‹ß‚­‚È‚Á‚½‚ç‚Ìˆ—
 				const float LeaderVecMax = 1200.0f;
 				if (VSize(leaderPos - enemyPos) <= LeaderVecMax)

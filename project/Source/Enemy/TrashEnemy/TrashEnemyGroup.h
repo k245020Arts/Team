@@ -43,6 +43,7 @@ public:
 
 	//遠距離のリーダーのポジション
 	VECTOR3 RangedLeaderPosition()const { return leaderPos; }
+	VECTOR3 HitEnemyPosition()const {return hitEnemyPos; }
 private:
 	Camera* camera;
 	TrashEnemyManager* trashEnemyManager;
@@ -121,8 +122,6 @@ private:
 	int yButtonImage;
 	//打ち返せ画像のポジション
 	const VECTOR3 YButtonPos = VECTOR3(1100.0f, 200.0f, 0.0f);
-
-	//bool rangedAtkUpdate;
 
 	//--------------------------
 };

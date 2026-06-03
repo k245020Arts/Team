@@ -43,7 +43,6 @@ void RangedEnemyCamera::Draw()
 void RangedEnemyCamera::Start()
 {
 	Camera* camera = GetBase<Camera>();
-
 	tEnemyManager = FindGameObject<TrashEnemyManager>();
 	player = camera->cameraComponent.player.obj->Component()->GetComponent<Player>();
 
