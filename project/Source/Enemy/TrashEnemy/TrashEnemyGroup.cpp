@@ -14,6 +14,7 @@ TrashEnemyGroup::TrashEnemyGroup()
 	enemiesRunCounter = 0;
 
 	leaderPos = VZero;
+	hitEnemyPos = VZero;
 
 	rangedDamageMove = false;
 
@@ -26,7 +27,6 @@ TrashEnemyGroup::TrashEnemyGroup()
 	startButtonImage = false;
 
 	leaderRotY = 0.0f;
-	//rangedAtkUpdate = false;
 
 	yButtonImage = LoadGraph("data/image/YButton.png");
 	SetDrawOrder(-300000);
@@ -345,7 +345,6 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		if (rangedJoinCounter == 0)//リーダー以外の敵を数える
 		{
 			rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
-			//rangedAtkUpdate = true;
 		}
 
 		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
@@ -381,7 +380,6 @@ void TrashEnemyGroup::RangedEnemyAttack()
 					FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
 					
 					startButtonImage = false;
-					//rangedAtkUpdate = false;
 				}
 			}
 		}
@@ -461,7 +459,6 @@ void TrashEnemyGroup::DeadRangedEnemy(bool _readerDead)
 		{
 			itr->ChangeHp(-itr->GetMaxHp());
 		}
-		
 	}
 }
 

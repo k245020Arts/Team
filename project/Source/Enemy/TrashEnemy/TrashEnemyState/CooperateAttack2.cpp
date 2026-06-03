@@ -8,6 +8,7 @@
 #include "../../../Common/Easing.h"
 #include "../../../Common/InputManager/PadInput.h"
 #include "../../../Common/InputManager/InputManager.h"
+#include "../../../Camera/Camera.h"
 
 CooperateAttack2::CooperateAttack2()
 {
@@ -126,6 +127,8 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 {
 	const float CounterMax = 1.0f;
+
+	//_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_FINISH_CAMERA_S);
 
 	hitStopCounter += Time::DeltaTimeRate();
 

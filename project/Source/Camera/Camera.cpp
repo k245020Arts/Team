@@ -24,6 +24,7 @@
 #include "../Common/Random.h"
 #include "../GameControler/GameControler.h"
 #include "../Camera/CameraState/RangedEnemyCamera.h"
+#include "../Camera/CameraState/RangedEnemyFinishCamera.h"
 
 Camera::Camera()
 {
@@ -213,6 +214,7 @@ void Camera::PlayerSet(BaseObject* _obj)
 	cameraComponent.state->CreateState<CutSceneCamera>				("_CutSceneCamera", StateID::CUT_SCENE_CAMERA_S);
 	cameraComponent.state->CreateState<PlayerHeavyAttackCamera>		("_PlayerHeavyAttackCamera", StateID::PLAYER_HEAVY_CHARGE_CAMERA_S);
 	cameraComponent.state->CreateState<RangedEnemyCamera>			("RangedEnemyCamera", StateID:: R_ENEMY_CAMERA_S);
+	cameraComponent.state->CreateState<RangedEnemyFinishCamera>		("RangedEnemyFinishCamera", StateID::R_ENEMY_FINISH_CAMERA_S);
 
 	cameraComponent.state->NodeDrawReady();
 	cameraComponent.target.shaker = _obj->Component()->GetComponent<Shaker>();

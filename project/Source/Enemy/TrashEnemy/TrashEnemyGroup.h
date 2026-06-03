@@ -105,6 +105,8 @@ private:
 	void DeadRangedEnemy(TrashEnemy* _enemy);
 
 	VECTOR3 leaderPos;
+	VECTOR3 hitEnemyPos;
+
 	float leaderRotY;
 	float rangedAtkTime;
 	bool rangedDamageMove;
