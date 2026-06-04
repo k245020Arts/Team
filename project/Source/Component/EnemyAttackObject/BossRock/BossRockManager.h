@@ -72,7 +72,7 @@ public:
 	void DropRockStart();
 
 	//指定されたポジションから一番近い岩のポジションを返す
-	VECTOR3 GetRockPos(VECTOR3 _pos);
+	VECTOR3 GetRockPos(const VECTOR3& _pos);
 	/// <summary>
 	/// すべての投擲物の位置を返す
 	/// </summary>
@@ -107,7 +107,7 @@ public:
 	/// 投擲物データの追加
 	/// </summary>
 	/// <param name="_data">新たに入れる投擲物データ</param>
-	void AddJsonData(BossThrowObjectData _data);
+	void AddJsonData(BossThrowObjectData& _data);
 	/// <summary>
 	/// 今まで使われていたものを上書きするときに使う関数
 	/// </summary>
@@ -120,7 +120,7 @@ public:
 	/// </summary>
 	/// <param name="_data">ボスの攻撃のデータ</param>
 	/// <param name="_animNum">アニメーションの現在の再生時間</param>
-	void RockContorler(EnemyAttackBase::BossAttackParam _data,float _animFrame);
+	void RockContorler(const EnemyAttackBase::BossAttackParam& _data,float _animFrame);
 	/// <summary>
 	/// 攻撃が終了した時に消すオブジェクトは消す
 	/// </summary>

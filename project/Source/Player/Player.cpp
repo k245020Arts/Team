@@ -65,8 +65,6 @@ namespace {
 	{ StateID::PLAYER_HEAVY_ATTACK_S, PlayerInformation::PlayerReaction(StateID::PLAYER_HEAVY_ATTACK_S,VECTOR3(150,150,150), 0.4f, VECTOR3(100,100,100), 0.3f, "swordHit00000", 7, true, Shaker::HORIZONAL_SHAKE) },
 
 	};*/
-	
-	PlayerParamWindow* paramWindow;
 
 	
 	const float SPECIAL_UI_INIT_POS_Y = 1025.0f;
@@ -110,7 +108,7 @@ Player::Player()
 	specialAttackGuageMax		= false;
 	objHit						= false;
 	bossRockManager				= nullptr;
-	paramWindow					= new PlayerParamWindow(this);
+	paramWindow					= std::make_unique<PlayerParamWindow>(this);
 	justAvoidCan				= false;
 	justAvoidColHit				= false;
 	specialTextObj				= nullptr;
@@ -125,10 +123,7 @@ Player::~Player()
 	//delete playerCom.stateManager;
 	/*DeleteGraph(justAvoidBlurImage);*/
 	justAvoidBlurImage = -1;
-	if (paramWindow != nullptr) {
-		delete paramWindow;
-		paramWindow = nullptr;
-	}
+	//paramWindow.reset();
 }
 
 void Player::Update()
@@ -722,7 +717,20 @@ void Player::AvoidFinishState()
 
 void Player::DrawTrail()
 {
-	DrawTrail(VECTOR3(-23, -4, -200), VECTOR3(23, 4, 16), 0.0f, 0.0f, 255.0f, 100.0f, 28, 0.25f);
+	//--------------------’è”----------------------
+
+	const VECTOR3 NEAR_POS = VECTOR3(-23, -4, -200);
+	const VECTOR3 FAR_POS = VECTOR3(23, 4, 16);
+	const float R = 0.0f;
+	const float G = 0.0f;
+	const float B = 255.0f;
+	const float A = 100.0f;
+	const int INDEX = 28;
+	const float TIME = 0.25f;
+
+	//-----------------------------------------------
+
+	DrawTrail(NEAR_POS, FAR_POS, R, G, B, A, INDEX, TIME);
 }
 
 void Player::DrawTrail(const VECTOR3& _nPos, const VECTOR3& _fPos, float _r, float _g, float _b, float _a, int index, float _time)
@@ -1057,14 +1065,13 @@ void Player::HpUIUpdate()
 void Player::SpecialUIUpdate()
 {
 	if (CanSpecialAttack()) {
-		specialMoveCounter += Time::DeltaTimeRate() * 0.4f;
-		/*if (specialMoveCounter >= 1.0f) {
-			specialMoveCounter = 0.0f;
-		}*/
+		specialMoveCounter += Time::DeltaTimeRate() * 0.8f;
 	}
 	else {
 		specialMoveCounter = 0.0f;
+		specialTextObj->GetTransform()->scale = VOne;
+		return; //ƒXƒyƒVƒƒƒ‹‚ª‚½‚Ü‚Á‚Ä‚È‚¢ó‘Ô‚È‚ç‰½‚à‚µ‚È‚¢‚Ì‚Å‚»‚Ì‚Ü‚Ü•Ô‚·
 	}
-	float move = Easing::SinCube(0.0f, -0.2f, specialMoveCounter);
-	specialTextObj->GetTransform()->position.y += move;
+	VECTOR3 move = Easing::SinCube(VOne * 0.95f, VOne * 1.05f, specialMoveCounter);
+	specialTextObj->GetTransform()->scale = move;
 }

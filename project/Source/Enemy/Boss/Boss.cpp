@@ -387,7 +387,7 @@ void Boss::LookPlayer(float speed)
 		bossTransform->rotation.y = direction;
 }
 
-void Boss::LookPlayer(VECTOR3 _target, float speed)
+void Boss::LookPlayer(const VECTOR3& _target, float speed)
 {
 	//プレイヤーのポジションを格納させる
 	VECTOR3 targetPos = _target;

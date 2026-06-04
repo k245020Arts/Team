@@ -48,4 +48,5 @@ private:
 	float selectDelayTime;
 	bool delayCountStart;
 	float baseSinRate;
+	float inputDelayTime;
 };

@@ -246,12 +246,14 @@ TrashEnemy::TrashEnemy()
 	cAttack = false;
 
 	leaderRotY = 0;
+	guage = nullptr;
 }
 
 TrashEnemy::~TrashEnemy()
 {
 	delete eStatus;
 	eStatus = nullptr;
+	guage = nullptr;
 }
 
 void TrashEnemy::Update()
@@ -267,6 +269,10 @@ void TrashEnemy::Update()
 	{
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 		deadMove = true;
+		if (guage != nullptr) {
+			guage->DestroyMe();
+		}
+		
 	}
 		
 	if (CheckHitKey(KEY_INPUT_9))
@@ -278,7 +284,7 @@ void TrashEnemy::Draw()
 	EnemyBase::Draw();
 }
 
-void TrashEnemy::Start(Object3D* _obj, EnemyType _type)
+void TrashEnemy::Start(Object3D* _obj, EnemyType _type, Object2D* _guage)
 {
 	SphereCollider* collider = _obj->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -333,6 +339,8 @@ void TrashEnemy::Start(Object3D* _obj, EnemyType _type)
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::E_MODEL, -1);
 	chara->SetImage(ResourceLoad::GetHandle(ID::SWORD_EFFECT_B));	
+
+	guage = _guage;
 }
 
 void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds, int _number)

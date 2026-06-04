@@ -50,7 +50,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void Start(Object3D* _obj, EnemyType _type);
+	void Start(Object3D* _obj, EnemyType _type,Object2D* _guage);
 	/// <summary>
 	/// ìGÇÃê∂ê¨
 	/// </summary>
@@ -199,4 +199,5 @@ private:
 	std::function<void(const CollsionEventData&)> attackFunk;
 	std::function<void(const CollsionEventData&)> justAvoidAttackFunk;
 
+	Object2D* guage;
 };

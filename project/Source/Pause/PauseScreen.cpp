@@ -89,17 +89,25 @@ void PauseScreen::Update()
 	if (!pause) { //ポーズ中じゃないならリターン
 		return;
 	}
-    if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y >= 0.5f || InputManager::GetInstance()->KeyInputDown("PauseUp"))
-    {
-        pauseItem = Back;
-		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
-    }
+	if (inputDelayTime >= 0.0f) {
+		inputDelayTime -= Time::DeltaTimeRate();
+	}
+	else {
+		static constexpr float INPUT_DELAY_TIME = 0.3f; //連続で入力情報が入らない時間
+		if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y >= 0.5f || InputManager::GetInstance()->KeyInputDown("PauseUp"))
+		{
+			pauseItem = Back;
+			SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
+			inputDelayTime = INPUT_DELAY_TIME;
+		}
 
-    if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y <= -0.5f || InputManager::GetInstance()->KeyInputDown("PauseDown"))
-    {
-        pauseItem = Title;
-		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
-    }
+		if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y <= -0.5f || InputManager::GetInstance()->KeyInputDown("PauseDown"))
+		{
+			pauseItem = Title;
+			SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
+			inputDelayTime = INPUT_DELAY_TIME;
+		}
+	}
 
 	if (InputManager::GetInstance()->KeyInputDown("PauseSelect"))
 	{
