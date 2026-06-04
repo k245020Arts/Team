@@ -134,6 +134,8 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_SHOT_FIRING, "BossShotFiring", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_TREE_SWING, "BossTreeSwing", ".wav", 255);
 	SoundLoad(Sound_ID::SOUND_ID::BOSS_JUMP, "BossJump", ".wav", 255);
+
+	SoundLoad(Sound_ID::PUSH, "titlePush (1)", ".wav", 250);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK2, "p_walk2", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK3, "p_walk3", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK4, "p_walk4", ".wav", 255);

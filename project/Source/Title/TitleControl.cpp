@@ -48,7 +48,7 @@ TitleControl::TitleControl()
 	player = obj->Component()->GetComponent<TitlePlayer>();
 
 	SetDrawOrder(-100);
-	stageID = 0;
+	stageID = StageSelectData::GetInstance()->GetNowStageData().id;
 	selectCounter = 0.0f;
 	titleState = TITLE;
 	alpha = 255;
@@ -138,7 +138,7 @@ void TitleControl::StageSelect()
 			stageID = stageMax;
 		}
 		StageSelectData::GetInstance()->SetStageID(stageID);
-		selectCounter = 0.1f;
+		selectCounter = 0.3f;
 		selectMoveCounter = 0.0f;
 		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
 	}
@@ -150,7 +150,7 @@ void TitleControl::StageSelect()
 			stageID = 0;
 		}
 		StageSelectData::GetInstance()->SetStageID(stageID);
-		selectCounter = 0.1f;
+		selectCounter = 0.3f;
 		selectMoveCounter = 0.0f;
 		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
 	}

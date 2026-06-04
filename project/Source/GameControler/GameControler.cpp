@@ -361,7 +361,7 @@ void GameControler::BeforeUpdate()
 		ChangeState(GameState::PLAY);
 #endif // STRING_MODE
 
-		
+
 	}
 }
 
