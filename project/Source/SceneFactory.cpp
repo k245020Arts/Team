@@ -10,7 +10,7 @@ SceneBase* SceneFactory::CreateFirst()
 	return new BootScene();
 }
 
-SceneBase * SceneFactory::Create(const std::string & name)
+SceneBase * SceneFactory::Create(const std::string& name)
 {
 	if (name == "TITLE")
 	{

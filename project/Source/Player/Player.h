@@ -11,6 +11,7 @@
 class EnemyAttackBase;
 class BossRockManager;
 struct PlayerAttackData;
+class PlayerParamWindow;
 
 class Player : public CharaBase
 {
@@ -343,5 +344,7 @@ private:
 	float specialMoveCounter;
 	void HpUIUpdate();
 	void SpecialUIUpdate();
+
+	std::unique_ptr<PlayerParamWindow> paramWindow;
 };
 

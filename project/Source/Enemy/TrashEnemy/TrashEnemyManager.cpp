@@ -317,5 +317,5 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
 
 	// ŒÂ•Ê‚ÌTrashEnemy‚ð’Ç‰Á
-	trashEnemy->Start(e, _type);
+	trashEnemy->Start(e, _type, guage);
 }

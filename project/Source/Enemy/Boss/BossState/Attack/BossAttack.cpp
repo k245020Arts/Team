@@ -501,7 +501,7 @@ void BossAttack::AttackFinishFrame()
 
 void BossAttack::SoundEvent()
 {
-	if (attackParam.soundEvent.empty()) {
+	if (attackParam.soundEvent.empty()) { //サウンドイベントがないならリターン
 		return;
 	}
 

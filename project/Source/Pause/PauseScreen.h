@@ -37,6 +37,16 @@ private:
 	TextRenderer* pauseText;
 	TextRenderer* backText;
 	TextRenderer* titleText;
+	TextRenderer* selectText;
+	TextRenderer* cursorText;
 
 	void ActiveButtonState(TextRenderer* _activeButton, TextRenderer* _noActiveButton);
+
+	float animationTime;
+
+	int screen;
+	float selectDelayTime;
+	bool delayCountStart;
+	float baseSinRate;
+	float inputDelayTime;
 };

@@ -59,6 +59,7 @@ public:
 	/// </summary>
 	/// <param name="_scale"></param>
 	void SetScale(const VECTOR3& _scale);
+	void SetPos(const VECTOR3& _pos);
 
 private:
 	int fontHandle;
