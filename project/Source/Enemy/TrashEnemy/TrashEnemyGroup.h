@@ -104,6 +104,10 @@ private:
 	void NextLeader();
 	//˜AŒgUŒ‚‚ğ‘Å‚¿•Ô‚³‚ê‚½Œã‚Ìˆ—
 	void DeadRangedEnemy(TrashEnemy* _enemy);
+	//UŒ‚‚ÌƒŠ[ƒ_[‚Ì“®‚«
+	void AttackLeaderMove(TrashEnemy* _enemy);
+	//UŒ‚‚Ì“G‚Ì“®‚«
+	void AttackRangedMove(TrashEnemy* _enemy);
 
 	VECTOR3 leaderPos;
 	VECTOR3 hitEnemyPos;

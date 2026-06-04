@@ -13,7 +13,7 @@ public:
 	void Finish()override;
 private:
 	void RangedMove(TrashEnemy* _enemy);
-	//ダメージをもたった後の処理
+	//ダメージを食らった後の処理
 	void DamageMove(TrashEnemy* _enemy);
 
 	const VECTOR3 CollPos	= VECTOR3(0.0f, 100.0f, 50.0f);

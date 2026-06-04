@@ -362,7 +362,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 				else
 					DeadRangedEnemy(enemy);
 			}
-				
+			
 			leaderPos = enemy->GetPos();
 
 			if (rangedJoinCounter <= rangedAtkCounter)//“G‘Sˆõ‚ªUŒ‚‚ðI‚¦‚½Œã‚Ìˆ—
@@ -550,4 +550,13 @@ void TrashEnemyGroup::DeadRangedEnemy(TrashEnemy* _enemy)
 	rangedAtkCounter = 0;
 	startRangedAtk = false;
 	FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
+}
+
+void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
+{
+
+}
+
+void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
+{
 }
