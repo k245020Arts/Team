@@ -127,5 +127,10 @@ private:
 	//‘Å‚¿•Ô‚¹‰æ‘œ‚Ìƒ|ƒWƒVƒ‡ƒ“
 	const VECTOR3 YButtonPos = VECTOR3(1100.0f, 200.0f, 0.0f);
 
+	const float MaxAttackCounter = 2.5f;
+	bool leaderActiveEnd;
+	//‘Å‚¿•Ô‚³‚ê‚½‚©‚Ç‚¤‚©
+	bool hitBack;
+
 	//--------------------------
 };
