@@ -17,4 +17,5 @@ private:
 	VECTOR3 copyColl;
 
 	float time;
+	float motionSpeed;
 };

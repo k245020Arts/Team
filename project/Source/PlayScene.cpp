@@ -97,15 +97,14 @@ PlayScene::PlayScene()
 	//std::vector<P> pl;
 	//ya.SaveVector<P>("ala", pl);
 	
-	SoundManager::GetInstance()->PlaySceneLoad();
-	SoundManager::GetInstance()->PlayBGM(Sound_ID::PLAY_BGM,true,true);
-
 	blur->SetDrawOrder(-500);
 	mode = NORMAL;
 	//m->TextureHandle(LoadGraph("data/texture/101backGround.png"),MeshRenderer2D::DRAW_RECT_ROTA_GRAPH,VECTOR3(500,500,500),VZero,VZero);
 
 	Wave* wave = new Wave;
 	
+	SoundManager::GetInstance()->PlaySceneLoad();
+	SoundManager::GetInstance()->PlayBGM(Sound_ID::PLAY_BGM, true, true);
 }
 
 PlayScene::~PlayScene()

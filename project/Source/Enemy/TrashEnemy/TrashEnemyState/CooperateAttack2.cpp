@@ -99,7 +99,7 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 		if (!_enemy->cooperateDamageMove)//UŒ‚‚ðH‚ç‚Á‚Ä‚È‚©‚Á‚½‚Æ‚«
 		{
 			_enemy->enemyBaseComponent.anim->Play(ID::TE_R_IDOL);
-			_enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+			//_enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 
 			isDamageMove = false;
 			_enemy->isStandby = false;
@@ -121,7 +121,6 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	AttackFlash(ID::E_MODEL, 35, "E_AttackV");
 	Trail();
 	EnemyJustAvoidCollsion();
-
 }
 
 void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
