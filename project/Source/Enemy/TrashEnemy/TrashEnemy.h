@@ -71,7 +71,6 @@ public:
 	//ƒQƒbƒ^[
 	VECTOR3 GetPos()const { return obj->GetTransform()->position; } 
 	VECTOR3 GetRot()const { return obj->GetTransform()->rotation; }
-
 	//’ÊíUŒ‚‚ğ‚µ‚Ä‚à‚æ‚¢‚©
 	bool IsAttack()const { return isAttack; }
 	//˜AŒgUŒ‚‚©‚Ç‚¤‚©
@@ -92,6 +91,7 @@ public:
 	int GetPointNumber()const { return pointNumber; }
 	bool GetCooperateDamageMove()const { return cooperateDamageMove; }
 	float MaxHp()const { return maxHp; }
+	float GetNowHp()const { return hp; }
 
 	VECTOR3 TargetPoint()const { return targetPoint; }
 

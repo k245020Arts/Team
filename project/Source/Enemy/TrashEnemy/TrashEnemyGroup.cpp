@@ -297,6 +297,9 @@ void TrashEnemyGroup::CooperateAttackLine()
 
 void TrashEnemyGroup::MeleeEvadeMove(TrashEnemy* _enemy)
 {
+	if (_enemy->GetNowHp() <= 0.0f)
+		return;
+
 	_enemy->SetLeaderPos(leaderPos);
 	_enemy->SetLeaderRotY(leaderRotY);
 
@@ -472,9 +475,14 @@ void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
 		return;
 	
 	if (rangedJoinCounter == 0)//リーダー以外の敵を数える
-		rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
-
-	//リーダーが飛ぶ処理
+	{
+		const int _Counter = (int)rangedEnemies.size() - 1;
+		if (_Counter > 0)
+			rangedJoinCounter = _Counter;//リーダーをのぞくため
+		else
+			return;
+	}
+		
 	_enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
 	leaderRotY = _enemy->GetRot().y;
 

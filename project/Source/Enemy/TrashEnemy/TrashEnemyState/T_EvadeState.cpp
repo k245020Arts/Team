@@ -29,8 +29,6 @@ void T_Evade::Update()
 		if (!isIdolAmim)
 		{
 			enemy->enemyBaseComponent.anim->Play(ID::TE_IDOL);
-			enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
-
 			isIdolAmim = true;
 		}
 		
@@ -40,7 +38,6 @@ void T_Evade::Update()
 	if (isIdolAmim)
 	{
 		enemy->enemyBaseComponent.anim->Play(ID::TE_STANCE);
-		enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 		isIdolAmim = false;
 	}
 		
