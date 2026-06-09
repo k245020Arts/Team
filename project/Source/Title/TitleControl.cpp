@@ -65,12 +65,25 @@ TitleControl::TitleControl()
 	text = commonTextObj->Component()->AddComponent<TextRenderer>();
 	
 	text->TextSetting("Aボタンを押してスタート!!", "MPlus2C", ".dft", WHITE, 4, Font_ID::TITLE_USE_FONT);
+
+	std::vector<StageData> stages = StageSelectData::GetInstance()->GetAllStageData();
+
+	for (const auto& stage : stages) {
+		stageHandle.emplace_back(LoadGraph((ResourceLoad::IMAGE_PATH + stage.stageImageHandleName + ".png").c_str()));
+	}
 }
 
 TitleControl::~TitleControl()
 {
 	Debug::ClearLogger();
 	//DeleteFontToHandle(font);
+
+	for (int& handle : stageHandle) {
+		if (handle >= 0) {
+			DeleteGraph(handle);
+		}
+	}
+	stageHandle.clear();
 }
 
 void TitleControl::Update()
@@ -219,6 +232,8 @@ void TitleControl::Draw()
 	}
 	DrawExtendFormatStringToHandle(Screen::WIDTH / 2 + STAGE_POS - 100, 850 + move, 1.0, 1.0, 0xffffff, font,"←");
 	DEFAULT_TEXTURE;
+
+	DrawRotaGraph(1480, 400 + move, 1.0f, 0.0f, stageHandle[stageID], true);
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
