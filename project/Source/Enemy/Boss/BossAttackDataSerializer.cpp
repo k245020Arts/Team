@@ -49,6 +49,19 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 	rockManager = nullptr;
 	boss = _boss;
 	isEffect = false;
+
+	std::string soundPath = "data/sound";
+	//サウンドデータのファイル名一覧取得
+	for (const auto& entry : std::filesystem::directory_iterator(soundPath))
+	{
+		if (entry.is_directory())
+		{
+			continue;
+		}
+
+		std::string name = entry.path().stem().string();
+		soundFileNames.push_back(name);
+	}
 }
 
 BossAttackDataSerializer::~BossAttackDataSerializer()
@@ -305,7 +318,7 @@ void BossAttackDataSerializer::Update()
 		std::string newID = newAttackID;
 
 		// AttackParam追加（ローカル）
-		BossAttackBase::BossAttackParam newParam;
+		EnemyAttackBase::BossAttackParam newParam;
 		newParam.attackID = newID;
 		newParam.animFileName = newAnimFile;
 		newParam.animNum = FileSystemUtils::GetFileCount("data/json/BossAttack/" + BossName);
@@ -578,6 +591,12 @@ void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
 		}
 	}
 
+	//サウンドイベント
+	if (ImGui::CollapsingHeader("Sound Event"))
+	{
+		DrawSoundEventEditor(param.soundEvent);
+	}
+
 	CopyParam(_selectID);
 
 	//保存
@@ -605,7 +624,121 @@ const char* BossAttackDataSerializer::MakeLabel(const char* label, const char* c
 	return buf;
 }
 
-void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase::ThrowObjectAttackData>& list,const std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData)
+void BossAttackDataSerializer::DrawSoundEventEditor(std::vector<EnemyAttackBase::SoundEffectEvent>& _eventData)
+{
+	static int selectIndex = -1;
+
+	ImGui::Separator();
+	ImGui::Text("Sound Event List");
+
+	//リスト表示
+	for (int i = 0; i < _eventData.size(); i++)
+	{
+		std::string label;
+
+		if (_eventData[i].name.empty())
+		{
+			label = std::to_string(i) + " : <Empty>";
+		}
+		else
+		{
+			label = std::to_string(i) + " : " + _eventData[i].name;
+		}
+
+		if (ImGui::Selectable(label.c_str(), selectIndex == i))
+		{
+			selectIndex = i;
+		}
+	}
+
+	//追加・複製・削除
+	if (ImGui::Button("Add Sound Event"))
+	{
+		_eventData.push_back(EnemyAttackBase::SoundEffectEvent());
+		selectIndex = (int)_eventData.size() - 1;
+	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Copy Sound Event") && selectIndex >= 0)
+	{
+		_eventData.push_back(_eventData[selectIndex]);
+		selectIndex = (int)_eventData.size() - 1;
+	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Delete Sound Event") && selectIndex >= 0)
+	{
+		_eventData.erase(_eventData.begin() + selectIndex);
+
+		if (selectIndex >= _eventData.size())
+		{
+			selectIndex = (int)_eventData.size() - 1;
+		}
+	}
+
+	//範囲外なら終了
+	if (selectIndex < 0 || selectIndex >= _eventData.size())
+	{
+		return;
+	}
+
+	auto& s = _eventData[selectIndex];
+
+	ImGui::Separator();
+	ImGui::Text("Edit Sound Event");
+
+	
+	//SoundName Combo
+
+	if (!soundFileNames.empty())
+	{
+		std::vector<const char*> items;
+
+		for (auto& name : soundFileNames)
+		{
+			items.push_back(name.c_str());
+		}
+
+		int currentIndex = 0;
+
+		for (int i = 0; i < soundFileNames.size(); i++)
+		{
+			if (soundFileNames[i] == s.name)
+			{
+				currentIndex = i;
+				break;
+			}
+		}
+
+		if (ImGui::Combo("SoundName", &currentIndex, items.data(), (int)items.size()))
+		{
+			s.name = soundFileNames[currentIndex];
+		}
+	}
+	else
+	{
+		ImGui::TextColored(ImVec4(1, 0, 0, 1), "No Sound Files");
+	}
+
+	//frame
+	ImGui::DragFloat("StartFrame", &s.soundStartFrame, 0.1f, 0.0f);
+	ImGui::DragFloat("StopFrame", &s.soundStopFrame, 0.1f, 0.0f);
+
+	//bool
+	ImGui::Checkbox("Loop", &s.loop);
+	ImGui::Checkbox("StopAfterPlay", &s.soundStopFrameAfetrSoundPlay);
+	ImGui::Checkbox("loopAnim", &s.loopAnim);
+
+	//補正
+	if (s.soundStopFrame < s.soundStartFrame)
+	{
+		s.soundStopFrame = s.soundStartFrame;
+	}
+}
+
+void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<EnemyAttackBase::ThrowObjectAttackData>& list,const std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData)
 {
 	static int selectIndex = -1;
 
@@ -626,7 +759,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<BossAttackBase:
 	//追加・削除
 	if (ImGui::Button("Add Empty"))
 	{
-		list.push_back(BossAttackBase::ThrowObjectAttackData());
+		list.push_back(EnemyAttackBase::ThrowObjectAttackData());
 		selectIndex = (int)list.size() - 1;
 	}
 
@@ -966,6 +1099,8 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 	static bool copyThrow = false;
 	static bool copyCamera = false;
 	static bool copyTrail = false;
+	static bool copySound = false;
+
 
 	// チェックボックス
 	ImGui::Checkbox("Move", &copyMove);
@@ -985,6 +1120,8 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 	ImGui::Checkbox("Camera", &copyCamera);
 	ImGui::SameLine();
 	ImGui::Checkbox("Trail", &copyTrail);
+	ImGui::SameLine();
+	ImGui::Checkbox("Sound", &copySound);
 
 	// 一括ON/OFF
 	if (ImGui::Button("All ON"))
@@ -1095,10 +1232,13 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 			param.useTrail = src.useTrail;
 			param.trailRightHand = src.trailRightHand;
 		}
+		if (copySound) {
+			param.soundEvent = src.soundEvent;
+		}
 	}
 }
 
-void BossAttackDataSerializer::DrawRayColliderInfo(const char* label, BossAttackBase::RayColliderInfo& r)
+void BossAttackDataSerializer::DrawRayColliderInfo(const char* label, EnemyAttackBase::RayColliderInfo& r)
 {
 	if (ImGui::TreeNode(label))
 	{
@@ -1109,7 +1249,7 @@ void BossAttackDataSerializer::DrawRayColliderInfo(const char* label, BossAttack
 	}
 }
 
-void BossAttackDataSerializer::DrawDountColliderInfo(const char* label, BossAttackBase::DountColliderInfo& d)
+void BossAttackDataSerializer::DrawDountColliderInfo(const char* label, EnemyAttackBase::DountColliderInfo& d)
 {
 	if (ImGui::TreeNode(label))
 	{

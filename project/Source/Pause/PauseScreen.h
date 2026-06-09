@@ -19,19 +19,38 @@ public:
 	bool PauseFinish();
 
 	bool IsSelect() { return selectMenu; }
+	
 
 	enum PauseMenuItem
 	{
-		Back,
-		Title
+		Back = 0,
+		Guide,
+		Title,
+
+		Max
 	};
 
-	
+	enum PauseResult
+	{
+		None = -1,
+		Resume,
+		OpenGuide,
+		ToTitle
+	};
+
+	PauseResult GetResult() const { return result; }
+
+	void PauseButtonGameBack();
 
 private:
 	bool pause;
 	float timeRate;
 	bool selectMenu;
+
+	int currentIndex;
+
+	PauseResult result;
+
 	UIManager* UiManager;
 
 	PauseMenuItem pauseItem;
@@ -39,4 +58,21 @@ private:
 	TextRenderer* pauseText;
 	TextRenderer* backText;
 	TextRenderer* titleText;
+	TextRenderer* guideText;
+	TextRenderer* selectText;
+	TextRenderer* cursorText;
+
+	std::vector<TextRenderer*> menuTexts;
+
+	void UpdateButtonState();
+
+	float animationTime;
+
+	int screen;
+	float selectDelayTime;
+	bool delayCountStart;
+	float baseSinRate;
+	float inputDelayTime;
+
+	std::vector<VECTOR3> cursorPos;
 };

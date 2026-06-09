@@ -94,7 +94,7 @@ void TitlePlayer::Start(Object3D* _obj) {
 	playerCom.stateManager->StartState(StateID::PLAYER_WAIT_S);
 }
 
-void TitlePlayer::RotationChange(VECTOR3 _angle, float _speed)
+void TitlePlayer::RotationChange(const VECTOR3& _angle, float _speed)
 {
 	VECTOR3 forward = VECTOR3(0, 0, 1) * MGetRotY(playerTransform->rotation.y);
 	VECTOR3 right = VECTOR3(1, 0, 0) * MGetRotY(playerTransform->rotation.y);
@@ -108,12 +108,16 @@ void TitlePlayer::RotationChange(VECTOR3 _angle, float _speed)
 	}
 	else
 	{
-		playerTransform->rotation.y = (VDot(right, target) > 0) ? playerTransform->rotation.y + _speed * DegToRad :
-		playerTransform->rotation.y - _speed * DegToRad;
+		if (VDot(right, target) > 0) {
+			playerTransform->rotation.y += _speed * DegToRad;
+		}
+		else {
+			playerTransform->rotation.y -= _speed * DegToRad;
+		}
 	}
 }
 
-void TitlePlayer::RotationChange(VECTOR3 _angle)
+void TitlePlayer::RotationChange(const VECTOR3& _angle)
 {
 	RotationChange(_angle, 5.0f);
 }

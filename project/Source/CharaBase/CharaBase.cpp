@@ -14,8 +14,10 @@ CharaBase::CharaBase()
 
 CharaBase::~CharaBase()
 {
-	DeleteCollision(&attackColl);
-	DeleteCollision(&justAvoidColl);
+	/*DeleteCollision(&attackColl);
+	DeleteCollision(&justAvoidColl);*/
+	attackColl.instance = nullptr;
+	justAvoidColl.instance = nullptr;
 }
 
 void CharaBase::Update()

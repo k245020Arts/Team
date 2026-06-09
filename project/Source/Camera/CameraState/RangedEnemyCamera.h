@@ -29,7 +29,7 @@ private:
 	void CamRotYMove(Camera* _camera);
 
 	//­‚µ‚¸‚ç‚µ‚½‚¢‚©‚çƒvƒŒƒCƒ„[‚É•â³‚ğ‚©‚¯‚é”š
-	const VECTOR3 PlayerPosOffset = VZero; /*VECTOR3(150.0f, 0.0f, 0.0f);*/
+	const VECTOR3 PlayerPosOffset = VECTOR3(150.0f, 0.0f, 0.0f);
 
 	VECTOR3 enemyPos;
 	VECTOR3 pPos;

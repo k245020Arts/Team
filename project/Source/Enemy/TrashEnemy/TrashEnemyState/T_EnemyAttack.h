@@ -1,9 +1,9 @@
 #pragma once
-#include "../../Boss/BossState/Attack/BossAttackBase.h"
+#include "../../Boss/BossState/Attack/EnemyAttackBase.h"
 
 class TrashEnemy;
 
-class T_EnemyAttack :public BossAttackBase
+class T_EnemyAttack :public EnemyAttackBase
 {
 public:
 	T_EnemyAttack();
@@ -19,8 +19,5 @@ protected:
 	void AttackInformation(TrashEnemy* _e);
 private:
 	float counter;
-	float mSpeed;
-	float mMaxFrame;
-	//Œ¸‘¬’†‚©Šm”F
-	bool isDecel;
+
 };

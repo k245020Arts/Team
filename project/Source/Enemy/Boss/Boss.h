@@ -37,7 +37,8 @@ public:
 	friend class BossDie;
 	friend class BossRoar;
 	friend class BossThreat;
-	friend class BossAttackBase;
+	friend class EnemyAttackBase;
+	friend class BossAttack;
 	friend class BossDamage;
 	friend class BossAppear;
 	friend class BossLose;
@@ -102,7 +103,7 @@ public:
 	/// <param name="speed">振り向くスピード</param>
 	void LookPlayer(float speed);
 
-	void LookPlayer(VECTOR3 _target,float speed);
+	void LookPlayer(const VECTOR3& _target,float speed);
 
 	/// <summary>
 	/// 攻撃の当たり判定の開始

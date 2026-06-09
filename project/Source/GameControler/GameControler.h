@@ -9,6 +9,7 @@ class SoundManager;
 class Camera;
 class ResultUi;
 class PauseScreen;
+class GuideWindow;
 
 //#define STRING_MODE
 
@@ -113,4 +114,9 @@ private:
 
 	bool changeState;
 	PauseScreen* pause;
+
+	GuideWindow* guide;
+
+	void PauseResult();
+	void GuideWindowUpdate();
 };

@@ -365,12 +365,12 @@ void AttackSorting::Load(std::string _bossName,Boss* _boss)
 
 		if (root.contains(key))
 		{
-			attackParam[key] = root[key].get<BossAttackBase::BossAttackParam>();
+			attackParam[key] = root[key].get<EnemyAttackBase::BossAttackParam>();
 		}
 		else if (!root.empty())
 		{
 			// フォールバック
-			attackParam[key] = root.begin().value().get<BossAttackBase::BossAttackParam>();
+			attackParam[key] = root.begin().value().get<EnemyAttackBase::BossAttackParam>();
 		}
 
 		// 念のためID補完
@@ -386,7 +386,7 @@ void AttackSorting::Load(std::string _bossName,Boss* _boss)
 		//StringからIDに変換
 		attackParam[key].animID = ID::StringToID(attackParam[key].animFileName);
 
-		attacks[key] = std::make_shared<BossAttackBase>();
+		attacks[key] = std::make_shared<BossAttack>();
 
 		attacks[key]->Init(obj,StateID::StringToID(key));
 
@@ -408,7 +408,7 @@ void AttackSorting::AttackStart()
 		Debug::DebugLog("ボスの攻撃がスタートできません");
 		return;
 	}
-	attacks[nextState]->BossStart();
+	attacks[nextState]->Start();
 }
 
 void AttackSorting::AttackFinish() 
@@ -417,10 +417,10 @@ void AttackSorting::AttackFinish()
 		Debug::DebugLog("ボスの攻撃が終了できません");
 		return;
 	}
-	attacks[nextState]->BossFinish();
+	attacks[nextState]->Finish();
 }
 
-std::shared_ptr<BossAttackBase> AttackSorting::GetNowAttackState()
+std::shared_ptr<EnemyAttackBase> AttackSorting::GetNowAttackState()
 {
 	return attacks[nextState];
 }
@@ -467,23 +467,23 @@ std::vector<ActionParam> AttackSorting::GetActionParam()
 	return actions;
 }
 
-std::unordered_map<std::string, BossAttackBase::BossAttackParam> AttackSorting::GetAttackParam()
+std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> AttackSorting::GetAttackParam()
 {
 	return attackParam;
 }
 
-void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, Boss* _boss)
+void AttackSorting::AddAttack(EnemyAttackBase::BossAttackParam _param, Boss* _boss)
 {
 	AddAttack(_param,_boss, _param.attackID);
 }
 
-void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, Boss* _boss, std::string _attackID)
+void AttackSorting::AddAttack(EnemyAttackBase::BossAttackParam _param, Boss* _boss, std::string _attackID)
 {
 	std::string key = _attackID;	
 	if (attacks[key] != nullptr) { //攻撃がすでにあったら追加しない
 		return;
 	}
-	attacks[key] = std::make_shared<BossAttackBase>();
+	attacks[key] = std::make_shared<BossAttack>();
 
 	attacks[key]->Init(obj, StateID::StringToID(key));
 
@@ -491,7 +491,7 @@ void AttackSorting::AddAttack(BossAttackBase::BossAttackParam _param, Boss* _bos
 	attacks[key]->SetAttackParam(attackParam[key]);
 }
 
-void AttackSorting::ReloadParam(BossAttackBase::BossAttackParam _param,std::string _reLoadID)
+void AttackSorting::ReloadParam(EnemyAttackBase::BossAttackParam _param,std::string _reLoadID)
 {
 	//設定のし直し
 	attackParam[_reLoadID] = _param;

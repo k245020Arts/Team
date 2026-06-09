@@ -48,7 +48,7 @@ TitleControl::TitleControl()
 	player = obj->Component()->GetComponent<TitlePlayer>();
 
 	SetDrawOrder(-100);
-	stageID = 0;
+	stageID = StageSelectData::GetInstance()->GetNowStageData().id;
 	selectCounter = 0.0f;
 	titleState = TITLE;
 	alpha = 255;
@@ -130,27 +130,45 @@ void TitleControl::StageSelect()
 	if (selectCounter > 0.0f) {
 		return;
 	}
-	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x >= 0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_RIGHT)
-		|| InputManager::GetInstance()->GetControllerInput()->GetIsButtonPutNow(XINPUT_BUTTON_DPAD_RIGHT)) {
+	const float SELECT_COUNTER = 0.3f;
+	bool rightStick = InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x >= 0.5f;
+	bool rightButton = InputManager::GetInstance()->KeyInputDown("StageSelectRight");
+	if (rightStick || rightButton) {
 		stageID++;
 		int stageMax = StageSelectData::GetInstance()->GetStageMax() - 1;
 		if (stageID >= stageMax) {
 			stageID = stageMax;
 		}
 		StageSelectData::GetInstance()->SetStageID(stageID);
-		selectCounter = 0.1f;
+		//スティックで入力しているときには待機時間を付ける
+		if (rightStick) {
+			selectCounter = SELECT_COUNTER;
+		}
+		else {
+			selectCounter = 0.0f;
+		}
+		
 		selectMoveCounter = 0.0f;
+		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
 	}
 
-	if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x <= -0.5f || InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_LEFT)
-		|| InputManager::GetInstance()->GetControllerInput()->GetIsButtonPutNow(XINPUT_BUTTON_DPAD_LEFT)) {
+	bool leftStick = InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x <= -0.5f;
+	bool leftButton = InputManager::GetInstance()->KeyInputDown("StageSelectLeft");
+	if (leftStick || leftButton) {
 		stageID--;
 		if (stageID <= 0) {
 			stageID = 0;
 		}
 		StageSelectData::GetInstance()->SetStageID(stageID);
-		selectCounter = 0.2f;
+		//スティックで入力しているときには待機時間を付ける
+		if (leftStick) {
+			selectCounter = SELECT_COUNTER;
+		}
+		else {
+			selectCounter = 0.0f;
+		}
 		selectMoveCounter = 0.0f;
+		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
 	}
 }
 

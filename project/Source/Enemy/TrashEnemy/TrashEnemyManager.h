@@ -52,7 +52,7 @@ public:
 
 	//連携攻撃
 	void Cooperate();
-
+	//遠距離の敵のリーダーのポジション
 	VECTOR3 GetRangedLeaderPos()const;
 	
 	VECTOR3 GetPlayerPos()const { return player->GetTransform()->position; }

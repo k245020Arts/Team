@@ -75,6 +75,7 @@ TrashEnemyManager::TrashEnemyManager()
 
 TrashEnemyManager::~TrashEnemyManager()
 {
+	player = nullptr;
 }
 
 void TrashEnemyManager::Update()
@@ -292,7 +293,7 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	anim->AnimDataLoad(_resource.charaID, _resource.typeID);
 
 	Physics* physics = e->Component()->AddComponent<Physics>();
-	physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(3000.0f, 3000.0f, 3000.0f));
+	physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(10.0f, 10.0f, 10.0f));
 
 	// ˆÊ’u‚ðŒˆ‚ß‚é
 	const int R_MAX = 2000;
@@ -316,5 +317,5 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
 
 	// ŒÂ•Ê‚ÌTrashEnemy‚ð’Ç‰Á
-	trashEnemy->Start(e, _type);
+	trashEnemy->Start(e, _type, guage);
 }

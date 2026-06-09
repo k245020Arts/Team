@@ -16,6 +16,5 @@ private:
 
 	VECTOR3 copyColl;
 
-	float speed;
 	float time;
 };

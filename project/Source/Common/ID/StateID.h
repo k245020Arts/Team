@@ -61,6 +61,7 @@ namespace StateID{
         CUT_SCENE_CAMERA_S,
         PLAYER_HEAVY_CHARGE_CAMERA_S,
         R_ENEMY_CAMERA_S,
+        R_ENEMY_FINISH_CAMERA_S,
 
         T_ENEMY_IDOL_S,
         T_ENEMY_RUN_S,
@@ -72,7 +73,7 @@ namespace StateID{
         T_ENEMY_DAMAGE,
         T_ENEMY_WAITSEE,
         T_ENEMY_STAYSKY,
-
+        T_ENEMY_EVADE,
 
         STATE_MAX,
     };

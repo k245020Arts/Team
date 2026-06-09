@@ -43,6 +43,7 @@ public:
 
 	//遠距離のリーダーのポジション
 	VECTOR3 RangedLeaderPosition()const { return leaderPos; }
+	VECTOR3 HitEnemyPosition()const {return hitEnemyPos; }
 private:
 	Camera* camera;
 	TrashEnemyManager* trashEnemyManager;
@@ -78,7 +79,9 @@ private:
 	void AllChangeMeleeState(StateID::State_ID _id);
 	//連携時に連携する敵を線でつなげる
 	void CooperateAttackLine();
-	
+	//遠距離の敵の攻撃時に敵が捌けるようにする
+	void MeleeEvadeMove(TrashEnemy* _enemy);
+
 	float attackCounter;
 	float maxAttackCounter;
 	float standbyCounter;
@@ -99,11 +102,19 @@ private:
 	void AllChangeRangedState(StateID::State_ID _id);
 	//遠距離の敵のリーダーがやられたとき次のリーダーを決める関数
 	void NextLeader();
-
+	//連携攻撃を打ち返された後の処理
 	void DeadRangedEnemy(TrashEnemy* _enemy);
+	//攻撃時のリーダーの動き
+	void AttackLeaderMove(TrashEnemy* _enemy);
+	//攻撃時の敵の動き
+	void AttackRangedMove(TrashEnemy* _enemy);
+	//攻撃で使う変数をリセット
+	void EndRangedAttack(TrashEnemy* _enemy);
 
 	VECTOR3 leaderPos;
+	VECTOR3 hitEnemyPos;
 
+	float leaderRotY;
 	float rangedAtkTime;
 	bool rangedDamageMove;
 	int rangedAtkCounter;
@@ -117,6 +128,11 @@ private:
 	int yButtonImage;
 	//打ち返せ画像のポジション
 	const VECTOR3 YButtonPos = VECTOR3(1100.0f, 200.0f, 0.0f);
+
+	const float MaxAttackCounter = 2.5f;
+	bool leaderActiveEnd;
+	//打ち返されたかどうか
+	bool hitBack;
 
 	//--------------------------
 };

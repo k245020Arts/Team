@@ -314,7 +314,7 @@
     <ClCompile Include="Source\Common\MyAssert\MyAssert.cpp">
       <Filter>Common\MyAssert</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.cpp">
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\EnemyAttackBase.cpp">
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp">
@@ -568,6 +568,18 @@
     </ClCompile>
     <ClCompile Include="Source\Component\UI\TextRenderer.cpp">
       <Filter>Component\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttack.cpp">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EvadeState.cpp">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera\CameraState\RangedEnemyFinishCamera.cpp">
+      <Filter>PlayScene\Camera\CameraState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuideWindow\GuideWindow.cpp">
+      <Filter>PlayScene\GuideWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -924,7 +936,7 @@
     <ClInclude Include="Source\Common\MyAssert\MyAssert.h">
       <Filter>Common\MyAssert</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.h">
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\EnemyAttackBase.h">
       <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossState\AttackSorting.h">
@@ -1212,6 +1224,18 @@
     <ClInclude Include="Source\Component\UI\TextRenderer.h">
       <Filter>Component\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttack.h">
+      <Filter>PlayScene\Enemy\Boss\BossState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EvadeState.h">
+      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState\Melee</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CameraState\RangedEnemyFinishCamera.h">
+      <Filter>PlayScene\Camera\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuideWindow\GuideWindow.h">
+      <Filter>PlayScene\GuideWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1444,6 +1468,9 @@
     </Filter>
     <Filter Include="Component\TextRenderer">
       <UniqueIdentifier>{05bc78ba-1382-4f9e-8ccf-47c35bdf5e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\GuideWindow">
+      <UniqueIdentifier>{16d2bc44-b9c7-4c8d-8cbc-598adc555995}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

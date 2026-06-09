@@ -38,8 +38,8 @@ public:
 	/// </summary>
 	/// <param name="_angle"></param>
 	/// <param name="_speed"></param>
-	void RotationChange(VECTOR3 _angle, float _speed);
-	void RotationChange(VECTOR3 _angle);
+	void RotationChange(const VECTOR3& _angle, float _speed);
+	void RotationChange(const VECTOR3& _angle);
 
 private:
 	PlayerInformation::CharaComponent playerCom;

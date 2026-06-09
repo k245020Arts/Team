@@ -210,11 +210,11 @@
           "MoveSpeed": {
             "x": 0.0,
             "y": 0.0,
-            "z": 2000.0
+            "z": 5000.0
           },
           "againTimer": 0.30000001192092896,
           "againTimerFlag": 2,
-          "hitDamage": 150.0
+          "hitDamage": 200.0
         },
         {
           "MoveSpeed": {
@@ -320,7 +320,7 @@
       },
       "collsionFinishTime": 30.0,
       "collsionStartTime": 4.0,
-      "hitDamage": 200.0,
+      "hitDamage": 230.0,
       "motionCancelStartTime": 0.0,
       "nextAttackRunTimer": 1.0,
       "noAttackRunTimer": 1.0,

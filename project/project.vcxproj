@@ -182,6 +182,7 @@
     <ClInclude Include="Source\Camera\CameraState\PlayerHeavyAttackCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.h" />
     <ClInclude Include="Source\Camera\CameraState\RangedEnemyCamera.h" />
+    <ClInclude Include="Source\Camera\CameraState\RangedEnemyFinishCamera.h" />
     <ClInclude Include="Source\Camera\CutSceneBox.h" />
     <ClInclude Include="Source\CharaBase\CharaBase.h" />
     <ClInclude Include="Source\Common\BlurScreen.h" />
@@ -267,7 +268,8 @@
     <ClInclude Include="Source\Enemy\Boss\BossCreater.h" />
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\AttackSorting.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttack.h" />
+    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\EnemyAttackBase.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackJsonParse.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossAppear.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossBackStep.h" />
@@ -304,7 +306,9 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDamage.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStaySky.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.h" />
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EvadeState.h" />
     <ClInclude Include="Source\GameControler\GameControler.h" />
+    <ClInclude Include="Source\GuideWindow\GuideWindow.h" />
     <ClInclude Include="Source\Light\Light.h" />
     <ClInclude Include="Source\BootScene.h" />
     <ClInclude Include="Source\Pause\PauseScreen.h" />
@@ -392,6 +396,7 @@
     <ClCompile Include="Source\Camera\CameraState\PlayerHeavyAttackCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\PlayerSpecialAttackCamera.cpp" />
     <ClCompile Include="Source\Camera\CameraState\RangedEnemyCamera.cpp" />
+    <ClCompile Include="Source\Camera\CameraState\RangedEnemyFinishCamera.cpp" />
     <ClCompile Include="Source\Camera\CutSceneBox.cpp" />
     <ClCompile Include="Source\CharaBase\CharaBase.cpp" />
     <ClCompile Include="Source\Common\BlurScreen.cpp" />
@@ -469,7 +474,8 @@
     <ClCompile Include="Source\Enemy\Boss\BossAttackDataSerializer.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossCreater.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttackBase.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttack.cpp" />
+    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\EnemyAttackBase.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossAppear.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossBackStep.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossCoolTime.cpp" />
@@ -500,7 +506,9 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyRUN.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStaySky.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.cpp" />
+    <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EvadeState.cpp" />
     <ClCompile Include="Source\GameControler\GameControler.cpp" />
+    <ClCompile Include="Source\GuideWindow\GuideWindow.cpp" />
     <ClCompile Include="Source\Light\Light.cpp" />
     <ClCompile Include="Source\Pause\PauseScreen.cpp" />
     <ClCompile Include="Source\Player\Player.cpp" />

@@ -10,7 +10,7 @@ CooperateAttack1::CooperateAttack1()
 	animId = ID::TE_C_ATTACK;
 	attackParam.animID = ID::TE_C_ATTACK;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
-	attackParam.damagePattern = BossAttackBase::BACK;
+	attackParam.damagePattern = EnemyAttackBase::BACK;
 
 	attackParam.hitDamage = 30;
 	time = 0;
@@ -32,21 +32,21 @@ void CooperateAttack1::Update()
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
 	AttackInformation(enemy);
-	time += Time::DeltaTimeRate();
+	enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 
+	time += Time::DeltaTimeRate();
 	if (time >= 1)
 		enemy->isCooperateAtk = false;
 }
 
 void CooperateAttack1::Start()
 {
-	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	enemy->enemyBaseComponent.anim->SetFrame(5.0f);
 	firstColl = true;
 
-	copyColl = BossAttackBase::collTrans.scale;
-	BossAttackBase::collTrans.scale = VECTOR3(200, 0, 0);
+	copyColl = EnemyAttackBase::collTrans.scale;
+	EnemyAttackBase::collTrans.scale = VECTOR3(200, 0, 0);
 
 	EnemyStateBase::Start();
 }
@@ -58,5 +58,5 @@ void CooperateAttack1::Finish()
 	enemy->CooperateAtkFinish();
 	enemy->DeleteCollision(&enemy->attackColl);
 
-	BossAttackBase::collTrans.scale = copyColl;
+	EnemyAttackBase::collTrans.scale = copyColl;
 }

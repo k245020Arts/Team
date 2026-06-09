@@ -74,134 +74,136 @@ void BossRockManager::Draw()
 
 }
 
-void BossRockManager::CreateThrowEmptyObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data)
+void BossRockManager::CreateThrowEmptyObject(const std::vector<EnemyAttackBase::ThrowObjectAttackData>& _data)
 {
-	for (auto data : _data) {
+	for (auto data : _data) { //ボスの中に入っている投擲物データのすべてを初期化状態にしておく
 		Object3D* throwObject = new Object3D();
 		throwObject->Init(Transform(), "bossThrowObject");
 		BossRockBase* bossRock = throwObject->Component()->AddComponent<BossRockBase>();
 		bossRock->SetThrowParam(data);
+		bossRock->SetPlayerTransform(boss->enemyBaseComponent.playerObj->GetTransform());
 		boss->obj->AddChild(throwObject, false);
 	}
 }
 
 void BossRockManager::AppearThrowObject(BossRockBase* _rock, int _index, int _total, float _rotateAngle)
 {
-	//for (auto data : _data) {
-		Object3D* throwObject = static_cast<Object3D*>(_rock->GetBaseObject());
-		BossAttackBase::ThrowObjectAttackData _data = _rock->GetThrowObjectsData();
-		SetRockComponent(throwObject, _data.baseGravity, _data.baseFirction, _data);
-		if (_data.throwToFallToPlayer || _data.throwToFall) {
-			VECTOR3 center = VZero;
-			VECTOR3 dir = VZero;
-			if (_data.throwToFallToPlayer) {
-				auto playerObj = boss->enemyBaseComponent.playerObj;
-				VECTOR3 playerPos = playerObj->GetTransform()->position;
+	//本格的に登場
+	Object3D* throwObject = static_cast<Object3D*>(_rock->GetBaseObject());
+	EnemyAttackBase::ThrowObjectAttackData _data = _rock->GetThrowObjectsData();
+	SetRockComponent(throwObject, _data.baseGravity, _data.baseFirction, _data); //投擲物データに必要な物を生成
+	if (_data.throwToFallToPlayer || _data.throwToFall) { //プレイヤーに向かって落ちるか、またはランダムに落ちるか
+		VECTOR3 center = VZero;
+		VECTOR3 dir = VZero;
+		if (_data.throwToFallToPlayer) { //プレイヤーに向かって落ちるならプレイヤーの予測線をもとに計算して位置を算出
+			auto playerObj = boss->enemyBaseComponent.playerObj;
+			VECTOR3 playerPos = playerObj->GetTransform()->position;
 
-				Physics* playerPhy = playerObj->Component()->GetComponent<Physics>();
+			Physics* playerPhy = playerObj->Component()->GetComponent<Physics>();
 
-				VECTOR3 playerVel = VZero;
-				if (playerPhy != nullptr) {
-					playerVel = playerPhy->GetVelocity();
-				}
-
-				float futureTime = Random::GetFloat(0.3f, 0.8f);
-				//予測値	
-				VECTOR3 futurePos = playerPos + playerVel * futureTime;
-
-				center = Easing::Lerp(playerPos, futurePos, 0.9f);
-			}
-			else {
-				center = _data.thorwStartPos;
-			}
-			dir.y = 0;
-			dir.Normalize();
-			Camera* cam = boss->enemyBaseComponent.camera;
-			VECTOR3 camForward = cam->GetCameraTransform()->Forward();
-			VECTOR3 camRight = camForward * MGetRotY(90.0f * DegToRad);
-
-			float limitAngle = 180.0f * DegToRad * 0.45f;
-
-			float baseAngle = (2.0f * 180.0f * DegToRad / _total) * _index;
-			float ramdom = Random::GetFloat(-0.25f, 0.25f);
-
-			float finalAngle = std::clamp(baseAngle + _rotateAngle + ramdom, -limitAngle, limitAngle);
-
-			dir = camForward * cosf(finalAngle) + camRight * sinf(finalAngle);
-
-			float wave = sinf(_index * 0.8f) * 350.0f;
-			float radius = 1000.0f + wave + Random::GetFloat(-200.0f, 200.0f);
-			VECTOR3 startPos = center + dir * radius;
-			if (_data.randomHeight) {
-				//VECTOR3 startPos = center + dir * radius;
-				//8000,12000
-				float offset = Random::GetFloat(_data.minHeight, _data.maxHeight);
-				startPos.y = center.y + offset;
+			VECTOR3 playerVel = VZero;
+			if (playerPhy != nullptr) {
+				playerVel = playerPhy->GetVelocity();
 			}
 
+			float futureTime = Random::GetFloat(0.3f, 0.8f);
+			//予測値	
+			VECTOR3 futurePos = playerPos + playerVel * futureTime;
 
-			VECTOR3 rotation = VZero;
-			//rotation.z = 45.0f * DegToRad;
-			throwObject->GetTransform()->position = startPos;
-			throwObject->GetTransform()->rotation = rotation;
+			center = Easing::Lerp(playerPos, futurePos, 0.9f);
+		}
+		else {
+			center = _data.thorwStartPos;
+		}
+		dir.y = 0;
+		dir.Normalize();
+		Camera* cam = boss->enemyBaseComponent.camera;
+		VECTOR3 camForward = cam->GetCameraTransform()->Forward();
+		VECTOR3 camRight = camForward * MGetRotY(90.0f * DegToRad);
 
-			VECTOR3 gravity = VECTOR3(0, _data.throwFallGravity, 0);
-			if (_data.randomSpeed) {
-				//1500,3000
-				gravity.y = Random::GetFloat(_data.minSpeed, _data.maxSpeed);
-				gravity.y *= -1.0f;
-			}
+		float limitAngle = 180.0f * DegToRad * 0.45f;
 
-			Physics* phy = throwObject->Component()->GetComponent<Physics>();
-			phy->SetGravity(gravity);
-		}
-		else if (_data.freeDir) {
-			throwObject->GetTransform()->position = _data.thorwStartPos;
-		}
-		else if (_data.armThrow) {
-			Physics* phy = throwObject->Component()->GetComponent<Physics>();
-			phy->Start(VZero, VZero);
-		}
-		if (_data.randomBlast) {
-			bool doBlast = true;
-			//0.1
-			if (Random::GetFloat(0.0f, 1.0f) < _data.randomBlastRate)
-			{
-				doBlast = false;
-			}
+		float baseAngle = (2.0f * 180.0f * DegToRad / _total) * _index;
+		float ramdom = Random::GetFloat(-0.25f, 0.25f);
 
-			BossRockBase* rockComp = throwObject->Component()->GetComponent<BossRockBase>();
-			rockComp->SetCanBlast(doBlast);
+		float finalAngle = std::clamp(baseAngle + _rotateAngle + ramdom, -limitAngle, limitAngle);
+
+		dir = camForward * cosf(finalAngle) + camRight * sinf(finalAngle);
+
+		float wave = sinf(_index * 0.8f) * 350.0f;
+		float radius = 1000.0f + wave + Random::GetFloat(-200.0f, 200.0f);
+		VECTOR3 startPos = center + dir * radius;
+		if (_data.randomHeight) {
+			//VECTOR3 startPos = center + dir * radius;
+			//8000,12000
+			float offset = Random::GetFloat(_data.minHeight, _data.maxHeight);
+			startPos.y = center.y + offset;
 		}
-		/*else if (data.blastCan) {
-			BossRockBase* rockComp = throwObject->Component()->GetComponent<BossRockBase>();
-			rockComp->SetCanBlast(true);
-		}*/
-		BossRockBase* rock = throwObject->Component()->GetComponent<BossRockBase>();
-		CharaWeapon* chara = throwObject->Component()->GetComponent<CharaWeapon>();
-		MATRIX* matrix = nullptr;
-		if (chara != nullptr) {
-			matrix = chara->GetMatrixPtr();
+
+
+		VECTOR3 rotation = VZero;
+		//rotation.z = 45.0f * DegToRad;
+		throwObject->GetTransform()->position = startPos;
+		throwObject->GetTransform()->rotation = rotation;
+
+		VECTOR3 gravity = VECTOR3(0, _data.throwFallGravity, 0);
+		if (_data.randomSpeed) {
+			//1500,3000
+			gravity.y = Random::GetFloat(_data.minSpeed, _data.maxSpeed);
+			gravity.y *= -1.0f;
 		}
-		
-		rock->Start(_data, matrix);
-	//}
+
+		Physics* phy = throwObject->Component()->GetComponent<Physics>();
+		phy->SetGravity(gravity);
+	}
+	else if (_data.freeDir) { //自由に飛ぶ設定にしているなら初期値を設定しておく
+		throwObject->GetTransform()->position = _data.thorwStartPos;
+	}
+	else if (_data.armThrow) { //腕で投げる設定にしてあるなら初期化をする
+		Physics* phy = throwObject->Component()->GetComponent<Physics>();
+		phy->Start(VZero, VZero);
+	}
+	if (_data.randomBlast) { //ランダムで爆発をする設定があるならランダムで爆発
+		bool doBlast = true;
+		//0.1
+		if (Random::GetFloat(0.0f, 1.0f) < _data.randomBlastRate)
+		{
+			doBlast = false;
+		}
+
+		BossRockBase* rockComp = throwObject->Component()->GetComponent<BossRockBase>();
+		rockComp->SetCanBlast(doBlast);
+	}
+	/*else if (data.blastCan) {
+		BossRockBase* rockComp = throwObject->Component()->GetComponent<BossRockBase>();
+		rockComp->SetCanBlast(true);
+	}*/
+	BossRockBase* rock = throwObject->Component()->GetComponent<BossRockBase>();
+	CharaWeapon* chara = throwObject->Component()->GetComponent<CharaWeapon>();
+	MATRIX* matrix = nullptr;
+	if (chara != nullptr) {
+		matrix = chara->GetMatrixPtr();
+	}
+	
+	rock->Start(_data, matrix);
 	
 }
 
-void BossRockManager::CreateThrowObject(const std::vector<BossAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle)
+void BossRockManager::CreateThrowObject(const std::vector<EnemyAttackBase::ThrowObjectAttackData>& _data, int _index, int _total, float _rotateAngle)
 {
+	//空のオブジェクトは関係なく作成
 	for (auto data : _data) {
 		Object3D* throwObject = new Object3D();
 		throwObject->Init(Transform(), "bossThrowObject");
 		BossRockBase* bossRock = throwObject->Component()->AddComponent<BossRockBase>();
 		bossRock->SetThrowParam(data);
+		bossRock->SetPlayerTransform(boss->enemyBaseComponent.playerObj->GetTransform());
 		boss->obj->AddChild(throwObject, false);
 		AppearThrowObject(bossRock, _index, _total, _rotateAngle);
 	}
 }
 
-VECTOR3 BossRockManager::GetPushCollSize(const BossAttackBase::ThrowObjectAttackData& _data)
+VECTOR3 BossRockManager::GetPushCollSize(const EnemyAttackBase::ThrowObjectAttackData& _data)
 {
 	return throwObjectsData[_data.throwObjectID].pushTransform.scale;
 }
@@ -250,7 +252,7 @@ void BossRockManager::DropRockStart()
 	}
 }
 
-VECTOR3 BossRockManager::GetRockPos(VECTOR3 _pos)
+VECTOR3 BossRockManager::GetRockPos(const VECTOR3& _pos)
 {
 	VECTOR3 pos = VECTOR3(INFINITY, INFINITY, INFINITY);
 
@@ -268,12 +270,14 @@ std::list<VECTOR3> BossRockManager::GetAllRockPos()
 {
 	std::list<VECTOR3> _pos;
 
-	for (auto rock : rocks)
-		_pos.push_back(rock->GetBaseObject()->GetTransform()->position);
+	for (auto rock : rocks) {
+		_pos.emplace_back(rock->GetBaseObject()->GetTransform()->position);
+	}
+		
 	return _pos;
 }
 
-void BossRockManager::AddJsonData(BossThrowObjectData _data)
+void BossRockManager::AddJsonData(BossThrowObjectData& _data)
 {
 	throwObjectsData[_data.id] = _data;
 
@@ -315,17 +319,14 @@ void BossRockManager::ChangeJsonData(const BossThrowObjectData& _data,const std:
 		ResourceLoad::DeleteEffectData(Effect_ID::StringToID(table[_oldKey].modelName), false);
 	}
 
-	//------------------------------------
-	// ■ キー変更（リネーム）
-	//------------------------------------
+	//キー変更
 	if (_oldKey != _newKey)
 	{
 		table.erase(_oldKey);
 	}
 
-	//------------------------------------
-	// ■ 更新
-	//------------------------------------
+
+	//更新
 	table[_newKey] = _data;
 
 	if (table[_newKey].isEffect) {
@@ -347,10 +348,10 @@ void BossRockManager::ChangeJsonData(const BossThrowObjectData& _data,const std:
 	json.Save(fileName, root);
 }
 
-void BossRockManager::RockContorler(BossAttackBase::BossAttackParam _data, float _animFrame)
+void BossRockManager::RockContorler(const EnemyAttackBase::BossAttackParam& _data, float _animFrame)
 {
 	for (auto rock : rocks) {
-		BossAttackBase::ThrowObjectAttackData data = rock->GetThrowObjectsData();
+		EnemyAttackBase::ThrowObjectAttackData data = rock->GetThrowObjectsData();
 		//投擲物が登場するタイミング
 		if (_animFrame >= data.throwObjectApperaTime) {
 			if (!rock->GetThrowObjectStart()) {
@@ -373,8 +374,8 @@ void BossRockManager::RockContorler(BossAttackBase::BossAttackParam _data, float
 void BossRockManager::AttackFinishDelete()
 {
 	for (auto itr = rocks.begin(); itr != rocks.end();) {
-		BossAttackBase::ThrowObjectAttackData data = (*itr)->GetThrowObjectsData();
-		if (data.attackFinishDelete) {
+		EnemyAttackBase::ThrowObjectAttackData data = (*itr)->GetThrowObjectsData();
+		if (data.attackFinishDelete) { //攻撃後に投擲物が消える設定にしていたら削除
 			(*itr)->GetBaseObject()->DestroyMe();
 		}
 		itr++;
@@ -385,18 +386,29 @@ void BossRockManager::DeleteEmptyObject()
 {
 	for (auto itr = rocks.begin(); itr != rocks.end();) {
 		bool start = (*itr)->GetThrowObjectStart();
-		if (!start) {
+		if (!start) { //初期化状態のまま敵の攻撃が終わったらそのまま削除
 			(*itr)->GetBaseObject()->DestroyMe();
 		}
 		itr++;
 	}
 }
 
-void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity, const VECTOR3& _fir, const BossAttackBase::ThrowObjectAttackData& _data)
+void BossRockManager::BossDieDeleteObject(float _hp)
+{
+	if (_hp > 0.0f) {
+		return; //ボスが死んでなかったら削除しない
+	}
+	//死んだら全削除
+	for (auto itr = rocks.begin(); itr != rocks.end();) {
+		(*itr)->GetBaseObject()->DestroyMe();
+		itr++;
+	}
+}
+
+void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity, const VECTOR3& _fir, const EnemyAttackBase::ThrowObjectAttackData& _data)
 {
 	//_base->Init(Transform(),"bossThrowObject");
 	//BossRockBase* bossRock = _base->Component()->AddComponent<BossRockBase>();
-	
 	Physics* phy = _base->Component()->AddComponent<Physics>();
 	phy->Start(_gravity, _fir);
 	//bossRock->StartCollAdd(CollsionInformation::BOSS_ROCK_ATTACK, Transform());;
@@ -424,9 +436,11 @@ void BossRockManager::SetRockComponent(Object3D* _base, const VECTOR3& _gravity,
 	MeshRenderer2D* yButton = _base->Component()->AddComponent<MeshRenderer2D>();
 	yButton->SetTransform(Transform(VZero,VZero,VOne * 0.5f));
 	yButton->TextureHandle(ResourceLoad::GetHandle(ID::Y_BUTTON), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+	yButton->SetDraw(false);
 	MeshRenderer2D* bButton = _base->Component()->AddComponent<MeshRenderer2D>();
 	bButton->SetTransform(Transform(VZero, VZero, VOne * 0.5f));
 	bButton->TextureHandle(ResourceLoad::GetHandle(ID::B_BUTTON), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F);
+	bButton->SetDraw(false);
 	//Shadow* shadow = _base->Component()->AddComponent<Shadow>();
 	/*Object3D* shadow = new Object3D();
 	shadow->Init(Transform(VECTOR3(0.0f, -20.0f, 0.0f), VZero, VECTOR3(_base->GetTransform()->scale.x + 4.0f, 0.1f, _base->GetTransform()->scale.z + 4.0f)), "BossShadow");

@@ -14,6 +14,7 @@ TrashEnemyGroup::TrashEnemyGroup()
 	enemiesRunCounter = 0;
 
 	leaderPos = VZero;
+	hitEnemyPos = VZero;
 
 	rangedDamageMove = false;
 
@@ -24,12 +25,22 @@ TrashEnemyGroup::TrashEnemyGroup()
 	startRangedAtk = false;
 
 	startButtonImage = false;
+
+	leaderRotY = 0.0f;
+
 	yButtonImage = LoadGraph("data/image/YButton.png");
 	SetDrawOrder(-300000);
+
+	leaderActiveEnd = false;
+
+	hitBack = false;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
 {
+	DeleteGraph(yButtonImage);
+	camera = nullptr;
+	trashEnemyManager = nullptr;
 }
 
 void TrashEnemyGroup::Update()
@@ -44,6 +55,8 @@ void TrashEnemyGroup::Update()
 		EnemiesRun(melee);
 		MeleeEnemyAttack(melee);
 		CooperateAttackMove(melee);
+		if (startRangedAtk)
+			MeleeEvadeMove(melee);
 	}
 	//遠距離の敵関連
 	for (auto ranged : rangedEnemies)
@@ -282,6 +295,14 @@ void TrashEnemyGroup::CooperateAttackLine()
 	copyPos.clear();
 }
 
+void TrashEnemyGroup::MeleeEvadeMove(TrashEnemy* _enemy)
+{
+	_enemy->SetLeaderPos(leaderPos);
+	_enemy->SetLeaderRotY(leaderRotY);
+
+	_enemy->ChangeState(StateID::T_ENEMY_EVADE);
+}
+
 void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 {
 	VECTOR3 position = camera->GetCameraTransform()->position;
@@ -314,111 +335,25 @@ void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 
 void TrashEnemyGroup::RangedEnemyAttack()
 {
-	float pointCounter = 0.0f;
-	const float MaxPoint = 8.0f;
-	const float Range = 700.0f;
-	const float MaxAttackCounter = 2.5f;
-	bool leaderActiveEnd = false;
-
-	/*
-		↓細かいとこ調整して気持ちよさをだせるようにする
-		敵キャラ揺れ
-		コントローラー揺れ
-	*/
-
 	for (auto& enemy : rangedEnemies)
 	{
-		if (enemy->GetDeadMove()|| enemy->IsPlayerSpecialMove())
+		if (enemy->GetDeadMove() || enemy->IsPlayerSpecialMove())
 			return;
-
-		if (rangedJoinCounter == 0)//リーダー以外の敵を数える
-			rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
-
 
 		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		{
-			//リーダーが飛ぶ処理
-			enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
-
-			startRangedAtk = true;
-
-			if (enemy->GetStandby())//リーダーが他の奴に指示を出す
-			{
-				if (rangedJoinCounter > 0)
-					leaderActiveEnd = true;
-				else
-					DeadRangedEnemy(enemy);
-			}
-				
-			leaderPos = enemy->GetPos();
-
-			if (rangedJoinCounter <= rangedAtkCounter)//敵全員が攻撃を終えた後の処理
-			{
-				if (rangedAtkTime >= MaxAttackCounter)
-				{
-					rangedAtkTime = 0;
-					AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
-					rangedJoinCounter = 0;
-					rangedAtkCounter = 0;
-					startRangedAtk = false;
-					FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
-
-					startButtonImage = false;
-				}
-			}
+			AttackLeaderMove(enemy);
 		}
 		else
 		{
-			if (!leaderActiveEnd)
-				return;
-			//リーダーの周りにポイント配置
-			if (pointCounter < MaxPoint && !enemy->GetStandby() && !enemy->IsMovingToPlayer())
-			{
-				//均等に割って円形に配置
-				float angle = (2.0f * DX_PI_F) * pointCounter / MaxPoint;
-
-				//回転を反映した方向
-				VECTOR3 rotatedDir = VECTOR3(cosf(angle), 0, sinf(angle));
-				//リーダーからの絶対座標
-				VECTOR3 target = leaderPos + rotatedDir * Range;
-				//指定したポイントを渡す
-				enemy->SetCooperateWayPoint(target);
-				enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
-
-				startButtonImage = true;
-
-				pointCounter++;
-			}
-
-			//敵がダメージをくらった後の処理
-			if (enemy->GetCooperateDamageMove())
-			{
-				const VECTOR3 enemyPos = enemy->GetPos();
-				//リーダーとの距離で近くなったらの処理
-				const float LeaderVecMax = 1200.0f;
-				if (VSize(leaderPos - enemyPos) <= LeaderVecMax)
-				{
-					EffectManager::GetInstance()
-						->CreateEffekseer(*enemy->GetEnemyObj()->GetTransform(), nullptr, Effect_ID::ROCK_BLAST, 3.0f);
-
-					DeadRangedEnemy(enemy);
-				}
-				return;
-			}
-			//敵がプレイヤーに攻撃する処理
-			if (rangedAtkTime >= MaxAttackCounter && !enemy->IsMovingToPlayer())
-			{
-				enemy->SetLeaderPos(leaderPos);
-				enemy->RangedAttack();
-				rangedAtkTime = 0;
-				rangedAtkCounter++;
-			}
+			AttackRangedMove(enemy);
 		}
 	}
+	
 	rangedAtkTime += Time::DeltaTimeRate();
 }
 
-void TrashEnemyGroup::DeadMeleeEnemy()
+void TrashEnemyGroup::DeadMeleeEnemy()	
 {
 	for (auto& itr : meleeEnemies)
 	{
@@ -442,7 +377,6 @@ void TrashEnemyGroup::DeadRangedEnemy(bool _readerDead)
 		{
 			itr->ChangeHp(-itr->GetMaxHp());
 		}
-		
 	}
 }
 
@@ -464,11 +398,11 @@ void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 		VECTOR3 _wayPointPos = CameraPos + Forward * Distance;
 
 		_wayPointPos.y = 0;
-		
+
 		_enemy->SetWayPoint(_wayPointPos);
 
 		leaderPos = _enemy->GetPos();
-	}	
+	}
 }
 
 void TrashEnemyGroup::RangedDamageMove()
@@ -482,7 +416,7 @@ void TrashEnemyGroup::RangedDamageMove()
 		}
 		else
 		{
-			if(!enemy->IsMovingToPlayer())
+			if (!enemy->IsMovingToPlayer())
 				enemy->ChangeHp(Damage);
 		}
 	}
@@ -519,7 +453,6 @@ void TrashEnemyGroup::NextLeader()
 	{
 		rangedEnemies[0]->SetEnemyType(EnemyType::RANGED_LEADER);
 		AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
-		//rangedEnemies[0]->ChangeState(StateID::T_ENEMY_IDOL_S);
 	}
 }
 
@@ -528,9 +461,113 @@ void TrashEnemyGroup::DeadRangedEnemy(TrashEnemy* _enemy)
 	rangedDamageMove = true;
 	_enemy->ChangeHp(-_enemy->MaxHp());
 
+	EndRangedAttack(_enemy);
+	
+	FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
+}
+
+void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
+{
+	if (hitBack)
+		return;
+	
+	if (rangedJoinCounter == 0)//リーダー以外の敵を数える
+		rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
+
+	//リーダーが飛ぶ処理
+	_enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
+	leaderRotY = _enemy->GetRot().y;
+
+	startRangedAtk = true;
+
+	if (_enemy->GetStandby())//リーダーが他の奴に指示を出す
+	{
+		if (rangedJoinCounter > 0)
+			leaderActiveEnd = true;
+		else
+			DeadRangedEnemy(_enemy);
+	}
+
+	leaderPos = _enemy->GetPos();
+
+	if (rangedJoinCounter <= rangedAtkCounter)//敵全員が攻撃を終えた後の処理
+	{
+		if (rangedAtkTime >= MaxAttackCounter )
+		{
+			//遠距離の敵のステートを変える
+			AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
+			//近距離の敵のステートを変える
+			AllChangeMeleeState(StateID::T_ENEMY_RUN_S);
+			EndRangedAttack(_enemy);
+			FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
+		}
+	}
+}
+
+void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
+{
+	float pointCounter = 0.0f;
+	const float MaxPoint = 8.0f;
+	const float Range = 700.0f;
+
+	//リーダーの周りにポイント配置
+	if (pointCounter < MaxPoint && !_enemy->GetStandby() && !_enemy->IsMovingToPlayer())
+	{
+		//均等に割って円形に配置
+		float angle = (2.0f * DX_PI_F) * pointCounter / MaxPoint;
+
+		//回転を反映した方向
+		VECTOR3 rotatedDir = VECTOR3(cosf(angle), 0, sinf(angle));
+		//リーダーからの絶対座標
+		VECTOR3 target = leaderPos + rotatedDir * Range;
+		//指定したポイントを渡す
+		_enemy->SetCooperateWayPoint(target);
+		_enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
+
+		startButtonImage = true;
+
+		pointCounter++;
+	}
+
+	//敵がダメージをくらった後の処理
+	if (_enemy->GetCooperateDamageMove())
+	{
+		const VECTOR3 enemyPos = _enemy->GetPos();
+		hitEnemyPos = enemyPos;
+		hitBack = true;
+		
+		const float LeaderVecMax = 1200.0f;
+		if (VSize(leaderPos - enemyPos) <= LeaderVecMax)//リーダーと打ち返された敵との距離が近くなったら倒す
+		{
+			EffectManager::GetInstance()
+				->CreateEffekseer(*_enemy->GetEnemyObj()->GetTransform(), nullptr, Effect_ID::ROCK_BLAST, 3.0f);
+			//近距離の敵を元のステートに戻す
+			AllChangeMeleeState(StateID::T_ENEMY_RUN_S);
+			DeadRangedEnemy(_enemy);
+
+			hitBack = false;
+			EndRangedAttack(_enemy);
+		}
+		return;
+	}
+
+	//敵がプレイヤーに攻撃する処理
+	if (rangedAtkTime >= MaxAttackCounter && !_enemy->IsMovingToPlayer())
+	{	
+		if (hitBack)
+			return;
+		_enemy->SetLeaderPos(leaderPos);
+		_enemy->RangedAttack();
+		rangedAtkTime = 0;
+		rangedAtkCounter++;
+	}
+}
+
+void TrashEnemyGroup::EndRangedAttack(TrashEnemy* _enemy)
+{
 	startButtonImage = false;
+	startRangedAtk = false;
 	rangedJoinCounter = 0;
 	rangedAtkCounter = 0;
-	startRangedAtk = false;
-	FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
+	rangedAtkTime = 0;
 }

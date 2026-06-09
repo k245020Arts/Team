@@ -13,11 +13,15 @@ public:
 	void Finish()override;
 private:
 	void RangedMove(TrashEnemy* _enemy);
-	//ダメージをもたった後の処理
+	//ダメージを食らった後の処理
 	void DamageMove(TrashEnemy* _enemy);
 
 	const VECTOR3 CollPos	= VECTOR3(0.0f, 100.0f, 50.0f);
 	const VECTOR3 Collscale = VECTOR3(100.0f, 0.0f, 0.0f);
+	//コントローラーの揺れの強さ
+	const int ControllerPower = 300;
+	//揺れる時間
+	const int SceondTime = 1;
 
 	float speedDownCounter;
 

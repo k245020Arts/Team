@@ -24,7 +24,7 @@ private:
 	bool windowMode;
 	std::string BossName;
 	std::shared_ptr<AttackSorting> sorting;
-	std::unordered_map<std::string, BossAttackBase::BossAttackParam> attackParam;
+	std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> attackParam;
 	std::vector<ActionParam> actions;
 	std::vector<std::string> attackKeys;
 	char newAttackID[64];
@@ -35,9 +35,9 @@ private:
 	void DrawAttackParamEditor(std::string _selectID);
 	void DrawTransform(const char* label, Transform& t);
 	void CopyParam(std::string _selectID);
-	void DrawThrowObjectEditor(std::vector<BossAttackBase::ThrowObjectAttackData>& list, const std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData);
-	void DrawRayColliderInfo(const char* label, BossAttackBase::RayColliderInfo& r);
-	void DrawDountColliderInfo(const char* label, BossAttackBase::DountColliderInfo& d);
+	void DrawThrowObjectEditor(std::vector<EnemyAttackBase::ThrowObjectAttackData>& list, const std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData);
+	void DrawRayColliderInfo(const char* label, EnemyAttackBase::RayColliderInfo& r);
+	void DrawDountColliderInfo(const char* label, EnemyAttackBase::DountColliderInfo& d);
 	void DrawAddThrowObjects(std::map<std::string, BossRockManager::BossThrowObjectData>& throwObjectsData);
 	const char* MakeLabel(const char* label, const char* category, int index);
 	Animator* bossAnim;
@@ -50,4 +50,8 @@ private:
 	bool isEffect;
 	std::vector<std::string> throwObjectKeys;
 	bool throwKeyReset;
+
+	void DrawSoundEventEditor(std::vector<EnemyAttackBase::SoundEffectEvent>& _eventData);
+
+	std::vector<std::string> soundFileNames;
 };

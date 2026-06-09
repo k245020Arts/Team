@@ -34,6 +34,7 @@
 #include "TrashEnemyState/T_EnemyDamage.h"
 #include "TrashEnemyState/T_EnemyWaitSee.h"
 #include "TrashEnemyState/T_EnemyStaySky.h"
+#include "TrashEnemyState/T_EvadeState.h"
 
 namespace
 {
@@ -243,12 +244,16 @@ TrashEnemy::TrashEnemy()
 	justAvoidAttackFunk = nullptr;
 
 	cAttack = false;
+
+	leaderRotY = 0;
+	guage = nullptr;
 }
 
 TrashEnemy::~TrashEnemy()
 {
 	delete eStatus;
 	eStatus = nullptr;
+	guage = nullptr;
 }
 
 void TrashEnemy::Update()
@@ -264,6 +269,10 @@ void TrashEnemy::Update()
 	{
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 		deadMove = true;
+		if (guage != nullptr) {
+			guage->DestroyMe();
+		}
+		
 	}
 		
 	if (CheckHitKey(KEY_INPUT_9))
@@ -275,7 +284,7 @@ void TrashEnemy::Draw()
 	EnemyBase::Draw();
 }
 
-void TrashEnemy::Start(Object3D* _obj, EnemyType _type)
+void TrashEnemy::Start(Object3D* _obj, EnemyType _type, Object2D* _guage)
 {
 	SphereCollider* collider = _obj->Component()->AddComponent<SphereCollider>();
 	CollsionInfo info;
@@ -318,6 +327,8 @@ void TrashEnemy::Start(Object3D* _obj, EnemyType _type)
 	enemyBaseComponent.state->CreateState<T_EnemyDamage>("_T_EnemyDamage", StateID::T_ENEMY_DAMAGE);
 	enemyBaseComponent.state->CreateState<T_EnemyWaitSee>("_T_EnemyWaitSee", StateID::T_ENEMY_WAITSEE);
 	enemyBaseComponent.state->CreateState <T_EnemyStaySky>("T_EnemyStaySky", StateID::T_ENEMY_STAYSKY);
+	enemyBaseComponent.state->CreateState<T_Evade>("T_Evade", StateID::T_ENEMY_EVADE);
+
 	enemyBaseComponent.state->SetComponent<TrashEnemy>(this);
 
 	enemyType = _type;
@@ -328,6 +339,8 @@ void TrashEnemy::Start(Object3D* _obj, EnemyType _type)
 	chara = obj->Component()->AddComponent<CharaWeapon>();
 	chara->ObjectPointer(_obj, 10, ID::E_MODEL, -1);
 	chara->SetImage(ResourceLoad::GetHandle(ID::SWORD_EFFECT_B));	
+
+	guage = _guage;
 }
 
 void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds, int _number)
@@ -403,7 +416,7 @@ void TrashEnemy::Move(VECTOR3& _targetPos, float _speed)
 {
 	VECTOR3 dir = VNorm(_targetPos - GetPos()) ;
 	dir.y = 0.0f;
-	//enemyBaseComponent.physics->AddVelocity(dir * _speed, false);
+	//enemyBaseComponent.physics->AddVelocity(dir * _speed, true);
 	GetEnemyObj()->GetTransform()->position += dir * _speed;
 }
 

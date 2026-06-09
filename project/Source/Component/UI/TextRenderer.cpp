@@ -64,3 +64,13 @@ void TextRenderer::UseDrawUI()
 	uiManager->UIPush(obj);//ƒŠƒXƒg‚É“o˜^
 	obj->SetDraw(false);
 }
+
+void TextRenderer::SetScale(const VECTOR3& _scale)
+{
+	obj->GetTransform()->scale = _scale;
+}
+
+void TextRenderer::SetPos(const VECTOR3& _pos)
+{
+	obj->GetTransform()->position = _pos;
+}
