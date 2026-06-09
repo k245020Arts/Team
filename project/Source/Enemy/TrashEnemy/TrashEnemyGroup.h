@@ -108,6 +108,8 @@ private:
 	void AttackLeaderMove(TrashEnemy* _enemy);
 	//UŒ‚‚Ì“G‚Ì“®‚«
 	void AttackRangedMove(TrashEnemy* _enemy);
+	//UŒ‚‚Åg‚¤•Ï”‚ğƒŠƒZƒbƒg
+	void EndRangedAttack(TrashEnemy* _enemy);
 
 	VECTOR3 leaderPos;
 	VECTOR3 hitEnemyPos;

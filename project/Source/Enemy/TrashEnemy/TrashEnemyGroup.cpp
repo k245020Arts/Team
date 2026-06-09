@@ -453,7 +453,6 @@ void TrashEnemyGroup::NextLeader()
 	{
 		rangedEnemies[0]->SetEnemyType(EnemyType::RANGED_LEADER);
 		AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
-		//rangedEnemies[0]->ChangeState(StateID::T_ENEMY_IDOL_S);
 	}
 }
 
@@ -462,10 +461,8 @@ void TrashEnemyGroup::DeadRangedEnemy(TrashEnemy* _enemy)
 	rangedDamageMove = true;
 	_enemy->ChangeHp(-_enemy->MaxHp());
 
-	startButtonImage = false;
-	rangedJoinCounter = 0;
-	rangedAtkCounter = 0;
-	startRangedAtk = false;
+	EndRangedAttack(_enemy);
+	
 	FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
 }
 
@@ -475,9 +472,7 @@ void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
 		return;
 	
 	if (rangedJoinCounter == 0)//リーダー以外の敵を数える
-	{
 		rangedJoinCounter = (int)rangedEnemies.size() - 1;//リーダーをのぞくため
-	}
 
 	//リーダーが飛ぶ処理
 	_enemy->ChangeState(StateID::T_ENEMY_STAYSKY);
@@ -499,26 +494,18 @@ void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
 	{
 		if (rangedAtkTime >= MaxAttackCounter )
 		{
-			rangedAtkTime = 0;
-			//遠距離の敵を元のステートに戻す
+			//遠距離の敵のステートを変える
 			AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
-			//近距離の敵を元のステートに戻す
+			//近距離の敵のステートを変える
 			AllChangeMeleeState(StateID::T_ENEMY_RUN_S);
-			rangedJoinCounter = 0;
-			rangedAtkCounter = 0;
-			startRangedAtk = false;
+			EndRangedAttack(_enemy);
 			FindGameObject<TrashEnemyManager>()->SetStartRangedAttack(false);
-
-			startButtonImage = false;
 		}
 	}
 }
 
 void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
 {
-	/*if (_enemy->GetEnemyType() != EnemyType::RANGED && !leaderActiveEnd)
-		return;*/
-
 	float pointCounter = 0.0f;
 	const float MaxPoint = 8.0f;
 	const float Range = 700.0f;
@@ -548,19 +535,18 @@ void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
 		const VECTOR3 enemyPos = _enemy->GetPos();
 		hitEnemyPos = enemyPos;
 		hitBack = true;
-		//リーダーとの距離で近くなったらの処理
+		
 		const float LeaderVecMax = 1200.0f;
-		if (VSize(leaderPos - enemyPos) <= LeaderVecMax)
+		if (VSize(leaderPos - enemyPos) <= LeaderVecMax)//リーダーと打ち返された敵との距離が近くなったら倒す
 		{
 			EffectManager::GetInstance()
 				->CreateEffekseer(*_enemy->GetEnemyObj()->GetTransform(), nullptr, Effect_ID::ROCK_BLAST, 3.0f);
 			//近距離の敵を元のステートに戻す
 			AllChangeMeleeState(StateID::T_ENEMY_RUN_S);
 			DeadRangedEnemy(_enemy);
+
 			hitBack = false;
-			rangedAtkTime = 0;
-			rangedJoinCounter = 0;
-			rangedAtkCounter = 0;
+			EndRangedAttack(_enemy);
 		}
 		return;
 	}
@@ -575,4 +561,13 @@ void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
 		rangedAtkTime = 0;
 		rangedAtkCounter++;
 	}
+}
+
+void TrashEnemyGroup::EndRangedAttack(TrashEnemy* _enemy)
+{
+	startButtonImage = false;
+	startRangedAtk = false;
+	rangedJoinCounter = 0;
+	rangedAtkCounter = 0;
+	rangedAtkTime = 0;
 }

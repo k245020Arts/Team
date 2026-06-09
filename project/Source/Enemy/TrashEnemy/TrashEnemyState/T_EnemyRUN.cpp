@@ -71,7 +71,7 @@ void T_EnemyRun::Start()
 		else
 			targetPos = enemy->cooperateWayPoint;
 		break;
-	case EnemyType::RANGED_LEADER: 
+	case EnemyType::RANGED_LEADER:
 	case EnemyType::RANGED:
 
 		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_WAITSEE);
