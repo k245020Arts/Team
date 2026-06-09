@@ -308,6 +308,7 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EvadeState.h" />
     <ClInclude Include="Source\GameControler\GameControler.h" />
+    <ClInclude Include="Source\GuideWindow\GuideWindow.h" />
     <ClInclude Include="Source\Light\Light.h" />
     <ClInclude Include="Source\BootScene.h" />
     <ClInclude Include="Source\Pause\PauseScreen.h" />
@@ -507,6 +508,7 @@
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyWaitSee.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EvadeState.cpp" />
     <ClCompile Include="Source\GameControler\GameControler.cpp" />
+    <ClCompile Include="Source\GuideWindow\GuideWindow.cpp" />
     <ClCompile Include="Source\Light\Light.cpp" />
     <ClCompile Include="Source\Pause\PauseScreen.cpp" />
     <ClCompile Include="Source\Player\Player.cpp" />

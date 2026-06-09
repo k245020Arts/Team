@@ -12,6 +12,7 @@
 #include "../Result/ResultUi.h"
 #include "../Common/InputManager/InputManager.h"
 #include "../Pause/PauseScreen.h"
+#include "../GuideWindow/GuideWindow.h"
 
 namespace {
 	const int GAME_STATE_MAX = 5;
@@ -53,7 +54,9 @@ GameControler::GameControler()
 #endif // STRING_MODE
 	
 	changeState = true;
-	
+
+	guide = new GuideWindow();
+	//guide->SetDrawOrder(-400000);
 }
 
 GameControler::~GameControler()
@@ -150,33 +153,23 @@ void GameControler::Update()
 	}
 #endif // STRING_MODE
 
-	if (InputManager::GetInstance()->KeyInputDown("PauseScreen")) {
-		if (gameState == PAUSE_SCENE) {
-			gameState = keepGameState;
-			bool result = pause->PauseFinish();
-			/*if (result) {
-				
+	//操作説明ガイドを表示しているときはポーズの機能をシャットダウン
+	if (!guide->GetActive()) {
+		if (InputManager::GetInstance()->KeyInputDown("PauseScreen")) {
+			if (gameState == PAUSE_SCENE) {
+				gameState = keepGameState;
+				pause->PauseButtonGameBack();
 			}
 			else {
-				gameState = SCENE_CHANGE;
-			}*/
-		}
-		else {
-			keepGameState = gameState;
-			gameState = PAUSE_SCENE;
-			pause->PauseStart();
+				keepGameState = gameState;
+				gameState = PAUSE_SCENE;
+				pause->PauseStart();
+			}
 		}
 	}
 
-	if (pause->IsSelect()) {
-		bool result = pause->PauseFinish();
-		if (result) {
-			gameState = keepGameState;
-		}
-		else {
-			gameState = SCENE_CHANGE;
-		}
-	}
+	PauseResult();
+	GuideWindowUpdate();
 }
 
 void GameControler::Draw()
@@ -358,7 +351,9 @@ void GameControler::BeforeUpdate()
 #ifdef STRING_MODE
 		ChangeState("PLAY");
 #else
-		ChangeState(GameState::PLAY);
+		guide->GuideWindowDraw(false);
+		keepGameState = PLAY;
+		//ChangeState(GameState::PLAY);
 #endif // STRING_MODE
 
 
@@ -434,4 +429,50 @@ void GameControler::SceneChangeUpdate()
 void GameControler::SceneChangeDraw()
 {
 	
+}
+
+void GameControler::PauseResult()
+{
+	if (pause->IsSelect()) {
+		switch (pause->GetResult())
+		{
+		case PauseScreen::Resume:
+
+			pause->PauseFinish();
+			gameState = keepGameState;
+			break;
+
+		case PauseScreen::OpenGuide:
+
+			pause->PauseFinish();
+			guide->GuideWindowDraw(true);
+			break;
+
+		case PauseScreen::ToTitle:
+
+			pause->PauseFinish();
+			gameState = SCENE_CHANGE;
+			break;
+		default:
+			my_error_assert("ポーズの状態が入っていません");
+			break;
+		}
+
+	}
+}
+
+void GameControler::GuideWindowUpdate()
+{
+	bool push = guide->GetPush();
+	if (push) {
+		bool gameBack = guide->GetGameBack();
+		if (gameBack) {
+			guide->GuideWindowFinish();
+			gameState = keepGameState;
+		}
+		else {
+			guide->GuideWindowFinish();
+			pause->PauseStart();
+		}
+	}
 }

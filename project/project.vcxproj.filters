@@ -578,6 +578,9 @@
     <ClCompile Include="Source\Camera\CameraState\RangedEnemyFinishCamera.cpp">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GuideWindow\GuideWindow.cpp">
+      <Filter>PlayScene\GuideWindow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1230,6 +1233,9 @@
     <ClInclude Include="Source\Camera\CameraState\RangedEnemyFinishCamera.h">
       <Filter>PlayScene\Camera\CameraState</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GuideWindow\GuideWindow.h">
+      <Filter>PlayScene\GuideWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
@@ -1462,6 +1468,9 @@
     </Filter>
     <Filter Include="Component\TextRenderer">
       <UniqueIdentifier>{05bc78ba-1382-4f9e-8ccf-47c35bdf5e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayScene\GuideWindow">
+      <UniqueIdentifier>{16d2bc44-b9c7-4c8d-8cbc-598adc555995}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

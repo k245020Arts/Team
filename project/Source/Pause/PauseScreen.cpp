@@ -23,6 +23,8 @@ PauseScreen::PauseScreen()
 	const int EDGE_NUM_X = 300;
 	const int EDGE_NUM_Y = 50;
 
+	
+
 	Object2D* pauseObj = new Object2D();
 	pauseObj->Init(VECTOR2F(440.0f + EDGE_NUM_X,150.0f + EDGE_NUM_Y),VECTOR2F(0.0f,0.0f),VECTOR2F(2.0f,2.0f),"PauseText");
 	pauseText = pauseObj->Component()->AddComponent<TextRenderer>();
@@ -35,14 +37,22 @@ PauseScreen::PauseScreen()
 	backText->TextSetting("ゲームに戻る", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
 	back->SetDrawOrder(-350000);
 
+	Object2D* guide = new Object2D();
+	guide->Init(VECTOR2F(505.0f + EDGE_NUM_X, 500.0f + EDGE_NUM_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "guideText");
+	guideText = guide->Component()->AddComponent<TextRenderer>();
+	guideText->TextSetting("操作説明", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
+	guide->SetDrawOrder(-350000);
+
+
 	Object2D* title = new Object2D();
-	title->Init(VECTOR2F(505.0f + EDGE_NUM_X, 500.0f + EDGE_NUM_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "TitleText");
+	title->Init(VECTOR2F(505.0f + EDGE_NUM_X, 650.0f + EDGE_NUM_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "TitleText");
 	titleText = title->Component()->AddComponent<TextRenderer>();
 	titleText->TextSetting("タイトルに戻る", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
 	title->SetDrawOrder(-350000);
 
+	
 	Object2D* select = new Object2D();
-	select->Init(VECTOR2F(355.0f + EDGE_NUM_X, 700.0f + EDGE_NUM_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.5f, 1.5f), "Select");
+	select->Init(VECTOR2F(355.0f + EDGE_NUM_X, 800.0f + EDGE_NUM_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.5f, 1.5f), "Select");
 	selectText = select->Component()->AddComponent<TextRenderer>();
 	selectText->TextSetting("Aボタンを押して選択", "MonopinJRegular", ".dft", WHITE, 4, Font_ID::PAUSE_FONT);
 	select->SetDrawOrder(-350000);
@@ -53,16 +63,28 @@ PauseScreen::PauseScreen()
 	cursorText->TextSetting("→","MonopinJRegular",".dft",WHITE,4, Font_ID::PAUSE_FONT);
 	cursorObj->SetDrawOrder(-350000);
 	
-	pauseText->SetAlpha(0.0f);
-	backText->SetAlpha(0.0f);
-	titleText->SetAlpha(0.0f);
-	selectText->SetAlpha(0.0f);
-	cursorText->SetAlpha(0.0f);
+	pauseText->SetAlpha(TRANSPARENT_COLOR_F);
+	selectText->SetAlpha(TRANSPARENT_COLOR_F);
+	cursorText->SetAlpha(TRANSPARENT_COLOR_F);
 
 	selectDelayTime = 0.0f;
 
 	delayCountStart = false;
 	baseSinRate = 0.0f;
+
+	menuTexts.push_back(backText);
+	menuTexts.push_back(guideText);
+	menuTexts.push_back(titleText);
+
+	for (auto* menu : menuTexts) {
+		menu->SetAlpha(TRANSPARENT_COLOR_F);
+	}
+
+	
+
+	cursorPos.push_back(VECTOR3(780, 400, 0));
+	cursorPos.push_back(VECTOR3(780, 550, 0));
+	cursorPos.push_back(VECTOR3(755, 740, 0));
 }
 
 PauseScreen::~PauseScreen()
@@ -93,31 +115,67 @@ void PauseScreen::Update()
 		inputDelayTime -= Time::DeltaTimeRate();
 	}
 	else {
-		static constexpr float INPUT_DELAY_TIME = 0.3f; //連続で入力情報が入らない時間
-		if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y >= 0.5f || InputManager::GetInstance()->KeyInputDown("PauseUp"))
-		{
-			pauseItem = Back;
-			SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
-			inputDelayTime = INPUT_DELAY_TIME;
-		}
+		static constexpr float INPUT_DELAY_TIME = 0.2f; //連続で入力情報が入らない時間
 
-		if (InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y <= -0.5f || InputManager::GetInstance()->KeyInputDown("PauseDown"))
+		bool stickUp = InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y >= 0.5f;
+		bool buttonUp = InputManager::GetInstance()->KeyInputDown("PauseUp");
+		if (stickUp || buttonUp)
 		{
-			pauseItem = Title;
 			SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
-			inputDelayTime = INPUT_DELAY_TIME;
+			//スティックで入力しているときには待機時間を付ける
+			if (stickUp) {
+				inputDelayTime = INPUT_DELAY_TIME;
+			}
+			else {
+				inputDelayTime = 0.0f;
+			}
+			
+			currentIndex--;
+
+			if (currentIndex < 0)
+			{
+				currentIndex = 0;
+			}
+			pauseItem = (PauseMenuItem)currentIndex;
+		}
+		bool stickDown = InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y <= -0.5f;
+		bool buttonDown = InputManager::GetInstance()->KeyInputDown("PauseDown");
+		if (stickDown || buttonDown)
+		{
+			currentIndex++;
+			SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
+			//スティックで入力しているときには待機時間を付ける
+			if (stickDown) {
+				inputDelayTime = INPUT_DELAY_TIME;
+			}
+			else {
+				inputDelayTime = 0.0f;
+			}
+			if (currentIndex >= PauseMenuItem::Max)
+			{
+				currentIndex = PauseMenuItem::Max - 1;
+			}
+			pauseItem = (PauseMenuItem)currentIndex;
+			
 		}
 	}
 
 	if (InputManager::GetInstance()->KeyInputDown("PauseSelect"))
 	{
-		if (pauseItem == Title) {
-			delayCountStart = true;
-		}
-		else {
+		switch (pauseItem)
+		{
+		case Back:
+			result = PauseResult::Resume;
 			selectMenu = true;
+			break;
+		case Guide:
+			result = PauseResult::OpenGuide;
+			selectMenu = true;
+			break;
+		case Title:
+			delayCountStart = true;
+			break;
 		}
-		SoundManager::GetInstance()->PlaySe(Sound_ID::PUSH);
 	}
 
 	const float OFFSET_PLUS_RATE = 10.0f;
@@ -135,19 +193,15 @@ void PauseScreen::Update()
 	
 
 	float cursorOffset = baseSinRate * OFFSET_PLUS_RATE;
-	if (pauseItem == Back)
-	{
-		cursorText->SetPos(VECTOR3(780.0f + cursorOffset,400.0f,0.0f));
-	}
-	else
-	{
-		cursorText->SetPos(VECTOR3(755.0f + cursorOffset,550.0f,0.0f));
-	}
+
+	VECTOR3 pos = cursorPos[currentIndex];
+	cursorText->SetPos(VECTOR3(pos.x + cursorOffset,pos.y,pos.z));
 
 	if (delayCountStart) {
 		selectDelayTime -= Time::DeltaTimeRate();
 		if (selectDelayTime <= 0.0f) {
 			selectMenu = true;
+			result = PauseResult::ToTitle;
 		}
 		float alpha = 180.0f + sinf(animationTime * 5.0f) * 75.0f;
 		selectText->SetAlpha(alpha);
@@ -174,12 +228,7 @@ void PauseScreen::Draw()
 
 	/*DrawString(550, 250, "PAUSE", GetColor(255, 255, 255));*/
 
-	if (pauseItem == PauseMenuItem::Back) {
-		ActiveButtonState(backText, titleText);
-	}
-	else if (pauseItem == PauseMenuItem::Title) {
-		ActiveButtonState(titleText, backText);
-	}
+	UpdateButtonState();
 
 	/*DrawString(560, 350, "Continue", resumeColor);
 	DrawString(560, 420, "Title", titleColor);*/
@@ -203,13 +252,19 @@ void PauseScreen::PauseStart()
 	//UiManager->SetUIDraw(false);
 	selectMenu = false; 
 
+	//すべてのポーズ画面で使うテキストを表示する
 	pauseText->SetAlpha((float)OPAQUE_COLOR);
-	backText->SetAlpha((float)OPAQUE_COLOR);
-	titleText->SetAlpha((float)OPAQUE_COLOR);
+	for (auto* menu : menuTexts) {
+		menu->SetAlpha((float)OPAQUE_COLOR);
+	}
 	selectText->SetAlpha((float)OPAQUE_COLOR);
 	cursorText->SetAlpha((float)OPAQUE_COLOR);
 
+	//---------------------------------------------------------------------
+
 	SoundManager::GetInstance()->ChangeVolumeSound(Sound_ID::PLAY_BGM,150);
+
+	result = None;
 }
 
 bool PauseScreen::PauseFinish()
@@ -223,14 +278,19 @@ bool PauseScreen::PauseFinish()
 	/*Time::ChangeDeltaRate(timeRate);*/
 	//UiManager->SetUIDraw(true);
 
+	//すべてのポーズ画面で使うテキストの表示を止める
+
 	pauseText->SetAlpha(TRANSPARENT_COLOR_F);
-	backText->SetAlpha(TRANSPARENT_COLOR_F);
-	titleText->SetAlpha(TRANSPARENT_COLOR_F);
+	for (auto* menu : menuTexts) {
+		menu->SetAlpha(TRANSPARENT_COLOR_F);
+	}
 	selectText->SetAlpha(TRANSPARENT_COLOR_F);
 	cursorText->SetAlpha(TRANSPARENT_COLOR_F);
 
 	selectMenu = false;
 	selectDelayTime = 0.0f;
+
+	//---------------------------------------------------------------------
 
 	SoundManager::GetInstance()->ChangeVolumeSound(Sound_ID::PLAY_BGM, 250);
 
@@ -244,15 +304,27 @@ bool PauseScreen::PauseFinish()
 	
 }
 
-void PauseScreen::ActiveButtonState(TextRenderer* _activeButton, TextRenderer* _noActiveButton)
+void PauseScreen::PauseButtonGameBack()
 {
-	const float BASE_SCALE = 1.35f;
-	float scale = BASE_SCALE + baseSinRate * 0.08f;
+	result = PauseResult::Resume;
+	selectMenu = true;
+}
 
-	//アクティブ状態になるオブジェクトの修正
-	_activeButton->SetColor(ORANGE);
-	_activeButton->SetScale(VOne * scale);
-	//非アクティブ状態になるオブジェクトの修正
-	_noActiveButton->SetColor(WHITE);
-	_noActiveButton->SetScale(VOne);
+void PauseScreen::UpdateButtonState()
+{
+	for (int i = 0; i < menuTexts.size(); i++)
+	{
+		if (i == currentIndex)
+		{
+			float scale = 1.35f + baseSinRate * 0.08f;
+
+			menuTexts[i]->SetColor(ORANGE);
+			menuTexts[i]->SetScale(VOne * scale);
+		}
+		else
+		{
+			menuTexts[i]->SetColor(WHITE);
+			menuTexts[i]->SetScale(VOne);
+		}
+	}
 }
