@@ -52,5 +52,5 @@ private:
 
 	TextRenderer* stageText;
 	TextRenderer* text;
-
+	std::vector<int> stageHandle;
 };

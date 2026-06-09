@@ -353,6 +353,7 @@ void GameControler::BeforeUpdate()
 #else
 		guide->GuideWindowDraw(false);
 		keepGameState = PLAY;
+		gameState = PAUSE_SCENE;
 		//ChangeState(GameState::PLAY);
 #endif // STRING_MODE
 

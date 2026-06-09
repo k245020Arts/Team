@@ -13,6 +13,7 @@ struct StageData
     int stageModelID;
 	std::string bgm;
     int bossID;
+    std::string stageImageHandleName;
 
     StageData() {
         id = -1;
@@ -20,6 +21,7 @@ struct StageData
         stageModelID = -1;
         bgm = "";
         bossID = -1;
+        stageImageHandleName = "";
     }
 };
 
@@ -53,6 +55,7 @@ public:
             stage.stageModelID = elem.value("map", -1);
             stage.bgm = elem.value("bgm", "");
             stage.bossID = elem.value("bossID", -1);
+            stage.stageImageHandleName = elem.value("stageImageHandleName", "");
             
             stages.push_back(stage);
         }
@@ -72,6 +75,8 @@ public:
     const StageData&  GetNowStageData() const {
         return stages.at(stageID);
     }
+
+    const std::vector<StageData>& GetAllStageData() { return stages; }
 
     int GetStageID() const { return stageID; }
     void SetStageID(int id) { stageID = id; }
