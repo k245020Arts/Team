@@ -65,7 +65,7 @@ void PlayerJustAvoidAttack1::Update()
 		distSize = dist.Size();
 		if (distSize <= DISTANCE_MOVE && beforeAttack) {
 			p->playerCom.anim->SetPlaySpeed(0.8f);
-			p->playerCom.physics->SetFirction(PlayerInformation::BASE_INTERIA + VECTOR3(30000.0f, 30000.0f, 30000.0f));
+			p->playerCom.physics->SetVelocity(VZero);
 		}
 		else {
 			angle = atan2f(dist.x, dist.z);

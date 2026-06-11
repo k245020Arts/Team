@@ -29,8 +29,8 @@
       "name" : "テストステージ2",
       "map" : 1,
       "bgm" : "PlaySceneBGM2",
-      "bossID" : 1,
-      "stageImageHandleName" : "Stage2"
+      "bossID" : 0,
+      "stageImageHandleName" : "Stage1"
     }
   ]
 }

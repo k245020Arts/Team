@@ -83,8 +83,8 @@ PauseScreen::PauseScreen()
 	
 
 	cursorPos.push_back(VECTOR3(780, 400, 0));
-	cursorPos.push_back(VECTOR3(780, 550, 0));
-	cursorPos.push_back(VECTOR3(755, 740, 0));
+	cursorPos.push_back(VECTOR3(755, 550, 0));
+	cursorPos.push_back(VECTOR3(735, 730, 0));
 }
 
 PauseScreen::~PauseScreen()
