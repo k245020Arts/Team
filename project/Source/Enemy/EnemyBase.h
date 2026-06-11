@@ -1,7 +1,7 @@
 #pragma once
 #include "../CharaBase/CharaBase.h"
 #include "enemyInformation.h"
-#include "TrashEnemy/EnemyState/EnemyDamage.h"
+#include "EnemyState/EnemyDamage.h"
 #include "../Common/ID/EffectID.h"
 
 class EnemyBase : public CharaBase

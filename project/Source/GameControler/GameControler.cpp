@@ -26,11 +26,12 @@ namespace {
 	};
 }
 
-
+int GameControler::gamePlayNum = 0;
 
 GameControler::GameControler()
 {
 	startCount = 0.0f;
+	gamePlayNum++;
 	SetDrawOrder(-500);
 	pause = FindGameObject<PauseScreen>();
 	//winImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
@@ -351,9 +352,15 @@ void GameControler::BeforeUpdate()
 #ifdef STRING_MODE
 		ChangeState("PLAY");
 #else
-		guide->GuideWindowDraw(false);
-		keepGameState = PLAY;
-		gameState = PAUSE_SCENE;
+		if (gamePlayNum == 1) { //‰‚ß‚ÄƒvƒŒƒC‚ð‚·‚é‚Æ‚«‚Ì‚Ý‘€ìà–¾‚ð•\Ž¦
+			guide->GuideWindowDraw(false);
+			keepGameState = PLAY;
+			gameState = PAUSE_SCENE;
+		}
+		else {
+			ChangeState(GameState::PLAY);
+		}
+		
 		//ChangeState(GameState::PLAY);
 #endif // STRING_MODE
 

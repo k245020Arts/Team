@@ -269,7 +269,6 @@
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\AttackSorting.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttack.h" />
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\EnemyAttackBase.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\Attack\BossAttackJsonParse.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossAppear.h" />
     <ClInclude Include="Source\Enemy\Boss\BossState\BossBackStep.h" />
@@ -288,10 +287,9 @@
     <ClInclude Include="Source\Enemy\EnemyBase.h" />
     <ClInclude Include="Source\Enemy\EnemyInformation.h" />
     <ClInclude Include="Source\Enemy\EnemyManager.h" />
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyBlowAway.h" />
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDamage.h" />
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateBase.h" />
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateManager.h" />
+    <ClInclude Include="Source\Enemy\EnemyState\Attack\EnemyAttackBase.h" />
+    <ClInclude Include="Source\Enemy\EnemyState\EnemyStateBase.h" />
+    <ClInclude Include="Source\Enemy\EnemyState\EnemyStateManager.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemy.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyGroup.h" />
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyManager.h" />
@@ -475,7 +473,6 @@
     <ClCompile Include="Source\Enemy\Boss\BossCreater.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\AttackSorting.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\Attack\BossAttack.cpp" />
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\EnemyAttackBase.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossAppear.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossBackStep.cpp" />
     <ClCompile Include="Source\Enemy\Boss\BossState\BossCoolTime.cpp" />
@@ -491,8 +488,9 @@
     <ClCompile Include="Source\Enemy\Boss\BossState\BossWin.cpp" />
     <ClCompile Include="Source\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Source\Enemy\EnemyManager.cpp" />
-    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateBase.cpp" />
-    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateManager.cpp" />
+    <ClCompile Include="Source\Enemy\EnemyState\Attack\EnemyAttackBase.cpp" />
+    <ClCompile Include="Source\Enemy\EnemyState\EnemyStateBase.cpp" />
+    <ClCompile Include="Source\Enemy\EnemyState\EnemyStateManager.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemy.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyGroup.cpp" />
     <ClCompile Include="Source\Enemy\TrashEnemy\TrashEnemyManager.cpp" />

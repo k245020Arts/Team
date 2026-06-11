@@ -1,5 +1,5 @@
 #pragma once
-#include "EnemyAttackBase.h"
+#include "../../../EnemyState/Attack/EnemyAttackBase.h"
 
 inline void to_json(JSON& j, const EnemyAttackBase::RayColliderInfo& p)
 {

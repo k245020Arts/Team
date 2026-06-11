@@ -1,7 +1,7 @@
 #pragma once
 #include "../Common/ID/EffectID.h"
-#include "TrashEnemy/EnemyState/EnemyBlowAway.h"
-#include "TrashEnemy/EnemyState/EnemyDamage.h"
+#include "EnemyState/EnemyBlowAway.h"
+#include "EnemyState/EnemyDamage.h"
 
 class StateManager;
 //class Enemy;

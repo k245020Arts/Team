@@ -8,7 +8,7 @@
 #include "../../Component/Shaker/Shaker.h"
 #include "../../../ImGui/imgui.h"
 #include "../../Player/Player.h"
-#include "../TrashEnemy/EnemyState/EnemyBlowAway.h"
+#include "../EnemyState/EnemyBlowAway.h"
 #include "../../Camera/CameraManager.h"
 #include "../../Camera/Camera.h"
 #include "../../Common/Effect/EffectManager.h"

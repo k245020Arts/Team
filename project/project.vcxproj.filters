@@ -332,12 +332,6 @@
     <ClCompile Include="Source\Enemy\Boss\Boss.cpp">
       <Filter>PlayScene\Enemy\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateBase.cpp">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateManager.cpp">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Enemy\EnemyBase.cpp">
       <Filter>PlayScene\Enemy</Filter>
     </ClCompile>
@@ -578,7 +572,13 @@
     <ClCompile Include="Source\GuideWindow\GuideWindow.cpp">
       <Filter>PlayScene\GuideWindow</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy\Boss\BossState\Attack\EnemyAttackBase.cpp">
+    <ClCompile Include="Source\Enemy\EnemyState\EnemyStateBase.cpp">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\EnemyState\EnemyStateManager.cpp">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\EnemyState\Attack\EnemyAttackBase.cpp">
       <Filter>PlayScene\Enemy\EnemyState\Attack</Filter>
     </ClCompile>
   </ItemGroup>
@@ -960,12 +960,6 @@
     <ClInclude Include="Source\Enemy\Boss\BossInformation.h">
       <Filter>PlayScene\Enemy\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateManager.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyStateBase.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Enemy\EnemyBase.h">
       <Filter>PlayScene\Enemy</Filter>
     </ClInclude>
@@ -1101,12 +1095,6 @@
     <ClInclude Include="Source\Enemy\Boss\BossState\BossLose.h">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyBlowAway.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\EnemyState\EnemyDamage.h">
-      <Filter>PlayScene\Enemy\EnemyState</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Component\EnemyAttackObject\BossRock\BossRockManager.h">
       <Filter>Component\EnemyAttackObject\BossRock</Filter>
     </ClInclude>
@@ -1233,7 +1221,13 @@
     <ClInclude Include="Source\GuideWindow\GuideWindow.h">
       <Filter>PlayScene\GuideWindow</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\Boss\BossState\Attack\EnemyAttackBase.h">
+    <ClInclude Include="Source\Enemy\EnemyState\EnemyStateBase.h">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\EnemyState\EnemyStateManager.h">
+      <Filter>PlayScene\Enemy\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\EnemyState\Attack\EnemyAttackBase.h">
       <Filter>PlayScene\Enemy\EnemyState\Attack</Filter>
     </ClInclude>
   </ItemGroup>

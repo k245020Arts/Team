@@ -1,7 +1,7 @@
 #pragma once
 #include "../EnemyAttackObject.h"
 #include <unordered_set>
-#include "../../../Enemy/Boss/BossState/Attack/EnemyAttackBase.h"
+#include "../../../Enemy/EnemyState/Attack/EnemyAttackBase.h"
 
 class SphereCollider;
 class RayCollider;

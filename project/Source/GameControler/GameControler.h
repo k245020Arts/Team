@@ -117,6 +117,8 @@ private:
 
 	GuideWindow* guide;
 
+	static int gamePlayNum;
+
 	void PauseResult();
 	void GuideWindowUpdate();
 };

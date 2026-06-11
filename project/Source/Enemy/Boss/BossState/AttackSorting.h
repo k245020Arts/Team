@@ -1,5 +1,5 @@
 #pragma once
-#include "../../TrashEnemy/EnemyState/EnemyStateBase.h"
+#include "../../EnemyState/EnemyStateBase.h"
 #include "../Boss.h"
 #include "Attack/BossAttackJsonParse.h"
 #include "Attack/BossAttack.h"

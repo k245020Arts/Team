@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../../Library/GameObject.h"
-#include "../../../Enemy/Boss/BossState/Attack/EnemyAttackBase.h"
+#include "../../../Enemy/EnemyState/Attack/EnemyAttackBase.h"
 #include "../../../Common/JsonReader.h"
 
 class BossRockBase;

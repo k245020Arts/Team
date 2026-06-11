@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "../../../TrashEnemy/EnemyState/EnemyStateBase.h"
-#include "../../../../Common/ID/EffectID.h"
+#include "../../EnemyState/EnemyStateBase.h"
+#include "../../../Common/ID/EffectID.h"
 //#define DataSave
-#include "../../../../Component/Collider/CollsionInformation.h"
+#include "../../../Component/Collider/CollsionInformation.h"
 
 class SphereCollider;
 class Boss;

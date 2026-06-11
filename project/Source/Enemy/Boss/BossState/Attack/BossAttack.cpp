@@ -8,7 +8,7 @@
 #include "../../../EnemyBase.h"
 #include "../../../Boss/Boss.h"
 #include "../../../../Common/ResourceLoader.h"
-#include "../../../TrashEnemy/EnemyState/EnemyStateManager.h"
+#include "../../../EnemyState/EnemyStateManager.h"
 #include "../../../../Common/Effect/EffectManager.h"
 #include "../../../../Common/Sound/SoundManager.h"
 #include "../../../../Weapon/WeaponManager.h"
