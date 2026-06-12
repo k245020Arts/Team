@@ -120,7 +120,6 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	AttackSound();
 	AttackFlash(ID::E_MODEL, 35, "E_AttackV");
 	Trail();
-	EnemyJustAvoidCollsion();
 }
 
 void CooperateAttack2::DamageMove(TrashEnemy* _enemy)

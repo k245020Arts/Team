@@ -30,11 +30,11 @@ void T_EnemyDamage::Update()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 	
-	if (enemy->IsPlayerSpecialMove())
+	/*if (enemy->IsPlayerSpecialMove())
 	{
 		enemy->enemyBaseComponent.anim->SetPlaySpeed(0);
 		return;
-	}
+	}*/
 	
 	enemy->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
