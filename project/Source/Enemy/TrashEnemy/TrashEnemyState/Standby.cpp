@@ -40,10 +40,7 @@ void Standby::Update()
 		if (vec.Size() <= range)//ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£‚ðŒ©‚ÄŒã‚ë‚É‰º‚ª‚é
 		{
 			isRedefinition = true;
-			float rotY = enemy->GetEnemyObj()->GetTransform()->rotation.y;
-
-			enemy->GetEnemyObj()->GetTransform()->position.x -= range / BACKSPEED * cosf(rotY - 0.5f * DX_PI_F);
-			enemy->GetEnemyObj()->GetTransform()->position.z -= range / BACKSPEED * sinf(rotY - 0.5f * DX_PI_F);
+			enemy->NormalMove(BACKSPEED);
 		}
 		else
 		{
@@ -127,7 +124,9 @@ void Standby::RotateMove(TrashEnemy* _enemy)
 	{
 		// ˆÚ“®
 		const float Speed = 10.0f;
-		_enemy->Move(newPos, Speed);
+		VECTOR3 dir = VNorm(newPos - EPos);
+		dir.y = 0.0f;
+		_enemy->Move(dir, Speed);
 	}
 	else
 	{

@@ -40,8 +40,7 @@ void T_EnemyAttack::Update()
 	if (counter <= 0.3f)
 	{
 		const float Speed = 30.0f;
-		enemy->GetEnemyObj()->GetTransform()->position.x += Speed * cosf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
-		enemy->GetEnemyObj()->GetTransform()->position.z += Speed * sinf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
+		enemy->NormalMove(Speed);
 	}
 
 	AttackInformation(enemy);

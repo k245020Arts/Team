@@ -412,13 +412,23 @@ void TrashEnemy::DamageCollsionEvent(const CollsionEventData& _data)
 	}
 }
 
-void TrashEnemy::Move(VECTOR3& _targetPos, float _speed)
+void TrashEnemy::NormalMove(float _speed)
 {
-	VECTOR3 dir = VNorm(_targetPos - GetPos()) ;
-	dir.y = 0.0f;
-	//enemyBaseComponent.physics->AddVelocity(dir * _speed, true);
-	GetEnemyObj()->GetTransform()->position += dir * _speed;
+	Move(VECTOR3(0, 0, -1), _speed);
 }
+
+void TrashEnemy::Move(VECTOR3 _vector, float _speed)
+{
+	GetEnemyObj()->GetTransform()->position += _vector * MGetRotY(GetEnemyObj()->GetTransform()->rotation.y) * _speed;
+}
+
+//void TrashEnemy::Move(VECTOR3& _targetPos, float _speed)
+//{
+//	VECTOR3 dir = VNorm(_targetPos - GetPos()) ;
+//	dir.y = 0.0f;
+//	//enemyBaseComponent.physics->AddVelocity(dir * _speed, true);
+//	GetEnemyObj()->GetTransform()->position += dir * _speed;
+//}
 
 void TrashEnemy::LookTarget(VECTOR3 _pos)
 {

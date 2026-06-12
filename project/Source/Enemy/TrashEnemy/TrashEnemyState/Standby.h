@@ -18,7 +18,7 @@ private:
 	void RotateMove(TrashEnemy* _enemy);
 	//ƒJƒƒ‰‚Ì’†‚É‚¢‚½‚çUŒ‚‚Å‚«‚é
 	void InCameraView();
-	const float BACKSPEED = 60.0f;
+	const float BACKSPEED = -20.0f;
 
 	VECTOR3 vec;
 	VECTOR3 pPos;
