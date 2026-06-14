@@ -422,14 +422,6 @@ void TrashEnemy::Move(VECTOR3 _vector, float _speed)
 	GetEnemyObj()->GetTransform()->position += _vector * MGetRotY(GetEnemyObj()->GetTransform()->rotation.y) * _speed;
 }
 
-//void TrashEnemy::Move(VECTOR3& _targetPos, float _speed)
-//{
-//	VECTOR3 dir = VNorm(_targetPos - GetPos()) ;
-//	dir.y = 0.0f;
-//	//enemyBaseComponent.physics->AddVelocity(dir * _speed, true);
-//	GetEnemyObj()->GetTransform()->position += dir * _speed;
-//}
-
 void TrashEnemy::LookTarget(VECTOR3 _pos)
 {
 	VECTOR3 distance = _pos - obj->GetTransform()->position;

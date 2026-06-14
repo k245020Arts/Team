@@ -203,7 +203,7 @@ void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 
 	attackCounter += Time::DeltaTimeRate();
 
-	if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)
+	if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)//攻撃のクールタイム
 	{
 		if (_enemy->IsAttack())
 		{
