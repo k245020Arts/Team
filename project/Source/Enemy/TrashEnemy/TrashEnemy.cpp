@@ -420,6 +420,23 @@ void TrashEnemy::NormalMove(float _speed)
 void TrashEnemy::Move(VECTOR3 _vector, float _speed)
 {
 	GetEnemyObj()->GetTransform()->position += _vector * MGetRotY(GetEnemyObj()->GetTransform()->rotation.y) * _speed;
+	WallStop();
+}
+
+void TrashEnemy::WallStop()
+{
+	VECTOR3& ePos = GetEnemyObj()->GetTransform()->position;
+	const VECTOR3 WallPos = VECTOR3(10000.0f, 0.0f, 10000.0f);
+
+	if (ePos.x >= WallPos.x)
+		ePos.x = WallPos.x;
+	else if(ePos.x <= -WallPos.x)
+		ePos.x = -WallPos.x;
+
+	if(ePos.z >= WallPos.z)
+		ePos.z = WallPos.z;
+	else if (ePos.z <= -WallPos.z)
+		ePos.z = -WallPos.z;
 }
 
 void TrashEnemy::LookTarget(VECTOR3 _pos)

@@ -133,6 +133,10 @@ private:
 	bool leaderActiveEnd;
 	//‘Å‚¿•Ô‚³‚ê‚½‚©‚Ç‚¤‚©
 	bool hitBack;
+	//˜A‘±‚Å˜AŒgUŒ‚‚ğn‚ß‚È‚¢‚æ‚¤‚É‚·‚é
+	float rangedAtkCoolTime;
+	//Å’á‰½•bŠÔUŒ‚‚µ‚È‚¢‚©
+	const float MaxCoolTime = 10.0f;
 
 	//--------------------------
 };

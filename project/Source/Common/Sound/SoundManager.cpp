@@ -140,6 +140,8 @@ void SoundManager::PlaySceneLoad()
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK3, "p_walk3", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK4, "p_walk4", ".wav", 255);
 	//SoundLoad(Sound_ID::SOUND_ID::PLAYER_WALK5, "p_walk5", ".wav", 255);
+
+	SoundLoad(Sound_ID::RANGED_ATK_FIN, "rockFall", ".wav", 250);
 }
 
 void SoundManager::TitleSceneLoad()

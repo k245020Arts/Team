@@ -134,11 +134,7 @@ public:
 	}
 
 	void DamageCollsionEvent(const CollsionEventData& _data);
-	//まっすぐ進む
-	void NormalMove(float _speed);
-	//指定した方向にすすむ
-	void Move(VECTOR3 _vector, float _speed);
-	//void Move(VECTOR3& _targetPos, float _speed);
+	
 
 private:
 	CharaWeapon* chara;
@@ -156,7 +152,13 @@ private:
 
 	//_posの方向に向く
 	void LookTarget(VECTOR3 _pos);
-	
+	//まっすぐ進む
+	void NormalMove(float _speed);
+	//指定した方向にすすむ
+	void Move(VECTOR3 _vector, float _speed);
+	//壁抜け防止関数
+	void WallStop();
+
 	bool active;
 	
 	//通常攻撃をしてもよいか
