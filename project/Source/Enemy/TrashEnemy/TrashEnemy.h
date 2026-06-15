@@ -134,8 +134,11 @@ public:
 	}
 
 	void DamageCollsionEvent(const CollsionEventData& _data);
-
-	void Move(VECTOR3& _targetPos, float _speed);
+	//‚Ü‚Á‚·‚®i‚Ş
+	void NormalMove(float _speed);
+	//w’è‚µ‚½•ûŒü‚É‚·‚·‚Ş
+	void Move(VECTOR3 _vector, float _speed);
+	//void Move(VECTOR3& _targetPos, float _speed);
 
 private:
 	CharaWeapon* chara;

@@ -22,8 +22,6 @@ CooperateAttack1::CooperateAttack1()
 	attackParam.speedUpMotionSpeed = 0.3f;
 
 	copyColl = VZero;
-
-	motionSpeed = 0;
 }
 
 CooperateAttack1::~CooperateAttack1()
@@ -33,8 +31,7 @@ CooperateAttack1::~CooperateAttack1()
 void CooperateAttack1::Update()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
-
-	enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	EnemyAttackBase::Update();
 
 	AttackInformation(enemy);
 
@@ -52,7 +49,6 @@ void CooperateAttack1::Start()
 	copyColl = EnemyAttackBase::collTrans.scale;
 	EnemyAttackBase::collTrans.scale = VECTOR3(200, 0, 0);
 
-	motionSpeed = enemy->enemyBaseComponent.anim->GetPlaySpeed();
 	EnemyStateBase::Start();
 }
 
@@ -62,8 +58,6 @@ void CooperateAttack1::Finish()
 	enemy->speed=enemy->eStatus->GetStatus().runSpeed;
 	enemy->CooperateAtkFinish();
 	enemy->DeleteCollision(&enemy->attackColl);
-
-	enemy->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
 	EnemyAttackBase::collTrans.scale = copyColl;
 }

@@ -38,9 +38,7 @@ void T_EnemyRun::Update()
 	rotation = enemy->obj->GetTransform()->rotation;
 	enemy->LookTarget(targetPos);
 
-	const float ROTY = -rotation.y - 0.5f * DX_PI_F;
-
-	enemy->Move(targetPos, enemy->eStatus->GetStatus().runSpeed);
+	enemy->NormalMove(enemy->eStatus->GetStatus().runSpeed);
 	
 	VECTOR3 targetVec = targetPos - enemy->obj->GetTransform()->position;
 	

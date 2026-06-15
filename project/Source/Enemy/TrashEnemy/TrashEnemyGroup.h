@@ -55,7 +55,7 @@ private:
 	//全部の敵の情報
 	std::list<TrashEnemy*> allEnemy;
 
-	const int ATK_COUNTER_MIN = 1;
+	const int ATK_COUNTER_MIN = 2;
 	const float ATK_COUNTER_MAX = 3.0f;
 	/// <summary>
 	/// 指定した敵のリストの中身を見て敵がやられてたらリストから削除する

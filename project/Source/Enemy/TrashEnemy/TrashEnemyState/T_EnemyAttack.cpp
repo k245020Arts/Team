@@ -4,7 +4,6 @@
 #include "../../../State/StateManager.h"
 #include "T_EnemyStatus.h"
 #include "../../../Player/Player.h"
-#include "../../../Common/Easing.h"
 
 T_EnemyAttack::T_EnemyAttack()
 {
@@ -12,14 +11,13 @@ T_EnemyAttack::T_EnemyAttack()
 	animId = ID::TE_ATTACK;
 	attackParam.animID = ID::TE_ATTACK;
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
-
 	attackParam.damagePattern = EnemyAttackBase::NO_BACK;
 
 	attackParam.useFlash = true;
 	attackParam.attackFlashStartTime = 0.7f;
 	attackParam.slowAmout = 0.1f;
 	attackParam.slowTime = 0.3f;
-	attackParam.speedUpMotionSpeed = 0.3f;
+	attackParam.speedUpMotionSpeed = 0.0f;
 }
 
 T_EnemyAttack::~T_EnemyAttack()
@@ -29,7 +27,6 @@ T_EnemyAttack::~T_EnemyAttack()
 void T_EnemyAttack::Update()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
-	EnemyAttackBase::Update();
 	enemy->LookTarget(enemy->enemyBaseComponent.playerObj->GetTransform()->position);
 	
 	if (enemy->isCooperateAtk)
@@ -40,10 +37,10 @@ void T_EnemyAttack::Update()
 	if (counter <= 0.3f)
 	{
 		const float Speed = 30.0f;
-		enemy->GetEnemyObj()->GetTransform()->position.x += Speed * cosf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
-		enemy->GetEnemyObj()->GetTransform()->position.z += Speed * sinf(-enemy->GetEnemyObj()->GetTransform()->rotation.y - 0.5f * DX_PI_F);
+		enemy->NormalMove(Speed);
 	}
 
+	EnemyAttackBase::Update();
 	AttackInformation(enemy);
 }
 
@@ -71,12 +68,12 @@ void T_EnemyAttack::Finish()
 
 void T_EnemyAttack::AttackInformation(TrashEnemy* _e)
 {
-	if (_e->enemyBaseComponent.anim->IsFinish())
-		_e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
-
 	AttackCollsion();
 	AttackSound();
 	AttackFlash(ID::E_MODEL, 35, "E_AttackV");
 	Trail();
 	EnemyJustAvoidCollsion();
+
+	if (_e->enemyBaseComponent.anim->IsFinish())
+		_e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
 }
