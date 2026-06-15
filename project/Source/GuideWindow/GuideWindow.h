@@ -45,11 +45,13 @@ private:
 	TextRenderer* gameBackText;
 	TextRenderer* pauseBackText;
 
-	int guideWindowHandle;
+	int guideWindowControlerHandle;
+	int guideWindowkeyHandle;
 
 	bool active;
 
 	int aButtonImage;
 	int bButtonImage;
 	bool buttonPut;
+	bool controler;
 };

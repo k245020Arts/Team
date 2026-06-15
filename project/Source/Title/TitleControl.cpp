@@ -31,6 +31,7 @@ TitleControl::TitleControl()
 	hImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Title", ID::TITLE_BACK);
 	titleImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "TitleImage", ID::TITLE);
 	keyImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "TitlePush", ID::PUSH_BUTTON);
+	pushKeyImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "TitlePushKey", ID::PUSH_KEY);
 	//font = LoadFontDataToHandle("data/font/MPlus2C.dft", 4);
 	font = ResourceLoad::LoadFont("MPlus2C", ".dft", Font_ID::TITLE_USE_FONT,4);
 	SoundManager::GetInstance()->AllDeleteSound();
@@ -42,7 +43,7 @@ TitleControl::TitleControl()
 	moveButton = 0.0f;
 	moveButton = 1.0f;
 	progress = 0.0f;
-
+	controler = true;
 	
 	Object3D* obj = FindGameObjectWithTag<Object3D>("PLAYER");
 	player = obj->Component()->GetComponent<TitlePlayer>();
@@ -125,6 +126,7 @@ void TitleControl::Update()
 			break;
 		}
 	}
+	KeyControlerChangeText();
 }
 
 float TitleControl::GetNowProgress()
@@ -185,6 +187,19 @@ void TitleControl::StageSelect()
 	}
 }
 
+void TitleControl::KeyControlerChangeText()
+{
+	//コントローラーが接続されている時のUIの変更
+	if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
+		text->SetText("Aボタンを押してスタート!!");
+		controler = true;
+	}
+	else {
+		text->SetText("  Pキーを押してスタート!!");
+		controler = false;
+	}
+}
+
 #define BLACK_TEXTURE SetDrawBright(0, 0, 0)
 #define DEFAULT_TEXTURE SetDrawBright(255, 255, 255)
 
@@ -203,7 +218,15 @@ void TitleControl::Draw()
 	int move = Easing::SinCube(0, 10, selectMoveCounter);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
-	DrawRotaGraph(Screen::WIDTH / 2, 850, (double)exrate * 2, 0.0, keyImage, true);
+	int titlePushImage = 1;
+	//コントロールに接続してるか否かで変更
+	if (controler) {
+		titlePushImage = keyImage;
+	}
+	else {
+		titlePushImage = pushKeyImage;
+	}
+	DrawRotaGraph(Screen::WIDTH / 2, 850, (double)exrate * 2, 0.0, titlePushImage, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - alpha);

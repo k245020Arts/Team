@@ -35,6 +35,7 @@ public:
 private:
 	int hImage;
 	int keyImage;
+	int pushKeyImage;
 	int titleImage;
 	float firstCounter;
 	float exrate;
@@ -53,4 +54,7 @@ private:
 	TextRenderer* stageText;
 	TextRenderer* text;
 	std::vector<int> stageHandle;
+
+	void KeyControlerChangeText();
+	bool controler;
 };

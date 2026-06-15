@@ -537,13 +537,15 @@ void Player::AvoidReady()
 void Player::AvoidRotationChange()
 {
 	//‰ñ”ð‚·‚é‚Æ‚«‚É‚Ç‚ê‚­‚ç‚¢‚Ì‘¬“x‚Å‰ñ“]‚³‚¹‚é‚©‚ðŽ¦‚·ˆ—
-	RotationChange(walkAngle,20.0f);
+	float speed = 20.0f;
+	RotationChange(walkAngle,speed);
 	if (avoidReadyCounter >= 0.0f) {
 		avoidReadyCounter	-= Time::DeltaTimeRate();
 	}
 	else {
 		justAvoidCanCounter -= Time::DeltaTimeRate();
 	}
+	
 	if (avoidStart && justAvoidCanCounter <= 0.0f && avoidReadyCounter <= 0.0f) {
 		playerCom.stateManager->ChangeState(StateID::PLAYER_AVOID_S);
 		avoidStart	= false;

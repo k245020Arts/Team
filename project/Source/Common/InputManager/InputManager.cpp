@@ -45,7 +45,7 @@ InputManager::InputManager()
 	CreateInputData(KeyConfigData("StageSelectRight", KEY_INPUT_RIGHT, XINPUT_BUTTON_DPAD_RIGHT, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("StageSelectLeft", KEY_INPUT_LEFT, XINPUT_BUTTON_DPAD_LEFT, MouseInput::MOUSE_NONE));
 	CreateInputData(KeyConfigData("GameBack", KEY_INPUT_SPACE, XINPUT_BUTTON_A, MouseInput::MOUSE_NONE));
-	CreateInputData(KeyConfigData("PauseBack", KEY_INPUT_B, XINPUT_BUTTON_B, MouseInput::MOUSE_NONE));
+	CreateInputData(KeyConfigData("PauseBack", KEY_INPUT_F3, XINPUT_BUTTON_B, MouseInput::MOUSE_NONE));
 
 	//-------------------------------------------------------------------------------------------------------------
 }

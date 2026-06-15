@@ -206,7 +206,15 @@ void PauseScreen::Update()
 		float alpha = 180.0f + sinf(animationTime * 5.0f) * 75.0f;
 		selectText->SetAlpha(alpha);
 	}
-	
+	//コントローラーが接続されている時のUIの変更
+	if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
+		selectText->SetText("Aボタンを押して選択");
+		selectText->SetPos(VECTOR3(655.0f, 850.0f, 0.0f));
+	}
+	else {
+		selectText->SetText("スペースキーを押して選択");
+		selectText->SetPos(VECTOR3(555.0f, 850.0f, 0.0f));
+	}
 }
 
 void PauseScreen::Draw()

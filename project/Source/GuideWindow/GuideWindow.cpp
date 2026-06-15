@@ -18,7 +18,8 @@ GuideWindow::GuideWindow()
 {
 	aButtonImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "AButtonImage",ID::A_BUTTONIMAGE);
 	bButtonImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "BButtonImage", ID::B_BUTTONIMAGE);
-	guideWindowHandle = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "GameGuide", ID::B_BUTTONIMAGE);
+	guideWindowControlerHandle = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "GameGuide", ID::GAME_GUIDE_CONTROLER);
+	guideWindowkeyHandle = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "GameGuideKeyboard", ID::GAME_GUIDE_KEY);
 
 	//---------------------------------------ガイドで使うテキストの初期化---------------------------------------
 
@@ -45,6 +46,13 @@ GuideWindow::GuideWindow()
 	gameBack = false;
 	active = false;
 	buttonPut = false;;
+
+	if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
+		controler = true;
+	}
+	else {
+		controler = false;
+	}
 }
 
 GuideWindow::~GuideWindow()
@@ -67,6 +75,20 @@ void GuideWindow::Update()
 			gameBack = false;
 		}
 	}
+
+	//コントローラーが接続されている時のUIの変更
+	if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
+		controler = true;
+		gameBackText->SetText("ゲームに戻る");
+		gameBackText->SetPos(VECTOR3((float)GAMEBACK_LABEL_POS_X, (float)LABEL_POS_Y, 0.0f));
+		pauseBackText->SetText("ポーズ画面に戻る");
+	}
+	else {
+		controler = false;
+		gameBackText->SetText("スペースキー : ゲームに戻る");
+		gameBackText->SetPos(VECTOR3((float)GAMEBACK_LABEL_POS_X - 400.0f, (float)LABEL_POS_Y, 0.0f));
+		pauseBackText->SetText("F3キー : ポーズ画面に戻る");
+	}
 	
 }
 
@@ -82,14 +104,21 @@ void GuideWindow::Draw()
 	DrawBox(0, 0, Screen::WIDTH, Screen::HEIGHT, GetColor(0, 0, 0), TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	
-	//操作説明書の描画
-	const int LABEL_SUB_POS_X = 40;
-	const int LABEL_SUB_POS_Y = 20;
-	DrawRotaGraph(GAMEBACK_LABEL_POS_X - LABEL_SUB_POS_X, LABEL_POS_Y + LABEL_SUB_POS_Y, 0.2f, 0.0f, aButtonImage, true);
-	if (menu) {
-		DrawRotaGraph(PAUSEBACK_LABEL_POS_X - LABEL_SUB_POS_X, LABEL_POS_Y + LABEL_SUB_POS_Y, 0.2f, 0.0f, bButtonImage, true);
+	if (controler) {
+		//操作説明書の描画
+		const int LABEL_SUB_POS_X = 40;
+		const int LABEL_SUB_POS_Y = 20;
+		DrawRotaGraph(GAMEBACK_LABEL_POS_X - LABEL_SUB_POS_X, LABEL_POS_Y + LABEL_SUB_POS_Y, 0.2f, 0.0f, aButtonImage, true);
+		if (menu) {
+			DrawRotaGraph(PAUSEBACK_LABEL_POS_X - LABEL_SUB_POS_X, LABEL_POS_Y + LABEL_SUB_POS_Y, 0.2f, 0.0f, bButtonImage, true);
+		}
+		DrawRotaGraph(Screen::WIDTH / 2, Screen::HEIGHT / 2, 1.0f, 0.0f, guideWindowControlerHandle, true);
 	}
-	DrawRotaGraph(Screen::WIDTH / 2, Screen::HEIGHT / 2, 1.0f, 0.0f, guideWindowHandle, true);
+	else {
+		DrawRotaGraph(Screen::WIDTH / 2, Screen::HEIGHT / 2, 1.0f, 0.0f, guideWindowkeyHandle, true);
+	}
+	
+	
 	
 }
 

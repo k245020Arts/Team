@@ -9,6 +9,11 @@ namespace {
 		XINPUT_BUTTON_A,XINPUT_BUTTON_B,
 		XINPUT_BUTTON_X,XINPUT_BUTTON_Y 
 	};
+
+	int keyNum[ButtonUI::ButtonType::BUTTON_MAX] = {
+		KEY_INPUT_X,KEY_INPUT_E,
+		KEY_INPUT_Q,KEY_INPUT_C
+	};
 }
 
 ButtonUI::ButtonUI()
@@ -41,14 +46,26 @@ void ButtonUI::Update()
 		my_error_assert("ボタンの種類がセットされていません。");
 		return;
 	}
-	if (InputManager::GetInstance()->GetControllerInput()->GetIsButtonPushingNow(buttonNum[type])) {
-		//obj->GetTransform()->scale = 0.5f;
-		push = true;
+
+	//コントローラーが繋がっているならコントローラー用UIにする
+	if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
+		if (InputManager::GetInstance()->GetControllerInput()->GetIsButtonPushingNow(buttonNum[type])) {
+			push = true;
+		}
+		else {
+			push = false;
+		}
 	}
 	else {
-		//obj->GetTransform()->scale = 1.0f;
-		push = false;
+		//キーボード用UI
+		if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(keyNum[type])) {
+			push = true;
+		}
+		else {
+			push = false;
+		}
 	}
+	
 	if (gradeMode) {
 		r += Time::DeltaTimeRate() * 255.0f;
 		g += Time::DeltaTimeRate() * 255.0f;
