@@ -420,6 +420,8 @@ void TrashEnemy::NormalMove(float _speed)
 void TrashEnemy::Move(VECTOR3 _vector, float _speed)
 {
 	GetEnemyObj()->GetTransform()->position += _vector * MGetRotY(GetEnemyObj()->GetTransform()->rotation.y) * _speed;
+	if (isCooperateAtk)
+		return;
 	WallStop();
 }
 
