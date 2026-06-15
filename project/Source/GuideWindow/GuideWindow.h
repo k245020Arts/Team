@@ -11,8 +11,14 @@ public:
 
 	void Update()override;
 	void Draw()override;
-
+	/// <summary>
+	/// 操作説明書の開始
+	/// </summary>
+	/// <param name="_menu">ポーズ画面から開いたらtrue、ゲーム開始直後から開いたらfalse</param>
 	void GuideWindowDraw(bool _menu);
+	/// <summary>
+	/// 操作説明書の終了
+	/// </summary>
 	void GuideWindowFinish();
 	/// <summary>
 	/// ボタンが押されたかどうかの取得
@@ -24,7 +30,10 @@ public:
 	/// </summary>
 	/// <returns>trueならゲーム状態へ移行</returns>
 	bool GetGameBack() { return gameBack; }
-
+	/// <summary>
+	/// 操作説明書が開かれているかの説明
+	/// </summary>
+	/// <returns></returns>
 	bool GetActive() { return  active; }
 
 private:

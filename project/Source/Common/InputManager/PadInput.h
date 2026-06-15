@@ -149,6 +149,17 @@ public:
 	//何Pのコントローラーの情報を入手するかを設定する(何もしなかったら1P)
 	void SetControllerPlayer(ControllerPlayer _playerNumber) { playerNumber = _playerNumber; }
 
+	/// <summary>
+	/// コントローラーが何台接続されているか返す
+	/// </summary>
+	/// <returns></returns>
+	int GetPadInputNum() { return GetJoypadNum(); }
+	/// <summary>
+	/// コントローラーが接続されているかを返す
+	/// </summary>
+	/// <returns>tuueなら接続されている</returns>
+	bool GetIsPadInput() { return (GetJoypadNum() > 0); }
+
 private:
 	/// <summary>コントローラーのボタンが押されているか確認する</summary>
 	/// <param name="_getStick">スティックの傾きも取るか</param>

@@ -20,6 +20,8 @@ GuideWindow::GuideWindow()
 	bButtonImage = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "BButtonImage", ID::B_BUTTONIMAGE);
 	guideWindowHandle = ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "GameGuide", ID::B_BUTTONIMAGE);
 
+	//---------------------------------------ガイドで使うテキストの初期化---------------------------------------
+
 	Object2D* gameBackObject = new Object2D();
 	gameBackObject->Init(VECTOR2F((float)GAMEBACK_LABEL_POS_X, (float)LABEL_POS_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "GameBack");
 	gameBackText = gameBackObject->Component()->AddComponent<TextRenderer>();
@@ -34,7 +36,15 @@ GuideWindow::GuideWindow()
 
 	pauseBackText->SetAlpha(TRANSPARENT_COLOR_F);
 	gameBackText->SetAlpha(TRANSPARENT_COLOR_F);
+
+	//----------------------------------------------------------------------------------------------------------
+
 	SetDrawOrder(-300000);
+	menu = false;
+
+	gameBack = false;
+	active = false;
+	buttonPut = false;;
 }
 
 GuideWindow::~GuideWindow()
@@ -44,12 +54,13 @@ GuideWindow::~GuideWindow()
 void GuideWindow::Update()
 {
 	if (!active)
-		return;
+		return; //メニューが開かれていないときはスルー
 
 	if (InputManager::GetInstance()->KeyInputDown("GameBack")) {
 		buttonPut = true;
 		gameBack = true;
 	}
+	//ポーズ画面から開いたときにはポーズ画面の遷移も入れる
 	if (menu) {
 		if (InputManager::GetInstance()->KeyInputDown("PauseBack")) {
 			buttonPut = true;
@@ -62,11 +73,16 @@ void GuideWindow::Update()
 void GuideWindow::Draw()
 {
 	if (!active)
-		return;
+		return; //メニューが開かれていないときはスルー
 
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180);
+	const int ALPHA = 180;
+
+	//背景の描画
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ALPHA);
 	DrawBox(0, 0, Screen::WIDTH, Screen::HEIGHT, GetColor(0, 0, 0), TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	
+	//操作説明書の描画
 	const int LABEL_SUB_POS_X = 40;
 	const int LABEL_SUB_POS_Y = 20;
 	DrawRotaGraph(GAMEBACK_LABEL_POS_X - LABEL_SUB_POS_X, LABEL_POS_Y + LABEL_SUB_POS_Y, 0.2f, 0.0f, aButtonImage, true);
@@ -80,7 +96,7 @@ void GuideWindow::Draw()
 void GuideWindow::GuideWindowDraw(bool _menu)
 {
 	if (active)
-		return;
+		return; //メニューが開かれていたらスルー
 	active = true;
 	menu = _menu;
 	if (menu) {

@@ -81,10 +81,10 @@ PauseScreen::PauseScreen()
 	}
 
 	
-
+	//カーソルの位置の設定
 	cursorPos.push_back(VECTOR3(780, 400, 0));
 	cursorPos.push_back(VECTOR3(755, 550, 0));
-	cursorPos.push_back(VECTOR3(735, 730, 0));
+	cursorPos.push_back(VECTOR3(735, 720, 0));
 }
 
 PauseScreen::~PauseScreen()
@@ -314,6 +314,7 @@ void PauseScreen::UpdateButtonState()
 {
 	for (int i = 0; i < menuTexts.size(); i++)
 	{
+		//選択状態ならUIを動かす
 		if (i == currentIndex)
 		{
 			float scale = 1.35f + baseSinRate * 0.08f;

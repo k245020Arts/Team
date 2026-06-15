@@ -79,7 +79,10 @@ void PlayerHeavyCharge::Update()
 			}
 		}
 		p->PlayerStickInput();
-		p->RotationChange(p->walkAngle, 12.0f/*スピード*/);
+		constexpr float DEAD_ZONE = 0.3f;
+		if ((fabs(p->walkAngle.x) >= DEAD_ZONE || fabs(p->walkAngle.z) >= DEAD_ZONE) && p->hp > 0.0f) {
+			p->RotationChange(p->walkAngle, 12.0f/*スピード*/);
+		}
 		
 	}
 	else {

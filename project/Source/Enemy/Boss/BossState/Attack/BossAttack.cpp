@@ -54,12 +54,8 @@ BossAttack::~BossAttack()
 void BossAttack::Update()
 {
 	EnemyAttackBase::Update();
-	Boss* boss = GetBase<Boss>();
-	//ボスのポインタが取得できなければイベントを走らせない
-	if (boss == nullptr) {
-		return;
-	}
-	//-------------------------ボスの攻撃に必要なUpdateの処理を実行--------------------------
+
+	//ボスの攻撃に必要なUpdateの処理を実行--------------------------
 
 	AttackFinishFrame();
 	AttackSound();

@@ -346,5 +346,7 @@ private:
 	void SpecialUIUpdate();
 
 	std::unique_ptr<PlayerParamWindow> paramWindow;
+
+	void KeyBoardPlayerRotate();
 };
 

@@ -21,6 +21,7 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 	attackParam = sorting->GetAttackParam();
 	actions = sorting->GetActionParam();
 	attackKeys.clear();
+	//攻撃の数分文字列の準備
 	for (auto& a : attackParam) {
 		attackKeys.push_back(a.first);
 	}
@@ -35,7 +36,7 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 		if (entry.is_directory()) {
 			continue;
 		}
-
+		//アニメーションのファイル名の取得
 		std::string name = entry.path().stem().string();
 		animFileName.push_back(name);
 	}
@@ -58,7 +59,7 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 		{
 			continue;
 		}
-
+		//サウンドファイル名の取得
 		std::string name = entry.path().stem().string();
 		soundFileNames.push_back(name);
 	}

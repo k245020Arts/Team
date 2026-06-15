@@ -203,6 +203,7 @@ void Player::Update()
 	
 	paramWindow->PlayerParamWindowView();
 
+	//新しく攻撃を生成する際敵のヒットリストを空にする
 	std::shared_ptr<PlayerAttackStateBase> pAttack = playerCom.stateManager->GetState<PlayerAttackStateBase>();
 	if (pAttack != nullptr) {
 		if (pAttack->GetCollsionCreate()) {
@@ -233,11 +234,11 @@ void Player::Start(Object3D* _obj)
 
 	playerCom.player		= this;
 
-	ComponentManager* c		= obj->Component();
+	ComponentManager* componentMangager		= obj->Component();
 	
-	playerCom.renderer		= c->GetComponent<MeshRenderer>();
-	playerCom.meshRenderer2D= c->GetComponent<MeshRenderer2D>();
-	playerCom.physics		= c->GetComponent<Physics>();
+	playerCom.renderer		= componentMangager->GetComponent<MeshRenderer>();
+	playerCom.meshRenderer2D= componentMangager->GetComponent<MeshRenderer2D>();
+	playerCom.physics		= componentMangager->GetComponent<Physics>();
 
 	playerCom.camera		= FindGameObject<CameraManager>()->GetCamera()->Component()->GetComponent<Camera>();
 
@@ -252,7 +253,7 @@ void Player::Start(Object3D* _obj)
 	//playerCom.targetObj = FindGameObjectWithTag<Object3D>("ENEMY");
 	playerCom.targetObj		= nullptr;
 	playerCom.hitObj		= nullptr;
-	playerCom.shaker		= c->GetComponent<Shaker>();
+	playerCom.shaker		= componentMangager->GetComponent<Shaker>();
 
 	playerCom.weapon		= FindGameObject<WeaponManager>();
 	playerCom.blur			= obj->Component()->GetComponent<MotionBlur>();
@@ -268,7 +269,6 @@ void Player::Start(Object3D* _obj)
 	//playerCom.physics->SetVelocity(VECTOR3(10.0f, 5.0f, 0.0f));
 
 	//physics->SetInterect(VECTOR3(5.0f, -1.0f, 0.0f),0.1);
-	using namespace ID;
 	//ステートのセット
 	
 
@@ -306,6 +306,7 @@ void Player::Start(Object3D* _obj)
 
 	DataLoadPlayerState();
 
+	//HPのテキストのセッティング
 	hpTextObj = new Object2D();
 	hpTextObj->Init(VECTOR2F(610.0f, 925.0f), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "hp");
 	TextRenderer* hpText = hpTextObj->Component()->AddComponent<TextRenderer>();
@@ -314,6 +315,7 @@ void Player::Start(Object3D* _obj)
 	hpText->TextSetting("HP", "MPlus2C", ".dft", LIGHT_GREEN, 4, Font_ID::UI_FONT);
 	hpTextObj->GetTransform()->position.x -= hpText->GetTextWidth();
 
+	//必殺技のテキストのセッティング
 	specialTextObj = new Object2D();
 	specialTextObj->Init(VECTOR2F(610.0f, SPECIAL_UI_INIT_POS_Y), VECTOR2F(0.0f, 0.0f), VECTOR2F(1.0f, 1.0f), "special");
 	TextRenderer* specialText = specialTextObj->Component()->AddComponent<TextRenderer>();
@@ -349,23 +351,6 @@ void Player::Move(float _speed, float _speedMax)
 
 	//}
 	PlayerStickInput(); //InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_LEFT)
-	const float LEFT_MOVE_ROTATE = -1.0f;
-	const float RIGHT_MOVE_ROTATE = 1.0f;
-	const float FRONT_MOVE_ROTATE = 1.0f;
-	const float BACK_MOVE_ROTATE = -1.0f;
-	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_A)) {
-		walkAngle.x = LEFT_MOVE_ROTATE;
-	}
-	else if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_W)) {
-		walkAngle.z = FRONT_MOVE_ROTATE;
-	}
-	else if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_S)) {
-		walkAngle.z = BACK_MOVE_ROTATE;
-	}
-	else if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_D)) {
-		walkAngle.x = RIGHT_MOVE_ROTATE;
-	}
-
 	
 	std::shared_ptr<PlayerStateBase> pB = playerCom.stateManager->GetState<PlayerStateBase>();
 
@@ -399,9 +384,13 @@ void Player::Move(float _speed, float _speedMax)
 		}
 		playerCom.stateManager->ChangeState(StateID::PLAYER_WALK_S);
 		//アニメーションのスピードを傾き方で測定
-		playerCom.anim->SetPlaySpeed(walkAngle.Size());
-		
-
+		if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
+			playerCom.anim->SetPlaySpeed(walkAngle.Size());
+		}
+		else {
+			//キーボードの時は一定にする
+			playerCom.anim->SetPlaySpeed(1.0f);
+		}
 		
 		/*if (nowStick == S_NO_DIRECTION || stick == S_NO_DIRECTION) {
 			return;
@@ -504,8 +493,15 @@ void Player::ImguiDraw()
 
 void Player::PlayerStickInput()
 {
-	//スティックの角度とり
-	walkAngle = VECTOR3(InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x, 0.0f, InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y);
+	
+	if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
+		//スティックの角度とり
+		walkAngle = VECTOR3(InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.x, 0.0f, InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick.y);
+	}
+	else {
+		KeyBoardPlayerRotate();
+	}
+	
 }
 
 void Player::AvoidReady()
@@ -1074,4 +1070,36 @@ void Player::SpecialUIUpdate()
 	}
 	VECTOR3 move = Easing::SinCube(VOne * 0.95f, VOne * 1.05f, specialMoveCounter);
 	specialTextObj->GetTransform()->scale = move;
+}
+
+void Player::KeyBoardPlayerRotate()
+{
+	const float LEFT_MOVE_ROTATE = -1.0f;
+	const float RIGHT_MOVE_ROTATE = 1.0f;
+	const float FRONT_MOVE_ROTATE = 1.0f;
+	const float BACK_MOVE_ROTATE = -1.0f;
+	bool isFrontMove = false;
+	bool isSideMove = false;
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_A)) {
+		walkAngle.x = LEFT_MOVE_ROTATE;
+		isSideMove = true;
+	}
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_W)) {
+		walkAngle.z = FRONT_MOVE_ROTATE;
+		isFrontMove = true;
+	}
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_S)) {
+		walkAngle.z = BACK_MOVE_ROTATE;
+		isFrontMove = true;
+	}
+	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_D)) {
+		walkAngle.x = RIGHT_MOVE_ROTATE;
+		isSideMove = true;
+	}
+	if(!isFrontMove) {
+		walkAngle.z = 0.0f;
+	}
+	if (!isSideMove) {
+		walkAngle.x = 0.0f;
+	}
 }

@@ -14,11 +14,20 @@ public:
 
 	void Update()override;
 	void Draw()override;
-
+	/// <summary>
+	/// ポーズ画面に入る
+	/// </summary>
 	void PauseStart();
+	/// <summary>
+	/// ポーズ画面を終了する
+	/// </summary>
+	/// <returns></returns>
 	bool PauseFinish();
-
-	bool IsSelect() { return selectMenu; }
+	/// <summary>
+	/// 選択されているかの取得
+	/// </summary>
+	/// <returns>選択されていたらtrue/returns>
+	bool IsSelect()const { return selectMenu; }
 	
 
 	enum PauseMenuItem
@@ -37,9 +46,14 @@ public:
 		OpenGuide,
 		ToTitle
 	};
-
+	/// <summary>
+	/// 選択した状態の取得
+	/// </summary>
+	/// <returns>状態が帰ってくる</returns>
 	PauseResult GetResult() const { return result; }
-
+	/// <summary>
+	/// ポーズボタンを押してポーズ画面からゲーム画面に遷移する
+	/// </summary>
 	void PauseButtonGameBack();
 
 private:
