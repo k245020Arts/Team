@@ -85,6 +85,7 @@ namespace Sound_ID {
 		BOSS_TREE_SWING,
 		BOSS_JUMP,
 
+		RANGED_ATK_FIN,
 		SOUND_MAX
 	};
 

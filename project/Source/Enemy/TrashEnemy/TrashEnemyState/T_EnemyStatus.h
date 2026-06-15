@@ -13,6 +13,7 @@ private:
 		const float runSpeed = 40.0f;			//移動速度
 		const float range = 2000.0f;			//idelとrunの切り替わり
 		const float atkRang = 600.0f;			//runと攻撃の切り替わり
+		const float playerRang = 1200.0f;
 		const float chaseRange = 1500.0f;		//プレイヤーと離れたときに切り替わる
 		const float cooperateRange = 200.0f;
 	};

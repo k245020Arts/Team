@@ -4,6 +4,7 @@
 #include "../../../State/StateManager.h"
 #include "T_EnemyStatus.h"
 #include "../../../Component/Physics/Physics.h"
+#include "../../../Player/Player.h"
 
 T_EnemyRun::T_EnemyRun()
 {
@@ -41,8 +42,9 @@ void T_EnemyRun::Update()
 	enemy->NormalMove(enemy->eStatus->GetStatus().runSpeed);
 	
 	VECTOR3 targetVec = targetPos - enemy->obj->GetTransform()->position;
-	
-	if (targetVec.Size() <= enemy->eStatus->GetStatus().atkRang)
+	VECTOR3 playerVec = enemy->enemyBaseComponent.playerObj->GetTransform()->position - enemy->obj->GetTransform()->position;
+
+	if (targetVec.Size() <= enemy->eStatus->GetStatus().atkRang || playerVec.Size() <= enemy->eStatus->GetStatus().playerRang)
 	{
 		if (!enemy->IsMovingToPlayer())
 			enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
