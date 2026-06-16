@@ -261,8 +261,11 @@ void TrashEnemy::Update()
 	slowCounter += Time::DeltaTimeRate();
 
 	if (IsPlayerSpecialMove())
-		return;
+	{
 
+		return;
+	}
+		
 	EnemyBase::Update();
 
 	if (hp <= 0)
@@ -276,7 +279,10 @@ void TrashEnemy::Update()
 	}
 		
 	if (CheckHitKey(KEY_INPUT_9))
+	{
 		hp -= maxHp;
+		deadPreset = deadPresets[2];
+	}
 }
 
 void TrashEnemy::Draw()

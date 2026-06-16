@@ -79,10 +79,10 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
 	VECTOR3 dir = VZero;
 	const float Speed = 50.0f;
-	const float SearchPosMax = 200.0f;
+	const float SearchPosMax = 300.0f;
 	const float Max = 50.0f;
 
-	if (VSize(pPos - _enemy->GetPos()) > SearchPosMax)
+	if (VSize(pPos - enePos) > SearchPosMax)
 		pPos = _enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 
 	_enemy->LookTarget(pPos);
@@ -94,12 +94,12 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 		InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartTime(ControllerPower, SceondTime);
 		return;
 	}
-	else if (VSize(pPos - _enemy->GetPos()) < Max )//地面に着地した時
+	else if (VSize(pPos - enePos) < Max )//地面に着地した時
 	{
 		if (!_enemy->cooperateDamageMove)//攻撃を食らってなかったとき
 		{
 			_enemy->enemyBaseComponent.anim->Play(ID::TE_R_IDOL);
-			_enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+			_enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);//モーション速度が0になるから入れる
 
 			isDamageMove = false;
 			_enemy->isStandby = false;
