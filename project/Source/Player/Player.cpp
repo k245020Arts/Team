@@ -1043,13 +1043,15 @@ void Player::DataLoadPlayerState()
 
 void Player::HpUIUpdate()
 {
-	if (hpUIMoveCounter > 0.0f) {
-		hpUIMoveCounter -= Time::DeltaTimeRate();
-		if (hpUIMoveCounter <= 0.0f) {
-			TextRenderer* hpText = hpTextObj->Component()->GetComponent<TextRenderer>();
-			hpText->SetColor(LIGHT_GREEN);
-		}
+	if (hpUIMoveCounter <= 0.0f) {
+		return;
 	}
+	hpUIMoveCounter -= Time::DeltaTimeRate();
+	if (hpUIMoveCounter <= 0.0f) {
+		TextRenderer* hpText = hpTextObj->Component()->GetComponent<TextRenderer>();
+		hpText->SetColor(LIGHT_GREEN);
+	}
+
 }
 
 void Player::SpecialUIUpdate()

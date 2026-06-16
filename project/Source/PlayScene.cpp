@@ -48,7 +48,6 @@ PlayScene::PlayScene()
 
 	StageManager* stageManager = new StageManager();
 
-	
 	EnemyManager* enemy =  new EnemyManager();
 
 	PlayerManager* player = new PlayerManager();

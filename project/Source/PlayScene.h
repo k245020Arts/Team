@@ -33,7 +33,6 @@ public:
 	void SetMode(Mode _mode) { mode = _mode; }
 	//static int count;
 private:
-	InputManager* input;
 
 	
 	Mode mode;
