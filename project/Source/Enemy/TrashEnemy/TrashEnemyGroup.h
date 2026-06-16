@@ -29,7 +29,7 @@ public:
 	int GetRangedActiveEnemy()const;
 
 	//一番近いウェイポイントを計算する
-	void CloseWayPoint(std::vector<WayPoint> wayPoint);
+	void CloseWayPoint(std::vector<WayPoint>& wayPoint);
 	//遠距離の敵の連携攻撃
 	void RangedEnemyAttack();
 
@@ -89,6 +89,8 @@ private:
 	float cooperateCounter;
 
 	int enemiesRunCounter;
+
+	//bool cooperateAtk;
 
 	//--------------------------
 

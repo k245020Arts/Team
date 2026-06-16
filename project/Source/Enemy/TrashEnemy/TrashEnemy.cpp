@@ -261,10 +261,7 @@ void TrashEnemy::Update()
 	slowCounter += Time::DeltaTimeRate();
 
 	if (IsPlayerSpecialMove())
-	{
-
 		return;
-	}
 		
 	EnemyBase::Update();
 
@@ -642,11 +639,10 @@ void TrashEnemy::SetCooperateWayPoint(VECTOR3 _pos, StateID::State_ID _id)
 	if (hp <= 0)
 		return;
 
+	isCooperateAtk = true;
 	cooperateWayPoint = _pos;
 	nextCooperateID = _id;
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
-	
-	isCooperateAtk = true;
 }
 
 void TrashEnemy::ChangeState(StateID::State_ID _id)

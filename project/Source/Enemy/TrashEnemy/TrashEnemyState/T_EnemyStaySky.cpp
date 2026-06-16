@@ -3,6 +3,7 @@
 #include "../../../State/StateManager.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Camera/Camera.h"
+#include "../../../Player/Player.h"
 
 T_EnemyStaySky::T_EnemyStaySky()
 {
@@ -20,6 +21,8 @@ T_EnemyStaySky::~T_EnemyStaySky()
 void T_EnemyStaySky::Update()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	if (enemy->IsPlayerSpecialMove())//•KE‹Z‚É~‚Ü‚ç‚¸‚É“®‚­‚©‚ç’â~‚³‚¹‚é
+		return;
 
 	if (!isLeader)
 		RangedMove(enemy);
@@ -65,6 +68,20 @@ void T_EnemyStaySky::LeaderMove(TrashEnemy* _enemy)
 		_enemy->isStandby = true;
 		_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
 	}
+
+	//‹ó‚ğ”ò‚ñ‚Å‚é‚½‚ß‹——£‚ğ‘ª‚é‚½‚ß‚Ég‚¤(2Dó)
+	VECTOR3 ePosRevision = _enemy->GetPos();
+	ePosRevision.y = 0.0f;
+
+	VECTOR3 vec = _enemy->enemyBaseComponent.playerObj->GetTransform()->position - ePosRevision;
+
+	const float PlayerVecSize = 2000.0f;
+	const float BackSpeed = 80.0f;
+
+	//ƒvƒŒƒCƒ„[‚ª‹ß‚Ã‚©‚È‚¢‚æ‚¤‚É‚·‚éˆ—
+	if (vec.Size() < PlayerVecSize)
+		_enemy->enemyBaseComponent.playerObj->GetTransform()->position +=
+		VECTOR3(0, 0, -1) * MGetRotY(_enemy->enemyBaseComponent.playerObj->GetTransform()->rotation.y) * BackSpeed;
 }
 
 void T_EnemyStaySky::RangedMove(TrashEnemy* _enemy)

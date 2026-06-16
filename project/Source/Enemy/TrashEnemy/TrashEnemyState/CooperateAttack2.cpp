@@ -46,6 +46,9 @@ void CooperateAttack2::Update()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
+	if (enemy->IsPlayerSpecialMove())//•KŽE‹ZŽž‚ÉŽ~‚Ü‚ç‚¸‚É“®‚­‚©‚ç’âŽ~‚³‚¹‚é
+		return;
+
 	if (!damageMove)
 			RangedMove(enemy);
 		else
