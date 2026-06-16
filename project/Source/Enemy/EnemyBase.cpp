@@ -97,7 +97,13 @@ void EnemyBase::Draw()
 	if (!lastTarget) {
 		return;
 	}
-	DrawCone3D(obj->GetTransform()->position + upPos, obj->GetTransform()->position + upPos + VECTOR3(0.0f,0.0f,50.0f) * MGetRotY(obj->GetTransform()->rotation.y), 50, 2, 0xffff00, 0xffff00, true);
+
+	//ロックオンコーンの表示
+
+	//ライトをOFFにして、影の描画をなくす
+	SetUseLighting(FALSE);
+	DrawCone3D(obj->GetTransform()->position + upPos, obj->GetTransform()->position + upPos + VECTOR3(0.0f,50.0f,0.0f) * MGetRotY(obj->GetTransform()->rotation.y), 45, 2, 0xffff00, 0xffff00, true);
+	SetUseLighting(TRUE);
 }
 
 void EnemyBase::DrawTrail() {

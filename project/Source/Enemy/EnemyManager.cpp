@@ -395,6 +395,9 @@ void EnemyManager::JustAvoidTargetChange(BaseObject* _obj)
 
 EnemyBase* EnemyManager::PlayerNearEnemy()
 {
+	if (chara.empty()) {
+		return nullptr;
+	}
 	float minDist = 100000.0f;
 	EnemyBase* nearEnemy = nullptr;
 	for (auto itrs = chara.begin(); itrs != chara.end(); itrs++) {
@@ -480,10 +483,11 @@ void EnemyManager::SetCameraRockOnObject(EnemyBase* _enemy, Camera* _camera)
 	cameraTargetObj = _enemy->GetBaseObject();
 }
 
-void EnemyManager::CameraRockOnStart(Camera* _camera)
+bool EnemyManager::CameraRockOnStart(Camera* _camera)
 {
 	EnemyBase* chara = PlayerNearEnemy();
 	SetCameraRockOnObject(chara, _camera);
+	return (chara != nullptr); //ƒƒbƒNƒIƒ“‚ª¬Œ÷‚µ‚½‚çtrue
 }
 
 EnemyAttackChangeCameraDirection EnemyManager::BossAttackCamera(Camera* camera, const Transform& _targetTransform)

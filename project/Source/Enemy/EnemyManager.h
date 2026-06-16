@@ -113,13 +113,14 @@ public:
 	/// カメラロックオンの開始（一番近くの敵を参照）
 	/// </summary>
 	/// <param name="_camera">カメラのポインタ</param>
-	void CameraRockOnStart(Camera* _camera);
+	/// /// <returns>ロックオン成功したかどうか</returns>
+	bool CameraRockOnStart(Camera* _camera);
 	/// <summary>
 	/// ボスが攻撃をしてきたときに使う
 	/// </summary>
 	/// <param name="camera">カメラのポインタ</param>
 	/// <param name="_targetTransform">攻撃してきた敵のTransform</param>
-	/// <returns></returns>
+	/// <returns>カメラの回転の方向</returns>
 	EnemyAttackChangeCameraDirection BossAttackCamera(Camera* camera,const Transform& _targetTransform);
 	/// <summary>
 	/// Enemyすべてがカメラが入っているかどうかを調べる

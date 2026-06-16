@@ -19,6 +19,7 @@ FollowCamera::FollowCamera()
 	addPos		= VZero;
 	player = nullptr;
 	playerShake = false;
+	changeState = false;
 }
 
 FollowCamera::~FollowCamera()
@@ -36,7 +37,7 @@ void FollowCamera::Update()
 		float t				= 1.0f - backCounter / TIMER_MAX;
 		VECTOR3 easedT		= Easing::EaseOut(c->currentDistance, c->defalutDistance, t);
 		VECTOR3 target		= SetTarget();
-		addPos = Easing::EaseOut(VECTOR3(VZero), ADD_POS, t);
+		addPos				= Easing::EaseOut(VECTOR3(VZero), ADD_POS, t);
 		c->target			= Easing::EaseOut(currentTarget,target,t) + addPos;
 		c->currentDistance	= easedT;
 		backCounter			-= Time::DeltaTimeRate();
@@ -45,7 +46,8 @@ void FollowCamera::Update()
 	else {
 		c->currentDistance	= c->defalutDistance;
 		addPos = ADD_POS;
-		c->target			= SetTarget() + addPos;
+		VECTOR3 target = SetTarget();
+		c->target			= target + addPos;
 	}
 	//’Ç]ˆ—
 	c->cameraComponent.camera->Follow();
@@ -83,6 +85,7 @@ void FollowCamera::Start()
 	currentTarget									= c->target;
 	c->cameraComponent.cameraTransform->rotation.x	= 30.0f * DegToRad;
 	addPos											= VZero;
+	changeState = false;
 }
 
 void FollowCamera::Finish()
@@ -93,7 +96,10 @@ void FollowCamera::Finish()
 VECTOR3 FollowCamera::SetTarget()
 {
 	Camera* c = GetBase<Camera>();
-
+	if (c->cameraComponent.target.transform == nullptr) { //“G‚Ìî•ñ‚ªnull‚È‚ç’Ç]ƒJƒƒ‰‚©‚ç•Ï‚¦‚é
+		changeState = true;
+		return VZero;
+	}
 	VECTOR3 enemyPos = c->cameraComponent.target.transform->position;
 	VECTOR3 playerPos = c->cameraComponent.player.transform->position + (c->cameraComponent.player.transform->Forward() * 30.0f);
 	//player‚Æenemy‚ÌŠÔ‚Ì“_‚ğ’‹“_‚É‚·‚é.

@@ -95,9 +95,11 @@ void Camera::Update()
 	if (InputManager::GetInstance()->KeyInputDown("camera")) {
 		if (!IsCutScene()) {
 			if (!rockOn) {
-				cameraComponent.enemyManager->CameraRockOnStart(this);
-				cameraComponent.state->NowChangeState(StateID::FOLLOW_CAMERA_S);
-				rockOn = true;
+				bool result = cameraComponent.enemyManager->CameraRockOnStart(this);
+				if (result) {
+					cameraComponent.state->NowChangeState(StateID::FOLLOW_CAMERA_S);
+					rockOn = true;
+				}
 			}
 			else {
 				cameraComponent.enemyManager->TargetCancel(this);

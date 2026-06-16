@@ -20,7 +20,7 @@ private:
 	bool enemyShake;
 	bool playerShake;
 	float backCounter;
-
+	bool changeState;
 	const float TIMER_MAX = 0.5f;
 
 	VECTOR3 targetPos;
