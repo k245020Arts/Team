@@ -10,6 +10,8 @@
 class PadInput;
 class KeyboardInput;
 
+//#define KEY_GUIDE //キーボードのガイドを付けるならdefineを定義
+
 /// <summary>
 /// キーコンフィグ用のデータ
 /// これを使うと直接ボタンの種類をやるのではなく、文字列でキーボード、コントローラー、マウスが対応可能になる
@@ -22,10 +24,7 @@ struct KeyConfigData
 	int padNumber;
 	MouseInput::MouseButton mouceNumber;
 
-	KeyConfigData() { 
-		MouseInput::MouseButton m = MouseInput::MouseButton::MOUSE_NONE;
-		KeyConfigData k =  KeyConfigData("", -1, -1, m);
-	}
+	KeyConfigData(): KeyConfigData("", -1, -1, MouseInput::MouseButton::MOUSE_NONE){}
 
 	KeyConfigData(std::string _act, int _key, int _pad, MouseInput::MouseButton _mouce) {
 		action = _act;

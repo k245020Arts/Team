@@ -350,6 +350,7 @@ void PlayerAttackStateBase::BaseAttackCollsion()
 	Player* p = GetBase<Player>();
 	p->playerCom.player->CollsionStart<SphereCollider>(&p->attackColl, playerAttackData.collTrans);
 	p->playerCom.player->SetShape(CollsionInformation::SPHERE, &p->attackColl);
-	
 	collsionCreate = true;
+	//V‚µ‚­UŒ‚‚ð¶¬‚·‚éÛ“G‚ÌƒqƒbƒgƒŠƒXƒg‚ð‹ó‚É‚·‚é
+	p->hitObjects.clear();
 }

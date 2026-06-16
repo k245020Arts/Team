@@ -142,17 +142,18 @@ bool InputManager::KeyInputDown(std::string _name)
 	bool key = false;
 	bool mouse = false;
 
-	if (c != nullptr) {
+	if (c != nullptr && inputData[_name].padNumber >= 0) {
 		control = c->GetIsButtonPutNow(inputData[_name].padNumber);
 	}
-	if (k != nullptr) {
+	if (k != nullptr && inputData[_name].keyNumber >= 0) {
 		key = k->GetIsKeyboardPut(inputData[_name].keyNumber);
 	}
-	if (m != nullptr) {
+	if (m != nullptr && inputData[_name].mouceNumber >= 0) {
 		mouse = m->GetMousePut(inputData[_name].mouceNumber);
 	}
 	//‚Ç‚ê‚©‚µ‚ç‚ªInput‚³‚ê‚Ä‚¢‚½‚çtrue
 	if (control || key || mouse) {
+		//printfDx("“ü—Í");
 		return true;
 	}
 	return false;
@@ -176,13 +177,13 @@ bool InputManager::KeyInput(std::string _name)
 	bool key = false;
 	bool mouse = false;
 
-	if (c != nullptr) {
+	if (c != nullptr && inputData[_name].padNumber >= 0) {
 		control = c->GetIsButtonPushingNow(inputData[_name].padNumber);
 	}
-	if (k != nullptr) {
+	if (k != nullptr && inputData[_name].keyNumber >= 0) {
 		key = k->GetIsKeyboardPushing(inputData[_name].keyNumber);
 	}
-	if (m != nullptr) {
+	if (m != nullptr && inputData[_name].mouceNumber >= 0) {
 		mouse = m->GetMousePushing(inputData[_name].mouceNumber);
 	}
 	//‚Ç‚ê‚©‚µ‚ç‚ªInput‚³‚ê‚Ä‚¢‚½‚çtrue
@@ -210,13 +211,13 @@ bool InputManager::KeyInputUp(std::string _name)
 	bool key = false;
 	bool mouse = false;
 
-	if (c != nullptr) {
+	if (c != nullptr && inputData[_name].padNumber >= 0) {
 		control = c->GetIsButtonReleaseNow(inputData[_name].padNumber);
 	}
-	if (k != nullptr) {
+	if (k != nullptr && inputData[_name].keyNumber >= 0) {
 		key = k->GetIsKeyboardRelease(inputData[_name].keyNumber);
 	}
-	if (m != nullptr) {
+	if (m != nullptr && inputData[_name].mouceNumber >= 0) {
 		mouse = m->GetMousePut(inputData[_name].mouceNumber);
 	}
 	//‚Ç‚ê‚©‚µ‚ç‚ªInput‚³‚ê‚Ä‚¢‚½‚çtrue

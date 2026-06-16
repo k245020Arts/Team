@@ -84,7 +84,7 @@ PauseScreen::PauseScreen()
 	//カーソルの位置の設定
 	cursorPos.push_back(VECTOR3(780, 400, 0));
 	cursorPos.push_back(VECTOR3(755, 550, 0));
-	cursorPos.push_back(VECTOR3(735, 720, 0));
+	cursorPos.push_back(VECTOR3(735, 700, 0));
 }
 
 PauseScreen::~PauseScreen()
@@ -207,6 +207,7 @@ void PauseScreen::Update()
 		selectText->SetAlpha(alpha);
 	}
 	//コントローラーが接続されている時のUIの変更
+#ifdef KEY_GUIDE
 	if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
 		selectText->SetText("Aボタンを押して選択");
 		selectText->SetPos(VECTOR3(655.0f, 850.0f, 0.0f));
@@ -215,6 +216,7 @@ void PauseScreen::Update()
 		selectText->SetText("スペースキーを押して選択");
 		selectText->SetPos(VECTOR3(555.0f, 850.0f, 0.0f));
 	}
+#endif
 }
 
 void PauseScreen::Draw()

@@ -41,32 +41,27 @@
 PlayScene::PlayScene()
 {
 	SoundManager::GetInstance()->AllDeleteSound();
-	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
-	//Load::LoadModel(Load::MODEL_PATH + "Player", ID::P_MODEL);
+
 	Hierachy* hierachy = new Hierachy();
-	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
-	
-	//Debug::DebugLog(std::to_string(GetMemory()));
 	
 	BlurScreen* blur =  new BlurScreen();
-	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
+
 	StageManager* stageManager = new StageManager();
-	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
-	
+
 	EnemyManager* enemy =  new EnemyManager();
-	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
+
 	PlayerManager* player = new PlayerManager();
-//	Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
+
 	WeaponManager* weapon = new WeaponManager();
-	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
+
 	CollsionManager* collManager =  new CollsionManager();
-	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
+
 	Light* light = new Light();
-	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
+
 	CameraManager* cameraManager = new CameraManager();
-	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
+
 	Sky* sky = new Sky();
-	//Debug::DebugLog(std::to_string(GetTrackedMemoryUsage()));
+
 	UIManager* uiManager = new UIManager();
 	PauseScreen* pauseScreen = new PauseScreen();
 	GameControler* gameManager = new GameControler();
@@ -132,15 +127,16 @@ void PlayScene::Update()
 		}
 	}
 
-
 	if (mode == CAMERA_EDITOR) {
 		return;
 	}
-#endif // _DEBUG
 
 	if (InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPut(KEY_INPUT_T)) {
 		FindGameObject<FadeTransitor>()->StartTransitor("TITLE", 1.0f);
 	}
+
+#endif // _DEBUG
+	
 	if (CheckHitKey(KEY_INPUT_ESCAPE)) {
 		SceneManager::Exit();
 	}
