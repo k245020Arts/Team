@@ -4,7 +4,7 @@
     "eventStartTime": 0.0,
     "fileName": "1100_C_ATTACK",
     "id": "1100_C_ATTACK",
-    "loop": false,
+    "loop": true,
     "maxFrame": 55.0,
     "playSpeed": 10.0
   }
