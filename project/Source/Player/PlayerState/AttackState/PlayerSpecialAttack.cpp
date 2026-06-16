@@ -165,6 +165,7 @@ void PlayerSpecialAttack::Start()
 
 	state = BEFORE;
 	collsionCreate = true;
+	p->hitObjects.clear();
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 
 	waitCounter = -1.0f;
@@ -269,6 +270,7 @@ void PlayerSpecialAttack::AddCollsion()
 	std::function<void(const CollsionEventData&)> func = [this](const CollsionEventData& _data) {dynamic_cast<Player*>(com)->CollsionAttackEvent(_data); };
 	collider->CollsionAdd(info, Transform(p->specialAttackCenterPos, VZero, VECTOR3(radius, 0, 0)), func,"special");
 	p->playerCom.enemyManager->CanPlayerSpecialHit();
+	p->hitObjects.clear();
 }
 
 void PlayerSpecialAttack::StateImguiDraw()

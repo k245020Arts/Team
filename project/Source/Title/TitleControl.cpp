@@ -189,6 +189,7 @@ void TitleControl::StageSelect()
 
 void TitleControl::KeyControlerChangeText()
 {
+#ifdef KEY_GUIDE
 	//コントローラーが接続されている時のUIの変更
 	if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
 		text->SetText("Aボタンを押してスタート!!");
@@ -198,6 +199,7 @@ void TitleControl::KeyControlerChangeText()
 		text->SetText("  Pキーを押してスタート!!");
 		controler = false;
 	}
+#endif
 }
 
 #define BLACK_TEXTURE SetDrawBright(0, 0, 0)

@@ -155,16 +155,18 @@ void GameControler::Update()
 #endif // STRING_MODE
 
 	//操作説明ガイドを表示しているときはポーズの機能をシャットダウン
-	if (!guide->GetActive()) {
-		if (InputManager::GetInstance()->KeyInputDown("PauseScreen")) {
-			if (gameState == PAUSE_SCENE) {
-				gameState = keepGameState;
-				pause->PauseButtonGameBack();
-			}
-			else {
-				keepGameState = gameState;
-				gameState = PAUSE_SCENE;
-				pause->PauseStart();
+	if (guide != nullptr) {
+		if (!guide->GetActive()) {
+			if (InputManager::GetInstance()->KeyInputDown("PauseScreen")) {
+				if (gameState == PAUSE_SCENE) {
+					gameState = keepGameState;
+					pause->PauseButtonGameBack();
+				}
+				else {
+					keepGameState = gameState;
+					gameState = PAUSE_SCENE;
+					pause->PauseStart();
+				}
 			}
 		}
 	}

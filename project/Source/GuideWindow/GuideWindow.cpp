@@ -47,12 +47,16 @@ GuideWindow::GuideWindow()
 	active = false;
 	buttonPut = false;;
 
+#ifdef KEY_GUIDE
 	if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
 		controler = true;
 	}
 	else {
 		controler = false;
 	}
+#else
+	controler = true;
+#endif
 }
 
 GuideWindow::~GuideWindow()
@@ -77,6 +81,7 @@ void GuideWindow::Update()
 	}
 
 	//コントローラーが接続されている時のUIの変更
+#ifdef KEY_GUIDE
 	if (InputManager::GetInstance()->GetControllerInput()->GetIsPadInput()) {
 		controler = true;
 		gameBackText->SetText("ゲームに戻る");
@@ -89,7 +94,7 @@ void GuideWindow::Update()
 		gameBackText->SetPos(VECTOR3((float)GAMEBACK_LABEL_POS_X - 400.0f, (float)LABEL_POS_Y, 0.0f));
 		pauseBackText->SetText("F3キー : ポーズ画面に戻る");
 	}
-	
+#endif
 }
 
 void GuideWindow::Draw()

@@ -202,14 +202,6 @@ void Player::Update()
 	//playerCom.physics->AddVelocity(VECTOR3(50.0f, 0.0f, 0.0f), false);
 	
 	paramWindow->PlayerParamWindowView();
-
-	//新しく攻撃を生成する際敵のヒットリストを空にする
-	std::shared_ptr<PlayerAttackStateBase> pAttack = playerCom.stateManager->GetState<PlayerAttackStateBase>();
-	if (pAttack != nullptr) {
-		if (pAttack->GetCollsionCreate()) {
-			hitObjects.clear();
-		}
-	}
 	
 	HpUIUpdate();
 	SpecialUIUpdate();
