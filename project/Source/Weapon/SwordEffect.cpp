@@ -227,19 +227,24 @@ void SwordEffect::MakeDiv(std::vector<VERTEX3D>& vs, VECTOR rPos[4], VECTOR tPos
 
 SwordEffect::SwordEffect()
 {
-	points.resize(30);
+	points.resize(40);
 	readp = 0;
 	writep = 0;
-	ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "zlRYsodZuqpGepk1757160129_1757160135", ID::SWORD_EFFECT_B);
+	ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "BossAttackEffect", ID::SWORD_EFFECT_B);
 	ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "SlashLocus", ID::SWORD_EFFECT);
 	image = -1;
 	debugId = 18;
 	tag = Function::GetClassNameC<SwordEffect>();
+
+	called = false;
+	time = 0.0f;
+	timeMax = 0.0f;
 }
 
 SwordEffect::~SwordEffect()
 {
 	//DeleteGraph(image);
+	points.clear();
 }
 
 void SwordEffect::Update()
@@ -295,6 +300,7 @@ void SwordEffect::Draw()
 	splineTop[3] = points[readp + 3].top;*/
 
 	int s = (int)points.size();
+
 	if (readp == writep)
 		return;
 	for (int idx = readp; idx != writep; idx = (idx + 1) % s) {
@@ -410,6 +416,7 @@ VERTEX3D SwordEffect::MakeVertex(VECTOR3 _pos, float u, float v,Color::Rgb _rgb)
 	vertex.norm = VECTOR3(0.0f, 1.0f, 0.0f);
 	vertex.dif = GetColorU8((int)_rgb.r, (int)_rgb.g, (int)_rgb.b, 255);
 	vertex.spc = GetColorU8(0, 0, 0, 0);
+	
 	return vertex;
 }
 
