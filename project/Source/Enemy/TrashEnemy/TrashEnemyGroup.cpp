@@ -311,7 +311,7 @@ void TrashEnemyGroup::MeleeEvadeMove(TrashEnemy* _enemy)
 	_enemy->ChangeState(StateID::T_ENEMY_EVADE);
 }
 
-void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
+void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint>& wayPoint)
 {
 	VECTOR3 position = camera->GetCameraTransform()->position;
 	position.y = 0;
@@ -319,6 +319,7 @@ void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(camera->GetCameraTransform()->rotation.y);
 	float counter = 0;
 	VECTOR3 savePos = INFINITY;
+	/*float _a = INFINITY;*/
 	for (auto enemy : meleeEnemies)
 	{
 		for (auto& itr : wayPoint)
@@ -331,9 +332,14 @@ void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint> wayPoint)
 			//一番近いウェイポイントを探す
 			if (itr.active)
 			{
-				VECTOR3 vec = itr.position - enemy->GetPos();
-				if (savePos.Size() > vec.Size())
+				float vec = VSize(itr.position - enemy->GetPos());
+				if (savePos.Size() > vec)
 					savePos = itr.position;
+				/*if (_a > vec)
+				{
+					savePos = itr.position;
+					_a = vec;
+				}*/
 			}
 		}
 		enemy->SetCooperateWayPoint(savePos, StateID::COOPERATEATTACK1);

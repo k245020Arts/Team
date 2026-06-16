@@ -46,7 +46,7 @@ void T_EnemyRun::Update()
 	VECTOR3 targetVec = targetPos - enemy->obj->GetTransform()->position;
 	VECTOR3 playerVec = enemy->enemyBaseComponent.playerObj->GetTransform()->position - enemy->obj->GetTransform()->position;
 
-	if (targetVec.Size() <= enemy->eStatus->GetStatus().atkRang || playerVec.Size() <= enemy->eStatus->GetStatus().playerRang)
+	if (targetVec.Size() <= enemy->eStatus->GetStatus().atkRang || (playerVec.Size() <= enemy->eStatus->GetStatus().playerRang && !enemy->isCooperateAtk))
 	{
 		if (!enemy->IsMovingToPlayer())
 			enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
