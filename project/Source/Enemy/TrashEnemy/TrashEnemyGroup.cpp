@@ -36,7 +36,7 @@ TrashEnemyGroup::TrashEnemyGroup()
 
 	hitBack = false;
 
-	rangedAtkCoolTime = 0.0f;
+	rangedAtkCoolTime = MaxCoolTime;
 
 	rangedAtkTime = 0.0f;
 }

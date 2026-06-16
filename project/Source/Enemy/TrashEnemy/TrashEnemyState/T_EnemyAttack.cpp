@@ -15,8 +15,8 @@ T_EnemyAttack::T_EnemyAttack()
 
 	attackParam.useFlash = true;
 	attackParam.attackFlashStartTime = 0.7f;
-	attackParam.slowAmout = 0.1f;
-	attackParam.slowTime = 0.3f;
+	attackParam.slowAmout = 0.1f;//3
+	attackParam.slowTime = 0.1f;//3
 	attackParam.speedUpMotionSpeed = 0.0f;
 }
 
