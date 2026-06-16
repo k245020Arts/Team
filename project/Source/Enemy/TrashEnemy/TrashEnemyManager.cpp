@@ -191,12 +191,13 @@ void TrashEnemyManager::ImguiDraw()
 		else
 			debugWaypoint = true;
 	}
+	int _a = 0;
 	for (auto& way : wayPoint)
 	{
-		if (!way.active)
-			continue;
+		if (way.active)
+			_a++;
 	}
-
+	ImGui::Text("way: %d", _a);
     ImGui::End();
 }
 

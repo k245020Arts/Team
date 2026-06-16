@@ -31,10 +31,12 @@ void T_EnemyRun::Update()
 	else
 		enemy->enemyBaseComponent.anim->SetPlaySpeed(motionSpeed);
 
-	if (!enemy->isCooperateAtk )
+	if (!enemy->isCooperateAtk)
 		targetPos = enemy->targetPoint;
 	else if (enemy->isMovingToPlayer)
 		targetPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
+	else
+		targetPos = enemy->cooperateWayPoint;
 	
 	rotation = enemy->obj->GetTransform()->rotation;
 	enemy->LookTarget(targetPos);

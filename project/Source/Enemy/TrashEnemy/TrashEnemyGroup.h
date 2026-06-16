@@ -90,6 +90,8 @@ private:
 
 	int enemiesRunCounter;
 
+	//bool cooperateAtk;
+
 	//--------------------------
 
 	//‰“‹——£‚Ì“G----------------

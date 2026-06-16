@@ -223,7 +223,7 @@ void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 
 void TrashEnemyGroup::EnemiesRun(TrashEnemy* _enemy)
 {
-	if (!_enemy->GetIsRunState())
+	if (!_enemy->GetIsRunState() && !_enemy->IsCooperateAtk())
 		return;
 	
 	VECTOR3 _pos = VZero;

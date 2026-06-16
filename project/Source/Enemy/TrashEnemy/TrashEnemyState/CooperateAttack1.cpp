@@ -19,7 +19,7 @@ CooperateAttack1::CooperateAttack1()
 	attackParam.attackFlashStartTime = 0.7f;
 	attackParam.slowAmout = 0.1f;
 	attackParam.slowTime = 0.3f;
-	attackParam.speedUpMotionSpeed = 0.3f;
+	attackParam.speedUpMotionSpeed = 0.0f;
 
 	copyColl = VZero;
 }
@@ -47,7 +47,7 @@ void CooperateAttack1::Start()
 	firstColl = true;
 
 	copyColl = EnemyAttackBase::collTrans.scale;
-	EnemyAttackBase::collTrans.scale = VECTOR3(200, 0, 0);
+	EnemyAttackBase::collTrans.scale = VECTOR3(400, 0, 0);
 
 	EnemyStateBase::Start();
 }
