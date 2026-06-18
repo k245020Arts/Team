@@ -335,11 +335,6 @@ void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint>& wayPoint)
 				float vec = VSize(itr.position - enemy->GetPos());
 				if (savePos.Size() > vec)
 					savePos = itr.position;
-				/*if (_a > vec)
-				{
-					savePos = itr.position;
-					_a = vec;
-				}*/
 			}
 		}
 		enemy->SetCooperateWayPoint(savePos, StateID::COOPERATEATTACK1);
