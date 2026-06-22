@@ -1,0 +1,12 @@
+{
+  "normalAttack1": 20.0,
+  "maxHp": 1500.0,
+  "defense": 500.0,
+  "coolTime": 30.0,
+  "runSpeed": 40.0,
+  "range": 2000.0,
+  "atkRange": 600.0,
+  "playerRange": 1200.0,
+  "chaseRange": 1500.0,
+  "cooperateRange": 200.0
+}
