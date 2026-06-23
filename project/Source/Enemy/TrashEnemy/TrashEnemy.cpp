@@ -214,6 +214,8 @@ TrashEnemy::TrashEnemy()
 	json j;
 	file >> j;
 	eStatus.normalAttack1	= j["normalAttack1"];
+	eStatus.C_Attack1Damage = j["CooperateAttack1"];
+	eStatus.C_Attack2Damage = j["CooperateAttack2"];
 	eStatus.maxHp			= j["maxHp"];
 	eStatus.defense			= j["defense"];
 	eStatus.coolTime		= j["coolTime"];

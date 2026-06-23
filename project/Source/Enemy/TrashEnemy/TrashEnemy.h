@@ -10,6 +10,8 @@ class CharaWeapon;
 struct EnemyStatus
 {
 	float normalAttack1;	//UŒ‚‚P‚Ìƒ_ƒ[ƒW”’l
+	float C_Attack1Damage;
+	float C_Attack2Damage;
 	float maxHp;			//Å‘åHP
 	float defense;			//–hŒä—Í
 	float coolTime;			//ˆê’i–Ú‚ÌUŒ‚‚Ü‚Å‚ÌŠÔ
