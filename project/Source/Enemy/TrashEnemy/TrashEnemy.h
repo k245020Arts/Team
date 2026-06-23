@@ -9,15 +9,15 @@ class CharaWeapon;
 
 struct EnemyStatus
 {
-	float normalAttack1;//攻撃１のダメージ数値 
-	float maxHp;		//最大HP 
-	float defense;		//防御力
-	float coolTime;		//一段目の攻撃までの時間 
-	float runSpeed;		//移動速度 
-	float range;		//idelとrunの切り替わり 
-	float atkRange;		//runと攻撃の切り替わり 
+	float normalAttack1;	//攻撃１のダメージ数値
+	float maxHp;			//最大HP
+	float defense;			//防御力
+	float coolTime;			//一段目の攻撃までの時間
+	float runSpeed;			//移動速度
+	float range;			//idelとrunの切り替わり
+	float atkRange;			//runと攻撃の切り替わり
 	float playerRange;
-	float chaseRange;	//プレイヤーと離れたときに切り替わる 
+	float chaseRange;		//プレイヤーと離れたときに切り替わる
 	float cooperateRange;
 };
 
@@ -111,10 +111,11 @@ public:
 	bool GetDeadMove()const{return deadMove;}
 
 	bool GetCAttack()const { return cAttack; }
+	//敵のパラメーターを返す
+	EnemyStatus GetStatus()const { return eStatus; }
+
 	//プレイヤーが必殺中に止まる処理
 	bool IsPlayerSpecialMove();
-
-	EnemyStatus GetStatus()const { return eStatus; }
 
 	//セッター
 	void SetWayPoint(VECTOR3 _wayPoint);
@@ -142,7 +143,6 @@ public:
 		if (_set->instance == nullptr) {
 			CollsionInfo info = CharaBase::CollsionInstant<T>(_set, _trans);
 			info.tag = _set->tag;
-			//collName = _set->collName;
 			_set->instance->CollsionAdd(info, _trans,_func, _set->collName);
 		};
 		return static_cast<T*>(_set->instance);
@@ -150,10 +150,8 @@ public:
 
 	void DamageCollsionEvent(const CollsionEventData& _data);
 	
-
 private:
 	CharaWeapon* chara;
-	//T_EnemyStatus* eStatus;
 	EnemyStatus eStatus;
 
 	DeadData deadPreset;

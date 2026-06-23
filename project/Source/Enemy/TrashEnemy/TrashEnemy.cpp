@@ -213,17 +213,16 @@ TrashEnemy::TrashEnemy()
 	std::ifstream file("data/json/TrashEnemyData.json");
 	json j;
 	file >> j;
-
-	eStatus.normalAttack1 = j["normalAttack1"];
-	eStatus.maxHp = j["maxHp"];
-	eStatus.defense = j["defense"];
-	eStatus.coolTime = j["coolTime"];
-	eStatus.runSpeed = j["runSpeed"];
-	eStatus.range = j["range"];
-	eStatus.atkRange = j["atkRange"];
-	eStatus.playerRange = j["playerRange"];
-	eStatus.chaseRange = j["chaseRange"];
-	eStatus.cooperateRange = j["cooperateRange"];
+	eStatus.normalAttack1	= j["normalAttack1"];
+	eStatus.maxHp			= j["maxHp"];
+	eStatus.defense			= j["defense"];
+	eStatus.coolTime		= j["coolTime"];
+	eStatus.runSpeed		= j["runSpeed"];
+	eStatus.range			= j["range"];
+	eStatus.atkRange		= j["atkRange"];
+	eStatus.playerRange		= j["playerRange"];
+	eStatus.chaseRange		= j["chaseRange"];
+	eStatus.cooperateRange	= j["cooperateRange"];
 
 	chara = nullptr;
 
@@ -267,8 +266,6 @@ TrashEnemy::TrashEnemy()
 
 TrashEnemy::~TrashEnemy()
 {
-	//delete eStatus;
-	//eStatus = nullptr;
 	guage = nullptr;
 }
 
