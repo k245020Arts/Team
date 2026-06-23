@@ -12,6 +12,7 @@
   "chaseRange": 1500.0,
   "cooperateRange": 200.0
 }
+
 /*
 normalAttack1 	  攻撃のダメージ数値
 CooperateAttack1  近距離の連携攻撃のダメージ
