@@ -2,7 +2,6 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
-#include "T_EnemyStatus.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Common/Random.h"
 
@@ -79,6 +78,6 @@ void T_EnemyIdol::NormalMove()
 
 	VECTOR3 targetVec = enemy->obj->GetTransform()->position - enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 	detectionRange += Time::DeltaTimeRate() * RANGESPEED;
-	if (targetVec.Size() < enemy->eStatus->GetStatus().chaseRange + detectionRange )
+	if (targetVec.Size() < enemy->GetStatus().chaseRange + detectionRange )
 		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 }

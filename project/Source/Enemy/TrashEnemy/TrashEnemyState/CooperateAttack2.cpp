@@ -1,6 +1,5 @@
 #include "CooperateAttack2.h"
 #include "../TrashEnemy.h"
-#include "T_EnemyStatus.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../../../State/StateManager.h"
 #include "../../../Component/Animator/Animator.h"

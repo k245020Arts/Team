@@ -6,7 +6,20 @@
 class StateManager;
 class EnemyStateManager;
 class CharaWeapon;
-class T_EnemyStatus;
+
+struct EnemyStatus
+{
+	float normalAttack1;//攻撃１のダメージ数値 
+	float maxHp;		//最大HP 
+	float defense;		//防御力
+	float coolTime;		//一段目の攻撃までの時間 
+	float runSpeed;		//移動速度 
+	float range;		//idelとrunの切り替わり 
+	float atkRange;		//runと攻撃の切り替わり 
+	float playerRange;
+	float chaseRange;	//プレイヤーと離れたときに切り替わる 
+	float cooperateRange;
+};
 
 struct DeadData
 {
@@ -101,6 +114,8 @@ public:
 	//プレイヤーが必殺中に止まる処理
 	bool IsPlayerSpecialMove();
 
+	EnemyStatus GetStatus()const { return eStatus; }
+
 	//セッター
 	void SetWayPoint(VECTOR3 _wayPoint);
 	void SetCooperateWayPoint(VECTOR3 _wayPoint) { cooperateWayPoint = _wayPoint; }
@@ -138,7 +153,8 @@ public:
 
 private:
 	CharaWeapon* chara;
-	T_EnemyStatus* eStatus;
+	//T_EnemyStatus* eStatus;
+	EnemyStatus eStatus;
 
 	DeadData deadPreset;
 	std::vector<DeadData> deadPresets
@@ -172,9 +188,7 @@ private:
 	bool isMovingToPlayer;
 	//プレイヤーに攻撃する
 	bool cAttack;
-	
-	//移動速度
-	float speed;
+
 	//防御力
 	float defense;
 

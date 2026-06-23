@@ -999,9 +999,6 @@
     <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyDead.h">
       <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyState\T_EnemyStatus.h">
-      <Filter>PlayScene\Enemy\TrashEnemy\TrashEnemyState</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Enemy\Boss\BossState\BossThreat.h">
       <Filter>PlayScene\Enemy\Boss\BossState</Filter>
     </ClInclude>

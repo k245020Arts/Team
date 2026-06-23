@@ -2,7 +2,6 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
-#include "T_EnemyStatus.h"
 #include "../../../Common/Random.h"
 #include "../../../Camera/Camera.h"
 #include "../../../Common/Effect/EffectManager.h"
@@ -52,7 +51,7 @@ void Standby::Update()
 			}
 		}
 
-		if (vec.Size() >= enemy->eStatus->GetStatus().chaseRange)
+		if (vec.Size() >= enemy->GetStatus().chaseRange)
 			runTime += Time::DeltaTimeRate();
 		else
 			runTime = 0.0f;
@@ -83,7 +82,7 @@ void Standby::Start()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	range = enemy->eStatus->GetStatus().atkRange;
+	range = enemy->GetStatus().atkRange;
 	
 	if (enemy->isCooperateAtk)
 		enemy->isMovingToPlayer = true;

@@ -2,7 +2,6 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
-#include "T_EnemyStatus.h"
 
 CooperateAttack1::CooperateAttack1()
 {
@@ -55,7 +54,7 @@ void CooperateAttack1::Start()
 void CooperateAttack1::Finish()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
-	enemy->speed=enemy->eStatus->GetStatus().runSpeed;
+	//enemy->speed=enemy->eStatus->GetStatus().runSpeed;
 	enemy->CooperateAtkFinish();
 	enemy->DeleteCollision(&enemy->attackColl);
 

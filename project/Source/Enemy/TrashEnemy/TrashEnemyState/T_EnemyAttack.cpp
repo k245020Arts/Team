@@ -2,7 +2,6 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
-#include "T_EnemyStatus.h"
 #include "../../../Player/Player.h"
 
 T_EnemyAttack::T_EnemyAttack()
@@ -53,7 +52,7 @@ void T_EnemyAttack::Start()
 	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 	
 	firstColl = true;
-	attackParam.hitDamage = enemy->eStatus->GetStatus().normalAttack1;
+	attackParam.hitDamage = enemy->GetStatus().normalAttack1;
 	counter = 0;
 
 	EnemyStateBase::Start();

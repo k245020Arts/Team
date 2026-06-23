@@ -23,7 +23,6 @@
 #include "../../Common/ResourceLoader.h"
 #include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 
-#include "TrashEnemyState/T_EnemyStatus.h"
 #include "TrashEnemyState/T_EnemyIdol.h"
 #include "TrashEnemyState/T_EnemyRun.h"
 #include "TrashEnemyState/T_EnemyAttack.h"
@@ -35,6 +34,10 @@
 #include "TrashEnemyState/T_EnemyWaitSee.h"
 #include "TrashEnemyState/T_EnemyStaySky.h"
 #include "TrashEnemyState/T_EvadeState.h"
+
+#include <fstream>
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 namespace
 {
@@ -206,11 +209,24 @@ namespace
 TrashEnemy::TrashEnemy()
 {
 	tag = Function::GetClassNameC<TrashEnemy>();
-	eStatus = new T_EnemyStatus;
+	
+	std::ifstream file("data/json/TrashEnemyData.json");
+	json j;
+	file >> j;
+
+	eStatus.normalAttack1 = j["normalAttack1"];
+	eStatus.maxHp = j["maxHp"];
+	eStatus.defense = j["defense"];
+	eStatus.coolTime = j["coolTime"];
+	eStatus.runSpeed = j["runSpeed"];
+	eStatus.range = j["range"];
+	eStatus.atkRange = j["atkRange"];
+	eStatus.playerRange = j["playerRange"];
+	eStatus.chaseRange = j["chaseRange"];
+	eStatus.cooperateRange = j["cooperateRange"];
 
 	chara = nullptr;
 
-	speed = 0;
 	defense = 0;
 
 	isAttack = false;
@@ -251,8 +267,8 @@ TrashEnemy::TrashEnemy()
 
 TrashEnemy::~TrashEnemy()
 {
-	delete eStatus;
-	eStatus = nullptr;
+	//delete eStatus;
+	//eStatus = nullptr;
 	guage = nullptr;
 }
 
@@ -358,24 +374,21 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds, int _number)
 	switch (kinds)
 	{
 	case 0://すばしっこい敵
-		hp = eStatus->GetStatus().maxHp * MIN;
+		hp = eStatus.maxHp * MIN;
 		maxHp = hp;
-		speed = eStatus->GetStatus().runSpeed * MAX;
-		defense = eStatus->GetStatus().defense * MIN;
+		defense = eStatus.defense * MIN;
 		GetEnemyObj()->GetTransform()->scale = GetEnemyObj()->GetTransform()->scale * MIN;
 		
 		break;
 	case 1:
-		hp = eStatus->GetStatus().maxHp * MID;
+		hp = eStatus.maxHp * MID;
 		maxHp = hp;
-		speed = eStatus->GetStatus().runSpeed * MID;
-		defense = eStatus->GetStatus().defense * MID;
+		defense = eStatus.defense * MID;
 		break;
 	default://重い敵
-		hp = eStatus->GetStatus().maxHp * MAX;
+		hp = eStatus.maxHp * MAX;
 		maxHp = hp;
-		speed = eStatus->GetStatus().runSpeed * MIN;
-		defense = eStatus->GetStatus().defense * MAX;
+		defense = eStatus.defense * MAX;
 		GetEnemyObj()->GetTransform()->scale = GetEnemyObj()->GetTransform()->scale * MAX;
 		break;
 	}
@@ -619,7 +632,7 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 	if (isCooperateAtk)
 		damage = damage / 5;
 	VECTOR3 a = VECTOR3((float)GetRand(100), (float)(500 + GetRand(100)), (float)GetRand(100));
-	hp -= DamageCalculation(a, damage, eStatus->GetStatus().defense,30);
+	hp -= DamageCalculation(a, damage, eStatus.defense,30);
 
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();

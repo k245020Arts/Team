@@ -2,7 +2,6 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
-#include "T_EnemyStatus.h"
 #include "../../../Component/Physics/Physics.h"
 #include "../../../Player/Player.h"
 
@@ -41,12 +40,12 @@ void T_EnemyRun::Update()
 	rotation = enemy->obj->GetTransform()->rotation;
 	enemy->LookTarget(targetPos);
 
-	enemy->NormalMove(enemy->eStatus->GetStatus().runSpeed);
+	enemy->NormalMove(enemy->GetStatus().runSpeed);
 	
 	VECTOR3 targetVec = targetPos - enemy->obj->GetTransform()->position;
 	VECTOR3 playerVec = enemy->enemyBaseComponent.playerObj->GetTransform()->position - enemy->obj->GetTransform()->position;
 
-	if (targetVec.Size() <= enemy->eStatus->GetStatus().atkRange || (playerVec.Size() <= enemy->eStatus->GetStatus().playerRange && !enemy->isCooperateAtk))
+	if (targetVec.Size() <= enemy->GetStatus().atkRange || (playerVec.Size() <= enemy->GetStatus().playerRange && !enemy->isCooperateAtk))
 	{
 		if (!enemy->IsMovingToPlayer())
 			enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
