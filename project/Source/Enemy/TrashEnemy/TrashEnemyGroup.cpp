@@ -429,6 +429,8 @@ void TrashEnemyGroup::RangedDamageMove()
 		{
 			if (!enemy->IsMovingToPlayer())
 				enemy->ChangeHp(Damage);
+			else
+				enemy->ChangeState(StateID::T_ENEMY_WAITSEE);
 		}
 	}
 
@@ -506,7 +508,7 @@ void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
 
 	leaderPos = _enemy->GetPos();
 
-	if (rangedJoinCounter <= rangedAtkCounter)//“G‘Sˆõ‚ªUŒ‚‚ðI‚¦‚½Œã‚Ìˆ—
+	if (rangedJoinCounter <= rangedAtkCounter || (int)rangedEnemies.size() - 1 <= 0)//“G‘Sˆõ‚ªUŒ‚‚ðI‚¦‚½Œã‚Ìˆ—‚Ü‚½‚ÍˆÚ“®’†‚É‘¼‚ªŽ€‚ñ‚¾‚Æ‚«
 	{
 		if (rangedAtkTime >= MaxAttackCounter )
 		{
@@ -574,11 +576,13 @@ void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
 	{	
 		if (hitBack)
 			return;
+		
 		_enemy->SetLeaderPos(leaderPos);
 		_enemy->RangedAttack();
 		rangedAtkTime = 0.0f;
 		rangedAtkCounter++;
 	}
+
 }
 
 void TrashEnemyGroup::EndRangedAttack(TrashEnemy* _enemy)

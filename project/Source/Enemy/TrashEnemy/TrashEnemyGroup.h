@@ -119,6 +119,7 @@ private:
 	float leaderRotY;
 	float rangedAtkTime;
 	bool rangedDamageMove;
+	//敵が何体攻撃したか
 	int rangedAtkCounter;
 	//連携開始時のリーダー以外の敵が何体いるか
 	int rangedJoinCounter;
