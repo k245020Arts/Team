@@ -116,6 +116,8 @@ public:
 	bool GetCAttack()const { return cAttack; }
 	//敵のパラメーターを返す
 	EnemyStatus GetStatus()const { return eStatus; }
+	//様子見行動を取ってるか
+	bool IsAtkStandby() {return isAtkStandby;}
 
 	//プレイヤーが必殺中に止まる処理
 	bool IsPlayerSpecialMove();
@@ -222,4 +224,5 @@ private:
 	Object2D* guage;
 
 	bool playerCloser;
+	bool isAtkStandby;
 };

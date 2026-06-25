@@ -93,6 +93,8 @@ void Standby::Start()
 
 	runTime = 0.0f;
 
+	enemy->isAtkStandby = true;
+
 	EnemyStateBase::Start();
 }
 
@@ -103,6 +105,8 @@ void Standby::Finish()
 	enemy->isStandby = false;
 	enemy->isAttack = false;
 	isRedefinition = true;
+
+	enemy->isAtkStandby = false;
 }
 
 void Standby::RotateMove(TrashEnemy* _enemy)

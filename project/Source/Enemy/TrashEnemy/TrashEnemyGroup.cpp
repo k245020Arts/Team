@@ -39,6 +39,7 @@ TrashEnemyGroup::TrashEnemyGroup()
 	rangedAtkCoolTime = MaxCoolTime;
 
 	rangedAtkTime = 0.0f;
+	atkCountStart = true;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -63,6 +64,7 @@ void TrashEnemyGroup::Update()
 		if (startRangedAtk)
 			MeleeEvadeMove(melee);
 	}
+	atkCountStart = true;
 	//遠距離の敵関連
 	for (auto ranged : rangedEnemies)
 	{
@@ -203,21 +205,30 @@ int TrashEnemyGroup::GetRangedActiveEnemy()const
 
 void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 {
-	if (_enemy->IsCooperateAtk() || !_enemy->IsAttack() || startRangedAtk)
+	if (_enemy->IsCooperateAtk() || !_enemy->IsAtkStandby() || startRangedAtk)
 		return;
+	if(atkCountStart)
+	{
+		attackCounter += Time::DeltaTimeRate();
+		atkCountStart = false;
+	}
 
-	attackCounter += Time::DeltaTimeRate();
-
-	if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)//攻撃のクールタイム
+	if (attackCounter >= maxAttackCounter * 2)//壁対策
+	{
+		_enemy->AttackCommand();
+		attackCounter = 0;
+		maxAttackCounter = ATK_COUNTER_MIN + ATK_COUNTER_MAX * (float)Random::GetReal();
+	}
+	else if (attackCounter >= maxAttackCounter)//攻撃のクールタイム
 	{
 		if (_enemy->IsAttack())
 		{
 			_enemy->AttackCommand();
 			attackCounter = 0;
-			maxAttackCounter = ATK_COUNTER_MAX * (float)Random::GetReal();
+			maxAttackCounter = ATK_COUNTER_MIN + ATK_COUNTER_MAX * (float)Random::GetReal();
 		}
 	}
-	else if (attackCounter >= ATK_COUNTER_MAX)
+	else if (attackCounter >= maxAttackCounter + ATK_COUNTER_MIN)//ク－ルタイム入ってない敵がいないとき
 		_enemy->AttackCoolTimeReset();
 }
 

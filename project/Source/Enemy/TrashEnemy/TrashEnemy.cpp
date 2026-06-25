@@ -211,21 +211,21 @@ TrashEnemy::TrashEnemy()
 	tag = Function::GetClassNameC<TrashEnemy>();
 	
 	std::ifstream file("data/json/TrashEnemyData.json");
-	json j;
-	file >> j;
-	eStatus.normalAttack1	= j["normalAttack1"];
-	eStatus.C_Attack1Damage = j["CooperateAttack1"];
-	eStatus.C_Attack2Damage = j["CooperateAttack2"];
-	eStatus.maxHp			= j["maxHp"];
-	eStatus.defense			= j["defense"];
-	eStatus.coolTime		= j["coolTime"];
-	eStatus.runSpeed		= j["runSpeed"];
-	eStatus.idelRange		= j["range"];
-	eStatus.runRange		= j["runRange"];
-	eStatus.atkRange		= j["atkRange"];
-	eStatus.playerRange		= j["playerRange"];
-	eStatus.chaseRange		= j["chaseRange"];
-	eStatus.cooperateRange	= j["cooperateRange"];
+	json json;
+	file >> json;
+	eStatus.normalAttack1	= json["normalAttack1"];
+	eStatus.C_Attack1Damage = json["CooperateAttack1"];
+	eStatus.C_Attack2Damage = json["CooperateAttack2"];
+	eStatus.maxHp			= json["maxHp"];
+	eStatus.defense			= json["defense"];
+	eStatus.coolTime		= json["coolTime"];
+	eStatus.runSpeed		= json["runSpeed"];
+	eStatus.idelRange		= json["range"];
+	eStatus.runRange		= json["runRange"];
+	eStatus.atkRange		= json["atkRange"];
+	eStatus.playerRange		= json["playerRange"];
+	eStatus.chaseRange		= json["chaseRange"];
+	eStatus.cooperateRange	= json["cooperateRange"];
 
 	chara = nullptr;
 
@@ -265,6 +265,8 @@ TrashEnemy::TrashEnemy()
 
 	leaderRotY = 0;
 	guage = nullptr;
+
+	isAtkStandby = false;
 }
 
 TrashEnemy::~TrashEnemy()
