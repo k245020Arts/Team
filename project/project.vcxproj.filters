@@ -197,9 +197,6 @@
     <ClCompile Include="Source\Component\Transform\Transform.cpp">
       <Filter>Component\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component\Component.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Component\ComponentManager.cpp">
       <Filter>Component</Filter>
     </ClCompile>
@@ -1453,9 +1450,6 @@
     </Filter>
     <Filter Include="PlayScene\Pause">
       <UniqueIdentifier>{78a54da2-5d5b-4a6d-b6fa-fdfd4de2bc47}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component\TextRenderer">
-      <UniqueIdentifier>{05bc78ba-1382-4f9e-8ccf-47c35bdf5e4f}</UniqueIdentifier>
     </Filter>
     <Filter Include="PlayScene\GuideWindow">
       <UniqueIdentifier>{16d2bc44-b9c7-4c8d-8cbc-598adc555995}</UniqueIdentifier>
