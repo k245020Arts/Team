@@ -82,7 +82,7 @@ void Standby::Start()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	range = enemy->GetStatus().atkRange;
+	range = enemy->GetStatus().runRange;
 	
 	if (enemy->isCooperateAtk)
 		enemy->isMovingToPlayer = true;
@@ -92,6 +92,8 @@ void Standby::Start()
 	randomSpeed = (float)Random::GetReal();
 
 	runTime = 0.0f;
+
+	enemy->isAtkStandby = true;
 
 	EnemyStateBase::Start();
 }
@@ -103,6 +105,8 @@ void Standby::Finish()
 	enemy->isStandby = false;
 	enemy->isAttack = false;
 	isRedefinition = true;
+
+	enemy->isAtkStandby = false;
 }
 
 void Standby::RotateMove(TrashEnemy* _enemy)

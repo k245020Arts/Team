@@ -10,12 +10,15 @@ class CharaWeapon;
 struct EnemyStatus
 {
 	float normalAttack1;	//攻撃１のダメージ数値
+	float C_Attack1Damage;
+	float C_Attack2Damage;
 	float maxHp;			//最大HP
 	float defense;			//防御力
 	float coolTime;			//一段目の攻撃までの時間
 	float runSpeed;			//移動速度
-	float range;			//idelとrunの切り替わり
-	float atkRange;			//runと攻撃の切り替わり
+	float idelRange;		//idelとrunの切り替わり
+	float runRange;			//runと様子見の切り替わり
+	float atkRange;			//攻撃してもいい範囲
 	float playerRange;
 	float chaseRange;		//プレイヤーと離れたときに切り替わる
 	float cooperateRange;
@@ -113,6 +116,8 @@ public:
 	bool GetCAttack()const { return cAttack; }
 	//敵のパラメーターを返す
 	EnemyStatus GetStatus()const { return eStatus; }
+	//様子見行動を取ってるか
+	bool IsAtkStandby() {return isAtkStandby;}
 
 	//プレイヤーが必殺中に止まる処理
 	bool IsPlayerSpecialMove();
@@ -217,4 +222,7 @@ private:
 	std::function<void(const CollsionEventData&)> justAvoidAttackFunk;
 
 	Object2D* guage;
+
+	bool playerCloser;
+	bool isAtkStandby;
 };

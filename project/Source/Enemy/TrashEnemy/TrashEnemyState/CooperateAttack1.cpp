@@ -11,7 +11,6 @@ CooperateAttack1::CooperateAttack1()
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	attackParam.damagePattern = EnemyAttackBase::BACK;
 
-	attackParam.hitDamage = 30;
 	time = 0;
 
 	attackParam.useFlash = true;
@@ -44,6 +43,7 @@ void CooperateAttack1::Start()
 	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 
 	firstColl = true;
+	attackParam.hitDamage = enemy->GetStatus().C_Attack1Damage;
 
 	copyColl = EnemyAttackBase::collTrans.scale;
 	EnemyAttackBase::collTrans.scale = VECTOR3(400, 0, 0);

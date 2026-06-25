@@ -31,16 +31,14 @@ void T_EnemyAttack::Update()
 	if (enemy->isCooperateAtk)
 		return;
 
-	counter+=Time::DeltaTimeRate();
-
-	if (counter <= 0.3f)
+	if (!enemy->playerCloser)
+		RunMove(enemy);
+	else
 	{
-		const float Speed = 30.0f;
-		enemy->NormalMove(Speed);
+		enemy->enemyBaseComponent.anim->Play(ID::TE_ATTACK);
+		EnemyAttackBase::Update();
+		AttackInformation(enemy);
 	}
-
-	EnemyAttackBase::Update();
-	AttackInformation(enemy);
 }
 
 void T_EnemyAttack::Draw()
@@ -75,4 +73,15 @@ void T_EnemyAttack::AttackInformation(TrashEnemy* _e)
 
 	if (_e->enemyBaseComponent.anim->IsFinish())
 		_e->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_STANDBY);
+}
+
+void T_EnemyAttack::RunMove(TrashEnemy* _enemy)
+{
+	if (VSize(_enemy->enemyBaseComponent.playerObj->GetTransform()->position - obj->GetTransform()->position) <= _enemy->eStatus.atkRange)
+	{
+		_enemy->playerCloser = true;
+		return;
+	}
+	_enemy->enemyBaseComponent.anim->Play(ID::TE_RUN);
+	_enemy->NormalMove(_enemy->GetStatus().runSpeed);
 }

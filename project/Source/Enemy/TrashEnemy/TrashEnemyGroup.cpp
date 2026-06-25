@@ -39,6 +39,7 @@ TrashEnemyGroup::TrashEnemyGroup()
 	rangedAtkCoolTime = MaxCoolTime;
 
 	rangedAtkTime = 0.0f;
+	atkCountStart = true;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -63,6 +64,7 @@ void TrashEnemyGroup::Update()
 		if (startRangedAtk)
 			MeleeEvadeMove(melee);
 	}
+	atkCountStart = true;
 	//‰“‹——£‚Ì“GŠÖ˜A
 	for (auto ranged : rangedEnemies)
 	{
@@ -203,21 +205,30 @@ int TrashEnemyGroup::GetRangedActiveEnemy()const
 
 void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 {
-	if (_enemy->IsCooperateAtk() || !_enemy->IsAttack() || startRangedAtk)
+	if (_enemy->IsCooperateAtk() || !_enemy->IsAtkStandby() || startRangedAtk)
 		return;
+	if(atkCountStart)
+	{
+		attackCounter += Time::DeltaTimeRate();
+		atkCountStart = false;
+	}
 
-	attackCounter += Time::DeltaTimeRate();
-
-	if (attackCounter >= ATK_COUNTER_MIN + maxAttackCounter)//UŒ‚‚ÌƒN[ƒ‹ƒ^ƒCƒ€
+	if (attackCounter >= maxAttackCounter * 2)//•Ç‘Îô
+	{
+		_enemy->AttackCommand();
+		attackCounter = 0;
+		maxAttackCounter = ATK_COUNTER_MIN + ATK_COUNTER_MAX * (float)Random::GetReal();
+	}
+	else if (attackCounter >= maxAttackCounter)//UŒ‚‚ÌƒN[ƒ‹ƒ^ƒCƒ€
 	{
 		if (_enemy->IsAttack())
 		{
 			_enemy->AttackCommand();
 			attackCounter = 0;
-			maxAttackCounter = ATK_COUNTER_MAX * (float)Random::GetReal();
+			maxAttackCounter = ATK_COUNTER_MIN + ATK_COUNTER_MAX * (float)Random::GetReal();
 		}
 	}
-	else if (attackCounter >= ATK_COUNTER_MAX)
+	else if (attackCounter >= maxAttackCounter + ATK_COUNTER_MIN)//ƒN|ƒ‹ƒ^ƒCƒ€“ü‚Á‚Ä‚È‚¢“G‚ª‚¢‚È‚¢‚Æ‚«
 		_enemy->AttackCoolTimeReset();
 }
 
@@ -429,6 +440,8 @@ void TrashEnemyGroup::RangedDamageMove()
 		{
 			if (!enemy->IsMovingToPlayer())
 				enemy->ChangeHp(Damage);
+			else
+				enemy->ChangeState(StateID::T_ENEMY_WAITSEE);
 		}
 	}
 
@@ -506,7 +519,7 @@ void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
 
 	leaderPos = _enemy->GetPos();
 
-	if (rangedJoinCounter <= rangedAtkCounter)//“G‘Sˆõ‚ªUŒ‚‚ðI‚¦‚½Œã‚Ìˆ—
+	if (rangedJoinCounter <= rangedAtkCounter || (int)rangedEnemies.size() - 1 <= 0)//“G‘Sˆõ‚ªUŒ‚‚ðI‚¦‚½Œã‚Ìˆ—‚Ü‚½‚ÍˆÚ“®’†‚É‘¼‚ªŽ€‚ñ‚¾‚Æ‚«
 	{
 		if (rangedAtkTime >= MaxAttackCounter )
 		{
@@ -574,11 +587,13 @@ void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
 	{	
 		if (hitBack)
 			return;
+		
 		_enemy->SetLeaderPos(leaderPos);
 		_enemy->RangedAttack();
 		rangedAtkTime = 0.0f;
 		rangedAtkCounter++;
 	}
+
 }
 
 void TrashEnemyGroup::EndRangedAttack(TrashEnemy* _enemy)

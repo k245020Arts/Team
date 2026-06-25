@@ -17,7 +17,6 @@ CooperateAttack2::CooperateAttack2()
 	collTrans = Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f));
 	attackParam.damagePattern = EnemyAttackBase::BACK;
 
-	attackParam.hitDamage = 50;
 	attackParam.useFlash = true;
 	attackParam.attackFlashStartTime = 0.7f;
 	attackParam.slowAmout = 0.1f;
@@ -59,6 +58,7 @@ void CooperateAttack2::Start()
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
 	firstColl = true;
+	attackParam.hitDamage = enemy->GetStatus().C_Attack2Damage;
 
 	EnemyAttackBase::collTrans.position	= CollPos;
 	EnemyAttackBase::collTrans.scale		= Collscale;
