@@ -82,7 +82,7 @@ void Standby::Start()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
 
-	range = enemy->GetStatus().atkRange;
+	range = enemy->GetStatus().runRange;
 	
 	if (enemy->isCooperateAtk)
 		enemy->isMovingToPlayer = true;

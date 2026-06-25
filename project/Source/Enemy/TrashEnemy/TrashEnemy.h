@@ -16,8 +16,9 @@ struct EnemyStatus
 	float defense;			//防御力
 	float coolTime;			//一段目の攻撃までの時間
 	float runSpeed;			//移動速度
-	float range;			//idelとrunの切り替わり
-	float atkRange;			//runと攻撃の切り替わり
+	float idelRange;		//idelとrunの切り替わり
+	float runRange;			//runと様子見の切り替わり
+	float atkRange;			//攻撃してもいい範囲
 	float playerRange;
 	float chaseRange;		//プレイヤーと離れたときに切り替わる
 	float cooperateRange;
@@ -219,4 +220,6 @@ private:
 	std::function<void(const CollsionEventData&)> justAvoidAttackFunk;
 
 	Object2D* guage;
+
+	bool playerCloser;
 };

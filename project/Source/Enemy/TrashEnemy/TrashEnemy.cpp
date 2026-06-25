@@ -220,7 +220,8 @@ TrashEnemy::TrashEnemy()
 	eStatus.defense			= j["defense"];
 	eStatus.coolTime		= j["coolTime"];
 	eStatus.runSpeed		= j["runSpeed"];
-	eStatus.range			= j["range"];
+	eStatus.idelRange		= j["range"];
+	eStatus.runRange		= j["runRange"];
 	eStatus.atkRange		= j["atkRange"];
 	eStatus.playerRange		= j["playerRange"];
 	eStatus.chaseRange		= j["chaseRange"];
@@ -664,6 +665,14 @@ void TrashEnemy::ChangeState(StateID::State_ID _id)
 
 void TrashEnemy::AttackCommand()
 {
+	if (VSize(enemyBaseComponent.playerObj->GetTransform()->position - obj->GetTransform()->position) >= eStatus.atkRange)
+	{
+		playerCloser = false;
+	}
+	else
+	{
+		playerCloser = true;
+	}
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_ATTACK_S);
 }
 
