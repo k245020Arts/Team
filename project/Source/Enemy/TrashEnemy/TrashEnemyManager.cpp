@@ -53,6 +53,10 @@ TrashEnemyManager::TrashEnemyManager()
 
 	setPos = VZero;
 	hasLeader = false;
+
+	isMeleeCooperateAtk = true;
+	rangedAtkCounter = 0;
+
 	resources.push_back(EnemyResource("1", "000", ResourceLoad::LoadModel("1000_Model", ID::IDType::E_MODEL)));
 	resources.push_back(EnemyResource("1", "100", ResourceLoad::LoadModel("1100_Model", ID::IDType::E_MODEL)));
 	//‹ß‹——£‚Ì“G‚ÌƒAƒjƒ[ƒVƒ‡ƒ“İ’è
@@ -80,6 +84,8 @@ TrashEnemyManager::~TrashEnemyManager()
 
 void TrashEnemyManager::Update()
 {
+	CooperateAtk();
+
 	if (startRangedAtk)
 		enemyGroup->RangedEnemyAttack();
 }
@@ -111,7 +117,9 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 	int enemyCounter = 0;
 	//¶¬‚·‚é‡Œv‚Ì“G
 	int max = meleeSpawnCounter + rangedSpawnCounter;
-	
+
+	isMeleeCooperateAtk = true;
+
     for (int i = 0; i < max; i++)
     {
 		//“G‚Ìí—Ş‚Ì”‚ª‚Å‚«‚é‚¾‚¯‹Ï“™‚É‚·‚é‚½‚ß‚Ìˆ—
@@ -318,4 +326,29 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 
 	// ŒÂ•Ê‚ÌTrashEnemy‚ğ’Ç‰Á
 	trashEnemy->Start(e, _type, guage);
+}
+
+void TrashEnemyManager::CooperateAtk()
+{
+	int meleeCounter = 4;
+	int rangedMaxCounter = 12.0f;
+
+	if (isMeleeCooperateAtk)
+	{
+		if (GetMeleeActiveEnemy() <= meleeCounter)
+		{
+			Cooperate();
+			isMeleeCooperateAtk = false;
+		}
+	}
+
+	if (GetRangedActiveEnemy() <= 0)
+		return;
+
+	rangedAtkCounter += Time::DeltaTimeRate();
+	if (rangedAtkCounter >= rangedMaxCounter)
+	{
+		startRangedAtk = true;
+		rangedAtkCounter = 0.0f;
+	}
 }

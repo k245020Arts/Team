@@ -87,6 +87,7 @@ private:
 	/// <param name="_typeID">雑魚敵の種類のID</param>
 	/// <param name="_i"></param>
 	void CreateData(EnemyResource _resource, int _i, EnemyType _type);
+	void CooperateAtk();
 
 	//ウェイポイントの元を保管する変数
 	std::list<VECTOR3> wayPointOffsets;
@@ -122,4 +123,8 @@ private:
 	int runPoint;
 
 	bool hasLeader;
+
+	bool isMeleeCooperateAtk;
+
+	float rangedAtkCounter;
 };
