@@ -40,6 +40,8 @@ TrashEnemyGroup::TrashEnemyGroup()
 
 	rangedAtkTime = 0.0f;
 	atkCountStart = true;
+
+	isMeleeECooperateAtk = false;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -250,8 +252,13 @@ void TrashEnemyGroup::EnemiesRun(TrashEnemy* _enemy)
 void TrashEnemyGroup::CooperateAttackMove(TrashEnemy* _enemy)
 {
 	if (!_enemy->IsCooperateAtk())
+	{
+		isMeleeECooperateAtk = false;
 		return;
+	}
+	
 	int enemiesMax = (int)meleeEnemies.size();
+	isMeleeECooperateAtk = true;
 
 	//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
 	if (_enemy->GetStandby())
@@ -360,6 +367,9 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		rangedAtkCoolTime += Time::DeltaTimeRate();
 		return;
 	}
+
+	if (isMeleeECooperateAtk)
+		return;
 
 	for (auto& enemy : rangedEnemies)
 	{

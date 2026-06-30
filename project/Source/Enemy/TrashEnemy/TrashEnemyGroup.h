@@ -91,6 +91,8 @@ private:
 	int enemiesRunCounter;
 	//攻撃カウントを進めてもいいか
 	bool atkCountStart;
+
+	bool isMeleeECooperateAtk;
 	//--------------------------
 
 	//遠距離の敵----------------
