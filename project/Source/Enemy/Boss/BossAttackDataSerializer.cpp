@@ -4,7 +4,7 @@
 #include "BossState/AttackSorting.h"
 #include <iostream>
 #include "../../../Source/Common/FileSystemUtils/FileSystemUtils.h"
-#include "../../Common/ResourceLoader.h"
+#include "../../Common/ResourceLoader/ResourceLoader.h"
 #include "../../../Source/Component/EnemyAttackObject/BossRock/BossRockBase.h"
 
 #define ANIM_FILE

@@ -3,7 +3,7 @@
 #include "../Component/Shaker/Shaker.h"
 #include "cameraInformation.h"
 #include "../Common/ID/StateID.h"
-#include "../Common/JsonReader.h"
+#include "../Common/JsonReader/JsonReader.h"
 #include "../Camera/CameraBase.h"
 #include "../Component/Collider/CollsionInformation.h"
 

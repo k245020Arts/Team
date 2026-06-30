@@ -2,7 +2,7 @@
 #include "BossRockManager.h"
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Common/Sound/SoundManager.h"
-#include "../../../Common/ResourceLoader.h"
+#include "../../../Common/ResourceLoader/ResourceLoader.h"
 #include "../../Collider/SphereCollider.h"
 #include "../../Collider/RayCollider.h"
 #include "../../Collider/ModelCollider.h"

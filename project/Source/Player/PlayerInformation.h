@@ -1,7 +1,7 @@
 #pragma once
 #include "../../Library/myDxLib.h"
 #include "../Component/Shaker/Shaker.h"
-#include "../Common/JsonReader.h"
+#include "../Common/JsonReader/JsonReader.h"
 #include "../Common/ID/StateID.h"
 
 class MeshRenderer;

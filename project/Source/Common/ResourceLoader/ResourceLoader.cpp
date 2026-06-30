@@ -2,8 +2,8 @@
 #include <unordered_map>
 #include <array>
 #include <EffekseerForDXLib.h>
-#include "Debug/Debug.h"
-#include "../../Library/SceneManager.h"
+#include "../Debug/Debug.h"
+#include "../../../Library/SceneManager.h"
 
 
 namespace {

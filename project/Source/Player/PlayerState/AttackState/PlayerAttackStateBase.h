@@ -1,6 +1,6 @@
 #pragma once
 #include "../PlayerStateBase.h"
-#include "../../../Common/JsonReader.h"
+#include "../../../Common/JsonReader/JsonReader.h"
 
 class PlayerAttackStateBase : public PlayerStateBase
 {

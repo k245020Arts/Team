@@ -1,5 +1,5 @@
 #include "CameraBase.h"
-#include "../Common/Easing.h"
+#include "../Common/Easing/Easing.h"
 
 CameraBase::CameraBase()
 {

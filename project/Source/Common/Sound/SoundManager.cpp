@@ -1,10 +1,10 @@
 #include "SoundManager.h"
 #include "Sound.h"
-#include "../ResourceLoader.h"
+#include "../ResourceLoader/ResourceLoader.h"
 #include "../Debug/Debug.h"
 #include "../../Component/Object/BaseObject.h"
 #include "../../Component/Transform/Transform.h"
-#include "../Easing.h"
+#include "../Easing/Easing.h"
 #include "../../Stage/StageSelectData.h"
 
 SoundManager::SoundManager()

@@ -20,7 +20,7 @@
 #include "../../Player/PlayerState/AttackState/PlayerAttackStateBase.h"
 #include "../../Weapon/SwordEffect.h"
 #include "../../Weapon/CharaWeapon.h"
-#include "../../Common/ResourceLoader.h"
+#include "../../Common/ResourceLoader/ResourceLoader.h"
 #include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 
 #include "TrashEnemyState/T_EnemyIdol.h"

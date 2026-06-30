@@ -1,7 +1,7 @@
 #include "Sound.h"
 #include "../../../Library/myDxLib.h"
 #include "../../../Library/Time.h"
-#include "../Easing.h"
+#include "../Easing/Easing.h"
 
 namespace {
 	static const int ParamMAX = 22050;

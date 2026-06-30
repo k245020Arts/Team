@@ -4,7 +4,7 @@
 #include "../../../ImGui/imgui.h"
 #include "../Animator/Anim2D.h"
 #include "../ComponentManager.h"
-#include "../../Common/Easing.h"
+#include "../../Common/Easing/Easing.h"
 #include "../Color/Color.h"
 
 MeshRenderer2D::MeshRenderer2D()

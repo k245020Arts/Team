@@ -2,7 +2,7 @@
 #include "../camera.h"
 #include "../../Common/InputManager/PadInput.h"
 #include "../../Common/InputManager/InputManager.h"
-#include "../../Common/Easing.h"
+#include "../../Common/Easing/Easing.h"
 #include <algorithm>
 #include "../../GameControler/GameControler.h"
 

@@ -2,7 +2,7 @@
 #include "../Component/Object/Object3D.h"
 #include "../Component/Transform/transform.h"
 #include "../Component/MeshRenderer/MeshRenderer.h"
-#include "../Common/ResourceLoader.h"
+#include "../Common/ResourceLoader/ResourceLoader.h"
 #include "CharaWeapon.h"
 #include "../Component/ComponentManager.h"
 

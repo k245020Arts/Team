@@ -1,6 +1,6 @@
 #include "EffectManager.h"
 #include "../../Screen.h"
-#include "../ResourceLoader.h"
+#include "../ResourceLoader/ResourceLoader.h"
 #include "EffectBase.h"
 #include "../../Component/Transform/Transform.h"
 #include "../../Component/ComponentManager.h"

@@ -1,6 +1,6 @@
 #include "TrashEnemyGroup.h"
 #include "TrashEnemy.h"
-#include "../../Common/Random.h"
+#include "../../Common/Random/Random.h"
 #include "../../Camera/Camera.h"
 #include "../../Common/Effect/EffectManager.h"
 #include "../../Common/Sound/SoundManager.h"

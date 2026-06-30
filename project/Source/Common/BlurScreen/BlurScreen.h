@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Library/GameObject.h"
+#include "../../../Library/GameObject.h"
 
 //ブラースクリーンを生成できるクラス。
 

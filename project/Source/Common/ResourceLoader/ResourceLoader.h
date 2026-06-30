@@ -1,9 +1,9 @@
 #pragma once
-#include "../../Library/GameObject.h"
-#include "ID/ID.h"
-#include "ID/SoundID.h"
-#include "ID/EffectID.h"
-#include "ID/FontID.h"
+#include "../../../Library/GameObject.h"
+#include "../ID/ID.h"
+#include "../ID/SoundID.h"
+#include "../ID/EffectID.h"
+#include "../ID/FontID.h"
 /// <summary>
 /// ロードを一括で管理する名前空間
 /// map上で管理されてそこからGetHandleをすることによって画像データを得ることが出来る

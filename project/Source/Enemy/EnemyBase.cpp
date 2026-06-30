@@ -9,7 +9,7 @@
 #include "../Player/PlayerState/AttackState/PlayerAttack2.h"
 #include "../Common/Memory/MemoryCount.h"
 #include "EnemyManager.h"
-#include "../Common/ResourceLoader.h"
+#include "../Common/ResourceLoader/ResourceLoader.h"
 #include "../Component/UI/EnemyDamageUI.h"
 #include "../Component/ComponentManager.h"
 #include "../Camera/Camera.h"

@@ -2,11 +2,11 @@
 #include <string>
 #include <assert.h>
 #include "../../../Library/time.h"
-#include "../../Common/ResourceLoader.h"
+#include "../../Common/ResourceLoader/ResourceLoader.h"
 #include "../../../ImGui/imgui.h"
 #include "../Transform/Transform.h"
 #include <algorithm> 
-#include "../../Common/JsonReader.h"
+#include "../../Common/JsonReader/JsonReader.h"
 #include "../../Common/FileSystemUtils/FileSystemUtils.h"
 
 Animator::Animator()

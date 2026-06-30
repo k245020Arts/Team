@@ -1,11 +1,11 @@
 ﻿#include "swordEffect.h"
-#include "../Common/ResourceLoader.h"
+#include "../Common/ResourceLoader/ResourceLoader.h"
 #include "CharaWeapon.h"
 #include "../Component/ComponentManager.h"
 #include "../Component/Transform/Transform.h"
 #include "../../ImGui/imgui.h"
 #include <array>
-#include "../Common/Easing.h"
+#include "../Common/Easing/Easing.h"
 
 
 #ifdef MY_SWORD

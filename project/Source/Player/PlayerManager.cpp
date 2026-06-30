@@ -10,7 +10,7 @@
 #include "../Component/Hierarchy/Hierarchy.h"
 #include "../State/StateManager.h"
 #include "../Enemy/EnemyManager.h"
-#include "../Common/ResourceLoader.h"
+#include "../Common/ResourceLoader/ResourceLoader.h"
 #include "../Component/Collider/SphereCollider.h"
 #include "../Component/Animator/Animator.h"
 #include "../Component/Light/ComponentLight.h"

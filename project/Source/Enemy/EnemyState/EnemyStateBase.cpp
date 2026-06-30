@@ -5,7 +5,7 @@
 #include "../../Component/Collider/sphereCollider.h"
 #include "../EnemyBase.h"
 #include "../Boss/Boss.h"
-#include "../../Common/ResourceLoader.h"
+#include "../../Common/ResourceLoader/ResourceLoader.h"
 #include "EnemyStateManager.h"
 #include "../../Common/Effect/EffectManager.h"
 #include "../../Common/Sound/SoundManager.h"

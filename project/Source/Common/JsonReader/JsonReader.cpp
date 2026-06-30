@@ -1,6 +1,6 @@
 #include "JsonReader.h"
 #include <fstream>
-#include "MyAssert/MyAssert.h"
+#include "../MyAssert/MyAssert.h"
 
 namespace {
     std::string error = "no_errer";

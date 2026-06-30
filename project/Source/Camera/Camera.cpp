@@ -5,7 +5,7 @@
 #include <cmath>
 #include "../Component/ComponentManager.h"
 #include "../Component/Shaker/Shaker.h"
-#include "../Common/Easing.h"
+#include "../Common/Easing/Easing.h"
 #include "../Camera/CameraState/CameraStateManager.h"
 #include "../Camera/CameraState/FollowCamera.h"
 #include "../Camera/CameraState/JustAvoidCamera.h"
@@ -21,7 +21,7 @@
 #include "CutSceneBox.h"
 #include "../Component/UI/UIManager/UIManager.h"
 #include "CameraState/PlayerHeavyAttackCamera.h"
-#include "../Common/Random.h"
+#include "../Common/Random/Random.h"
 #include "../GameControler/GameControler.h"
 #include "../Camera/CameraState/RangedEnemyCamera.h"
 #include "../Camera/CameraState/RangedEnemyFinishCamera.h"

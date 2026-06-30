@@ -1,6 +1,6 @@
 #include "BlurScreen.h"
-#include "../../Source/Screen.h"
-#include "ResourceLoader.h"
+#include "../../Screen.h"
+#include "../ResourceLoader/ResourceLoader.h"
 
 #define NEW_VERSION  (0);
 #define OLD_VERSION  (1);

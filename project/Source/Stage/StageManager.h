@@ -2,7 +2,7 @@
 #include "../../Library/GameObject.h"
 #include "vector"
 #include "../Component/Transform/Transform.h"
-#include "../Common/JsonReader.h"
+#include "../Common/JsonReader/JsonReader.h"
 
 class Object3D;
 

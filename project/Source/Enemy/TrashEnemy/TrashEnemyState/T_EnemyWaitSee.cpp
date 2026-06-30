@@ -2,7 +2,7 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
-#include "../../../Common/Random.h"
+#include "../../../Common/Random/Random.h"
 
 T_EnemyWaitSee::T_EnemyWaitSee()
 {

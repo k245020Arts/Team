@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../../Library/GameObject.h"
 #include "../../../Enemy/EnemyState/Attack/EnemyAttackBase.h"
-#include "../../../Common/JsonReader.h"
+#include "../../../Common/JsonReader/JsonReader.h"
 
 class BossRockBase;
 class Boss;

@@ -3,7 +3,7 @@
 #include "../Component/Object/Object2D.h"
 #include "../Component/MeshRenderer2D/MeshRenderer2D.h"
 #include "../Component/ComponentManager.h"
-#include "../Common/ResourceLoader.h"
+#include "../Common/ResourceLoader/ResourceLoader.h"
 #include "../Common/Sound/SoundManager.h"
 #include "../Camera/Camera.h"
 #include "../Wave/Wave.h"
