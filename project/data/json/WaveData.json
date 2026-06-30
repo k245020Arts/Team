@@ -1,6 +1,6 @@
 {
   "WaveEnemyData": {
-    "1": {
+    "0": {
       "Wave1": {
         "melee": 5,
         "range": 0
@@ -10,12 +10,16 @@
         "range": 5
       }
     },
-    "2": {
+    "1": {
       "Wave1": {
-        "melee": 5,
+        "melee": 30,
         "range": 0
       },
       "Wave2": {
+        "melee": 13,
+        "range": 5
+      },
+      "Wave3": {
         "melee": 13,
         "range": 5
       }
