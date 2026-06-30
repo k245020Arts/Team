@@ -443,7 +443,6 @@
     <ClCompile Include="Source\Component\Collider\RayCollider.cpp" />
     <ClCompile Include="Source\Component\Collider\SphereCollider.cpp" />
     <ClCompile Include="Source\Component\Color\Color.cpp" />
-    <ClCompile Include="Source\Component\Component.cpp" />
     <ClCompile Include="Source\Component\ComponentManager.cpp" />
     <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRockBase.cpp" />
     <ClCompile Include="Source\Component\EnemyAttackObject\BossRock\BossRockManager.cpp" />
