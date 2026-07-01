@@ -229,7 +229,7 @@ void BlurScreen::Reset()
 
 }
 
-void BlurScreen::CurrentScreenSet()
+void BlurScreen::CurrentScreenSet() const
 {
 	if (blurScreen[currentScreen] != -1) {
 		SetDrawScreen(blurScreen[currentScreen]); //•`‰ææ‚ğXV

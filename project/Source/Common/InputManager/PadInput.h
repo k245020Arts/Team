@@ -31,6 +31,11 @@ struct StickInput
 {
 	DxLib::VECTOR2F leftStick;
 	DxLib::VECTOR2F rightStick;
+
+	StickInput() {
+		leftStick = VECTOR2F();
+		rightStick = VECTOR2F();
+	}
 };
 
 //LRスティックのbool
@@ -38,6 +43,11 @@ struct StickBool
 {
 	bool isLeftStick;
 	bool isRightStick;
+
+	StickBool() {
+		isLeftStick = false;
+		isRightStick = false;
+	}
 };
 
 //LRスティックのfloat
@@ -45,12 +55,22 @@ struct StickFloat
 {
 	float leftStick;
 	float rightStick;
+
+	StickFloat() {
+		leftStick = 0.0f;
+		rightStick = 0.0f;
+	}
 };
 
 struct StickDirection
 {
 	StickDirections leftStick;
 	StickDirections rightStick;
+
+	StickDirection() {
+		leftStick = S_DIRECTION_NUM;
+		rightStick = S_DIRECTION_NUM;
+	}
 };
 
 
@@ -64,18 +84,18 @@ public:
 	/// <summary>コントローラーのボタンが押されているか確認する</summary>
 	/// <param name="_getStick">スティックの傾きも取るか　通常はfalse</param>
 	/// <returns>いずれかのボタンが押されたらTrueを返す</returns>
-	bool GetAnyButtonPush(bool _getStick = false);
+	const bool GetAnyButtonPush(bool _getStick = false)const;
 	/// <summary>コントローラーのボタンが押されているか確認する</summary>
 	/// <param name="_getStick">スティックの傾きも取るか 通常はfalse</param>
 	/// <returns>いずれかのボタンが押されたらTrueを返す　前フレームも押されているならfalseを返す</returns>
-	bool GetAnyButtonPut(bool _getStick = false);
+	const bool GetAnyButtonPut(bool _getStick = false)const;
 
 	//ボタンを押している間True
-	bool GetIsButtonPushingNow(int _button);
+	const bool GetIsButtonPushingNow(int _button)const;
 	//ボタンの押し始め1フレームのみTrue
-	bool GetIsButtonPutNow(int _button);
+	const bool GetIsButtonPutNow(int _button)const;
 	//ボタンを押して離した1フレームのみTrue
-	bool GetIsButtonReleaseNow(int _button);
+	const bool GetIsButtonReleaseNow(int _button)const;
 
 	/*///<summary>ボタンを押している間True(過去のフレームを取れる)
 	/// ※指定したフレーム分前の入力が保存されていなかった場合、無条件でfalseを返す</summary>
@@ -96,55 +116,55 @@ public:
 	///<summary>指定したボタンが何フレーム間押し続けられているかを確認する</summary>
 	/// <param name="_button">ボタンの種類</param>
 	/// <returns>押されているフレームの長さ(SAVE_FRAME_MAXが最大値)</returns>
-	int GetPushButtonTime(int _button);
+	int GetPushButtonTime(int _button)const;
 
 	///<summary>スティックの倒し具合を(-1~1)取る</summary>
-	StickInput GetStickInput();
+	StickInput GetStickInput()const;
 	///<summary>スティックの倒し具合を(-1~1)取る</summary>
 	/// <param name="_backFrame">何フレーム前の入力を取るか</param>
-	StickInput GetStickInput(int _backFrame);
+	StickInput GetStickInput(int _backFrame)const;
 
 	///<summary>スティックが倒されている方向を調べる</summary>
 	/// <param name="_deadZone">デッドゾーン(全体の何割が倒れていたら反応させるか)</param>
-	StickDirection GetStickKnocking(float _deadZone);
+	StickDirection GetStickKnocking(float _deadZone)const;
 	///<summary>スティックが倒されている方向を調べる</summary>
 	/// <param name="_deadZone">デッドゾーン(全体の何割が倒れていたら反応させるか)</param>
 	/// /// <param name="_backFrame">何フレーム前の入力を取るか</param>
-	StickDirection GetStickKnocking(float _deadZone, int _backFrame);
+	StickDirection GetStickKnocking(float _deadZone, int _backFrame)const;
 	///<summary>スティックが倒されている方向の逆方向をしらべる</summary>
 	/// <param name="_deadZone">デッドゾーン(全体の何割が倒れていたら反応させるか)</param>
 	/// /// <param name="_backFrame">何フレーム前の入力を取るか</param>
-	StickDirection GetStickKnockingReverce(float _deadZone, int _backFrame);
+	StickDirection GetStickKnockingReverce(float _deadZone, int _backFrame)const;
 
 	///<summary>スティックが倒されている方向を調べる</summary>
 	/// <param name="_deadZone">デッドゾーン(全体の何割が倒れていたら反応させるか)</param>
 	/// <returns>前回のフレームと今のフレームで倒した角度が違うなら値を返し、同じならS_NO_DIRECTIONが返る</returns>
-	StickDirection GetStickKnockingPut(float _deadZone);
+	StickDirection GetStickKnockingPut(float _deadZone)const;
 
 	///<summary>倒されているスティックの角度を入手する</summary>
-	StickFloat GetStickRot();
+	const StickFloat GetStickRot()const;
 	///<summary>倒されているスティックの角度を入手する</summary>
 	/// <param name="_backFrame">何フレーム前の入力を取るか</param>
-	StickFloat GetStickRot(int _backFrame);
+	const StickFloat GetStickRot(int _backFrame)const;
 
 	///<summary>現フレームのLRトリガーの押し込まれ具合を入手する(0~1)</summary>
-	StickFloat GetTriggerNow();
+	const StickFloat GetTriggerNow()const;
 
 	///<summary>コントローラーの振動を行う</summary>
 	/// <param name="_power">振動の強さ(0~1000)</param>
 	///	<param name="_timeSecond">振動時間(秒数)</param>
-	void ControlVibrationStartTime(int _power, int _timeSecond);
+	void ControlVibrationStartTime(int _power, int _timeSecond)const;
 
 	///<summary>コントローラーの振動を行う(1秒=60フレームで計算)</summary>
 	/// <param name="_power">振動の強さ(0~1000)</param>
 	///	<param name="_timeFrame">振動時間(フレーム数)</param>
-	void ControlVibrationStartFrame(int _power, int _timeFrame);
+	void ControlVibrationStartFrame(int _power, int _timeFrame)const;
 	/// <summary>
 	/// コントローラーの振動をストップする
 	/// </summary>
 	/// <param name="_power"></param>
 	/// <param name="_timeFrame"></param>
-	void StopControlVibrationStartFrame();
+	void StopControlVibrationStartFrame()const;
 
 	//何Pのコントローラーの情報を入手するかを設定する(何もしなかったら1P)
 	void SetControllerPlayer(ControllerPlayer _playerNumber) { playerNumber = _playerNumber; }
@@ -153,23 +173,23 @@ public:
 	/// コントローラーが何台接続されているか返す
 	/// </summary>
 	/// <returns></returns>
-	int GetPadInputNum() { return GetJoypadNum(); }
+	const int GetPadInputNum()const { return GetJoypadNum(); }
 	/// <summary>
 	/// コントローラーが接続されているかを返す
 	/// </summary>
 	/// <returns>tuueなら接続されている</returns>
-	bool GetIsPadInput() { return (GetJoypadNum() > 0); }
+	bool GetIsPadInput()const { return (GetJoypadNum() > 0); }
 
 private:
 	/// <summary>コントローラーのボタンが押されているか確認する</summary>
 	/// <param name="_getStick">スティックの傾きも取るか</param>
 	/// <param name="_backFrame">何フレーム前のものを取るか</param>
 	/// <returns>いずれかのボタンが押されたらTrueを返す</returns>
-	bool GetAnyButtonPush(bool _getStick, int _backFrame);
+	const bool GetAnyButtonPush(bool _getStick, int _backFrame)const;
 
-	StickDirections GetDirection(float _rot);
+	const StickDirections GetDirection(float _rot)const;
 
-	StickDirections ReverceDirection(StickDirections _direction);
+	const StickDirections ReverceDirection(StickDirections _direction)const;
 
 	const int BUTTON_MAX = 16;//XINPUTで使うボタンの数
 	const float ANY_KEY_TRIGGER_DEADZONE = 0.5f;//AnyButtonPushで使うトリガーのデッドゾーン

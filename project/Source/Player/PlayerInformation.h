@@ -85,7 +85,7 @@ namespace PlayerInformation {
 	/// <summary>
 	/// ジャスト回避をした時にどれくらい敵をスローさせるか
 	/// </summary>
-	static const float JUST_AVOID_ENEMY_TIME_SCALE = 0.3f;
+	static constexpr float JUST_AVOID_ENEMY_TIME_SCALE = 0.3f;
 
 	// チャージレベル1つ分のリアクションパラメータ
 	struct ChargeReactionLevelData

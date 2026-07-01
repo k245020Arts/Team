@@ -78,11 +78,11 @@ void ResourceLoad::Init()
 
 // 共通データと通常データを管理するLoadクラスの例
 
-int ResourceLoad::LoadModel(std::string path, ID::IDType id) {
+int ResourceLoad::LoadModel(const std::string& path, ID::IDType id) {
     return LoadModel(path, id, false);
 }
 
-int ResourceLoad::LoadModel(std::string path, ID::IDType id, bool _common) {
+int ResourceLoad::LoadModel(const std::string& path, ID::IDType id, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
 
@@ -103,12 +103,12 @@ int ResourceLoad::LoadModel(std::string path, ID::IDType id, bool _common) {
     return targetLoad[name].handle;
 }
 
-int ResourceLoad::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id) {
+int ResourceLoad::LoadSound(const std::string& path, const std::string& exten, Sound_ID::SOUND_ID id) {
     // 通常版は _common = false
     return LoadSound(path, exten, id, false);
 }
 
-int ResourceLoad::LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id, bool _common) {
+int ResourceLoad::LoadSound(const std::string& path, const std::string& exten, Sound_ID::SOUND_ID id, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
 
@@ -129,12 +129,12 @@ int ResourceLoad::LoadSound(std::string path, std::string exten, Sound_ID::SOUND
     return targetLoad[name].handle;
 }
 
-int ResourceLoad::LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size) {
+int ResourceLoad::LoadEffect(const std::string& path, const std::string& _exten, Effect_ID::EFFECT_ID id, float size) {
     return LoadEffect(path, _exten, id,size, false);
 }
 
 
-int ResourceLoad::LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size, bool _common) {
+int ResourceLoad::LoadEffect(const std::string& path, const std::string& _exten, Effect_ID::EFFECT_ID id, float size, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
     //配列の要素にデータが入ってなかったらロード
@@ -154,11 +154,11 @@ int ResourceLoad::LoadEffect(std::string path, std::string _exten, Effect_ID::EF
     return targetLoad[name].handle;
 }
 
-int ResourceLoad::LoadImageGraph(std::string path, ID::IDType id) {
+int ResourceLoad::LoadImageGraph(const std::string& path, ID::IDType id) {
     return LoadImageGraph(path, id, false);
 }
 
-int ResourceLoad::LoadImageGraph(std::string path, ID::IDType id, bool _common) {
+int ResourceLoad::LoadImageGraph(const std::string& path, ID::IDType id, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad;
     //配列の要素にデータが入ってなかったらロード
@@ -178,11 +178,11 @@ int ResourceLoad::LoadImageGraph(std::string path, ID::IDType id, bool _common) 
     return targetLoad[name].handle;
 }
 
-int ResourceLoad::LoadAnim(std::string path, ID::IDType id) {
+int ResourceLoad::LoadAnim(const std::string& path, ID::IDType id) {
     return LoadAnim(path, id, false);
 }
 
-int ResourceLoad::LoadAnim(std::string path, ID::IDType id, bool _common) {
+int ResourceLoad::LoadAnim(const std::string& path, ID::IDType id, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
     //配列の要素にデータが入ってなかったらロード
@@ -204,12 +204,12 @@ int ResourceLoad::LoadAnim(std::string path, ID::IDType id, bool _common) {
 }
 
 
-int ResourceLoad::LoadFont(std::string path, std::string exten, Font_ID::Font_ID id, int _edge) {
+int ResourceLoad::LoadFont(const std::string& path, const std::string& exten, Font_ID::Font_ID id, int _edge) {
     // 通常版は _common = false
     return LoadFont(path, exten, id, _edge,false);
 }
 
-int ResourceLoad::LoadFont(std::string path, std::string exten, Font_ID::Font_ID id, int _edge, bool _common) {
+int ResourceLoad::LoadFont(const std::string& path, const std::string& exten, Font_ID::Font_ID id, int _edge, bool _common) {
     std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
 

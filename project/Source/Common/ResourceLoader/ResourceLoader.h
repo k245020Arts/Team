@@ -20,7 +20,7 @@ namespace ResourceLoad {
 	/// <param name="path">ファイルパス</param>
 	/// <param name="id">設定するID</param>
 	/// <returns>モデルデータ</returns>
-	int LoadModel(std::string path, ID::IDType id);
+	int LoadModel(const std::string& path, ID::IDType id);
 	/// <summary>
 	/// モデルのロードをする
 	/// </summary>
@@ -28,7 +28,7 @@ namespace ResourceLoad {
 	/// <param name="id">設定するID</param>
 	/// <param name="_common">コモンデータに入れるかどうかtrueなら入れる</param>
 	/// <returns>モデルデータ</returns>
-	int LoadModel(std::string path, ID::IDType id, bool _common);
+	int LoadModel(const std::string& path, ID::IDType id, bool _common);
 	/// <summary>
 	/// サウンドのロードをする
 	/// </summary>
@@ -36,7 +36,7 @@ namespace ResourceLoad {
 	/// <param name="exten">拡張子</param>
 	/// <param name="id">設定するID</param>
 	/// <returns>サウンドデータ</returns>
-	int LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id);
+	int LoadSound(const std::string& path, const std::string& exten, Sound_ID::SOUND_ID id);
 	/// <summary>
 	/// サウンドのロードをする
 	/// </summary>
@@ -45,7 +45,7 @@ namespace ResourceLoad {
 	/// <param name="id">設定するID</param>
 	/// <param name="_common">コモンデータに入れるかどうかtrueなら入れる</param>
 	/// <returns>サウンドデータ</returns>
-	int LoadSound(std::string path, std::string exten, Sound_ID::SOUND_ID id, bool _common);
+	int LoadSound(const std::string& path, const std::string& exten, Sound_ID::SOUND_ID id, bool _common);
 	/// <summary>
 	/// エフェクトのロードをする
 	/// </summary>
@@ -53,7 +53,7 @@ namespace ResourceLoad {
 	/// <param name="id">設定するID</param>
 	/// <param name="size">エフェクトの大きさ</param>
 	/// <returns>エフェクトデータ</returns>
-	int LoadEffect(std::string path, std::string _exten,Effect_ID::EFFECT_ID id, float size);
+	int LoadEffect(const std::string& path, const std::string& _exten,Effect_ID::EFFECT_ID id, float size);
 	/// <summary>
 	/// エフェクトのロードをする
 	/// </summary>
@@ -62,14 +62,14 @@ namespace ResourceLoad {
 	/// <param name="size">エフェクトの大きさ</param>
 	/// <param name="_common">コモンデータに入れるかどうかtrueなら入れる</param>
 	/// <returns>エフェクトデータ</returns>
-	int LoadEffect(std::string path, std::string _exten, Effect_ID::EFFECT_ID id, float size, bool _common);
+	int LoadEffect(const std::string& path, const std::string& _exten, Effect_ID::EFFECT_ID id, float size, bool _common);
 	/// <summary>
 	/// 画像のロードをする
 	/// </summary>
 	/// <param name="path">ファイルパス</param>
 	/// <param name="id">設定するID</param>
 	/// <returns>画像データ</returns>
-	int LoadImageGraph(std::string path, ID::IDType id);
+	int LoadImageGraph(const std::string& path, ID::IDType id);
 	/// <summary>
 	/// 画像のロードをする
 	/// </summary>
@@ -77,14 +77,14 @@ namespace ResourceLoad {
 	/// <param name="id">設定するID</param>
 	/// <param name="_common">コモンデータに入れるかどうかtrueなら入れる</param>
 	/// <returns>画像データ</returns>
-	int LoadImageGraph(std::string path, ID::IDType id, bool _common);
+	int LoadImageGraph(const std::string&, ID::IDType id, bool _common);
 	/// <summary>
 	/// アニメーションデータのロードをする
 	/// </summary>
 	/// <param name="path">ファイルパス</param>
 	/// <param name="id">設定するID</param>
 	/// <returns>アニメーションデータ</returns>
-	int LoadAnim(std::string path, ID::IDType id);
+	int LoadAnim(const std::string&, ID::IDType id);
 	/// <summary>
 	/// アニメーションデータのロードをする
 	/// </summary>
@@ -92,7 +92,7 @@ namespace ResourceLoad {
 	/// <param name="id">設定するID</param>
 	/// <param name="_common">コモンデータに入れるかどうかtrueなら入れる</param>
 	/// <returns>アニメーションデータ</returns>
-	int LoadAnim(std::string path, ID::IDType id, bool _common);
+	int LoadAnim(const std::string& path, ID::IDType id, bool _common);
 
 	/// <summary>
 	/// サウンドのロードをする
@@ -101,7 +101,7 @@ namespace ResourceLoad {
 	/// <param name="exten">拡張子</param>
 	/// <param name="id">設定するID</param>
 	/// <returns>サウンドデータ</returns>
-	int LoadFont(std::string path, std::string exten, Font_ID::Font_ID id,int _edge);
+	int LoadFont(const std::string& path, const std::string& exten, Font_ID::Font_ID id,int _edge);
 	/// <summary>
 	/// サウンドのロードをする
 	/// </summary>
@@ -110,7 +110,7 @@ namespace ResourceLoad {
 	/// <param name="id">設定するID</param>
 	/// <param name="_common">コモンデータに入れるかどうかtrueなら入れる</param>
 	/// <returns>サウンドデータ</returns>
-	int LoadFont(std::string path, std::string exten, Font_ID::Font_ID id, int _edge, bool _common);
+	int LoadFont(const std::string& path, const std::string& exten, Font_ID::Font_ID id, int _edge, bool _common);
 
 	/// <summary>
 	/// 指定したデータの削除

@@ -80,7 +80,7 @@ namespace StateID{
 
     void DeleteStateID();
 
-	std::string GetID(State_ID _type);
+    const std::string GetID(State_ID _type);
 	void SetID(std::string _state, State_ID _type);
 
     State_ID StringToID(std::string _str);

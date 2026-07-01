@@ -21,7 +21,7 @@ public:
 
 private:
 
-	void CurrentScreenSet();
+	void CurrentScreenSet()const;
 
 	void ScreenFinish();
 

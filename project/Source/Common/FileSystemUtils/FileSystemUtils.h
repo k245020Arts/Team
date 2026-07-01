@@ -16,21 +16,21 @@ public:
 	/// </summary>
 	/// <param name="_filePath">	フォルダパス					</param>
 	/// <returns>					フォルダとファイルの総数		</returns>
-	static int GetDirectoryAndFileCount(const std::string_view& _filePath);
+	const static int GetDirectoryAndFileCount(const std::string_view& _filePath);
 
 	/// <summary>
 	///								フォルダパス内のフォルダの総数を返す
 	/// </summary>
 	/// <param name="_filePath">	フォルダパス		</param>
 	/// <returns>					フォルダの総数		</returns>
-	static int GetDirectoryCount(const std::string_view& _filePath);
+	const static int GetDirectoryCount(const std::string_view& _filePath);
 
 	/// <summary>
 	///								フォルダパス内のファイルの総数を返す
 	/// </summary>
 	/// <param name="_filePath">	フォルダパス		</param>
 	/// <returns>					ファイルの総数		</returns>
-	static int GetFileCount(const std::string_view& _filePath);
+	const static int GetFileCount(const std::string_view& _filePath);
 
 	/// <summary>
 	///									フォルダパスとファイルを作成する
@@ -39,7 +39,7 @@ public:
 	/// <param name="_DirectoryPath">	作成するフォルダパス(ディレクトリパス)	｛例) data/stage/wave/｝ [※最後の / がないとstageと同じ階層にwave.txtが作られる]	</param>
 	/// <param name="_fileName">		作成するファイル名						｛例) wave.txt｝																	</param>
 	/// <returns>						true:成功 / false:失敗																										</returns>
-	static bool CreateDirectoryAndFile(std::string_view _DirectoryPath, std::string_view _fileName);
+	const static bool CreateDirectoryAndFile(std::string_view _DirectoryPath, std::string_view _fileName);
 
 	/// <summary>
 	///								フォルダパスとファイルを作成する
@@ -47,7 +47,7 @@ public:
 	/// </summary>
 	/// <param name="_filePath">	作成するフォルダパス(ディレクトリパス)	｛例) data/stage/wave/wave.txt｝	</param>
 	/// <returns>					true:成功 / false:失敗														</returns>
-	static bool CreateDirectoryAndFile(std::string_view _filePath);
+	const static bool CreateDirectoryAndFile(std::string_view _filePath);
 
 	/// <summary>
 	///									フォルダパスを作成する
@@ -55,14 +55,14 @@ public:
 	/// </summary>
 	/// <param name="_DirectoryPath">	作成するフォルダパス(ディレクトリパス)	｛例) data/stage/wave｝	</param>
 	/// <returns>						true:成功 / false:失敗											</returns>
-	static bool CreateEntryDirectory(std::string_view _DirectoryPath);
+	const static bool CreateEntryDirectory(std::string_view _DirectoryPath);
 
 	/// <summary>
 	///								ファイルを作成する
 	/// </summary>
 	/// <param name="_filePath">	作成するファイルパス		｛例) data/stage/wave/wave.txt｝	</param>
 	/// <returns>					true:成功 / false:失敗											</returns>
-	static bool CreateEntryFile(std::string_view _filePath);
+	const static bool CreateEntryFile(std::string_view _filePath);
 
 	// 以下、自身で追加した関数 -----------------------------------------------------------------------
 	
@@ -73,7 +73,7 @@ public:
 	/// <param name="folderPath">フォルダパス</param>
 	/// <param name="prefix">先頭の文字列</param>
 	/// <returns>フォルダ名(拡張子なし)</returns>
-	static std::vector<std::string> GetFilesStartsWith(const std::string& folderPath, const std::string& prefix);
+	const static std::vector<std::string> GetFilesStartsWith(const std::string& folderPath, const std::string& prefix);
 
 	/// <summary>
 	/// 指定した文字列のリストからすべての文字列を検索し、Keywardの後から最後の文字列を検索し
@@ -83,9 +83,9 @@ public:
 	/// <param name="after">指定ワード</param>
 	/// <param name="keyword">ここから検索開始の文字列</param>
 	/// <returns>後の文字列だけ取得</returns>
-	static std::string FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword);
-	static std::string FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword,size_t _cutNum);
-	static std::string FindAfterAndMatchFileName(const std::vector<std::string> str, const std::string& after, const std::string& keyword);
+	const static std::string FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword);
+	const static std::string FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword,size_t _cutNum);
+	const static std::string FindAfterAndMatchFileName(const std::vector<std::string> str, const std::string& after, const std::string& keyword);
 
 	// -------------------------------------------------------------------------------------------
 
@@ -107,7 +107,7 @@ private:
 	/// <param name="_filePath">フォルダパス												</param>
 	/// <param name="_type">	指定エントリタイプ 											</param>
 	/// <returns>				指定されたエントリタイプのフォルダパス内のエントリの総数	</returns>
-	static int GetEntryCount(const std::string_view& _filePath, const ENTRY_TYPE _type);
+	const static int GetEntryCount(const std::string_view& _filePath, const ENTRY_TYPE _type);
 
 	/// <summary>
 	///									指定されたタイプのエントリの作成を行う
@@ -116,6 +116,6 @@ private:
 	/// <param name="_fileName">		ファイル名									</param>
 	/// <param name="_type">			指定エントリタイプ							</param>
 	/// <returns>						true:成功 / false:失敗						</returns>
-	static bool CreateEntry(std::string_view _DirectoryPath, std::string_view _fileName, const ENTRY_TYPE _type);
+	const static bool CreateEntry(std::string_view _DirectoryPath, std::string_view _fileName, const ENTRY_TYPE _type);
 };
 

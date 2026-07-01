@@ -15,7 +15,7 @@
 #include "../GuideWindow/GuideWindow.h"
 
 namespace {
-	const int GAME_STATE_MAX = 5;
+	constexpr int GAME_STATE_MAX = 5;
 
 	const std::string stateName[GAME_STATE_MAX]{
 		{"BEFORE"},

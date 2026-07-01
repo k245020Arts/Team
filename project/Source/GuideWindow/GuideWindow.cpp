@@ -9,9 +9,9 @@
 #include "../Common/Sound/SoundManager.h"
 
 namespace {
-	const int LABEL_POS_Y = 950;
-	const int GAMEBACK_LABEL_POS_X = 600;
-	const int PAUSEBACK_LABEL_POS_X = 1050;
+	constexpr int LABEL_POS_Y = 950;
+	constexpr int GAMEBACK_LABEL_POS_X = 600;
+	constexpr int PAUSEBACK_LABEL_POS_X = 1050;
 }
 
 GuideWindow::GuideWindow()

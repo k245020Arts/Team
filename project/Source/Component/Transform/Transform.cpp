@@ -37,7 +37,7 @@ void Transform::SetParent(Transform* _pare)
 	}
 }
 
-Transform Transform::WorldTransform()
+Transform Transform::WorldTransform()const
 {
 	VECTOR3 worldPos = position;
 	VECTOR3 worldRot = rotation;

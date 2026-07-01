@@ -8,7 +8,7 @@ public:
 	VECTOR3 position;
 	VECTOR3 rotation;
 	VECTOR3 scale;
-	VECTOR3 Forward() { return VECTOR3(0, 0, 1) * rotMatrix; }
+	const VECTOR3 Forward()const { return VECTOR3(0, 0, 1) * rotMatrix; }
 	Transform() {
 		position = VZero;
 		rotation = VZero;
@@ -57,7 +57,7 @@ public:
 		child.emplace_back(_child);
 	}
 	//子のポジションのワールド座標を取り出す関数。
-	Transform WorldTransform();
+	Transform WorldTransform()const;
 	/// <summary>
 	/// ワールドTransformをセットする
 	/// </summary>

@@ -11,8 +11,8 @@
 
 
 namespace {
-	const int ATTACK_KIND_MAX		= 6;
-	const int COMBO_ATTACK_KIND_MAX = 3;
+	constexpr int ATTACK_KIND_MAX		= 6;
+	constexpr int COMBO_ATTACK_KIND_MAX = 3;
 	/*enum COMBO_ATTACK
 	{
 		NORMAL_COMBO1,

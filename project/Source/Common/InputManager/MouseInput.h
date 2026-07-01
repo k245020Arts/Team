@@ -35,7 +35,7 @@ public:
 	///<summary>マウスカーソルの位置を取得する</summary>
 	/// <param name="_canScreenOut">TRUEなら画面外の座標も得られる,FALSEなら画面端が最大(最小)値になる</param>
 	/// <returns>マウスカーソルの座標</returns>
-	VECTOR2F GetMousePos(bool _canScreenOut);
+	VECTOR2F GetMousePos(bool _canScreenOut)const;
 	///<summary>マウスカーソルの位置を移動させる</summary>
 	/// <param name="_pos">マウスカーソルの移動先の座標</param>
 	void SetMousePos(VECTOR2F _pos);
@@ -43,11 +43,11 @@ public:
 	///<summary></summary>
 	/// <param name="_button"></param>
 	/// <returns></returns>
-	bool GetMousePushing(MouseButton _button);
+	bool GetMousePushing(MouseButton _button)const;
 	///<summary></summary>
 	/// <param name="_button"></param>
 	/// <returns></returns>
-	bool GetMousePut(MouseButton _button);
+	bool GetMousePut(MouseButton _button)const;
 
 	///<summary>現在のフレームのマウスホイールの移動量を取得する</summary>
 	/// <returns>奥に動かしたなら正の値・手前に動かしたなら負の値が返り動かしていないなら0が返される</returns>
@@ -57,7 +57,7 @@ public:
 	/// <param name="_centerPos">範囲の中心の座標</param>
 	/// <param name="_size">当たり判定を取りたい中心からの範囲</param>
 	/// <returns>当たったならTrue,当たっていないならFalse</returns>
-	bool IsCursorSquareCollision(VECTOR2F _centerPos, VECTOR2F _size);
+	bool IsCursorSquareCollision(VECTOR2F _centerPos, VECTOR2F _size)const;
 
 private:
 	//現フレームのボタン入力記録する
