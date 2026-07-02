@@ -61,7 +61,7 @@ void CooperateAttack2::Start()
 	attackParam.hitDamage = enemy->GetStatus().C_Attack2Damage;
 
 	EnemyAttackBase::collTrans.position	= CollPos;
-	EnemyAttackBase::collTrans.scale		= Collscale;
+	EnemyAttackBase::collTrans.scale	= Collscale;
 
 	enemy->isMovingToPlayer = true;
 
@@ -127,7 +127,7 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 {
 	const float CounterMax = 1.0f;
-
+	//攻撃を食らったときにカメラのステートを変える
 	//_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_FINISH_CAMERA_S);
 
 	hitStopCounter += Time::DeltaTimeRate();
