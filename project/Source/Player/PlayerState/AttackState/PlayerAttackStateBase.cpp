@@ -1,6 +1,6 @@
 #include "PlayerAttackStateBase.h"
 #include "../../player.h"
-#include "../../../Common/Easing.h"
+#include "../../../Common/Easing/Easing.h"
 #include "../../../Common/Sound/SoundManager.h"
 #include "../../../Common/InputManager/InputManager.h"
 #include "../playerStateManager.h"
@@ -178,7 +178,7 @@ void PlayerAttackStateBase::Finish()
 	}
 }
 
-bool PlayerAttackStateBase::IsAttack()
+bool PlayerAttackStateBase::IsAttack()const
 {
 	Player* p = GetBase<Player>();
 	float frame = p->playerCom.anim->GetCurrentFrame();

@@ -24,7 +24,7 @@ public:
 	/// 現在使われているモデルデータ
 	/// </summary>
 	/// <returns>当たり判定に使用するモデルデーター</returns>
-	int GetModel() { return modelHandle; }
+	int GetModel() const { return modelHandle; }
 
 private:
 	int modelHandle; //当たり判定に使うモデル

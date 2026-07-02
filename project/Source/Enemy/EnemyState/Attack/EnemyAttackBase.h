@@ -514,7 +514,7 @@ public:
 	/// ダメージのパラメーターを取得
 	/// </summary>
 	/// <returns>ダメージのパラメーター</returns>
-	const BossAttackParam& GetDamageParam() { return attackParam; }
+	const BossAttackParam& GetDamageParam()const { return attackParam; }
 	/// <summary>
 	/// データのセーブをする関数
 	/// </summary>
@@ -533,14 +533,14 @@ public:
 	/// <param name="_modelId">モデルのEnum</param>
 	/// <param name="_modelFrame">光らせる場所のフレーム</param>
 	/// <param name="_voice">ボイスの名前</param>
-	void AttackFlash(ID::IDType _modelId, int _modelFrame, std::string _voice);
+	void AttackFlash(ID::IDType _modelId, int _modelFrame, const std::string& _voice);
 	/// <summary>
 	/// 攻撃をするときに手を光らせる処理
 	/// </summary>
 	/// <param name="_modelId">モデルのEnum</param>
 	/// <param name="_modelFrame">光らせる場所のフレーム</param>
 	/// <param name="_voice">ボイスの名前</param>
-	void AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std::string _voice);
+	void AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, const std::string& _voice);
 	/// <summary>
 	/// 軌跡の表示
 	/// </summary>
@@ -557,12 +557,12 @@ public:
 	/// 攻撃のデータの受け渡し
 	/// </summary>
 	/// <param name="_param"></param>
-	void SetAttackParam(BossAttackParam _param);
+	void SetAttackParam(const BossAttackParam& _param);
 	/// <summary>
 	/// 今再生されてるアニメーションが攻撃アニメーションかどうかを判定する
 	/// </summary>
 	/// <returns></returns>
-	bool CurrentAttackAnim();
+	bool CurrentAttackAnim()const;
 	
 
 protected:

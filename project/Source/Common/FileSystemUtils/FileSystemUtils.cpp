@@ -4,22 +4,22 @@
 #include <assert.h>
 #include <list>
 
-int FileSystemUtils::GetDirectoryAndFileCount(const std::string_view& _filePath)
+const int FileSystemUtils::GetDirectoryAndFileCount(const std::string_view& _filePath)
 {
 	return GetEntryCount(_filePath, ENTRY_TYPE::ALL);
 }
 
-int FileSystemUtils::GetDirectoryCount(const std::string_view& _filePath)
+const int FileSystemUtils::GetDirectoryCount(const std::string_view& _filePath)
 {
 	return GetEntryCount(_filePath, ENTRY_TYPE::DIRECTORY);
 }
 
-int FileSystemUtils::GetFileCount(const std::string_view& _filePath)
+const int FileSystemUtils::GetFileCount(const std::string_view& _filePath)
 {
 	return GetEntryCount(_filePath, ENTRY_TYPE::FILE);
 }
 
-int FileSystemUtils::GetEntryCount(const std::string_view& _filePath, const ENTRY_TYPE _type)
+const int FileSystemUtils::GetEntryCount(const std::string_view& _filePath, const ENTRY_TYPE _type)
 {
 	if (!std::filesystem::exists(_filePath))
 		assert(false && "ディレクトリが見つかりませんでした");
@@ -67,12 +67,12 @@ int FileSystemUtils::GetEntryCount(const std::string_view& _filePath, const ENTR
 	return entryCount;
 }
 
-bool FileSystemUtils::CreateDirectoryAndFile(std::string_view _DirectoryPath, std::string_view _fileName)
+const bool FileSystemUtils::CreateDirectoryAndFile(std::string_view _DirectoryPath, std::string_view _fileName)
 {
 	return CreateEntry(_DirectoryPath, _fileName, ENTRY_TYPE::ALL);
 }
 
-bool FileSystemUtils::CreateDirectoryAndFile(std::string_view _filePath)
+const bool FileSystemUtils::CreateDirectoryAndFile(std::string_view _filePath)
 {
 	std::string directoryPath = std::string(_filePath);	// ディレクトリパス
 	std::list<char> reverseFileName;					// 逆順のまま、ファイルパスの後ろから/までの文字列を保存するコンテナ	std::stringにpush_front()がないので、処理負荷軽減のため一度逆順でいいので、保存する
@@ -103,19 +103,19 @@ bool FileSystemUtils::CreateDirectoryAndFile(std::string_view _filePath)
 	return CreateDirectoryAndFile(directoryPath, fileName);
 }
 
-bool FileSystemUtils::CreateEntryDirectory(std::string_view _DirectoryPath)
+const bool FileSystemUtils::CreateEntryDirectory(std::string_view _DirectoryPath)
 {
 	return CreateEntry(_DirectoryPath, "", ENTRY_TYPE::DIRECTORY);
 }
 
-bool FileSystemUtils::CreateEntryFile(std::string_view _filePath)
+const bool FileSystemUtils::CreateEntryFile(std::string_view _filePath)
 {
 	return CreateEntry("", _filePath, ENTRY_TYPE::FILE);
 }
 
 // 以下、自身で追加した関数 -----------------------------------------------------------------------
 
-std::vector<std::string> FileSystemUtils::GetFilesStartsWith(const std::string& folderPath, const std::string& prefix)
+const std::vector<std::string> FileSystemUtils::GetFilesStartsWith(const std::string& folderPath, const std::string& prefix)
 {
 	std::vector<std::string> result;
 
@@ -135,12 +135,12 @@ std::vector<std::string> FileSystemUtils::GetFilesStartsWith(const std::string& 
 	return result;
 }
 
-std::string FileSystemUtils::FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword)
+const std::string FileSystemUtils::FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword)
 {
 	return FindAfterAndMatch(str, after, keyword, after.length());
 }
 
-std::string FileSystemUtils::FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword, size_t _cutNum)
+const std::string FileSystemUtils::FindAfterAndMatch(const std::vector<std::string> str, const std::string& after, const std::string& keyword, size_t _cutNum)
 {
 	// 「after」の位置を探す
 	for (auto& s : str) {
@@ -161,7 +161,7 @@ std::string FileSystemUtils::FindAfterAndMatch(const std::vector<std::string> st
 	return "";
 }
 
-std::string FileSystemUtils::FindAfterAndMatchFileName(const std::vector<std::string> str, const std::string& after, const std::string& keyword)
+const std::string FileSystemUtils::FindAfterAndMatchFileName(const std::vector<std::string> str, const std::string& after, const std::string& keyword)
 {
 	// 「after」の位置を探す
 	for (auto& s : str) {
@@ -184,7 +184,7 @@ std::string FileSystemUtils::FindAfterAndMatchFileName(const std::vector<std::st
 
 // -------------------------------------------------------------------------------------------
 
-bool FileSystemUtils::CreateEntry(std::string_view _DirectoryPath, std::string_view _fileName, const ENTRY_TYPE _type)
+const bool FileSystemUtils::CreateEntry(std::string_view _DirectoryPath, std::string_view _fileName, const ENTRY_TYPE _type)
 {
 	// ファイルを作成するタイプでなかったら
 	if (_type != ENTRY_TYPE::FILE)

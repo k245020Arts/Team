@@ -23,18 +23,18 @@ public:
 
 	///<summary>キーボード用　指定したキーが押されている間trueを返す</summary>
 	/// <param name="_keyCode">キーの種類</param>
-	bool GetIsKeyboardPushing(int _keyCode);
+	bool GetIsKeyboardPushing(int _keyCode)const;
 	///<summary>キーボード用　指定したキーが押され始めた1Fのみ間trueを返す</summary>
 	/// <param name="_keyCode">キーの種類</param>
-	bool GetIsKeyboardPut(int _keyCode);
+	bool GetIsKeyboardPut(int _keyCode)const;
 	///<summary>キーボード用　指定したキーを押して離した1Fのみ間trueを返す</summary>
 	/// <param name="_keyCode">キーの種類</param>
-	bool GetIsKeyboardRelease(int _keyCode);
+	bool GetIsKeyboardRelease(int _keyCode)const;
 	/// <summary>
 	/// ImguiのInput系でinputされているかどうか
 	/// </summary>
 	/// <returns>通常入力が出来るならtrue</returns>
-	bool IsInputCan();
+	bool IsInputCan()const;
 
 private:
 	KeyboardInputData keyboardInputNow;

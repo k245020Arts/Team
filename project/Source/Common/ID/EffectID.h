@@ -53,7 +53,7 @@ namespace Effect_ID {
 
 	void DeleteEffectID();
 
-	std::string GetEffectID(EFFECT_ID _type);
+	const std::string GetEffectID(EFFECT_ID _type);
 
 	void SetEffectID(std::string _effect, EFFECT_ID _type);
 

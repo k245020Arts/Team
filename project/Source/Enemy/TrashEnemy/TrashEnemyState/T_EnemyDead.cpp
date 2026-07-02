@@ -4,7 +4,7 @@
 #include "../../../State/StateManager.h"
 #include "../../../Component/Collider/ModelCollider.h"
 #include "../../../Component/Collider/SphereCollider.h"
-#include "../../../Common/Easing.h"
+#include "../../../Common/Easing/Easing.h"
 #include "../../../Component/Color/Color.h"
 #include "../../EnemyManager.h"
 

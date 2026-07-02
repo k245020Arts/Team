@@ -306,7 +306,7 @@ bool CollsionManager::CollsionAABBToRay(ColliderBase* col1, ColliderBase* col2, 
 	return true;
 }
 
-VECTOR3 ClosestPointOnSegment(VECTOR3& p, VECTOR3& a, VECTOR3& b)
+VECTOR3 ClosestPointOnSegment(const VECTOR3& p, const VECTOR3& a, const VECTOR3& b)
 {
 	VECTOR3 ab = b - a;
 	float t = VDot(p - a, ab) / ab.SquareSize();
@@ -321,10 +321,10 @@ VECTOR3 ClosestPointOnSegment(VECTOR3& p, VECTOR3& a, VECTOR3& b)
 
 bool CollsionManager::CollsionSphereToCapsule(ColliderBase* col1, ColliderBase* col2, Pushback& resolver, VECTOR3& _hitPos)
 {
-	CapsuleCollider* capsule = dynamic_cast<CapsuleCollider*>(col2);
+	const CapsuleCollider* capsule = dynamic_cast<CapsuleCollider*>(col2);
 	Transform* sphereTransform = col1->GetTransform();
 	Transform* capsuleStartTransform = col2->GetTransform();
-	Transform* capsuleTransformEnd = capsule->CapselEndTransform();
+	const Transform* capsuleTransformEnd = capsule->CapselEndTransform();
 
 	VECTOR3 startPos = VZero;
 	VECTOR3 endPos = VZero;
@@ -344,10 +344,12 @@ bool CollsionManager::CollsionSphereToCapsule(ColliderBase* col1, ColliderBase* 
 	//円の中心点からカプセルの中の一番近い点の算出
 	VECTOR3 closest = ClosestPointOnSegment(spherePosition, startPos, endPos);
 
-	float distSq = VSquareSize(sphereTransform->WorldTransform().position - closest);
+	VECTOR3 closeDist = sphereTransform->WorldTransform().position - closest;
+
+	float distSqareSize = closeDist.SquareSize();
 	float r = sphereTransform->WorldTransform().scale.x + capselRadous;
 
-	bool result = distSq <= r * r;
+	bool result = distSqareSize <= r * r;
 
 	return result;
 }

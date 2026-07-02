@@ -2,16 +2,16 @@
 #include "../Component/UI/UIManager/UIManager.h"
 #include "../Common/InputManager/InputManager.h"
 #include "../Common/InputManager/PadInput.h"
-#include "../Common/ResourceLoader.h"
+#include "../Common/ResourceLoader/ResourceLoader.h"
 #include "../Component/UI/TextRenderer.h"
 #include "../Component/ComponentManager.h"
 #include "../Screen.h"
 #include "../Common/Sound/SoundManager.h"
 
 namespace {
-	const int LABEL_POS_Y = 950;
-	const int GAMEBACK_LABEL_POS_X = 600;
-	const int PAUSEBACK_LABEL_POS_X = 1050;
+	constexpr int LABEL_POS_Y = 950;
+	constexpr int GAMEBACK_LABEL_POS_X = 600;
+	constexpr int PAUSEBACK_LABEL_POS_X = 1050;
 }
 
 GuideWindow::GuideWindow()
@@ -117,7 +117,7 @@ void GuideWindow::Draw()
 	GuideDraw();
 }
 
-void GuideWindow::GuideDraw()
+void GuideWindow::GuideDraw()const
 {
 	if (controler) {
 		//ëÄçÏê‡ñæèëÇÃï`âÊ

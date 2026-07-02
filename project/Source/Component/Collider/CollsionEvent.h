@@ -14,6 +14,6 @@ private:
 
 	using EventFunc = void (CollsionEvent::*)(ColliderBase*, ColliderBase*, Pushback&, const VECTOR3&);
 
-	CollsionEventData SetEventData(ColliderBase* _myCollObj, ColliderBase* _targetCollObj, Pushback& _pushInfo, const VECTOR3& _hitPos);
+	CollsionEventData SetEventData(ColliderBase* _myCollObj, ColliderBase* _targetCollObj, const Pushback& _pushInfo, const VECTOR3& _hitPos);
 
 };

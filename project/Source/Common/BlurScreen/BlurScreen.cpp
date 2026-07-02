@@ -1,6 +1,6 @@
 #include "BlurScreen.h"
-#include "../../Source/Screen.h"
-#include "ResourceLoader.h"
+#include "../../Screen.h"
+#include "../ResourceLoader/ResourceLoader.h"
 
 #define NEW_VERSION  (0);
 #define OLD_VERSION  (1);
@@ -229,7 +229,7 @@ void BlurScreen::Reset()
 
 }
 
-void BlurScreen::CurrentScreenSet()
+void BlurScreen::CurrentScreenSet() const
 {
 	if (blurScreen[currentScreen] != -1) {
 		SetDrawScreen(blurScreen[currentScreen]); //•`‰ææ‚ğXV

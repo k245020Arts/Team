@@ -72,14 +72,14 @@ public:
 	/// 強制的に次の攻撃のStateの決定をする
 	/// </summary>
 	/// <param name="_attackID"></param>
-	void ForcedAttackStart(std::string _attackID);
+	void ForcedAttackStart(const std::string& _attackID);
 
 	/// <summary>
 	/// 攻撃情報のロードをする
 	/// </summary>
 	/// <param name="_bossName">ボスのID</param>
 	/// <param name="_boss">ボスのポインタ</param>
-	void Load(std::string _bossName, Boss* _boss);
+	void Load(const std::string& _bossName, Boss* _boss);
 	/// <summary>
 	/// 攻撃の終了
 	/// </summary>
@@ -93,41 +93,41 @@ public:
 	/// 攻撃抽選情報のセーブ
 	/// </summary>
 	/// <param name="_bossName">ボスのID</param>
-	void SaveSorthing(std::string _bossName);
+	void SaveSorthing(const std::string& _bossName);
 	/// <summary>
 	/// 攻撃抽選情報のロード
 	/// </summary>
 	/// <param name="_bossName">ボスのID</param>
-	void LoadSorting(std::string _bossName);
+	void LoadSorting(const std::string& _bossName);
 	/// <summary>
 	/// 攻撃抽選情報の取得
 	/// </summary>
 	/// <returns></returns>
-	std::vector<ActionParam> GetActionParam();
+	const std::vector<ActionParam> GetActionParam()const;
 	/// <summary>
 	/// 攻撃情報の取得
 	/// </summary>
 	/// <returns></returns>
-	std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> GetAttackParam();
+	const std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> GetAttackParam()const;
 	/// <summary>
 	/// 攻撃の追加
 	/// </summary>
 	/// <param name="_param">攻撃情報</param>
 	/// <param name="_boss">ボスのポインタ</param>
-	void AddAttack(EnemyAttackBase::BossAttackParam _param, Boss* _boss);
+	void AddAttack(const EnemyAttackBase::BossAttackParam& _param, Boss* _boss);
 	/// <summary>
 	/// 攻撃の追加
 	/// </summary>
 	/// <param name="_param">攻撃情報</param>
 	/// <param name="_boss">ボスのポインタ</param>
 	/// <param name="_attackID">攻撃のID</param>
-	void AddAttack(EnemyAttackBase::BossAttackParam _param,Boss* _boss,std::string _attackID);
+	void AddAttack(const EnemyAttackBase::BossAttackParam& _param,Boss* _boss, const std::string& _attackID);
 	/// <summary>
 	/// 攻撃情報のリロードをする
 	/// </summary>
 	/// <param name="_param"></param>
 	/// <param name="_reLoadID"></param>
-	void ReloadParam(EnemyAttackBase::BossAttackParam _param,std::string _reLoadID);
+	void ReloadParam(const EnemyAttackBase::BossAttackParam& _param, const std::string& _reLoadID);
 
 	//void StateImguiDraw()override;
 

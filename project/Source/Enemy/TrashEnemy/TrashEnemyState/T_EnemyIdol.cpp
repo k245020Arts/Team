@@ -3,7 +3,7 @@
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
 #include "../../../Component/Physics/Physics.h"
-#include "../../../Common/Random.h"
+#include "../../../Common/Random/Random.h"
 
 T_EnemyIdol::T_EnemyIdol()
 {

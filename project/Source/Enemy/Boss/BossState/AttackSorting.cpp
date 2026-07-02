@@ -2,17 +2,17 @@
 #include "../Boss.h"
 #include "../../../State/StateManager.h"
 #include "BossStatus.h"
-#include "../../../Common/Random.h"
+#include "../../../Common/Random/Random.h"
 #include "../../../Common/FileSystemUtils/FileSystemUtils.h"
-#include "../../../Common/ResourceLoader.h"
+#include "../../../Common/ResourceLoader/ResourceLoader.h"
 #include "../../../../ImGui/imgui.h"
 #include "../../../Stage/StageSelectData.h"
 #include "../../../Component/Animator/Animator.h"
 
 
 namespace {
-	const int ATTACK_KIND_MAX		= 6;
-	const int COMBO_ATTACK_KIND_MAX = 3;
+	constexpr int ATTACK_KIND_MAX		= 6;
+	constexpr int COMBO_ATTACK_KIND_MAX = 3;
 	/*enum COMBO_ATTACK
 	{
 		NORMAL_COMBO1,
@@ -218,7 +218,7 @@ void AttackSorting::Finish()
 	forceAttack = false;
 }
 
-void AttackSorting::ForcedAttackStart(std::string _attackID)
+void AttackSorting::ForcedAttackStart(const std::string& _attackID)
 {
 	nextState = _attackID;
 	nextAttack = true;
@@ -341,7 +341,7 @@ void AttackSorting::AllAddWeightZero()
 }
 
 
-void AttackSorting::Load(std::string _bossName,Boss* _boss) 
+void AttackSorting::Load(const std::string& _bossName,Boss* _boss)
 {
 	//int attackNum = FileSystemUtils::GetDirectoryCount("data/json/BossAttack/" + _bossName);
 
@@ -425,7 +425,7 @@ std::shared_ptr<EnemyAttackBase> AttackSorting::GetNowAttackState()
 	return attacks[nextState];
 }
 
-void AttackSorting::SaveSorthing(std::string _bossName)
+void AttackSorting::SaveSorthing(const std::string& _bossName)
 {
 	std::string filePath = std::string("data/json/BossAttack/" + _bossName + "/Sorting") + "/AttackSort" + ".json";
 
@@ -446,7 +446,7 @@ void AttackSorting::SaveSorthing(std::string _bossName)
 	json.Save(filePath, root);
 }
 
-void AttackSorting::LoadSorting(std::string _bossName)
+void AttackSorting::LoadSorting(const std::string& _bossName)
 {
 	JsonReader json;
 	std::string filePath = std::string("data/json/BossAttack/" + _bossName + "/Sorting") + "/AttackSort" + ".json";
@@ -462,22 +462,22 @@ void AttackSorting::LoadSorting(std::string _bossName)
 	
 }
 
-std::vector<ActionParam> AttackSorting::GetActionParam()
+const std::vector<ActionParam> AttackSorting::GetActionParam()const
 {
 	return actions;
 }
 
-std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> AttackSorting::GetAttackParam()
+const std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> AttackSorting::GetAttackParam()const
 {
 	return attackParam;
 }
 
-void AttackSorting::AddAttack(EnemyAttackBase::BossAttackParam _param, Boss* _boss)
+void AttackSorting::AddAttack(const EnemyAttackBase::BossAttackParam& _param, Boss* _boss)
 {
 	AddAttack(_param,_boss, _param.attackID);
 }
 
-void AttackSorting::AddAttack(EnemyAttackBase::BossAttackParam _param, Boss* _boss, std::string _attackID)
+void AttackSorting::AddAttack(const EnemyAttackBase::BossAttackParam& _param, Boss* _boss, const std::string& _attackID)
 {
 	std::string key = _attackID;	
 	if (attacks[key] != nullptr) { //çUåÇÇ™Ç∑Ç≈Ç…Ç†Ç¡ÇΩÇÁí«â¡ÇµÇ»Ç¢
@@ -491,7 +491,7 @@ void AttackSorting::AddAttack(EnemyAttackBase::BossAttackParam _param, Boss* _bo
 	attacks[key]->SetAttackParam(attackParam[key]);
 }
 
-void AttackSorting::ReloadParam(EnemyAttackBase::BossAttackParam _param,std::string _reLoadID)
+void AttackSorting::ReloadParam(const EnemyAttackBase::BossAttackParam& _param, const std::string& _reLoadID)
 {
 	//ê›íËÇÃÇµíºÇµ
 	attackParam[_reLoadID] = _param;

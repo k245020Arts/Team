@@ -26,8 +26,8 @@ public:
 	void SpotLightHandleStart(VECTOR position, VECTOR direction, float outAngle, float inAngle, float range, float atten0, float atten1, float atten2);
 
 	void ImguiDraw()override;
-	void SpotUpdate();
-	void PointUpdate();
+	void SpotUpdate()const;
+	void PointUpdate()const;
 
 private:
 

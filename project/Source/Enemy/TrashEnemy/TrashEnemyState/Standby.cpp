@@ -2,7 +2,7 @@
 #include "../TrashEnemy.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
-#include "../../../Common/Random.h"
+#include "../../../Common/Random/Random.h"
 #include "../../../Camera/Camera.h"
 #include "../../../Common/Effect/EffectManager.h"
 #include "../../../Component/Physics/Physics.h"

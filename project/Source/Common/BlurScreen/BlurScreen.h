@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Library/GameObject.h"
+#include "../../../Library/GameObject.h"
 
 //ブラースクリーンを生成できるクラス。
 
@@ -21,7 +21,7 @@ public:
 
 private:
 
-	void CurrentScreenSet();
+	void CurrentScreenSet()const;
 
 	void ScreenFinish();
 

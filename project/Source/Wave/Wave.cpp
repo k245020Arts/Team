@@ -5,7 +5,7 @@
 #include "../GameControler/GameControler.h"
 #include "../Common/Fead/Fead.h"
 #include "../Stage/StageSelectData.h"
-#include "../Common/JsonReader.h"
+#include "../Common/JsonReader/JsonReader.h"
 
 Wave::Wave()
 {

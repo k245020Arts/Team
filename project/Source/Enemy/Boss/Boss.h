@@ -173,7 +173,7 @@ public:
 	void BossDamageCollsionEvent(const CollsionEventData& _data);
 
 private:
-	void PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps,VECTOR3 _randomPos,float _randomAngle);
+	void PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps,const VECTOR3& _randomPos,float _randomAngle);
 	Boss* boss;
 	BossStatus* bs;
 
@@ -218,7 +218,7 @@ private:
 	std::function<void(const CollsionEventData&)> attackFunk;
 	std::function<void(const CollsionEventData&)> justAvoidAttackFunk;
 
-	VECTOR3 GetDamageDrawPos();
+	VECTOR3 GetDamageDrawPos()const;
 };
 
 // to_json

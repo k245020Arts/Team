@@ -4,7 +4,7 @@
 #include "../../../State/StateManager.h"
 #include "../../../Component/Animator/Animator.h"
 #include "../../../Component/Collider/ColliderBase.h"
-#include "../../../Common/Easing.h"
+#include "../../../Common/Easing/Easing.h"
 #include "../../../Common/InputManager/PadInput.h"
 #include "../../../Common/InputManager/InputManager.h"
 #include "../../../Camera/Camera.h"

@@ -1,5 +1,5 @@
 #include "TrashEnemyManager.h"
-#include "../../Common/ResourceLoader.h"
+#include "../../Common/ResourceLoader/ResourceLoader.h"
 #include "../../Component/MeshRenderer/MeshRenderer.h"
 #include "../../../ImGui/imgui.h"
 #include "../../Component/MeshRenderer/MeshRenderer.h"
@@ -17,11 +17,11 @@
 #include "../Boss/Boss.h"
 #include "../../Component/Collider/rayCollider.h"
 #include "../../Component/Collider/ModelCollider.h"
-#include "../../Common/Random.h"
+#include "../../Common/Random/Random.h"
 #include "../../Common/Debug/Debug.h"
 #include "../../GameControler/GameControler.h"
 #include "TrashEnemyGroup.h"
-#include "../../Common/ResourceLoader.h"
+#include "../../Common/ResourceLoader/ResourceLoader.h"
 
 TrashEnemyManager::TrashEnemyManager()
 {
@@ -331,7 +331,7 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 void TrashEnemyManager::CooperateAtk()
 {
 	int meleeCounter = 4;
-	int rangedMaxCounter = 12.0f;
+	float rangedMaxCounter = 12.0f;
 
 	if (isMeleeCooperateAtk)
 	{

@@ -139,7 +139,7 @@ public:
 	/// <param name="maxLength">ç≈ëÂÇÃí∑Ç≥</param>
 	void Apply(Transform* _transform, Physics* _physics, bool _affectVelocity = true, float _maxLength = 5.0f);
 	bool IsGrounded(float _minYNormal = 0.6f);
-	std::vector<PushInfo>& GetPushInfo() { return pushes; }
+	const std::vector<PushInfo>& GetPushInfo()const { return pushes; }
 private:
 	std::vector<PushInfo> pushes;
 };

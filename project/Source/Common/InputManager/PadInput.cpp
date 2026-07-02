@@ -42,14 +42,14 @@ void PadInput::Update()
 	}
 }
 
-bool PadInput::GetAnyButtonPush(bool _getStick, int _backFrame)
+const bool PadInput::GetAnyButtonPush(bool _getStick, int _backFrame)const
 {
 	if (input.size() < 1)
 	{
 		return false;
 	}
 
-	std::list<XINPUT_STATE>::iterator it = input.begin();
+	std::list<XINPUT_STATE>::const_iterator it = input.begin();
 
 	//それ以上戻れない場合や0フレーム(現在のフレームを取ろうとしている)場合は飛ばす
 	if ((int)input.size() > _backFrame + 1 && _backFrame != 0)
@@ -87,17 +87,17 @@ bool PadInput::GetAnyButtonPush(bool _getStick, int _backFrame)
 	return false;
 }
 
-bool PadInput::GetAnyButtonPush(bool _getStick)
+const bool PadInput::GetAnyButtonPush(bool _getStick)const
 {
 	return GetAnyButtonPush(_getStick, 0);
 }
 
-bool PadInput::GetAnyButtonPut(bool _getStick)
+const bool PadInput::GetAnyButtonPut(bool _getStick)const
 {
 	return (GetAnyButtonPush(_getStick, 0) && !GetAnyButtonPush(_getStick, 1));
 }
 
-bool PadInput::GetIsButtonPushingNow(int _button)
+const bool PadInput::GetIsButtonPushingNow(int _button)const
 {
 	if (input.front().Buttons[_button])
 	{
@@ -109,11 +109,11 @@ bool PadInput::GetIsButtonPushingNow(int _button)
 	}
 }
 
-bool PadInput::GetIsButtonPutNow(int _button)
+const bool PadInput::GetIsButtonPutNow(int _button)const
 {
 	if (input.size() > 1)
 	{
-		std::list<XINPUT_STATE>::iterator it = input.begin();
+		std::list<XINPUT_STATE>::const_iterator it = input.begin();
 		XINPUT_STATE now = *it;
 		std::advance(it, 1);
 		XINPUT_STATE lastFrame = *it;
@@ -133,11 +133,11 @@ bool PadInput::GetIsButtonPutNow(int _button)
 	}
 }
 
-bool PadInput::GetIsButtonReleaseNow(int _button)
+const bool PadInput::GetIsButtonReleaseNow(int _button)const
 {
 	if (input.size() > 1)
 	{
-		std::list<XINPUT_STATE>::iterator it = input.begin();
+		std::list<XINPUT_STATE>::const_iterator it = input.begin();
 		XINPUT_STATE now = *it;
 		std::advance(it, 1);
 		XINPUT_STATE lastFrame = *it;
@@ -229,13 +229,13 @@ bool PadInput::GetIsButtonReleasePast(int _button, int _frameNum)
 	}
 }*/
 
-int PadInput::GetPushButtonTime(int _button)
+int PadInput::GetPushButtonTime(int _button)const
 {
 	if (input.size() < _button)
 	{
 		return -1;
 	}
-	std::list<XINPUT_STATE>::iterator it = input.begin();
+	std::list<XINPUT_STATE>::const_iterator it = input.begin();
 	XINPUT_STATE now = *it;
 
 	if (!now.Buttons[_button])
@@ -258,7 +258,7 @@ int PadInput::GetPushButtonTime(int _button)
 	return time;
 }
 
-StickInput PadInput::GetStickInput()
+StickInput PadInput::GetStickInput()const
 {
 	StickInput result;
 	result.leftStick = { (float)inputNow.ThumbLX / STICK_INPUT_MAX,(float)inputNow.ThumbLY / STICK_INPUT_MAX };
@@ -267,7 +267,7 @@ StickInput PadInput::GetStickInput()
 	return result;
 }
 
-StickInput PadInput::GetStickInput(int _backFrame)
+StickInput PadInput::GetStickInput(int _backFrame)const
 {
 	StickInput result;
 	auto it = input.begin();
@@ -283,12 +283,12 @@ StickInput PadInput::GetStickInput(int _backFrame)
 	return result;
 }
 
-StickDirection PadInput::GetStickKnocking(float _deadZone)
+StickDirection PadInput::GetStickKnocking(float _deadZone)const
 {
-	StickDirection result{ S_NO_DIRECTION };
+	StickDirection result = StickDirection();
 	StickFloat stickRot = GetStickRot();
 	//ベクトルの量を求める
-	StickFloat stickSize{ 0 };
+	StickFloat stickSize = StickFloat();
 	stickSize.leftStick = sqrtf(GetStickInput().leftStick.x * GetStickInput().leftStick.x + GetStickInput().leftStick.y * GetStickInput().leftStick.y);
 	stickSize.rightStick = sqrtf(GetStickInput().rightStick.x * GetStickInput().rightStick.x + GetStickInput().rightStick.y * GetStickInput().rightStick.y);
 
@@ -304,12 +304,12 @@ StickDirection PadInput::GetStickKnocking(float _deadZone)
 	return result;
 }
 
-StickDirection PadInput::GetStickKnocking(float _deadZone, int _backFrame)
+StickDirection PadInput::GetStickKnocking(float _deadZone, int _backFrame)const
 {
-	StickDirection result{ S_NO_DIRECTION };
+	StickDirection result = StickDirection();
 	StickFloat stickRot = GetStickRot(_backFrame);
 	//ベクトルの量を求める
-	StickFloat stickSize{ 0 };
+	StickFloat stickSize = StickFloat();
 	stickSize.leftStick = sqrtf(GetStickInput(_backFrame).leftStick.x * GetStickInput(_backFrame).leftStick.x + GetStickInput(_backFrame).leftStick.y * GetStickInput(_backFrame).leftStick.y);
 	stickSize.rightStick = sqrtf(GetStickInput(_backFrame).rightStick.x * GetStickInput(_backFrame).rightStick.x + GetStickInput(_backFrame).rightStick.y * GetStickInput(_backFrame).rightStick.y);
 
@@ -325,7 +325,7 @@ StickDirection PadInput::GetStickKnocking(float _deadZone, int _backFrame)
 	return result;
 }
 
-StickDirection PadInput::GetStickKnockingReverce(float _deadZone, int _backFrame)
+StickDirection PadInput::GetStickKnockingReverce(float _deadZone, int _backFrame)const
 {
 	StickDirection result =  GetStickKnocking(_deadZone, _backFrame);
 	result.leftStick = ReverceDirection(result.leftStick);
@@ -333,9 +333,9 @@ StickDirection PadInput::GetStickKnockingReverce(float _deadZone, int _backFrame
 	return result;
 }
 
-StickDirection PadInput::GetStickKnockingPut(float _deadZone)
+StickDirection PadInput::GetStickKnockingPut(float _deadZone)const
 {
-	StickDirection result{ S_NO_DIRECTION,S_NO_DIRECTION };
+	StickDirection result = StickDirection();
 
 	//現フレームの入力
 	StickDirection nowInput = GetStickKnocking(_deadZone);
@@ -354,9 +354,9 @@ StickDirection PadInput::GetStickKnockingPut(float _deadZone)
 	return result;
 }
 
-StickFloat PadInput::GetStickRot()
+const StickFloat PadInput::GetStickRot()const
 {
-	StickFloat result{ 0 };
+	StickFloat result = StickFloat();
 	StickInput stick = GetStickInput();
 
 	result.leftStick = atan2f((float)inputNow.ThumbLY, (float)inputNow.ThumbLX);
@@ -365,9 +365,9 @@ StickFloat PadInput::GetStickRot()
 	return result;
 }
 
-StickFloat PadInput::GetStickRot(int _backFrame)
+const StickFloat PadInput::GetStickRot(int _backFrame)const
 {
-	StickFloat result{ 0 };
+	StickFloat result = StickFloat();
 	StickInput stick = GetStickInput(_backFrame);
 
 	result.leftStick = atan2f((float)stick.leftStick.y, (float)stick.leftStick.x);
@@ -376,28 +376,30 @@ StickFloat PadInput::GetStickRot(int _backFrame)
 	return result;
 }
 
-StickFloat PadInput::GetTriggerNow()
+const StickFloat PadInput::GetTriggerNow()const
 {
-	StickFloat trigger{ inputNow.LeftTrigger / 255.0f, inputNow.RightTrigger / 255.0f };
+	StickFloat trigger = StickFloat();
+	trigger.leftStick = inputNow.LeftTrigger / 255.0f;
+	trigger.leftStick = inputNow.RightTrigger / 255.0f;
 	return trigger;
 }
 
-void PadInput::ControlVibrationStartTime(int _power, int _timeSecond)
+void PadInput::ControlVibrationStartTime(int _power, int _timeSecond)const
 {
 	StartJoypadVibration(playerNumber, _power, _timeSecond * 1000);
 }
 
-void PadInput::ControlVibrationStartFrame(int _power, int _timeFrame)
+void PadInput::ControlVibrationStartFrame(int _power, int _timeFrame)const
 {
 	StartJoypadVibration(playerNumber, _power, _timeFrame * 1000 / 60);
 }
 
-void PadInput::StopControlVibrationStartFrame()
+void PadInput::StopControlVibrationStartFrame()const
 {
 	StopJoypadVibration(playerNumber);
 }
 
-StickDirections PadInput::ReverceDirection(StickDirections _direction)
+const StickDirections PadInput::ReverceDirection(StickDirections _direction)const
 {
 	StickDirections direction = S_NO_DIRECTION;
 	switch (_direction)
@@ -432,7 +434,7 @@ StickDirections PadInput::ReverceDirection(StickDirections _direction)
 	return direction;
 }
 
-StickDirections PadInput::GetDirection(float _rot)
+const StickDirections PadInput::GetDirection(float _rot)const
 {
 	_rot += DX_PI_F;//計算しやすい用に整数にする
 

@@ -25,7 +25,7 @@
 #include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 #include "../../Weapon/SwordEffect.h"
 #include "../../Weapon/CharaWeapon.h"
-#include "../../Common/ResourceLoader.h"
+#include "../../Common/ResourceLoader/ResourceLoader.h"
 #include "../Boss/BossState/AttackSorting.h"
 #include "../Boss/BossState/BossCoolTime.h"
 #include "../Boss/BossState/BossStatus.h"
@@ -38,8 +38,8 @@
 #include "../Boss/BossState/BossFear.h"
 #include "../Boss/BossState/BossBackStep.h"
 #include "../Boss/BossState/BossWin.h"
-#include "../TrashEnemy/TrashEnemyManager.h"//
-#include "../../Common/Random.h"
+#include "../TrashEnemy/TrashEnemyManager.h"
+#include "../../Common/Random/Random.h"
 #include "../../Component/UI/EnemyDamageUI.h"
 #include "../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
 #include "../../Component/EnemyAttackObject/BossRock/BossRockBase.h"
@@ -709,7 +709,7 @@ void Boss::BossDamageCollsionEvent(const CollsionEventData& _data)
 	}
 }
 
-void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps, VECTOR3 _randomPos, float _randomAngle)
+void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps, const VECTOR3& _randomPos, float _randomAngle)
 {
 	PlayerSpecialAttack::PLAYER_SPECIAL_ATTACK_STATE state = _ps->GetSpecialAttackState();
 
@@ -745,7 +745,7 @@ void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std
 	}
 }
 
-VECTOR3 Boss::GetDamageDrawPos()
+VECTOR3 Boss::GetDamageDrawPos()const
 {
 	return VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200));
 }
