@@ -50,7 +50,7 @@ public:
 	virtual void Update();
 	virtual void Draw();
 
-	StateID::State_ID GetBeforeID() { return beforeId; }
+	StateID::State_ID GetBeforeID()const { return beforeId; }
 
 	//ステートを追加
 	template <typename T>
@@ -91,14 +91,14 @@ public:
 	/// 現在のStateを取得
 	/// </summary>
 	/// <returns></returns>
-	std::shared_ptr<StateBase> GetCurrentState() { return state; }
+	const std::shared_ptr<StateBase> GetCurrentState()const { return state; }
 	/// <summary>
 	/// 現在のStateを取得
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
 	template <typename T>
-	std::shared_ptr<T> GetState() {
+	const std::shared_ptr<T> GetState() const{
 		return std::dynamic_pointer_cast<T>(GetCurrentState());
 	}
 	/// <summary>
@@ -121,7 +121,7 @@ public:
 
 	void ImguiDraw();
 
-	std::unordered_map<std::string, std::shared_ptr<StateBase>> GetStateInfo() { return stateInfo; }
+	const std::unordered_map<std::string, std::shared_ptr<StateBase>>& GetStateInfo()const { return stateInfo; }
 
 protected:
 

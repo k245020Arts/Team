@@ -377,7 +377,7 @@ void SwordEffect::ImguiDraw()
 	ImGui::Text("%d", points.size());
 }
 
-void SwordEffect::CreateEffect(VECTOR3 _nearPos, VECTOR3 _farPos, Color::Rgb _rgb, int _boneIndex, float _time)
+void SwordEffect::CreateEffect(const VECTOR3& _nearPos, const VECTOR3& _farPos, Color::Rgb _rgb, int _boneIndex, float _time)
 {
 	Points in;
 
@@ -407,7 +407,7 @@ void SwordEffect::CreateEffect(VECTOR3 _nearPos, VECTOR3 _farPos, Color::Rgb _rg
 	}
 }
 
-VERTEX3D SwordEffect::MakeVertex(VECTOR3 _pos, float u, float v,Color::Rgb _rgb)
+VERTEX3D SwordEffect::MakeVertex(const VECTOR3& _pos, float u, float v,Color::Rgb _rgb)
 {
 	VERTEX3D vertex;
 	vertex.pos = _pos;

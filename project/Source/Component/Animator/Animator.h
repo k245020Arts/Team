@@ -59,20 +59,20 @@ public:
 	/// 今のアニメーションの再生速度を返す
 	/// </summary>
 	/// <returns>再生速度（倍率）</returns>
-	float GetPlaySpeed();
+	float GetPlaySpeed()const;
 
 	/// <summary>
 	/// アニメーションが終ったか調べる
 	/// ループしないアニメーションが、最後のフレームまで再生したものを、終りとする
 	/// </summary>
 	/// <returns>終っていればtrue</returns>
-	bool IsFinish();
+	bool IsFinish()const;
 
 	/// <summary>
 	/// 現在再生しているアニメーション番号
 	/// </summary>
 	/// <returns>アニメーション番号</returns>
-	std::string GetCurrentID();
+	std::string GetCurrentID()const;
 
 	/// <summary>
 	/// 現在の再生フレーム
@@ -89,7 +89,7 @@ public:
 	/// 現在再生中アニメーションの最大フレームを返す
 	/// </summary>
 	/// <returns>最大フレーム</returns>
-	float GetMaxFrame();
+	float GetMaxFrame()const;
 
 	/// ボーン番号を引数に入れるとそのローカルポジションが次のアップデートから得られるようになる。
 	void SetBoneFrame(int _index);
@@ -105,7 +105,7 @@ public:
 	/// アニメーションイベントを生成しているかどうか
 	/// </summary>
 	/// <returns>アニメーションイベントが発動しているならtrue</returns>
-	bool AnimEventCan() { return animEventCan; }
+	bool AnimEventCan() const{ return animEventCan; }
 	/// <summary>
 	/// アニメーションイベントを発動をキャンセルする
 	/// </summary>
@@ -115,15 +115,15 @@ public:
 	/// </summary>
 	/// <param name="id">取得したいID</param>
 	/// <returns>アニメーションイベントの開始時間</returns>
-	float EventStartTime(ID::IDType id) { return fileInfos[ID::GetID(id)].eventStartTime; }
-	float EventStartTime(std::string id) { return fileInfos[id].eventStartTime; }
+	float EventStartTime(ID::IDType id)const { return fileInfos.at(ID::GetID(id)).eventStartTime; }
+	float EventStartTime(std::string id)const { return fileInfos.at(id).eventStartTime; }
 	/// <summary>
 	/// アニメーションイベントの終了時間取得
 	/// </summary>
 	/// <param name="id">取得したいID</param>
 	/// <returns>アニメーションイベントの終了時間</returns>
-	float EventFinishTime(ID::IDType id) { return fileInfos[ID::GetID(id)].eventFinishTime; }
-	float EventFinishTime(std::string id) { return fileInfos[id].eventFinishTime; }
+	float EventFinishTime(ID::IDType id)const { return fileInfos.at(ID::GetID(id)).eventFinishTime; }
+	float EventFinishTime(std::string id)const { return fileInfos.at(id).eventFinishTime; }
 
 	/// <summary>
 	/// アニメーションのフレームをセットする

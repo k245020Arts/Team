@@ -13,7 +13,7 @@ BossAttackDataSerializer::BossAttackDataSerializer() : BossAttackDataSerializer(
 {
 }
 
-BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting> _sort, Boss* _boss, std::string _bossName)
+BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting> _sort, Boss* _boss, const std::string& _bossName)
 {
 	windowMode = false;
 	BossName = _bossName;
@@ -404,7 +404,7 @@ void BossAttackDataSerializer::ActionsSave()
 	json.Save(filePath, root);
 }
 
-void BossAttackDataSerializer::AttackSave(std::string _attackID)
+void BossAttackDataSerializer::AttackSave(const std::string& _attackID)
 {
 	JSON root;
 
@@ -415,7 +415,7 @@ void BossAttackDataSerializer::AttackSave(std::string _attackID)
 	jsonReader.Save("data/json/BossAttack/" + BossName + "/" + _attackID + ".json", root);
 }
 
-void BossAttackDataSerializer::DrawAttackParamEditor(std::string _selectID)
+void BossAttackDataSerializer::DrawAttackParamEditor(const std::string& _selectID)
 {
 	auto& param = attackParam[_selectID];
 

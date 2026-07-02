@@ -72,7 +72,7 @@ void CutSceneCamera::Update()
     time -= Time::DeltaTimeRate();
     float t = std::clamp(time / cut.duration, 0.0f, 1.0f);
 
-    Transform* posBase = PlayerEnemyWorldToPos(cut.followPosName);
+    const Transform* posBase = PlayerEnemyWorldToPos(cut.followPosName);
 
     if (posBase != nullptr)
     {
@@ -197,7 +197,7 @@ void CutSceneCamera::Update()
     camera->cameraComponent.cameraTransform->position += camera->cameraComponent.shaker->GetShakePower();
    
     // ターゲット
-    Transform* targetBase = PlayerEnemyWorldToPos(cut.followPosTarget);
+    const Transform* targetBase = PlayerEnemyWorldToPos(cut.followPosTarget);
 
     if (targetBase != nullptr)
     {
@@ -400,13 +400,13 @@ void CutSceneCamera::Start()
     beforePosName = "";
     beforeTargetName = "";
 
-    Transform* startTransform = PlayerEnemyWorldToPos(camera->cutSceneData[camera->cutSceneIndex].firstPosBaseName);
+    const Transform* startTransform = PlayerEnemyWorldToPos(camera->cutSceneData[camera->cutSceneIndex].firstPosBaseName);
     //最初に指定するTransformがあったら
     if (startTransform != nullptr) {
         firstPos = camera->cutSceneData[camera->cutSceneIndex].camera.startPos * startTransform->GetRotationMatrix() + startTransform->position;;
     }
    else {
-        Transform* st = PlayerEnemyWorldToPos(camera->cutSceneData[camera->cutSceneIndex].followPosName);
+       const Transform* st = PlayerEnemyWorldToPos(camera->cutSceneData[camera->cutSceneIndex].followPosName);
        if (st != nullptr) {
             firstPos = camera->cutSceneData[camera->cutSceneIndex].camera.startPos * st->GetRotationMatrix() + st->position;;
        }
@@ -431,9 +431,9 @@ void CutSceneCamera::Finish()
     
 }
 
-Transform* CutSceneCamera::PlayerEnemyWorldToPos(std::string _name)
+const Transform* CutSceneCamera::PlayerEnemyWorldToPos(const std::string& _name)const
 {
-    Camera* camera = GetBase<Camera>();
+    const Camera* camera = GetBase<Camera>();
     
     //プレイヤー関連の名前がついていたらプレイヤーのTransformを取得
     if (_name == PLAYER_POS_NAME || _name == PLAYER_FIRST_POS_NAME)

@@ -57,7 +57,7 @@ private:
 	/// <summary>
 	/// ‘€ìà–¾‚Ì•`‰æ
 	/// </summary>
-	void GuideDraw();
+	void GuideDraw()const;
 	/// <summary>
 	/// ƒKƒCƒh‚Ì‰Šú‰»
 	/// </summary>

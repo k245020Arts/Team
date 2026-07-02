@@ -374,12 +374,12 @@ void Camera::CameraEditor()
 	editor->EditorWindow();
 }
 
-void Camera::CutSceneChangeState(std::string _name, bool _cutScene)
+void Camera::CutSceneChangeState(const std::string& _name, bool _cutScene)
 {
 	CutSceneChangeState(_name, _cutScene,CutSceneSpece::NONE);
 }
 
-void Camera::CutSceneChangeState(std::string _name, bool _cutScene, int _stop)
+void Camera::CutSceneChangeState(const std::string& _name, bool _cutScene, int _stop)
 {
 	JsonReader json;
 	std::string name = "data/json/CutScene/" + _name + ".json";

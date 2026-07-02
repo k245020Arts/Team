@@ -495,7 +495,7 @@ void BossRockBase::RockBossHit(const CollsionEventData& _data)
 	/*EffectManager::GetInstance()->CreateEffekseer(Transform(obj->GetTransform()->position , VZero, VOne * 3.0f), nullptr, Effect_ID::ROCK_BLAST, 1.0f);*/
 }
 
-void BossRockBase::Start(const EnemyAttackBase::ThrowObjectAttackData& _attack,MATRIX* _handMatrix)
+void BossRockBase::Start(const EnemyAttackBase::ThrowObjectAttackData& _attack,const MATRIX* _handMatrix)
 {
 	attackData = _attack;
 	handMatrix = _handMatrix;

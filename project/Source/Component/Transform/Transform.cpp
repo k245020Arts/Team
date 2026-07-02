@@ -6,7 +6,21 @@ MATRIX Transform::GetPositionMatrix()const
 	return MGetTranslate(position);
 }
 
-MATRIX Transform::GetRotationMatrix()
+MATRIX Transform::GetRotationMatrix()const
+{
+	MATRIX mry = MGetRotY(rotation.y);
+	MATRIX mrx = MGetRotX(rotation.x);
+	MATRIX mrz = MGetRotZ(rotation.z);
+
+	return mrz * mrx * mry;
+}
+
+MATRIX Transform::GetScaleMatrix()const
+{
+	return MGetScale(scale);
+}
+
+MATRIX Transform::UpdateRotationMatrix()
 {
 	MATRIX mry = MGetRotY(rotation.y);
 	MATRIX mrx = MGetRotX(rotation.x);
@@ -15,12 +29,7 @@ MATRIX Transform::GetRotationMatrix()
 	return rotMatrix;
 }
 
-MATRIX Transform::GetScaleMatrix()const
-{
-	return MGetScale(scale);
-}
-
-MATRIX Transform::GetMatrix()
+MATRIX Transform::GetMatrix()const
 {
 	return  GetScaleMatrix() * GetRotationMatrix() * GetPositionMatrix();
 }

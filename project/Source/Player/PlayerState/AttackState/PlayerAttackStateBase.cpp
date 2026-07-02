@@ -178,7 +178,7 @@ void PlayerAttackStateBase::Finish()
 	}
 }
 
-bool PlayerAttackStateBase::IsAttack()
+bool PlayerAttackStateBase::IsAttack()const
 {
 	Player* p = GetBase<Player>();
 	float frame = p->playerCom.anim->GetCurrentFrame();

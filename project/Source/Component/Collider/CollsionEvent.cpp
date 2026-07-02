@@ -60,7 +60,7 @@ void CollsionEvent::Event(ColliderBase* _coll1, ColliderBase* _coll2, Pushback& 
 
 	
 }
-CollsionEventData CollsionEvent::SetEventData(ColliderBase* _myCollObj, ColliderBase* _targetCollObj, Pushback& _pushInfo, const VECTOR3& _hitPos)
+CollsionEventData CollsionEvent::SetEventData(ColliderBase* _myCollObj, ColliderBase* _targetCollObj, const Pushback& _pushInfo, const VECTOR3& _hitPos)
 {
 	CollsionEventData eventData;
 

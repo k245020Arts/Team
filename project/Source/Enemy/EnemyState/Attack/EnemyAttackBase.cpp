@@ -121,7 +121,7 @@ void EnemyAttackBase::AttackSound()
 	}
 }
 
-void EnemyAttackBase::AttackFlash(ID::IDType _modelId, int _modelFrame, std::string _voice)
+void EnemyAttackBase::AttackFlash(ID::IDType _modelId, int _modelFrame, const std::string& _voice)
 {
 	EnemyBase* e = GetBase<EnemyBase>();
 	float time = e->enemyBaseComponent.anim->EventStartTime(attackParam.animID);
@@ -141,7 +141,7 @@ void EnemyAttackBase::AttackFlash(ID::IDType _modelId, int _modelFrame, std::str
 	}
 }
 
-void EnemyAttackBase::AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, std::string _voice)
+void EnemyAttackBase::AttackBeforeFrash(ID::IDType _modelId, int _modelFrame, const std::string& _voice)
 {
 	EnemyBase* e = GetBase<EnemyBase>();
 	if (sound) {
@@ -231,12 +231,12 @@ void EnemyAttackBase::LoadAttackParam()
 	}
 }
 
-void EnemyAttackBase::SetAttackParam(BossAttackParam _param)
+void EnemyAttackBase::SetAttackParam(const BossAttackParam& _param)
 {
 	attackParam = _param;
 }
 
-bool EnemyAttackBase::CurrentAttackAnim()
+bool EnemyAttackBase::CurrentAttackAnim()const
 {
 	Boss* boss = GetBase<Boss>();
 	//攻撃のフレームならTrueを返す(前隙、後隙はfalse)

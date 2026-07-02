@@ -74,7 +74,7 @@ void ComponentLight::ImguiDraw()
 	ImGui::TreePop();
 }
 
-void ComponentLight::SpotUpdate()
+void ComponentLight::SpotUpdate()const
 {
 	//スポットライトの設定
 	SetLightPositionHandle(lightHandle, lightTransform->WorldTransform().position);
@@ -82,7 +82,7 @@ void ComponentLight::SpotUpdate()
 	SetLightDirectionHandle(lightHandle, obj->GetTransform()->WorldTransform().rotation);
 }
 
-void ComponentLight::PointUpdate()
+void ComponentLight::PointUpdate()const
 {
 	//ポイントライトの設定
 	SetLightPositionHandle(lightHandle, lightTransform->WorldTransform().position);

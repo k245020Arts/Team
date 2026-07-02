@@ -8,7 +8,7 @@ public:
 	VECTOR3 position;
 	VECTOR3 rotation;
 	VECTOR3 scale;
-	const VECTOR3 Forward()const { return VECTOR3(0, 0, 1) * rotMatrix; }
+	const VECTOR3 Forward()const { return VECTOR3(0, 0, 1) * GetRotationMatrix(); }
 	Transform() {
 		position = VZero;
 		rotation = VZero;
@@ -41,10 +41,12 @@ public:
 	}
 
 	MATRIX GetPositionMatrix()const ;
-	MATRIX GetRotationMatrix() ;
+	MATRIX GetRotationMatrix()const ;
 	MATRIX GetScaleMatrix()const ;
 
-	MATRIX GetMatrix() ;
+	MATRIX UpdateRotationMatrix();
+
+	MATRIX GetMatrix()const ;
 
 	//éqÇ™êeÇí«â¡ÇµÇΩÇ¢Ç∆Ç´
 	void SetParent(Transform* _pare);

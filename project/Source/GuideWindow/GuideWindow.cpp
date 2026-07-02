@@ -117,7 +117,7 @@ void GuideWindow::Draw()
 	GuideDraw();
 }
 
-void GuideWindow::GuideDraw()
+void GuideWindow::GuideDraw()const
 {
 	if (controler) {
 		//‘€ìà–¾‘‚Ì•`‰æ

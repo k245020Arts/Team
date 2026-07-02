@@ -709,7 +709,7 @@ void Boss::BossDamageCollsionEvent(const CollsionEventData& _data)
 	}
 }
 
-void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps, VECTOR3 _randomPos, float _randomAngle)
+void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps, const VECTOR3& _randomPos, float _randomAngle)
 {
 	PlayerSpecialAttack::PLAYER_SPECIAL_ATTACK_STATE state = _ps->GetSpecialAttackState();
 
@@ -745,7 +745,7 @@ void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std
 	}
 }
 
-VECTOR3 Boss::GetDamageDrawPos()
+VECTOR3 Boss::GetDamageDrawPos()const
 {
 	return VECTOR3((float)(GetRand(400) - 200), (float)(800 + GetRand(400) - 200), (float)(GetRand(400) - 200));
 }

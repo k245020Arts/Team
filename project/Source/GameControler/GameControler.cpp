@@ -316,7 +316,7 @@ void GameControler::ChangeState(GameState _name)
 	}
 }
 
-GameControler::GameState GameControler::GetStateNumber()
+GameControler::GameState GameControler::GetStateNumber()const
 {
 	return gameState;
 }

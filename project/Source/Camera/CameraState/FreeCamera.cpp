@@ -136,7 +136,7 @@ void FreeCamera::StickMove()
 	}
 }
 
-float FreeCamera::AnglePI(float _current, float _target)
+float FreeCamera::AnglePI(float _current, float _target)const
 {
 	float diff = _target - _current;
 

@@ -263,17 +263,17 @@ void Animator::SetPlaySpeed(float speed)
     playSpeed = speed;
 }
 
-float Animator::GetPlaySpeed()
+float Animator::GetPlaySpeed()const
 {
     return playSpeed;
 }
 
-bool Animator::IsFinish()
+bool Animator::IsFinish()const
 {
     return finished;
 }
 
-std::string Animator::GetCurrentID()
+std::string Animator::GetCurrentID()const
 {
     return current.fileID;
 }
@@ -288,11 +288,11 @@ float Animator::GetCurrentBeforeFrame()const
     return current.beforeFrame;
 }
 
-float Animator::GetMaxFrame()
+float Animator::GetMaxFrame()const
 {
     if (current.attachID >= 0)
     {
-        return fileInfos[current.fileID].maxFrame;
+        return fileInfos.at(current.fileID).maxFrame;
     }
     return 0.0f;
 }

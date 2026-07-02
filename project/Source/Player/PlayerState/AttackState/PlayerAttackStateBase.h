@@ -27,7 +27,7 @@ public:
 	/// Œ»İUŒ‚’†‚©‚ğæ“¾
 	/// </summary>
 	/// <returns></returns>
-	bool IsAttack();
+	bool IsAttack()const;
 
 	/// <summary>
 	/// UŒ‚‚Ì“–‚½‚è”»’è‚Ì¶¬‚ğ‚ ‚é’ö“x“ˆê‰»‚³‚¹‚½ŠÖ”
@@ -37,7 +37,7 @@ public:
 	/// “–‚½‚è”»’è‚ª’¼‘O‚É¶¬‚³‚ê‚½‚©‚ğæ“¾
 	/// </summary>
 	/// <returns>UŒ‚‚ª¶¬‚³‚ê‚Ä‚¢‚½‚çtrue</returns>
-	bool GetCollsionCreate() { return collsionCreate; }
+	bool GetCollsionCreate()const { return collsionCreate; }
 
 	/// <summary>
 	/// •KE‹Z‚ğ”­“®

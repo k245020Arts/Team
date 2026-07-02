@@ -265,7 +265,7 @@ void BossCreater::CreateBoss()
 	//FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>()->TargetSet(*enemy.begin());
 }
 
-bool BossCreater::LoadBossParam(std::string _fileName)
+bool BossCreater::LoadBossParam(const std::string& _fileName)
 {
 	JsonReader jsonReader;
 	if (!jsonReader.Load(_fileName)) {
