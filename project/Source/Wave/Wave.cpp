@@ -15,16 +15,16 @@ Wave::Wave()
 
 	JsonReader json; 
 	json.Load("data/json/WaveData.json");
-	//json.Data();
+	
 	JSON jsonData = json.Data();
 
-	stageMax = jsonData["WaveEnemyData"][std::to_string(stageNum)].size();
+	const auto& wave = jsonData["WaveEnemyData"][std::to_string(stageNum)];
+	stageMax = wave.size();
 	SpawnData data;
-
 	for (int i = 0; i < stageMax; i++)
 	{
-		std::string a = "Wave" + std::to_string((i + 1));
-		data.SetData(jsonData["WaveEnemyData"][std::to_string(stageNum)][ a]["melee"], jsonData["WaveEnemyData"][std::to_string(stageNum)][a]["range"]);
+		const std::string StageName = "Wave" + std::to_string((i + 1));
+		data.SetData(wave[StageName]["melee"], wave[StageName]["range"]);
 		spawnData.push_back(data);
 	}
 
@@ -42,14 +42,10 @@ Wave::~Wave()
 
 void Wave::Update()
 {
-	if (!first) {
+	if (!first)
 		return;
-	}
 	
 	EnemySpawn();
-	
-	/*CooperateAttack();
-	RangedCooperateAttack();*/
 }
 
 void Wave::Draw()
@@ -78,8 +74,7 @@ void Wave::EnemySpawn()
 
 		if(waveNow <= stageMax)
 			tEnemyManager->CreateEnemy(SPWNPOS, spawnData[waveNow - 1].MeleeEnemyCounter, spawnData[waveNow - 1].RangedEnemyCounter);
-		
-		else/*if (waveNow == stageMax)*/
+		else
 			if (bossCreate)
 			{
 				FindGameObject<BossCreater>()->CreateBoss();
@@ -92,33 +87,3 @@ void Wave::EnemySpawn()
 		isCooperate = false;
 	}
 }
-
-//void Wave::CooperateAttack()
-//{
-//	int counter = tEnemyManager->GetMeleeActiveEnemy();
-//
-//	if (counter > 4 || isCooperate)
-//		return;
-//
-//	if (waveNow == 1)
-//	{
-//		tEnemyManager->Cooperate();
-//		isCooperate = true;
-//	}
-//}
-//
-//void Wave::RangedCooperateAttack()
-//{
-//	if (waveNow != 2)
-//		return;
-//	int counter = tEnemyManager->GetMeleeActiveEnemy();
-//
-//	if (counter <= 5)
-//		isCooperate = false;
-//
-//	if (counter > 10 || isCooperate)
-//		return;
-//
-//	tEnemyManager->SetStartRangedAttack(true);
-//	isCooperate = true;
-//}
