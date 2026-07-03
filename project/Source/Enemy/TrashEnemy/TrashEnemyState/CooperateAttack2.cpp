@@ -113,7 +113,6 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 		return;
 	}
 
-	const float ROTY = -_enemy->enemyBaseComponent.playerObj->GetTransform()->rotation.y - 0.5f * DX_PI_F;
 	dir = VNorm(pPos - enePos);
 	
 	_enemy->GetEnemyObj()->GetTransform()->position += dir * Speed; 
@@ -127,6 +126,7 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 {
 	const float CounterMax = 1.0f;
+	const float VecSpeed = 60.0f;
 	//攻撃を食らったときにカメラのステートを変える
 	//_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_FINISH_CAMERA_S);
 
@@ -134,14 +134,15 @@ void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 
 	if (hitStopCounter < CounterMax)
 	{
-		_enemy->GetEnemyObj()->GetTransform()->position += sinf(hitStopCounter * 60) * VECTOR3(10, 0, 10);
+		_enemy->GetEnemyObj()->GetTransform()->position += sinf(hitStopCounter * VecSpeed) * VECTOR3(10, 0, 10);
 		return;
 	}
 	
 	const VECTOR3 enePos = _enemy->GetPos();
 	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
-	VECTOR3 dir = VNorm(targetPos - enePos);
 	const float Speed = 100.0f;
+
+	VECTOR3 dir = VNorm(targetPos - enePos);
 	
 	speedDownCounter += Time::DeltaTimeRate();
 

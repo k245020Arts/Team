@@ -214,8 +214,9 @@ void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 		attackCounter += Time::DeltaTimeRate();
 		atkCountStart = false;
 	}
+	const float MaxAtkTime = maxAttackCounter * 2;
 
-	if (attackCounter >= maxAttackCounter * 2)//•Ç‘Îô
+	if (attackCounter >= MaxAtkTime)//•Ç‘Îô
 	{
 		_enemy->AttackCommand();
 		attackCounter = 0;
@@ -266,8 +267,9 @@ void TrashEnemyGroup::CooperateAttackMove(TrashEnemy* _enemy)
 	if (standbyCounter >= 1)
 		cooperateCounter += Time::DeltaTimeRate();
 
+	const float MaxTime = 3.0f;
 	//“G‘Sˆõ‚ª€”õŠ®—¹‚·‚é‚©ŽžŠÔŒo‰ß‚ÅUŒ‚‚ÉˆÚ‚é
-	if (standbyCounter == enemiesMax || cooperateCounter >= 3)
+	if (standbyCounter == enemiesMax || cooperateCounter >= MaxTime)
 	{
 		AllChangeMeleeState(StateID::T_ENEMY_RUN_S);
 		standbyCounter = 0;
@@ -309,10 +311,12 @@ void TrashEnemyGroup::CooperateAttackLine()
 	}
 
 	const size_t Counter = copyPos.size() - 1;
+	const int Color = GetColor(255, 0, 0);
+	const float Size = 20.0f;
 
 	for (int i = 0; i < Counter; i++)
 	{
-		DrawCapsule3D(copyPos[i], copyPos[i + 1] , 20, 0, GetColor(255, 0, 0), GetColor(255, 0, 0), true);
+		DrawCapsule3D(copyPos[i], copyPos[i + 1] , Size, 0, Color, Color, true);
 	}
 
 	copyPos.clear();
