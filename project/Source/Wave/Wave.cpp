@@ -19,7 +19,7 @@ Wave::Wave()
 	JSON jsonData = json.Data();
 
 	const auto& wave = jsonData["WaveEnemyData"][std::to_string(stageNum)];
-	stageMax = wave.size();
+	stageMax = (int)wave.size();
 	SpawnData data;
 	for (int i = 0; i < stageMax; i++)
 	{
