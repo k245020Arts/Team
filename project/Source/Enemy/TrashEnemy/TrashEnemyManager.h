@@ -41,6 +41,8 @@ public:
 
 	//“G‚ª‰½l¶‚«‚Ä‚¢‚é‚©‚í‚©‚éŠÖ”
 	int GetActiveEnemy()const;
+
+
 	//¶‚«‚Ä‚é‹ß‹——£‚Ì“G‚ğ”‚¦‚éŠÖ”
 	int GetMeleeActiveEnemy()const;
 	//¶‚«‚Ä‚é‰“‹——£‚Ì“G‚ğ”‚¦‚éŠÖ”

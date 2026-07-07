@@ -34,6 +34,8 @@ Wave::Wave()
 	bossCreate = true;
 	first = false;
 	bossWave = false;
+
+	spawnTimeCounter = 0;
 }
 
 Wave::~Wave()
@@ -70,6 +72,10 @@ void Wave::EnemySpawn()
 	int _counter = tEnemyManager->GetActiveEnemy();
 	if (_counter <= 0)
 	{
+		spawnTimeCounter += Time::DeltaTimeRate();
+		if (spawnTimeCounter <= 1.0f)
+			return;
+
 		waveNow++;
 
 		if(waveNow <= stageMax)
@@ -85,5 +91,7 @@ void Wave::EnemySpawn()
 				bossWave = true;
 			}
 		isCooperate = false;
+
+		spawnTimeCounter = 0;
 	}
 }

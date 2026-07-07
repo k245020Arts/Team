@@ -181,11 +181,12 @@ int TrashEnemyGroup::GetActiveEnemy()const
 int TrashEnemyGroup::GetMeleeActiveEnemy()const
 {
 	int _counter = 0;
-	float* _hp = 0;
+	float _hp = 0;
 
 	for (auto& itr : meleeEnemies)
 	{
-		if (itr->GetHp() > _hp)//Activeでやると死んでるモーション挟んでる敵もカウントされるため
+		//if (itr->GetCurrentHp() > _hp)//Activeでやると死んでるモーション挟んでる敵もカウントされるため
+		if(itr->GetActive())
 			_counter++;
 	}
 	return _counter;
@@ -194,11 +195,39 @@ int TrashEnemyGroup::GetMeleeActiveEnemy()const
 int TrashEnemyGroup::GetRangedActiveEnemy()const
 {
 	int _counter = 0;
-	float* _hp = 0;
+	float _hp = 0;
 
 	for (auto& itr : rangedEnemies)
 	{
-		if (itr->GetHp() > _hp)
+		//if (itr->GetCurrentHp() > _hp)
+		if (itr->GetActive())
+			_counter++;
+	}
+
+	return _counter;
+}
+
+int TrashEnemyGroup::GetMeleeZeroHpEnemy() const
+{
+	int _counter = 0;
+	float _hp = 0;
+
+	for (auto& itr : meleeEnemies)
+	{
+		if (itr->GetCurrentHp() > _hp)
+			_counter++;
+	}
+	return _counter;
+}
+
+int TrashEnemyGroup::GetRangedZeroHpEnemy() const
+{
+	int _counter = 0;
+	float _hp = 0;
+
+	for (auto& itr : rangedEnemies)
+	{
+		if (itr->GetCurrentHp() > _hp)
 			_counter++;
 	}
 
@@ -324,7 +353,7 @@ void TrashEnemyGroup::CooperateAttackLine()
 
 void TrashEnemyGroup::MeleeEvadeMove(TrashEnemy* _enemy)
 {
-	if (_enemy->GetNowHp() <= 0.0f)
+	if (_enemy->GetCurrentHp() <= 0.0f)
 		return;
 
 	_enemy->SetLeaderPos(leaderPos);

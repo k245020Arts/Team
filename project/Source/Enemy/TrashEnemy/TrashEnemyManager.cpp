@@ -120,6 +120,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 	int max = meleeSpawnCounter + rangedSpawnCounter;
 
 	isMeleeCooperateAtk = true;
+	rangedAtkCounter = 0.0f;
 
     for (int i = 0; i < max; i++)
     {
@@ -332,20 +333,25 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 void TrashEnemyManager::CooperateAtk()
 {
 	int meleeCounter = 4;
-	float rangedMaxCounter = 12.0f;
+	float rangedMaxCounter = 15.0f;
 
+	//‹ß‹——£‚Ì˜AŒgUŒ‚
 	if (isMeleeCooperateAtk)
 	{
-		if (GetMeleeActiveEnemy() <= meleeCounter)
+		if (enemyGroup->GetMeleeZeroHpEnemy() <= meleeCounter)
 		{
 			Cooperate();
 			isMeleeCooperateAtk = false;
 		}
 	}
 
-	if (GetRangedActiveEnemy() <= 0)
+	if (enemyGroup->GetRangedZeroHpEnemy() <= 0)
+	{
+		rangedAtkCounter = 0.0f;
 		return;
+	}
 
+	//‰“‹——£‚Ì˜AŒgUŒ‚
 	rangedAtkCounter += Time::DeltaTimeRate();
 	if (rangedAtkCounter >= rangedMaxCounter)
 	{
