@@ -102,6 +102,7 @@ void TrashEnemyManager::Draw()
 	{
 		if (!itr.active)
 			continue;
+		//デバック表示
 		DrawSphere3D(itr.position, 40.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), itr.active);
 	}
 }

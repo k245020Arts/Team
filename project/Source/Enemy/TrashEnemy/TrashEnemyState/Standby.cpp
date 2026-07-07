@@ -11,7 +11,7 @@ Standby::Standby()
 {
 	animId = ID::TE_STANCE;
 	string = Function::GetClassNameC<Standby>();
-	counter = 0;
+	cooperateCounter = 0;
 
 	range = 0.0f;
 	randomSpeed = 0.0f;
@@ -47,7 +47,7 @@ void Standby::Update()
 			if (vec.Size() <= range / 2)
 			{
 				pPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
-				counter = 0;
+				cooperateCounter = 0;
 			}
 		}
 
@@ -56,21 +56,23 @@ void Standby::Update()
 		else
 			runTime = 0.0f;
 
-		if (runTime >= 0.5f)
+		//runと切り替わるときにすぐ切り替わらないようにクールタイムを設けた
+		if (runTime >= RunTimeMac)
 			enemy->ChangeState(StateID::T_ENEMY_RUN_S);
 	}
 	else
 	{
-		if (counter <= 1)
+		CooperateMove(enemy);
+	/*	if (counter <= 1)
 			counter += Time::DeltaTimeRate();
-		else if (counter != 2)
+		else if (counter!= 2)
 		{
 			enemy->isStandby = true;
 			EffectManager::GetInstance()->CreateEffekseer(Transform(enemy->GetPos(), VZero, VOne), nullptr, Effect_ID::COOPERATEATTACK, 1.0f);
 			counter = 2;
 		}
 		else
-			enemy->isStandby = false;
+			enemy->isStandby = false;*/
 	}
 }
 
@@ -101,7 +103,7 @@ void Standby::Start()
 void Standby::Finish()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
-	counter = 0;
+	cooperateCounter = 0;
 	enemy->isStandby = false;
 	enemy->isAttack = false;
 	isRedefinition = true;
@@ -145,9 +147,27 @@ void Standby::RotateMove(TrashEnemy* _enemy)
 	}
 }
 
+void Standby::CooperateMove(TrashEnemy* _enemy)
+{
+	const float C_CoolTime = 1.0f;
+	const float C_CounterMax = 2.0f;
+
+	if (cooperateCounter <= C_CoolTime)//定位置についてから少しクールタイムをもうける
+		cooperateCounter += Time::DeltaTimeRate();
+	else if (cooperateCounter != C_CounterMax)//マネージャーに準備完了したことを伝える
+	{
+		_enemy->isStandby = true;
+		EffectManager::GetInstance()->CreateEffekseer(Transform(_enemy->GetPos(), VZero, VOne), nullptr, Effect_ID::COOPERATEATTACK, 1.0f);
+		cooperateCounter = C_CounterMax;
+	}
+	else//falseにしないとマネージャー側で一体ずつカウントがやりずらい
+		_enemy->isStandby = false;
+}
+
 void Standby::InCameraView()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	const float Viewing = 45.0f;
 	VECTOR3 cameraPos = enemy->enemyBaseComponent.camera->GetCameraTransform()->position;
 	cameraPos.y = 0;
 	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(enemy->enemyBaseComponent.camera->GetCameraTransform()->rotation.y);
@@ -156,7 +176,7 @@ void Standby::InCameraView()
 	//内積
 	float dotProduct = VDot(frontVec, vec.Normalize());
 	
-	if (dotProduct > cosf(45 * DegToRad) )//カメラに写っているかつプレイヤーの前
+	if (dotProduct > cosf(Viewing * DegToRad) )//カメラに写っているかつプレイヤーの前
 		enemy->isAttack = true;
 	else
 		enemy->isAttack = false;

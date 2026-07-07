@@ -39,10 +39,10 @@ void T_EnemyWaitSee::Start()
 	{
 	case EnemyType::RANGED:
 		moveSpeed = NormalMoveSpeed;
-		pointRange = 400.0f + 200.0f * (float)Random::GetReal();
+		pointRange = LeaderRange + RangedRange * (float)Random::GetReal();
 		break;
 	case EnemyType::RANGED_LEADER:
-		pointRange = 400;
+		pointRange = LeaderRange;
 		moveSpeed = LeaderMoveSpeed;
 		isLeader = true;
 		break;

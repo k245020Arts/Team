@@ -287,12 +287,10 @@ void TrashEnemy::Update()
 	{
 		enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DEAD);
 		deadMove = true;
-		if (guage != nullptr) {
+		if (guage != nullptr)
 			guage->DestroyMe();
-		}
-		
 	}
-		
+	
 	if (CheckHitKey(KEY_INPUT_9))
 	{
 		hp -= maxHp;

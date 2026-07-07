@@ -86,8 +86,6 @@ void T_EnemyRun::Start()
 	enemy->isRunState = true;
 
 	EnemyStateBase::Start();
-
-	
 }
 
 void T_EnemyRun::Finish()
