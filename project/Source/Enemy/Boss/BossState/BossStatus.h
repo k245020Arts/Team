@@ -22,5 +22,5 @@ private:
 
 public:
 	BossStatus() { ; }
-	Status GetStatus() { return status; }
+	Status GetStatus() const{ return status; }
 };

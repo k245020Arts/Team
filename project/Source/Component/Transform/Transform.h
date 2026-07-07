@@ -77,7 +77,7 @@ public:
 	/// <param name="_matrix">‰ñ“]s—ñ</param>
 	void SetRotationMatrix(const MATRIX& _matrix) { rotMatrix = _matrix; }
 
-	void RemoveParent(Transform* transform);
+	void RemoveParent(const Transform* transform);
 
 private:
 

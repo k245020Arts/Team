@@ -29,7 +29,7 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 	currentSelectAnimInfos = Animator::AnimFileInfo();
 
 
-	std::string filePath = "data/model/animation";
+	const std::string filePath = "data/model/animation";
 
 	for (const auto& entry : std::filesystem::directory_iterator(filePath)) {
 		// フォルダはスキップ
@@ -51,7 +51,7 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 	boss = _boss;
 	isEffect = false;
 
-	std::string soundPath = "data/sound";
+	const std::string soundPath = "data/sound";
 	//サウンドデータのファイル名一覧取得
 	for (const auto& entry : std::filesystem::directory_iterator(soundPath))
 	{
@@ -60,7 +60,7 @@ BossAttackDataSerializer::BossAttackDataSerializer(std::shared_ptr<AttackSorting
 			continue;
 		}
 		//サウンドファイル名の取得
-		std::string name = entry.path().stem().string();
+		const std::string name = entry.path().stem().string();
 		soundFileNames.push_back(name);
 	}
 }
@@ -80,7 +80,7 @@ void BossAttackDataSerializer::SetThrowManager(BossRockManager* _data)
 	throwObjectsData = rockManager->GetThrowObjectsData();
 
 	throwObjectKeys.clear();
-	for (auto& [key, _] : throwObjectsData)
+	for (const auto& [key, _] : throwObjectsData)
 	{
 		throwObjectKeys.push_back(key);
 	}
@@ -117,14 +117,14 @@ void BossAttackDataSerializer::Update()
 		change = ImGui::Combo("AttackSelect", &currentIndex, items.data(), (int)items.size());
 	}
 	if (change) {
-		std::string selectedID = attackKeys[currentIndex];
-		auto& param = attackParam[selectedID];
+		const std::string selectedID = attackKeys[currentIndex];
+		const auto& param = attackParam[selectedID];
 		currentSelectAnimInfos = bossAnim->GetSelectFileInfo(param.animFileName);
 	}
 	//選択中の攻撃取得
 	if (!attackKeys.empty())
 	{
-		std::string selectedID = attackKeys[currentIndex];
+		const std::string selectedID = attackKeys[currentIndex];
 		if (ImGui::BeginTabBar("EditTabs")) {
 			//攻撃のソートの調整
 			if (ImGui::BeginTabItem("AttackSort")) {
@@ -283,7 +283,7 @@ void BossAttackDataSerializer::Update()
 
 	//バリデーション
 	bool canAdd = true;
-	std::string idStr = newAttackID;
+	const std::string idStr = newAttackID;
 
 	// 空チェック
 	if (idStr.empty()) {
@@ -316,7 +316,7 @@ void BossAttackDataSerializer::Update()
 
 	if (ImGui::Button("AddAttack"))
 	{
-		std::string newID = newAttackID;
+		const std::string newID = newAttackID;
 
 		// AttackParam追加（ローカル）
 		EnemyAttackBase::BossAttackParam newParam;
@@ -385,7 +385,7 @@ void BossAttackDataSerializer::Update()
 
 void BossAttackDataSerializer::ActionsSave()
 {
-	std::string filePath = std::string("data/json/BossAttack/" + BossName + "/Sorting") + "/AttackSort" + ".json";
+	const std::string filePath = std::string("data/json/BossAttack/" + BossName + "/Sorting") + "/AttackSort" + ".json";
 
 	JsonReader json;
 	json.Load(filePath);
@@ -749,7 +749,7 @@ void BossAttackDataSerializer::DrawThrowObjectEditor(std::vector<EnemyAttackBase
 	//リスト
 	for (int i = 0; i < list.size(); i++)
 	{
-		std::string label = std::to_string(i) + " : " + list[i].throwObjectID;
+		const std::string label = std::to_string(i) + " : " + list[i].throwObjectID;
 
 		if (ImGui::Selectable(label.c_str(), selectIndex == i))
 		{
@@ -1137,9 +1137,7 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 			copyJump = copyShock = copyThrow = copyCamera = copyTrail = false;
 	}
 
-	//========================
-	// ■ コピー実行
-	//========================
+	//コピー実行
 	if (ImGui::Button("Copy Selected Events"))
 	{
 		//移動

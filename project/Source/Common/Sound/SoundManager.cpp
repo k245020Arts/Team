@@ -190,7 +190,7 @@ void SoundManager::AllDeleteSound()
 
 void SoundManager::RandamSe(const std::string& _name, const int num)const
 {
-	int randomNum = GetRand(num - 1) + 1;
+	const int randomNum = GetRand(num - 1) + 1;
 
 	std::string value = std::to_string(randomNum);
 
@@ -249,7 +249,7 @@ void SoundManager::Play3DSound(const Sound_ID::SOUND_ID _id, const BaseObject* _
 	const Transform*  targetTransform = _targetObj->GetTransform();
 	const Transform* base3DTransfom = Base3DSoundObj->GetTransform();
 	VECTOR3 dist = targetTransform->position - base3DTransfom->position;
-	float size = dist.Size();
+	const float size = dist.Size();
 
 	int vol = 0;
 	//Å’á‰¹—Ê‚Ì‹——£‚æ‚è—£‚ê‚½‚ç‰¹—Ê‚ğ‚È‚­‚·

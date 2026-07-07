@@ -125,7 +125,7 @@ void PlayerParamWindow::PlayerParamWindowView()
                 {
                     auto& c = r.chargeLevels[i];
 
-                    std::string name = "Level " + std::to_string(i);
+                    const std::string name = "Level " + std::to_string(i);
 
                     if (ImGui::TreeNode(name.c_str()))
                     {

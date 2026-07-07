@@ -62,7 +62,7 @@ void CutSceneCamera::Update()
     Camera* camera = GetBase<Camera>();
     if (camera->cutSceneData.empty()) return;
 
-    CutSceneSpece::CutScene& cut = camera->cutSceneData[camera->cutSceneIndex];
+    CutSceneSpece::CutScene& cut = camera->cutSceneData.at(camera->cutSceneIndex);
 
     // ‘ÎÛØ‚è‘Ö‚¦”»’è 
     bool isTransition = (cut.followPosName != beforePosName);
@@ -131,7 +131,7 @@ void CutSceneCamera::Update()
         baseRot = enemyLastRot;
     }
 
-    VECTOR3 endPos = basePos + cut.camera.endPos * baseRot;
+    const VECTOR3 endPos = basePos + cut.camera.endPos * baseRot;
 
     VECTOR3 movePos = VZero;
 
@@ -166,10 +166,10 @@ void CutSceneCamera::Update()
     else
     {
         // ’Ç]‚ÌŽž‚Íoffset‚Ì‚Ý•âŠÔ 
-        VECTOR3 currentPos =
+        const VECTOR3 currentPos =
             camera->cameraComponent.cameraTransform->position;
 
-        VECTOR3 currentOffset = currentPos - basePos;
+        const VECTOR3 currentOffset = currentPos - basePos;
         VECTOR3 targetOffset = cut.camera.endPos * baseRot;
 
         VECTOR3 offset = VZero;
@@ -256,7 +256,7 @@ void CutSceneCamera::Update()
         targetBaseRot = enemyLastTargetRot;
     }
 
-    VECTOR3 endTarget = targetBasePos + cut.camera.target * targetBaseRot;
+    const VECTOR3 endTarget = targetBasePos + cut.camera.target * targetBaseRot;
     VECTOR3 moveTarget = VZero;
 
   
@@ -290,10 +290,10 @@ void CutSceneCamera::Update()
     else
     {
         // ’Ç]‚ÌŽž‚Íoffset‚Ì‚Ý•âŠÔ 
-        VECTOR3 currentTarget = camera->target;
+        const VECTOR3 currentTarget = camera->target;
 
-        VECTOR3 currentOffset = currentTarget - targetBasePos;
-        VECTOR3 targetOffset = cut.camera.target * targetBaseRot;
+        const VECTOR3 currentOffset = currentTarget - targetBasePos;
+        const VECTOR3 targetOffset = cut.camera.target * targetBaseRot;
 
         VECTOR3 offset = VZero;
 
@@ -448,7 +448,7 @@ const Transform* CutSceneCamera::PlayerEnemyWorldToPos(const std::string& _name)
 
 void CutSceneCamera::StateImguiDraw()
 {
-    Camera* camera = GetBase<Camera>();
+    const Camera* camera = GetBase<Camera>();
     ImGui::Text("CutScene Index : %d", camera->cutSceneIndex);
 }
 //#include "CutSceneCamera.h"

@@ -114,9 +114,9 @@ const bool PadInput::GetIsButtonPutNow(int _button)const
 	if (input.size() > 1)
 	{
 		std::list<XINPUT_STATE>::const_iterator it = input.begin();
-		XINPUT_STATE now = *it;
+		const XINPUT_STATE now = *it;
 		std::advance(it, 1);
-		XINPUT_STATE lastFrame = *it;
+		const XINPUT_STATE lastFrame = *it;
 
 		if (now.Buttons[_button] && !lastFrame.Buttons[_button])
 		{
@@ -138,9 +138,9 @@ const bool PadInput::GetIsButtonReleaseNow(int _button)const
 	if (input.size() > 1)
 	{
 		std::list<XINPUT_STATE>::const_iterator it = input.begin();
-		XINPUT_STATE now = *it;
+		const XINPUT_STATE now = *it;
 		std::advance(it, 1);
-		XINPUT_STATE lastFrame = *it;
+		const XINPUT_STATE lastFrame = *it;
 
 		if (!now.Buttons[_button] && lastFrame.Buttons[_button])
 		{
