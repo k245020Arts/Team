@@ -273,7 +273,7 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	// 個別のenemyを作る
 	Object3D* e;
 	e = new Object3D();
-	e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(2.5f, 2.5f, 2.5f), "ENEMY" + std::to_string(_i));
+	e->Init(EnemyInformation::BASE_POS, VZero, Scale, "ENEMY" + std::to_string(_i));
 	//当たり判定を生成（やられ判定）
 	trashEnemy = e->Component()->AddComponent<TrashEnemy>();
 	CollsionInfo info;
@@ -286,7 +286,7 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::E_FLOOR;
-	collider3->RaySet(info, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, 1, 0), VZero, VECTOR3(1.0f, 1, 1)), nullptr);
+	collider3->RaySet(info, collTipData, collEndData, nullptr);
 
 	Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
@@ -303,12 +303,8 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	anim->AnimDataLoad(_resource.charaID, _resource.typeID);
 
 	Physics* physics = e->Component()->AddComponent<Physics>();
-	physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(10.0f, 10.0f, 10.0f));
-
-	// 位置を決める
-	const int R_MAX = 2000;
-	const float PosY = 3000.0f;
-
+	physics->Start(GravityVec, Friction);
+	
 	float rangeX = (float)GetRand(R_MAX * 2) - R_MAX;
 	float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
 	VECTOR3 pos = VECTOR3(rangeX, PosY, rangeY);
@@ -317,14 +313,14 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 
 	//hp表示
 	Object2D* guage = new Object2D();
-	guage->Init(VECTOR2F(150, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.2f, 0.2f), "TrashEnemyHpGuage");
+	guage->Init(HpPos, HpRot, HpScale, "TrashEnemyHpGuage");
 	e->AddChild(guage);
 	Guage* g = guage->Component()->AddComponent<Guage>();
 	g->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
 	g->GuageDrawReady<TrashEnemy>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "playerHp",
 		ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,
 		Guage::BAR_MODE::HP);
-	g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
+	g->WorldToScreenMode(true, WorldPos);
 
 	// 個別のTrashEnemyを追加
 	trashEnemy->Start(e, _type, guage);

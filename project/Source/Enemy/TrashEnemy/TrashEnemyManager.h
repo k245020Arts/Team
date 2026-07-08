@@ -64,6 +64,25 @@ private:
 	const int ATK_COUNTER_MIN = 1;
 	const float ATK_COUNTER_MAX = 3;
 
+	//enemyのクリエイト時のデータ--------------------
+	const VECTOR3 Scale = VECTOR3(2.5f, 2.5f, 2.5f);
+	const Transform collTipData = Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(1.0f, 1.0, 1.0));
+	const Transform collEndData = Transform(VECTOR3(0, 1, 0), VZero, VECTOR3(1.0f, 1, 1));
+	//落下速度
+	const VECTOR3 GravityVec = VECTOR3(0.0f, -150.0f, 0.0f);
+	//ノックバック時の摩擦
+	const VECTOR3 Friction = VECTOR3(3000.0f, 3000.0f, 3000.0f);
+	// 位置を決める
+	const int R_MAX = 2000;
+	const float PosY = 3000.0f;
+
+	const VECTOR2F HpPos = VECTOR2F(150.0f, 115.0f);
+	const VECTOR2F HpRot = VECTOR2F(0.0f, 0.0f);
+	const VECTOR2F HpScale = VECTOR2F(0.2f, 0.2f);
+
+	const VECTOR3 WorldPos = VECTOR3(0, 700.0f, 0);
+	//-----------------------------------------------
+
 	TrashEnemyGroup* enemyGroup;
 	//敵のファイルネームなどを設定するために使う
 	struct EnemyResource
