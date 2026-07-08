@@ -157,16 +157,17 @@ void TrashEnemyGroup::Separation()
 
 void TrashEnemyGroup::InCameraWayPoint(WayPoint& _wayPoint)
 {
-	VECTOR3 position = camera->GetCameraTransform()->position;
-	position.y = 0;
+	VECTOR3 camPos = camera->GetCameraTransform()->position;
+	camPos.y = 0;
+	const float ViewingAngle = 45.0f;
 	//³–Ê‚×‚­
 	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(camera->GetCameraTransform()->rotation.y);
-	VECTOR3 vec = _wayPoint.position - position;
+	VECTOR3 vec = _wayPoint.position - camPos;
 
 	//“àÏ
 	float dotProduct = VDot(frontVec, vec.Normalize());
 	//ƒJƒƒ‰‚ÉÊ‚Á‚Ä‚é‚©
-	if (dotProduct > cosf(45 * DegToRad))
+	if (dotProduct > cosf(ViewingAngle * DegToRad))
 		_wayPoint.active = true;
 	//ƒJƒƒ‰‚ÉÊ‚Á‚Ä‚È‚©‚Á‚½‚ç
 	else
