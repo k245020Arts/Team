@@ -317,6 +317,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	//ボスの情報のセット
 	bossParam = _param;
 	hp = bossParam.hp;
+	maxHp = hp;
 	defense = bossParam.defense;
 	enemyBaseComponent.color->setRGB(Color::Rgb(255, 255, 255, 255));
 
@@ -560,13 +561,13 @@ void Boss::Drail(bool _right)
 Boss::HP_RATE Boss::Hp()
 {
 	//HPの状態を取得
-	if (hp >= bs->GetStatus().maxHp * 0.8f) {
+	if (hp >= maxHp * 0.8f) {
 		hpRate = Boss::MAX;
 	}
-	else if (hp >= bs->GetStatus().maxHp * 0.5f) {
+	else if (hp >= maxHp * 0.5f) {
 		hpRate = Boss::EIGHT;
 	}
-	else if (hp >= bs->GetStatus().maxHp * 0.3f) {
+	else if (hp >= maxHp * 0.3f) {
 		hpRate = Boss::FIVE;
 	}
 	else {

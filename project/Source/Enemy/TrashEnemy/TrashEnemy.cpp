@@ -46,10 +46,10 @@ namespace
 	{ StateID::PLAYER_ATTACK1_S,
 		EnemyInformation::EnemyReaction(
 			StateID::PLAYER_ATTACK1_S,
-			EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100), 0.15f, 0.8f),
+			EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,0), VECTOR3(100,100,100), 0.15f, 0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(),
 			EnemyInformation::EnemyReaction::Type::Normal,
-			StateID::B_THREAT_S,
+			StateID::STATE_MAX,
 			10, 10,
 			Effect_ID::HIT_EFFECT,
 			EnemyInformation::HIT_EFFECT_TIME,
@@ -66,10 +66,10 @@ namespace
 	{ StateID::PLAYER_ATTACK2_S,
 		EnemyInformation::EnemyReaction(
 			StateID::PLAYER_ATTACK2_S,
-			EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100), 0.25f, 0.8f),
+			EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,0), VECTOR3(100,100,100), 0.25f, 0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(),
 			EnemyInformation::EnemyReaction::Type::Normal,
-			StateID::B_THREAT_S,
+			StateID::STATE_MAX,
 			40, 30,
 			Effect_ID::HIT_EFFECT,
 			EnemyInformation::HIT_EFFECT_TIME,
@@ -86,10 +86,10 @@ namespace
 	{ StateID::PLAYER_ATTACK3_S,
 		EnemyInformation::EnemyReaction(
 			StateID::PLAYER_ATTACK3_S,
-			EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100), 0.35f, 0.8f),
+			EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,0), VECTOR3(100,100,100), 0.35f, 0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(),
 			EnemyInformation::EnemyReaction::Type::Normal,
-			StateID::B_THREAT_S,
+			StateID::STATE_MAX,
 			10, 10,
 			Effect_ID::HIT_EFFECT,
 			EnemyInformation::HIT_EFFECT_TIME,
@@ -106,10 +106,10 @@ namespace
 	{ StateID::PLAYER_ATTACK4_S,
 		EnemyInformation::EnemyReaction(
 			StateID::PLAYER_ATTACK4_S,
-			EnemyDamage::EnemyDamageInfo(VECTOR3(0,400,0), VECTOR3(200,200,200), 0.85f, 1.0f),
+			EnemyDamage::EnemyDamageInfo(VECTOR3(0,10,0), VECTOR3(200,200,200), 0.85f, 1.0f),
 			EnemyBlowAway::EnemyBlowAwayInfo(),
 			EnemyInformation::EnemyReaction::Type::Normal,
-			StateID::B_THREAT_S,
+			StateID::STATE_MAX,
 			50, 50,
 			Effect_ID::HIT_EFFECT,
 			EnemyInformation::HIT_EFFECT_TIME,
@@ -129,7 +129,7 @@ namespace
 			EnemyDamage::EnemyDamageInfo(),
 			EnemyBlowAway::EnemyBlowAwayInfo(),
 			EnemyInformation::EnemyReaction::Type::LoopCombo,
-			StateID::B_THREAT_S,
+			StateID::STATE_MAX,
 			0, 0,
 			Effect_ID::HIT_EFFECT,
 			EnemyInformation::HIT_EFFECT_TIME,
@@ -146,10 +146,10 @@ namespace
 	{ StateID::PLAYER_ATTACK5_S,
 		EnemyInformation::EnemyReaction(
 			StateID::PLAYER_ATTACK5_S,
-			EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200), 0.2f, 0.8f),
+			EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,0), VECTOR3(200,200,200), 0.2f, 0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(),
 			EnemyInformation::EnemyReaction::Type::Normal,
-			StateID::B_THREAT_S,
+			StateID::STATE_MAX,
 			70, 40,
 			Effect_ID::HIT_EFFECT,
 			EnemyInformation::HIT_EFFECT_TIME,
@@ -163,13 +163,33 @@ namespace
 		)
 	},
 
+	{ StateID::PLAYER_ATTACK6_S,
+	EnemyInformation::EnemyReaction(
+		StateID::PLAYER_ATTACK6_S,
+		EnemyDamage::EnemyDamageInfo(VECTOR3(0,000,4000), VECTOR3(200,200,200), 0.2f, 0.8f),
+		EnemyBlowAway::EnemyBlowAwayInfo(),
+		EnemyInformation::EnemyReaction::Type::Normal,
+		StateID::T_ENEMY_DAMAGE,
+		70, 40,
+		Effect_ID::HIT_EFFECT,
+		EnemyInformation::HIT_EFFECT_TIME,
+		EnemyInformation::HIT_EFFECT_SCALE_RATE,
+		true,
+		90.0f * DegToRad,
+		Effect_ID::PLAYER_SLASH_ATTACK,
+		true,
+		-1,
+		0.0f
+	)
+	},
+
 	{ StateID::PLAYER_SPECIAL_ATTACK_S,
 		EnemyInformation::EnemyReaction(
 			StateID::PLAYER_SPECIAL_ATTACK_S,
 			EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100), 0.15f, 0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(),
 			EnemyInformation::EnemyReaction::Type::Special,
-			StateID::B_THREAT_S,
+			StateID::STATE_MAX,
 			10, 10,
 			Effect_ID::HIT_EFFECT,
 			EnemyInformation::HIT_EFFECT_TIME,
@@ -189,7 +209,7 @@ namespace
 		EnemyDamage::EnemyDamageInfo(VECTOR3(0,-2000,-2000), VECTOR3(200,200,200), 0.2f, 0.8f),
 		EnemyBlowAway::EnemyBlowAwayInfo(),
 		EnemyInformation::EnemyReaction::Type::Normal,
-		StateID::B_THREAT_S,
+		StateID::STATE_MAX,
 		70, 40,
 		Effect_ID::HIT_EFFECT,
 		EnemyInformation::HIT_EFFECT_TIME,
@@ -551,6 +571,7 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 			EffectManager::GetInstance()->CreateEffekseer(Transform(VOne * VECTOR3(0, 100, 0), VOne * VECTOR3(0, 0, e.slashAngleRad), VOne), obj, e.slashEffectID, 1.0f);
 			hit = true;
 			deadPreset = deadPresets[1];
+			dInfo = e.dInfo;
 			break;
 		case EnemyInformation::EnemyReaction::Type::BlowAway:
 
@@ -628,12 +649,15 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 		}
 	}
 	EnemyDamageMove(dInfo);
+	enemyBaseComponent.shaker->ShakeStart(VECTOR3(30.0f, 80.0f, 30.0f), Shaker::HEIGHT_SHAKE, false, 0.15f);
 	//連携攻撃のときは耐性を付与
 	if (isCooperateAtk)
 		damage = damage / 5;
 	VECTOR3 a = VECTOR3((float)GetRand(100), (float)(500 + GetRand(100)), (float)GetRand(100));
 	hp -= DamageCalculation(a, damage, eStatus.defense,30);
-
+	/*if (param->second.changeStateID != StateID::STATE_MAX) {
+		enemyBaseComponent.state->ChangeState(param->second.changeStateID);
+	}*/
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();
 	std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();
