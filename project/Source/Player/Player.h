@@ -31,7 +31,7 @@ public:
 	friend class PlayerAttack5;
 	friend class PlayerAttack4;
 	friend class PlayerJustAvoidAttack4;
-	friend class PlayerAttack5;
+	friend class PlayerAttack6;
 	friend class PlayerJustAvoidAttack5;
 	friend class PlayerAttackStateBase;
 	friend class PlayerStateBase;

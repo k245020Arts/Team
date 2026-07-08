@@ -85,6 +85,7 @@ public:
 		VECTOR3 attackMove;									// 攻撃時移動量
 
 		Transform collTrans;								// 攻撃判定Transform
+		float attackSpeedChangeRate;
 
 		std::vector<ChargeAttackLevelData> chargeLevels;	// チャージ攻撃レベルデータ一覧
 
@@ -111,6 +112,7 @@ public:
 			, noAttackRunTimer(0.0f)
 			, attackMove(VZero)
 			, collTrans()
+			, attackSpeedChangeRate(0.0f)
 			, chargeLevels()
 		{
 		}
@@ -186,6 +188,8 @@ protected:
 	bool rockOn;
 
 	int attackCount;
+	float heavyAttackHoldFrame;
+	bool chargeAttack;
 
 	float attackAgainStartCounter;
 	bool speedChange;
@@ -236,6 +240,7 @@ inline void to_json(nlohmann::json& j, const PlayerAttackStateBase::PlayerAttack
 		{"noAttackRunTimer",           p.noAttackRunTimer},
 		{"AttackMove",                 p.attackMove},
 		{"collTrans",                  p.collTrans},
+		{"attackSpeedChangeRate",      p.attackSpeedChangeRate},
 		{"chargeLevels",               p.chargeLevels},
 	};
 }
@@ -262,6 +267,7 @@ inline void from_json(const nlohmann::json& j, PlayerAttackStateBase::PlayerAtta
 		j.at("AttackMove").get_to(p.attackMove);
 	}
 	j.at("collTrans").get_to(p.collTrans);
+	j.at("attackSpeedChangeRate").get_to(p.attackSpeedChangeRate);
 
 	// チャージ非対応のStateはキーなしでもOK
 	if (j.contains("chargeLevels")) {
