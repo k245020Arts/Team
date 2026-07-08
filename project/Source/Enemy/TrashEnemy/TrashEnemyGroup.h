@@ -28,6 +28,12 @@ public:
 	//生きてる遠距離の敵を数える関数
 	int GetRangedActiveEnemy()const;
 
+	//HPが0じゃない近距離の敵を数える関数(Activeでやると死んでるモーション挟んでる敵もカウントされるため)
+	int GetMeleeZeroHpEnemy()const;
+	//HPが0じゃない遠距離の敵を数える関数(Activeでやると死んでるモーション挟んでる敵もカウントされるため)
+	int GetRangedZeroHpEnemy()const;
+
+
 	//一番近いウェイポイントを計算する
 	void CloseWayPoint(std::vector<WayPoint>& wayPoint);
 	//遠距離の敵の連携攻撃

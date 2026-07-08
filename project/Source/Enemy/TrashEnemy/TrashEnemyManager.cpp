@@ -120,6 +120,7 @@ void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int ran
 	int max = meleeSpawnCounter + rangedSpawnCounter;
 
 	isMeleeCooperateAtk = true;
+	rangedAtkCounter = 0.0f;
 
     for (int i = 0; i < max; i++)
     {
@@ -272,7 +273,7 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	// ŒÂ•Ê‚Ìenemy‚ğì‚é
 	Object3D* e;
 	e = new Object3D();
-	e->Init(EnemyInformation::BASE_POS, VZero, VECTOR3(2.5f, 2.5f, 2.5f), "ENEMY" + std::to_string(_i));
+	e->Init(EnemyInformation::BASE_POS, VZero, Scale, "ENEMY" + std::to_string(_i));
 	//“–‚½‚è”»’è‚ğ¶¬i‚â‚ç‚ê”»’èj
 	trashEnemy = e->Component()->AddComponent<TrashEnemy>();
 	CollsionInfo info;
@@ -285,7 +286,7 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
 	info.tag = CollsionInformation::E_FLOOR;
-	collider3->RaySet(info, Transform(VECTOR3(0, 150, 0), VZero, VECTOR3(1.0f, 1.0, 1.0)), Transform(VECTOR3(0, 1, 0), VZero, VECTOR3(1.0f, 1, 1)), nullptr);
+	collider3->RaySet(info, collTipData, collEndData, nullptr);
 
 	Shaker* shaker = e->Component()->AddComponent<Shaker>();
 
@@ -302,12 +303,8 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 	anim->AnimDataLoad(_resource.charaID, _resource.typeID);
 
 	Physics* physics = e->Component()->AddComponent<Physics>();
-	physics->Start(VECTOR3(0.0f, -150.0f, 0.0f), VECTOR3(3000.0f, 10.0f, 3000.0f));
-
-	// ˆÊ’u‚ğŒˆ‚ß‚é
-	const int R_MAX = 2000;
-	const float PosY = 3000.0f;
-
+	physics->Start(GravityVec, Friction);
+	
 	float rangeX = (float)GetRand(R_MAX * 2) - R_MAX;
 	float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
 	VECTOR3 pos = VECTOR3(rangeX, PosY, rangeY);
@@ -316,14 +313,14 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 
 	//hp•\¦
 	Object2D* guage = new Object2D();
-	guage->Init(VECTOR2F(150, 115), VECTOR2F(0.0f, 0.0f), VECTOR2F(0.2f, 0.2f), "TrashEnemyHpGuage");
+	guage->Init(HpPos, HpRot, HpScale, "TrashEnemyHpGuage");
 	e->AddChild(guage);
 	Guage* g = guage->Component()->AddComponent<Guage>();
 	g->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "bossHpEdge1", ID::BOSS_HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 120.0f, 0.0f), VZero, VECTOR3(0.2f, 0.2f, 0.2f)));
 	g->GuageDrawReady<TrashEnemy>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "playerHp",
 		ID::PLAYER_HP_GUAGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F,
 		Guage::BAR_MODE::HP);
-	g->WorldToScreenMode(true, VECTOR3(0, 700, 0));
+	g->WorldToScreenMode(true, WorldPos);
 
 	// ŒÂ•Ê‚ÌTrashEnemy‚ğ’Ç‰Á
 	trashEnemy->Start(e, _type, guage);
@@ -332,20 +329,25 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 void TrashEnemyManager::CooperateAtk()
 {
 	int meleeCounter = 4;
-	float rangedMaxCounter = 12.0f;
+	float rangedMaxCounter = 15.0f;
 
+	//‹ß‹——£‚Ì˜AŒgUŒ‚
 	if (isMeleeCooperateAtk)
 	{
-		if (GetMeleeActiveEnemy() <= meleeCounter)
+		if (enemyGroup->GetMeleeZeroHpEnemy() <= meleeCounter)
 		{
 			Cooperate();
 			isMeleeCooperateAtk = false;
 		}
 	}
 
-	if (GetRangedActiveEnemy() <= 0)
+	if (enemyGroup->GetRangedZeroHpEnemy() <= 0)
+	{
+		rangedAtkCounter = 0.0f;
 		return;
+	}
 
+	//‰“‹——£‚Ì˜AŒgUŒ‚
 	rangedAtkCounter += Time::DeltaTimeRate();
 	if (rangedAtkCounter >= rangedMaxCounter)
 	{

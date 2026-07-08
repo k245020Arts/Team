@@ -529,9 +529,9 @@ void TrashEnemy::Trail()
 void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 {
 	Player* player = pState->GetBaseObject()->Component()->GetComponent<Player>();
-	if (player->IsHitObject(_data.myObject)) {
+	if (player->IsHitObject(_data.myObject)) 
 		return;
-	}
+
 	StateID::State_ID attackID = pState->GetState<PlayerStateBase>()->GetID();
 	float damage = 0;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr)

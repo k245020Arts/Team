@@ -157,16 +157,17 @@ void TrashEnemyGroup::Separation()
 
 void TrashEnemyGroup::InCameraWayPoint(WayPoint& _wayPoint)
 {
-	VECTOR3 position = camera->GetCameraTransform()->position;
-	position.y = 0;
+	VECTOR3 camPos = camera->GetCameraTransform()->position;
+	camPos.y = 0;
+	const float ViewingAngle = 45.0f;
 	//正面べく
 	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(camera->GetCameraTransform()->rotation.y);
-	VECTOR3 vec = _wayPoint.position - position;
+	VECTOR3 vec = _wayPoint.position - camPos;
 
 	//内積
 	float dotProduct = VDot(frontVec, vec.Normalize());
 	//カメラに写ってるか
-	if (dotProduct > cosf(45 * DegToRad))
+	if (dotProduct > cosf(ViewingAngle * DegToRad))
 		_wayPoint.active = true;
 	//カメラに写ってなかったら
 	else
@@ -181,11 +182,12 @@ int TrashEnemyGroup::GetActiveEnemy()const
 int TrashEnemyGroup::GetMeleeActiveEnemy()const
 {
 	int _counter = 0;
-	float* _hp = 0;
+	float _hp = 0;
 
 	for (auto& itr : meleeEnemies)
 	{
-		if (itr->GetHp() > _hp)//Activeでやると死んでるモーション挟んでる敵もカウントされるため
+		//if (itr->GetCurrentHp() > _hp)//Activeでやると死んでるモーション挟んでる敵もカウントされるため
+		if(itr->GetActive())
 			_counter++;
 	}
 	return _counter;
@@ -194,11 +196,39 @@ int TrashEnemyGroup::GetMeleeActiveEnemy()const
 int TrashEnemyGroup::GetRangedActiveEnemy()const
 {
 	int _counter = 0;
-	float* _hp = 0;
+	float _hp = 0;
 
 	for (auto& itr : rangedEnemies)
 	{
-		if (itr->GetHp() > _hp)
+		//if (itr->GetCurrentHp() > _hp)
+		if (itr->GetActive())
+			_counter++;
+	}
+
+	return _counter;
+}
+
+int TrashEnemyGroup::GetMeleeZeroHpEnemy() const
+{
+	int _counter = 0;
+	float _hp = 0;
+
+	for (auto& itr : meleeEnemies)
+	{
+		if (itr->GetCurrentHp() > _hp)
+			_counter++;
+	}
+	return _counter;
+}
+
+int TrashEnemyGroup::GetRangedZeroHpEnemy() const
+{
+	int _counter = 0;
+	float _hp = 0;
+
+	for (auto& itr : rangedEnemies)
+	{
+		if (itr->GetCurrentHp() > _hp)
 			_counter++;
 	}
 
@@ -324,7 +354,7 @@ void TrashEnemyGroup::CooperateAttackLine()
 
 void TrashEnemyGroup::MeleeEvadeMove(TrashEnemy* _enemy)
 {
-	if (_enemy->GetNowHp() <= 0.0f)
+	if (_enemy->GetCurrentHp() <= 0.0f)
 		return;
 
 	_enemy->SetLeaderPos(leaderPos);
