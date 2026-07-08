@@ -40,6 +40,8 @@ Wave::Wave()
 
 Wave::~Wave()
 {
+	tEnemyManager = nullptr;
+	spawnData.clear();
 }
 
 void Wave::Update()
