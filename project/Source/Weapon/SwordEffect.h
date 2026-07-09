@@ -121,6 +121,16 @@ private:
 
 		CharaWeapon* weapon;
 		BaseObject* charaObj;
+
+		Points() {
+			top = VZero;
+			btm = VZero;
+			rgb = Color::Rgb();
+			bone = 0;
+			weapon = nullptr;
+			charaObj = nullptr;
+
+		}
 	};
 
 	std::vector<Points> points; //リングバッファ
