@@ -8,7 +8,7 @@ public:
 	~CollsionEvent();
 
 	//ÉCÉxÉìÉgî≠ê∂
-	void Event(ColliderBase* _coll1,ColliderBase* _coll2, Pushback& resolver,const VECTOR3& _hitPos);
+	void Event(ColliderBase* _coll1,ColliderBase* _coll2, const Pushback& resolver,const VECTOR3& _hitPos);
 
 private:
 

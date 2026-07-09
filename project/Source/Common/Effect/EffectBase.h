@@ -45,7 +45,7 @@ public:
 	/// 現在使用してるエフェクトのIDをわたす
 	/// </summary>
 	/// <returns>エフェクトのID</returns>
-	Effect_ID::EFFECT_ID GetEffectID() { return id; }
+	Effect_ID::EFFECT_ID GetEffectID()const { return id; }
 	/// <summary>
 	/// エフェクトの再生を止める
 	/// </summary>

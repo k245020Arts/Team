@@ -230,7 +230,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 
 	const StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
 
-	std::string charaID = "2";
+	const std::string charaID = "2";
 
 	bossID = stageData.bossID;
 
@@ -258,7 +258,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	enemyBaseComponent.state->CreateState<BossRun>("BossRun", StateID::BOSS_RUN_S);
 	enemyBaseComponent.state->CreateState<BossCoolTime>("BossCoolTime", StateID::BOSS_COOL_TIME_S);
 	std::shared_ptr<AttackSorting> attackSorting =  enemyBaseComponent.state->CreateState<AttackSorting>("AttackSorting", StateID::ATTACK_SORTING_S);
-	std::string folderName = "Boss" + std::to_string(bossID);
+	const std::string folderName = "Boss" + std::to_string(bossID);
 	attackSorting->Load(folderName,this);
 
 	enemyBaseComponent.state->CreateState<BossWalk>("BossWalk", StateID::BOSS_WALK);
@@ -317,6 +317,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	//ボスの情報のセット
 	bossParam = _param;
 	hp = bossParam.hp;
+	maxHp = hp;
 	defense = bossParam.defense;
 	enemyBaseComponent.color->setRGB(Color::Rgb(255, 255, 255, 255));
 
@@ -413,7 +414,7 @@ void Boss::LookPlayer(const VECTOR3& _target, float speed)
 
 void Boss::PlayerHit(const CollsionEventData& _data)
 {
-	Player* player = pState->GetBaseObject()->Component()->GetComponent<Player>();
+	const Player* player = pState->GetBaseObject()->Component()->GetComponent<Player>();
 	if (player->IsHitObject(_data.myObject)) {
 		return;
 	}
@@ -422,15 +423,11 @@ void Boss::PlayerHit(const CollsionEventData& _data)
 		int c = 0;
 	}
 
-	float damage = 0;;
-	if (pState->GetState<PlayerAttackStateBase>() != nullptr) {
+	const std::shared_ptr<PlayerAttackStateBase> attackState = pState->GetState<PlayerAttackStateBase>();
 
-		damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
-
-		
-
-	}
-	else {
+	//AttackStateがnullptrじゃなかったらDamageの値を挿入
+	const float damage = (attackState != nullptr) ? attackState->GetHitDamage() : 0.0f;
+	if (attackState == nullptr) {
 		loopNum = -1;
 	}
 	EnemyDamage::EnemyDamageInfo dInfo;
@@ -444,9 +441,9 @@ void Boss::PlayerHit(const CollsionEventData& _data)
 	float angleRan = 0.0f;
 	bool lastAttack = false;
 	bool lastBeforeAttack = false;
-	auto bossParam = enemyTable.find(attackID);
-	float angleRand = Random::GetFloat(0.0f, 360.0f);
-	std::shared_ptr<PlayerSpecialAttack> pSpecial = pState->GetState<PlayerSpecialAttack>();
+	const auto bossParam = enemyTable.find(attackID);
+	const float angleRand = Random::GetFloat(0.0f, 360.0f);
+	const std::shared_ptr<PlayerSpecialAttack> pSpecial = pState->GetState<PlayerSpecialAttack>();
 	Object2D* damageNum = nullptr;
 	if (bossParam != enemyTable.end()) {
 		const auto& e = bossParam->second;
@@ -564,13 +561,13 @@ void Boss::Drail(bool _right)
 Boss::HP_RATE Boss::Hp()
 {
 	//HPの状態を取得
-	if (hp >= bs->GetStatus().maxHp * 0.8f) {
+	if (hp >= maxHp * 0.8f) {
 		hpRate = Boss::MAX;
 	}
-	else if (hp >= bs->GetStatus().maxHp * 0.5f) {
+	else if (hp >= maxHp * 0.5f) {
 		hpRate = Boss::EIGHT;
 	}
-	else if (hp >= bs->GetStatus().maxHp * 0.3f) {
+	else if (hp >= maxHp * 0.3f) {
 		hpRate = Boss::FIVE;
 	}
 	else {
@@ -709,7 +706,7 @@ void Boss::BossDamageCollsionEvent(const CollsionEventData& _data)
 	}
 }
 
-void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, std::shared_ptr<PlayerSpecialAttack> _ps, const VECTOR3& _randomPos, float _randomAngle)
+void Boss::PlayerSpecialAttackHit(const EnemyInformation::EnemyReaction& _e, const std::shared_ptr<PlayerSpecialAttack> _ps, const VECTOR3& _randomPos, float _randomAngle)
 {
 	PlayerSpecialAttack::PLAYER_SPECIAL_ATTACK_STATE state = _ps->GetSpecialAttackState();
 

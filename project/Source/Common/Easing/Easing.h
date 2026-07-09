@@ -18,14 +18,14 @@ namespace Easing {
     /// 等速
     /// </summary>
     template<typename T>
-    const T inline Lerp(T a, T b, float t) {
+    T inline Lerp(const T a, const T b, const float t) {
         return static_cast<T>(a + (b - a) * t);
     }
     /// <summary>
     /// 徐々に加速するLerp
     /// </summary>
     template<typename T>
-    const T inline EaseIn(T a, T b, float t) {
+    T inline EaseIn(const T a, const T b, float t) {
         t = t * t;
         return static_cast<T>(Lerp<T>(a,b,t));
     }
@@ -34,7 +34,7 @@ namespace Easing {
     /// 徐々に停止するLerp
     /// </summary>
     template<typename T>
-    const T inline EaseOut(T a, T b, float t) {
+    T inline EaseOut(const T a, const T b, float t) {
         t = 1 - (1 - t) * (1 - t);
         return static_cast<T>(Lerp<T>(a, b, t));
     }
@@ -43,7 +43,7 @@ namespace Easing {
     /// スムーズに加速し終わり際に減速
     /// </summary>
     template<typename T>
-    const T inline EaseInOut(T a, T b, float t) {
+    T inline EaseInOut(const T a, const T b, float t) {
         if (t < 0.5f) {
             t = 2 * t * t;
         }
@@ -57,7 +57,7 @@ namespace Easing {
     /// よりスムーズに変化
     /// </summary>
     template<typename T>
-    const T inline SmoothStep(T a, T b, float t) {
+    T inline SmoothStep(const T a, const T b, const float t) {
         t = t * t * (3 - 2 * t);
         return static_cast<T>(Lerp<T>(a, b, t));
     }
@@ -67,7 +67,7 @@ namespace Easing {
     /// </summary>
     
     template<typename T>
-    const T inline EaseInExpo(T a, T b, float t) {
+    T inline EaseInExpo(const T a, const  T b, float t) {
         t = powf(2, 10 * t - 10);
         return static_cast<T>(Lerp<T>(a, b, t));
     }
@@ -78,7 +78,7 @@ namespace Easing {
     /// 逆方向に少し戻ってから最終位置で減速するイージング
     /// </summary>
     template<typename T>
-    const T inline EaseOutBack(T a, T b, float t) {
+    T inline EaseOutBack(const T a, const T b, float t) {
         const float c1 = 1.70158f;
         const float c3 = c1 + 1.0f;
 
@@ -89,7 +89,7 @@ namespace Easing {
     /// 弾むような振動で終了するイージング (Ease Out Elastic)
     /// </summary>
     template<typename T>
-    const T inline EaseOutElastic(T a, T b, float t) {
+    T inline EaseOutElastic(const T a, const T b, const float t) {
         const float c4 = (2.0f * DX_PI_F) / 3.0f;
 
         if (t == 0.0f) return a;
@@ -102,7 +102,7 @@ namespace Easing {
     /// 弾むような振動で開始するイージング (Ease In Elastic)
     /// </summary>
     template<typename T>
-    const T inline EaseInElastic(T a, T b, float t) {
+    T inline EaseInElastic(const T a, const T b, const float t) {
         const float c4 = (2.0f * DX_PI_F) / 3.0f;
 
         if (t == 0.0f)
@@ -117,7 +117,7 @@ namespace Easing {
     /// 軽く戻しを伴いながら加速して開始するイージング (Ease In Back)
     /// </summary>
     template<typename T>
-    const T inline EaseInBack(T a, T b, float t) {
+    T inline EaseInBack(const T a, const T b, float t) {
 
         const float c1 = 1.70158f;
         const float c3 = c1 + 1;
@@ -131,7 +131,7 @@ namespace Easing {
     /// </summary>
     
     template<typename T>
-    const T inline SinCube(T a, T b, float t) {
+    T inline SinCube(const T a, const T b, float t) {
 
         t = sinf(t * DX_PI_F);
         return static_cast<T>(Lerp<T>(a, b, t));
@@ -140,7 +140,7 @@ namespace Easing {
 
     //sin波の90度まで(0～1にいって0に戻る動き)を行うための関数。
     template<typename T>
-    const T inline Sin90Cube(T a, T b, float t) {
+    T inline Sin90Cube(const T a, const T b, float t) {
 
         t = sinf(t * DX_PI_F / 2);
         return static_cast<T>(Lerp<T>(a, b, t));
@@ -157,7 +157,7 @@ namespace Easing {
     /// <param name="_func">関数</param>
     /// <returns>_funcによって取得した値</returns>
     template<typename T>
-    const T EasingFlow(float* _counter, float _maxTime, T min, T max, std::function<T(T, T, float)> _func) {
+    T EasingFlow(float* _counter, float _maxTime, const T min, const T max, std::function<T(T, T, float)> _func) {
         //カウンターが0より下になったらminの値を返す
         if (*_counter <= 0.0f) {
             float rate = *_counter / _maxTime;

@@ -51,7 +51,7 @@ VECTOR2F MouseInput::GetMousePos(bool _canScreenOut)const
 	return result;
 }
 
-void MouseInput::SetMousePos(VECTOR2F _pos)
+void MouseInput::SetMousePos(const VECTOR2F& _pos)
 {
 	SetMousePoint((int)_pos.x, (int)_pos.y);
 }
@@ -80,11 +80,11 @@ int MouseInput::GetMouseWheelFrame()const
 	return nowMouseWheelVol;
 }
 
-bool MouseInput::IsCursorSquareCollision(VECTOR2F _centerPos, VECTOR2F _size)const
+bool MouseInput::IsCursorSquareCollision(const VECTOR2F& _centerPos, const VECTOR2F& _size)const
 {
-	VECTOR2 leftUpPos = _centerPos - _size;
-	VECTOR2 rightDownPos = _centerPos + _size;
-	VECTOR2 mousePos = GetMousePos(false);
+	const VECTOR2 leftUpPos = _centerPos - _size;
+	const VECTOR2 rightDownPos = _centerPos + _size;
+	const VECTOR2 mousePos = GetMousePos(false);
 
 	if (leftUpPos.x < mousePos.x && mousePos.x < rightDownPos.x &&
 		leftUpPos.y < mousePos.y && mousePos.y < rightDownPos.y)

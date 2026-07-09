@@ -107,7 +107,7 @@ public:
 	int GetPointNumber()const { return pointNumber; }
 	bool GetCooperateDamageMove()const { return cooperateDamageMove; }
 	float MaxHp()const { return maxHp; }
-	float GetNowHp()const { return hp; }
+	float GetCurrentHp()const { return hp; }
 
 	VECTOR3 TargetPoint()const { return targetPoint; }
 

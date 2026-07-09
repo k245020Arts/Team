@@ -57,4 +57,5 @@ private:
 		}
 	};
 	std::vector<SpawnData> spawnData;
+	float spawnTimeCounter;
 };

@@ -83,7 +83,7 @@ int ResourceLoad::LoadModel(const std::string& path, ID::IDType id) {
 }
 
 int ResourceLoad::LoadModel(const std::string& path, ID::IDType id, bool _common) {
-    std::string name = path;
+    const std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
 
     if (targetLoad[name].handle == -1) {
@@ -109,7 +109,7 @@ int ResourceLoad::LoadSound(const std::string& path, const std::string& exten, S
 }
 
 int ResourceLoad::LoadSound(const std::string& path, const std::string& exten, Sound_ID::SOUND_ID id, bool _common) {
-    std::string name = path;
+    const std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
 
     //配列の要素にデータが入ってなかったらロード
@@ -135,7 +135,7 @@ int ResourceLoad::LoadEffect(const std::string& path, const std::string& _exten,
 
 
 int ResourceLoad::LoadEffect(const std::string& path, const std::string& _exten, Effect_ID::EFFECT_ID id, float size, bool _common) {
-    std::string name = path;
+    const std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
     //配列の要素にデータが入ってなかったらロード
     if (targetLoad[name].handle == -1) {
@@ -159,7 +159,7 @@ int ResourceLoad::LoadImageGraph(const std::string& path, ID::IDType id) {
 }
 
 int ResourceLoad::LoadImageGraph(const std::string& path, ID::IDType id, bool _common) {
-    std::string name = path;
+    const std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad;
     //配列の要素にデータが入ってなかったらロード
     if (targetLoad[name].handle == -1) {
@@ -183,7 +183,7 @@ int ResourceLoad::LoadAnim(const std::string& path, ID::IDType id) {
 }
 
 int ResourceLoad::LoadAnim(const std::string& path, ID::IDType id, bool _common) {
-    std::string name = path;
+    const std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
     //配列の要素にデータが入ってなかったらロード
     if (targetLoad[name].handle == -1) {
@@ -210,7 +210,7 @@ int ResourceLoad::LoadFont(const std::string& path, const std::string& exten, Fo
 }
 
 int ResourceLoad::LoadFont(const std::string& path, const std::string& exten, Font_ID::Font_ID id, int _edge, bool _common) {
-    std::string name = path;
+    const std::string name = path;
     auto& targetLoad = _common ? commonFileLoad : fileLoad; //コモンファイルに入れるか、シーンごとのファイルに入れるかを指定
 
     //配列の要素にデータが入ってなかったらロード
@@ -232,16 +232,16 @@ int ResourceLoad::LoadFont(const std::string& path, const std::string& exten, Fo
 
 // 共通ファイルとシーンごとで分けるファイルの両方から検索する
 int ResourceLoad::GetHandle(ID::IDType id) {
-    std::string name = ID::GetID(id);
+    const std::string name = ID::GetID(id);
 
-    auto it = fileLoad.find(name);
+    const auto it = fileLoad.find(name);
     if (it != fileLoad.end()) {
         return it->second.handle;
     }
 
-    it = commonFileLoad.find(name);
-    if (it != commonFileLoad.end()) {
-        return it->second.handle;
+    const auto commonIt = commonFileLoad.find(name);
+    if (commonIt != commonFileLoad.end()) {
+        return commonIt->second.handle;
     };
 
     Debug::DebugLog("そのIDはありません: " + std::to_string((int)id));
@@ -250,16 +250,16 @@ int ResourceLoad::GetHandle(ID::IDType id) {
 
 // 共通ファイルとシーンごとで分けるファイルの両方から検索する
 int ResourceLoad::GetSoundHandle(Sound_ID::SOUND_ID id) {
-    std::string name = Sound_ID::GetSoundID(id);
+    const std::string name = Sound_ID::GetSoundID(id);
 
-    auto it = fileLoad.find(name);
+    const auto it = fileLoad.find(name);
     if (it != fileLoad.end()) {
         return it->second.handle;
     }
 
-    it = commonFileLoad.find(name);
-    if (it != commonFileLoad.end()) {
-        return it->second.handle;
+    const auto commonIt = commonFileLoad.find(name);
+    if (commonIt != commonFileLoad.end()) {
+        return commonIt->second.handle;
     }
 
     Debug::DebugLog("そのサウンドデータはありません: " + std::to_string((int)id));
@@ -267,16 +267,16 @@ int ResourceLoad::GetSoundHandle(Sound_ID::SOUND_ID id) {
 }
 // 共通ファイルとシーンごとで分けるファイルの両方から検索する
 int ResourceLoad::GetEffectHandle(Effect_ID::EFFECT_ID id) {
-    std::string name = Effect_ID::GetEffectID(id);
+    const std::string name = Effect_ID::GetEffectID(id);
 
-    auto it = fileLoad.find(name);
+    const auto it = fileLoad.find(name);
     if (it != fileLoad.end()) {
         return it->second.handle;
     }
 
-    it = commonFileLoad.find(name);
-    if (it != commonFileLoad.end()) {
-        return it->second.handle;
+    const auto commonIt = commonFileLoad.find(name);
+    if (commonIt != commonFileLoad.end()) {
+        return commonIt->second.handle;
     }
 
     Debug::DebugLog("そのエフェクトデータはありません: " + std::to_string((int)id));
@@ -403,16 +403,16 @@ void ResourceLoad::AllDelete() {
 
 int ResourceLoad::GetFontHandle(Font_ID::Font_ID id)
 {
-    std::string name = Font_ID::GetFontID(id);
+    const std::string name = Font_ID::GetFontID(id);
 
-    auto it = fileLoad.find(name);
+    const auto it = fileLoad.find(name);
     if (it != fileLoad.end()) {
         return it->second.handle;
     }
 
-    it = commonFileLoad.find(name);
-    if (it != commonFileLoad.end()) {
-        return it->second.handle;
+    const auto commonIt = commonFileLoad.find(name);
+    if (commonIt != commonFileLoad.end()) {
+        return commonIt->second.handle;
     }
 
     Debug::DebugLog("そのフォントデータはありません: " + std::to_string((int)id));

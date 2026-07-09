@@ -114,7 +114,7 @@ const MouseInput* InputManager::GetMouseInput()const
 
 void InputManager::CreateInputData(const KeyConfigData& _data)
 {
-	auto it = inputData.find(_data.action);
+	const auto it = inputData.find(_data.action);
 	if (inputData.end() == it) {
 		inputData[_data.action] = _data;
 	
@@ -130,7 +130,7 @@ const bool InputManager::KeyInputDown(const std::string& _name)const
 	if (!IsInputCan()) {
 		return false;
 	}
-	bool keyData = IsData(_name);
+	const bool keyData = IsData(_name);
 	if (!keyData) {//データが存在していないならキーを入力をしていないものとして返す
 		Debug::DebugLog("noAction");
 		return false;
@@ -167,7 +167,7 @@ const bool InputManager::KeyInput(const std::string& _name)const
 	if (!IsInputCan()) {
 		return false;
 	}
-	bool keyData = IsData(_name);
+	const bool keyData = IsData(_name);
 	if (!keyData) { //データが存在していないならキーを入力をしていないものとして返す
 		Debug::DebugLog("noAction");
 		return false;
@@ -203,7 +203,7 @@ const bool InputManager::KeyInputUp(const std::string& _name)const
 	if (!IsInputCan()) {
 		return false;
 	}
-	bool keyData = IsData(_name);
+	const bool keyData = IsData(_name);
 	if (!keyData) {//データが存在していないならキーを入力をしていないものとして返す
 		Debug::DebugLog("noAction");
 		return false;
@@ -246,7 +246,7 @@ const bool InputManager::IsData(const std::string& _name)const
 
 const bool InputManager::IsInputCan()const
 {
-	ImGuiIO& io = ImGui::GetIO();
+	const ImGuiIO& io = ImGui::GetIO();
 	return !io.WantCaptureKeyboard;
 }
 

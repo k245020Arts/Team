@@ -8,7 +8,7 @@ CooperateAttack1::CooperateAttack1()
 	string = Function::GetClassNameC<CooperateAttack1>();
 	animId = ID::TE_C_ATTACK;
 	attackParam.animID = ID::TE_C_ATTACK;
-	collTrans = CollTransform/*Transform(VECTOR3(0, 0, -100), VZero, VECTOR3(480.0f, 0.0f, 0.0f))*/;
+	collTrans = CollTransform;
 	attackParam.damagePattern = EnemyAttackBase::BACK;
 
 	attackParam.useFlash = true;

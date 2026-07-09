@@ -41,6 +41,7 @@ void PlayerAttack4::Update()
 	collsionCreate = false;
 	PlayerAttackStateBase::Update();
 	PlayerAttackStateBase::AttackCommonUpdate();
+	float frame = p->playerCom.anim->GetCurrentFrame();
 	timer -= Time::DeltaTimeRate();
 	if (timer <= 0.0f) {
 		p->playerCom.anim->SetPlaySpeed(1.0f);

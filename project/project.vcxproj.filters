@@ -578,6 +578,9 @@
     <ClCompile Include="Source\Common\ResourceLoader\ResourceLoader.cpp">
       <Filter>Common\ResourceLoader</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttack6.cpp">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -1223,6 +1226,9 @@
     </ClInclude>
     <ClInclude Include="Source\Common\ResourceLoader\ResourceLoader.h">
       <Filter>Common\ResourceLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttack6.h">
+      <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

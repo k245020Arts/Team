@@ -126,7 +126,7 @@ void Transform::RemoveChild(Transform* _child)
 	}
 }
 
-void Transform::RemoveParent(Transform* transform)
+void Transform::RemoveParent(const Transform* transform)
 {
 	if (parent == nullptr) { //e‚ªnullptr‚È‚ç•Ô‚·
 		return;

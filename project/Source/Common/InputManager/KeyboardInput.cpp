@@ -23,7 +23,7 @@ void KeyboardInput::Update()
 }
 
 
-bool KeyboardInput::GetIsKeyboardPushing(int _keyCode)const
+bool KeyboardInput::GetIsKeyboardPushing(const int _keyCode)const
 {
 	if (!IsInputCan()) {
 		return false;
@@ -35,7 +35,7 @@ bool KeyboardInput::GetIsKeyboardPushing(int _keyCode)const
 	return false;
 }
 
-bool KeyboardInput::GetIsKeyboardPut(int _keyCode)const
+bool KeyboardInput::GetIsKeyboardPut(const int _keyCode)const
 {
 	if (!IsInputCan()) {
 		return false;
@@ -43,9 +43,9 @@ bool KeyboardInput::GetIsKeyboardPut(int _keyCode)const
 	if(keyboardInput.size()>1)
 	{
 		auto it = keyboardInput.begin();
-		KeyboardInputData now = *it;
+		const KeyboardInputData now = *it;
 		std::advance(it, 1);
-		KeyboardInputData lastFrame = *it;
+		const KeyboardInputData lastFrame = *it;
 
 		if (now.kInput[_keyCode] && !lastFrame.kInput[_keyCode])
 		{
@@ -55,7 +55,7 @@ bool KeyboardInput::GetIsKeyboardPut(int _keyCode)const
 	return false;
 }
 
-bool KeyboardInput::GetIsKeyboardRelease(int _keyCode)const
+bool KeyboardInput::GetIsKeyboardRelease(const int _keyCode)const
 {
 	if (!IsInputCan()) {
 		return false;
@@ -63,9 +63,9 @@ bool KeyboardInput::GetIsKeyboardRelease(int _keyCode)const
 	if (keyboardInput.size() > 1)
 	{
 		std::list<KeyboardInputData>::const_iterator it = keyboardInput.begin();
-		KeyboardInputData now = *it;
+		const KeyboardInputData now = *it;
 		std::advance(it, 1);
-		KeyboardInputData lastFrame = *it;
+		const KeyboardInputData lastFrame = *it;
 
 		if (!now.kInput[_keyCode] && lastFrame.kInput[_keyCode])
 		{
@@ -82,6 +82,6 @@ bool KeyboardInput::GetIsKeyboardRelease(int _keyCode)const
 
 bool KeyboardInput::IsInputCan()const
 {
-	ImGuiIO& io = ImGui::GetIO();
+	const ImGuiIO& io = ImGui::GetIO();
 	return !io.WantCaptureKeyboard;
 }

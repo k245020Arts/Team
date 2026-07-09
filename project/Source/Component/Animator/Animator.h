@@ -19,7 +19,7 @@ public:
 	~Animator();
 
 	void BaseModelSet(int _model, int _root);
-	void BaseModelSet(int _model, std::string _rootName);
+	void BaseModelSet(int _model, const std::string& _rootName);
 
 	/// <summary>
 	/// アニメーションの再生をする
@@ -97,8 +97,8 @@ public:
 	/// アニメーションでもし移動する場合があった時にそのボーンの位置にポジションを合わせなければいけないので
 	/// その時にこの関数を使う。
 	/// これの返り値の座標引く動かしたい座標をすればその位置が帰ってくる。
-	VECTOR3 BoneMovePositionAdd();
-	VECTOR3 BoneMovePositionAdd(VECTOR3 _position);
+	VECTOR3 BoneMovePositionAdd()const;
+	VECTOR3 BoneMovePositionAdd(const VECTOR3& _position);
 	VECTOR3 BoneNowPosition();
 
 	/// <summary>
@@ -160,6 +160,12 @@ public:
 		std::string id; //アニメーションID
 
 		AnimFileInfo() : hModel(-1), loop(false), maxFrame(1.0f), playSpeed(1.0f), eventFinishTime(-1.0f), eventStartTime(-1.0f), fileName(""), id("") {}
+		AnimFileInfo(int _hModel,bool _loop,float _maxFrame,float _playSpeed,float _eventStartTime,float _eventFinishTime,const std::string& _fileName,const std::string& _id)
+			: hModel(_hModel), loop(_loop), maxFrame(_maxFrame), playSpeed(_playSpeed), eventStartTime(_eventStartTime), eventFinishTime(_eventFinishTime), fileName(_fileName), id(_id){}
+		/*AnimFileInfo(int _hModel,float _maxFrame,const std::string& _fileName, const std::string& _id)
+			: hModel(_hModel),  maxFrame(_maxFrame), fileName(_fileName), id(_id), loop(false), playSpeed(1.0f), eventFinishTime(-1.0f), eventStartTime(-1.0f) {
+		}*/
+
 	};
 
 	/// <summary>
@@ -170,7 +176,7 @@ public:
 	/// アニメーションの一部データをSaveする
 	/// </summary>
 	/// <param name="_fileName">アニメーションjsonファイル名</param>
-	void AnimDataReSave(std::string _fileName);
+	void AnimDataReSave(const std::string& _fileName);
 	/// <summary>
 	/// アニメーションのデータをロードするときに使用
 	/// </summary>
@@ -184,12 +190,12 @@ public:
 	/// </summary>
 	/// <param name="_fileName">指定したファイルネーム</param>
 	/// <returns></returns>
-	AnimFileInfo GetSelectFileInfo(std::string _fileName);
+	AnimFileInfo GetSelectFileInfo(const std::string& _fileName)const;
 	/// <summary>
 	/// アニメーションデータのセット
 	/// </summary>
 	/// <param name="_animFileInfo"></param>
-	void SetSelectFileInfo(AnimFileInfo _animFileInfo);
+	void SetSelectFileInfo(const AnimFileInfo& _animFileInfo);
 
 private:
 	int baseModel;

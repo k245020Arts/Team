@@ -63,16 +63,6 @@ void Standby::Update()
 	else
 	{
 		CooperateMove(enemy);
-	/*	if (counter <= 1)
-			counter += Time::DeltaTimeRate();
-		else if (counter!= 2)
-		{
-			enemy->isStandby = true;
-			EffectManager::GetInstance()->CreateEffekseer(Transform(enemy->GetPos(), VZero, VOne), nullptr, Effect_ID::COOPERATEATTACK, 1.0f);
-			counter = 2;
-		}
-		else
-			enemy->isStandby = false;*/
 	}
 }
 
