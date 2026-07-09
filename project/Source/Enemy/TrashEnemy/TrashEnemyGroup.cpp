@@ -42,6 +42,7 @@ TrashEnemyGroup::TrashEnemyGroup()
 	atkCountStart = true;
 
 	isMeleeECooperateAtk = false;
+
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()

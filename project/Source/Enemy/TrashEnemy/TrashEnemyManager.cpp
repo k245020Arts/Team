@@ -75,6 +75,7 @@ TrashEnemyManager::TrashEnemyManager()
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_DAMAGE",	ID::TE_R_DAMAGE);
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_DEAD",		ID::TE_R_DEAD);
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_Stance",	ID::TE_R_STANCE);
+
 }
 
 TrashEnemyManager::~TrashEnemyManager()

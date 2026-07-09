@@ -36,6 +36,7 @@ Wave::Wave()
 	bossWave = false;
 
 	spawnTimeCounter = 0;
+
 }
 
 Wave::~Wave()
