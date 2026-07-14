@@ -7,7 +7,8 @@
   "coolTime": 30.0,
   "runSpeed": 40.0,
   "range": 2000.0,
-  "atkRange": 600.0,
+  "runRange": 600.0,
+  "atkRange": 300.0,
   "playerRange": 1200.0,
   "chaseRange": 1500.0,
   "cooperateRange": 200.0
@@ -22,7 +23,7 @@ defense 		    	防御力
 coolTime; 		    一段目の攻撃までの時間
 runSpeed;		  	  移動速度
 range 			      idelとrunの切り替わり
-atkRange			    runと攻撃の切り替わり
+runRange			    runと様子見の切り替わり
 playerRange
 chaseRange		   プレイヤーと離れたときに切り替わる
 cooperateRange
