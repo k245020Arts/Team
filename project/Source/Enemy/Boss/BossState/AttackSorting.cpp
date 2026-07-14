@@ -27,7 +27,7 @@ namespace {
 		{RUN_COMBO},
 	};*/
 	//単発攻撃の種類
-	std::vector<StateID::State_ID> attackKind{
+	/*std::vector<StateID::State_ID> attackKind{
 		{StateID::BOSS_NORMAL_ATTACK1_S},
 		{StateID::BOSS_NORMAL_ATTACK2_S},
 		{StateID::BOSS_NORMAL_ATTACK3_S},
@@ -37,7 +37,7 @@ namespace {
 		{StateID::BOSS_NORMAL_ATTACK4_S},
 		{StateID::BOSS_NORMAL_ATTACK5_S},
 		{StateID::BOSS_NORMAL_ATTACK6_S},
-	};
+	};*/
 	
 	
 
@@ -67,19 +67,19 @@ namespace {
 		{ 0.05,	0.05,	1.0,	0.5,	0.9,	0.1,	0.5,	0.5,	0.5  },
 	};
 	//コンボ攻撃の重み
-	const std::vector<std::vector<double>> comboAttackParam{
+	/*const std::vector<std::vector<double>> comboAttackParam{
 		{ 1.0,	0.5,	0.0,	0.0},
 		{ 0.8,	0.7,	0.2,	0.0},
 		{ 0.5,	1.0,	0.5,	0.1},
 		{ 0.2,	0.5,	0.7,	0.1},
-	};
+	};*/
 	//コンボ攻撃の順番
-	const std::vector<std::vector<StateID::State_ID>> comboOrder{
+	/*const std::vector<std::vector<StateID::State_ID>> comboOrder{
 		{StateID::BOSS_NORMAL_ATTACK1_S,		StateID::BOSS_NORMAL_ATTACK2_S,			StateID::BOSS_NORMAL_ATTACK3_S},
 		{StateID::BOSS_NORMAL_ATTACK4_S,		StateID::BOSS_NORMAL_ATTACK5_S,			StateID::BOSS_NORMAL_ATTACK6_S},
 		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	StateID::BOSS_SPECIAL_ATTACK1_S },
 		{StateID::BOSS_SPECIAL_ATTACK2_S,		StateID::BOSS_SPECIAL_ATTACK2_S,		StateID::BOSS_SPECIAL_ATTACK2_S,	StateID::BOSS_SPECIAL_ATTACK2_S}
-	};
+	};*/
 }
 
 AttackSorting::AttackSorting()
@@ -99,7 +99,7 @@ AttackSorting::AttackSorting()
 
 	
 
-	vec = VZero;
+	pVec = VZero;
 	forceAttack = false;
 	nextAttack = false;
 }
@@ -115,11 +115,13 @@ void AttackSorting::Update()
 {
 	Boss* b = GetBase<Boss>();
 	coolTime += Time::DeltaTimeRate();
+	//次の行動にすぐ切り替わらないようにする
 	if (coolTime <= COOLTIME)
 		return;
 
-	if (b->maxAttack != -1)
-		b->enemyBaseComponent.state->ChangeState(comboOrder[kind][attackNum - b->maxAttack]);
+	/*if (b->maxAttack != -1)
+		b->enemyBaseComponent.state->ChangeState(comboOrder[kind][attackNum - b->maxAttack]);*/
+
 #ifdef NORMAL_MODE
 	else 
 		b->enemyBaseComponent.state->ChangeState(nextState/*attackKind[kind]*/);
@@ -153,16 +155,7 @@ void AttackSorting::Start()
 	animId = ID::B_IDOL;
 	EnemyStateBase::Start();
 	Boss* b = GetBase<Boss>();
-	/*if (b->maxAttack >= 0) {
-		b->maxAttack--;
-		if (b->maxAttack == -1) {
-			NormalAttackSelect();
-		}
-		b->comboFirstAttack = false;
-		return;
-	}*/
-	/*int maxAttack = b->bs->GetStatus().maxAttack;
-	int randam = GetRand(1);*/
+	
 	hp = b->Hp();
 	//コンボ攻撃をするか決める
 	float comboAttackRate = 0.0f;
@@ -186,25 +179,10 @@ void AttackSorting::Start()
 		bossPriority = 80;
 		break;
 	}
-	vec = b->enemyBaseComponent.playerObj->GetTransform()->position - b->GetEnemyObj()->GetTransform()->position;
-	BuildTable(bossPriority);
-	/*bool combo = Random::GetBernoulli(comboAttackRate);
-	if (combo) {
-		std::vector<double> rand = comboAttackParam[hp];
-		VECTOR3 dist = b->obj->GetTransform()->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
-		float size = dist.Size();
-		if (size >= 5000.0f) {
-			rand[3] += 2.0f;
-		}
-		kind = Random::GetWeightedIndex(rand);
-		b->maxAttack = (int)comboOrder[kind].size() - 1;
-		attackNum = b->maxAttack;
-		b->comboFirstAttack = true;
-	}
-	else {
-		NormalAttackSelect();
-	}*/
 
+	pVec = b->enemyBaseComponent.playerObj->GetTransform()->position - b->GetEnemyObj()->GetTransform()->position;
+	BuildTable(bossPriority);
+	
 	b->comboFirstAttack = true;
 
 	coolTime = 0;
@@ -274,7 +252,6 @@ void AttackSorting::BuildTable(int _priority)
 	if (forceAttack) {
 		return;
 	}
-	int totalWeight = 0;
 	
 	//ここで通常の攻撃か連続攻撃を出すかを求める
 	//①確率の分け方は連続攻撃プライオリティーによって分けて、そこから通常攻撃80％、連続攻撃20%で
@@ -282,57 +259,7 @@ void AttackSorting::BuildTable(int _priority)
 	//②連続攻撃にはいったらどの攻撃を使うかの抽選をする //ここで一個json
 	//ここも従来の攻撃と同じソート方式を使用、どの攻撃をどの順番で使うかをvector型のstring型で保持しとく(先頭から順番に流す)
 
-	for (auto& itr : actions)
-	{
-		if (itr.id == copyState)//一個前の行動と同じとき
-		{
-			if (itr.maxAction < moveCounter)//指定した行動
-			{
-				copyPriority = itr.priority;
-				itr.priority = 0;
-				continue;
-			}
-		}
-		else
-			moveCounter = 0;
-
-		if (itr.priority > _priority)
-			continue;
-		else
-		{
-			if (itr.distance!=0.0f&&vec.Size() > itr.distance)
-				itr.addWeight = 3000;
-
-			totalWeight += itr.weight + itr.addWeight;
-		}
-			
-	}
-
-	//打てる技の合計からランダムな数字をだす
-	int rand = GetRand(totalWeight - 1);
-
-	for (auto& itr : actions)
-	{
-		if (itr.priority == 0)
-		{
-			itr.priority = copyPriority;
-			continue;
-		}
-		else if(itr.priority > _priority)//プライオリティを超えてるとき
-			continue;
-
-		rand -= itr.weight + itr.addWeight;
-	
-		if (rand < 0)
-		{
-			//AttackFinish();
-			nextState = itr.id;
-			nextAttack = itr.attackState;
-			AllAddWeightZero();
-			AttackStart();
-			break;
-		}
-	}
+	SelectNextAction(_priority);
 }
 
 void AttackSorting::AllAddWeightZero()
@@ -345,7 +272,6 @@ void AttackSorting::AllAddWeightZero()
 		itr.addWeight = 0;
 	}
 }
-
 
 void AttackSorting::Load(const std::string& _bossName,Boss* _boss)
 {
@@ -417,6 +343,64 @@ void AttackSorting::AttackStart()
 	attacks[nextState]->Start();
 }
 
+void AttackSorting::SelectNextAction(int _priority)
+{
+	int totalWeight = 0;
+	//距離が離れていて選択されやすい攻撃をするときにどれだけ出やすくするか
+	float _addWeight = 0;//後でjosnのadd...にどれだけ打ちやすいかの数値を決めてそれを_addWeightに代入させる
+
+	for (auto& itr : actions)
+	{
+		if (itr.id == copyState)//一個前の行動と同じとき
+		{
+			if (itr.maxAction < moveCounter)//指定した行動
+			{
+				//同じ行動を取らないためにプライオリティをコピーしてから0を代入して選ばれないようにしている(後で戻すためにコピーしてる)
+				copyPriority = itr.priority;
+				itr.priority = 0;
+				continue;
+			}
+		}
+		else
+			moveCounter = 0;
+
+		if (itr.priority > _priority)
+			continue;
+		else
+		{
+			if (itr.distance != 0.0f && pVec.Size() > itr.distance)
+				itr.addWeight = 3000;
+
+			totalWeight = itr.weight + itr.addWeight;
+		}
+	}
+
+	//打てる技の合計からランダムな数字をだす
+	int rand = GetRand(totalWeight - 1);
+
+	for (auto& itr : actions)
+	{
+		if (itr.priority == 0)//上で制御した行動を戻す代わりに選出されないようにした
+		{
+			itr.priority = copyPriority;
+			continue;
+		}
+		else if (itr.priority > _priority)//プライオリティを超えて技をださないようにする
+			continue;
+
+		rand -= itr.weight + itr.addWeight;
+
+		if (rand < 0)
+		{
+			nextState = itr.id;
+			nextAttack = itr.attackState;
+			AllAddWeightZero();
+			AttackStart();
+			break;
+		}
+	}
+}
+
 void AttackSorting::AttackFinish() 
 {
 	if (attacks[nextState] == nullptr) {
@@ -464,8 +448,6 @@ void AttackSorting::LoadSorting(const std::string& _bossName)
 		j.get_to(action);
 		actions.push_back(action);
 	}
-
-	
 }
 
 const std::vector<ActionParam> AttackSorting::GetActionParam()const
@@ -503,8 +485,3 @@ void AttackSorting::ReloadParam(const EnemyAttackBase::BossAttackParam& _param, 
 	attackParam[_reLoadID] = _param;
 	attacks[_reLoadID]->SetAttackParam(attackParam[_reLoadID]);
 }
-
-//void AttackSorting::StateImguiDraw()
-//{
-//	/*ImGui::Text(nextState.c_str());*/
-//}
