@@ -41,8 +41,7 @@ namespace {
 	
 	
 
-	//攻撃振り分けパラメーターの設定
-	std::vector<ActionParam> actions;
+	
 
 	/*{
 		{"BossWalk",				false,10, 40, 0},
@@ -371,7 +370,7 @@ void AttackSorting::SelectNextAction(int _priority)
 			if (itr.distance != 0.0f && pVec.Size() > itr.distance)
 				itr.addWeight = 3000;
 
-			totalWeight = itr.weight + itr.addWeight;
+			totalWeight += itr.weight + itr.addWeight;
 		}
 	}
 
@@ -431,7 +430,6 @@ void AttackSorting::SaveSorthing(const std::string& _bossName)
 		std::string key = attack.id;
 		root["AttackSort"][key] = attack;
 	}
-
 
 	json.Save(filePath, root);
 }

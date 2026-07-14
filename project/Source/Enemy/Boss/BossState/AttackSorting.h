@@ -4,6 +4,19 @@
 #include "Attack/BossAttackJsonParse.h"
 #include "Attack/BossAttack.h"
 
+struct AttackSelectData
+{
+	float priority;
+	float normalParam;
+	float comboParam;
+	AttackSelectData()
+	{
+		priority = 0;
+		normalParam = 0;
+		comboParam = 0;
+	}
+};
+
 struct ActionParam
 {
 	std::string id;
@@ -58,6 +71,12 @@ inline void from_json(const JSON& j, ActionParam& p)
 		j.at("addWeight").get_to(p.addWeight);
 }
 
+inline void from_json(const JSON& j, AttackSelectData& data)
+{
+	j.at("priority").get_to(data.priority);
+	j.at("normal").get_to(data.normalParam);
+	j.at("combo").get_to(data.comboParam);
+}
 
 class AttackSorting :public EnemyStateBase
 {
@@ -149,6 +168,11 @@ private:
 	//変動させた値をすべてゼロにする
 	void AllAddWeightZero();
 
+	//攻撃振り分けパラメーターの設定
+	std::vector<ActionParam> actions;
+	//コンボか通常の数値のデータを保存する
+	std::vector<AttackSelectData> selectData;
+
 	float coolTime;
 
 	Boss::HP_RATE hp;
@@ -157,15 +181,6 @@ private:
 	int kind;
 	int attackNum;
 	bool nextAttack;
-
-	/*struct ActionRange
-	{
-		int min;
-		int max;
-		StateID::State_ID id;
-		ActionRange();
-	};
-	std::vector<ActionRange> table;*/
 
 	int bossPriority;//
 	std::string nextState;
