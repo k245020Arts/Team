@@ -57,6 +57,11 @@ public:
 	/// </summary>
 	void SoundEvent();
 
+	/// <summary>
+	/// 雑魚敵召喚イベントを実行
+	/// </summary>
+	void TrashEnemySpownEvent();
+
 	void AttackStart();
 	void BossDushSound();
 
@@ -98,4 +103,6 @@ private:
 	Boss* bossPtr;
 	std::unordered_map<std::string, bool> soundPlayed;
 	std::unordered_map<std::string, bool> soundLoopPlaying;
+
+	int enemySpownNum;
 };

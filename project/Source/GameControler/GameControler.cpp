@@ -34,6 +34,7 @@ GameControler::GameControler()
 	gamePlayNum++;
 	SetDrawOrder(-500);
 	pause = FindGameObject<PauseScreen>();
+	camera = nullptr;
 	//winImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Win", ID::WIN);
 	//loseImage = Load::LoadImageGraph(Load::IMAGE_PATH + "Lose", ID::LOSE);
 
@@ -57,6 +58,8 @@ GameControler::GameControler()
 	changeState = true;
 
 	guide = new GuideWindow();
+
+	keepGameState = GameState::NONE;
 	//guide->SetDrawOrder(-400000);
 }
 

@@ -15,6 +15,7 @@ class BossRockManager;
 
 class PlayerSpecialAttack;
 class BossAttackDataSerializer;
+class TrashEnemyManager;
 
 class Boss : public EnemyBase
 {
@@ -193,7 +194,7 @@ private:
 	HP_RATE hpRate;
 	bool roaf;
 
-	//TrashEnemyManager* trashEnemy;
+	TrashEnemyManager* trashEnemy;
 	float coolTime;
 
 	float attackNum;
