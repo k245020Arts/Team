@@ -47,6 +47,7 @@ namespace Effect_ID {
 		THROW_EFFECT10,
 
 		COOPERATEATTACK,
+		ENEMY_SPOWN,
 
 		EFFECT_MAX
 	};

@@ -49,6 +49,7 @@ EffectManager::EffectManager()
 	ResourceLoad::LoadEffect("playerAttackRock",			".efkefc",Effect_ID::PLAYER_ATTACK_ROCK,		50.0f,true);
 
 	ResourceLoad::LoadEffect("enemyCooperateAttack",		".efk",	  Effect_ID::COOPERATEATTACK,			50.0f, true);
+	ResourceLoad::LoadEffect("EnemySpown",					".efkefc",Effect_ID::ENEMY_SPOWN,				50.0f, true);
 	
 	//-----------------------------------------------------------------------------------------------------------------
 
