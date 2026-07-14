@@ -36,6 +36,7 @@
 #include "../Player/PlayerState/AttackState/playerAttack6.h"
 #include "../Player/PlayerState/AttackState/PlayerHeavyCharge.h"
 #include "../Player/PlayerState/AttackState/PlayerHeavyAttack.h"
+#include "../Player/PlayerState/AttackState/PlayerHeavyAttack2.h"
 #include "../Player/PlayerState/PlayerAvoid.h"
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
@@ -162,6 +163,7 @@ void PlayerManager::CreatePlayer()
 	stateManager->CreateState<PlayerBossAppear>("PlayerBossAppear", StateID::PLAYER_BOSS_APPEAR_S);
 	stateManager->CreateState<PlayerHeavyCharge>("PlayerHeavyCharge", StateID::PLAYER_HEAVY_CHARGE_S);
 	stateManager->CreateState<PlayerHeavyAttack>("PlayerHeavyAttack", StateID::PLAYER_HEAVY_ATTACK_S);
+	stateManager->CreateState<PlayerHeavyAttack2>("PlayerHeavyAttack2", StateID::PLAYER_HEAVY_ATTACK2_S);
 	stateManager->CreateState<PlayerLose>("PlayerLose", StateID::PLAYER_LOSE_S);
 	//--------------------------------------------------------------------------
 
@@ -193,6 +195,7 @@ void PlayerManager::CreatePlayer()
 	ResourceLoad::LoadAnim(charaID + typeID + "_WINIDOL", ID::IDType::PLAYER_WIN_IDOL);
 	ResourceLoad::LoadAnim(charaID + typeID + "_LEG_UP", ID::IDType::P_LEG_UP);
 	ResourceLoad::LoadAnim(charaID + typeID + "_HEAVY_ATTACK", ID::IDType::P_HEAVY_ATTACK);
+	ResourceLoad::LoadAnim(charaID + typeID + "_HEAVY_ATTACK2", ID::IDType::P_HEAVY_ATTACK2);
 	ResourceLoad::LoadAnim(charaID + typeID + "_HEAVY_CHARGE", ID::IDType::P_HEAVY_CHARGE);
 
 	anim->AnimDataLoad(charaID, typeID);;

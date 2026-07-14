@@ -16,7 +16,7 @@
       "id": "BossNomalAttack10",
       "maxAction": 1,
       "priority": 1,
-      "weight": 0
+      "weight": 100
     },
     "BossNormalAttack1": {
       "addWeight": 0,

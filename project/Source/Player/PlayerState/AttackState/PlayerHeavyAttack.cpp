@@ -72,5 +72,5 @@ void PlayerHeavyAttack::Finish()
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.anim->AnimEventReset();
 	p->playerCom.camera->ChangeStateCamera(StateID::FREE_CAMERA_S);
-
+	p->attackLevel = 0;
 }

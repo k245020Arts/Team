@@ -321,6 +321,7 @@
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttack6.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerAttackStateBase.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerHeavyAttack.h" />
+    <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerHeavyAttack2.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerHeavyCharge.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack1.h" />
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.h" />
@@ -519,6 +520,7 @@
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttack6.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerAttackStateBase.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerHeavyAttack.cpp" />
+    <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerHeavyAttack2.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerHeavyCharge.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerJustAvoidAttack1.cpp" />
     <ClCompile Include="Source\Player\PlayerState\AttackState\PlayerSpecialAttack.cpp" />

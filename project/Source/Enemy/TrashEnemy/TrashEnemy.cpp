@@ -222,6 +222,25 @@ namespace
 		0.0f
 	)
 	},
+	{ StateID::PLAYER_HEAVY_ATTACK2_S,
+	EnemyInformation::EnemyReaction(
+	StateID::PLAYER_HEAVY_ATTACK2_S,
+	EnemyDamage::EnemyDamageInfo(VECTOR3(0,000,3000), VECTOR3(200,200,200), 0.2f, 0.8f),
+	EnemyBlowAway::EnemyBlowAwayInfo(),
+	EnemyInformation::EnemyReaction::Type::Normal,
+	StateID::STATE_MAX,
+	70, 40,
+	Effect_ID::HIT_EFFECT,
+	EnemyInformation::HIT_EFFECT_TIME,
+	EnemyInformation::HIT_EFFECT_SCALE_RATE,
+	true,
+	180.0f * DegToRad,
+	Effect_ID::PLAYER_SLASH_ATTACK,
+	true,
+	-1,
+	0.0f
+)
+	},
 
 	};
 }
@@ -390,6 +409,8 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds, int _number)
 	const float MAX = 1.5f;
 	const float MID = 1.25f;
 	const float MIN = 1.0f;
+
+	//EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::ENEMY_SPOWN, 2.0f);
 
 	switch (kinds)
 	{

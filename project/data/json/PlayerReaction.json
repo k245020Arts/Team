@@ -183,6 +183,26 @@
       "soundKind": 7,
       "soundName": "swordHit00000"
     },
+    "PlayerHeavyAttack2": {
+      "PlayerState": "PlayerHeavyAttack2",
+      "ShakePattern": 1,
+      "cameraShakePower": {
+        "x": 100.0,
+        "y": 100.0,
+        "z": 100.0
+      },
+      "cameraShakeTime": 0.10000001192092896,
+      "chargeLevels": [],
+      "playerShakePower": {
+        "x": 150.0,
+        "y": 100.0,
+        "z": 100.0
+      },
+      "playerShakeTime": 0.05,
+      "shakerType": true,
+      "soundKind": 7,
+      "soundName": "swordHit00000"
+    },
     "PlayerJustAvoidAttack1": {
       "PlayerState": "PlayerJustAvoidAttack1",
       "ShakePattern": 1,
