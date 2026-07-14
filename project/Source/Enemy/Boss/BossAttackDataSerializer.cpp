@@ -593,11 +593,86 @@ void BossAttackDataSerializer::DrawAttackParamEditor(const std::string& _selectI
 	}
 
 	//サウンドイベント
-	if (ImGui::CollapsingHeader("Sound Event"))
+	if (ImGui::CollapsingHeader("SoundEvent"))
 	{
 		DrawSoundEventEditor(param.soundEvent);
 	}
 
+	//雑魚敵イベント
+	if (ImGui::CollapsingHeader("TrashEnemyEvent"))
+	{
+		ImGui::Checkbox("Enable##TrashEnemyEvent", &param.useEnemySpawnEvent);
+		if (param.useEnemySpawnEvent) {
+			ImGui::Separator();
+
+			// 敵数設定
+			ImGui::InputInt("MeleeEnemyCount", &param.meleeEnemySpawnNum);
+			ImGui::InputInt("RangedEnemyCount", &param.rangedEnemySpawnNum);
+
+			// 出現座標
+			ImGui::DragFloat3("EnemySpawnPosition",&param.enemySpawnPosition.x,0.1f);
+
+			// 出現タイミング
+			ImGui::DragFloat("SpawnStartFrame",&param.enemySpawnStartFrame,0.1f);
+
+			// 分割出現
+			ImGui::Checkbox("SpawnEnemiesinGroups",&param.splitEnemySpawn);
+
+			if (param.splitEnemySpawn)
+			{
+				ImGui::DragFloat("SpawnInterval",&param.enemySpawnInterval,0.1f);
+
+				ImGui::DragInt("SpawnGroupCount",&param.enemySpawnCount,1);
+			}
+
+
+			// 殲滅イベント
+			ImGui::Checkbox("EnableEnemyDefeatEvent",&param.useEnemyDeadEvent);
+
+			// アニメーションループ
+			ImGui::Checkbox("LoopAnimation",&param.loopAnimation);
+
+
+			// エフェクトID
+			int effectID = static_cast<int>(param.enemySpawnEffect);
+
+			if (ImGui::InputInt("SpawnEffectID", &effectID))
+			{
+				param.enemySpawnEffect =
+					static_cast<Effect_ID::EFFECT_ID>(effectID);
+			}
+
+
+			// 制限時間
+			ImGui::DragFloat("EnemyDefeatTimeLimit",&param.enemyDeadLimitTime,0.1f);
+
+
+			// 成功・失敗時ステート
+			char successState[256];
+
+			strncpy_s(successState,param.enemyDeadSuccessState.c_str(),sizeof(successState));
+
+			if (ImGui::InputText("DefeatSuccessNextState",successState,sizeof(successState)))
+			{
+				param.enemyDeadSuccessState = successState;
+			}
+
+
+			char failState[256];
+			
+			strncpy_s(failState,param.enemyDeadFailState.c_str(),sizeof(failState));
+
+			if (ImGui::InputText("DefeatFailNextState",failState,sizeof(failState)))
+			{
+				param.enemyDeadFailState = failState;
+			}
+
+			// 待機時間
+			ImGui::DragFloat("SuccessWaitTimeAfterDefeat", &param.enemyDeadSuccessWaitTime, 0.1f);
+
+			ImGui::DragFloat("FailWaitTimeAfterDefeat", &param.enemyDeadFailWaitTime, 0.1f);
+		}
+	}
 	CopyParam(_selectID);
 
 	//保存
@@ -1101,7 +1176,7 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 	static bool copyCamera = false;
 	static bool copyTrail = false;
 	static bool copySound = false;
-
+	static bool copyTrashEnemy = false;
 
 	// チェックボックス
 	ImGui::Checkbox("Move", &copyMove);
@@ -1123,18 +1198,20 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 	ImGui::Checkbox("Trail", &copyTrail);
 	ImGui::SameLine();
 	ImGui::Checkbox("Sound", &copySound);
+	ImGui::SameLine();
+	ImGui::Checkbox("TrashEnemy", &copyTrashEnemy);
 
 	// 一括ON/OFF
 	if (ImGui::Button("All ON"))
 	{
 		copyMove = copyFollow = copyRush = copyRotate =
-			copyJump = copyShock = copyThrow = copyCamera = copyTrail = true;
+			copyJump = copyShock = copyThrow = copyCamera = copyTrail = copySound = copyTrashEnemy = true;
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("All OFF"))
 	{
 		copyMove = copyFollow = copyRush = copyRotate =
-			copyJump = copyShock = copyThrow = copyCamera = copyTrail = false;
+			copyJump = copyShock = copyThrow = copyCamera = copyTrail = copySound = copyTrashEnemy  = false;
 	}
 
 	//コピー実行
@@ -1233,6 +1310,35 @@ void BossAttackDataSerializer::CopyParam(std::string _selectID)
 		}
 		if (copySound) {
 			param.soundEvent = src.soundEvent;
+		}
+		if (copyTrashEnemy)
+		{
+			param.useEnemySpawnEvent = src.useEnemySpawnEvent;
+
+			param.meleeEnemySpawnNum = src.meleeEnemySpawnNum;
+			param.rangedEnemySpawnNum = src.rangedEnemySpawnNum;
+
+			param.enemySpawnPosition = src.enemySpawnPosition;
+
+			param.enemySpawnStartFrame = src.enemySpawnStartFrame;
+
+			param.splitEnemySpawn = src.splitEnemySpawn;
+			param.enemySpawnInterval = src.enemySpawnInterval;
+			param.enemySpawnCount = src.enemySpawnCount;
+
+			param.useEnemyDeadEvent = src.useEnemyDeadEvent;
+
+			param.loopAnimation = src.loopAnimation;
+
+			param.enemySpawnEffect = src.enemySpawnEffect;
+
+			param.enemyDeadLimitTime = src.enemyDeadLimitTime;
+
+			param.enemyDeadSuccessState = src.enemyDeadSuccessState;
+			param.enemyDeadFailState = src.enemyDeadFailState;
+
+			param.enemyDeadSuccessWaitTime = src.enemyDeadSuccessWaitTime;
+			param.enemyDeadFailWaitTime = src.enemyDeadFailWaitTime;
 		}
 	}
 }

@@ -133,6 +133,7 @@ public:
 			float _noAttackRunTimer,
 			VECTOR3 _attackMove,
 			const Transform& collTrans,
+			float _attackSpeedChangeRate,
 			const std::vector<ChargeAttackLevelData>& chargeLevels = {}
 		)
 			: state(state)
@@ -149,6 +150,7 @@ public:
 			, noAttackRunTimer(_noAttackRunTimer)
 			, attackMove(_attackMove)
 			, collTrans(collTrans)
+			, attackSpeedChangeRate(_attackSpeedChangeRate)
 			, chargeLevels(chargeLevels)
 		{
 		}

@@ -31,7 +31,8 @@ EnemyBase::EnemyBase()
 	damageFlash = 0.0f;
 	specialAttackHit = false;
 	justAvoidCollTime = 0.0f;
-
+	damageNum = 0;
+	name = "";
 }
 
 EnemyBase::~EnemyBase()

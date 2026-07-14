@@ -85,7 +85,7 @@ Boss::Boss()
 	hp = bs->GetStatus().maxHp;
 	defense = 500.0f;
 	maxHp = hp;
-	//trashEnemy = FindGameObject< TrashEnemyManager>();
+	trashEnemy = FindGameObject< TrashEnemyManager>();
 	maxAttack = -1;
 	comboFirstAttack = false;
 	roaf = false;

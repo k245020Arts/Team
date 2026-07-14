@@ -23,6 +23,7 @@
 #include "../../../../Component/EnemyAttackObject/ShockWave/ShockWave.h"
 #include "../../../../Component/EnemyAttackObject/BossRock/BossRockManager.h"
 #include "../AttackSorting.h"
+#include "../../../TrashEnemy/TrashEnemyManager.h"
 
 BossAttack::BossAttack()
 {
@@ -69,6 +70,7 @@ void BossAttack::Update()
 	JumpEvent();
 	ThrowObjectsEvent();
 	SoundEvent();
+	TrashEnemySpownEvent();
 	if (attackParam.useTrail) {
 		BossTrail(attackParam.trailRightHand);
 	}
@@ -134,6 +136,8 @@ void BossAttack::Start()
 		soundLoopPlaying[event.name] = false;
 		soundPlayed[event.name] = false;
 	}
+
+	enemySpownNum = 0;
 }
 
 void BossAttack::Finish()
@@ -596,6 +600,32 @@ void BossAttack::BossDushSound()
 		firstOnes = true;
 		secondOnes = true;
 	}
+}
+
+void BossAttack::TrashEnemySpownEvent()
+{
+	Boss* b = GetBase<Boss>();
+
+	if (!attackParam.useEnemySpawnEvent) {
+		return;
+	}
+
+	const float frame = b->enemyBaseComponent.anim->GetCurrentFrame();
+
+	if (frame >= attackParam.enemySpawnStartFrame) {
+		//小分けで出現しないなら1回の出現とする
+		int totalSpownNum = 1;
+		if (attackParam.splitEnemySpawn) {
+			totalSpownNum = attackParam.enemySpawnCount;
+		}
+		if (totalSpownNum > enemySpownNum) {
+			enemySpownNum++;
+			b->trashEnemy->CreateEnemy(attackParam.enemySpawnPosition, attackParam.meleeEnemySpawnNum, attackParam.rangedEnemySpawnNum);
+		}
+	}
+
+	//ToDo 敵殲滅イベントを作成
+
 }
 
 void BossAttack::AttackStart()
