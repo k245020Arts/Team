@@ -11,11 +11,12 @@ struct ActionParam
 	int priority;     // プライオリティ
 	int weight;       // 重さ
 	int maxAction;    // 連続で何回行動できるか
-
 	float distance = 0; // 距離によってその技が出やすいかどうか
+
 	int addWeight = 0;  // 数字変動
 
-	ActionParam() {
+	ActionParam() 
+	{
 		id = "";
 		attackState = false;
 		priority = 1;
@@ -136,16 +137,15 @@ private:
 
 	void NormalAttackSelect();
 	void AttackStart();
-
-	
-	
-	//int AttackPriority();
-	
+		
 	/// <summary>
 	/// 行動を決める
 	/// </summary>
 	/// <param name="_priority">今のボスの状況を入れる</param>
 	void BuildTable(int _priority);
+	//攻撃を選択する関数
+	void SelectNextAction(int _priority);
+
 	//変動させた値をすべてゼロにする
 	void AllAddWeightZero();
 
@@ -175,7 +175,7 @@ private:
 	int moveCounter;
 	bool forceAttack;
 
-	VECTOR3 vec;
+	VECTOR3 pVec;
 	std::unordered_map<std::string, std::shared_ptr<BossAttack>> attacks; //攻撃のポインターの保持
 	std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> attackParam; ///攻撃のパラメーターの保持
 };

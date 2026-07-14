@@ -137,3 +137,13 @@
     }
   }
 }
+/*
+  std::string id;
+	bool attackState; // 攻撃のStateか
+	int priority;     // プライオリティ
+	int weight;       // 重さ(技の出やすさ)
+	int maxAction;    // 連続で何回行動できるか
+
+	float distance = 0; // 距離によってその技が出やすいかどうか
+	int addWeight = 0;  // 数字変動
+*/
