@@ -153,6 +153,7 @@ public:
 
 private:
 	const float COOLTIME = 0.5f;
+	void LoodAttackSelect(const std::string& _fileName);
 
 	void NormalAttackSelect();
 	void AttackStart();
@@ -162,6 +163,8 @@ private:
 	/// </summary>
 	/// <param name="_priority">今のボスの状況を入れる</param>
 	void BuildTable(int _priority);
+	//コンボ関数
+	void SelectNextComboAction(int _priority);
 	//攻撃を選択する関数
 	void SelectNextAction(int _priority);
 

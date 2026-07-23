@@ -9,7 +9,6 @@
 #include "../../../Stage/StageSelectData.h"
 #include "../../../Component/Animator/Animator.h"
 
-
 namespace {
 	constexpr int ATTACK_KIND_MAX		= 6;
 	constexpr int COMBO_ATTACK_KIND_MAX = 3;
@@ -72,17 +71,11 @@ namespace {
 		{ 0.5,	1.0,	0.5,	0.1},
 		{ 0.2,	0.5,	0.7,	0.1},
 	};*/
-	//コンボ攻撃の順番
-	/*const std::vector<std::vector<StateID::State_ID>> comboOrder{
-		{StateID::BOSS_NORMAL_ATTACK1_S,		StateID::BOSS_NORMAL_ATTACK2_S,			StateID::BOSS_NORMAL_ATTACK3_S},
-		{StateID::BOSS_NORMAL_ATTACK4_S,		StateID::BOSS_NORMAL_ATTACK5_S,			StateID::BOSS_NORMAL_ATTACK6_S},
-		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	StateID::BOSS_SPECIAL_ATTACK1_S },
-		{StateID::BOSS_SPECIAL_ATTACK2_S,		StateID::BOSS_SPECIAL_ATTACK2_S,		StateID::BOSS_SPECIAL_ATTACK2_S,	StateID::BOSS_SPECIAL_ATTACK2_S}
-	};*/
 }
 
 AttackSorting::AttackSorting()
 {
+	LoodAttackSelect("data/json/BossAttack/Combo.json");
 	coolTime	= 0;
 	string		= Function::GetClassNameC<AttackSorting>();
 	hp			= Boss::MAX;
@@ -95,8 +88,6 @@ AttackSorting::AttackSorting()
 	moveCounter = 0;
 
 	copyState = StateID::STATE_MAX;
-
-	
 
 	pVec = VZero;
 	forceAttack = false;
@@ -204,6 +195,19 @@ void AttackSorting::ForcedAttackStart(const std::string& _attackID)
 	forceAttack = true;
 }
 
+void AttackSorting::LoodAttackSelect(const std::string& _fileName)
+{
+	JsonReader json;
+	json.Load(_fileName);
+
+	auto& j = json.Data();
+
+	for (const auto& copy : j["BossAttackSelect"])
+	{
+		selectData.push_back(copy);
+	}
+}
+
 void AttackSorting::NormalAttackSelect()
 {
 	Boss* b = GetBase<Boss>();
@@ -251,14 +255,27 @@ void AttackSorting::BuildTable(int _priority)
 	if (forceAttack) {
 		return;
 	}
-	
-	//ここで通常の攻撃か連続攻撃を出すかを求める
-	//①確率の分け方は連続攻撃プライオリティーによって分けて、そこから通常攻撃80％、連続攻撃20%で
-	//分けるみたいな感じで全てのHPパターンにこの形式を導入 //ここで一個json
+
+	// LoodAttackSelectに引数追加してコンボのjsonデータを追加できるようにする
 	//②連続攻撃にはいったらどの攻撃を使うかの抽選をする //ここで一個json
 	//ここも従来の攻撃と同じソート方式を使用、どの攻撃をどの順番で使うかをvector型のstring型で保持しとく(先頭から順番に流す)
+	float c = 0;
+	float n = 0;
+	for (int i = 0; i < selectData.size(); i++)
+	{
+		if (bossPriority <= selectData[i].priority)
+		{
+			c = selectData[i].comboParam;
+			n = selectData[i].normalParam;
+			break;
+		}
+	}
 
-	SelectNextAction(_priority);
+	float p = GetRand(c + n);
+	if (p - c <= 0)
+		SelectNextComboAction(_priority);
+	else
+		SelectNextAction(_priority);
 }
 
 void AttackSorting::AllAddWeightZero()
@@ -340,6 +357,11 @@ void AttackSorting::AttackStart()
 		return;
 	}
 	attacks[nextState]->Start();
+}
+
+void AttackSorting::SelectNextComboAction(int _priority)
+{
+	
 }
 
 void AttackSorting::SelectNextAction(int _priority)

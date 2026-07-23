@@ -10,8 +10,6 @@ class Player;
 class CharaWeapon;
 class BossStatus;
 class BossRockManager;
-//class TrashEnemyManager;
-//class PlayerAttack3;
 
 class PlayerSpecialAttack;
 class BossAttackDataSerializer;
