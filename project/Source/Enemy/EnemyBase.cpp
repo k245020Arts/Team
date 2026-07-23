@@ -116,7 +116,19 @@ void EnemyBase::DrawTrail() {
 void EnemyBase::EnemyDamageMove(const EnemyDamage::EnemyDamageInfo& _info)
 {
 	//“G‚ªƒ_ƒ[ƒW‚ðŽó‚¯‚½Žž‚Ì‚Á”ò‚Î‚µ—Ê‚ÌÝ’è
-	enemyBaseComponent.physics->SetVelocity(_info.speed * MGetRotY(enemyBaseComponent.playerObj->GetTransform()->rotation.y));
+	VECTOR3 finalSpeed = VZero;
+	if (_info.playerFrontMode) {
+		finalSpeed = _info.playerFrontModeSpeed * MGetRotY(enemyBaseComponent.playerObj->GetTransform()->rotation.y);
+	}
+	else {
+		VECTOR3 pPos = enemyBaseComponent.playerObj->GetTransform()->position;
+		VECTOR3 dist = obj->GetTransform()->position - pPos;
+
+		finalSpeed = dist.Normalize() * _info.speed;
+	}
+	
+
+	enemyBaseComponent.physics->SetVelocity(finalSpeed);
 }
 
 float EnemyBase::DamageCalculation(const VECTOR3& _pos, float _damage,float _defense, float deviation)

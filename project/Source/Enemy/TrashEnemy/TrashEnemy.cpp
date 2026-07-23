@@ -166,7 +166,7 @@ namespace
 	{ StateID::PLAYER_ATTACK6_S,
 	EnemyInformation::EnemyReaction(
 		StateID::PLAYER_ATTACK6_S,
-		EnemyDamage::EnemyDamageInfo(VECTOR3(0,000,4000), VECTOR3(200,200,200), 0.2f, 0.8f),
+		EnemyDamage::EnemyDamageInfo(VECTOR3(0,000,4000), VECTOR3(200,200,200), 0.2f, 0.8f,false,4000.0f),
 		EnemyBlowAway::EnemyBlowAwayInfo(),
 		EnemyInformation::EnemyReaction::Type::Normal,
 		StateID::T_ENEMY_DAMAGE,
@@ -225,7 +225,7 @@ namespace
 	{ StateID::PLAYER_HEAVY_ATTACK2_S,
 	EnemyInformation::EnemyReaction(
 	StateID::PLAYER_HEAVY_ATTACK2_S,
-	EnemyDamage::EnemyDamageInfo(VECTOR3(0,000,3000), VECTOR3(200,200,200), 0.2f, 0.8f),
+	EnemyDamage::EnemyDamageInfo(VECTOR3(0,000,3000), VECTOR3(200,200,200), 0.2f, 0.8f,false,4000.0f),
 	EnemyBlowAway::EnemyBlowAwayInfo(),
 	EnemyInformation::EnemyReaction::Type::Normal,
 	StateID::STATE_MAX,

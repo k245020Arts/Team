@@ -10,13 +10,17 @@ public:
 		EnemyDamageInfo() {
 			EnemyDamageInfo(VZero, VZero, 0.0f,0.0f);
 		}
-		EnemyDamageInfo(VECTOR3 _speed, VECTOR3 _power, float _shaketime,float _damageTime) {
-			speed = _speed;
+		EnemyDamageInfo(VECTOR3 _playerFrontModeSpeed, VECTOR3 _power, float _shaketime,float _damageTime,bool _playerFrontMode = true,float _speed = 0.0f) {
+			playerFrontModeSpeed = _playerFrontModeSpeed;
 			shakePower = _power;
 			shakeTime = _shaketime;
 			damageTime = _damageTime;
+			speed = _speed;
+			playerFrontMode = _playerFrontMode;
 		}
-		VECTOR3 speed;
+		bool playerFrontMode;
+		VECTOR3 playerFrontModeSpeed;
+		float speed;
 		VECTOR3 shakePower;
 		float shakeTime;
 		float damageTime;
