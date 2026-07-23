@@ -113,10 +113,10 @@ AttackSorting::~AttackSorting()
 void AttackSorting::Update()
 {
 	Boss* b = GetBase<Boss>();
-	coolTime += Time::DeltaTimeRate();
-	//次の行動にすぐ切り替わらないようにする
-	if (coolTime <= COOLTIME)
-		return;
+	//coolTime += Time::DeltaTimeRate();
+	////次の行動にすぐ切り替わらないようにする
+	//if (coolTime <= COOLTIME)
+	//	return;
 
 	/*if (b->maxAttack != -1)
 		b->enemyBaseComponent.state->ChangeState(comboOrder[kind][attackNum - b->maxAttack]);*/
@@ -126,7 +126,7 @@ void AttackSorting::Update()
 		b->enemyBaseComponent.state->ChangeState(nextState/*attackKind[kind]*/);
 
 #else
-	else {
+	/*else {*/
 		if (nextAttack) {
 			if (attacks[nextState] == nullptr) {
 				//次の状態が何も入ってなかったら攻撃ステートを終了
@@ -144,7 +144,7 @@ void AttackSorting::Update()
 			b->enemyBaseComponent.state->ChangeState(StateID::StringToID(nextState));
 		}
 	
-	}
+	//}
 
 #endif
 }

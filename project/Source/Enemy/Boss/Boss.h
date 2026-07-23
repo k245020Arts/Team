@@ -64,6 +64,7 @@ public:
 		std::string	modelName;
 		float hp;
 		float defense;
+		float attackCoolTime;
 
 		BossParam(){
 			bossID = 0;
@@ -71,6 +72,7 @@ public:
 			modelName = "";
 			hp = 0.0f;
 			defense = 0.0f;
+			attackCoolTime = 0.0f;
 		}
 	};
 	
@@ -147,7 +149,7 @@ public:
 	/// 攻撃のクールタイムの取得
 	/// </summary>
 	/// <returns>攻撃のクールタイム</returns>
-	float GetAttackCoolTime();
+	//float GetAttackCoolTime();
 
 	/// <summary>
 	/// ボスの攻撃をさせたいときに呼ぶ
@@ -195,7 +197,7 @@ private:
 	bool roaf;
 
 	TrashEnemyManager* trashEnemy;
-	float coolTime;
+	float attackCoolTime;
 
 	float attackNum;
 	Player* player;
@@ -243,4 +245,5 @@ inline void from_json(const JSON& j, Boss::BossParam& p)
 	j.at("modelName").get_to(p.modelName);
 	j.at("hp").get_to(p.hp);
 	j.at("defense").get_to(p.defense);
+	j.at("attackCoolTime").get_to(p.attackCoolTime);
 }

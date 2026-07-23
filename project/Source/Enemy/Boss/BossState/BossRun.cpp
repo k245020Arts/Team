@@ -39,16 +39,6 @@ void BossRun::Update()
 		speed = bs->GetStatus().runSpeed;
 	}
 
-	//rotation = b->obj->GetTransform()->rotation;
-	//const float ROTY = -rotation.y - 0.5f * DX_PI_F;
-
-	////移動の計算
-	//velocity.x = speed * cosf(ROTY);
-	//velocity.z = speed * sinf(ROTY);
-
-	////計算したものをボスのポジションに足す
-	//b->obj->GetTransform()->position += velocity;
-
 	float speed = 0.0f;
 	float max	= 0.0f;
 
