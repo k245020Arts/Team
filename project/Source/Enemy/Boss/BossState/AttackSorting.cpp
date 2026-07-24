@@ -75,7 +75,6 @@ namespace {
 
 AttackSorting::AttackSorting()
 {
-	LoodAttackSelect("data/json/BossAttack/Combo.json");
 	coolTime	= 0;
 	string		= Function::GetClassNameC<AttackSorting>();
 	hp			= Boss::MAX;
@@ -127,9 +126,13 @@ void AttackSorting::Update()
 			attacks[nextState]->Update();
 		}
 		else {
-			if (nextState == "") {
+			if (nextState == "")
+			{
+				ForcedAttackStart(comboIdSave[0]);
 				//次の状態が何も入ってなかったらもう一度抽選
 				BuildTable(bossPriority);
+				comboIdSave.erase(comboIdSave.begin());
+	
 				return;
 			}
 			b->enemyBaseComponent.state->ChangeState(StateID::StringToID(nextState));
@@ -195,7 +198,7 @@ void AttackSorting::ForcedAttackStart(const std::string& _attackID)
 	forceAttack = true;
 }
 
-void AttackSorting::LoodAttackSelect(const std::string& _fileName)
+void AttackSorting::LoodAttackSelect(const std::string& _fileName, const std::string& _atkCombo)
 {
 	JsonReader json;
 	json.Load(_fileName);
@@ -205,6 +208,16 @@ void AttackSorting::LoodAttackSelect(const std::string& _fileName)
 	for (const auto& copy : j["BossAttackSelect"])
 	{
 		selectData.push_back(copy);
+	}
+
+	JsonReader json2;
+	json2.Load(_atkCombo);
+
+	auto& j2 = json2.Data();
+	int a = j2.size();
+	for (int i = 0; i < j2.size(); i++)
+	{
+		atkComboData.push_back(j2.at("Combo" + std::to_string(i)).get<AttackComboData>());
 	}
 }
 
@@ -256,9 +269,6 @@ void AttackSorting::BuildTable(int _priority)
 		return;
 	}
 
-	// LoodAttackSelectに引数追加してコンボのjsonデータを追加できるようにする
-	//②連続攻撃にはいったらどの攻撃を使うかの抽選をする //ここで一個json
-	//ここも従来の攻撃と同じソート方式を使用、どの攻撃をどの順番で使うかをvector型のstring型で保持しとく(先頭から順番に流す)
 	float c = 0;
 	float n = 0;
 	for (int i = 0; i < selectData.size(); i++)
@@ -361,7 +371,46 @@ void AttackSorting::AttackStart()
 
 void AttackSorting::SelectNextComboAction(int _priority)
 {
+	//②連続攻撃にはいったらどの攻撃を使うかの抽選をする //ここで一個json
+	//ここも従来の攻撃と同じソート方式を使用、どの攻撃をどの順番で使うかをvector型のstring型で保持しとく(先頭から順番に流す)
+	int totalWeight = 0;
+	for (auto& itr : atkComboData)
+	{
+		if (itr.priority > _priority)
+			continue;
+		else
+		{
+			totalWeight += itr.weight;
+		}
+	}
 	
+	//打てる技の合計からランダムな数字をだす
+	int rand = GetRand(totalWeight - 1);
+
+	for (auto& itr : atkComboData)
+	{
+		if (itr.priority == 0)//上で制御した行動を戻す代わりに選出されないようにした
+		{
+			itr.priority = copyPriority;
+			continue;
+		}
+		else if (itr.priority > _priority)//プライオリティを超えて技をださないようにする
+			continue;
+
+		rand -= itr.weight;
+
+		if (rand < 0)
+		{
+			for (auto& id : itr.id)
+			{
+				comboIdSave.push_back(id);
+			}
+
+			//nextState = itr.attackState;
+			AttackStart();
+			break;
+		}
+	}
 }
 
 void AttackSorting::SelectNextAction(int _priority)

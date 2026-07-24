@@ -16,6 +16,18 @@ struct AttackSelectData
 		comboParam = 0;
 	}
 };
+struct AttackComboData
+{
+	float priority;
+	float weight;
+
+	std::vector<std::string> id;
+	AttackComboData()
+	{
+		priority = 0;
+		weight = 0;
+	}
+};
 
 struct ActionParam
 {
@@ -76,6 +88,13 @@ inline void from_json(const JSON& j, AttackSelectData& data)
 	j.at("priority").get_to(data.priority);
 	j.at("normal").get_to(data.normalParam);
 	j.at("combo").get_to(data.comboParam);
+}
+
+inline void from_json(const JSON& j, AttackComboData& data)
+{
+	j.at("priority").get_to(data.priority);
+	j.at("weight").get_to(data.weight);
+	j.at("Conbo").get_to(data.id);
 }
 
 class AttackSorting :public EnemyStateBase
@@ -148,12 +167,16 @@ public:
 	/// <param name="_param"></param>
 	/// <param name="_reLoadID"></param>
 	void ReloadParam(const EnemyAttackBase::BossAttackParam& _param, const std::string& _reLoadID);
-
+	/// <summary>
+	/// jsonデータのロード
+	/// </summary>
+	/// <param name="_fileName">コンボか攻撃をするか決めるjsonデータのファイル名を入れる</param>
+	/// <param name="_atkCombo">コンボのjsonデータのファイル名を入れる</param>
+	void LoodAttackSelect(const std::string& _fileName, const std::string& _atkCombo);
 	//void StateImguiDraw()override;
 
 private:
 	const float COOLTIME = 0.5f;
-	void LoodAttackSelect(const std::string& _fileName);
 
 	void NormalAttackSelect();
 	void AttackStart();
@@ -175,6 +198,10 @@ private:
 	std::vector<ActionParam> actions;
 	//コンボか通常の数値のデータを保存する
 	std::vector<AttackSelectData> selectData;
+	//コンボのデータを保持する
+	std::vector<AttackComboData> atkComboData;
+	//
+	std::vector<std::string> comboIdSave;
 
 	float coolTime;
 

@@ -261,6 +261,9 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	const std::string folderName = "Boss" + std::to_string(bossID);
 	attackSorting->Load(folderName,this);
 
+	std::string fileNamejson = "data/json/BossAttack/";
+	attackSorting->LoodAttackSelect(fileNamejson + "/Combo.json", fileNamejson + "/Boss" + std::to_string(bossID) + "/Sorting/AttackCombo.json");
+
 	enemyBaseComponent.state->CreateState<BossWalk>("BossWalk", StateID::BOSS_WALK);
 	/*enemyBaseComponent.state->CreateState<BossNormalAttack1>("BossNormalAttack1", StateID::BOSS_NORMAL_ATTACK1_S);
 	enemyBaseComponent.state->CreateState<BossNormalAttack2>("BossNormalAttack2", StateID::BOSS_NORMAL_ATTACK2_S);
@@ -340,6 +343,7 @@ void Boss::Start(Object3D* _obj,const BossParam& _param)
 	text->TextSetting(UTFConverter::Utf8ToSjis(bossParam.bossName), "MPlus2C", ".dft", WHITE, 4, Font_ID::UI_FONT);
 	bossName->GetTransform()->position.x -= text->GetTextWidth() / 2.0f;
 	text->UseDrawUI();
+
 	/*JsonReader json;
 	std::string filePath = std::string("data/json/BossAttack");
 
