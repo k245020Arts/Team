@@ -625,39 +625,35 @@ void Boss::MoveBoss(float _speed, float _max)
 
 void Boss::BossAttackStateChange()
 {
-	if (maxAttack != -1) { //連続攻撃をするなら
-		enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
-	}
-	else {
-		//プレイヤーの範囲内なら攻撃
-		if (RunChangeAttack()) {
-			enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
-			alotAttack++;
-			if (alotAttack >= 3) {
-				noAttackChangeCounter = Random::GetInt(1,2) * 0.5f;
-				alotAttack = 0;
-				//enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
-				enemyBaseComponent.state->ChangeState(StateID::BOSS_COOL_TIME_S);
-			}
-		}
-		else {
-			//enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
-			enemyBaseComponent.state->ChangeState(StateID::BOSS_COOL_TIME_S);
-			alotAttack = 0;
-		}
-		
-	}
+	//プレイヤーの範囲内なら攻撃
+	//if (RunChangeAttack())
+	//{
+	//	enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
+	//	alotAttack++;
+	//	if (alotAttack >= 3)
+	//	{
+	//		noAttackChangeCounter = Random::GetInt(1, 2) * 0.5f;
+	//		alotAttack = 0;
+	//		//enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+	//		enemyBaseComponent.state->ChangeState(StateID::BOSS_COOL_TIME_S);
+	//	}
+	//}
+	//else
+	//{
+	//	//enemyBaseComponent.state->ChangeState(StateID::BOSS_RUN_S);
+	//	enemyBaseComponent.state->ChangeState(StateID::BOSS_COOL_TIME_S);
+	//	alotAttack = 0;
+	//}
+	enemyBaseComponent.state->ChangeState(StateID::BOSS_COOL_TIME_S);
+
 }
 
 bool Boss::RunChangeAttack()
 {
-	bool result = false;
-	/*if (noAttackChangeCounter > 0.0f) {
-		return result;
-	}*/
-	VECTOR3 targetVec = bossTransform->position - enemyBaseComponent.playerObj->GetTransform()->position;
-	if (targetVec.Size() <= bs->GetStatus().range) {
-		result = true;
+	bool result = true;
+	float targetVec = VSize(bossTransform->position - enemyBaseComponent.playerObj->GetTransform()->position);
+	if (targetVec >= bs->GetStatus().range) {
+		result = false;
 	}
 	return result;
 }

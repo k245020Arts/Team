@@ -213,6 +213,23 @@ void BossAttack::BossJustAvoidCollsion()
 	}
 }
 
+bool BossAttack::isFinishAttack()
+{
+	Boss* boss = GetBase<Boss>();
+	if (!CurrentAttackAnim())
+	{
+		return false;
+	}
+	if (boss->enemyBaseComponent.anim->IsFinish())
+	{
+		/*boss->BossAttackStateChange();
+		boss->GetStateManager()->GetState<AttackSorting>()->AttackFinish();*/
+		return true;
+	}
+	else
+		return false;
+}
+
 void BossAttack::RotateEvent()
 {
 	Boss* boss = GetBase<Boss>();

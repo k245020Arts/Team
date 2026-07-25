@@ -80,6 +80,8 @@ public:
 	/// </summary>
 	void BossJustAvoidCollsion();
 
+	bool isFinishAttack();
+
 private:
 	float averageSpeed;
 	bool aloowStop;

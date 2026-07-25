@@ -203,8 +203,6 @@ private:
 	//
 	std::vector<std::string> comboIdSave;
 
-	float coolTime;
-
 	Boss::HP_RATE hp;
 
 	bool jump;
@@ -221,6 +219,8 @@ private:
 	bool forceAttack;
 
 	VECTOR3 pVec;
+	bool isComboAtk;
+
 	std::unordered_map<std::string, std::shared_ptr<BossAttack>> attacks; //攻撃のポインターの保持
 	std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> attackParam; ///攻撃のパラメーターの保持
 };
