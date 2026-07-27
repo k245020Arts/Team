@@ -39,7 +39,7 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
-namespace
+namespace EnemyTable
 {
 	const std::unordered_map<StateID::State_ID, EnemyInformation::EnemyReaction> enemyTable = {
 
@@ -580,8 +580,8 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 	bool lastAttack = false;
 	bool lastBeforeAttack = false;
 
-	auto param = enemyTable.find(attackID);
-	if (param != enemyTable.end())
+	auto param = EnemyTable::enemyTable.find(attackID);
+	if (param != EnemyTable::enemyTable.end())
 	{
 		const auto& e = param->second;
 		switch (e.attackType)
@@ -676,9 +676,7 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 		damage = damage / 5;
 	VECTOR3 a = VECTOR3((float)GetRand(100), (float)(500 + GetRand(100)), (float)GetRand(100));
 	hp -= DamageCalculation(a, damage, eStatus.defense,30);
-	/*if (param->second.changeStateID != StateID::STATE_MAX) {
-		enemyBaseComponent.state->ChangeState(param->second.changeStateID);
-	}*/
+	
 	//ダメージか吹っ飛ばしの状態になっていたらダメージのパラメーターをいれる。
 	std::shared_ptr<EnemyDamage> eD = enemyBaseComponent.state->GetState<EnemyDamage>();
 	std::shared_ptr <EnemyBlowAway> eB = enemyBaseComponent.state->GetState<EnemyBlowAway>();

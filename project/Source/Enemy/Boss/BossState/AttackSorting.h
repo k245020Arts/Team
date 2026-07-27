@@ -7,8 +7,8 @@
 struct AttackSelectData
 {
 	float priority;
-	float normalParam;
-	float comboParam;
+	int normalParam;
+	int comboParam;
 	AttackSelectData()
 	{
 		priority = 0;
@@ -18,8 +18,8 @@ struct AttackSelectData
 };
 struct AttackComboData
 {
-	float priority;
-	float weight;
+	int priority;
+	int weight;
 
 	std::vector<std::string> id;
 	AttackComboData()
@@ -179,6 +179,7 @@ private:
 	const float COOLTIME = 0.5f;
 
 	void NormalAttackSelect();
+	//攻撃の処理
 	void AttackStart();
 		
 	/// <summary>
@@ -200,7 +201,7 @@ private:
 	std::vector<AttackSelectData> selectData;
 	//コンボのデータを保持する
 	std::vector<AttackComboData> atkComboData;
-	//
+	//コンボの順番などを保存する
 	std::vector<std::string> comboIdSave;
 
 	Boss::HP_RATE hp;

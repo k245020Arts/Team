@@ -161,7 +161,7 @@ void AttackSorting::LoodAttackSelect(const std::string& _fileName, const std::st
 	json2.Load(_atkCombo);
 
 	auto& j2 = json2.Data();
-	int a = j2.size();
+	
 	for (int i = 0; i < j2.size(); i++)
 	{
 		atkComboData.push_back(j2.at("Combo" + std::to_string(i)).get<AttackComboData>());
@@ -197,8 +197,8 @@ void AttackSorting::BuildTable(int _priority)
 	if (forceAttack) 
 		return;
 
-	float c = 0;
-	float n = 0;
+	int c = 0;
+	int n = 0;
 	for (int i = 0; i < selectData.size(); i++)
 	{
 		if (bossPriority <= selectData[i].priority)
@@ -209,7 +209,7 @@ void AttackSorting::BuildTable(int _priority)
 		}
 	}
 	//距離が離れてるときにコンボ攻撃を選択するとその場で攻撃するようになる
-	float p = GetRand(c + n);
+	int p = GetRand(c + n);
 	if (p - c <= 0)
 		SelectNextComboAction(_priority);
 	else
@@ -229,8 +229,6 @@ void AttackSorting::AllAddWeightZero()
 
 void AttackSorting::Load(const std::string& _bossName,Boss* _boss)
 {
-	//int attackNum = FileSystemUtils::GetDirectoryCount("data/json/BossAttack/" + _bossName);
-
 	std::string filePath = "data/json/BossAttack/" + _bossName;
 
 	for (const auto& entry : std::filesystem::directory_iterator(filePath)) {
@@ -283,9 +281,7 @@ void AttackSorting::Load(const std::string& _bossName,Boss* _boss)
 		t.second->SetComponent<Boss>(_boss);
 	}
 
-	//Save(_bossName);
 	LoadSorting(_bossName);
-
 }
 
 void AttackSorting::AttackStart() 
@@ -300,7 +296,7 @@ void AttackSorting::AttackStart()
 void AttackSorting::SelectNextComboAction(int _priority)
 {
 	isComboAtk = true;
-	int totalWeight = 0;
+	float totalWeight = 0;
 	for (auto& itr : atkComboData)
 	{
 		if (itr.priority > _priority)
@@ -312,7 +308,7 @@ void AttackSorting::SelectNextComboAction(int _priority)
 	}
 	
 	//打てる技の合計からランダムな数字をだす
-	int rand = GetRand(totalWeight - 1);
+	int rand = GetRand((int)totalWeight - 1);
 
 	for (auto& itr : atkComboData)
 	{
@@ -324,7 +320,7 @@ void AttackSorting::SelectNextComboAction(int _priority)
 		else if (itr.priority > _priority)//プライオリティを超えて技をださないようにする
 			continue;
 
-		rand -= itr.weight;
+		rand -= (int)itr.weight;
 
 		if (rand < 0)
 		{
@@ -334,7 +330,6 @@ void AttackSorting::SelectNextComboAction(int _priority)
 				nextAttack = false;
 			}
 			nextState = comboIdSave[0];
-			//AttackStart();
 			break;
 		}
 	}
@@ -344,7 +339,7 @@ void AttackSorting::SelectNextAction(int _priority)
 {
 	int totalWeight = 0;
 	//距離が離れていて選択されやすい攻撃をするときにどれだけ出やすくするか
-	float _addWeight = 0;//後でjosnのadd...にどれだけ打ちやすいかの数値を決めてそれを_addWeightに代入させる
+	float _addWeight = 0;
 
 	for (auto& itr : actions)
 	{
