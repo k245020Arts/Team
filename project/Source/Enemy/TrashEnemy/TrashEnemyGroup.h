@@ -33,14 +33,14 @@ public:
 	//HPが0じゃない遠距離の敵を数える関数(Activeでやると死んでるモーション挟んでる敵もカウントされるため)
 	int GetRangedZeroHpEnemy()const;
 
-
-	//一番近いウェイポイントを計算する
-	void CloseWayPoint(std::vector<WayPoint>& wayPoint);
+	//近距離の敵の連携攻撃を準備する
+	void SetPrepare(bool _prepare) { setPrepare = _prepare; }
 	//遠距離の敵の連携攻撃
 	void RangedEnemyAttack();
 
 	//近距離の敵を強制的に倒す処理
 	void DeadMeleeEnemy();
+
 	/// <summary>
 	/// 遠距離の敵を強制的に倒す処理
 	/// </summary>
@@ -79,6 +79,8 @@ private:
 	void MeleeEnemyAttack(TrashEnemy* _enemy);
 	//近距離の敵の走るポイントを決める
 	void EnemiesRun(TrashEnemy* _enemy);
+	//一番近いウェイポイントを計算する
+	void CloseWayPoint();
 	//近距離の敵の連携攻撃
 	void CooperateAttackMove(TrashEnemy* _enemy);
 	//近距離の敵のステートを指定したステートに全員変える処理
@@ -87,6 +89,9 @@ private:
 	void CooperateAttackLine();
 	//遠距離の敵の攻撃時に敵が捌けるようにする
 	void MeleeEvadeMove(TrashEnemy* _enemy);
+
+	bool setPrepare;
+	float prepareCounter;
 
 	float attackCounter;
 	float maxAttackCounter;
