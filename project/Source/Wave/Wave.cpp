@@ -74,7 +74,7 @@ void Wave::EnemySpawn()
 	if (waveNow > stageMax)
 		return;
 
-	if (gameControler->GetStateNumber() == GameControler::BEFORE) 
+	if (gameControler->GetStateNumber() == GameControler::PAUSE_SCENE) 
 		return;
 
 	int _counter = tEnemyManager->GetActiveEnemy();
