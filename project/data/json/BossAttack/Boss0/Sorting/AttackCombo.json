@@ -1,11 +1,29 @@
 {
 	"Combo0": {
-		"priority": 10,
+		"priority": 30,
 		"weight": 10,
 		"Conbo": [
 			"BossNormalAttack1",
 			"BossNormalAttack2",
 			"BossNormalAttack3"
+		]
+	},
+	"Combo1": {
+		"priority": 30,
+		"weight": 100,
+		"Conbo": [
+			"BossNormalAttack4",
+			"BossNormalAttack5",
+			"BossNormalAttack6"
+		]
+	},
+	"Combo2": {
+		"priority": 50,
+		"weight": 30,
+		"Conbo": [
+			"BossSpecialSmallAttack1",
+			"BossSpecialSmallAttack1",
+			"BossSpecialAttack1"
 		]
 	}
 }

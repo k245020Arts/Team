@@ -210,7 +210,7 @@ void AttackSorting::BuildTable(int _priority)
 	}
 	//‹——£‚ª—£‚ê‚Ä‚é‚Æ‚«‚ÉƒRƒ“ƒ{UŒ‚‚ğ‘I‘ğ‚·‚é‚Æ‚»‚Ìê‚ÅUŒ‚‚·‚é‚æ‚¤‚É‚È‚é
 	int p = GetRand(c + n);
-	if (p - c <= 0)
+	if (p - c <= 0 || pVec.Size() < ComboDistance)
 		SelectNextComboAction(_priority);
 	else
 		SelectNextAction(_priority);
