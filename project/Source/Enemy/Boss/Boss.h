@@ -220,6 +220,8 @@ private:
 	std::function<void(const CollsionEventData&)> justAvoidAttackFunk;
 
 	VECTOR3 GetDamageDrawPos()const;
+
+	bool isComboAttack;
 };
 
 // to_json

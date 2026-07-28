@@ -39,7 +39,6 @@ AttackSorting::AttackSorting()
 	pVec = VZero;
 	forceAttack = false;
 	nextAttack = false;
-	isComboAtk = false;
 }
 
 AttackSorting::~AttackSorting()
@@ -51,9 +50,13 @@ void AttackSorting::Update()
 {
 	Boss* b = GetBase<Boss>();
 
-	if (isComboAtk && attacks[nextState]->isFinishAttack())
+	if (b->isComboAttack && attacks[nextState]->isFinishAttack())
+	{
+		AttackFinish();
+		b->enemyBaseComponent.anim->Play(ID::B_IDOL);
 		nextAttack = false;
-
+	}
+		
 	if (nextAttack)
 	{
 		if (attacks[nextState] == nullptr)
@@ -81,7 +84,7 @@ void AttackSorting::Update()
 			nextAttack = true;
 			return;
 		}
-		else if (isComboAtk)
+		else if (b->isComboAttack)//コンボ攻撃が終了したとき
 		{
 			b->BossAttackStateChange();
 			return;
@@ -129,11 +132,12 @@ void AttackSorting::Start()
 
 void AttackSorting::Finish()
 {
+	Boss* boss = GetBase<Boss>();
 	copyState = nextState;
 	moveCounter++;
 	AttackFinish();
 	forceAttack = false;
-	isComboAtk = false;
+	boss->isComboAttack = false;
 }
 
 void AttackSorting::ForcedAttackStart(const std::string& _attackID)
@@ -210,7 +214,7 @@ void AttackSorting::BuildTable(int _priority)
 	}
 	//距離が離れてるときにコンボ攻撃を選択するとその場で攻撃するようになる
 	int p = GetRand(c + n);
-	if (p - c <= 0 /*&& pVec.Size() < ComboDistance*/)
+	if (p - c < 0 && pVec.Size() < ComboDistance)
 		SelectNextComboAction(_priority);
 	else
 		SelectNextAction(_priority);
@@ -295,7 +299,8 @@ void AttackSorting::AttackStart()
 
 void AttackSorting::SelectNextComboAction(int _priority)
 {
-	isComboAtk = true;
+	Boss* boss = GetBase<Boss>();
+	boss->isComboAttack = true;
 	float totalWeight = 0;
 	for (auto& itr : atkComboData)
 	{

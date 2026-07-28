@@ -10,7 +10,7 @@
 	},
 	"Combo1": {
 		"priority": 30,
-		"weight": 100,
+		"weight": 10,
 		"Conbo": [
 			"BossNormalAttack4",
 			"BossNormalAttack5",

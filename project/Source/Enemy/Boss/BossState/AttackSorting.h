@@ -221,7 +221,7 @@ private:
 	bool forceAttack;
 
 	VECTOR3 pVec;
-	bool isComboAtk;
+	//bool isComboAtk;
 
 	std::unordered_map<std::string, std::shared_ptr<BossAttack>> attacks; //攻撃のポインターの保持
 	std::unordered_map<std::string, EnemyAttackBase::BossAttackParam> attackParam; ///攻撃のパラメーターの保持

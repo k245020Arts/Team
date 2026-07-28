@@ -104,6 +104,8 @@ Boss::Boss()
 
 	attackFunk = nullptr;
 	justAvoidAttackFunk = nullptr;
+
+	isComboAttack = false;
 }
 
 Boss::~Boss()
