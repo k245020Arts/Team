@@ -21,8 +21,8 @@
 		"priority": 50,
 		"weight": 30,
 		"Conbo": [
-			"BossSpecialSmallAttack1",
-			"BossSpecialSmallAttack1",
+			"BossSpecialSmallAttack2",
+			"BossSpecialSmallAttack2",
 			"BossSpecialAttack1"
 		]
 	}
