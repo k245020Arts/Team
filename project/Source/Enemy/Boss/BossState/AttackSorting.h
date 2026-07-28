@@ -177,6 +177,7 @@ public:
 
 private:
 	const float COOLTIME = 0.5f;
+	const float ComboDistance = 2000.0f;
 
 	void NormalAttackSelect();
 	//UŒ‚‚Ìˆ—
