@@ -79,7 +79,8 @@ void PlayerStateBase::DefalutWalk()
 		else {
 			const VECTOR2F stickAngle = InputManager::GetInstance()->GetControllerInput()->GetStickInput().leftStick;
 			const bool frontKey = InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_W);
-			if (stickAngle.y >= 0.8f || frontKey) {
+			const bool backKey = InputManager::GetInstance()->GetKeyboardInput()->GetIsKeyboardPushing(KEY_INPUT_S);
+			if (fabs(stickAngle.y) >= 0.8f || frontKey || backKey) {
 				p->playerCom.stateManager->ChangeState(StateID::PLAYER_HEAVY_ATTACK2_S);
 			}
 			else {

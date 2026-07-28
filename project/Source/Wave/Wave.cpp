@@ -37,6 +37,8 @@ Wave::Wave()
 
 	spawnTimeCounter = 0;
 
+	gameControler = FindGameObject<GameControler>();
+
 }
 
 Wave::~Wave()
@@ -70,6 +72,9 @@ bool Wave::GetBossWave()
 void Wave::EnemySpawn()
 {
 	if (waveNow > stageMax)
+		return;
+
+	if (gameControler->GetStateNumber() == GameControler::BEFORE) 
 		return;
 
 	int _counter = tEnemyManager->GetActiveEnemy();

@@ -33,6 +33,8 @@ void PlayerHeavyAttack2::Start()
 	PlayerStateBase::Start();
 	PlayerAttackStateBase::Start();
 	Player* p = GetBase<Player>();
+	frontMove = true;
+	rockOn = false;
 }
 
 void PlayerHeavyAttack2::Finish()
@@ -41,4 +43,5 @@ void PlayerHeavyAttack2::Finish()
 	PlayerAttackStateBase::Finish();
 	p->playerCom.anim->SetPlaySpeed(1.0f);
 	p->playerCom.anim->AnimEventReset();
+	frontMove = false;
 }

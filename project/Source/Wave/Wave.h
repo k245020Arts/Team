@@ -2,6 +2,7 @@
 #include "../../Library/GameObject.h"
 
 class TrashEnemyManager;
+class GameControler;
 
 class Wave :public GameObject
 {
@@ -22,6 +23,7 @@ private:
 	/*void CooperateAttack();
 	void RangedCooperateAttack();*/
 	TrashEnemyManager* tEnemyManager;
+	GameControler* gameControler;
 	//最大ウェーブ数
 	//const int WAVE_MAX = 3;
 	const VECTOR3 SPWNPOS = VECTOR3(0, 0, 2500);
