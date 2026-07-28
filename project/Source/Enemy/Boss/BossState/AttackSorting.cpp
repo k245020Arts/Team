@@ -49,12 +49,14 @@ AttackSorting::~AttackSorting()
 void AttackSorting::Update()
 {
 	Boss* b = GetBase<Boss>();
-
-	if (b->isComboAttack && attacks[nextState]->isFinishAttack())
+	if (b->isComboAttack)
 	{
-		AttackFinish();
-		b->enemyBaseComponent.anim->Play(ID::B_IDOL);
-		nextAttack = false;
+		if (attacks[nextState]->isFinishAttack())
+		{
+			AttackFinish();
+			b->enemyBaseComponent.anim->Play(ID::B_IDOL);
+			nextAttack = false;
+		}
 	}
 		
 	if (nextAttack)
@@ -214,7 +216,7 @@ void AttackSorting::BuildTable(int _priority)
 	}
 	//‹——£‚ª—£‚ê‚Ä‚é‚Æ‚«‚ÉƒRƒ“ƒ{UŒ‚‚ğ‘I‘ğ‚·‚é‚Æ‚»‚Ìê‚ÅUŒ‚‚·‚é‚æ‚¤‚É‚È‚é
 	int p = GetRand(c + n);
-	if (p - c < 0 && pVec.Size() < ComboDistance)
+	if (p - c < 0 && pVec.Size() < ComboDistance && atkComboData.size()!=0)
 		SelectNextComboAction(_priority);
 	else
 		SelectNextAction(_priority);
