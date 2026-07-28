@@ -11,7 +11,7 @@ private:
 		float runSpeed = 8.0f;		//ボスの移動速度
 		//float fallFrame = 50.0f;	//次の攻撃の間隔を短くする
 		//float motionSpeed = 1.4f;		//攻撃モーションの最大速度
-		float range = 1400.0f;	//敵が攻撃するまでのプレイヤーとの距離
+		float range = 1000.0f;	//敵が攻撃するまでのプレイヤーとの距離
 		float chaseRange = 5000.0f;	//プレイヤーと離れたときに切り替わる
 	};
 	Status status;

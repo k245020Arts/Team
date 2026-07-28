@@ -64,9 +64,7 @@ void EnemyBase::Update()
 			enemyBaseComponent.color->setRGB(Color::Rgb(255.0f, 255.0f, 255.0f, 255.0f));
 		}
 	}
-	///*if (CheckHitKey(KEY_INPUT_G)) {
-	//	obj->GetTransform()->position = EnemyInformation::BASE_POS;*/
-	//}
+	
 	//‘½’iƒqƒbƒg‚Ìˆ—
 	if (loopNum >= 0) {
 		hitCounter -= Time::DeltaTimeRate();

@@ -9,54 +9,9 @@
 #include "../../../Stage/StageSelectData.h"
 #include "../../../Component/Animator/Animator.h"
 
-
 namespace {
 	constexpr int ATTACK_KIND_MAX		= 6;
 	constexpr int COMBO_ATTACK_KIND_MAX = 3;
-	/*enum COMBO_ATTACK
-	{
-		NORMAL_COMBO1,
-		NORMAL_COMBO2,
-		JUMP_COMBO,
-		RUN_COMBO,
-	};
-	std::vector<COMBO_ATTACK> comboKind{
-		{NORMAL_COMBO1},
-		{NORMAL_COMBO2},
-		{JUMP_COMBO},
-		{RUN_COMBO},
-	};*/
-	//単発攻撃の種類
-	/*std::vector<StateID::State_ID> attackKind{
-		{StateID::BOSS_NORMAL_ATTACK1_S},
-		{StateID::BOSS_NORMAL_ATTACK2_S},
-		{StateID::BOSS_NORMAL_ATTACK3_S},
-		{StateID::BOSS_SPECIAL_ATTACK1_S},
-		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S},
-		{StateID::BOSS_SPECIAL_ATTACK2_S},
-		{StateID::BOSS_NORMAL_ATTACK4_S},
-		{StateID::BOSS_NORMAL_ATTACK5_S},
-		{StateID::BOSS_NORMAL_ATTACK6_S},
-	};*/
-	
-	
-
-	
-
-	/*{
-		{"BossWalk",				false,10, 40, 0},
-		{"BossNormalAttack1",		true,10, 10, 1},
-		{"BossNormalAttack2",		true,10, 10, 1},
-		{"BossNormalAttack3",		true,10, 10, 1},
-		{"BossNormalAttack4",		true,10, 10, 1},
-		{"BossNormalAttack5",		true,30, 10, 1},
-		{"BossNormalAttack6",		true,30, 10, 1},
-		{"BossNormalAttack7",		true,10, 10, 0, 2000},
-		{"BossSpecialAttack1",		true,50, 30, 1},
-		{"BossSpecialSmallAttack1",	true,50, 30, 1},
-		{"BossSpecialAttack2",		true,50, 0,  1, 2000},
-		{"BossBackStep",			false,50, 30, 0},
-	};*/
 
 	//通常攻撃の重み
 	const std::vector<std::vector<double>> normalAttackParam{
@@ -65,25 +20,10 @@ namespace {
 		{ 0.1,	0.1,	0.5,	0.7,	1.0,	0.1,	0.5,	0.5,	0.5  },
 		{ 0.05,	0.05,	1.0,	0.5,	0.9,	0.1,	0.5,	0.5,	0.5  },
 	};
-	//コンボ攻撃の重み
-	/*const std::vector<std::vector<double>> comboAttackParam{
-		{ 1.0,	0.5,	0.0,	0.0},
-		{ 0.8,	0.7,	0.2,	0.0},
-		{ 0.5,	1.0,	0.5,	0.1},
-		{ 0.2,	0.5,	0.7,	0.1},
-	};*/
-	//コンボ攻撃の順番
-	/*const std::vector<std::vector<StateID::State_ID>> comboOrder{
-		{StateID::BOSS_NORMAL_ATTACK1_S,		StateID::BOSS_NORMAL_ATTACK2_S,			StateID::BOSS_NORMAL_ATTACK3_S},
-		{StateID::BOSS_NORMAL_ATTACK4_S,		StateID::BOSS_NORMAL_ATTACK5_S,			StateID::BOSS_NORMAL_ATTACK6_S},
-		{StateID::BOSS_SPECIAL_SMALL_ATTACK1_S, StateID::BOSS_SPECIAL_SMALL_ATTACK1_S,	StateID::BOSS_SPECIAL_ATTACK1_S },
-		{StateID::BOSS_SPECIAL_ATTACK2_S,		StateID::BOSS_SPECIAL_ATTACK2_S,		StateID::BOSS_SPECIAL_ATTACK2_S,	StateID::BOSS_SPECIAL_ATTACK2_S}
-	};*/
 }
 
 AttackSorting::AttackSorting()
 {
-	coolTime	= 0;
 	string		= Function::GetClassNameC<AttackSorting>();
 	hp			= Boss::MAX;
 	attackNum	= 0;
@@ -96,11 +36,10 @@ AttackSorting::AttackSorting()
 
 	copyState = StateID::STATE_MAX;
 
-	
-
 	pVec = VZero;
 	forceAttack = false;
 	nextAttack = false;
+	isComboAtk = false;
 }
 
 AttackSorting::~AttackSorting()
@@ -108,45 +47,48 @@ AttackSorting::~AttackSorting()
 
 }
 
-//#define NORMAL_MODE
-
 void AttackSorting::Update()
 {
 	Boss* b = GetBase<Boss>();
-	coolTime += Time::DeltaTimeRate();
-	//次の行動にすぐ切り替わらないようにする
-	if (coolTime <= COOLTIME)
-		return;
 
-	/*if (b->maxAttack != -1)
-		b->enemyBaseComponent.state->ChangeState(comboOrder[kind][attackNum - b->maxAttack]);*/
+	if (isComboAtk && attacks[nextState]->isFinishAttack())
+		nextAttack = false;
 
-#ifdef NORMAL_MODE
-	else 
-		b->enemyBaseComponent.state->ChangeState(nextState/*attackKind[kind]*/);
-
-#else
-	else {
-		if (nextAttack) {
-			if (attacks[nextState] == nullptr) {
-				//次の状態が何も入ってなかったら攻撃ステートを終了
-				b->BossAttackStateChange();
-				return;
-			}
-			attacks[nextState]->Update();
+	if (nextAttack)
+	{
+		if (attacks[nextState] == nullptr)
+		{
+			//次の状態が何も入ってなかったら攻撃ステートを終了
+			b->BossAttackStateChange();
+			return;
 		}
-		else {
-			if (nextState == "") {
-				//次の状態が何も入ってなかったらもう一度抽選
-				BuildTable(bossPriority);
-				return;
-			}
-			b->enemyBaseComponent.state->ChangeState(StateID::StringToID(nextState));
-		}
-	
+		attacks[nextState]->Update();
 	}
+	else
+	{
+		if (nextState == "")
+		{
+			//次の状態が何も入ってなかったらもう一度抽選
+			BuildTable(bossPriority);
+			return;
+		}
+		else if (comboIdSave.size() != 0)
+		{
+			nextState = comboIdSave[0];
+			AttackStart();
+			//保存したコンボの先頭を削除して次の技を0に保存する
+			comboIdSave.erase(comboIdSave.begin());
+			nextAttack = true;
+			return;
+		}
+		else if (isComboAtk)
+		{
+			b->BossAttackStateChange();
+			return;
+		}
 
-#endif
+		b->enemyBaseComponent.state->ChangeState(StateID::StringToID(nextState));
+	}
 }
 
 void AttackSorting::Start()
@@ -183,8 +125,6 @@ void AttackSorting::Start()
 	BuildTable(bossPriority);
 	
 	b->comboFirstAttack = true;
-
-	coolTime = 0;
 }
 
 void AttackSorting::Finish()
@@ -193,6 +133,7 @@ void AttackSorting::Finish()
 	moveCounter++;
 	AttackFinish();
 	forceAttack = false;
+	isComboAtk = false;
 }
 
 void AttackSorting::ForcedAttackStart(const std::string& _attackID)
@@ -204,28 +145,33 @@ void AttackSorting::ForcedAttackStart(const std::string& _attackID)
 	forceAttack = true;
 }
 
+void AttackSorting::LoodAttackSelect(const std::string& _fileName, const std::string& _atkCombo)
+{
+	JsonReader json;
+	json.Load(_fileName);
+
+	auto& j = json.Data();
+
+	for (const auto& copy : j["BossAttackSelect"])
+	{
+		selectData.push_back(copy);
+	}
+
+	JsonReader json2;
+	json2.Load(_atkCombo);
+
+	auto& j2 = json2.Data();
+	
+	for (int i = 0; i < j2.size(); i++)
+	{
+		atkComboData.push_back(j2.at("Combo" + std::to_string(i)).get<AttackComboData>());
+	}
+}
+
 void AttackSorting::NormalAttackSelect()
 {
 	Boss* b = GetBase<Boss>();
 	std::vector<double> rand = normalAttackParam[hp];
-	/*switch (hp)
-	{
-	case AttackSorting::MAX:
-		rand = 
-		break;
-		break;
-	case AttackSorting::EIGHT:
-		rand = 
-		break;
-	case AttackSorting::FIVE:
-		
-		break;
-	case AttackSorting::THREE:
-		
-		break;
-	default:
-		break;
-	}*/
 	
 	VECTOR3 dist = b->obj->GetTransform()->position - b->enemyBaseComponent.playerObj->GetTransform()->position;
 	float size = dist.Size();
@@ -248,17 +194,26 @@ void AttackSorting::NormalAttackSelect()
 
 void AttackSorting::BuildTable(int _priority)
 {
-	if (forceAttack) {
+	if (forceAttack) 
 		return;
-	}
-	
-	//ここで通常の攻撃か連続攻撃を出すかを求める
-	//①確率の分け方は連続攻撃プライオリティーによって分けて、そこから通常攻撃80％、連続攻撃20%で
-	//分けるみたいな感じで全てのHPパターンにこの形式を導入 //ここで一個json
-	//②連続攻撃にはいったらどの攻撃を使うかの抽選をする //ここで一個json
-	//ここも従来の攻撃と同じソート方式を使用、どの攻撃をどの順番で使うかをvector型のstring型で保持しとく(先頭から順番に流す)
 
-	SelectNextAction(_priority);
+	int c = 0;
+	int n = 0;
+	for (int i = 0; i < selectData.size(); i++)
+	{
+		if (bossPriority <= selectData[i].priority)
+		{
+			c = selectData[i].comboParam;
+			n = selectData[i].normalParam;
+			break;
+		}
+	}
+	//距離が離れてるときにコンボ攻撃を選択するとその場で攻撃するようになる
+	int p = GetRand(c + n);
+	if (p - c <= 0)
+		SelectNextComboAction(_priority);
+	else
+		SelectNextAction(_priority);
 }
 
 void AttackSorting::AllAddWeightZero()
@@ -274,8 +229,6 @@ void AttackSorting::AllAddWeightZero()
 
 void AttackSorting::Load(const std::string& _bossName,Boss* _boss)
 {
-	//int attackNum = FileSystemUtils::GetDirectoryCount("data/json/BossAttack/" + _bossName);
-
 	std::string filePath = "data/json/BossAttack/" + _bossName;
 
 	for (const auto& entry : std::filesystem::directory_iterator(filePath)) {
@@ -328,9 +281,7 @@ void AttackSorting::Load(const std::string& _bossName,Boss* _boss)
 		t.second->SetComponent<Boss>(_boss);
 	}
 
-	//Save(_bossName);
 	LoadSorting(_bossName);
-
 }
 
 void AttackSorting::AttackStart() 
@@ -342,11 +293,53 @@ void AttackSorting::AttackStart()
 	attacks[nextState]->Start();
 }
 
+void AttackSorting::SelectNextComboAction(int _priority)
+{
+	isComboAtk = true;
+	float totalWeight = 0;
+	for (auto& itr : atkComboData)
+	{
+		if (itr.priority > _priority)
+			continue;
+		else
+		{
+			totalWeight += itr.weight;
+		}
+	}
+	
+	//打てる技の合計からランダムな数字をだす
+	int rand = GetRand((int)totalWeight - 1);
+
+	for (auto& itr : atkComboData)
+	{
+		if (itr.priority == 0)//上で制御した行動を戻す代わりに選出されないようにした
+		{
+			itr.priority = copyPriority;
+			continue;
+		}
+		else if (itr.priority > _priority)//プライオリティを超えて技をださないようにする
+			continue;
+
+		rand -= (int)itr.weight;
+
+		if (rand < 0)
+		{
+			for (auto& id : itr.id)
+			{
+				comboIdSave.push_back(id);
+				nextAttack = false;
+			}
+			nextState = comboIdSave[0];
+			break;
+		}
+	}
+}
+
 void AttackSorting::SelectNextAction(int _priority)
 {
 	int totalWeight = 0;
 	//距離が離れていて選択されやすい攻撃をするときにどれだけ出やすくするか
-	float _addWeight = 0;//後でjosnのadd...にどれだけ打ちやすいかの数値を決めてそれを_addWeightに代入させる
+	float _addWeight = 0;
 
 	for (auto& itr : actions)
 	{
