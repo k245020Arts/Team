@@ -43,6 +43,8 @@ TrashEnemyGroup::TrashEnemyGroup()
 
 	isMeleeECooperateAtk = false;
 
+	setPrepare = false;
+	prepareCounter = 0;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -54,11 +56,10 @@ TrashEnemyGroup::~TrashEnemyGroup()
 
 void TrashEnemyGroup::Update()
 {
-	EnemyDead(meleeEnemies);
-	EnemyDead(rangedEnemies);
 	Separation();
-	
 	//近距離の敵関連
+	EnemyDead(meleeEnemies);
+	CloseWayPoint();
 	for (auto melee : meleeEnemies)
 	{
 		EnemiesRun(melee);
@@ -69,6 +70,7 @@ void TrashEnemyGroup::Update()
 	}
 	atkCountStart = true;
 	//遠距離の敵関連
+	EnemyDead(rangedEnemies);
 	for (auto ranged : rangedEnemies)
 	{
 		RangedEnemySetWaypoint(ranged);
@@ -187,7 +189,6 @@ int TrashEnemyGroup::GetMeleeActiveEnemy()const
 
 	for (auto& itr : meleeEnemies)
 	{
-		//if (itr->GetCurrentHp() > _hp)//Activeでやると死んでるモーション挟んでる敵もカウントされるため
 		if(itr->GetActive())
 			_counter++;
 	}
@@ -201,7 +202,6 @@ int TrashEnemyGroup::GetRangedActiveEnemy()const
 
 	for (auto& itr : rangedEnemies)
 	{
-		//if (itr->GetCurrentHp() > _hp)
 		if (itr->GetActive())
 			_counter++;
 	}
@@ -238,7 +238,7 @@ int TrashEnemyGroup::GetRangedZeroHpEnemy() const
 
 void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 {
-	if (_enemy->IsCooperateAtk() || !_enemy->IsAtkStandby() || startRangedAtk)
+	if (_enemy->IsCooperateAtk() || !_enemy->IsAtkStandby() || startRangedAtk || setPrepare)
 		return;
 	if(atkCountStart)
 	{
@@ -281,6 +281,50 @@ void TrashEnemyGroup::EnemiesRun(TrashEnemy* _enemy)
 	_enemy->SetWayPoint(_pos);
 }
 
+void TrashEnemyGroup::CloseWayPoint()
+{
+	if (!setPrepare)
+		return;
+	if (prepareCounter <= 1.0f)
+	{
+		prepareCounter += Time::DeltaTimeRate();
+		return;
+	}
+
+	std::vector<WayPoint> wayPoint = trashEnemyManager->PlayerWayPoint();
+
+	VECTOR3 position = camera->GetCameraTransform()->position;
+	position.y = 0;
+	//正面べく
+	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(camera->GetCameraTransform()->rotation.y);
+	float counter = 0;
+	VECTOR3 savePos = INFINITY;
+
+	for (auto enemy : meleeEnemies)
+	{
+		for (auto& itr : wayPoint)
+		{
+			//使っていいウェイポイントを一回だけ探す
+			if (counter == 0)
+			{
+				InCameraWayPoint(itr);
+			}
+			//一番近いウェイポイントを探す
+			if (itr.active)
+			{
+				float vec = VSize(itr.position - enemy->GetPos());
+				if (savePos.Size() > vec)
+					savePos = itr.position;
+			}
+		}
+		enemy->SetCooperateWayPoint(savePos, StateID::COOPERATEATTACK1);
+		counter = 1;
+	}
+
+	setPrepare = false;
+	prepareCounter = 0;
+}
+
 void TrashEnemyGroup::CooperateAttackMove(TrashEnemy* _enemy)
 {
 	if (!_enemy->IsCooperateAtk())
@@ -300,7 +344,7 @@ void TrashEnemyGroup::CooperateAttackMove(TrashEnemy* _enemy)
 
 	const float MaxTime = 3.0f;
 	//敵全員が準備完了するか時間経過で攻撃に移る
-	if (standbyCounter == enemiesMax || cooperateCounter >= MaxTime)
+	if (standbyCounter >= enemiesMax || cooperateCounter >= MaxTime)
 	{
 		AllChangeMeleeState(StateID::T_ENEMY_RUN_S);
 		standbyCounter = 0;
@@ -337,8 +381,10 @@ void TrashEnemyGroup::CooperateAttackLine()
 	{
 		if (!itr->IsCooperateAtk())
 			return;
+		if (itr->GetCurrentHp() <= 0)
+			continue;
 
-		copyPos.push_back(VECTOR3(itr->GetPos().x, PosY, itr->GetPos().z));
+		copyPos.push_back(VECTOR3(itr->GetPos().x, itr->GetPos().y + PosY, itr->GetPos().z));
 	}
 
 	const size_t Counter = copyPos.size() - 1;
@@ -362,37 +408,6 @@ void TrashEnemyGroup::MeleeEvadeMove(TrashEnemy* _enemy)
 	_enemy->SetLeaderRotY(leaderRotY);
 
 	_enemy->ChangeState(StateID::T_ENEMY_EVADE);
-}
-
-void TrashEnemyGroup::CloseWayPoint(std::vector<WayPoint>& wayPoint)
-{
-	VECTOR3 position = camera->GetCameraTransform()->position;
-	position.y = 0;
-	//正面べく
-	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(camera->GetCameraTransform()->rotation.y);
-	float counter = 0;
-	VECTOR3 savePos = INFINITY;
-	/*float _a = INFINITY;*/
-	for (auto enemy : meleeEnemies)
-	{
-		for (auto& itr : wayPoint)
-		{
-			//使っていいウェイポイントを一回だけ探す
-			if (counter == 0)
-			{
-				InCameraWayPoint(itr);
-			}
-			//一番近いウェイポイントを探す
-			if (itr.active)
-			{
-				float vec = VSize(itr.position - enemy->GetPos());
-				if (savePos.Size() > vec)
-					savePos = itr.position;
-			}
-		}
-		enemy->SetCooperateWayPoint(savePos, StateID::COOPERATEATTACK1);
-		counter = 1;
-	}
 }
 
 void TrashEnemyGroup::RangedEnemyAttack()

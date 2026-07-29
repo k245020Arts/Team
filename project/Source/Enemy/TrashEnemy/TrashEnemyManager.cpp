@@ -213,9 +213,8 @@ void TrashEnemyManager::ImguiDraw()
 
 void TrashEnemyManager::Cooperate()
 {
-	PlayerWayPoint();
-
-	enemyGroup->CloseWayPoint(wayPoint);
+	
+	enemyGroup->SetPrepare(true);
 }
 
 VECTOR3 TrashEnemyManager::GetRangedLeaderPos()const
@@ -243,7 +242,7 @@ void TrashEnemyManager::WayPointOffset()
 	}
 }
 
-void TrashEnemyManager::PlayerWayPoint()
+std::vector<WayPoint> TrashEnemyManager::PlayerWayPoint()
 {
 	searchCounter = 0;
 	wayPoint.clear();
@@ -254,6 +253,8 @@ void TrashEnemyManager::PlayerWayPoint()
 	{
 		wayPoint.emplace_back(WayPoint(itr + playerPos, true));
 	}
+
+	return wayPoint;
 }
 
 std::vector<VECTOR3> TrashEnemyManager::GetWayPointPosition()
@@ -329,26 +330,30 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 
 void TrashEnemyManager::CooperateAtk()
 {
+	int _enemyCounter = enemyGroup->GetMeleeZeroHpEnemy();
+	if (_enemyCounter == 0)
+		return;
+
 	int meleeCounter = 4;
 	float rangedMaxCounter = 15.0f;
 
 	//‹ß‹——£‚Ì˜AŒgUŒ‚
 	if (isMeleeCooperateAtk)
 	{
-		if (enemyGroup->GetMeleeZeroHpEnemy() <= meleeCounter)
+		if (_enemyCounter <= meleeCounter)
 		{
 			Cooperate();
 			isMeleeCooperateAtk = false;
 		}
 	}
 
+	//‰“‹——£‚Ì˜AŒgUŒ‚
 	if (enemyGroup->GetRangedZeroHpEnemy() <= 0)
 	{
 		rangedAtkCounter = 0.0f;
 		return;
 	}
 
-	//‰“‹——£‚Ì˜AŒgUŒ‚
 	rangedAtkCounter += Time::DeltaTimeRate();
 	if (rangedAtkCounter >= rangedMaxCounter)
 	{

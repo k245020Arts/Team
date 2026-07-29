@@ -59,6 +59,9 @@ public:
 	
 	VECTOR3 GetPlayerPos()const { return player->GetTransform()->position; }
 	std::vector<VECTOR3> GetWayPointPosition();
+
+	//プレイヤーの周りにポイントを作る
+	std::vector<WayPoint> PlayerWayPoint();
 private:
 	const int ENEMIESMAX = 30;
 	const int ATK_COUNTER_MIN = 1;
@@ -122,8 +125,6 @@ private:
 	
 	//ウェイポイントを最初に作る
 	void WayPointOffset();
-	//プレイヤーの周りにポイントを作る
-	void PlayerWayPoint();
 	
 	bool comboRequest;
 	

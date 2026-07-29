@@ -406,9 +406,9 @@ void TrashEnemy::CreateTrashEnemy(VECTOR3 _pos, int kinds, int _number)
 	obj->GetTransform()->position = _pos;
 	pointNumber = _number;
 
-	const float MAX = 1.5f;
-	const float MID = 1.25f;
-	const float MIN = 1.0f;
+	const float MAX = 1.8f;
+	const float MID = 1.6f;
+	const float MIN = 1.4f;
 
 	//EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::ENEMY_SPOWN, 2.0f);
 
