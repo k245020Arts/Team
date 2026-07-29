@@ -75,7 +75,7 @@ void Wave::EnemySpawn()
 		return;
 
 	if (gameControler->GetStateNumber() == GameControler::PAUSE_SCENE) 
-		return;
+		return; //操作説明ガイドが表示されているときにはこのクラスは通過しない
 
 	int _counter = tEnemyManager->GetActiveEnemy();
 	if (_counter <= 0)
