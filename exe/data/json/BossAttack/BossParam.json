@@ -5,14 +5,16 @@
       "bossName": "Volcraid",
       "defense": 500.0,
       "hp": 50000.0,
-      "modelName": "BossModel"
+      "modelName": "BossModel",
+      "attackCoolTime": 1.0
     },
     {
       "bossID": 1,
       "bossName": "Serapion",
       "defense": 1000.0,
       "hp": 50000.0,
-      "modelName": "BossModel3"
+      "modelName": "BossModel3",
+      "attackCoolTime": 1.0
     }
   ]
 }
