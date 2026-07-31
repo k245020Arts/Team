@@ -76,7 +76,7 @@ void Standby::Start()
 
 	range = enemy->GetStatus().runRange;
 	
-	if (enemy->isCooperateAtk)
+	if (enemy->isCooperateAtk)//˜AŒgUŒ‚‚¾‚Á‚½Žž
 		enemy->isMovingToPlayer = true;
 		
 	pPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
@@ -108,10 +108,10 @@ void Standby::RotateMove(TrashEnemy* _enemy)
 
 	if (isRedefinition)
 	{
-		float MaxPos = 1500;
+		float MaxPos = 1500.0f;
 		_enemy->enemyBaseComponent.anim->Play(ID::TE_STANCE);
-		float _rangeX = MaxPos * (float)Random::GetReal() - MaxPos * (float)Random::GetReal();
-		float _rangeZ = MaxPos * (float)Random::GetReal() - MaxPos * (float)Random::GetReal();
+		const float _rangeX = MaxPos * (float)Random::GetReal() - MaxPos * (float)Random::GetReal();
+		const float _rangeZ = MaxPos * (float)Random::GetReal() - MaxPos * (float)Random::GetReal();
 		newPos = VECTOR3(_rangeX, 0, _rangeZ) + EPos;
 		isRedefinition = false;
 	}

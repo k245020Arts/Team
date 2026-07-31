@@ -16,12 +16,12 @@ public:
 private:
 	//“G‚Ì—lqŒ©‚ÌˆÚ“®
 	void RotateMove(TrashEnemy* _enemy);
-	//
+	//˜AŒgUŒ‚‚Ì‚Ì“®‚«
 	void CooperateMove(TrashEnemy* _enemy);
 	//ƒJƒƒ‰‚Ì’†‚É‚¢‚½‚çUŒ‚‚Å‚«‚é
 	void InCameraView();
 	const float BACKSPEED = -20.0f;
-	const float RunTimeMac = 0.5f;
+	const float RunTimeMac = 1.0f;
 
 	VECTOR3 vec;
 	VECTOR3 pPos;

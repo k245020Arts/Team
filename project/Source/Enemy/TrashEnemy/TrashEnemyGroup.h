@@ -34,7 +34,7 @@ public:
 	int GetRangedZeroHpEnemy()const;
 
 	//‹ß‹——£‚Ì“G‚Ì˜AŒgUŒ‚‚ğ€”õ‚·‚é
-	void SetPrepare(bool _prepare) { setPrepare = _prepare; }
+	void SetPrepare(bool _prepare) { cooperatePrepare = _prepare; }
 	//‰“‹——£‚Ì“G‚Ì˜AŒgUŒ‚
 	void RangedEnemyAttack();
 
@@ -90,7 +90,8 @@ private:
 	//‰“‹——£‚Ì“G‚ÌUŒ‚‚É“G‚ªJ‚¯‚é‚æ‚¤‚É‚·‚é
 	void MeleeEvadeMove(TrashEnemy* _enemy);
 
-	bool setPrepare;
+	//˜AŒgUŒ‚‚Ì€”õ
+	bool cooperatePrepare;
 	float prepareCounter;
 
 	float attackCounter;
@@ -103,7 +104,7 @@ private:
 	//UŒ‚ƒJƒEƒ“ƒg‚ği‚ß‚Ä‚à‚¢‚¢‚©
 	bool atkCountStart;
 
-	bool isMeleeECooperateAtk;
+	bool isMeleeCooperateAtk;
 	//--------------------------
 
 	//‰“‹——£‚Ì“G----------------

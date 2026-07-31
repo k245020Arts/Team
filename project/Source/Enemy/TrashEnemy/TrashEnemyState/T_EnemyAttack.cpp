@@ -17,6 +17,8 @@ T_EnemyAttack::T_EnemyAttack()
 	attackParam.slowAmout = 0.1f;//3
 	attackParam.slowTime = 0.1f;//3
 	attackParam.speedUpMotionSpeed = 0.0f;
+
+	pGroundPos = VZero;
 }
 
 T_EnemyAttack::~T_EnemyAttack()
@@ -26,7 +28,9 @@ T_EnemyAttack::~T_EnemyAttack()
 void T_EnemyAttack::Update()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
-	enemy->LookTarget(enemy->enemyBaseComponent.playerObj->GetTransform()->position);
+	pGroundPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
+	pGroundPos.y = 0;
+	enemy->LookTarget(pGroundPos);
 	
 	if (enemy->isCooperateAtk)
 		return;
@@ -77,7 +81,7 @@ void T_EnemyAttack::AttackInformation(TrashEnemy* _e)
 
 void T_EnemyAttack::RunMove(TrashEnemy* _enemy)
 {
-	if (VSize(_enemy->enemyBaseComponent.playerObj->GetTransform()->position - obj->GetTransform()->position) <= _enemy->eStatus.atkRange)
+	if (VSize(pGroundPos - obj->GetTransform()->position) <= _enemy->eStatus.atkRange)
 	{
 		_enemy->playerCloser = true;
 		return;

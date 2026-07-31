@@ -20,5 +20,5 @@ protected:
 private:
 	void RunMove(TrashEnemy* _enemy);
 	float counter;
-
+	VECTOR3 pGroundPos;
 };

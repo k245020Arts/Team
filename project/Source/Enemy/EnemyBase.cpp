@@ -125,7 +125,6 @@ void EnemyBase::EnemyDamageMove(const EnemyDamage::EnemyDamageInfo& _info)
 		finalSpeed = dist.Normalize() * _info.speed;
 	}
 	
-
 	enemyBaseComponent.physics->SetVelocity(finalSpeed);
 }
 

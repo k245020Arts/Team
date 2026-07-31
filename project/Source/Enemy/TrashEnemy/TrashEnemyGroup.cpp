@@ -41,9 +41,9 @@ TrashEnemyGroup::TrashEnemyGroup()
 	rangedAtkTime = 0.0f;
 	atkCountStart = true;
 
-	isMeleeECooperateAtk = false;
+	isMeleeCooperateAtk = false;
 
-	setPrepare = false;
+	cooperatePrepare = false;
 	prepareCounter = 0;
 }
 
@@ -238,7 +238,7 @@ int TrashEnemyGroup::GetRangedZeroHpEnemy() const
 
 void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 {
-	if (_enemy->IsCooperateAtk() || !_enemy->IsAtkStandby() || startRangedAtk || setPrepare)
+	if (_enemy->IsCooperateAtk() || !_enemy->IsAtkStandby() || startRangedAtk || cooperatePrepare)
 		return;
 	if(atkCountStart)
 	{
@@ -283,8 +283,9 @@ void TrashEnemyGroup::EnemiesRun(TrashEnemy* _enemy)
 
 void TrashEnemyGroup::CloseWayPoint()
 {
-	if (!setPrepare)
+	if (!cooperatePrepare)
 		return;
+	//­‚µŠÔ‚ğŠJ‚¯‚Ä‚©‚ç˜AŒgUŒ‚‚ğdŠ|‚¯‚é
 	if (prepareCounter <= 1.0f)
 	{
 		prepareCounter += Time::DeltaTimeRate();
@@ -321,7 +322,7 @@ void TrashEnemyGroup::CloseWayPoint()
 		counter = 1;
 	}
 
-	setPrepare = false;
+	cooperatePrepare = false;
 	prepareCounter = 0;
 }
 
@@ -329,12 +330,12 @@ void TrashEnemyGroup::CooperateAttackMove(TrashEnemy* _enemy)
 {
 	if (!_enemy->IsCooperateAtk())
 	{
-		isMeleeECooperateAtk = false;
+		isMeleeCooperateAtk = false;
 		return;
 	}
 	
 	int enemiesMax = (int)meleeEnemies.size();
-	isMeleeECooperateAtk = true;
+	isMeleeCooperateAtk = true;
 
 	//˜AŒgUŒ‚‚Ì‚Æ‚«‚É‚»‚Ì“G‚ª€”õŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
 	if (_enemy->GetStandby())
@@ -418,7 +419,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		return;
 	}
 
-	if (isMeleeECooperateAtk)
+	if (isMeleeCooperateAtk)
 		return;
 
 	for (auto& enemy : rangedEnemies)
@@ -653,7 +654,6 @@ void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
 		rangedAtkTime = 0.0f;
 		rangedAtkCounter++;
 	}
-
 }
 
 void TrashEnemyGroup::EndRangedAttack(TrashEnemy* _enemy)
