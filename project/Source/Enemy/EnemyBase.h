@@ -74,6 +74,9 @@ public:
 protected:
 
 	EnemyInformation::EnemyComponent enemyBaseComponent;
+	//指定されたポジションに向く
+	void LookTarget(const VECTOR3& _target, float speed);
+
 	float damageFlash;
 	float hitCounter;
 	int loopNum;

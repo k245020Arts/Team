@@ -16,8 +16,10 @@ BossRun::BossRun()
 
 	targetPos = VZero;
 
-	counter = 0.0f;
+	lineCounter = 0.0f;
 	speed = 0.0f;
+
+	atkTransferCounter = 0.0f;
 }
 
 BossRun::~BossRun()
@@ -30,8 +32,11 @@ void BossRun::Update()
 	if (b->hp <= 0) { //ボスのHPが死んでいる状態になったら走らない
 		return;
 	}
-	b->LookPlayer(targetPos, 0.1f);
+	b->LookTarget(targetPos, 0.1f);
 	HitLine();
+
+	//プレイヤーが逃げ回っていても強制的に攻撃に移行するため
+	atkTransferCounter += Time::DeltaTimeRate();
 
 	if (bs == nullptr)
 	{
@@ -57,8 +62,11 @@ void BossRun::Update()
 	//プレイヤーと離れたらアイドルになる
 	if (targetVec.Size() >= bs->GetStatus().chaseRange)
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_IDOL_S);
+
 	//プレイヤーに近づいたら攻撃に移行
-	if (b->RunChangeAttack()) {
+	if (b->RunChangeAttack() || atkTransferCounter > MAX_TRANSFER_ATK) 
+	{
+		atkTransferCounter = 0.0f;
 		b->enemyBaseComponent.state->ChangeState(StateID::BOSS_COOL_TIME_S);
 	}
 }
@@ -96,13 +104,13 @@ void BossRun::HitLine()
 	VECTOR3 rockPos = VECTOR3(INFINITY, INFINITY, INFINITY);
 	VECTOR3 pPos = b->enemyBaseComponent.playerObj->GetTransform()->position;
 	const float size = 1500;
-	counter += Time::DeltaTimeRate();
+	lineCounter += Time::DeltaTimeRate();
 
-	if (VSize(targetPos - b->GetEnemyObj()->GetTransform()->position) < 400 || counter >= 1.0f)
+	if (VSize(targetPos - b->GetEnemyObj()->GetTransform()->position) < 400 || lineCounter >= 1.0f)
 	{
 		islooping = true;
 		targetPos = pPos;
-		counter = 0.0f;
+		lineCounter = 0.0f;
 	}
 		
 	if (!islooping)

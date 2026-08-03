@@ -29,6 +29,9 @@ private:
 	float speed;
 
 	bool islooping;
-	float counter;
+	float lineCounter;
 
+	float atkTransferCounter;
+	//UŒ‚‚ÉˆÚs‚·‚éÅ‘åŠÔ
+	const float MAX_TRANSFER_ATK = 5.0f;
 };

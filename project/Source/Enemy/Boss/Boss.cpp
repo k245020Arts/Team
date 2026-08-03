@@ -395,30 +395,6 @@ void Boss::LookPlayer(float speed)
 		bossTransform->rotation.y = direction;
 }
 
-void Boss::LookPlayer(const VECTOR3& _target, float speed)
-{
-	//プレイヤーのポジションを格納させる
-	VECTOR3 targetPos = _target;
-	VECTOR3 distance = targetPos - bossTransform->position;
-	//向くべき角度
-	float direction = -atan2f(distance.z, distance.x) - 0.5f * DX_PI_F;
-	//その角度とどれだけ差があるか
-	float sign = direction - bossTransform->rotation.y;
-	//切り捨てして180の境界線を無くす
-	sign -= floorf(sign / DX_PI_F / 2) * DX_PI_F * 2.0f;
-	if (sign > DX_PI_F)
-		sign -= 2 * DX_PI_F;
-	//向くスピード(ラジアン)
-	const float LOOK_SPEED = speed;
-	//Playerの方をゆっくり向く
-	if (sign > LOOK_SPEED)
-		bossTransform->rotation.y += LOOK_SPEED;
-	else if (sign < -LOOK_SPEED)
-		bossTransform->rotation.y -= LOOK_SPEED;
-	else
-		bossTransform->rotation.y = direction;
-}
-
 void Boss::PlayerHit(const CollsionEventData& _data)
 {
 	const Player* player = pState->GetBaseObject()->Component()->GetComponent<Player>();

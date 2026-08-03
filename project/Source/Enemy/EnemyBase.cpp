@@ -142,3 +142,27 @@ float EnemyBase::DamageCalculation(const VECTOR3& _pos, float _damage,float _def
 	
 	return damage;
 }
+
+void EnemyBase::LookTarget(const VECTOR3& _target, float speed)
+{
+	//プレイヤーのポジションを格納させる
+	VECTOR3 targetPos = _target;
+	VECTOR3 distance = targetPos - obj->GetTransform()->position;
+	//向くべき角度
+	float direction = -atan2f(distance.z, distance.x) - 0.5f * DX_PI_F;
+	//その角度とどれだけ差があるか
+	float sign = direction - obj->GetTransform()->rotation.y;
+	//切り捨てして180の境界線を無くす
+	sign -= floorf(sign / DX_PI_F / 2) * DX_PI_F * 2.0f;
+	if (sign > DX_PI_F)
+		sign -= 2 * DX_PI_F;
+	//向くスピード(ラジアン)
+	const float LOOK_SPEED = speed;
+	//Playerの方をゆっくり向く
+	if (sign > LOOK_SPEED)
+		obj->GetTransform()->rotation.y += LOOK_SPEED;
+	else if (sign < -LOOK_SPEED)
+		obj->GetTransform()->rotation.y -= LOOK_SPEED;
+	else
+		obj->GetTransform()->rotation.y = direction;
+}

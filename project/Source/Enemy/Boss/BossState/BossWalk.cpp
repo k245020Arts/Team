@@ -19,13 +19,13 @@ void BossWalk::Update()
 	b-> LookPlayer();
 
 	VECTOR3 enemyPos = b->obj->GetTransform()->position;
-	float MAX = 100;
+	float MAX = 100.0f;
 
 	if (isRedefinition)
 	{
 		float _rangeX = MAX * (float)Random::GetReal() - MAX * (float)Random::GetReal();
 		float _rangeZ = MAX * (float)Random::GetReal() - MAX * (float)Random::GetReal();
-		newPos = VECTOR3(_rangeX, 0, _rangeZ);
+		newPos = b->GetEnemyObj()->GetTransform()->position + VECTOR3(_rangeX, 0, _rangeZ);
 		isRedefinition = false;
 	}
 

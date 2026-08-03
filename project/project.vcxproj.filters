@@ -1236,6 +1236,9 @@
     <ClInclude Include="Source\Player\PlayerState\AttackState\PlayerHeavyAttack2.h">
       <Filter>PlayScene\Player\PlayerState\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy\TrashEnemy\TrashEnemyInformation.h">
+      <Filter>PlayScene\Enemy\TrashEnemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
