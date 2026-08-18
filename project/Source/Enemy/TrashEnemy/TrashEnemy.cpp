@@ -449,7 +449,7 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 		}
 	}
 	EnemyDamageMove(dInfo);
-	enemyBaseComponent.shaker->ShakeStart(VECTOR3(30.0f, 80.0f, 30.0f), Shaker::HEIGHT_SHAKE, false, 0.15f);
+	enemyBaseComponent.shaker->ShakeStart(VECTOR3(30.0f, 30.0f, 30.0f), Shaker::HEIGHT_SHAKE, false, 0.10f);
 	//˜AŒgUŒ‚‚Ì‚Æ‚«‚Í‘Ï«‚ğ•t—^
 	if (isCooperateAtk)
 		damage = damage / 5;

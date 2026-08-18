@@ -55,7 +55,7 @@ namespace EnemyInformation {
 
 	//ç≈èâÇÃÉ|ÉWÉVÉáÉì
 	const VECTOR3 BASE_POS = VECTOR3(500, 1000, 0);
-	const float HIT_EFFECT_TIME = 0.2f;
+	const float HIT_EFFECT_TIME = 0.1f;
 	const float HIT_EFFECT_SCALE_RATE = 0.1f;
 
 	enum AttackType {
