@@ -18,6 +18,7 @@ private:
 	Player* player;
 	TrashEnemyGroup* groupManager;
 	VECTOR3 targetPos;
+	VECTOR3 lookPos;
 
-	const VECTOR3 PosOffset = VECTOR3(300.0f, 1000.0f, 0.0f);
+	const VECTOR3 PosOffset = VECTOR3(800.0f, 600.0f, -800.0f);
 };

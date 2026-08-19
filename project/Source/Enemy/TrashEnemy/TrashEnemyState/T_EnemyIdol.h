@@ -1,6 +1,8 @@
 #pragma once
 #include "../../EnemyState/EnemyStateBase.h"
 
+class TrashEnemy;
+
 class T_EnemyIdol :public EnemyStateBase
 {
 public:
@@ -14,6 +16,7 @@ public:
 	void Finish()override;
 private:
 	void NormalMove();
+	void PlayerCloser(TrashEnemy* _enemy);
 
 	const float RANGESPEED = 60.0f;
 	const float Gravity = -1000.0f;

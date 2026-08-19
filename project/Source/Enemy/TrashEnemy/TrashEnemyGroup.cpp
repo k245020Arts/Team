@@ -624,6 +624,7 @@ void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
 	{
 		const VECTOR3 enemyPos = _enemy->GetPos();
 		hitEnemyPos = enemyPos;
+		hitEnemy = _enemy;
 		hitBack = true;
 		
 		const float LeaderVecMax = 1200.0f;

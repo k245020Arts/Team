@@ -8,6 +8,7 @@
 #include "../../../Common/InputManager/PadInput.h"
 #include "../../../Common/InputManager/InputManager.h"
 #include "../../../Camera/Camera.h"
+#include "../../../Common/Sound/SoundManager.h"
 
 CooperateAttack2::CooperateAttack2()
 {
@@ -59,6 +60,7 @@ void CooperateAttack2::Start()
 
 	firstColl = true;
 	attackParam.hitDamage = enemy->GetStatus().C_Attack2Damage;
+	enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
 
 	EnemyAttackBase::collTrans.position	= CollPos;
 	EnemyAttackBase::collTrans.scale	= Collscale;
@@ -128,7 +130,8 @@ void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 	const float CounterMax = 1.0f;
 	const float VecSpeed = 60.0f;
 	//攻撃を食らったときにカメラのステートを変える
-	//_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_FINISH_CAMERA_S);
+	_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_FINISH_CAMERA_S);
+	SoundManager::GetInstance()->PlaySe(Sound_ID::SOUND_ID::V_E_DAMAGE5);
 
 	hitStopCounter += Time::DeltaTimeRate();
 

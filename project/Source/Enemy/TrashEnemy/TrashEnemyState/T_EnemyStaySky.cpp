@@ -63,7 +63,7 @@ void T_EnemyStaySky::LeaderMove(TrashEnemy* _enemy)
 
 	if (_enemy->GetPos().y <= MaxPos)
 		_enemy->GetEnemyObj()->GetTransform()->position.y += Speed;
-	else
+	else if(!_enemy->isStandby)
 	{
 		_enemy->isStandby = true;
 		_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_CAMERA_S);

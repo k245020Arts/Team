@@ -73,8 +73,18 @@ void T_EnemyIdol::NormalMove()
 		return;
 	}
 
+	PlayerCloser(enemy);
+
 	VECTOR3 targetVec = enemy->obj->GetTransform()->position - enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 	detectionRange += Time::DeltaTimeRate() * RANGESPEED;
 	if (targetVec.Size() < enemy->GetStatus().chaseRange + detectionRange )
 		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
+}
+
+void T_EnemyIdol::PlayerCloser(TrashEnemy* _enemy)
+{
+	const float _speed = 5.0f;
+	_enemy->enemyBaseComponent.anim->Play(ID::TE_STANCE);
+	_enemy->LookTarget(_enemy->enemyBaseComponent.playerObj->GetTransform()->position);
+	_enemy->NormalMove(_speed);
 }

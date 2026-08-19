@@ -22,6 +22,7 @@ void RangedEnemyFinishCamera::Update()
 	Camera* camera = GetBase<Camera>();
 
 	camera->cameraComponent.cameraTransform->position = targetPos;
+	camera->target = groupManager->HitEnemyPosition();
 }
 
 void RangedEnemyFinishCamera::Start()
@@ -32,6 +33,8 @@ void RangedEnemyFinishCamera::Start()
 
 	targetPos = player->GetPlayerObj()->GetTransform()->position + PosOffset;
 	camera->target = (player->GetPlayerObj()->GetTransform()->position + groupManager->HitEnemyPosition()) * 0.5f;
+	
+	lookPos = groupManager->HitEnemyPosition();
 }
 
 void RangedEnemyFinishCamera::Finish()

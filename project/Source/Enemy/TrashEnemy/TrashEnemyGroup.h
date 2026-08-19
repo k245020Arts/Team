@@ -50,6 +50,8 @@ public:
 	//遠距離のリーダーのポジション
 	VECTOR3 RangedLeaderPosition()const { return leaderPos; }
 	VECTOR3 HitEnemyPosition()const {return hitEnemyPos; }
+
+	TrashEnemy* HitEnemyData()const { return hitEnemy; }
 private:
 	Camera* camera;
 	TrashEnemyManager* trashEnemyManager;
@@ -128,6 +130,8 @@ private:
 
 	VECTOR3 leaderPos;
 	VECTOR3 hitEnemyPos;
+
+	TrashEnemy* hitEnemy;
 
 	float leaderRotY;
 	float rangedAtkTime;

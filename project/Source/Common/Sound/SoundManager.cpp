@@ -96,6 +96,7 @@ void SoundManager::PlaySceneLoad()
 	SoundLoad(Sound_ID::SOUND_ID::V_E_DAMAGE2, "E_DamageV2", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::V_E_DAMAGE3, "E_DamageV3", ".wav", 200);
 	SoundLoad(Sound_ID::SOUND_ID::V_E_DAMAGE4, "E_DamageV4", ".wav", 200);
+	SoundLoad(Sound_ID::SOUND_ID::V_E_DAMAGE5, "E_DamageV5", ".wav", 255);
 
 	SoundLoad(Sound_ID::SOUND_ID::JUST_AVOID_SUCCESS, "success", ".wav", 255);
 

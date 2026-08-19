@@ -44,6 +44,7 @@ namespace Sound_ID {
 		V_E_DAMAGE2,
 		V_E_DAMAGE3,
 		V_E_DAMAGE4,
+		V_E_DAMAGE5,
 		V_E_ATTACK1,
 		V_E_ATTACK2,
 		V_E_ATTACK3,
