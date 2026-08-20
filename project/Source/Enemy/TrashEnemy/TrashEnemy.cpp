@@ -101,6 +101,11 @@ TrashEnemy::TrashEnemy()
 	guage = nullptr;
 
 	isAtkStandby = false;
+
+	playerCloser = false;
+
+	targetPoint = VZero;
+	enemyType = EnemyType::MAX;
 }
 
 TrashEnemy::~TrashEnemy()
