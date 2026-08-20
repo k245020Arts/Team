@@ -75,7 +75,7 @@ void Debug::InitDebug(InputManager* _input)
 void Debug::DebugUpdate()
 {
 	MouseDrawUpdate();
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	if (inputManager->KeyInputDown("debugChange")) {
 		debug = !debug;
 	}
@@ -135,7 +135,7 @@ void Debug::DebugUpdate()
 	}
 
 	UpdateLogger();
-#endif // _DEBUG
+//#endif // _DEBUG
 }
 
 void Debug::DebugLog(std::string _log)
