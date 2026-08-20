@@ -173,6 +173,19 @@ public:
 	/// <param name="_id">ステートID</param>
 	void ChangeStateCamera(StateID::State_ID _id);
 	/// <summary>
+	/// ステートの変更が不可能になる
+	/// </summary>
+	void CanNotStateChange();
+	/// <summary>
+	/// ステートの変更が可能になる
+	/// </summary>
+	void CanStateChange();
+	/// <summary>
+	/// カメラのステートをすぐに変更する
+	/// </summary>
+	/// <param name="_id"></param>
+	void NowChangeStateCamera(StateID::State_ID _id);
+	/// <summary>
 	/// 注視点を取得
 	/// </summary>
 	/// <returns>注視点</returns>

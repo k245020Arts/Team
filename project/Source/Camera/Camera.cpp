@@ -266,6 +266,21 @@ void Camera::ChangeStateCamera(StateID::State_ID _id)
 	cameraComponent.state->ChangeState(_id);
 }
 
+void Camera::CanNotStateChange()
+{
+	cameraComponent.state->SetNoStateChange(true);
+}
+
+void Camera::CanStateChange()
+{
+	cameraComponent.state->SetNoStateChange(false);
+}
+
+void Camera::NowChangeStateCamera(StateID::State_ID _id)
+{
+	cameraComponent.state->NowChangeState(_id);
+}
+
 void Camera::CollsionPosHit(const VECTOR3& _norm, float _size, const VECTOR3& _groundPos)
 {
 	hitPos		= _groundPos;
