@@ -446,6 +446,7 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 				enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DAMAGE);
 			damage = damage * 2;
 			deadPreset = deadPresets[3];
+			dInfo = e.dInfo;
 			break;
 		default:
 			break;
