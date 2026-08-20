@@ -78,6 +78,7 @@ void CooperateAttack2::Finish()
 	enemy->enemyBaseComponent.camera->CanStateChange();
 	
 	enemy->CooperateAtkFinish();
+	enemy->enemyBaseComponent.camera->NowChangeStateCamera(StateID::FREE_CAMERA_S);
 }
 
 void CooperateAttack2::RangedMove(TrashEnemy* _enemy)

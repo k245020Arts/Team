@@ -60,13 +60,17 @@ void T_EnemyStaySky::LeaderMove(TrashEnemy* _enemy)
 {
 	const float Speed = 50.0f;
 	const float MaxPos = 1800.0f;
+	if (!_enemy->isStandby)
+	{
+		_enemy->enemyBaseComponent.camera->NowChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
+		_enemy->enemyBaseComponent.camera->CanNotStateChange();
+	}
 
 	if (_enemy->GetPos().y <= MaxPos)
 		_enemy->GetEnemyObj()->GetTransform()->position.y += Speed;
-	else if(!_enemy->isStandby)
+	else 
 	{
 		_enemy->isStandby = true;
-		_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
 	}
 
 	//‹ó‚ğ”ò‚ñ‚Å‚é‚½‚ß‹——£‚ğ‘ª‚é‚½‚ß‚Ég‚¤(2Dó)
