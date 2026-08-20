@@ -354,7 +354,13 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 		return;
 	}
 
-	EnemyDamage::EnemyDamageInfo dInfo;
+	EnemyDamage::EnemyDamageInfo dInfo = EnemyDamage::EnemyDamageInfo();
+	/*dInfo.damageTime = 0.0f;
+	dInfo.playerFrontMode = false;
+	dInfo.playerFrontModeSpeed = VZero;
+	dInfo.shakePower = VZero;
+	dInfo.shakeTime = 0.0f;
+	dInfo.speed = 0.0f;*/
 	EnemyBlowAway::EnemyBlowAwayInfo bInfo;
 	float random[3] = {};
 	//エフェクトの位置をランダムに派生
@@ -451,7 +457,7 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 				enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_DAMAGE);
 			damage = damage * 2;
 			deadPreset = deadPresets[3];
-			dInfo = e.dInfo;
+			//dInfo = e.dInfo;
 			break;
 		default:
 			break;

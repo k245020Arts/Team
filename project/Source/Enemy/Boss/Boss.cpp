@@ -413,7 +413,7 @@ void Boss::PlayerHit(const CollsionEventData& _data)
 	if (attackState == nullptr) {
 		loopNum = -1;
 	}
-	EnemyDamage::EnemyDamageInfo dInfo;
+	EnemyDamage::EnemyDamageInfo dInfo = EnemyDamage::EnemyDamageInfo();
 	EnemyBlowAway::EnemyBlowAwayInfo bInfo;
 	float random[3] = {};
 	//エフェクトの位置をランダムに派生
