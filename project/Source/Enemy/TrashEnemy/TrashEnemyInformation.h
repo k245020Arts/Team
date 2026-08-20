@@ -148,7 +148,7 @@ namespace EnemyTable
 	{ StateID::PLAYER_SPECIAL_ATTACK_S,
 		EnemyInformation::EnemyReaction(
 			StateID::PLAYER_SPECIAL_ATTACK_S,
-			EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(100,100,100), 0.15f, 0.8f,false,1000.0f),
+			EnemyDamage::EnemyDamageInfo(VECTOR3(0,0,1500), VECTOR3(10,10,10), 0.15f, 0.8f),
 			EnemyBlowAway::EnemyBlowAwayInfo(),
 			EnemyInformation::EnemyReaction::Type::Special,
 			StateID::STATE_MAX,
