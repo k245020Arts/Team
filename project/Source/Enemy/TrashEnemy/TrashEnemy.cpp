@@ -110,6 +110,9 @@ TrashEnemy::~TrashEnemy()
 
 void TrashEnemy::Update()
 {
+	if (GetEnemyObj()->GetTransform()->position.y <= 0)
+		GetEnemyObj()->GetTransform()->position.y = 0;
+
 	slowCounter += Time::DeltaTimeRate();
 
 	if (IsPlayerSpecialMove())

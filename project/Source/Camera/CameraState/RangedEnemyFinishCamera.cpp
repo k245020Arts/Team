@@ -7,6 +7,15 @@
 RangedEnemyFinishCamera::RangedEnemyFinishCamera()
 {
 	string = Function::GetClassNameC<RangedEnemyFinishCamera>();
+
+	player = nullptr;
+	groupManager = nullptr;
+	targetPos = VZero;
+	lookPos = VZero;
+
+	keepTarget = VZero;
+	timer = 0;
+	keepPos = VZero;
 }
 
 RangedEnemyFinishCamera::~RangedEnemyFinishCamera()
