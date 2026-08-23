@@ -21,4 +21,10 @@ private:
 	VECTOR3 lookPos;
 
 	const VECTOR3 PosOffset = VECTOR3(800.0f, 600.0f, -800.0f);
+
+	VECTOR3 keepTarget;
+	float timer;
+	VECTOR3 keepPos;
+
+	const float MAX_TIMER = 0.8f;
 };

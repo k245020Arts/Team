@@ -19,6 +19,8 @@ RangedEnemyCamera::RangedEnemyCamera()
 
 	isAngleSet = false;
 
+	string = Function::GetClassNameC<RangedEnemyCamera>();
+
 }
 
 RangedEnemyCamera::~RangedEnemyCamera()

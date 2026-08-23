@@ -20,6 +20,8 @@ PlayerHeavyAttackCamera::PlayerHeavyAttackCamera()
 	targetPos = VZero;
 	currentTarget = VZero;
 	beforeTarget = 0.0f;
+
+	string = Function::GetClassNameC<PlayerHeavyAttackCamera>();
 }
 
 PlayerHeavyAttackCamera::~PlayerHeavyAttackCamera()

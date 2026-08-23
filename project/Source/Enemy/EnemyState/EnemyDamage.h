@@ -7,8 +7,8 @@ public:
 
 	struct EnemyDamageInfo
 	{
-		EnemyDamageInfo() {
-			EnemyDamageInfo(VZero, VZero, 0.0f,0.0f);
+		EnemyDamageInfo() :EnemyDamageInfo(VZero, VZero, 0.0f, 0.0f){
+			
 		}
 		EnemyDamageInfo(VECTOR3 _playerFrontModeSpeed, VECTOR3 _power, float _shaketime,float _damageTime,bool _playerFrontMode = true,float _speed = 0.0f) {
 			playerFrontModeSpeed = _playerFrontModeSpeed;

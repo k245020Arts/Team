@@ -63,7 +63,7 @@ void Hierachy::Update()
 	/*if (!fade->IsEnd()) {
 		return;
 	}*/
-#ifdef _DEBUG
+//#ifdef _DEBUG
 
 	if (InputManager::GetInstance()->KeyInputDown("debugChange")) {
 		windowMode = !windowMode; //デバックウィンドウの出し入れ
@@ -94,7 +94,7 @@ void Hierachy::Update()
 	if (playscene != nullptr && playscene->GetMode() == PlayScene::CAMERA_EDITOR) {
 		camera->CameraEditor();
 	}
-#endif // _DEBUG
+//#endif // _DEBUG
 	
 }
 	

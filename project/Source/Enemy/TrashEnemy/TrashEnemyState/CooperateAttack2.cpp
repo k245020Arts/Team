@@ -60,7 +60,8 @@ void CooperateAttack2::Start()
 
 	firstColl = true;
 	attackParam.hitDamage = enemy->GetStatus().C_Attack2Damage;
-	enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
+	enemy->enemyBaseComponent.camera->NowChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
+	enemy->enemyBaseComponent.camera->CanNotStateChange();
 
 	EnemyAttackBase::collTrans.position	= CollPos;
 	EnemyAttackBase::collTrans.scale	= Collscale;
@@ -73,8 +74,11 @@ void CooperateAttack2::Start()
 void CooperateAttack2::Finish()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
+
+	enemy->enemyBaseComponent.camera->CanStateChange();
 	
 	enemy->CooperateAtkFinish();
+	enemy->enemyBaseComponent.camera->NowChangeStateCamera(StateID::FREE_CAMERA_S);
 }
 
 void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
@@ -130,6 +134,7 @@ void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 	const float CounterMax = 1.0f;
 	const float VecSpeed = 60.0f;
 	//攻撃を食らったときにカメラのステートを変える
+	_enemy->enemyBaseComponent.camera->CanStateChange();
 	_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_FINISH_CAMERA_S);
 	SoundManager::GetInstance()->PlaySe(Sound_ID::SOUND_ID::V_E_DAMAGE5);
 
