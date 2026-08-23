@@ -12,7 +12,7 @@
     },
     "1": {
       "Wave1": {
-        "melee": 30,
+        "melee": 15,
         "range": 0
       },
       "Wave2": {
@@ -20,7 +20,7 @@
         "range": 5
       },
       "Wave3": {
-        "melee": 13,
+        "melee": 15,
         "range": 5
       }
     }

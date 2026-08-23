@@ -13,6 +13,7 @@ T_EnemyIdol::T_EnemyIdol()
 	setGravity = VZero;
 
 	counter = 0;
+	animCounter = 0;
 }
 
 T_EnemyIdol::~T_EnemyIdol()
@@ -57,6 +58,8 @@ void T_EnemyIdol::Finish()
 {
 	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 	enemy->enemyBaseComponent.physics->SetGravity(setGravity);
+	enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	counter = 0;
 }
 
 void T_EnemyIdol::NormalMove()
@@ -83,8 +86,14 @@ void T_EnemyIdol::NormalMove()
 
 void T_EnemyIdol::PlayerCloser(TrashEnemy* _enemy)
 {
-	const float _speed = 5.0f;
-	_enemy->enemyBaseComponent.anim->Play(ID::TE_STANCE);
+	const float _speed = 10.0f;
+	if (animCounter == 0)
+	{
+		_enemy->enemyBaseComponent.anim->Play(ID::TE_STANCE);
+		_enemy->enemyBaseComponent.anim->SetPlaySpeed(2.0f * Random::GetReal());
+		counter++;
+	}
+
 	_enemy->LookTarget(_enemy->enemyBaseComponent.playerObj->GetTransform()->position);
 	_enemy->NormalMove(_speed);
 }

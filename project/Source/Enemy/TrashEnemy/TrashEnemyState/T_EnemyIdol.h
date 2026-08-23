@@ -27,4 +27,6 @@ private:
 	VECTOR3 setGravity;
 
 	int counter;
+
+	int animCounter;
 };
