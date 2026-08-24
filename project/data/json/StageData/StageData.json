@@ -18,7 +18,7 @@
     },
     {
      "id": 2,
-      "name" : "テストステージ1",
+      "name" : "ボスステージ0",
       "map" : 0,
       "bgm" : "PlaySceneBGM2",
       "bossID" : 1,
@@ -26,7 +26,7 @@
     },
     {
      "id": 3,
-      "name" : "テストステージ2",
+      "name" : "ボスステージ1",
       "map" : 1,
       "bgm" : "PlaySceneBGM2",
       "bossID" : 0,

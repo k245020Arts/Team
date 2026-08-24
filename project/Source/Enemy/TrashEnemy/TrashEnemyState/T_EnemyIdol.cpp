@@ -58,7 +58,7 @@ void T_EnemyIdol::Finish()
 {
 	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 	enemy->enemyBaseComponent.physics->SetGravity(setGravity);
-	enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	//enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	counter = 0;
 }
 
@@ -90,7 +90,7 @@ void T_EnemyIdol::PlayerCloser(TrashEnemy* _enemy)
 	if (animCounter == 0)
 	{
 		_enemy->enemyBaseComponent.anim->Play(ID::TE_STANCE);
-		_enemy->enemyBaseComponent.anim->SetPlaySpeed(2.0f * Random::GetReal());
+		//_enemy->enemyBaseComponent.anim->SetPlaySpeed(2.0f * Random::GetReal());
 		counter++;
 	}
 
