@@ -30,4 +30,5 @@ private:
 	const float NormalMoveSpeed = 6.0f;
 
 	float pointRange;
+	VECTOR3 setGravity;
 };

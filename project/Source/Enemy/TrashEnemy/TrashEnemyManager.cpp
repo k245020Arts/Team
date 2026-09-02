@@ -204,15 +204,13 @@ void TrashEnemyManager::ImguiDraw()
 	
 	for (auto& way : wayPoint)
 	{
-		/*if (way.active)
-			return;*/
+		
 	}
     ImGui::End();
 }
 
 void TrashEnemyManager::Cooperate()
 {
-	
 	enemyGroup->SetPrepare(true);
 }
 

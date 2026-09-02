@@ -141,6 +141,7 @@ public:
 	void RangedAttack();
 	//指定した分ダメージを受ける
 	void ChangeHp(float _damage);
+	void OnRangedGravity() { rangedGravity = true; }
 
 	template<typename T>
 	T* CollsionStart(CollsionSet* _set, const Transform& _trans, std::function<void(const CollsionEventData&)> _func)
@@ -225,4 +226,6 @@ private:
 
 	bool playerCloser;
 	bool isAtkStandby;
+
+	bool rangedGravity;
 };

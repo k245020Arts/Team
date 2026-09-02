@@ -106,6 +106,8 @@ TrashEnemy::TrashEnemy()
 
 	targetPoint = VZero;
 	enemyType = EnemyType::MAX;
+
+	rangedGravity = false;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -355,12 +357,6 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 	}
 
 	EnemyDamage::EnemyDamageInfo dInfo = EnemyDamage::EnemyDamageInfo();
-	/*dInfo.damageTime = 0.0f;
-	dInfo.playerFrontMode = false;
-	dInfo.playerFrontModeSpeed = VZero;
-	dInfo.shakePower = VZero;
-	dInfo.shakeTime = 0.0f;
-	dInfo.speed = 0.0f;*/
 	EnemyBlowAway::EnemyBlowAwayInfo bInfo;
 	float random[3] = {};
 	//エフェクトの位置をランダムに派生

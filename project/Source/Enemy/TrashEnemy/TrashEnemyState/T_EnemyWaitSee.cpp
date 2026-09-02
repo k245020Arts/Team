@@ -3,6 +3,7 @@
 #include "../../../Component/Animator/Animator.h"
 #include "../../../State/StateManager.h"
 #include "../../../Common/Random/Random.h"
+#include "../../../Component/Physics/Physics.h"
 
 T_EnemyWaitSee::T_EnemyWaitSee()
 {
@@ -15,6 +16,7 @@ T_EnemyWaitSee::T_EnemyWaitSee()
 	moveSpeed = 0;
 
 	pointRange = 0.0f;
+	setGravity = 0;
 }
 
 T_EnemyWaitSee::~T_EnemyWaitSee()
@@ -32,7 +34,9 @@ void T_EnemyWaitSee::Update()
 void T_EnemyWaitSee::Start()
 {
 	const TrashEnemy* enemy = GetBase<TrashEnemy>();
-	
+	setGravity = enemy->enemyBaseComponent.physics->GetGravity();
+	enemy->enemyBaseComponent.physics->SetGravity(VZero);
+
 	targetPos = enemy->TargetPoint();
 
 	switch (enemy->enemyType)
@@ -59,12 +63,22 @@ void T_EnemyWaitSee::Finish()
 
 void T_EnemyWaitSee::Move(TrashEnemy* _enemy)
 {
-	if (_enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
-		if (_enemy->GetPos().y > 0.0f)
-			return;
+	/*if (_enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
+		if (_enemy->GetPos().y > PosY)
+			return;*/
 
-	targetPos = _enemy->TargetPoint();
 	const VECTOR3 enePos = _enemy->GetPos();
+	targetPos = _enemy->TargetPoint();
+
+	if (!_enemy->rangedGravity)
+	{
+		const float PosY = 1200.0f;
+		targetPos.y = PosY;
+		float a = PosY - enePos.y;
+		_enemy->GetEnemyObj()->GetTransform()->position.y += a * 0.01f;
+	}
+	else
+		_enemy->enemyBaseComponent.physics->SetGravity(setGravity);
 
 	if (VSize(targetPos - enePos) < pointRange)
 		return;

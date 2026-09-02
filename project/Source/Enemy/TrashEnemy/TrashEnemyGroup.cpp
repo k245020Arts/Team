@@ -485,6 +485,10 @@ void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 		_enemy->SetWayPoint(_wayPointPos);
 
 		leaderPos = _enemy->GetPos();
+
+		rangedCounter = GetRangedActiveEnemy() - 1;
+		if (rangedCounter <= 0)
+			_enemy->OnRangedGravity();
 	}
 }
 

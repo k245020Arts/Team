@@ -86,8 +86,8 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	const VECTOR3 enePos = _enemy->GetPos();
 	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
 	VECTOR3 dir = VZero;
-	const float Speed = 50.0f;
-	const float SearchPosMax = 1200.0f;
+	const float Speed = 70.0f;
+	const float SearchPosMax = 2000.0f;
 	const float Max = 40.0f;
 
 	if (VSize(pPos - enePos) > SearchPosMax)

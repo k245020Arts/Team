@@ -157,6 +157,8 @@ private:
 	float rangedAtkCoolTime;
 	//ç≈í·âΩïbä‘çUåÇÇµÇ»Ç¢Ç©
 	const float MaxCoolTime = 10.0f;
+	
+	int rangedCounter = 0;
 
 	//--------------------------
 };
