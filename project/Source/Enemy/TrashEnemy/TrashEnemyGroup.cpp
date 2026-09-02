@@ -247,7 +247,7 @@ void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 	}
 	const float MaxAtkTime = maxAttackCounter * 2;
 
-	if (attackCounter >= MaxAtkTime)//•Ç‘Îô
+	if (attackCounter >= MaxAtkTime)//ƒvƒŒƒCƒ„[‚ª•Ç‚Ì•û‚ð‚Ý‚Ä‚½‚Æ‚«‚Ì‘Îô
 	{
 		_enemy->AttackCommand();
 		attackCounter = 0;
