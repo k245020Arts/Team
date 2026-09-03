@@ -179,6 +179,15 @@ private:
 	//壁抜け防止関数
 	void WallStop();
 
+	//ヒット対象の確認
+	void HandleNormalAttack(const CollsionEventData& _data);
+	//攻撃情報・ダメージ取得
+	void HandleLoopCombo(EnemyDamage::EnemyDamageInfo& _dInfo);
+	//エフェクトなどの再生
+	void PlayDamageFeedback();
+	//攻撃タイプごとのリアクション
+	void ApplyDamage(EnemyDamage::EnemyDamageInfo _dInfo);
+	
 	bool active;
 	
 	//通常攻撃をしてもよいか
@@ -228,4 +237,6 @@ private:
 	bool isAtkStandby;
 
 	bool rangedGravity;
+
+	float damage;
 };
