@@ -184,7 +184,7 @@ private:
 	//攻撃情報・ダメージ取得
 	void HandleLoopCombo(EnemyDamage::EnemyDamageInfo& _dInfo);
 	//エフェクトなどの再生
-	void PlayDamageFeedback();
+	void PlayDamageFeedback(int _power, int _time, const Transform& _transform, Effect_ID::EFFECT_ID _id, float time, const Transform& _transform2, Effect_ID::EFFECT_ID _id2, float _time2);
 	//攻撃タイプごとのリアクション
 	void ApplyDamage(EnemyDamage::EnemyDamageInfo _dInfo);
 	
