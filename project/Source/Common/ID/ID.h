@@ -108,6 +108,7 @@ namespace ID {
 		TE_STANCE,
 
 		TE_R_IDOL,
+		TE_R_IDOL_SKY,
 		TE_R_RUN,
 		TE_R_ATTACK,
 		TE_R_C_ATTACK,

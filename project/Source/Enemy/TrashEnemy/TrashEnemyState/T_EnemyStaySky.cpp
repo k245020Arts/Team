@@ -7,7 +7,7 @@
 
 T_EnemyStaySky::T_EnemyStaySky()
 {
-	animId = ID::TE_R_IDOL;
+	animId = ID::TE_R_IDOL_SKY;
 	string = Function::GetClassNameC<T_EnemyStaySky>();
 
 	isLeader = false;

@@ -69,6 +69,7 @@ TrashEnemyManager::TrashEnemyManager()
 	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_Stance",	ID::TE_STANCE);
 	//遠距離の敵のアニメーション設定
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_IDOL",		ID::TE_R_IDOL);
+	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_IDOL_SKY",  ID::TE_R_IDOL_SKY);
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_RUN",		ID::TE_R_RUN);
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_ATTACK1",	ID::TE_R_ATTACK);
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_C_ATTACK",	ID::TE_R_C_ATTACK);

@@ -7,7 +7,7 @@
 
 T_EnemyWaitSee::T_EnemyWaitSee()
 {
-	animId = ID::TE_R_IDOL;
+	animId = ID::TE_R_IDOL_SKY;
 
 	attackCounter = 0.0f;
 	targetPos = VZero;
@@ -63,10 +63,6 @@ void T_EnemyWaitSee::Finish()
 
 void T_EnemyWaitSee::Move(TrashEnemy* _enemy)
 {
-	/*if (_enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
-		if (_enemy->GetPos().y > PosY)
-			return;*/
-
 	const VECTOR3 enePos = _enemy->GetPos();
 	targetPos = _enemy->TargetPoint();
 
