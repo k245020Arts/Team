@@ -37,6 +37,7 @@ public:
 	void SetPrepare(bool _prepare) { cooperatePrepare = _prepare; }
 	//‰“‹——£‚Ì“G‚Ì˜AŒgUŒ‚
 	void RangedEnemyAttack();
+	void RangedDebugAtk() { rangedAtkCoolTime = MaxCoolTime; }
 
 	//‹ß‹——£‚Ì“G‚ğ‹­§“I‚É“|‚·ˆ—
 	void DeadMeleeEnemy();
@@ -160,5 +161,6 @@ private:
 	
 	int rangedCounter = 0;
 
+	float pointCounter;
 	//--------------------------
 };

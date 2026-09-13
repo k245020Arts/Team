@@ -24,16 +24,7 @@ RangedEnemyFinishCamera::~RangedEnemyFinishCamera()
 
 void RangedEnemyFinishCamera::Update()
 {
-	/*
-	あたった敵のポジションをもらう
-	あたった敵にいい感じに拡大
-	エフェクトを足す
-	音を追加する
-	*/
 	Camera* camera = GetBase<Camera>();
-
-	//camera->cameraComponent.cameraTransform->position = targetPos;
-	//camera->target = groupManager->HitEnemyPosition();
 
 	if (timer >= 0.0f) {
 
@@ -45,7 +36,6 @@ void RangedEnemyFinishCamera::Update()
 		VECTOR3 pos = Easing::EaseOut(keepPos, targetPos, t);
 		camera->cameraComponent.cameraTransform->position = pos;
 		timer -= Time::DeltaTimeRate();
-
 	}
 	else {
 		camera->target = groupManager->HitEnemyPosition();

@@ -45,6 +45,8 @@ TrashEnemyGroup::TrashEnemyGroup()
 
 	cooperatePrepare = false;
 	prepareCounter = 0;
+
+	pointCounter = 0;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -430,7 +432,10 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 			AttackLeaderMove(enemy);
 		else
+		{
 			AttackRangedMove(enemy);
+			pointCounter = 0;
+		}
 	}
 	
 	rangedAtkTime += Time::DeltaTimeRate();
@@ -600,9 +605,7 @@ void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
 
 void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
 {
-	float pointCounter = 0.0f;
 	const float MaxPoint = 8.0f;
-	const float Range = 700.0f;
 
 	//リーダーの周りにポイント配置
 	if (pointCounter < MaxPoint && !_enemy->GetStandby() && !_enemy->IsMovingToPlayer())
@@ -610,10 +613,16 @@ void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
 		//均等に割って円形に配置
 		float angle = (2.0f * DX_PI_F) * pointCounter / MaxPoint;
 
-		//回転を反映した方向
-		VECTOR3 rotatedDir = VECTOR3(cosf(angle), 0, sinf(angle));
+		float cameraRotY = camera->GetCameraTransform()->rotation.y;
+
+		// 円形の方向
+		VECTOR3 rotatedDir = VECTOR3(cosf(angle), 0.0f, sinf(angle));
+
+		// カメラのY回転を適用
+		rotatedDir = VTransform(rotatedDir, MGetRotY(-cameraRotY));
+
 		//リーダーからの絶対座標
-		VECTOR3 target = leaderPos + rotatedDir * Range;
+		VECTOR3 target = leaderPos + rotatedDir;
 		//指定したポイントを渡す
 		_enemy->SetCooperateWayPoint(target);
 		_enemy->ChangeState(StateID::T_ENEMY_STAYSKY);

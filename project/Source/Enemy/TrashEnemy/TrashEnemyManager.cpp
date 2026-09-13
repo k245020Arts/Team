@@ -187,7 +187,10 @@ void TrashEnemyManager::ImguiDraw()
 	if (ImGui::Button("ack1"))
 		Cooperate();
 	if (ImGui::Button("ack2"))
+	{
 		startRangedAtk = true;
+		enemyGroup->RangedDebugAtk();
+	}
 	if (ImGui::Button("DeadMeleeEnemy"))
 		enemyGroup->DeadMeleeEnemy();
 	if (ImGui::Button("DeadRangedReader"))

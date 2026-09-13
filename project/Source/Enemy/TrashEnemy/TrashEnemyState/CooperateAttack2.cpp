@@ -67,6 +67,7 @@ void CooperateAttack2::Start()
 	EnemyAttackBase::collTrans.scale	= Collscale;
 
 	enemy->isMovingToPlayer = true;
+	pPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 
 	EnemyStateBase::Start();
 }
@@ -93,10 +94,9 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	if (VSize(pPos - enePos) > SearchPosMax)
 		pPos = _enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	_enemy->LookTarget(pPos);
-
 	if (_enemy->cooperateDamageMove && isDamageMove)//ƒ_ƒ[ƒW‚ð‚à‚ç‚Á‚½Žž‚Ìˆ—
 	{
+		_enemy->LookTarget(pPos);
 		damageMove = true;
 		_enemy->DeleteCollision(&_enemy->attackColl);
 		InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartTime(ControllerPower, SceondTime);

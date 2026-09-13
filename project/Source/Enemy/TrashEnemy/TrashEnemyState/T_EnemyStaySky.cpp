@@ -12,6 +12,8 @@ T_EnemyStaySky::T_EnemyStaySky()
 
 	isLeader = false;
 	setGravity = VZero;
+
+	maxPosY = 0;
 }
 
 T_EnemyStaySky::~T_EnemyStaySky()
@@ -21,6 +23,7 @@ T_EnemyStaySky::~T_EnemyStaySky()
 void T_EnemyStaySky::Update()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	enemy->enemyBaseComponent.physics->SetGravity(VZero);
 	if (enemy->IsPlayerSpecialMove())//•KŽE‹ZŽž‚ÉŽ~‚Ü‚ç‚¸‚É“®‚­‚©‚ç’âŽ~‚³‚¹‚é
 		return;
 
@@ -39,7 +42,7 @@ void T_EnemyStaySky::Start()
 
 	setGravity = enemy->enemyBaseComponent.physics->GetGravity();
 	enemy->enemyBaseComponent.physics->SetGravity(VZero);
-
+	maxPosY = 0;
 	EnemyStateBase::Start();
 }
 
@@ -94,6 +97,7 @@ void T_EnemyStaySky::RangedMove(TrashEnemy* _enemy)
 	const VECTOR3 targetPos = _enemy->cooperateWayPoint;
 	VECTOR3 dir = VZero;
 	const float MaxSpeed = 30.0f;
+	
 
 	//ƒŠ[ƒ_[‚ÌŽü‚è‚ÉˆÚ“®
 	if (VSize(targetPos - enePos) >= MaxSpeed && !_enemy->isStandby)
@@ -101,6 +105,11 @@ void T_EnemyStaySky::RangedMove(TrashEnemy* _enemy)
 		dir = VNorm(targetPos - enePos);
 		_enemy->GetEnemyObj()->GetTransform()->position += dir * MaxSpeed;
 	}
-	else
+	else if(_enemy->isStandby == false)
+	{
 		_enemy->isStandby = true;
+		maxPosY = _enemy->GetEnemyObj()->GetTransform()->position.y;
+	}
+	else if (_enemy->GetEnemyObj()->GetTransform()->position.y < maxPosY)
+		_enemy->GetEnemyObj()->GetTransform()->position.y = maxPosY;
 }

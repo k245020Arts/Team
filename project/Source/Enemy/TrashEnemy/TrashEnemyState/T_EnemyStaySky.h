@@ -23,4 +23,5 @@ private:
 	bool isLeader;
 
 	VECTOR3 setGravity;
+	float maxPosY;
 };
