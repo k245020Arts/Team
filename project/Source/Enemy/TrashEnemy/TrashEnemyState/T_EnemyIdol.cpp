@@ -89,8 +89,7 @@ void T_EnemyIdol::PlayerCloser(TrashEnemy* _enemy)
 	const float _speed = 10.0f;
 	if (animCounter == 0)
 	{
-		_enemy->enemyBaseComponent.anim->Play(ID::TE_STANCE);
-		//_enemy->enemyBaseComponent.anim->SetPlaySpeed(2.0f * Random::GetReal());
+		_enemy->enemyBaseComponent.anim->Play(ID::TE_WALK);
 		counter++;
 	}
 

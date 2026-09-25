@@ -26,6 +26,9 @@ T_EnemyWaitSee::~T_EnemyWaitSee()
 void T_EnemyWaitSee::Update()
 {
 	TrashEnemy* enemy = GetBase<TrashEnemy>();
+	if (enemy->IsPlayerSpecialMove())
+		return;
+	
 	enemy->LookTarget(enemy->enemyBaseComponent.playerObj->GetTransform()->position);
 
 	Move(enemy);

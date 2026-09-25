@@ -60,8 +60,8 @@ void CooperateAttack2::Start()
 
 	firstColl = true;
 	attackParam.hitDamage = enemy->GetStatus().C_Attack2Damage;
-	enemy->enemyBaseComponent.camera->NowChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
-	enemy->enemyBaseComponent.camera->CanNotStateChange();
+	//enemy->enemyBaseComponent.camera->NowChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
+	//enemy->enemyBaseComponent.camera->CanNotStateChange();
 
 	EnemyAttackBase::collTrans.position	= CollPos;
 	EnemyAttackBase::collTrans.scale	= Collscale;

@@ -26,9 +26,9 @@ void RangedEnemyFinishCamera::Update()
 {
 	Camera* camera = GetBase<Camera>();
 
-	if (timer >= 0.0f) {
-
-		const float t = 1.0f - timer / MAX_TIMER;
+	if (timer >= 0.0f) 
+	{
+		const float t = 1.0f - timer / MaxTimer;
 
 		const VECTOR3 enemyPos = groupManager->HitEnemyPosition();
 		VECTOR3 easedT = Easing::EaseOut(keepTarget,enemyPos, t);
@@ -37,9 +37,10 @@ void RangedEnemyFinishCamera::Update()
 		camera->cameraComponent.cameraTransform->position = pos;
 		timer -= Time::DeltaTimeRate();
 	}
-	else {
+	else
+	{
 		camera->target = groupManager->HitEnemyPosition();
-		camera->cameraComponent.cameraTransform->position = targetPos;
+		//camera->cameraComponent.cameraTransform->position = targetPos;
 	}
 }
 
@@ -56,7 +57,7 @@ void RangedEnemyFinishCamera::Start()
 	lookPos = groupManager->HitEnemyPosition();
 
 	keepTarget = camera->target;
-	timer = MAX_TIMER;
+	timer = MaxTimer;
 }
 
 void RangedEnemyFinishCamera::Finish()

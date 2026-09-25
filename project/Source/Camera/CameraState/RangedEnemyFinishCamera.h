@@ -26,5 +26,5 @@ private:
 	float timer;
 	VECTOR3 keepPos;
 
-	const float MAX_TIMER = 0.8f;
+	const float MaxTimer = 0.8f;
 };

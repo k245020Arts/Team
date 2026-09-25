@@ -16,6 +16,7 @@ public:
 	void Finish()override;
 private:
 	void NormalMove();
+	//ƒvƒŒƒCƒ„[‚É­‚µ‚¸‚Â‹ß‚Ã‚­ˆ—
 	void PlayerCloser(TrashEnemy* _enemy);
 
 	const float RANGESPEED = 60.0f;

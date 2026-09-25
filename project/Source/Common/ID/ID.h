@@ -106,6 +106,7 @@ namespace ID {
 		TE_DAMAGE,
 		TE_DEAD,
 		TE_STANCE,
+		TE_WALK,
 
 		TE_R_IDOL,
 		TE_R_IDOL_SKY,

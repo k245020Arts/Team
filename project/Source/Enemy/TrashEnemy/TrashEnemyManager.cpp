@@ -66,7 +66,8 @@ TrashEnemyManager::TrashEnemyManager()
 	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_C_ATTACK",	ID::TE_C_ATTACK);
 	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_DAMAGE",	ID::TE_DAMAGE);
 	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_DEAD",		ID::TE_DEAD);
-	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_Stance",	ID::TE_STANCE);
+	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_STANCE",	ID::TE_STANCE);
+	ResourceLoad::LoadAnim(resources[0].charaTypeID + "_WALK",		ID::TE_WALK);
 	//遠距離の敵のアニメーション設定
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_IDOL",		ID::TE_R_IDOL);
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_IDOL_SKY",  ID::TE_R_IDOL_SKY);
@@ -75,7 +76,7 @@ TrashEnemyManager::TrashEnemyManager()
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_C_ATTACK",	ID::TE_R_C_ATTACK);
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_DAMAGE",	ID::TE_R_DAMAGE);
 	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_DEAD",		ID::TE_R_DEAD);
-	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_Stance",	ID::TE_R_STANCE);
+	ResourceLoad::LoadAnim(resources[1].charaTypeID + "_STANCE",	ID::TE_R_STANCE);
 }
 
 TrashEnemyManager::~TrashEnemyManager()

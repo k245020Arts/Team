@@ -66,7 +66,7 @@ void T_EnemyStaySky::LeaderMove(TrashEnemy* _enemy)
 	if (!_enemy->isStandby)
 	{
 		_enemy->enemyBaseComponent.camera->NowChangeStateCamera(StateID::R_ENEMY_CAMERA_S);
-		_enemy->enemyBaseComponent.camera->CanNotStateChange();
+		//_enemy->enemyBaseComponent.camera->CanNotStateChange();
 	}
 
 	if (_enemy->GetPos().y <= MaxPos)

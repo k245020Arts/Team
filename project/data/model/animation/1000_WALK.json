@@ -2,10 +2,10 @@
   "Animator": {
     "eventFinishTime": -1.0,
     "eventStartTime": -1.0,
-    "fileName": "1100_Stance",
-    "id": "1100_Stance",
+    "fileName": "1000_WALK",
+    "id": "1000_WALK",
     "loop": true,
-    "maxFrame": 21.0,
+    "maxFrame": 35.0,
     "playSpeed": 1.0
   }
 }
