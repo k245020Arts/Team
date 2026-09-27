@@ -33,4 +33,7 @@ private:
 	bool isDamageMove;
 
 	float motionSpeed;
+
+	//プレイヤーの位置を一回だけ保存するためのカウンター
+	int pCounter;
 };

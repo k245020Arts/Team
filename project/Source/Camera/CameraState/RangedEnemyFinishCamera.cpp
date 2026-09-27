@@ -39,7 +39,8 @@ void RangedEnemyFinishCamera::Update()
 	}
 	else
 	{
-		camera->target = groupManager->HitEnemyPosition();
+		lookPos = groupManager->HitEnemyPosition() + EnemyPosOffset;
+		camera->target = lookPos;
 		//camera->cameraComponent.cameraTransform->position = targetPos;
 	}
 }
@@ -51,11 +52,12 @@ void RangedEnemyFinishCamera::Start()
 	groupManager = FindGameObject<TrashEnemyGroup>();
 
 	keepPos = camera->cameraComponent.cameraTransform->position;
-	targetPos = player->GetPlayerObj()->GetTransform()->position + PosOffset;
-	camera->target = (player->GetPlayerObj()->GetTransform()->position + groupManager->HitEnemyPosition()) * 0.5f;
-	
-	lookPos = groupManager->HitEnemyPosition();
+	targetPos = player->GetPlayerObj()->GetTransform()->position + PosOffset * MGetRotY(player->GetPlayerObj()->GetTransform()->rotation.y);
 
+	lookPos = groupManager->HitEnemyPosition() + EnemyPosOffset;
+	camera->target = lookPos/*(player->GetPlayerObj()->GetTransform()->position + lookPos) * 0.5f*/;
+	
+	
 	keepTarget = camera->target;
 	timer = MaxTimer;
 }

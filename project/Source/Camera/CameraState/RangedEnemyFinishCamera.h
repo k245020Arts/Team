@@ -19,8 +19,10 @@ private:
 	TrashEnemyGroup* groupManager;
 	VECTOR3 targetPos;
 	VECTOR3 lookPos;
-
-	const VECTOR3 PosOffset = VECTOR3(800.0f, 600.0f, -800.0f);
+	//プレイヤーとカメラをどれくらい離すか
+	const VECTOR3 PosOffset = VECTOR3(800.0f, 1000.0f, -800.0f);
+	//敵の見る位置を少し上にする
+	const VECTOR3 EnemyPosOffset = VECTOR3(0, 500, 0);
 
 	VECTOR3 keepTarget;
 	float timer;

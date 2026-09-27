@@ -9,6 +9,7 @@
 #include "../../../Common/InputManager/InputManager.h"
 #include "../../../Camera/Camera.h"
 #include "../../../Common/Sound/SoundManager.h"
+#include "../../../Component/Collider/SphereCollider.h"
 
 CooperateAttack2::CooperateAttack2()
 {
@@ -35,6 +36,8 @@ CooperateAttack2::CooperateAttack2()
 	isDamageMove = true;
 
 	motionSpeed = 0;
+
+	pCounter = 0;
 }
 
 CooperateAttack2::~CooperateAttack2()
@@ -68,7 +71,7 @@ void CooperateAttack2::Start()
 
 	enemy->isMovingToPlayer = true;
 	pPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
-
+	pCounter = 0;
 	EnemyStateBase::Start();
 }
 
@@ -137,6 +140,14 @@ void CooperateAttack2::DamageMove(TrashEnemy* _enemy)
 	_enemy->enemyBaseComponent.camera->CanStateChange();
 	_enemy->enemyBaseComponent.camera->ChangeStateCamera(StateID::R_ENEMY_FINISH_CAMERA_S);
 	SoundManager::GetInstance()->PlaySe(Sound_ID::SOUND_ID::V_E_DAMAGE5);
+	obj->Component()->RemoveAllComponent<SphereCollider>();
+
+	if (pCounter == 0)
+	{
+		pPos = _enemy->enemyBaseComponent.playerObj->GetTransform()->position;
+		pCounter = 1;
+	}
+	_enemy->enemyBaseComponent.playerObj->GetTransform()->position = pPos;
 
 	hitStopCounter += Time::DeltaTimeRate();
 
