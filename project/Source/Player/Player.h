@@ -12,6 +12,7 @@ class EnemyAttackBase;
 class BossRockManager;
 struct PlayerAttackData;
 class PlayerParamWindow;
+class TrashEnemyGroup;
 
 class Player : public CharaBase
 {
@@ -291,6 +292,7 @@ private:
 	PlayerInformation::CharaComponent playerCom;
 	float size;
 	Transform* playerTransform;
+	TrashEnemyGroup* trashEnemyGroup;
 	VECTOR3 walkAngle;
 	bool avoidStart;
 	bool avoidReady;

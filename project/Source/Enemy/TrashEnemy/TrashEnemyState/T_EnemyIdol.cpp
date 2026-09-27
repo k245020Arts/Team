@@ -58,7 +58,7 @@ void T_EnemyIdol::Finish()
 {
 	const TrashEnemy* enemy = GetBase<TrashEnemy>();
 	enemy->enemyBaseComponent.physics->SetGravity(setGravity);
-	//enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
+	enemy->enemyBaseComponent.anim->SetPlaySpeed(1.0f);
 	counter = 0;
 }
 
@@ -79,7 +79,7 @@ void T_EnemyIdol::NormalMove()
 	PlayerCloser(enemy);
 
 	VECTOR3 targetVec = enemy->obj->GetTransform()->position - enemy->enemyBaseComponent.playerObj->GetTransform()->position;
-	detectionRange += Time::DeltaTimeRate() * RANGESPEED;
+	detectionRange += Time::DeltaTimeRate() * RangeSpeed;
 	if (targetVec.Size() < enemy->GetStatus().chaseRange + detectionRange )
 		enemy->enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_RUN_S);
 }
@@ -90,6 +90,7 @@ void T_EnemyIdol::PlayerCloser(TrashEnemy* _enemy)
 	if (animCounter == 0)
 	{
 		_enemy->enemyBaseComponent.anim->Play(ID::TE_WALK);
+		_enemy->enemyBaseComponent.anim->SetPlaySpeed(Random::GetFloat(WalkAnimSpeedMin, WalkAnimSpeedMax));
 		counter++;
 	}
 

@@ -127,7 +127,7 @@ void TrashEnemy::Update()
 
 	if (IsPlayerSpecialMove())
 		return;
-		
+	
 	EnemyBase::Update();
 
 	if (hp <= 0)

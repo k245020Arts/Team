@@ -49,7 +49,7 @@ PlayScene::PlayScene()
 	StageManager* stageManager = new StageManager();
 
 	EnemyManager* enemy =  new EnemyManager();
-
+	
 	PlayerManager* player = new PlayerManager();
 
 	WeaponManager* weapon = new WeaponManager();
@@ -97,7 +97,6 @@ PlayScene::PlayScene()
 	//m->TextureHandle(LoadGraph("data/texture/101backGround.png"),MeshRenderer2D::DRAW_RECT_ROTA_GRAPH,VECTOR3(500,500,500),VZero,VZero);
 
 	Wave* wave = new Wave;
-	
 	SoundManager::GetInstance()->PlaySceneLoad();
 	SoundManager::GetInstance()->PlayBGM(Sound_ID::PLAY_BGM, true, true);
 }

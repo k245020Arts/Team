@@ -43,6 +43,8 @@
 #include "../GameControler/GameControler.h"
 #include "../Player/PlayerState/PlayerDie.h"
 #include "../Enemy/EnemyManager.h"
+#include "../Enemy/TrashEnemy/TrashEnemyGroup.h"
+
 #include "../Enemy/EnemyState/Attack/EnemyAttackBase.h"
 #include "../Enemy/Boss/BossState/AttackSorting.h"
 #include "../Common/Easing/Easing.h"
@@ -116,6 +118,9 @@ Player::Player()
 	hpUIMoveCounter				= 0.0f;
 	specialTextPhysics			= nullptr;
 	specialMoveCounter			= 0.0f;
+
+	//trashEnemyGroup = FindGameObject<TrashEnemyGroup>();
+	//trashEnemyGroup = nullptr;
 }
 
 Player::~Player()
@@ -128,6 +133,12 @@ Player::~Player()
 
 void Player::Update()
 {
+	/*if (trashEnemyGroup->GetStartRangedAtk())
+		specialAttack = false;
+	else
+		specialAttack = true;*/
+	
+
 	//playerCom.stateManager->Update();
 	//‰ñ”ðó‘Ô‚ªŽn‚Ü‚é‚Æ‚«‚É‰ñ“]‚É•â³‚ðŠ|‚¯‚é‚½‚ß‚Ìˆ—
 	//DebugLogText::GetInstance()->Log(LogLevel::INFO, Debug::printfString("playerPositionY = %.3f", playerTransform->position.y));

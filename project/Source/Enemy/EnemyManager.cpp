@@ -23,6 +23,7 @@
 #include "../State/StateManager.h"
 #include "../Stage/StageSelectData.h"
 #include "Boss/BossCreater.h"
+#include "TrashEnemy/TrashEnemyManager.h"
 //#define VERSION2D
 //#define DOT_MODE
 
@@ -35,6 +36,8 @@ EnemyManager::EnemyManager()
 	cameraTargetObj = nullptr;
 	gameContorler = nullptr;
 	new BossCreater();
+
+	//new TrashEnemyManager();
 }
 
 EnemyManager::~EnemyManager()

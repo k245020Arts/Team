@@ -38,6 +38,7 @@ public:
 	//‰“‹——£‚Ì“G‚Ì˜AŒgUŒ‚
 	void RangedEnemyAttack();
 	void RangedDebugAtk() { rangedAtkCoolTime = MaxCoolTime; }
+	bool GetStartRangedAtk() { return startRangedAtk; }
 
 	//‹ß‹——£‚Ì“G‚ğ‹­§“I‚É“|‚·ˆ—
 	void DeadMeleeEnemy();

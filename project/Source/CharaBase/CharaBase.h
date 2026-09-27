@@ -104,7 +104,7 @@ public:
 	/// ƒXƒyƒVƒƒƒ‹UŒ‚‚ğ‚¾‚¹‚é‚©‚Ç‚¤‚©‚Ì”»’è
 	/// </summary>
 	/// <returns></returns>
-	bool CanSpecialAttack()const { return (specialAttackBar >= specialAttackBarMax); }
+	bool CanSpecialAttack()const { return (specialAttackBar >= specialAttackBarMax && specialAttack); }
 
 protected:
 	CollsionSet attackColl; //UŒ‚‚Ì“–‚½‚è”»’è‚Ìî•ñ
@@ -117,4 +117,6 @@ protected:
 
 	float specialAttackBar;
 	float specialAttackBarMax;
+
+	bool specialAttack;
 };

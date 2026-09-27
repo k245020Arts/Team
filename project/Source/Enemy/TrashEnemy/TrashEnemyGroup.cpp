@@ -5,6 +5,9 @@
 #include "../../Common/Effect/EffectManager.h"
 #include "../../Common/Sound/SoundManager.h"
 
+#include "../../State/StateManager.h"
+#include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
+
 TrashEnemyGroup::TrashEnemyGroup()
 {
 	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
@@ -420,7 +423,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		rangedAtkCoolTime += Time::DeltaTimeRate();
 		return;
 	}
-
+	
 	if (isMeleeCooperateAtk)
 		return;
 
