@@ -69,6 +69,7 @@ Camera::Camera()
 	shakePower							= 0.0f;
 	shakeTime							= 0.0f;
 	rokPos								= 0.0f;
+	canUseSpecial						= true;
 }
 
 Camera::~Camera()

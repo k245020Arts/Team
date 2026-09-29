@@ -275,6 +275,7 @@ public:
 	/// </summary>
 	void CameraPerspectiveShakeFinish();
 
+	const bool GetCanUseSpecial() { return  canUseSpecial; }
 private:
 
 	float timeTest;
@@ -314,4 +315,6 @@ private:
 	float shakePower;
 	float shakeTime;
 	float keepFov; //‹–ìŠp‚ÌShake‚Ì‚½‚ß‚És‚¤
+
+	bool canUseSpecial;
 };

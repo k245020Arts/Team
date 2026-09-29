@@ -50,7 +50,7 @@ void RangedEnemyCamera::Start()
 
 	enemyPos = tEnemyManager->GetRangedLeaderPos();
 	pPos = player->GetPlayerObj()->GetTransform()->position + PlayerPosOffset;
-
+	camera->canUseSpecial = false;
 	isAngleSet = false;
 }
 

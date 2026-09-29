@@ -64,4 +64,6 @@ void RangedEnemyFinishCamera::Start()
 
 void RangedEnemyFinishCamera::Finish()
 {
+	Camera* camera = GetBase<Camera>();
+	camera->canUseSpecial = true;
 }

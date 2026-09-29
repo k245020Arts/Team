@@ -119,8 +119,6 @@ Player::Player()
 	specialTextPhysics			= nullptr;
 	specialMoveCounter			= 0.0f;
 
-	//trashEnemyGroup = FindGameObject<TrashEnemyGroup>();
-	//trashEnemyGroup = nullptr;
 }
 
 Player::~Player()
@@ -133,10 +131,10 @@ Player::~Player()
 
 void Player::Update()
 {
-	/*if (trashEnemyGroup->GetStartRangedAtk())
-		specialAttack = false;
+	if (playerCom.camera->GetCanUseSpecial())
+		specialAttack = true;
 	else
-		specialAttack = true;*/
+		specialAttack = false;
 	
 
 	//playerCom.stateManager->Update();
