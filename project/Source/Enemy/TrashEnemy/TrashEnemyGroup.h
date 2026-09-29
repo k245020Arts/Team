@@ -16,9 +16,9 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	//‹ß‹——£‚Ì“G‚¾‚¯‚ğì‚é
+	//‹ß‹——£‚Ì“G‚ğ•Û‘¶‚·‚é
 	void SetMeleeEnemy(TrashEnemy* _enemy);
-	//‰“‹——£‚Ì“G‚¾‚¯‚ğì‚é
+	//‰“‹——£‚Ì“G‚ğ•Û‘¶‚·‚é
 	void SetRangedEnemy(TrashEnemy* _enemy);
 
 	//¶‚«‚Ä‚é‚·‚×‚Ä‚Ì“G‚ğ”‚¦‚éŠÖ”

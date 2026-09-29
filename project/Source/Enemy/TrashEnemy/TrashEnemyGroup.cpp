@@ -128,7 +128,7 @@ void TrashEnemyGroup::Separation()
 	const float E_SIZE = 600;
 
 	allEnemy.clear();
-
+	
 	for (auto& melee : meleeEnemies)
 	{
 		allEnemy.push_back(melee);
@@ -168,7 +168,7 @@ void TrashEnemyGroup::InCameraWayPoint(WayPoint& _wayPoint)
 	VECTOR3 camPos = camera->GetCameraTransform()->position;
 	camPos.y = 0;
 	const float ViewingAngle = 45.0f;
-	//³–Ê‚×‚­
+	//³–Ê
 	VECTOR3 frontVec = VECTOR3(0, 0, 1) * MGetRotY(camera->GetCameraTransform()->rotation.y);
 	VECTOR3 vec = _wayPoint.position - camPos;
 
@@ -424,6 +424,7 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		return;
 	}
 	
+	//‹ß‹——£‚Ì“G‚ª˜AŒgUŒ‚‚µ‚Ä‚½‚çUŒ‚‚µ‚È‚¢‚æ‚¤‚É‚·‚é
 	if (isMeleeCooperateAtk)
 		return;
 
@@ -546,11 +547,14 @@ void TrashEnemyGroup::NextLeader()
 		}
 	}
 	//ƒŠ[ƒ_[‚ª€‚ñ‚Å‚½•Ê‚Ì“G‚ğƒŠ[ƒ_[‚É‚·‚é
-	if (!readerActive)
-	{
-		rangedEnemies[0]->SetEnemyType(EnemyType::RANGED_LEADER);
-		AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
-	}
+	if (readerActive)
+		return;
+
+	rangedEnemies[0]->SetEnemyType(EnemyType::RANGED_LEADER);
+	AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
+	//˜AŒgUŒ‚’†‚É“G‚ª€‚ñ‚¾‚Æ‚«
+	if (startRangedAtk)
+		rangedJoinCounter--;
 }
 
 void TrashEnemyGroup::DeadRangedEnemy(TrashEnemy* _enemy)

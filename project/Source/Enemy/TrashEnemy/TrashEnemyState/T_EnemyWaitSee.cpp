@@ -73,11 +73,15 @@ void T_EnemyWaitSee::Move(TrashEnemy* _enemy)
 	{
 		const float PosY = 1200.0f;
 		targetPos.y = PosY;
-		float a = PosY - enePos.y;
-		_enemy->GetEnemyObj()->GetTransform()->position.y += a * 0.01f;
+		float moveDelta = PosY - enePos.y;
+		_enemy->GetEnemyObj()->GetTransform()->position.y += moveDelta * 0.01f;
 	}
 	else
+	{
 		_enemy->enemyBaseComponent.physics->SetGravity(setGravity);
+		if(enePos.y <= 0.0f)
+			_enemy->enemyBaseComponent.anim->Play(ID::TE_R_IDOL);
+	}
 
 	if (VSize(targetPos - enePos) < pointRange)
 		return;
