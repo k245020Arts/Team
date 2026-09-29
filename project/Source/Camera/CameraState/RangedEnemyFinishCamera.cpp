@@ -60,6 +60,8 @@ void RangedEnemyFinishCamera::Start()
 	
 	keepTarget = camera->target;
 	timer = MaxTimer;
+	camera->canUseSpecial = false;
+
 }
 
 void RangedEnemyFinishCamera::Finish()

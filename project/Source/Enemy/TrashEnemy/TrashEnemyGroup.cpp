@@ -333,7 +333,7 @@ void TrashEnemyGroup::CloseWayPoint()
 
 void TrashEnemyGroup::CooperateAttackMove(TrashEnemy* _enemy)
 {
-	if (!_enemy->IsCooperateAtk())
+	if (!_enemy->IsCooperateAtk()|| startRangedAtk)
 	{
 		isMeleeCooperateAtk = false;
 		return;

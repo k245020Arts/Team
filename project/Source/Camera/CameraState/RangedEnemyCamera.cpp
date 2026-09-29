@@ -56,6 +56,8 @@ void RangedEnemyCamera::Start()
 
 void RangedEnemyCamera::Finish()
 {
+	Camera* camera = GetBase<Camera>();
+	camera->canUseSpecial = true;
 }
 
 void RangedEnemyCamera::UpdateCamPos(Camera* _camera)
