@@ -2,10 +2,10 @@
   "Animator": {
     "eventFinishTime": -1.0,
     "eventStartTime": -1.0,
-    "fileName": "1100_STANCE",
-    "id": "1100_STANCE",
+    "fileName": "1100_IDOL_SKY",
+    "id": "1100_IDOL_SKY",
     "loop": true,
-    "maxFrame": 21.0,
+    "maxFrame": 99.0,
     "playSpeed": 1.0
   }
 }
