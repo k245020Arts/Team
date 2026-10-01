@@ -38,6 +38,8 @@ CooperateAttack2::CooperateAttack2()
 	motionSpeed = 0;
 
 	pCounter = 0;
+
+	s = 0;
 }
 
 CooperateAttack2::~CooperateAttack2()
@@ -72,6 +74,8 @@ void CooperateAttack2::Start()
 	enemy->isMovingToPlayer = true;
 	pPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 	pCounter = 0;
+
+	s = 0;
 	EnemyStateBase::Start();
 }
 
@@ -93,11 +97,11 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	const float Speed = 70.0f;
 	const float SearchPosMax = 2000.0f;
 	const float Max = 40.0f;
-
+	
 	if (VSize(pPos - enePos) > SearchPosMax)
 		pPos = _enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 
-	if (_enemy->cooperateDamageMove && isDamageMove)//ダメージをもらった時の処理
+	if (_enemy->cooperateDamageMove && isDamageMove)//ダメージをもらって打ち返されたときの処理
 	{
 		_enemy->LookTarget(pPos);
 		damageMove = true;
@@ -114,11 +118,12 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 
 			isDamageMove = false;
 			_enemy->isStandby = false;
-
 		}
 		else if (!isDamageMove)//攻撃を食らうのと着地が同時だった時
 			isDamageMove = true;
 
+		//どっかで位置固定処理が入ってるからそれを変える
+		_enemy->NormalMove(Speed);
 		return;
 	}
 

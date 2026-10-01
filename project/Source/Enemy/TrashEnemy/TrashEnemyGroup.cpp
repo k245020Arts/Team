@@ -125,7 +125,7 @@ void TrashEnemyGroup::Separation()
 {
 	VECTOR pos1 = { 0,0,0 };
 	VECTOR pos2 = { 0,0,0 };
-	const float E_SIZE = 600;
+	const float EnemyDistance = 600;
 
 	allEnemy.clear();
 	
@@ -138,29 +138,59 @@ void TrashEnemyGroup::Separation()
 		allEnemy.push_back(ranged);
 	}
 
-	for (auto& itr1 : allEnemy)
+	for (size_t i = 0; i < allEnemy.size(); ++i)
 	{
-		for (auto& itr2 : allEnemy)
+		for (size_t j = i + 1; j < allEnemy.size(); ++j)
 		{
-			if (itr1 == itr2)
+			pos1 = allEnemy[i]->GetPos();
+			pos2 = allEnemy[j]->GetPos();
+
+			VECTOR3 direction = pos1 - pos2;
+			direction.y = 0.0f;
+
+			float distance = direction.Size();
+
+			if (distance > EnemyDistance)
 				continue;
 
-			pos1 = itr1->GetPos();
-			pos2 = itr2->GetPos();
-			VECTOR3 vec = pos1 - pos2;
-			VECTOR3 vec2 = pos2 - pos1;
-
-			vec.y = 0.0f;
-			vec2.y = 0.0f;
-
-			//エネミーの分散
-			if (vec.Size() <= E_SIZE)
+			if (distance <= 0.001f)
 			{
-				itr1->AddPos(vec.Normalize());
-				itr2->AddPos(vec2.Normalize());
+				direction = VECTOR3(1.0f, 0.0f, 0.0f);
+				distance = 0.0f;
 			}
+
+			float penetration = EnemyDistance - distance;
+
+			if (allEnemy[i]->GetEnemyType() != EnemyType::RANGED_LEADER)
+				allEnemy[i]->AddPos(direction.Normalize() * penetration * 0.5f);
+			if (allEnemy[j]->GetEnemyType() != EnemyType::RANGED_LEADER)
+				allEnemy[j]->AddPos(direction.Normalize() * penetration * -0.5f);
 		}
 	}
+
+	//for (auto& itr1 : allEnemy)
+	//{
+	//	for (auto& itr2 : allEnemy)
+	//	{
+	//		if (itr1 == itr2)
+	//			continue;
+
+	//		pos1 = itr1->GetPos();
+	//		pos2 = itr2->GetPos();
+	//		VECTOR3 vec = pos1 - pos2;
+	//		VECTOR3 vec2 = pos2 - pos1;
+
+	//		vec.y = 0.0f;
+	//		vec2.y = 0.0f;
+
+	//		//エネミーの分散
+	//		if (vec.Size() <= E_SIZE)
+	//		{
+	//			itr1->AddPos(vec.Normalize());
+	//			itr2->AddPos(vec2.Normalize());
+	//		}
+	//	}
+	//}
 }
 
 void TrashEnemyGroup::InCameraWayPoint(WayPoint& _wayPoint)
@@ -438,10 +468,10 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		else
 		{
 			AttackRangedMove(enemy);
-			pointCounter = 0;
+			/*pointCounter = 0;*/
 		}
 	}
-	
+	pointCounter = 0;
 	rangedAtkTime += Time::DeltaTimeRate();
 }
 
@@ -569,7 +599,7 @@ void TrashEnemyGroup::DeadRangedEnemy(TrashEnemy* _enemy)
 
 void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
 {
-	if (hitBack)
+	if (hitBack || _enemy->IsPlayerSpecialMove())
 		return;
 	
 	if (rangedJoinCounter == 0)//リーダー以外の敵を数える

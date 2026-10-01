@@ -63,7 +63,7 @@ private:
 	//‰“‹——£‚Ì“G
 	std::vector<TrashEnemy*> rangedEnemies;
 	//‘S•”‚Ì“G‚Ìî•ñ
-	std::list<TrashEnemy*> allEnemy;
+	std::vector<TrashEnemy*> allEnemy;
 
 	const int ATK_COUNTER_MIN = 3;
 	const float ATK_COUNTER_MAX = 3.0f;
