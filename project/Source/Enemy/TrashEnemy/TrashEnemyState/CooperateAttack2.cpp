@@ -38,6 +38,9 @@ CooperateAttack2::CooperateAttack2()
 	motionSpeed = 0;
 
 	pCounter = 0;
+
+	runThrough = false;
+	throughCounter = 0;
 }
 
 CooperateAttack2::~CooperateAttack2()
@@ -73,6 +76,8 @@ void CooperateAttack2::Start()
 	pPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
 	pCounter = 0;
 
+	runThrough = false;
+	throughCounter = 0;
 	EnemyStateBase::Start();
 }
 
@@ -106,7 +111,7 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 		InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartTime(ControllerPower, SceondTime);
 		return;
 	}
-	else if (VSize(pPos - enePos) < Max )//’n–Ê‚É’…’n‚µ‚½
+	else if (VSize(pPos - enePos) < Max && !runThrough)//’n–Ê‚É’…’n‚µ‚½
 	{
 		if (!_enemy->cooperateDamageMove)//UŒ‚‚ğH‚ç‚Á‚Ä‚È‚©‚Á‚½‚Æ‚«
 		{
@@ -115,15 +120,23 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 
 			isDamageMove = false;
 			_enemy->isStandby = false;
+			runThrough = true;
 		}
 		else if (!isDamageMove)//UŒ‚‚ğH‚ç‚¤‚Ì‚Æ’…’n‚ª“¯‚¾‚Á‚½
 			isDamageMove = true;
 		
 		return;
 	}
-	else//“G‚ªUŒ‚‚µ‚½Œã‚Ì‹ì‚¯”²‚¯‹““®
+	else if(runThrough)//“G‚ªUŒ‚‚µ‚½Œã‚Ì‹ì‚¯”²‚¯‹““®
 	{
+		if (throughCounter <= 1)
+		{
+			throughCounter += Time::DeltaTimeRate();
+			_enemy->NormalMove(Speed / 2);
+		}
 
+		_enemy->GetEnemyObj()->GetTransform()->position.y = 0;
+		return;
 	}
 
 	dir = VNorm(pPos - enePos);

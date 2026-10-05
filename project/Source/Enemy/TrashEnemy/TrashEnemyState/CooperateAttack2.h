@@ -37,5 +37,8 @@ private:
 	//プレイヤーの位置を一回だけ保存するためのカウンター
 	int pCounter;
 	
-	
+	//走り抜ける挙動の時に使う
+	bool runThrough;
+	//走り抜けるときに使うカウンター
+	float throughCounter;
 };

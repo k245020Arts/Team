@@ -50,6 +50,11 @@ TrashEnemyGroup::TrashEnemyGroup()
 	prepareCounter = 0;
 
 	pointCounter = 0;
+
+	cooperateCounter = 0;
+	hitEnemy = nullptr;
+	maxAttackCounter = 0;
+	standbyCounter = 0;
 }
 
 TrashEnemyGroup::~TrashEnemyGroup()
@@ -128,7 +133,7 @@ void TrashEnemyGroup::Separation()
 	const float EnemyDistance = 600;
 
 	allEnemy.clear();
-	
+	//近距離の敵と遠距離の敵をまとめる
 	for (auto& melee : meleeEnemies)
 	{
 		allEnemy.push_back(melee);
@@ -138,59 +143,29 @@ void TrashEnemyGroup::Separation()
 		allEnemy.push_back(ranged);
 	}
 
-	for (size_t i = 0; i < allEnemy.size(); ++i)
+	for (auto& itr1 : allEnemy)
 	{
-		for (size_t j = i + 1; j < allEnemy.size(); ++j)
+		for (auto& itr2 : allEnemy)
 		{
-			pos1 = allEnemy[i]->GetPos();
-			pos2 = allEnemy[j]->GetPos();
-
-			VECTOR3 direction = pos1 - pos2;
-			direction.y = 0.0f;
-
-			float distance = direction.Size();
-
-			if (distance > EnemyDistance)
+			if (itr1 == itr2)
 				continue;
 
-			if (distance <= 0.001f)
+			pos1 = itr1->GetPos();
+			pos2 = itr2->GetPos();
+			VECTOR3 vec = pos1 - pos2;
+			VECTOR3 vec2 = pos2 - pos1;
+
+			vec.y = 0.0f;
+			vec2.y = 0.0f;
+
+			//エネミーの分散
+			if (vec.Size() <= EnemyDistance)
 			{
-				direction = VECTOR3(1.0f, 0.0f, 0.0f);
-				distance = 0.0f;
+				itr1->AddPos(vec.Normalize());
+				itr2->AddPos(vec2.Normalize());
 			}
-
-			float penetration = EnemyDistance - distance;
-
-			if (allEnemy[i]->GetEnemyType() != EnemyType::RANGED_LEADER)
-				allEnemy[i]->AddPos(direction.Normalize() * penetration * 0.5f);
-			if (allEnemy[j]->GetEnemyType() != EnemyType::RANGED_LEADER)
-				allEnemy[j]->AddPos(direction.Normalize() * penetration * -0.5f);
 		}
 	}
-
-	//for (auto& itr1 : allEnemy)
-	//{
-	//	for (auto& itr2 : allEnemy)
-	//	{
-	//		if (itr1 == itr2)
-	//			continue;
-
-	//		pos1 = itr1->GetPos();
-	//		pos2 = itr2->GetPos();
-	//		VECTOR3 vec = pos1 - pos2;
-	//		VECTOR3 vec2 = pos2 - pos1;
-
-	//		vec.y = 0.0f;
-	//		vec2.y = 0.0f;
-
-	//		//エネミーの分散
-	//		if (vec.Size() <= E_SIZE)
-	//		{
-	//			itr1->AddPos(vec.Normalize());
-	//			itr2->AddPos(vec2.Normalize());
-	//		}
-	//	}
-	//}
 }
 
 void TrashEnemyGroup::InCameraWayPoint(WayPoint& _wayPoint)
