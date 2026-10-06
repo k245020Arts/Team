@@ -354,7 +354,6 @@ void TrashEnemy::PlayerHit(const CollsionEventData& _data)
 
 void TrashEnemy::HandleNormalAttack(const CollsionEventData& _data)
 {
-	//damage = 0;
 	if (pState->GetState<PlayerAttackStateBase>() != nullptr)
 		damage = pState->GetState<PlayerAttackStateBase>()->GetHitDamage();
 	else
