@@ -333,22 +333,21 @@ void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _t
 void TrashEnemyManager::CooperateAtk()
 {
 	int _enemyCounter = enemyGroup->GetMeleeZeroHpEnemy();
-	if (_enemyCounter == 0)
-		return;
-
-	int meleeCounter = 4;
-	float rangedMaxCounter = 15.0f;
-
-	//‹ß‹——£‚Ì˜AŒgUŒ‚
-	if (isMeleeCooperateAtk)
+	if (_enemyCounter != 0)//ƒXƒ|[ƒ“‚·‚é‘O‚ÉUŒ‚‚µ‚½ó‘Ô‚É‚È‚é‚½‚ß
 	{
-		if (_enemyCounter <= meleeCounter)
+		int meleeCounter = 4;
+		
+		//‹ß‹——£‚Ì˜AŒgUŒ‚
+		if (isMeleeCooperateAtk)
 		{
-			Cooperate();
-			isMeleeCooperateAtk = false;
+			if (_enemyCounter <= meleeCounter)
+			{
+				Cooperate();
+				isMeleeCooperateAtk = false;
+			}
 		}
 	}
-
+	float rangedMaxCounter = 15.0f;
 	//‰“‹——£‚Ì˜AŒgUŒ‚
 	if (enemyGroup->GetRangedZeroHpEnemy() <= 0)
 	{
