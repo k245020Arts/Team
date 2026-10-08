@@ -4,6 +4,7 @@
 #include "../../../State/StateManager.h"
 #include "../../../Common/Random/Random.h"
 #include "../../../Component/Physics/Physics.h"
+#include "../../../Common/Easing/Easing.h"
 
 T_EnemyWaitSee::T_EnemyWaitSee()
 {
@@ -17,6 +18,8 @@ T_EnemyWaitSee::T_EnemyWaitSee()
 
 	pointRange = 0.0f;
 	setGravity = 0;
+
+	floatingTimeCounter = 0;
 }
 
 T_EnemyWaitSee::~T_EnemyWaitSee()
@@ -71,9 +74,8 @@ void T_EnemyWaitSee::Move(TrashEnemy* _enemy)
 
 	if (!_enemy->rangedGravity)
 	{
-		const float PosY = 1200.0f;
-		targetPos.y = PosY;
-		float moveDelta = PosY - enePos.y;
+		targetPos.y = AveragePositionY;
+		float moveDelta = AveragePositionY - enePos.y;
 		_enemy->GetEnemyObj()->GetTransform()->position.y += moveDelta * 0.01f;
 	}
 	else
@@ -88,4 +90,12 @@ void T_EnemyWaitSee::Move(TrashEnemy* _enemy)
 
 	VECTOR3 dir = VNorm(targetPos - enePos);
 	_enemy->GetEnemyObj()->GetTransform()->position+= dir * moveSpeed;
+}
+
+void T_EnemyWaitSee::FloatingMove(TrashEnemy* _enemy)
+{
+	//
+	floatingTimeCounter += Time::DeltaTimeRate();
+	const float _posY = Easing::Lerp(AveragePositionY - DeviationPositionY, AveragePositionY + DeviationPositionY, floatingTimeCounter);
+	_enemy->GetEnemyObj()->GetTransform()->position.y;
 }

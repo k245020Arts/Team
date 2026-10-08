@@ -17,9 +17,15 @@ public:
 	bool IsLeader() { return isLeader; }
 private:
 	void Move(TrashEnemy* _enemy);
+	void FloatingMove(TrashEnemy* _enemy);
 
 	const float LeaderRange = 400.0f;
 	const float RangedRange = 200.0f;
+	//敵の浮いている位置の平均値
+	const float AveragePositionY = 1200.0f;
+	//浮いてるように見せるための誤差の数値
+	const float DeviationPositionY = 200.0f;
+
 
 	VECTOR3 targetPos;
 	bool isLeader;
@@ -31,4 +37,6 @@ private:
 
 	float pointRange;
 	VECTOR3 setGravity;
+	//浮くときに使うカウンター
+	float floatingTimeCounter;
 };

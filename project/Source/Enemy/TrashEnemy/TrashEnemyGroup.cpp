@@ -506,6 +506,7 @@ void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 	}
 }
 
+
 void TrashEnemyGroup::RangedDamageMove()
 {
 	for (auto& enemy : rangedEnemies)
