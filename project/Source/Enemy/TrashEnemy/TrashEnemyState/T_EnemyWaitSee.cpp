@@ -19,7 +19,9 @@ T_EnemyWaitSee::T_EnemyWaitSee()
 	pointRange = 0.0f;
 	setGravity = 0;
 
-	floatingTimeCounter = 0;
+	floatingTimeCounter = 1.0f;
+	copyPositionY = 0;
+	isUpMove = false;
 }
 
 T_EnemyWaitSee::~T_EnemyWaitSee()
@@ -44,6 +46,7 @@ void T_EnemyWaitSee::Start()
 	enemy->enemyBaseComponent.physics->SetGravity(VZero);
 
 	targetPos = enemy->TargetPoint();
+	isUpMove = true;
 
 	switch (enemy->enemyType)
 	{
@@ -74,9 +77,20 @@ void T_EnemyWaitSee::Move(TrashEnemy* _enemy)
 
 	if (!_enemy->rangedGravity)
 	{
-		targetPos.y = AveragePositionY;
-		float moveDelta = AveragePositionY - enePos.y;
-		_enemy->GetEnemyObj()->GetTransform()->position.y += moveDelta * 0.01f;
+		if (isUpMove)
+		{
+			targetPos.y = AveragePositionY;
+			const bool IsUpMove = enePos.y >= targetPos.y - 50;
+			float moveDelta = AveragePositionY - enePos.y;
+			_enemy->GetEnemyObj()->GetTransform()->position.y += moveDelta * 0.01f;
+			if (IsUpMove)
+			{
+				copyPositionY = enePos.y;
+				isUpMove = false;
+			}
+		}
+		else
+			FloatingMove(_enemy);
 	}
 	else
 	{
@@ -94,8 +108,8 @@ void T_EnemyWaitSee::Move(TrashEnemy* _enemy)
 
 void T_EnemyWaitSee::FloatingMove(TrashEnemy* _enemy)
 {
-	//
 	floatingTimeCounter += Time::DeltaTimeRate();
-	const float _posY = Easing::Lerp(AveragePositionY - DeviationPositionY, AveragePositionY + DeviationPositionY, floatingTimeCounter);
-	_enemy->GetEnemyObj()->GetTransform()->position.y;
+	// ã‰º‚É—h‚ê‚é—Ê‚ðŒvŽZ
+	const float offsetY = copyPositionY + Easing::SinCube(-DeviationPositionY, DeviationPositionY, sinf(floatingTimeCounter));
+	_enemy->GetEnemyObj()->GetTransform()->position.y = offsetY;
 }

@@ -187,6 +187,8 @@ private:
 	void PlayDamageFeedback(int _power, int _time, const Transform& _transform, Effect_ID::EFFECT_ID _id, float time, const Transform& _transform2, Effect_ID::EFFECT_ID _id2, float _time2);
 	//攻撃タイプごとのリアクション
 	void ApplyDamage(EnemyDamage::EnemyDamageInfo _dInfo);
+	//カメラとプレイヤーの間の敵を見えないようにする
+	void UpdateEnemyVisibility();
 	
 	bool active;
 	

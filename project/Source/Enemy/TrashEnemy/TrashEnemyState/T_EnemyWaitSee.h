@@ -17,6 +17,7 @@ public:
 	bool IsLeader() { return isLeader; }
 private:
 	void Move(TrashEnemy* _enemy);
+	//ぷかぷか浮かぶような動き
 	void FloatingMove(TrashEnemy* _enemy);
 
 	const float LeaderRange = 400.0f;
@@ -24,7 +25,7 @@ private:
 	//敵の浮いている位置の平均値
 	const float AveragePositionY = 1200.0f;
 	//浮いてるように見せるための誤差の数値
-	const float DeviationPositionY = 200.0f;
+	const float DeviationPositionY = 100.0f;
 
 
 	VECTOR3 targetPos;
@@ -39,4 +40,7 @@ private:
 	VECTOR3 setGravity;
 	//浮くときに使うカウンター
 	float floatingTimeCounter;
+	float copyPositionY;
+	//ふわふわ浮くように見せるときにつかう
+	bool isUpMove;
 };

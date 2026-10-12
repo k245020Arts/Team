@@ -495,6 +495,15 @@ void TrashEnemy::ApplyDamage(EnemyDamage::EnemyDamageInfo _dInfo)
 	damage = 0;
 }
 
+void TrashEnemy::UpdateEnemyVisibility()
+{
+	const VECTOR3 PlayerPos = enemyBaseComponent.playerObj->GetTransform()->position;
+	const VECTOR3 CameraPos = enemyBaseComponent.camera->GetCameraTransform()->position;
+	const VECTOR3 EnemyPos = GetPos();
+
+
+}
+
 void TrashEnemy::SetWayPoint(VECTOR3 _wayPoint)
 {
 	targetPoint = _wayPoint;
