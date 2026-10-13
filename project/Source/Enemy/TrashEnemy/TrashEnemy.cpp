@@ -23,6 +23,7 @@
 #include "../../Common/ResourceLoader/ResourceLoader.h"
 #include "../../Player/PlayerState/AttackState/PlayerSpecialAttack.h"
 #include "TrashEnemyInformation.h"
+#include "../../Common/Easing/Easing.h"
 
 #include "TrashEnemyState/T_EnemyIdol.h"
 #include "TrashEnemyState/T_EnemyRun.h"
@@ -111,6 +112,7 @@ TrashEnemy::TrashEnemy()
 
 	damage = 0;
 
+	fadeCounter = FadeSpeed;
 }
 
 TrashEnemy::~TrashEnemy()
@@ -128,6 +130,7 @@ void TrashEnemy::Update()
 	if (IsPlayerSpecialMove())
 		return;
 	
+	UpdateEnemyVisibility();
 	EnemyBase::Update();
 
 	if (hp <= 0)
@@ -500,8 +503,51 @@ void TrashEnemy::UpdateEnemyVisibility()
 	const VECTOR3 PlayerPos = enemyBaseComponent.playerObj->GetTransform()->position;
 	const VECTOR3 CameraPos = enemyBaseComponent.camera->GetCameraTransform()->position;
 	const VECTOR3 EnemyPos = GetPos();
+	const float Color_Rgb = 255.0f;
 
+	VECTOR3 comToPlayerVec = PlayerPos - CameraPos;
+	float length = VSize(comToPlayerVec);
 
+	if (length <= 0.0f)
+	{
+		fadeCounter = FadeSpeed;
+		enemyBaseComponent.color->setRGB(Color::Rgb(Color_Rgb, Color_Rgb, Color_Rgb, Color_Rgb));
+		return;
+	}
+		
+	// ³‹K‰»‚µ‚½•ûŒüƒxƒNƒgƒ‹
+	VECTOR3 dir = comToPlayerVec / length;
+
+	// ƒJƒƒ‰‚©‚ç“G‚Ö‚ÌƒxƒNƒgƒ‹
+	VECTOR3 cameraToEnemy = EnemyPos - CameraPos;
+
+	// “G‚ÌˆÊ’u‚ðü•ª‚É“Š‰e
+	float distance = VDot(cameraToEnemy, dir);
+
+	// ü•ªã‚ÌÅ‹ßÚ“_‚ð‹‚ß‚é
+	VECTOR3 closestPos = CameraPos + dir * distance;
+
+	// “G‚Æü•ª‚Ì‹——£
+	float distanceToLine = VSize(EnemyPos - closestPos);
+
+	// “G‚Ì”¼Œa‚È‚Ç‚ðl—¶‚µ‚½”»’è‹——£
+	const float OCCLUSION_RANGE = 1000.0f;
+
+	bool isBetween = distance > 0.0f && distance < length && distanceToLine < OCCLUSION_RANGE;
+
+	if (isBetween)//“G‚ð”¼“§–¾‚É‚·‚é
+	{
+		if (fadeCounter > 0)
+			fadeCounter -= Time::DeltaTimeRate();
+
+		float alph = Easing::EaseIn(Color_Rgb / 2, Color_Rgb, fadeCounter);
+		enemyBaseComponent.color->setRGB(Color::Rgb(Color_Rgb, Color_Rgb, Color_Rgb, alph));
+	}
+	else//“G‚ð’Êí•\Ž¦‚É–ß‚·
+	{
+		fadeCounter = FadeSpeed;
+		enemyBaseComponent.color->setRGB(Color::Rgb(Color_Rgb, Color_Rgb, Color_Rgb, Color_Rgb));
+	}
 }
 
 void TrashEnemy::SetWayPoint(VECTOR3 _wayPoint)

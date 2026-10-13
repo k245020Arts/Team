@@ -169,6 +169,7 @@ private:
 		{40.0f, -1200.0f,0.5f,1000.0f},//必殺
 		{20.0f, -1200.0f,0.0f,0.0f},//遠距離の特殊ダメージ
 	};
+	const float  FadeSpeed = 1.0f;
 
 	//_posの方向に向く
 	void LookTarget(VECTOR3 _pos);
@@ -241,4 +242,6 @@ private:
 	bool rangedGravity;
 
 	float damage;
+	//カメラとプレイヤーの間の敵にフェードをかけるときに使う
+	float fadeCounter;
 };

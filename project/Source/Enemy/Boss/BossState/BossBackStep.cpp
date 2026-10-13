@@ -18,7 +18,6 @@ BossBackStep::~BossBackStep()
 
 void BossBackStep::Update()
 {
-	//å„Ç≈èëÇ´íºÇ∑
 	Boss* b = GetBase<Boss>();
 	b->LookPlayer();
 	speed = Easing::EaseIn(0.0f, MaxSpeed, MaxSpeed / 60);
@@ -43,23 +42,6 @@ void BossBackStep::Update()
 
 	if (time >= 0.55f)
 		b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
-	
-	//time += Time::DeltaTimeRate();
-
-	//if (vec.Size() <= 2200.0f && counter == 1|| vec.Size() <= 4400 && counter == 2)
-	//{
-	//	b->GetEnemyObj()->GetTransform()->position.x -= speed * cosf(ROTY);
-	//	b->GetEnemyObj()->GetTransform()->position.z -= speed * sinf(ROTY);
-	//}
-	//else if (time >= 0.5f && counter < 2)
-	//{
-	//	time = 0.0f;
-	//	counter++;
-	//}
-	///*else if(counter < 2)
-	//	time = 0.0f;*/
-	//else if(/*counter > 2 &&*/ time>=0.55f||time >= 3.0f)
-	//	b->enemyBaseComponent.state->ChangeState(StateID::ATTACK_SORTING_S);
 }
 
 void BossBackStep::Start()
