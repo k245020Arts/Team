@@ -681,7 +681,7 @@ void Boss::BossDamageCollsionEvent(const CollsionEventData& _data)
 		}
 		RockHitDamage(_data);
 	}
-	else {
+	else if(_data.targetTag != CollsionInformation::WALL){
 		PlayerHit(_data);
 	}
 }

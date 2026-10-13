@@ -37,7 +37,7 @@ void CollsionInformation::InitSetPair()
     SetPair(PLAYER, B_ATTACK);
     SetPair(BOSS, P_ATTACK);
     SetPair(BOSS_ROCK_PLAYER_ATTACK, P_ATTACK);
-    /*SetPair(BOSS, WALL);*/
+    SetPair(BOSS, WALL);
     SetPair(FLOOR, P_FLOOR);
     SetPair(FLOOR, E_FLOOR);
     SetPair(FLOOR, C_FLOOR);
