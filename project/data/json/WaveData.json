@@ -2,7 +2,7 @@
   "WaveEnemyData": {
     "0": {
       "Wave1": {
-        "melee": 1,
+        "melee": 5,
         "range": 0
       },
       "Wave2": {

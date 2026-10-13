@@ -172,7 +172,6 @@ void Boss::Update()
 	if (bossAttackDataSerializer != nullptr) {
 		bossAttackDataSerializer->Update();
 	}
-	
 }
 
 void Boss::Draw()
