@@ -123,18 +123,18 @@ public:
 	bool IsPlayerSpecialMove();
 
 	//セッター
-	void SetWayPoint(VECTOR3 _wayPoint);
-	void SetCooperateWayPoint(VECTOR3 _wayPoint) { cooperateWayPoint = _wayPoint; }
+	void SetWayPoint(const VECTOR3& _wayPoint);
+	void SetCooperateWayPoint(const VECTOR3& _wayPoint) { cooperateWayPoint = _wayPoint; }
 	// //ウェイポイントを取得して連携攻撃に切り替わる関数
-	void SetCooperateWayPoint(VECTOR3 _pos, StateID::State_ID _id);
+	void SetCooperateWayPoint(const VECTOR3& _pos, StateID::State_ID _id);
 	//敵のステートを変える関数
 	void ChangeState(StateID::State_ID _id);
-	void AddPos(VECTOR3 _pos);
+	void AddPos(const VECTOR3& _pos);
 	//近距離か遠距離の敵かを指定する関数
 	void SetEnemyType(EnemyType type);
 	//void ReadyCooperteAtk2(VECTOR3 _pos);
 
-	void SetLeaderPos(VECTOR3 _pos);
+	void SetLeaderPos(const VECTOR3& _pos);
 
 	void SetLeaderRotY(float _rotY) { leaderRotY = _rotY; }
 	//遠距離の敵が攻撃する

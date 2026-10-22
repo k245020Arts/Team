@@ -30,6 +30,9 @@ PlayerHeavyCharge::PlayerHeavyCharge()
 	maxCharge		= false;
 
 	playerAttackData.state = StateID::PLAYER_HEAVY_CHARGE_S;
+
+	posYDownCounter = 0;
+	copyPosY = 0;
 }
 
 PlayerHeavyCharge::~PlayerHeavyCharge()
@@ -41,14 +44,14 @@ void PlayerHeavyCharge::Update()
 	Player* p = GetBase<Player>();
 	//AttackCollsion();
 	PlayerAttackStateBase::Update();
-	
+
 	if (InputManager::GetInstance()->KeyInput("heavyAttack")) {
 		chargeCount -= Time::DeltaTimeRate();
 		if (chargeCount <= 0.0f) {
 			p->attackLevel = 2;
 			p->playerCom.shaker->SetShakePower(VECTOR3(20, 20, 20));
 			InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(150, -1);
-			
+
 			//オーラエフェクトが切れたらまた再生
 			if (!EffectManager::GetInstance()->IsPlayIng(Effect_ID::PLAYER_CHARGE_FINAL)) {
 				EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FINAL, 1.0f);
@@ -62,7 +65,7 @@ void PlayerHeavyCharge::Update()
 			if (!maxCharge) {
 				maxCharge = true;
 				SoundManager::GetInstance()->PlaySe(Sound_ID::PLAYER_CHARGE_END);
-				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0,100,0),VZero,VOne), obj, Effect_ID::PLAYER_CHARGE_END, 1.0f);
+				EffectManager::GetInstance()->CreateEffekseer(Transform(VECTOR3(0, 100, 0), VZero, VOne), obj, Effect_ID::PLAYER_CHARGE_END, 1.0f);
 			}
 		}
 		else if (chargeCount <= 1.0f) {
@@ -84,7 +87,7 @@ void PlayerHeavyCharge::Update()
 		if ((fabs(p->walkAngle.x) >= DEAD_ZONE || fabs(p->walkAngle.z) >= DEAD_ZONE) && p->hp > 0.0f) {
 			p->RotationChange(p->walkAngle, 12.0f/*スピード*/);
 		}
-		
+
 	}
 	else {
 		chargeFinish = true;
@@ -96,6 +99,8 @@ void PlayerHeavyCharge::Update()
 		p->playerCom.shaker->ShakeFinish();
 		InputManager::GetInstance()->GetControllerInput()->StopControlVibrationStartFrame();
 	}
+	if (p->GetPlayerObj()->GetTransform()->position.y > -120.0f)
+		p->GetPlayerObj()->GetTransform()->position.y -= 3.0f;
 }
 
 void PlayerHeavyCharge::Draw()
@@ -119,6 +124,10 @@ void PlayerHeavyCharge::Start()
 	InputManager::GetInstance()->GetControllerInput()->ControlVibrationStartFrame(50, -1);
 	EffectManager::GetInstance()->CreateEffekseer(Transform(), obj, Effect_ID::PLAYER_CHARGE_FIRST, 1.0f);
 	p->playerCom.physics->SetVelocity(VZero);
+
+	posYDownCounter = 0;
+	copyPosY = p->GetPlayerObj()->GetTransform()->position.y;
+	p->GetPlayerObj()->GetTransform()->position.y = -30.0f;
 }
 
 void PlayerHeavyCharge::Finish()
@@ -131,4 +140,6 @@ void PlayerHeavyCharge::Finish()
 	p->playerCom.camera->ChangeStateCamera(StateID::FREE_CAMERA_S);
 	p->playerCom.shaker->ShakeFinish();
 	InputManager::GetInstance()->GetControllerInput()->StopControlVibrationStartFrame();
+
+	p->GetPlayerObj()->GetTransform()->position.y = copyPosY;
 }

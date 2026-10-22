@@ -18,4 +18,7 @@ private:
 	bool chargeFinish;
 	int baseFrequ;
 	bool maxCharge;
+
+	float posYDownCounter;
+	float copyPosY;
 };

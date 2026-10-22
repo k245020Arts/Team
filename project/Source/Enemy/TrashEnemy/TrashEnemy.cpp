@@ -251,7 +251,7 @@ void TrashEnemy::SetEnemyType(EnemyType type)
 	enemyType = type;
 }
 
-void TrashEnemy::SetLeaderPos(VECTOR3 _pos)
+void TrashEnemy::SetLeaderPos(const VECTOR3& _pos)
 {
 	leaderPos = _pos;
 }
@@ -550,12 +550,12 @@ void TrashEnemy::UpdateEnemyVisibility()
 	}
 }
 
-void TrashEnemy::SetWayPoint(VECTOR3 _wayPoint)
+void TrashEnemy::SetWayPoint(const VECTOR3& _wayPoint)
 {
 	targetPoint = _wayPoint;
 }
 
-void TrashEnemy::SetCooperateWayPoint(VECTOR3 _pos, StateID::State_ID _id)
+void TrashEnemy::SetCooperateWayPoint(const VECTOR3& _pos, StateID::State_ID _id)
 {
 	if (hp <= 0)
 		return;
@@ -591,7 +591,7 @@ void TrashEnemy::CooperateAtkFinish()
 	enemyBaseComponent.state->ChangeState(StateID::T_ENEMY_IDOL_S);
 }
 
-void TrashEnemy::AddPos(VECTOR3 _pos)
+void TrashEnemy::AddPos(const VECTOR3& _pos)
 {
 	obj->GetTransform()->position = obj->GetTransform()->position + _pos;
 }

@@ -74,6 +74,7 @@ void CooperateAttack2::Start()
 
 	enemy->isMovingToPlayer = true;
 	pPos = enemy->enemyBaseComponent.playerObj->GetTransform()->position;
+	pPos.y = 0;
 	pCounter = 0;
 
 	runThrough = false;
@@ -102,6 +103,8 @@ void CooperateAttack2::RangedMove(TrashEnemy* _enemy)
 	
 	if (VSize(pPos - enePos) > SearchPosMax && _enemy->isStandby)//どこまでプレイヤーに追従するか
 		pPos = _enemy->enemyBaseComponent.playerObj->GetTransform()->position;
+
+	pPos.y = 0;
 
 	if (_enemy->cooperateDamageMove && isDamageMove)//ダメージをもらって打ち返されたときの処理
 	{
