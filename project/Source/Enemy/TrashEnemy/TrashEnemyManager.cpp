@@ -109,7 +109,7 @@ void TrashEnemyManager::Draw()
 	}
 }
 
-void TrashEnemyManager::CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int rangedSpawnCounter)
+void TrashEnemyManager::CreateEnemy(const VECTOR3& _pos, const int& meleeSpawnCounter, const int& rangedSpawnCounter)
 {
 	setPos = _pos;
 	//“¯‚¶í—Ş‚Ì“G‚ğ‰½‘Ìo‚·‚©
@@ -272,7 +272,7 @@ std::vector<VECTOR3> TrashEnemyManager::GetWayPointPosition()
 	return _pos;
 }
 
-void TrashEnemyManager::CreateData(EnemyResource _resource, int _i, EnemyType _type)
+void TrashEnemyManager::CreateData(const EnemyResource& _resource, const int& _i, const EnemyType& _type)
 {
 	// ŒÂ•Ê‚Ìenemy‚ğì‚é
 	Object3D* e;

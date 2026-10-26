@@ -34,7 +34,7 @@ public:
 	int GetRangedZeroHpEnemy()const;
 
 	//‹ß‹——£‚Ì“G‚Ì˜AŒgUŒ‚‚ğ€”õ‚·‚é
-	void SetPrepare(bool _prepare) { cooperatePrepare = _prepare; }
+	void SetPrepare(const bool& _prepare) { cooperatePrepare = _prepare; }
 	//‰“‹——£‚Ì“G‚Ì˜AŒgUŒ‚
 	void RangedEnemyAttack();
 	void RangedDebugAtk() { rangedAtkCoolTime = MaxCoolTime; }

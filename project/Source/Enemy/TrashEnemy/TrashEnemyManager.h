@@ -37,7 +37,7 @@ public:
 	/// </summary>
 	/// <param name="_pos">座標</param>
 	/// <param name="enemySpawnCounter">何体生成するか</param>
-	void CreateEnemy(VECTOR3 _pos, int meleeSpawnCounter, int rangedSpawnCounter);
+	void CreateEnemy(const VECTOR3& _pos, const int& meleeSpawnCounter, const int& rangedSpawnCounter);
 
 	//敵が何人生きているかわかる関数
 	int GetActiveEnemy()const;
@@ -94,7 +94,7 @@ private:
 		std::string typeID;
 		std::string charaTypeID;
 		int model;
-		EnemyResource(std::string _charaID, std::string _typeID, int _model)
+		EnemyResource(const std::string& _charaID, const std::string& _typeID, const int& _model)
 		{
 			charaID = _charaID;
 			typeID = _typeID;
@@ -110,7 +110,7 @@ private:
 	/// <param name="_charaID"></param>
 	/// <param name="_typeID">雑魚敵の種類のID</param>
 	/// <param name="_i"></param>
-	void CreateData(EnemyResource _resource, int _i, EnemyType _type);
+	void CreateData(const EnemyResource& _resource, const int& _i, const EnemyType& _type);
 	void CooperateAtk();
 
 	//ウェイポイントの元を保管する変数
