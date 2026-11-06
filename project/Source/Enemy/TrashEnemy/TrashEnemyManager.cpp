@@ -250,7 +250,7 @@ std::vector<WayPoint> TrashEnemyManager::PlayerWayPoint()
 	wayPoint.clear();
 	
 	VECTOR3 playerPos = player->GetTransform()->position;
-	
+	//プレイヤーの周りにポイントを設置する
 	for (auto& itr : wayPointOffsets)
 	{
 		wayPoint.emplace_back(WayPoint(itr + playerPos, true));
@@ -285,7 +285,7 @@ void TrashEnemyManager::CreateData(const EnemyResource& _resource, const int& _i
 	info.shape = CollsionInformation::SPHERE;
 	info.oneColl = false;
 	info.tag = CollsionInformation::Tag::ENEMY;
-	info.size = 1.0f;//
+	info.size = 1.0f;
 
 	RayCollider* collider3 = e->Component()->AddComponent<RayCollider>();
 	info.shape = CollsionInformation::RAY;
@@ -308,7 +308,7 @@ void TrashEnemyManager::CreateData(const EnemyResource& _resource, const int& _i
 
 	Physics* physics = e->Component()->AddComponent<Physics>();
 	physics->Start(GravityVec, Friction);
-	
+	//スポーンするポジションを決める
 	float rangeX = (float)GetRand(R_MAX * 2) - R_MAX;
 	float rangeY = (float)GetRand(R_MAX * 2) - R_MAX;
 	VECTOR3 pos = VECTOR3(rangeX, PosY, rangeY);

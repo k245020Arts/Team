@@ -255,6 +255,7 @@ void TrashEnemyGroup::MeleeEnemyAttack(TrashEnemy* _enemy)
 		attackCounter += Time::DeltaTimeRate();
 		atkCountStart = false;
 	}
+	//UŒ‚‚Ü‚Å‚ÌÅ‘åŽžŠÔ
 	const float MaxAtkTime = maxAttackCounter * 2;
 
 	if (attackCounter >= MaxAtkTime)//ƒvƒŒƒCƒ„[‚ª•Ç‚Ì•û‚ð‚Ý‚Ä‚½‚Æ‚«‚Ì‘Îô
