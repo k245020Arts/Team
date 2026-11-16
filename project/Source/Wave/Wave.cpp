@@ -9,8 +9,8 @@
 
 Wave::Wave()
 {
-	tEnemyManager = new TrashEnemyManager;
-	//tEnemyManager = FindGameObject<TrashEnemyManager>();
+	//tEnemyManager = new TrashEnemyManager;
+	tEnemyManager = FindGameObject<TrashEnemyManager>();
 
 	const StageData stageData = StageSelectData::GetInstance()->GetNowStageData();
 	stageNum = stageData.id;

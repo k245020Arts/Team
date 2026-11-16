@@ -25,7 +25,7 @@
 
 TrashEnemyManager::TrashEnemyManager()
 {
-	player = FindGameObjectWithTag<Object3D>("PLAYER");
+	//player = FindGameObjectWithTag<Object3D>("PLAYER");
 	
 	enemyGroup = new TrashEnemyGroup;
 	trashEnemy = nullptr;
@@ -107,6 +107,16 @@ void TrashEnemyManager::Draw()
 		//デバック表示
 		DrawSphere3D(itr.position, 40.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), itr.active);
 	}
+}
+
+void TrashEnemyManager::SetCamera(Camera* _camera)
+{
+	enemyGroup->SetCamera(_camera);
+}
+
+void TrashEnemyManager::PlayerSettig()
+{
+	player = FindGameObjectWithTag<Object3D>("PLAYER");
 }
 
 void TrashEnemyManager::CreateEnemy(const VECTOR3& _pos, const int& meleeSpawnCounter, const int& rangedSpawnCounter)

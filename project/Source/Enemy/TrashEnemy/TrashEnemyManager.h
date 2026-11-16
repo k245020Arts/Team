@@ -32,6 +32,9 @@ public:
 
 	void Update()override;
 	void Draw()override;
+
+	void SetCamera(Camera* _camera);
+	void PlayerSettig();
 	/// <summary>
 	/// 雑魚敵の生成
 	/// </summary>
@@ -118,6 +121,7 @@ private:
 	//ウェイポイントを保管する変数
 	std::vector<WayPoint> wayPoint;
 
+	//Player* player;
 	Object3D* player;
 	//std::list<Object3D*> stage;
 	Object3D* stage[4];

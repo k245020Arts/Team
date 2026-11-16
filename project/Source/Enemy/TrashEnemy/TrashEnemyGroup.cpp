@@ -10,7 +10,7 @@
 
 TrashEnemyGroup::TrashEnemyGroup()
 {
-	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
+	//camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
 	trashEnemyManager = FindGameObject<TrashEnemyManager>();
 
 	attackCounter = 0;

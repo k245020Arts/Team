@@ -48,6 +48,7 @@
 #include "../Title/TitlePlayer.h"
 #include "../Player/PlayerState/PlayerBossAppear.h"
 #include "../PlayScene.h"
+#include "../Enemy/TrashEnemy/TrashEnemyManager.h"
 
 PlayerManager::PlayerManager()
 {
@@ -248,6 +249,7 @@ void PlayerManager::CreatePlayer()
 	specialG->GuageDrawReady<Player>(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Player_HpBar_YellowBack", ID::P_SPECIAL_ATTACK_BAR), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Guage::BAR_MODE::SPECIAL_ATTACK);
 	specialG->EdgeDrawReady(ResourceLoad::LoadImageGraph(ResourceLoad::IMAGE_PATH + "Player_HpBar_Frame", ID::HP_EDGE), MeshRenderer2D::DRAW_RECT_ROTA_GRAPH_FAST_3F, Transform(VECTOR3(915.0f, 1050.0f, 0.0f), VZero, VECTOR3(1.0f, 1.0f, 0.0f)));
 
+	FindGameObject<TrashEnemyManager>()->PlayerSettig();
 }
 
 void PlayerManager::GameSceneChangeState()

@@ -10,6 +10,7 @@ class EnemyBase;
 class Transform;
 class Boss;
 class GameControler;
+class TrashEnemyManager;
 
 class EnemyManager : public GameObject
 {
@@ -148,6 +149,8 @@ public:
 
 	int GetEnemySize()const { return (int)enemy.size(); }
 
+	void SetCamera(Camera* _camera);
+
 private:
 	
 	std::list<BaseObject*> enemy;//“G‚ÌObject‚ÌƒŠƒXƒg
@@ -156,6 +159,8 @@ private:
 	BaseObject* cameraTargetObj;
 	//std::list<Boss> bossList;
 	GameControler* gameContorler;
+
+	TrashEnemyManager* trashEnemyManager;
 	void GameSceneChangeState();
 
 	

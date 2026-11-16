@@ -37,7 +37,7 @@ EnemyManager::EnemyManager()
 	gameContorler = nullptr;
 	new BossCreater();
 
-	//new TrashEnemyManager();
+	trashEnemyManager = new TrashEnemyManager();
 }
 
 EnemyManager::~EnemyManager()
