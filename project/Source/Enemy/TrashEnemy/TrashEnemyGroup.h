@@ -16,7 +16,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void SetCamera(Camera* _camera) { camera = _camera; }
+	void CameraSettig();
 	//‹ß‹——£‚Ì“G‚ð•Û‘¶‚·‚é
 	void SetMeleeEnemy(TrashEnemy* _enemy);
 	//‰“‹——£‚Ì“G‚ð•Û‘¶‚·‚é

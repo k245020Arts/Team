@@ -141,6 +141,7 @@ public:
 	void RangedAttack();
 	//指定した分ダメージを受ける
 	void ChangeHp(float _damage);
+	//遠距離の敵が重力を受けるかどうか
 	void OnRangedGravity() { rangedGravity = true; }
 
 	template<typename T>

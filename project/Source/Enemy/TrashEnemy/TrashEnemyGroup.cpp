@@ -10,7 +10,6 @@
 
 TrashEnemyGroup::TrashEnemyGroup()
 {
-	//camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
 	trashEnemyManager = FindGameObject<TrashEnemyManager>();
 
 	attackCounter = 0;
@@ -98,6 +97,11 @@ void TrashEnemyGroup::Draw()
 
 	if(startButtonImage)
 		DrawGraph((int)YButtonPos.x, (int)YButtonPos.y, yButtonImage, true);
+}
+
+void TrashEnemyGroup::CameraSettig()
+{
+	camera = FindGameObjectWithTag<Object3D>("CAMERA_OBJ")->Component()->GetComponent<Camera>();
 }
 
 void TrashEnemyGroup::SetMeleeEnemy(TrashEnemy* _enemy)
@@ -387,6 +391,7 @@ void TrashEnemyGroup::CooperateAttackLine()
 		return;
 
 	std::vector<VECTOR3> copyPos;
+	//ラインをつなげるときに見やすいようにする
 	const float PosY = 300.0f;
 
 	for (auto& itr : meleeEnemies)
@@ -395,14 +400,14 @@ void TrashEnemyGroup::CooperateAttackLine()
 			return;
 		if (itr->GetCurrentHp() <= 0)
 			continue;
-
+		//敵のポジションをコピーして、少し上にずらす
 		copyPos.push_back(VECTOR3(itr->GetPos().x, itr->GetPos().y + PosY, itr->GetPos().z));
 	}
 
 	const size_t Counter = copyPos.size() - 1;
 	const int Color = GetColor(255, 0, 0);
 	const float Size = 20.0f;
-
+	//敵にラインをつなげる
 	for (int i = 0; i < Counter; i++)
 	{
 		DrawCapsule3D(copyPos[i], copyPos[i + 1] , Size, 0, Color, Color, true);
@@ -439,14 +444,12 @@ void TrashEnemyGroup::RangedEnemyAttack()
 		if (enemy->GetDeadMove() || enemy->IsPlayerSpecialMove())
 			return;
 
-		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
+		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)//リーダーの攻撃
 			AttackLeaderMove(enemy);
-		else
-		{
+		else//リーダー以外の攻撃
 			AttackRangedMove(enemy);
-			/*pointCounter = 0;*/
-		}
 	}
+
 	pointCounter = 0;
 	rangedAtkTime += Time::DeltaTimeRate();
 }
@@ -472,41 +475,40 @@ void TrashEnemyGroup::DeadRangedEnemy(bool _readerDead)
 			}
 		}
 		else
-		{
 			itr->ChangeHp(-itr->GetMaxHp());
-		}
 	}
 }
 
 void TrashEnemyGroup::RangedEnemySetWaypoint(TrashEnemy* _enemy)
 {
-	if (_enemy->GetEnemyType() == EnemyType::RANGED)
+	if (_enemy->GetEnemyType() == EnemyType::RANGED)//リーダー以外の敵
 	{
 		VECTOR3 lPos = leaderPos;
 		lPos.y = 0.0f;
+		//リーダーについて行くようにする
 		_enemy->SetWayPoint(lPos);
 	}
-	else
+	else//リーダーの敵
 	{
 		const VECTOR3 CameraPos = camera->GetCameraTransform()->position;
 		const float CamRotY = camera->GetCameraTransform()->rotation.y;
 		const VECTOR3 Forward = VECTOR3(sinf(CamRotY), 0, cosf(CamRotY));
 		const float Distance = 5000;
-
+		//カメラの正面にウェイポイントを作る
 		VECTOR3 _wayPointPos = CameraPos + Forward * Distance;
 
 		_wayPointPos.y = 0;
-
+		//リーダーの敵にウェイポイントを渡して、そのウェイポイントに向かって移動するようにする
 		_enemy->SetWayPoint(_wayPointPos);
-
+		//リーダーの座標を保存しておく
 		leaderPos = _enemy->GetPos();
 
+		//リーダー以外の敵が死んだときにリーダーが落下するようにする
 		rangedCounter = GetRangedActiveEnemy() - 1;
 		if (rangedCounter <= 0)
 			_enemy->OnRangedGravity();
 	}
 }
-
 
 void TrashEnemyGroup::RangedDamageMove()
 {
@@ -514,14 +516,12 @@ void TrashEnemyGroup::RangedDamageMove()
 	{
 		const float Damage = -enemy->MaxHp();
 		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
-		{
 			enemy->ChangeHp(Damage);
-		}
 		else
 		{
 			if (!enemy->IsMovingToPlayer())
 				enemy->ChangeHp(Damage);
-			else
+			else//打ち返されたときにその場にいない遠距離の敵の時
 				enemy->ChangeState(StateID::T_ENEMY_WAITSEE);
 		}
 	}
@@ -542,21 +542,23 @@ void TrashEnemyGroup::NextLeader()
 	bool readerActive = false;
 	const size_t Max = rangedEnemies.size();
 
+	//遠距離の敵がいなかったら処理をしない
 	if (Max <= 0)
 		return;
 
 	for (auto& enemy : rangedEnemies)
 	{
+		//リーダーが生きてたら処理をしない
 		if (enemy->GetEnemyType() == EnemyType::RANGED_LEADER)
 		{
 			readerActive = true;
 			return;
 		}
 	}
-	//リーダーが死んでた時別の敵をリーダーにする
 	if (readerActive)
 		return;
 
+	//リーダーが死んでた時別の敵をリーダーにする
 	rangedEnemies[0]->SetEnemyType(EnemyType::RANGED_LEADER);
 	AllChangeRangedState(StateID::T_ENEMY_WAITSEE);
 	//連携攻撃中に敵が死んだとき
@@ -578,8 +580,9 @@ void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
 {
 	if (hitBack || _enemy->IsPlayerSpecialMove())
 		return;
-	
-	if (rangedJoinCounter == 0)//リーダー以外の敵を数える
+
+	//リーダー以外の敵を数える
+	if (rangedJoinCounter == 0)
 	{
 		const int _Counter = (int)rangedEnemies.size() - 1;
 		if (_Counter > 0)
@@ -593,7 +596,8 @@ void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
 
 	startRangedAtk = true;
 
-	if (_enemy->GetStandby())//リーダーが他の奴に指示を出す
+	//リーダーが他の奴に指示を出す
+	if (_enemy->GetStandby())
 	{
 		if (rangedJoinCounter > 0)
 			leaderActiveEnd = true;
@@ -603,7 +607,8 @@ void TrashEnemyGroup::AttackLeaderMove(TrashEnemy* _enemy)
 
 	leaderPos = _enemy->GetPos();
 
-	if (rangedJoinCounter <= rangedAtkCounter || (int)rangedEnemies.size() - 1 <= 0)//敵全員が攻撃を終えた後の処理または移動中に他が死んだとき
+	//敵全員が攻撃を終えた後の処理または移動中に他が死んだとき
+	if (rangedJoinCounter <= rangedAtkCounter || (int)rangedEnemies.size() - 1 <= 0)
 	{
 		if (rangedAtkTime >= MaxAttackCounter )
 		{
@@ -655,7 +660,8 @@ void TrashEnemyGroup::AttackRangedMove(TrashEnemy* _enemy)
 		hitBack = true;
 		
 		const float LeaderVecMax = 1200.0f;
-		if (VSize(leaderPos - enemyPos) <= LeaderVecMax)//リーダーと打ち返された敵との距離が近くなったら倒す
+		//リーダーと打ち返された敵との距離が近くなったら倒す
+		if (VSize(leaderPos - enemyPos) <= LeaderVecMax)
 		{
 			SoundManager::GetInstance()->PlaySe(Sound_ID::SOUND_ID::RANGED_ATK_FIN);
 			EffectManager::GetInstance()

@@ -33,7 +33,6 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void SetCamera(Camera* _camera);
 	void PlayerSettig();
 	/// <summary>
 	/// G‹›“G‚Ì¶¬

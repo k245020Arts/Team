@@ -24,9 +24,7 @@
 #include "../../Common/ResourceLoader/ResourceLoader.h"
 
 TrashEnemyManager::TrashEnemyManager()
-{
-	//player = FindGameObjectWithTag<Object3D>("PLAYER");
-	
+{	
 	enemyGroup = new TrashEnemyGroup;
 	trashEnemy = nullptr;
 
@@ -109,11 +107,6 @@ void TrashEnemyManager::Draw()
 	}
 }
 
-void TrashEnemyManager::SetCamera(Camera* _camera)
-{
-	enemyGroup->SetCamera(_camera);
-}
-
 void TrashEnemyManager::PlayerSettig()
 {
 	player = FindGameObjectWithTag<Object3D>("PLAYER");
@@ -142,7 +135,7 @@ void TrashEnemyManager::CreateEnemy(const VECTOR3& _pos, const int& meleeSpawnCo
 			numTypeCounter++;
 			spawnCounter = 0;
 		}
-		//
+		//どこのポイントを追いかけるか決めるときにポイントの上限を超えたら最初に戻す
 		runPoint++;
 		if (runPoint >= wayPointOffsets.size())
 			runPoint = 0;
@@ -153,18 +146,20 @@ void TrashEnemyManager::CreateEnemy(const VECTOR3& _pos, const int& meleeSpawnCo
 		if (meleeSpawnCounter >= enemyCounter)//近距離の敵の生成
 		{
 			CreateData(resources[0],  i,EnemyType::MELEE);
+			//作った敵を近距離の敵のリストに入れる
 			enemyGroup->SetMeleeEnemy(trashEnemy);
 			continue;
 		}
 		else if (max >= enemyCounter)//遠距離の敵の生成
 		{
-			if(hasLeader)
+			if (hasLeader)//リーダーがいたら通常の遠距離の敵を生成する
 				CreateData(resources[1], i,EnemyType::RANGED);
-			else
+			else//リーダーがいなかったらリーダーを生成する
 			{
 				CreateData(resources[1], i,EnemyType::RANGED_LEADER);
 				hasLeader = true;
 			}
+			//作った敵を遠距離の敵のリストに入れる
 			enemyGroup->SetRangedEnemy(trashEnemy);
 			continue;
 		}
@@ -217,10 +212,6 @@ void TrashEnemyManager::ImguiDraw()
 			debugWaypoint = true;
 	}
 	
-	for (auto& way : wayPoint)
-	{
-		
-	}
     ImGui::End();
 }
 
@@ -237,7 +228,7 @@ VECTOR3 TrashEnemyManager::GetRangedLeaderPos()const
 void TrashEnemyManager::WayPointOffset()
 {
 	const int WaypointMax = 8;
-	const float Range = 1500.0f;// プレイヤー中心の半径
+	const float Range = 1500.0f;//半径
 
 	for (int i = 0; i < WaypointMax; i++)
 	{
@@ -357,16 +348,17 @@ void TrashEnemyManager::CooperateAtk()
 			}
 		}
 	}
-	float rangedMaxCounter = 15.0f;
+	
+	const float RangedMaxCounter = 15.0f;
 	//遠距離の連携攻撃
 	if (enemyGroup->GetRangedZeroHpEnemy() <= 0)
 	{
 		rangedAtkCounter = 0.0f;
 		return;
 	}
-
+	//遠距離の敵のカウントを進めて、一定の値を超えたら連携攻撃を始める
 	rangedAtkCounter += Time::DeltaTimeRate();
-	if (rangedAtkCounter >= rangedMaxCounter)
+	if (rangedAtkCounter >= RangedMaxCounter)
 	{
 		startRangedAtk = true;
 		rangedAtkCounter = 0.0f;

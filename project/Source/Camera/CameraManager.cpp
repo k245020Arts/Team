@@ -12,7 +12,7 @@
 #include "../../Source/Component/Physics/Physics.h"
 #include "../State/StateManager.h"
 #include "../Title/TitleCamera.h"
-#include "../Enemy/TrashEnemy/TrashEnemyManager.h"
+#include "../Enemy/TrashEnemy/TrashEnemyGroup.h"
 
 CameraManager::CameraManager()
 {
@@ -49,8 +49,7 @@ void CameraManager::CreateCamera()
 	info.tag = CollsionInformation::C_FLOOR;
 	c->CollsionAdd(info, Transform(VZero, VZero, VOne * VECTOR3(100,0,0)));*/
 
-	TrashEnemyManager* trashEnemyManager = FindGameObject<TrashEnemyManager>();
-	trashEnemyManager->SetCamera(camera);
+	FindGameObject<TrashEnemyGroup>()->CameraSettig();
 
 	mainCamera->Component()->AddComponent<Physics>()->Start(VZero, VZero);
 
